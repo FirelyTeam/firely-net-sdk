@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -17,13 +17,9 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Specification.Source;
-using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation.Impl;
-using Hl7.Fhir.Validation.Schema;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -129,69 +125,21 @@ namespace Hl7.Fhir.Validation
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages();
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); 
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages();
+            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages(); 
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages();
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); 
         }
         #endregion
-
-        internal OperationOutcome Validate(IValidatable validatable, ITypedElement input)
-        {
-            var outcome = new OperationOutcome();
-
-            return outcome;
-        }
-
-        internal OperationOutcome Validate(StructureDefinition sd, ITypedElement input)
-        {
-            var outcome = new OperationOutcome();
-            //IValidatable validatable = sd.ToValidatable();
-            IValidatable validatable = null;
-
-            outcome.Add(Validate(validatable, input));
-
-            return outcome;
-        }
-
-        internal class GroupedValidator : IValidatable
-        {
-            List<IValidatable> _validatables = new List<IValidatable>();
-
-            public void Add(IValidatable item)
-            {
-                _validatables.Add(item);
-            }
-
-            public Assertions Validate(ITypedElement input, ValidationContext vc)
-            {
-                //var outcome = new OperationOutcome();
-                //_validatables.ForEach(v => outcome.Add(v.Validate(input, vc)));
-                //return outcome;
-                return null;
-            }
-        }
-
-        class InstanceTypeValidator
-        {
-            public string ExpectedInstanceName;
-        }
-
-        abstract class ElementNameSwitchValidator
-        {
-            public abstract void Add(string elementName, IValidatable rules);
-        }
-
-        #region NewValidation stuff
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
@@ -199,53 +147,18 @@ namespace Hl7.Fhir.Validation
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
-            /*
-
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
                 outcome.Add(Validate(instance, processor.Result));
-                */
-
-
-
-            if (outcome.Success)
-            {
-
-                var node = instance as ScopedNode ?? new ScopedNode(instance);
-
-                var resolver = new ElementSchemaResolver(Settings?.ResourceResolver);
-
-                var symbolTable = new SymbolTable();
-                symbolTable.AddStandardFP();
-                symbolTable.AddFhirExtensions();
-
-
-                var validationContext = new ValidationContext()
-                {
-                    FhirPathCompiler = new FhirPathCompiler(symbolTable),
-                    ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
-                    TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
-                    IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null
-                };
-
-                var result = Assertions.Empty;
-                foreach (var profile in processor.Result)
-                {
-                    var schema = resolver.GetSchema(profile);
-                    resolver.DumpCache();
-                    result += schema.Validate(new[] { node }, validationContext);
-                }
-                outcome.Add(result.ToOperationOutcome());
-            }
 
             return outcome;
 
-
             StructureDefinition profileResolutionNeeded(string canonical) =>
+//TODO: Need to make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
-
+#pragma warning restore CS0618 // Type or member is obsolete
         }
-        #endregion
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
         {
@@ -333,8 +246,8 @@ namespace Hl7.Fhir.Validation
                     // so there's no point in also validating the <type> or <nameReference>
                     // TODO: Check whether this is even true when the <type> has a profile?
                     // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
-                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
                     // in which case there may be additional children (verified in the next step)
+                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
 
                     // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
                     // we need to validate based on the actual type of the instance
@@ -359,50 +272,11 @@ namespace Hl7.Fhir.Validation
 
             outcome.Add(this.ValidateFixed(elementConstraints, instance));
             outcome.Add(this.ValidatePattern(elementConstraints, instance));
-            //outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
-            //outcome.Add(ValidateMaxLength(elementConstraints, instance));
+            outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
+            outcome.Add(ValidateMaxLength(elementConstraints, instance));
             outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
             outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
             outcome.Add(this.ValidateBinding(elementConstraints, instance));
-
-            // new style validator - has a configure and then execute step.
-            // will be separated when all logic has been converted.
-            var ts = Settings.TerminologyService;
-            if (ts == null)
-            {
-                if (Settings.ResourceResolver == null)
-                {
-                    Trace(outcome, $"Cannot resolve binding references since neither TerminologyService nor ResourceResolver is given in the settings",
-                        Issue.UNAVAILABLE_TERMINOLOGY_SERVER, instance);
-                    return outcome;
-                }
-
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
-            }
-
-            // TODO MV: validation
-            ValidationContext vc = new ValidationContext(); // { TerminologyService = ts };
-
-            var validator = new ValidatorBuilder(vc);
-
-            if (elementConstraints.Binding != null)
-                validator.Add(elementConstraints.Binding.ToValidatable());
-            // TODO MV 20190801 Validation: this has to go to ElementSchema
-            /*
-            if (elementConstraints.MinValue != null)
-                validator.Add(elementConstraints.MinValue.ToValidatable(MinMax.MinValue));
-
-            if (elementConstraints.MaxValue != null)
-                validator.Add(elementConstraints.MaxValue.ToValidatable(MinMax.MaxValue));
-
-            if (elementConstraints.MaxLength.HasValue)
-                validator.Add(elementConstraints.ToValidatable());
-
-            if (elementConstraints.Fixed != null)
-                validator.Add(elementConstraints.ToValidatable());
-
-            outcome.Add(validator.Validate(instance));
-            */
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
@@ -475,12 +349,12 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver);
             }
 
-            ValidationContext vc = new ValidationContext();// { TerminologyService = ts };
+            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
-                Binding b = binding.ToValidatable();
-                outcome.Add(b.Validate(instance, vc));
+                    Binding b = binding.ToValidatable();
+                    outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -510,38 +384,6 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome VerifyPrimitiveContents(ElementDefinition definition, ITypedElement instance)
-        {
-            var outcome = new OperationOutcome();
-
-            Trace(outcome, "Verifying content of the leaf primitive value attribute", Issue.PROCESSING_PROGRESS, instance);
-
-            // Go look for the primitive type extensions
-            //  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex">
-            //        <valueString value="-?([0]|([1-9][0-9]*))"/>
-            //      </extension>
-            //      <code>
-            //        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
-            //          <valueString value="number"/>
-            //        </extension>
-            //        <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
-            //          <valueString value="int"/>
-            //        </extension>
-            //      </code>
-            // Note that the implementer of IValueProvider may already have outsmarted us and parsed
-            // the wire representation (i.e. POCO). If the provider reads xml directly, would it know the
-            // type? Would it convert it to a .NET native type? How to check?
-
-            // The spec has no regexes for the primitives mentioned below, so don't check them
-
-            // TODO MV Validation
-            return outcome;
-            //return definition.Type.Count() == 1
-            //    ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
-            //    : outcome;
-        }
-
-        /*
         internal OperationOutcome ValidateMaxLength(ElementDefinition definition, ITypedElement instance)
         {
             var outcome = new OperationOutcome();
@@ -568,7 +410,6 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
         }
-        */
 
 
         internal OperationOutcome.IssueComponent Trace(OperationOutcome outcome, string message, Issue issue, string location)
@@ -651,7 +492,10 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
+//TODO: make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 #if DEBUG
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);

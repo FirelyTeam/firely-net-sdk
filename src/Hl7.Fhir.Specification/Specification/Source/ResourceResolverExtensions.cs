@@ -13,70 +13,108 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     public static class ResourceResolverExtensions
     {
-        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
+        /// <inheritdoc cref="FindExtensionDefinitionAsync(IAsyncResourceResolver, string)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindExtensionDefinitionAsync() instead.")]
+        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri)
         {
-            var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
-            if (sd == null) return null;
+            if (!(resolver.ResolveByCanonicalUri(uri) is StructureDefinition sd)) return null;
 
             if (!sd.IsExtension)
-                throw Error.Argument(nameof(uri), "Given uri exists as a StructureDefinition, but is not an extension");
-
-            if (sd.Snapshot == null && requireSnapshot)
-                return null;
+                throw Error.Argument(nameof(uri), $"Found StructureDefinition at '{uri}', but is not an extension");
 
             return sd;
         }
 
-        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
+
+        /// <summary>
+        /// Resolve the given url and verify it defines an Extension.
+        /// </summary>
+        /// <returns>Returns a StructureDefinition if it is resolvable and defines an extension, otherwise <c>null</c>.</returns>
+        public static async T.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
         {
-            var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
-            if (sd == null) return null;
+            if (!(await resolver.ResolveByCanonicalUriAsync(uri) is StructureDefinition sd)) return null;
 
-            if (sd.Snapshot == null && requireSnapshot)
-                return null;
+            if (!sd.IsExtension)
+                throw Error.Argument(nameof(uri), $"Found StructureDefinition at '{uri}', but is not an extension");
 
             return sd;
         }
 
+        /// <inheritdoc cref="FindStructureDefinitionAsync(IAsyncResourceResolver, string)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionAsync() instead.")]
+        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri)
+            => resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
+
+        /// <summary>
+        /// Resolve the given url and verify it is a StructureDefinition
+        /// </summary>
+        /// <returns>The resolved StructureDefinition or <c>null</c> if it cannot be resolved or does not resolve to a StructureDefinition.</returns>
+        public static async T.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
+            => await resolver.ResolveByCanonicalUriAsync(uri) as StructureDefinition;
+
+        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, string)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfo.CanonicalUriForFhirCoreType(typename).Value;
+#pragma warning disable CS0618 // Type or member is obsolete
             return resolver.FindStructureDefinition(url);
-        }
-
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
-        {
-            return resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>
-        /// Find a ValueSet by canonical url
+        /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="typename"/>.
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="uri"></param>
-        /// <returns></returns>
-        public static ValueSet FindValueSet(this IResourceResolver source, string uri)
+        /// <remarks>If the <paramref name="typename"/> is a uri, will resolve the given uri, if it is a simple typename,
+        /// it will resolve the typename below <c>http://hl7.org/fhir/StructureDefinition/</c>.
+        /// </remarks>
+        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
         {
-            return source.ResolveByCanonicalUri(uri) as ValueSet;
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : 
+                ModelInfo.CanonicalUriForFhirCoreType(typename).Value;
+            return await resolver.FindStructureDefinitionAsync(url);
         }
 
+        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
+        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
+#pragma warning disable CS0618 // Type or member is obsolete
+            => resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        /// <summary>
+        /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
+        /// </summary>
+        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
+            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type));
+
+        /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindValueSetAsync() instead.")]
+        public static ValueSet FindValueSet(this IResourceResolver source, string uri)
+            => source.ResolveByCanonicalUri(uri) as ValueSet;
+
+        /// <summary>
+        /// Find a ValueSet by canonical url.
+        /// </summary>
+        public static async T.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri)
+            => await source.ResolveByCanonicalUriAsync(uri) as ValueSet;
+
+        /// <inheritdoc cref="FindCodeSystemAsync(IAsyncResourceResolver, string)"/>
+        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindCodeSystemAsync() instead.")]
+        public static CodeSystem FindCodeSystem(this IResourceResolver source, string uri)
+            => source.ResolveByCanonicalUri(uri) as CodeSystem;
 
         /// <summary>
         /// Find a CodeSystem by canonical url.
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="uri"></param>
-        /// <returns></returns>
-        public static CodeSystem FindCodeSystem(this IResourceResolver source, string uri)
-        {
-            return source.ResolveByCanonicalUri(uri) as CodeSystem;
-        }
-
+        public static async T.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
+            => await source.ResolveByCanonicalUriAsync(uri) as CodeSystem;
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {
@@ -86,101 +124,10 @@ namespace Hl7.Fhir.Specification.Source
             {
                 var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
                 var uris = source.ListResourceUris(resourceType);
-                // [WMR 20180914] OBSOLETE
-                // For some reason there is an issue with this StructureDefinition (needs fixing)
-                // .Where(u => u != "http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire");
-
-                // [WMR 20180824] FIXED
-                //return uris.Select(u => source.ResolveByCanonicalUri(u) as T).Where(r => r != null);
                 return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
             }
             else
                 return null;
-        }
-
-        /// <summary>Resolve a <see cref="StructureDefinition"/> from a TypeRef.Code element, handle unknown/custom core types.</summary>
-        /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
-        /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
-        /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        internal static StructureDefinition GetStructureDefinitionForTypeCode(this IResourceResolver resolver, FhirUri typeCodeElement)
-        {
-            StructureDefinition sd = null;
-            var typeCode = typeCodeElement.Value;
-            if (!string.IsNullOrEmpty(typeCode))
-            {
-                sd = resolver.FindStructureDefinitionForCoreType(typeCode);
-            }
-            else
-            {
-                // Unknown/custom core type; try to resolve from raw object value
-                var typeName = typeCodeElement.ObjectValue as string;
-                if (!string.IsNullOrEmpty(typeName))
-                {
-                    sd = resolver.FindStructureDefinitionForCoreType(typeName);
-                }
-            }
-            return sd;
-        }
-
-        // [WMR 20170227] NEW
-        // TODO:
-        // - Analyze possible re-use by Validator
-        // - Maybe move this method to another (public) class?
-
-        /// <summary>
-        /// Determines if the specified <see cref="StructureDefinition"/> is compatible with <paramref name="type"/>.
-        /// Walks up the profile hierarchy by resolving base profiles from the current <see cref="IResourceResolver"/> instance.
-        /// </summary>
-        /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
-        /// <param name="resolver">A resource resolver instance.</param>
-        /// <param name="type">A FHIR type.</param>
-        /// <param name="profile">A StructureDefinition instance.</param>
-        public static bool IsValidTypeProfile(this IResourceResolver resolver, string type, StructureDefinition profile)
-        {
-            if (resolver == null) { throw new ArgumentNullException(nameof(resolver)); }
-
-            return isValidTypeProfile(resolver, new HashSet<string>(), type, profile);
-        }
-
-        private static bool isValidTypeProfile(this IResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
-        {
-            // Recursively walk up the base profile hierarchy until we find a profile on baseType
-            if (type == null) { return true; }
-            if (profile == null) { return true; }
-
-            // DSTU2: sd.ConstrainedType is empty for core definitions => resolve from sd.Name
-            // STU3: sd.Type is always specified, including for core definitions
-            var sdType = profile.Type;
-
-            if (sdType == type) { return true; }
-            if (profile.BaseDefinition == null) { return false; }
-            var sdBase = resolver.FindStructureDefinition(profile.BaseDefinition);
-            if (sdBase == null) { return false; }
-            if (sdBase.Url == null) { return false; } // Shouldn't happen...
-
-            // Detect/prevent endless recursion... e.g. X.Base = Y and Y.Base = X
-            if (!recursionStack.Add(sdBase.Url))
-            {
-                throw Error.InvalidOperation(
-                    $"Recursive profile dependency detected. Base profile hierarchy:\r\n{string.Join("\r\n", recursionStack)}"
-                );
-            }
-
-            return isValidTypeProfile(resolver, recursionStack, type, sdBase);
-        }
-
-        // Helper method to retrieve debugger display strings for well-known implementations
-        // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
-        internal static string DebuggerDisplayString(this IResourceResolver resolver)
-        {
-            if (resolver is DirectorySource ds) { return ds.DebuggerDisplay; }
-            if (resolver is ZipSource zs) { return zs.DebuggerDisplay; }
-            // if (resolver is WebResolver wr) { return wr.DebuggerDisplay; }
-            if (resolver is MultiResolver mr) { return mr.DebuggerDisplay; }
-            if (resolver is CachedResolver cr) { return cr.DebuggerDisplay; }
-            if (resolver is SnapshotSource ss) { return ss.DebuggerDisplay; }
-
-            return resolver.GetType().Name;
         }
     }
 }
