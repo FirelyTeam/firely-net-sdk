@@ -17,9 +17,13 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation.Impl;
+using Hl7.Fhir.Validation.Schema;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using System;
@@ -125,19 +129,19 @@ namespace Hl7.Fhir.Validation
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages();
         }
 
         [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages();
         }
 
         [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
         public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); 
+            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages();
         }
         #endregion
 
@@ -177,10 +181,11 @@ namespace Hl7.Fhir.Validation
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
-            // Note: only start validating if the profiles are complete and consistent
-            if (outcome.Success)
-                outcome.Add(Validate(instance, processor.Result));
-
+            /*
+           // Note: only start validating if the profiles are complete and consistent
+           if (outcome.Success)
+               outcome.Add(Validate(instance, processor.Result));
+               */
 
 
             if (outcome.Success)
@@ -216,11 +221,12 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
-//TODO: Need to make everything async in 2.x validator
+                //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
         }
+        #endregion NewValidation stuff
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
         {
@@ -408,12 +414,12 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver);
             }
 
-            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
+            ValidationContext vc = new ValidationContext();// { TerminologyService = ts };
 
             try
             {
-                    Binding b = binding.ToValidatable();
-                    outcome.Add(b.Validate(instance, vc));
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -551,7 +557,7 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
-//TODO: make everything async in 2.x validator
+                //TODO: make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
 #pragma warning restore CS0618 // Type or member is obsolete
