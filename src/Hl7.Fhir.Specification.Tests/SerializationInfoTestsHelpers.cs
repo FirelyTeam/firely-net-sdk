@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 var si = provider.Provide(typename);
                 var children = si.GetElements();
                 var max = children.Aggregate(0, (a, i) =>
-                    i.Order > a ? i.Order : fail($"Order of {i.ElementName} is out of order"));
+                    i.Order > a ? i.Order : fail($"Element '{i.ElementName}' of '{typename}' is out of order"));
 
                 int fail(string message)
                 {
