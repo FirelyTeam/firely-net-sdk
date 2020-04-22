@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When allergy or intolerance was identified
         /// </summary>
-        [FhirElement("onset", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onset", Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]

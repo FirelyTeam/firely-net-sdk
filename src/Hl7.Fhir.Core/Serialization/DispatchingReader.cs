@@ -11,6 +11,7 @@ using System.Collections;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.ElementModel;
+using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -58,7 +59,7 @@ namespace Hl7.Fhir.Serialization
 
             // A Choice property that contains a choice of any resource
             // (as used in Resource.contained)
-            if(prop.Choice == ChoiceType.ResourceChoice)
+            if(prop.IsResourceChoice)
             {
                 var reader = new ResourceReader(_current, Settings);
                 return reader.Deserialize(null);
@@ -68,7 +69,7 @@ namespace Hl7.Fhir.Serialization
                 ComplexTypeReader.RaiseFormatError(
                     "Underlying data source was not able to provide the actual instance type of the resource.", _current.Location);
 
-            ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
+            ClassMapping mapping = prop.IsDatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
                 : _inspector.ImportType(prop.ElementType);
 

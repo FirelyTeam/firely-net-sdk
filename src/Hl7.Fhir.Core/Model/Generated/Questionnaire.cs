@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Default value when item is first rendered
             /// </summary>
-            [FhirElement("initial", Order=170, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("initial", Order=170)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value question must have
             /// </summary>
-            [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("answer", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Answer value
             /// </summary>
-            [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
             [Cardinality(Min=1,Max=1)]

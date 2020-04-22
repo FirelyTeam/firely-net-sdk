@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A resource in the bundle
             /// </summary>
-            [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("resource", InSummary=true, Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// OperationOutcome with hints and warnings (for batch/transaction)
             /// </summary>
-            [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
+            [FhirElement("outcome", InSummary=true, Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
             [DataMember]

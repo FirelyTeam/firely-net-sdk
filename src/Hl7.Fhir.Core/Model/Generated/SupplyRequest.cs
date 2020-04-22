@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication, Substance, or Device requested to be supplied
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the request should be fulfilled
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why the supply item was requested
         /// </summary>
-        [FhirElement("reason", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

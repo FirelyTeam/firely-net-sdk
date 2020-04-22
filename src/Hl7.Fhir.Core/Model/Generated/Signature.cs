@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who signed
         /// </summary>
-        [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("who", InSummary=true, Order=50)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The party represented
         /// </summary>
-        [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("onBehalfOf", InSummary=true, Order=60)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

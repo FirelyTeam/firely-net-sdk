@@ -380,6 +380,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity;
@@ -403,6 +404,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);

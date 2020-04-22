@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Message part content
             /// </summary>
-            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When scheduled
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

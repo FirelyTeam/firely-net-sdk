@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contents of this set of documents
             /// </summary>
-            [FhirElement("p", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("p", InSummary=true, Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

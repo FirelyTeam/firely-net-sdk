@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who participated
             /// </summary>
-            [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("who", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Who the agent is representing
             /// </summary>
-            [FhirElement("onBehalfOf", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onBehalfOf", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Identity of entity
             /// </summary>
-            [FhirElement("what", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("what", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
             [Cardinality(Min=1,Max=1)]

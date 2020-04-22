@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What medication was supplied
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=true, Order=130)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why a dispense was not performed
         /// </summary>
-        [FhirElement("notDoneReason", Order=310, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("notDoneReason", Order=310)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

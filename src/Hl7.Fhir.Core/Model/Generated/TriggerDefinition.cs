@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Timing of the event
         /// </summary>
-        [FhirElement("eventTiming", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("eventTiming", InSummary=true, Order=50)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]

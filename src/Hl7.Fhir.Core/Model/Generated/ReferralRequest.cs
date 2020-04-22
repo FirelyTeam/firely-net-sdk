@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the service(s) requested in the referral should occur
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

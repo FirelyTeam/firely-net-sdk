@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Benefits allowed
             /// </summary>
-            [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("allowed", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Money))]
             [DataMember]
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Benefits used
             /// </summary>
-            [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("used", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Money))]
             [DataMember]

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = root;
             _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
+            InstanceType = root.TypeName;
             Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
 
             Location = InstanceType;
@@ -46,13 +46,9 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = shortPath;
         }
 
-        private static string determineInstanceType(object instance, IElementDefinitionSummary summary)
-        {
-            var typeName = !summary.IsChoiceElement && !summary.IsResource ?
+        private static string determineInstanceType(object instance, IElementDefinitionSummary summary) 
+            => !summary.IsChoiceElement && !summary.IsResource ?
                         summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
-
-            return ModelInfo.IsProfiledQuantity(typeName) ? "Quantity" : typeName;
-        }
 
         public IElementDefinitionSummary Definition { get; private set; }
 

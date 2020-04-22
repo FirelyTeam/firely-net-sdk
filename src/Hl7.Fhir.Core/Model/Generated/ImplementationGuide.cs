@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Location of the resource
             /// </summary>
-            [FhirElement("source", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("source", InSummary=true, Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

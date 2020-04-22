@@ -26,9 +26,7 @@ namespace Hl7.Fhir.Specification
 
         public static bool DefaultTypeNameMapper(string name, out string canonical)
         {
-            var typeName = ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
-
-            canonical = ResourceIdentity.CORE_BASE_URL + typeName;
+            canonical = ResourceIdentity.CORE_BASE_URL + name;
             return true;
         }
 

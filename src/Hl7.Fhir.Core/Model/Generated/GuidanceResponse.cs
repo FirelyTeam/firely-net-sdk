@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for the response
         /// </summary>
-        [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

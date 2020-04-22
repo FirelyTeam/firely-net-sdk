@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Individual responsible for the annotation
         /// </summary>
-        [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("author", InSummary=true, Order=30)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]

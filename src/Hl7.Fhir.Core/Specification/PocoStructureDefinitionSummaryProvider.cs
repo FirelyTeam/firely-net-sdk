@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -126,7 +125,7 @@ namespace Hl7.Fhir.Specification
 
             if (elementType.IsNestedType)
             {
-                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
+                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.FhirType[0]);
                 return new ITypeSerializationInfo[] { info };
             }
             else
@@ -152,9 +151,9 @@ namespace Hl7.Fhir.Specification
         public XmlRepresentation Representation => _pm.SerializationHint != XmlRepresentation.None ?
             _pm.SerializationHint : XmlRepresentation.XmlElement;
 
-        public bool IsChoiceElement => _pm.Choice == ChoiceType.DatatypeChoice;
+        public bool IsChoiceElement => _pm.IsDatatypeChoice;
 
-        public bool IsResource => _pm.Choice == ChoiceType.ResourceChoice;
+        public bool IsResource => _pm.IsResourceChoice;
 
         public bool IsRequired => _pm.IsMandatoryElement;
 

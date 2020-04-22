@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Value that defines the context
         /// </summary>
-        [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("value", InSummary=true, Order=40)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range))]
         [Cardinality(Min=1,Max=1)]

@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Collection time
             /// </summary>
-            [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("collected", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date and time of specimen processing
             /// </summary>
-            [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("time", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additive associated with container
             /// </summary>
-            [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("additive", Order=90)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]

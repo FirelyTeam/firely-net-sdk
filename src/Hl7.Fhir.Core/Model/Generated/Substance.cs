@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A component of the substance
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("substance", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

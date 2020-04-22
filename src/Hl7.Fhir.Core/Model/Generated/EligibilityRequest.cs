@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimated date or dates of Service
         /// </summary>
-        [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("serviced", Order=130)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

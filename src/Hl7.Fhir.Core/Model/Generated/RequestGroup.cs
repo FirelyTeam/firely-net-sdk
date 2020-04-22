@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=120)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Time offset for the relationship
             /// </summary>
-            [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("offset", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reason for the request group
         /// </summary>
-        [FhirElement("reason", Order=210, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reason", Order=210)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

@@ -936,7 +936,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When activity is to occur
         /// </summary>
-        [FhirElement("timing", Order=340, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=340)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
         [DataMember]
@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What's administered/supplied
         /// </summary>
-        [FhirElement("product", Order=370, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("product", Order=370)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
