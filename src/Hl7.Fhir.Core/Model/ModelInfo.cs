@@ -416,11 +416,11 @@ namespace Hl7.Fhir.Model
         {
             if (string.IsNullOrEmpty(externalVersion))
             {
-                return false;
+                throw new ArgumentNullException();
             }
 
-            var minorFhirVersion = GetMinorVersion(Version);
-            var externalMinorVersion = GetMinorVersion(externalVersion);
+            var minorFhirVersion = getMajorAndMinorVersion(Version);
+            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
 
             if (string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion))
             {
@@ -432,10 +432,10 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public static string GetMinorVersion(string version)
+        private static string getMajorAndMinorVersion(string version)
         {
             var versionnumbers = version.Split('.');
-            if (versionnumbers != null && versionnumbers.Count() >= 2)
+            if (versionnumbers.Count() >= 2)
             {
                 return string.Join(".", versionnumbers[0], versionnumbers[1]);
             }
