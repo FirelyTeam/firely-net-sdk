@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -20,16 +21,16 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly PocoComplexTypeSerializationInfo _mySD;
+        private readonly IStructureDefinitionSummary _mySD;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = InstanceType = root.TypeName;
-            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
+            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
+            InstanceType = root.TypeName;
+            Definition = ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
@@ -38,18 +39,14 @@ namespace Hl7.Fhir.ElementModel
         private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = determineInstanceType(Current, definition);
+            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
+            InstanceType = instance.TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
         }
-
-        private static string determineInstanceType(object instance, IElementDefinitionSummary summary)
-           => !summary.IsChoiceElement && !summary.IsResource ?
-                       summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
 
         public IElementDefinitionSummary Definition { get; private set; }
 
@@ -66,8 +63,11 @@ namespace Hl7.Fhir.ElementModel
             foreach (var child in children)
             {
                 if (name == null || child.ElementName == name)
-                {
-                    var childElementDef = _mySD.GetElement(child.ElementName);
+                {        
+                    // Poll the actual implementation, which results in a more efficient loopkup when the underlying
+                    // implementation of _mySD is ClassMapping.
+                    var childElementDef = (_mySD is ClassMapping cm) ? cm.FindMappedElementByName(name) : 
+                        _mySD.GetElements().FirstOrDefault(c => c.ElementName == child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;
