@@ -66,7 +66,8 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (name == null || child.ElementName == name)
                 {
-                    var childElementDef = _mySD.GetElement(child.ElementName);
+                    //var childElementDef = _mySD.GetElement(child.ElementName);
+                    var childElementDef = _mySD.GetElements().FirstOrDefault(c => c.ElementName == child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;
