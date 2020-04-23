@@ -19,16 +19,16 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly PocoComplexTypeSerializationInfo _mySD;
+        private readonly IStructureDefinitionSummary _mySD;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
+            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
             InstanceType = root.TypeName;
-            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
+            Definition = ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.ElementModel
         private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
+            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
             InstanceType = determineInstanceType(Current, definition);
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
