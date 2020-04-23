@@ -212,6 +212,7 @@ namespace Hl7.Fhir.Validation
                 foreach (var profile in processor.Result)
                 {
                     var schema = resolver.GetSchema(profile);
+                    schema.LogSchema();
                     resolver.DumpCache();
                     result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
                 }

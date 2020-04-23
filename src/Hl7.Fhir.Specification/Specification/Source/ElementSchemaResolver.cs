@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
         }
 
         public IElementSchema GetSchema(Uri schemaUri)
-        {
+        { // TODO lock
             if (_cache.TryGetValue(schemaUri, out IElementSchema schema))
             {
                 return schema;

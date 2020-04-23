@@ -72,10 +72,10 @@ namespace Hl7.Fhir.Specification.Schema
 
 
         private static IAssertion BuildMinValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
-            def.MinValue != null ? assertionFactory.CreateMinMaxValueAssertion("TODO", def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
+            def.MinValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.Path, def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
 
         private static IAssertion BuildMaxValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
-            def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion("TODO", def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
+            def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.Path, def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
         private static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.Fixed != null ? assertionFactory.CreateFixedValueAssertion(def.Path, def.Fixed.ToTypedElement()) : null;
@@ -138,11 +138,21 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (def.IsPrimitiveConstraint())
             {
-                return builder.BuildProfileRef("http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
+                return builder.BuildProfileRef("System.String", "http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
             }
 
-            if (typeRefs.Count() == 1)
-                return builder.BuildProfileRef(typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
+
+            var result = Assertions.Empty;
+            foreach (var (code, profile) in typeRefs)
+            {
+                result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
+            }
+            return new AnyAssertion(result);
+
+            // return new AnyAssertion(typeRefs.SelectMany(t => t.profile.Select(p => builder.BuildProfileRef(t.code, p))));
+
+            //if (typeRefs.Count() == 1)
+            //    return builder.BuildProfileRef(typeRefs.Single().code, typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
 
 
             /*

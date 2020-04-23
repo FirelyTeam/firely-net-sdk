@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests.Schema
 {
@@ -120,7 +121,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public async void MyTestMethod2()
+        public async T.Task MyTestMethod2()
         {
             var poco = new HumanName() { Family = BigString() };
             poco.GivenElement.Add(new FhirString(BigString()));
@@ -155,7 +156,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             */
         }
         [TestMethod]
-        public async void TestInstance()
+        public async T.Task TestInstance()
         {
             var instantSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/instant", UriKind.Absolute));
 
@@ -169,7 +170,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public async void ValidateMaxStringonFhirString()
+        public async T.Task ValidateMaxStringonFhirString()
         {
             var fhirString = new FhirString(BigString()).ToTypedElement();
 
@@ -188,7 +189,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public async void ValidateOwnProfile()
+        public async T.Task ValidateOwnProfile()
         {
 
 

@@ -14,9 +14,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using T = System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -190,6 +190,24 @@ namespace Hl7.Fhir.Specification.Tests
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // ext-1, Extension.value[x] cardinality [1..1]
+            Assert.Equal(0, report.Warnings);
+        }
+
+        [Fact]
+        public async T.Task TestMultipleExtensions()
+        {
+            var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
+            var data = SourceNode.Valued("active", "true",
+                          SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor")),
+                          SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/display")),
+                          SourceNode.Node("extension", SourceNode.Valued("valueBoolean", "true")))
+                       //SourceNode.Node("extension", SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/display"))))
+                       .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
+
+            var report = _validator.Validate(data, boolSd);
+            output.WriteLine(report.ToString());
+            Assert.Equal(0, report.Fatals);
+            Assert.Equal(4, report.Errors); // 2 x ext-1, iso21090-nullFlavor: Extension.value[x] cardinality [1..1], Extension.url cardinality [1..1]
             Assert.Equal(0, report.Warnings);
         }
 
@@ -935,7 +953,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = _validator.Validate(sd);
             Assert.True(result.Success);
         }
-     
+
         // [WMR 20161220] Example by Christiaan Knaap
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
@@ -1083,7 +1101,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// </summary>
         [Fact]
         public async T.Task IgnoreRng2FPConstraint()
-        {           
+        {
             var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
 
             var instance = new Observation
