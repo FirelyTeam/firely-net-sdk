@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.IsPrimitive)
             {
                 var reader = new PrimitiveValueReader(_current);
-                return reader.Deserialize(prop.ElementType);
+                return reader.Deserialize(prop.NativeType);
             }
 
             // A Choice property that contains a choice of any resource
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
 
             ClassMapping mapping = prop.IsDatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
-                : _inspector.ImportType(prop.ElementType);
+                : _inspector.ImportType(prop.NativeType);
 
             // Handle other Choices having any datatype or a list of datatypes
 

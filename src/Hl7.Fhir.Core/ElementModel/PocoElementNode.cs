@@ -38,17 +38,13 @@ namespace Hl7.Fhir.ElementModel
         {
             Current = instance;
             _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = determineInstanceType(Current, definition);
+            InstanceType = instance.TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
         }
-
-        private static string determineInstanceType(object instance, IElementDefinitionSummary summary) 
-            => !summary.IsChoiceElement && !summary.IsResource ?
-                        summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
 
         public IElementDefinitionSummary Definition { get; private set; }
 

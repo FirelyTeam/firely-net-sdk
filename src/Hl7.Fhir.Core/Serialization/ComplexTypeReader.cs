@@ -113,9 +113,6 @@ namespace Hl7.Fhir.Serialization
             foreach (var memberData in members)
             {
                 var memberName = memberData.Name;  // tuple: first is name of member
-
-                // Find a property on the instance that matches the element found in the data
-                // NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
                 var mappedProperty = mapping.FindMappedElementByName(memberName);
 
                 if (mappedProperty != null)
@@ -141,12 +138,12 @@ namespace Hl7.Fhir.Serialization
                     // when this happens.
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    if (mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
+                    if (mappedProperty.RepresentsValueElement && mappedProperty.NativeType.IsEnum() && value is String)
                     {
                         if (!Settings.AllowUnrecognizedEnums)
                         {
-                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ElementType) == null)
-                                RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.ElementType.Name}'", _current.Location);
+                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.NativeType) == null)
+                                RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.NativeType.Name}'", _current.Location);
                         }
 
                         ((PrimitiveType)existing).ObjectValue = value;
