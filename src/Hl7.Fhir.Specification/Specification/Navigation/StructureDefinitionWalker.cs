@@ -137,7 +137,8 @@ namespace Hl7.Fhir.Specification
                     .Select(c => FromCanonical(c));
             }
 
-            throw new StructureDefinitionWalkerException($"Invalid StructureDefinition: element misses either a type reference or nameReference at '{Current.CanonicalPath()}'");
+            throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
+                $"a value in ElementDefinition.contentReference at '{Current.CanonicalPath()}'");
         }
 
         /// <summary>
