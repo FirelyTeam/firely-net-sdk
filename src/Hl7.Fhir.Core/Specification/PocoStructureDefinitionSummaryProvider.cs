@@ -35,7 +35,6 @@ namespace Hl7.Fhir.Specification
                 return null;
             }
 
-
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
 

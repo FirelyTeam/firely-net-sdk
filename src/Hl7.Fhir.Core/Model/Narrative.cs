@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
         /// Limited xhtml content
         /// </summary>
         [FhirElement("div", XmlSerialization=XmlRepresentation.XHtml, InSummary=true, Order=40)]
-        [DeclaredType(Type = typeof(XHtml))]
+        [TypeRedirect(Type = typeof(XHtml))]
         [Cardinality(Min=1,Max=1)]
         [NarrativeXhtmlPattern]
         [DataMember]
