@@ -16,14 +16,14 @@ namespace Hl7.Fhir.Serialization
     {
 #pragma warning disable 612, 618
         private readonly ITypedElement _reader;
-        private readonly ModelInspector _inspector;
+        private readonly VersionAwarePocoStructureDefinitionSummaryProvider _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        internal ResourceReader(ITypedElement reader, ParserSettings settings)
+        internal ResourceReader(VersionAwarePocoStructureDefinitionSummaryProvider inspector, ITypedElement reader, ParserSettings settings)
         {
             _reader = reader;
-            _inspector = BaseFhirParser.Inspector;
+            _inspector = inspector;
             Settings = settings;
         }
 #pragma warning restore 612,618
@@ -34,14 +34,14 @@ namespace Hl7.Fhir.Serialization
                 ComplexTypeReader.RaiseFormatError(
                     "Underlying data source was not able to provide the actual instance type of the resource.", _reader.Location);
 
-            var mapping = _inspector.FindClassMappingByName(_reader.InstanceType);
+            var mapping = (ClassMapping)_inspector.Provide(_reader.InstanceType);
 
             if (mapping == null)
                 ComplexTypeReader.RaiseFormatError($"Asked to deserialize unknown resource '{_reader.InstanceType}'", _reader.Location);
              
             // Delegate the actual work to the ComplexTypeReader, since
             // the serialization of Resources and ComplexTypes are virtually the same
-            var cplxReader = new ComplexTypeReader(_reader, Settings);
+            var cplxReader = new ComplexTypeReader(_inspector, _reader, Settings);
             return (Resource)cplxReader.Deserialize(mapping, existing);
         }
     }

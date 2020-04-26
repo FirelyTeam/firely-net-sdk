@@ -19,17 +19,16 @@ namespace Hl7.Fhir.Serialization
     internal class DispatchingReader
     {
         private readonly ITypedElement _current;
-        private readonly ModelInspector _inspector;
+        private readonly VersionAwarePocoStructureDefinitionSummaryProvider _inspector;
         private readonly bool _arrayMode;
 
         public ParserSettings Settings { get; private set; }
 
-        internal DispatchingReader(ITypedElement data, ParserSettings settings, bool arrayMode)
+        internal DispatchingReader(VersionAwarePocoStructureDefinitionSummaryProvider inspector, ITypedElement data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
-            _inspector = BaseFhirParser.Inspector;
+            _inspector = inspector;
             _arrayMode = arrayMode;
-
             Settings = settings;
         }
 #pragma warning restore 612,618
@@ -44,7 +43,7 @@ namespace Hl7.Fhir.Serialization
             if (!_arrayMode && prop.IsCollection)
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
-                var reader = new RepeatingElementReader(_current, Settings);
+                var reader = new RepeatingElementReader(_inspector, _current, Settings);
                 return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
@@ -61,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.IsResourceChoice)
             {
-                var reader = new ResourceReader(_current, Settings);
+                var reader = new ResourceReader(_inspector, _current, Settings);
                 return reader.Deserialize(null);
             }
 
@@ -71,12 +70,12 @@ namespace Hl7.Fhir.Serialization
 
             ClassMapping mapping = prop.IsDatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
-                : _inspector.ImportType(prop.NativeType);
+                : _inspector.GetOrAddClassMappingForType(prop.NativeType);
 
             // Handle other Choices having any datatype or a list of datatypes
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");
-            var cplxReader = new ComplexTypeReader(_current, Settings);
+            var cplxReader = new ComplexTypeReader(_inspector, _current, Settings);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
@@ -85,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now
             // assume the caller has Imported all types in the right (overriding) order.
-            ClassMapping result = _inspector.FindClassMappingByName(typeName);
+            var result = (ClassMapping)_inspector.Provide(typeName);
 
             if (result == null)
                 ComplexTypeReader.RaiseFormatError(

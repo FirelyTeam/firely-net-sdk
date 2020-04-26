@@ -43,14 +43,14 @@ namespace Hl7.Fhir.Serialization
     internal class ComplexTypeReader
     {
         private readonly ITypedElement _current;
-        private readonly ModelInspector _inspector;
+        private readonly VersionAwarePocoStructureDefinitionSummaryProvider _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        public ComplexTypeReader(ITypedElement reader, ParserSettings settings)
+        public ComplexTypeReader(VersionAwarePocoStructureDefinitionSummaryProvider inspector, ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
-            _inspector = BaseFhirParser.Inspector;
+            _inspector = inspector;
             Settings = settings;
         }
 
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization
             if (_current.InstanceType is null)
                 throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
 
-            var mapping = _inspector.FindClassMappingByName(_current.InstanceType);
+            var mapping = (ClassMapping)_inspector.Provide(_current.InstanceType);
 
             if (mapping == null)
                 RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization
                             RaiseFormatError($"Element '{mappedProperty.Name}' must not repeat", memberData.Location);
                     }
 
-                    var reader = new DispatchingReader(memberData, Settings, arrayMode: false);
+                    var reader = new DispatchingReader(_inspector, memberData, Settings, arrayMode: false);
 
                     // Since we're still using both ClassMappings and the newer IElementDefinitionSummary provider at the same time, 
                     // the member might be known in the one (POCO), but unknown in the provider. This is only in theory, since the
@@ -147,9 +147,6 @@ namespace Hl7.Fhir.Serialization
                         }
 
                         ((PrimitiveType)existing).ObjectValue = value;
-                        //var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
-                        //prop.SetValue(existing, value, null);
-                        //mappedProperty.SetValue(existing, null);                           
                     }
                     else
                     {

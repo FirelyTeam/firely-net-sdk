@@ -19,12 +19,10 @@ namespace Hl7.Fhir.Serialization
     internal class PrimitiveValueReader
     {
         private readonly ITypedElement _current;
-        private readonly ModelInspector _inspector;
 
         public PrimitiveValueReader(ITypedElement data)
         {
             _current = data;
-            _inspector = BaseFhirParser.Inspector;
         }
 
 

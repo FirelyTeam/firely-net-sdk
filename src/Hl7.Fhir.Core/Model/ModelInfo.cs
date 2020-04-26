@@ -34,6 +34,8 @@ using System.Linq;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
+using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
@@ -465,6 +467,26 @@ namespace Hl7.Fhir.Model
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
+
+        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
+        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
+        private static readonly Lazy<VersionAwarePocoStructureDefinitionSummaryProvider> _versionedProvider
+            = new Lazy<VersionAwarePocoStructureDefinitionSummaryProvider>(createVersionedProvider);
+
+        private static VersionAwarePocoStructureDefinitionSummaryProvider createVersionedProvider()
+        {
+            var result = new VersionAwarePocoStructureDefinitionSummaryProvider(
+                VersionAwarePocoStructureDefinitionSummaryProvider.R3_VERSION);
+
+            result.Import(typeof(Resource).GetTypeInfo().Assembly);
+            result.Import(typeof(Patient).GetTypeInfo().Assembly);
+
+            return result;
+        }
+
+        public static VersionAwarePocoStructureDefinitionSummaryProvider GetStructureDefinitionSummaryProvider() =>
+            _versionedProvider.Value;
+
 
         public static readonly Type[] OpenTypes =
         {

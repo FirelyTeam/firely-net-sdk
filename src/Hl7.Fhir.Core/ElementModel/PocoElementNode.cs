@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -19,32 +20,59 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly IStructureDefinitionSummary _mySD;
+        private readonly ClassMapping _mySD;
+        private readonly VersionAwarePocoStructureDefinitionSummaryProvider _provider;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        internal PocoElementNode(Base root, string rootName = null)
+        internal PocoElementNode(IStructureDefinitionSummaryProvider provider, Base root, string rootName = null)
         {
             Current = root;
-            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = root.TypeName;
+            _provider = provider is VersionAwarePocoStructureDefinitionSummaryProvider vap ?
+                    vap : throw new ArgumentException("Can only work with providers that provide information derived from POCO's");
+
+            // Once we have the backbone elements names in Current.TypeName, we can use Provide()
+            // instead of going through .NET types here.
+            _mySD = _provider.FindClassMappingByType(root.GetType());
+            InstanceType = ((IStructureDefinitionSummary)_mySD).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
         }
 
-        private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
+        private PocoElementNode(IStructureDefinitionSummaryProvider provider, Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = instance.TypeName;
+            _provider = provider is VersionAwarePocoStructureDefinitionSummaryProvider vap ?
+                    vap : throw new ArgumentException("Can only work with providers that provide information derived from POCO's");
+
+            // Once we have the backbone elements names in Current.TypeName, we can use Provide()
+            // instead of going through .NET types here.
+            var instanceType = determineInstanceType(instance.GetType(), definition);
+            _mySD = _provider.FindClassMappingByType(instanceType);
+            InstanceType = ((IStructureDefinitionSummary)_mySD).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
         }
+
+
+        private Type determineInstanceType(Type type, PropertyMapping definition)
+        {
+            if (definition.IsDatatypeChoice || definition.IsResourceChoice)
+                return type;
+            else
+                return definition.FhirType[0];
+        }
+
+        // Once we have the backbone elements names in Current.TypeName, we can use Provide()
+        // instead of going through .NET types here.
+        //private static string determineInstanceType(object instance, IElementDefinitionSummary summary)
+        //   => !summary.IsChoiceElement && !summary.IsResource ?
+        //               summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
 
         public IElementDefinitionSummary Definition { get; private set; }
 
@@ -62,8 +90,7 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (name == null || child.ElementName == name)
                 {
-                    //var childElementDef = _mySD.GetElement(child.ElementName);
-                    var childElementDef = _mySD.GetElements().FirstOrDefault(c => c.ElementName == child.ElementName);
+                    var childElementDef = _mySD.FindMappedElementByName(child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;
@@ -79,7 +106,7 @@ namespace Hl7.Fhir.ElementModel
                             $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
                             $"{ShortPath}.{child.ElementName}");
 
-                    yield return new PocoElementNode(child.Value, this, childElementDef,
+                    yield return new PocoElementNode(_provider, child.Value, this, childElementDef,
                         location, shortPath);
                 }
 
@@ -184,5 +211,12 @@ namespace Hl7.Fhir.ElementModel
             else
                 return Enumerable.Empty<object>();
         }
+    }
+
+    public static class PocoElementNodeExtensions
+    {
+        public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
+            new PocoElementNode(ModelInfo.GetStructureDefinitionSummaryProvider(), @base, rootName: rootName);
+
     }
 }

@@ -7,8 +7,10 @@
  */
 
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -19,13 +21,13 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoBuilderExtensions
     {
         public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(source, pocoType);
+            new PocoBuilder((VersionAwarePocoStructureDefinitionSummaryProvider)ModelInfo.GetStructureDefinitionSummaryProvider(), settings).BuildFrom(source, pocoType);
 
         public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
                (T)source.ToPoco(typeof(T), settings);
 
         public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(element);
+            new PocoBuilder((VersionAwarePocoStructureDefinitionSummaryProvider)ModelInfo.GetStructureDefinitionSummaryProvider(), settings).BuildFrom(element);
 
         public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
                (T)element.ToPoco(settings);
@@ -85,18 +87,18 @@ namespace Hl7.Fhir.ElementModel
                 case FHIRAllTypes.CodeableConcept:
                     return instance.ParseCodeableConcept();
                 case FHIRAllTypes.Quantity:
-                    return parseQuantity(instance);
+                    return parseQuantity();
                 case FHIRAllTypes.String:
                     return new Code(instance.ParsePrimitive<FhirString>()?.Value);
                 case FHIRAllTypes.Uri:
                     return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
                 case FHIRAllTypes.Extension:
-                    return parseExtension(instance);
+                    return parseExtension();
                 default:
                     return null;
             }
 
-            Coding parseQuantity(ITypedElement nav)
+            Coding parseQuantity()
             {
                 var newCoding = new Coding();
                 var q = instance.ParseQuantity();
@@ -105,7 +107,7 @@ namespace Hl7.Fhir.ElementModel
                 return newCoding;
             }
 
-            Element parseExtension(ITypedElement nav)
+            Element parseExtension()
             {
                 var valueChild = instance.Children("value").FirstOrDefault();
                 return valueChild?.ParseBindable();

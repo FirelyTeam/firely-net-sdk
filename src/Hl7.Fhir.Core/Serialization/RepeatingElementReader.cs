@@ -17,14 +17,14 @@ namespace Hl7.Fhir.Serialization
     {
 #pragma warning disable 612, 618
         private readonly ITypedElement _current;
-        private readonly ModelInspector _inspector;
+        private readonly VersionAwarePocoStructureDefinitionSummaryProvider _inspector;
 
         public ParserSettings Settings { get; private set; }
 
-        internal RepeatingElementReader(ITypedElement reader, ParserSettings settings)
+        internal RepeatingElementReader(VersionAwarePocoStructureDefinitionSummaryProvider inspector, ITypedElement reader, ParserSettings settings)
         {
             _current = reader;
-            _inspector = BaseFhirParser.Inspector;
+            _inspector = inspector;
 
             Settings = settings;
         }
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
 
             if (result == null) result = ReflectionHelper.CreateGenericList(prop.NativeType);
 
-            var reader = new DispatchingReader(_current, Settings, arrayMode: true);
+            var reader = new DispatchingReader(_inspector, _current, Settings, arrayMode: true);
             result.Add(reader.Deserialize(prop, memberName));
 
             return result;
