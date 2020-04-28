@@ -328,6 +328,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             dumpBaseElems(expanded);
 
+            var identifierValueElement = expanded.Single(element => element.Path == "Organization.identifier.value");
+            identifierValueElement.Extension.Should().BeEmpty("Extensions on the value type should not be inherited");
+
             Assert.IsNull(_generator.Outcome);
         }
 
