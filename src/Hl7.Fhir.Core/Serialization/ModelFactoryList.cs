@@ -17,7 +17,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class ModelFactoryList : List<IModelClassFactory> {}
+  /*  public class ModelFactoryList : List<IModelClassFactory> {}
 
     public static class ModelFactoryListExtensions
     {
@@ -46,5 +46,5 @@ namespace Hl7.Fhir.Serialization
     {
         bool CanCreate(Type type);
         object Create(Type type);
-    }
+    }*/
 }

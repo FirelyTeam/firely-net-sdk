@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.IsResourceChoice)
             {
-                var reader = new ResourceReader(_inspector, _current, Settings);
+                var reader = new ComplexTypeReader(_inspector, _current, Settings);
                 return reader.Deserialize(null);
             }
 
@@ -71,6 +71,7 @@ namespace Hl7.Fhir.Serialization
             ClassMapping mapping = prop.IsDatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
                 : _inspector.GetOrAddClassMappingForType(prop.NativeType);
+
 
             // Handle other Choices having any datatype or a list of datatypes
 

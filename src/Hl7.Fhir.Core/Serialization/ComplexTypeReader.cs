@@ -39,7 +39,6 @@ namespace Hl7.Fhir.Serialization
         public IEnumerable<ITypedElement> Children(string name = null) => _wrapped.Children(name);
     }
 
-#pragma warning disable 612,618
     internal class ComplexTypeReader
     {
         private readonly ITypedElement _current;
@@ -54,19 +53,6 @@ namespace Hl7.Fhir.Serialization
             Settings = settings;
         }
 
-        internal Base Deserialize(Base existing = null)
-        {
-            if (_current.InstanceType is null)
-                throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
-
-            var mapping = (ClassMapping)_inspector.Provide(_current.InstanceType);
-
-            if (mapping == null)
-                RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
-
-            return Deserialize(mapping, existing);
-        }
-
         internal static void RaiseFormatError(string message, string location)
         {
             throw Error.Format("While building a POCO: " + message, location);
@@ -74,17 +60,28 @@ namespace Hl7.Fhir.Serialization
 
         internal Base Deserialize(ClassMapping mapping, Base existing = null)
         {
-            if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
+            var mappingToUse = mapping;
 
+            if (mappingToUse == null)
+            {
+                if (_current.InstanceType is null)
+                    throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
+
+                mappingToUse = (ClassMapping)_inspector.Provide(_current.InstanceType);
+
+                if (mappingToUse == null)
+                    RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
+            }
+          
             if (existing == null)
             {
                 var fac = new DefaultModelFactory();
-                existing = (Base)fac.Create(mapping.NativeType);
+                existing = (Base)fac.Create(mappingToUse.NativeType);
             }
             else
             {
-                if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mapping.NativeType.Name));
+                if (mappingToUse.NativeType != existing.GetType())
+                    throw Error.Argument(nameof(existing), "Existing instance is of type {0}, but data indicates resource is a {1}".FormatWith(existing.GetType().Name, mappingToUse.NativeType.Name));
             }
 
             // The older code for read() assumes the primitive value member is represented as a separate child element named "value", 
@@ -95,7 +92,7 @@ namespace Hl7.Fhir.Serialization
 
             try
             {
-                read(mapping, members, existing);
+                read(mappingToUse, members, existing);
             }
             catch (StructuralTypeException ste)
             {
@@ -164,5 +161,4 @@ namespace Hl7.Fhir.Serialization
 
         }
     }
-#pragma warning restore 612, 618
 }

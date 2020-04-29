@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         /// <summary>
-        /// Build a POCO from an ISourceNode.m
+        /// Build a POCO from an ISourceNode.
         /// </summary>
         /// <param name="source"></param>
         /// <param name="dataType">Optional. Type of POCO to build. Should be one of the generated POCO classes.</param>
@@ -40,10 +40,13 @@ namespace Hl7.Fhir.Serialization
         public Base BuildFrom(ISourceNode source, Type dataType = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
-            string typeFound = null;
-            if (dataType != null)
+            
+            return BuildFrom(source, dataType != null ?
+                    findMappingOrReport(dataType) : null);
+
+            ClassMapping findMappingOrReport(Type t)
             {
-                typeFound = ModelInfo.GetFhirTypeNameForType(dataType);
+                var typeFound = _inspector.FindClassMappingByType(dataType);
 
                 if (typeFound == null)
                 {
@@ -53,19 +56,20 @@ namespace Hl7.Fhir.Serialization
 
                     return null;
                 }
+
+                return typeFound;
             }
-            return BuildFrom(source, typeFound);
         }
 
         /// <summary>
         /// Build a POCO from an ISourceNode.
         /// </summary>
         /// <param name="source"></param>
-        /// <param name="dataType">Optional. Type of POCO to build. Should be the name of one of the generated POCO classes.</param>
+        /// <param name="mapping">Optional. The <see cref="ClassMapping" /> for the POCO to build. </param>
         /// <returns></returns>
-        /// <remarks>If <paramref name="dataType"/> is not supplied, or is <code>Resource</code> or <code>DomainResource</code>, 
+        /// <remarks>If <paramref name="mapping"/> is not supplied, or is <code>Resource</code> or <code>DomainResource</code>, 
         /// the builder will try to determine the actual type to create from the <paramref name="source"/>. </remarks>
-        public Base BuildFrom(ISourceNode source, string dataType = null)
+        public Base BuildFrom(ISourceNode source, ClassMapping mapping = null)
         {
             if (source == null) throw Error.ArgumentNull(nameof(source));
             TypedElementSettings typedSettings = new TypedElementSettings
@@ -75,9 +79,14 @@ namespace Hl7.Fhir.Serialization
                     : TypedElementSettings.TypeErrorMode.Report
             };
 
+            string dataType;
             // If dataType is an abstract resource superclass -> ToTypedElement(with type=null) will figure it out;
-            if (dataType == FHIRAllTypes.Resource.GetLiteral() || dataType == FHIRAllTypes.DomainResource.GetLiteral())
+            if (mapping == null)
                 dataType = null;
+            else if (mapping.NativeType == typeof(Resource) || mapping.NativeType == typeof(DomainResource))
+                dataType = null;
+            else
+                dataType = mapping.Name;
 
             var typedSource = source.ToTypedElement(_inspector, dataType, typedSettings);
 
@@ -105,26 +114,13 @@ namespace Hl7.Fhir.Serialization
 
             Base build()
             {
-                var typeToBuild = ModelInfo.GetTypeForFhirType(source.InstanceType);
-
-                if (typeToBuild == null)
-                {
-                    ExceptionHandler.NotifyOrThrow(this,
-                        ExceptionNotification.Error(
-                            new StructuralTypeException($"While building a POCO: There is no .NET type representing the FHIR type '{source.InstanceType}'.")));
-
-                    return null;
-                }
-
                 var settings = new ParserSettings
                 {
                     AcceptUnknownMembers = _settings.IgnoreUnknownMembers,
                     AllowUnrecognizedEnums = _settings.AllowUnrecognizedEnums
                 };
 
-                return typeToBuild.CanBeTreatedAsType(typeof(Resource))
-                    ? new ResourceReader(_inspector, source, settings).Deserialize()
-                    : new ComplexTypeReader(_inspector, source, settings).Deserialize();
+                return new ComplexTypeReader(_inspector, source, settings).Deserialize(null);
             }
         }
     }
