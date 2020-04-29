@@ -15,16 +15,17 @@ using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Specification.Source
 {
-    internal class ElementSchemaResolver : IResourceResolver, ISchemaResolver
+    internal class ElementSchemaResolver : IAsyncResourceResolver, ISchemaResolver
     {
         private readonly IElementDefinitionAssertionFactory _assertionFactory;
-        private readonly IResourceResolver _wrapped;
+        private readonly IAsyncResourceResolver _wrapped;
         private readonly IDictionary<Uri, IElementSchema> _cache = new Dictionary<Uri, IElementSchema>();
 
-        public ElementSchemaResolver(IResourceResolver wrapped, IElementDefinitionAssertionFactory assertionFactory = null)
+        public ElementSchemaResolver(IAsyncResourceResolver wrapped, IElementDefinitionAssertionFactory assertionFactory = null)
         {
             _wrapped = wrapped ?? throw new ArgumentNullException(nameof(wrapped));
             _assertionFactory = assertionFactory ?? new ValidationElementDefinitionAssertionFactory();
@@ -39,31 +40,26 @@ namespace Hl7.Fhir.Specification.Specification.Source
                 return schema;
             }
 
-            if (schemaUri.OriginalString.EndsWith("System.String"))
-            {
-                schema = new ElementSchema(schemaUri);
-            }
-
             schema = new SchemaConverter(this, _assertionFactory).Convert(nav);
 
             _cache.Add(schemaUri, schema);
             return schema;
         }
 
-        public IElementSchema GetSchema(Uri schemaUri)
+        public async Task<IElementSchema> GetSchema(Uri schemaUri)
         { // TODO lock
             if (_cache.TryGetValue(schemaUri, out IElementSchema schema))
             {
                 return schema;
             }
 
-            if (schemaUri.OriginalString.EndsWith("System.String"))
+            if (schemaUri.OriginalString.StartsWith("http://hl7.org/fhirpath/")) // Compiler magic: stop condition
             {
                 schema = new ElementSchema(schemaUri);
             }
 
 
-            var sd = this.FindStructureDefinition(schemaUri.OriginalString);
+            var sd = await this.FindStructureDefinitionAsync(schemaUri.OriginalString);
             if (sd != null)
             {
                 schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
@@ -73,9 +69,9 @@ namespace Hl7.Fhir.Specification.Specification.Source
             return schema;
         }
 
-        public Resource ResolveByCanonicalUri(string uri) => _wrapped.ResolveByCanonicalUri(uri);
+        public async Task<Resource> ResolveByCanonicalUriAsync(string uri) => await _wrapped.ResolveByCanonicalUriAsync(uri);
 
-        public Resource ResolveByUri(string uri) => _wrapped.ResolveByUri(uri);
+        public async Task<Resource> ResolveByUriAsync(string uri) => await _wrapped.ResolveByUriAsync(uri);
 
         public void DumpCache()
         {

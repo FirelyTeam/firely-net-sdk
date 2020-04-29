@@ -136,10 +136,10 @@ namespace Hl7.Fhir.Specification.Schema
             // * elem with multiple TypeRefs - without explicit suffix [x], this is a slice 
             // without discriminator
 
-            if (def.IsPrimitiveConstraint())
-            {
-                return builder.BuildProfileRef("System.String", "http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
-            }
+            //if (def.IsPrimitiveConstraint())
+            // {
+            //    return builder.BuildProfileRef("System.String", "http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
+            //}
 
 
             var result = Assertions.Empty;
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
             }
-            return new AnyAssertion(result);
+            return result.Count > 0 ? new AnyAssertion(result) : null;
 
             // return new AnyAssertion(typeRefs.SelectMany(t => t.profile.Select(p => builder.BuildProfileRef(t.code, p))));
 
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Specification.Schema
                             d.Path.EndsWith("[x]");
 
             */
-            return null;
+            //return null;
         }
 
         private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, IAssertion element)

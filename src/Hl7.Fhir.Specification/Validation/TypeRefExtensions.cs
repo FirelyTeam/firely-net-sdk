@@ -6,12 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System.Linq;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using System.Collections.Generic;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -27,7 +26,13 @@ namespace Hl7.Fhir.Validation
                 return typeRef.Profile.ToArray();
             }
             if (!string.IsNullOrEmpty(typeRef.Code))
+            {
+
+                if (typeRef.Code.StartsWith("http://")) return new[] { typeRef.Code };
+
                 return new[] { ModelInfo.CanonicalUriForFhirCoreType(typeRef.Code)?.Value };
+            }
+
             return null;
         }
 

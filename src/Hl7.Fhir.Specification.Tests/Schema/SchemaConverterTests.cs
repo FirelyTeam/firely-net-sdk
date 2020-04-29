@@ -59,18 +59,18 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
 
         [TestMethod]
-        public void MyTestMethod()
+        public async T.Task MyTestMethod()
         {
 
             var poco = new Patient() { Name = new List<HumanName>() { new HumanName() { Family = BigString() } } };
             var patient = poco.ToTypedElement();
 
-            var schemaElement = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/Patient", UriKind.Absolute));
+            var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/Patient", UriKind.Absolute));
             var json = schemaElement.ToJson().ToString();
             //Debug.WriteLine(json);
 
 
-            var results = schemaElement.Validate(new[] { patient }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
+            var results = await schemaElement.Validate(new[] { patient }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
             Assert.IsNotNull(results);
             var r = _resolver as ElementSchemaResolver;
             r.DumpCache();
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             var eltstring = TypedElementAsString(new ValueTypedElement(element));
 
-            var schemaElement = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
+            var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
 
             //var json = schemaElement.ToJson().ToString();
 
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         [TestMethod]
         public async T.Task TestInstance()
         {
-            var instantSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/instant", UriKind.Absolute));
+            var instantSchema = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/instant", UriKind.Absolute));
 
             var instantPoco = new Instant(DateTimeOffset.Now);
 
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         {
             var fhirString = new FhirString(BigString()).ToTypedElement();
 
-            var stringSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/string", UriKind.Absolute));
+            var stringSchema = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/string", UriKind.Absolute));
 
             var results = await stringSchema.Validate(new[] { fhirString }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         {
 
 
-            var stringSchema = _resolver.GetSchema(new Uri("http://example.org/fhir/StructureDefinition/MyHumanName", UriKind.Absolute));
+            var stringSchema = await _resolver.GetSchema(new Uri("http://example.org/fhir/StructureDefinition/MyHumanName", UriKind.Absolute));
 
             var json = stringSchema.ToJson().ToString();
 
