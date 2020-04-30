@@ -132,9 +132,17 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(types.Count() > 1, child.IsChoiceElement);
             Assert.AreEqual(mayRepeat, child.IsCollection);
             Assert.IsTrue(child.Type.All(t => t is IStructureDefinitionReference));
+
+            if (types.Length == 1 && child.Type.Length == 1)
+            {
+                Assert.AreEqual(types.Single(), ((IStructureDefinitionReference)child.Type.Single()).ReferredType);
+            }
+            else
+            {
             CollectionAssert.AreEqual(types, child.Type
                 .Cast<IStructureDefinitionReference>()
                 .Select(t => t.ReferredType).ToArray());
+        }
         }
 
         private static IStructureDefinitionSummary checkBBType(IStructureDefinitionSummary parent, string ename, string bbType, bool mayRepeat)
@@ -153,18 +161,33 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void TestSpecialTypes(IStructureDefinitionSummaryProvider provider)
         {
-            // Narrative.div
-            var div = provider.Provide("Narrative");
-            Assert.IsNotNull(div);
-            checkType(div, "div", false, "xhtml");
+            //string FP_STRING = "http://hl7.org/fhirpath/System.String";
+            //string FP_DATETIME = "http://hl7.org/fhirpath/System.DateTime";
 
             // Element.id
-            checkType(div, "id", false, "string");
+            var elem = provider.Provide("Element");
+            checkType(elem, "id", false, "string");
 
-            var ext = provider.Provide("Extension");
+            // xhtml.id
+            var xhtml = provider.Provide("xhtml");
+            checkType(xhtml, "id", false, "string");
+
+            // Narrative.div
+            var div = provider.Provide("Narrative");
+            checkType(div, "div", false, "xhtml");
+            checkType(div, "id", false, "string");  // also try `id` in a derived element
 
             // Extension.url
+            var ext = provider.Provide("Extension");
             checkType(ext, "url", false, "uri");
+
+            // Resource.id
+            var res = provider.Provide("Resource");
+            checkType(res, "id", false, "id");
+
+            // Patient.id - derived type
+            res = provider.Provide("Patient");
+            checkType(res, "id", false, "id");
         }
 
         public static void TestProvidedOrder(IStructureDefinitionSummaryProvider provider)
