@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tpXml = File.ReadAllText(Path.Combine("TestData", "no-namespace.xml"));
             var bundle = FhirXmlNode.Parse(tpXml, new FhirXmlParsingSettings { PermissiveParsing = true });
             var result = bundle.ToTypedElement(new PocoStructureDefinitionSummaryProvider()).VisitAndCatch();
-            Assert.AreEqual(1000, result.Count);
+            Assert.AreEqual(0, result.Count);
         }
 
         [TestMethod]
