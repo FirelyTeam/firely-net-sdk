@@ -20,6 +20,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -84,6 +85,30 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = elements.ToList()
                 }
             };
+        }
+
+        [TestMethod]
+        public void TestMergeMax()
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            test(null, "1", "1");
+            test("1", null, "1");
+            test("1", "1", "1");
+            test("1", "*", "1");
+            test("2", "*", "2");
+            test("*", "*", "*");
+            test("*", "2", "2");
+            test("*", null, "*");
+            test(null, "*", "*");
+            test("3", "2", "2");
+            test("2", "3", "2");
+
+            void test(string snap, string diff, string expected)
+            {
+                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+                Assert.AreEqual(expected, actual.Value);
+            }
         }
 
         [TestMethod]
@@ -7168,6 +7193,23 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(refElem.Base);
                 Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
             }
+        }
+    
+        // #1108/#1303 - incorrectly copies the 0..* root cardinality of a referenced datatype profile
+        // over unto an element that has base cardinality 0..1
+        [TestMethod]
+        public void ShouldRespectMaxCardinalityFromBase()
+        {
+            var cr = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(new TestProfileArtifactSource()),
+                        new ZipSource("specification.zip"))));
+
+            var range = cr.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality");
+            var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
+            Assert.AreEqual(1, lowElement.Min);
+            Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
         }
     }
 }

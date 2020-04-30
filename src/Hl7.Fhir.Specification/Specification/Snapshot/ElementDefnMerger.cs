@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Private static helper for <see cref="SnapshotGenerator"/>.
         /// Merge two <see cref="ElementDefinition"/> instances and all their properties.
         /// </summary>
-        struct ElementDefnMerger
+        internal struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
@@ -107,7 +107,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
                 snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
-                snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
+                //snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
+                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.base should already be there, and is not changed by the diff
 
@@ -194,7 +195,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
             void onConstraint(Element snap)
             {
-                _generator.OnConstraint(snap);
+                _generator?.OnConstraint(snap);
             }
 
             /// <summary>
@@ -237,6 +238,58 @@ namespace Hl7.Fhir.Specification.Snapshot
                         result.ObjectValue = diffText;
                     }
 
+                    onConstraint(result);
+                    return result;
+                }
+                else
+                    return snap;
+            }
+
+            // The diamond problem is especially painful for min/max -
+            // most datatypes roots have a cardinality of 0..*, so
+            // a non-repeating element referring to a profiled datatype
+            // (with 0..*) onto an element which needs to be expanded
+            // and which has no diff constraints on max will get the 
+            // max from the base -> a non-repeating element will become repeating.
+            internal FhirString mergeMax(FhirString snap, FhirString diff)
+            {
+                // [WMR 20160718] Handle snap == null
+                // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
+                if (!diff.IsNullOrEmpty() && !snap.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+                    if (diff.Value == "*")
+                        return snap;
+
+                    // Now, diff has a numeric limit
+                    // So, if snap has no limit, take the diff
+                    if(snap.Value == "*")
+                    {
+                        var result = (FhirString)diff.DeepCopy();
+                        onConstraint(result);
+                        return result;
+                    }
+
+                    // snap and diff both have a numeric value
+                    if (Int32.TryParse(snap.Value, out var sv) &&
+                        Int32.TryParse(diff.Value, out var dv))
+                    {
+                        // compare them if they are both numerics
+                        if (dv < sv)
+                        {
+                            var result = (FhirString)diff.DeepCopy();
+                            onConstraint(result);
+                            return result;
+                        }
+                        else
+                            return snap;
+                    }
+
+                    return snap;
+                }
+                else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+                {
+                    var result = (FhirString)diff.DeepCopy();
                     onConstraint(result);
                     return result;
                 }
