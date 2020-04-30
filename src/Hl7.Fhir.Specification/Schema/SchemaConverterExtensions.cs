@@ -138,11 +138,11 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (def.IsPrimitiveConstraint())
             {
-                return builder.BuildProfileRef("http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
+                return builder.BuildProfileRef("", "http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
             }
 
             if (typeRefs.Count() == 1)
-                return builder.BuildProfileRef(typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
+                return builder.BuildProfileRef("", typeRefs.Single().profile.Single()); // TODO MV: this was profile and not profile.Single()
 
 
             /*
