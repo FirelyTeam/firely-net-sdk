@@ -20,6 +20,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -7168,6 +7169,28 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(refElem.Base);
                 Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
             }
+        }
+
+        [TestMethod]
+        public void Issue_1227()
+        {
+            var resolver = new CachedResolver(
+                new SnapshotSource(
+                new MultiResolver(
+                    new CachedResolver(new TestProfileArtifactSource()),
+                    new ZipSource("specification.zip")
+                    ))
+                );
+            var profile = resolver.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/Issue1227");
+
+            //var xml = profile.ToXml(new FhirXmlSerializationSettings() { Pretty = true });
+            var securityExtension = profile.Snapshot.Element.Where(e => e.Path == "Person.meta.security.extension");
+            Assert.AreEqual(2, securityExtension.Count(), "Person.meta.security.extension should exist twice: opening slice and the slice itself");
+            Assert.IsNotNull(securityExtension.First().Base.Min, "Person.meta.security.extension.base.min should exists");
+            Assert.IsNotNull(securityExtension.First().Base.Max, "Person.meta.security.extension.base.max should exists");
+
+            var duplicates = profile.Snapshot.Element.GroupBy(e => e.ElementId).Where(g => g.Count() > 1);
+            Assert.IsFalse(duplicates.Any(), "Duplicates of Element.Id found which is not allowed.");
         }
     }
 }

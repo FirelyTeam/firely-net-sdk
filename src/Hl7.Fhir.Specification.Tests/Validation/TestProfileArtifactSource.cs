@@ -1,10 +1,9 @@
-﻿using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Validation
 {
@@ -27,12 +26,106 @@ namespace Hl7.Fhir.Validation
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
-            buildParametersWithBoundParams(),   
+            buildParametersWithBoundParams(),
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
             buildOrganizationWithRegexConstraintOnType(),
-            buildValueDescriminatorWithPattern()
+            buildValueDescriminatorWithPattern(),
+            buildIssue1227(),
+            buildMetadataExtension()
         };
+
+        private const string METADATA_EXTENSION_CANONICAL = "http://ehelse.no/fhir/StructureDefinition/gd-fregmetadata";
+
+        private static StructureDefinition buildMetadataExtension()
+        {
+            var result = createTestSD(METADATA_EXTENSION_CANONICAL, "FregMetadata",
+                   "fregmetadata (registermetadata)", FHIRAllTypes.Extension);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Extension") { ElementId = "Extension" });
+
+            var slicingIntro = new ElementDefinition("Extension.extension") { ElementId = "Extension.extension" }
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Open,
+                (ElementDefinition.DiscriminatorType.Value, "url"));
+            cons.Add(slicingIntro);
+
+            //slice 1:
+            cons.Add(new ElementDefinition("Extension.extension")
+            {
+                ElementId = "Extension.extension:registeredTimestamp",
+                SliceName = "registeredTimestamp",
+                Max = "1"
+            });
+
+            cons.Add(new ElementDefinition("Extension.extension.url")
+            {
+                ElementId = "Extension.extension:registeredTimestamp.url"
+            }.Value(fix: new FhirUri("registeredTimestamp")));
+
+            cons.Add(new ElementDefinition("Extension.extension.value[x]")
+            {
+                ElementId = "Extension.extension:registeredTimestamp.value[x]"
+            }.OfType(FHIRAllTypes.DateTime));
+
+
+            cons.Add(new ElementDefinition("Extension.url")
+            {
+                ElementId = "Extension.url"
+            }.Value(fix: new FhirUri(METADATA_EXTENSION_CANONICAL)));
+
+            cons.Add(new ElementDefinition("Extension.value[x]") { ElementId = "Extension.value[x]" }.Prohibited());
+
+            return result;
+        }
+
+        private static StructureDefinition buildIssue1227()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/Issue1227", "Issue1227",
+                    "Nested slicing", FHIRAllTypes.Person);
+            var cons = result.Differential.Element;
+
+            // cons.Add(new ElementDefinition("Person.Meta") { ElementId = "Person.meta", MustSupport = true });
+
+            // slicing on Person.Meta.Security
+            var slicingIntro = new ElementDefinition("Person.meta.security") { ElementId = "Person.meta.security" }
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Open,
+                (ElementDefinition.DiscriminatorType.Value, "system"));
+
+            cons.Add(slicingIntro);
+
+            // Slice 1 with Binding
+            cons.Add(new ElementDefinition("Person.meta.security")
+            {
+                ElementId = "Person.meta.security:addressConfidentiality",
+                SliceName = "addressConfidentiality",
+                Max = "1",
+
+            });
+
+            cons.Add(new ElementDefinition("Person.meta.security.system")
+            {
+                ElementId = "Person.meta.security:addressConfidentiality.system",
+                Min = 1
+            }.Value(fix: new FhirUri("http://ehelse.no/fhir/ValueSet/gd-address-confidentiality-v05")));
+
+            // Nested slicing on Person.meta.security.extension
+            var securityExtSliceIntro = new ElementDefinition("Person.meta.security.extension") { ElementId = "Person.meta.security:addressConfidentiality.extension" }
+                .WithSlicingIntro(ElementDefinition.SlicingRules.OpenAtEnd,
+                (ElementDefinition.DiscriminatorType.Value, "url"));
+
+            cons.Add(securityExtSliceIntro);
+
+            cons.Add(new ElementDefinition("Person.meta.security.extension")
+            {
+                ElementId = "Person.meta.security:addressConfidentiality.extension:fregMetadata",
+                SliceName = "fregMetadata",
+                Max = "1"
+            }.OfType(FHIRAllTypes.Extension, METADATA_EXTENSION_CANONICAL));
+
+
+            return result;
+        }
 
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
         {
@@ -193,7 +286,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition bundleWithConstrainedContained()
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained",
                             $"Bundle with a constraint on the Bundle.entry.resource",
                     $"Bundle with a constraint on the Bundle.entry.resource", FHIRAllTypes.Bundle);
 
@@ -257,7 +350,7 @@ namespace Hl7.Fhir.Validation
             });
             cons.Add(new ElementDefinition("Practitioner.identifier.type")
             {
-                ElementId = "Practitioner.identifier:slice1.type", 
+                ElementId = "Practitioner.identifier:slice1.type",
                 Pattern = new CodeableConcept("http://local-codes.nl/identifier-types", "ID-TYPE-1")
             }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
 
@@ -290,7 +383,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri=null)
+        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri = null)
         {
             var result = new StructureDefinition();
 
@@ -313,7 +406,7 @@ namespace Hl7.Fhir.Validation
             result.Type = constrainedType.ToString();
             result.Abstract = false;
 
-            if(baseUri == null)
+            if (baseUri == null)
                 baseUri = ResourceIdentity.Core(constrainedType).ToString();
 
             result.BaseDefinition = baseUri;
