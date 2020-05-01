@@ -12,7 +12,6 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 using System.Reflection;
 using Hl7.Fhir.Utility;
 
@@ -253,48 +252,42 @@ namespace Hl7.Fhir.Specification.Snapshot
             // max from the base -> a non-repeating element will become repeating.
             internal FhirString mergeMax(FhirString snap, FhirString diff)
             {
-                // [WMR 20160718] Handle snap == null
-                // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
-                // if (!diff.IsNullOrEmpty() && (snap == null || !diff.IsExactly(snap)))
                 if (!diff.IsNullOrEmpty() && !snap.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
+                    // If diff is unlimited, we can just take the original snap as the lowest limit
                     if (diff.Value == "*")
                         return snap;
 
                     // Now, diff has a numeric limit
                     // So, if snap has no limit, take the diff
                     if(snap.Value == "*")
-                    {
-                        var result = (FhirString)diff.DeepCopy();
-                        onConstraint(result);
-                        return result;
-                    }
+                        return deepCopyAndRaiseOnConstraint(diff);
 
                     // snap and diff both have a numeric value
-                    if (Int32.TryParse(snap.Value, out var sv) &&
-                        Int32.TryParse(diff.Value, out var dv))
+                    if (int.TryParse(snap.Value, out var sv) &&
+                        int.TryParse(diff.Value, out var dv))
                     {
                         // compare them if they are both numerics
-                        if (dv < sv)
-                        {
-                            var result = (FhirString)diff.DeepCopy();
-                            onConstraint(result);
-                            return result;
-                        }
-                        else
-                            return snap;
+                        return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
                     }
-
+                    
+                    // one of the two values cannot be parsed, just don't
+                    // do anything to not break it any further.
                     return snap;
                 }
                 else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
-                    var result = (FhirString)diff.DeepCopy();
-                    onConstraint(result);
-                    return result;
+                    return deepCopyAndRaiseOnConstraint(diff);
                 }
                 else
                     return snap;
+            }
+
+            private FhirString deepCopyAndRaiseOnConstraint(FhirString elt)
+            {
+                var result = (FhirString)elt.DeepCopy();
+                onConstraint(result);
+                return result;
             }
 
             T mergeComplexAttribute<T>(T snap, T diff) where T : Element
