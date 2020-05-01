@@ -1,11 +1,9 @@
-﻿using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
-using System.Diagnostics;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Validation
 {
@@ -28,7 +26,7 @@ namespace Hl7.Fhir.Validation
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
-            buildParametersWithBoundParams(),   
+            buildParametersWithBoundParams(),
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
             buildOrganizationWithRegexConstraintOnType(),
@@ -173,7 +171,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Observation").OfType(FHIRAllTypes.Observation));
             cons.Add(new ElementDefinition("Observation.value[x]")
-                .OfType(FHIRAllTypes.Quantity,new[] { "http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "http://validationtest.org/fhir/StructureDefinition/HeightQuantity" })
+                .OfType(FHIRAllTypes.Quantity, new[] { "http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "http://validationtest.org/fhir/StructureDefinition/HeightQuantity" })
                 .OrType(FHIRAllTypes.String));
 
             return result;
@@ -197,7 +195,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition bundleWithConstrainedContained()
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained",
                             $"Bundle with a constraint on the Bundle.entry.resource",
                     $"Bundle with a constraint on the Bundle.entry.resource", FHIRAllTypes.Bundle);
 
@@ -256,7 +254,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality", 
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality",
                 "Range referring to a profiled quantity",
                 "Range that refers to a profiled quantity on its Range.low - this profiled Quantity has a 0..* root.",
                    FHIRAllTypes.Range);
@@ -264,7 +262,7 @@ namespace Hl7.Fhir.Validation
 
             cons.Add(new ElementDefinition("Range").OfType(FHIRAllTypes.Range));
             cons.Add(new ElementDefinition("Range.low")
-                .OfType(FHIRAllTypes.Quantity, profile: QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL)
+                .OfType(FHIRAllTypes.Quantity, profile: new[] { QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL })
                 .Required(min: 1, max: null));   // just set min to 1 and leave max out.
 
             return result;
@@ -293,7 +291,7 @@ namespace Hl7.Fhir.Validation
             });
             cons.Add(new ElementDefinition("Practitioner.identifier.type")
             {
-                ElementId = "Practitioner.identifier:slice1.type", 
+                ElementId = "Practitioner.identifier:slice1.type",
                 Pattern = new CodeableConcept("http://local-codes.nl/identifier-types", "ID-TYPE-1")
             }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
 
@@ -326,7 +324,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri=null)
+        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri = null)
         {
             var result = new StructureDefinition();
 
@@ -349,7 +347,7 @@ namespace Hl7.Fhir.Validation
             result.Type = constrainedType.ToString();
             result.Abstract = false;
 
-            if(baseUri == null)
+            if (baseUri == null)
                 baseUri = ResourceIdentity.Core(constrainedType).ToString();
 
             result.BaseDefinition = baseUri;

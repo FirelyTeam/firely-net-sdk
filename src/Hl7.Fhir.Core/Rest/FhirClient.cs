@@ -8,14 +8,8 @@
 
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Rest
@@ -119,106 +113,6 @@ namespace Hl7.Fhir.Rest
         {
             // Default implementation: call event
             OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
-        }
-
-        // Original
-        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
-        {
-            return executeAsync<TResource>(tx, new[] { expect }).WaitResult();
-        }
-        public Task<TResource> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
-        {
-            return executeAsync<TResource>(tx, new[] { expect });
-        }
-        // Original
-        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            return executeAsync<TResource>(tx,  expect).WaitResult();
-        }
-
-        private async Task<TResource> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            verifyServerVersion();
-
-            var request = tx.Entry[0];
-            var response = await _requester.ExecuteAsync(request).ConfigureAwait(false);
-
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Response.Status))
-            {
-                Enum.TryParse<HttpStatusCode>(response.Response.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Response.Status), code);
-            }
-
-            Resource result;
-
-            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
-            // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && isPostOrPut(request) 
-                && PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
-                && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
-            {
-                result = await GetAsync(response.Response.Location).ConfigureAwait(false);
-            }
-            else
-                result = response.Resource;
-
-            if (result == null) return null;
-
-            // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-            if (!(result is TResource))
-            {
-                // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                // the LastResult, and return null as the result. Otherwise, throw.
-                if (result is OperationOutcome)
-                    return null;
-
-                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
-                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
-
-                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
-                throw new FhirOperationException(message, code);
-            }
-            else
-                return result as TResource;
-        }
-        private bool isPostOrPut(Bundle.EntryComponent interaction)
-        {
-            var method = interaction.Request.Method;
-            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
-        }
-
-
-        private bool versionChecked = false;
-
-        private void verifyServerVersion()
-        {
-            if (!VerifyFhirVersion) return;
-
-            if (versionChecked) return;
-            versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
-
-            CapabilityStatement conf = null;
-            try
-            {
-                conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
-            }
-            catch (FormatException)
-            {
-                // Mmmm...cannot even read the body. Probably not so good.
-                throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
-            }
-
-            if (conf.Version == null)
-            {
-                throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
-            }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.Version))
-            {
-                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
-            }         
-           
         }
     }
 
