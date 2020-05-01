@@ -1,4 +1,4 @@
-﻿/*
+/*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
   
@@ -428,6 +428,39 @@ namespace Hl7.Fhir.Model
             if (definedType == null) return false;
 
             return IsProfiledQuantity(definedType.Value);
+        }
+
+        public static bool CheckMinorVersionCompatibility(string externalVersion)
+        {
+            if (string.IsNullOrEmpty(externalVersion))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var minorFhirVersion = getMajorAndMinorVersion(Version);
+            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
+
+            if (string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion))
+            {
+                return false;
+            }
+            else
+            {
+                return minorFhirVersion == externalMinorVersion;
+            }
+        }
+
+        private static string getMajorAndMinorVersion(string version)
+        {
+            var versionnumbers = version.Split('.');
+            if (versionnumbers.Count() >= 2)
+            {
+                return string.Join(".", versionnumbers[0], versionnumbers[1]);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static bool IsInstanceTypeFor(string superclass, string subclass)

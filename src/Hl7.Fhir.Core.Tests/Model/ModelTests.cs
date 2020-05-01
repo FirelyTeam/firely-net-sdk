@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -707,6 +707,23 @@ namespace Hl7.Fhir.Tests.Model
                     }
                 }
             }
+        }
+        [TestMethod]
+        public void TestCheckMinorVersionCompatibiliy()
+        {
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));            
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestCheckMinorVersionCompatibilityWithNull()
+        {
+            ModelInfo.CheckMinorVersionCompatibility(null);
         }
     }
 }

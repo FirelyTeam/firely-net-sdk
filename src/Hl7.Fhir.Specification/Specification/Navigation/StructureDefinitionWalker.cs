@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification
 
         public StructureDefinitionWalker FromCanonical(string canonical)
         {
-            var sd = Resolver.FindStructureDefinition(canonical, requireSnapshot: true);
+            var sd = Resolver.FindStructureDefinition(canonical);
             if (sd == null)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'");
 

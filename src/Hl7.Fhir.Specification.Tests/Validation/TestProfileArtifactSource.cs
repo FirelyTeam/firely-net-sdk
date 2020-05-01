@@ -32,7 +32,9 @@ namespace Hl7.Fhir.Validation
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
             buildOrganizationWithRegexConstraintOnType(),
-            buildValueDescriminatorWithPattern()
+            buildValueDescriminatorWithPattern(),
+            buildQuantityWithUnlimitedRootCardinality(),
+            buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
         };
 
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
@@ -232,6 +234,38 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Parameters").OfType(FHIRAllTypes.Parameters));
             cons.Add(new ElementDefinition("Parameters.parameter.value[x]")
                     .WithBinding("http://hl7.org/fhir/ValueSet/data-absent-reason", BindingStrength.Required));
+
+            return result;
+        }
+
+        private const string QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL = "http://validationtest.org/fhir/StructureDefinition/QuantityWithUnlimitedRootCardinality";
+
+        private static StructureDefinition buildQuantityWithUnlimitedRootCardinality()
+        {
+            var result = createTestSD(QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL, "A Quantity with a root cardinality of 0..*",
+                    "Parameters resource where the parameter.value[x] is bound to a valueset", FHIRAllTypes.Quantity);
+            var cons = result.Differential.Element;
+
+            var quantityRoot = new ElementDefinition("Quantity").OfType(FHIRAllTypes.Quantity);
+            quantityRoot.Min = 0;
+            quantityRoot.Max = "*";  // this is actually the case in all core classes as well.
+            cons.Add(quantityRoot);
+
+            return result;
+        }
+
+        private static StructureDefinition buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality", 
+                "Range referring to a profiled quantity",
+                "Range that refers to a profiled quantity on its Range.low - this profiled Quantity has a 0..* root.",
+                   FHIRAllTypes.Range);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Range").OfType(FHIRAllTypes.Range));
+            cons.Add(new ElementDefinition("Range.low")
+                .OfType(FHIRAllTypes.Quantity, profile: QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL)
+                .Required(min: 1, max: null));   // just set min to 1 and leave max out.
 
             return result;
         }
