@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = _resolver.FindStructureDefinition(mappedCanonical, requireSnapshot: true);
+            var sd = _resolver.FindStructureDefinition(mappedCanonical);
             if (sd == null) return null;
 
             return new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
