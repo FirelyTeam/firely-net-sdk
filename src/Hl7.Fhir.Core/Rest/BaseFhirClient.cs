@@ -995,8 +995,7 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            CapabilityStatement conf;
-
+            CapabilityStatement conf = null;
             try
             {
                 conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
@@ -1006,11 +1005,16 @@ namespace Hl7.Fhir.Rest
                 // Mmmm...cannot even read the body. Probably not so good.
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
-            string actualServerVersion = ((ISystemAndCode)conf?.FhirVersionElement)?.Code;
-            if (String.IsNullOrEmpty(actualServerVersion) || !actualServerVersion.StartsWith(ModelInfo.Version))
+
+            if (conf.Version == null)
             {
-                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, actualServerVersion));
+                throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
+            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.Version))
+            {
+                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
+            }
+
         }
 
         #region IDisposable Support

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,16 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
 using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -70,7 +67,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TodayTests()
         {
-            var todayLocal = Date.Today(); 
+            var todayLocal = Date.Today();
             Assert.AreEqual(DateTimeOffset.Now.ToString("yyy-MM-dd"), todayLocal.Value);
 
             var todayUtc = Date.UtcToday();
@@ -105,7 +102,7 @@ namespace Hl7.Fhir.Tests.Model
                 var uriEncodedUrl = string.Format(urlFormat, Uri.EscapeDataString(param1), Uri.EscapeDataString(param2));
                 Assert.AreEqual(manuallyEncodedUrl, uriEncodedUrl);
                 var uri = new Uri(manuallyEncodedUrl, UriKind.RelativeOrAbsolute);
-                var bundle = new Bundle {SelfLink = uri};
+                var bundle = new Bundle { SelfLink = uri };
                 if (uri.IsAbsoluteUri)
                 {
                     Assert.AreEqual(uri.AbsoluteUri, bundle.SelfLink.AbsoluteUri);
@@ -687,6 +684,25 @@ namespace Hl7.Fhir.Tests.Model
                     }
                 }
             }
+        }
+        [TestMethod]
+        public void TestCheckMinorVersionCompatibiliy()
+        {
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestCheckMinorVersionCompatibilityWithNull()
+        {
+            ModelInfo.CheckMinorVersionCompatibility(null);
         }
     }
 }

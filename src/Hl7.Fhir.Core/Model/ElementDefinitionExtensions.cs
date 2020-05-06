@@ -121,5 +121,20 @@ namespace Hl7.Fhir.Model
 
             return ed;
         }
+
+        public static ElementDefinition WithSlicingIntro(this ElementDefinition ed, ElementDefinition.SlicingRules rules, 
+            params (ElementDefinition.DiscriminatorType type,string path)[] discriminators)
+
+        {
+            ed.Slicing = new ElementDefinition.SlicingComponent
+            {
+                Rules = rules,
+                Discriminator = discriminators.Select(t => 
+                    new ElementDefinition.DiscriminatorComponent { Path = t.path, Type = t.type })
+                    .ToList()
+            };
+
+            return ed;
+        }
     }
 }

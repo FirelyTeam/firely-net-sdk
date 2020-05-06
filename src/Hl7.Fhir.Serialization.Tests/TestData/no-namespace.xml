@@ -1,0 +1,35 @@
+﻿<Bundle>
+  <id value="bundle-example"/>
+  <meta>
+    <lastUpdated value="2014-08-18T01:43:30Z"/>
+  </meta>
+  <type value="searchset"/>
+  <total value="3"/>
+  <entry>
+    <fullUrl value="https://example.com/base/MedicationRequest/3123"/>
+    <resource>
+      <MedicationRequest>
+        <id value="3123"/>
+        <!--    snip    -->
+        <text>
+          <status value="generated"/>
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>snip</p>
+          </div>
+        </text>
+        <status value="unknown"/>
+        <intent value="order"/>
+        <medicationReference>
+          <reference value="Medication/example"/>
+        </medicationReference>
+        <subject>
+          <reference value="Patient/347"/>
+        </subject>
+      </MedicationRequest>
+    </resource>
+    <search>
+      <mode value="match"/>
+      <score value="1"/>
+    </search>
+  </entry>
+</Bundle>

@@ -30,5 +30,10 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         public void TestValueIsNotAChild() => SerializationInfoTestHelpers.TestValueIsNotAChild(new PocoStructureDefinitionSummaryProvider());
+
+        //These tests uses a profile that is not expressed as a POCO, so these tests are not applicable
+        //public void TestXmlRepresetation() => SerializationInfoTestHelpers.TestXmlRepresetation(new PocoStructureDefinitionSummaryProvider());
+        //public void TestRequiresSnapshot() => SerializationInfoTestHelpers.TestRequiresSnapshot(new PocoStructureDefinitionSummaryProvider());
+
     }
 }

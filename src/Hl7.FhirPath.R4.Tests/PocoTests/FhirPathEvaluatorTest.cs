@@ -631,5 +631,15 @@ namespace Hl7.FhirPath.R5.Tests
 
         }
 
+        // Verifies https://github.com/FirelyTeam/fhir-net-api/issues/1140
+        [Fact]
+        public void TestELD13Bug()
+        {
+            var emptyPat = new Patient();
+
+            // Test how the engine treats primitives with no values in operations that
+            // do not propagate null values....
+            Assert.Equal("",emptyPat.Scalar("name & gender"));
+        }
     }
 }
