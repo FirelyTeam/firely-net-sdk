@@ -2173,6 +2173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Structure has no base, i.e. core type definition => differential introduces & defines the root element
                 // No need to rebase, nothing to merge
                 var snapRoot = (ElementDefinition)diffRoot.DeepCopy();
+                snapRoot.Extension.Clear();
 
 #if CACHE_ROOT_ELEMDEF
                 Debug.Assert(!snapRoot.HasSnapshotElementAnnotation());

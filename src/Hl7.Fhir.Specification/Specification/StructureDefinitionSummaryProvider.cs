@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = _resolver.FindStructureDefinition(mappedCanonical, requireSnapshot: true);
+            var sd = _resolver.FindStructureDefinition(mappedCanonical);
             if (sd == null) return null;
 
             return new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
@@ -192,20 +192,22 @@ namespace Hl7.Fhir.Specification
 
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
-            else if (nav.Current.Path == "Extension.url")        // Compiler magic since R4
-            {
-                return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("uri") };
-            }
             else
             {                
                 var basePath = nav.Current?.Base?.Path;
-                if (basePath == "Resource.id")
+                if (basePath == "Resource.id" || nav?.Current?.Path == "Resource.id")
                 {
+                    // [EK 20200423] OMG! Why does Resource.id have a base Resource.id?
                     // [MV 20191217] it should be url?.Value, but there is something wrong in the 
                     // specification (https://jira.hl7.org/browse/FHIR-25262), so I manually change it to "id".
                     //return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
 
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
+                }
+                else if(basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
+                {
+                    // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
                 }
                 else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
                 {
