@@ -18,7 +18,14 @@ namespace Hl7.Fhir.Specification.Source
 {
     public static class ResourceResolverExtensions
     {
-        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
+        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri)
+#pragma warning disable CS0618 // Type or member is obsolete
+            => FindExtensionDefinition(resolver, uri, requireSnapshot: false);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        [Obsolete("Using this function merges the errors paths for unresolvable StructureDefinitions and StructureDefinitions " +
+            "without a snapshot. Call FindExtensionDefinition(resolver,string) and explicitly check for the presence of the snapshot instead.")]
+        public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot)
         {
             var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
             if (sd == null) return null;
@@ -32,7 +39,14 @@ namespace Hl7.Fhir.Specification.Source
             return sd;
         }
 
-        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot = false)
+        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri)
+#pragma warning disable CS0618 // Type or member is obsolete
+            => FindStructureDefinition(resolver, uri, requireSnapshot: false);
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        [Obsolete("Using this function merges the errors paths for unresolvable StructureDefinitions and StructureDefinitions " +
+               "without a snapshot. Call FindStructureDefinition(resolver,string) and explicitly check for the presence of the snapshot instead.")]
+        public static StructureDefinition FindStructureDefinition(this IResourceResolver resolver, string uri, bool requireSnapshot)
         {
             var sd = resolver.ResolveByCanonicalUri(uri) as StructureDefinition;
             if (sd == null) return null;
