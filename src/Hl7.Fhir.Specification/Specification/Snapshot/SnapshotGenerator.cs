@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             ElementDefinitionNavigator nav;
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
-            {               
+            {
                 var baseStructure = _resolver.FindStructureDefinition(structure.BaseDefinition);
 
                 // [WMR 20161208] Handle unresolved base profile
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
             // Then snapshot root is already generated and annotated to differential.Element[0]
             //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (before merge)] diff root is annotated with cached snapshot root...");
-            
+
             merge(nav, diff);
 
             result = nav.ToListOfElements();
@@ -715,10 +715,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         void createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);            
+            ElementDefinition targetElement = getBaseElementForElementType(diff.Current, out StructureDefinition typeStructure);
             addConstraintSource(targetElement, typeStructure?.Url);
-            
-           
+
+
 
             if (!(targetElement is null))
             {
@@ -790,11 +790,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         private static void addConstraintSource(ElementDefinition targetElement, string url)
-        {           
+        {
             foreach (var constraint in targetElement?.Constraint.Where(c => string.IsNullOrEmpty(c.Source)) ?? Enumerable.Empty<ElementDefinition.ConstraintComponent>())
             {
                 constraint.Source = url;
-            }            
+            }
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
@@ -1055,8 +1055,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 typeStructure = _resolver.FindStructureDefinition(primaryDiffTypeProfile);
-                
-                if(_settings.GenerateSnapshotForExternalProfiles)
+
+                if (_settings.GenerateSnapshotForExternalProfiles)
                     ensureSnapshot(typeStructure, primaryDiffTypeProfile);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
@@ -2176,7 +2176,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var baseProfileUri = sd.BaseDefinition;
 
-            if (baseProfileUri == null)
+            if (baseProfileUri is null || baseProfileUri == "http://hl7.org/fhir/StructureDefinition/PrimitiveType")
             {
                 if (diffRoot == null)
                 {
@@ -2200,7 +2200,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Otherwise, cloning & expanding the result will pick up incorrect root element from original... WRONG!
 #endif
                 // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url) ;
+                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url);
 
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return snapRoot;
