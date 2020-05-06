@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,57 +64,57 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("preparation", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Preparation")]
+            [EnumLiteral("preparation", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Preparation")]
             Preparation,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("in-progress", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("In Progress")]
+            [EnumLiteral("in-progress", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("In Progress")]
             InProgress,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("cancelled", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Cancelled")]
+            [EnumLiteral("cancelled", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Cancelled")]
             Cancelled,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("on-hold", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("On Hold")]
+            [EnumLiteral("on-hold", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("On Hold")]
             OnHold,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("completed", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Entered in Error")]
             EnteredInError,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("stopped", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Stopped")]
+            [EnumLiteral("stopped", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Stopped")]
             Stopped,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("declined", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Declined")]
+            [EnumLiteral("declined", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Declined")]
             Declined,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medicationdispense-status)
             /// </summary>
-            [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/medicationdispense-status"), Description("Unknown")]
+            [EnumLiteral("unknown", "http://hl7.org/fhir/CodeSystem/medicationdispense-status"), Description("Unknown")]
             Unknown,
         }
 
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("actor", Order=50)]
             [CLSCompliant(false)]
-			[References("Practitioner","PractitionerRole","Organization","Patient","Device","RelatedPerson")]
+			[References("Practitioner","PractitionerRole","Organization","Patient","Device","RelatedPerson","CareTeam")]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.ResourceReference Actor
@@ -470,17 +470,15 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why a dispense was not performed
         /// </summary>
-        [FhirElement("statusReason", Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("statusReason", Order=130)]
         [DataMember]
-        public Hl7.Fhir.Model.Element StatusReason
+        public Hl7.Fhir.Model.CodeableReference StatusReason
         {
             get { return _StatusReason; }
             set { _StatusReason = value; OnPropertyChanged("StatusReason"); }
         }
         
-        private Hl7.Fhir.Model.Element _StatusReason;
+        private Hl7.Fhir.Model.CodeableReference _StatusReason;
         
         /// <summary>
         /// Type of medication dispense
@@ -499,18 +497,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What medication was supplied
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("medication", InSummary=true, Order=150)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Medication
+        public Hl7.Fhir.Model.CodeableReference Medication
         {
             get { return _Medication; }
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
         
-        private Hl7.Fhir.Model.Element _Medication;
+        private Hl7.Fhir.Model.CodeableReference _Medication;
         
         /// <summary>
         /// Who the dispense is for
@@ -870,9 +866,9 @@ namespace Hl7.Fhir.Model
                 if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
                 if(PartOf != null) dest.PartOf = new List<Hl7.Fhir.Model.ResourceReference>(PartOf.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes>)StatusElement.DeepCopy();
-                if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.Element)StatusReason.DeepCopy();
+                if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableReference)StatusReason.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.CodeableReference)Medication.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());

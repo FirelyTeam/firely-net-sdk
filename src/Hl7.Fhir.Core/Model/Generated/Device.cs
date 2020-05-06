@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -92,6 +92,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
             SelfReported,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/udi-entry-type)
+            /// </summary>
+            [EnumLiteral("electronic-transmission", "http://hl7.org/fhir/udi-entry-type"), Description("Electronic Transmission")]
+            ElectronicTransmission,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/udi-entry-type)
@@ -301,7 +307,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// barcode | rfid | manual +
+            /// barcode | rfid | manual | card | self-reported | electronic-transmission | unknown
             /// </summary>
             [FhirElement("entryType", Order=90)]
             [DataMember]
@@ -314,7 +320,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.Device.UDIEntryType> _EntryTypeElement;
             
             /// <summary>
-            /// barcode | rfid | manual +
+            /// barcode | rfid | manual | card | self-reported | electronic-transmission | unknown
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -712,7 +718,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// A single component of the device version
+            /// The hardware or software module of the device to which the version applies
             /// </summary>
             [FhirElement("component", Order=50)]
             [DataMember]
@@ -841,7 +847,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PropertyComponent"; } }
             
             /// <summary>
-            /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible)
+            /// Code that specifies the property being represented
             /// </summary>
             [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -958,6 +964,216 @@ namespace Hl7.Fhir.Model
         }
         
         
+        [FhirType("OperationalStatusComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class OperationalStatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "OperationalStatusComponent"; } }
+            
+            /// <summary>
+            /// on |off | standby
+            /// </summary>
+            [FhirElement("value", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Value;
+            
+            /// <summary>
+            /// The reasons given for the current operational status
+            /// </summary>
+            [FhirElement("reason", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Reason
+            {
+                get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+                set { _Reason = value; OnPropertyChanged("Reason"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as OperationalStatusComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new OperationalStatusComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as OperationalStatusComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as OperationalStatusComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Value != null) yield return Value;
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("AssociationStatusComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class AssociationStatusComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "AssociationStatusComponent"; } }
+            
+            /// <summary>
+            /// implanted|explanted|attached
+            /// </summary>
+            [FhirElement("value", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Value
+            {
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Value;
+            
+            /// <summary>
+            /// The reasons given for the current association status
+            /// </summary>
+            [FhirElement("reason", Order=50)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.CodeableConcept> Reason
+            {
+                get { if(_Reason==null) _Reason = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Reason; }
+                set { _Reason = value; OnPropertyChanged("Reason"); }
+            }
+            
+            private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as AssociationStatusComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.CodeableConcept)Value.DeepCopy();
+                    if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new AssociationStatusComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as AssociationStatusComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
+                if( !DeepComparable.Matches(Reason, otherT.Reason)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as AssociationStatusComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
+                if( !DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (Value != null) yield return Value;
+                    foreach (var elem in Reason) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (Value != null) yield return new ElementValue("value", Value);
+                    foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
+                }
+            }
+
+            
+        }
+        
+        
         /// <summary>
         /// Instance identifier
         /// </summary>
@@ -973,9 +1189,41 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
+        /// The name used to display by default when the device is referenced
+        /// </summary>
+        [FhirElement("displayName", Order=100)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirString DisplayNameElement
+        {
+            get { return _DisplayNameElement; }
+            set { _DisplayNameElement = value; OnPropertyChanged("DisplayNameElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirString _DisplayNameElement;
+        
+        /// <summary>
+        /// The name used to display by default when the device is referenced
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string DisplayName
+        {
+            get { return DisplayNameElement != null ? DisplayNameElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DisplayNameElement = null; 
+                else
+                  DisplayNameElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("DisplayName");
+            }
+        }
+        
+        /// <summary>
         /// The reference to the definition for the device
         /// </summary>
-        [FhirElement("definition", Order=100)]
+        [FhirElement("definition", Order=110)]
         [CLSCompliant(false)]
 		[References("DeviceDefinition")]
         [DataMember]
@@ -990,7 +1238,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Unique Device Identifier (UDI) Barcode string
         /// </summary>
-        [FhirElement("udiCarrier", InSummary=true, Order=110)]
+        [FhirElement("udiCarrier", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Device.UdiCarrierComponent> UdiCarrier
@@ -1004,7 +1252,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// active | inactive | entered-in-error | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [DataMember]
         public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
         {
@@ -1036,7 +1284,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// online | paused | standby | offline | not-ready | transduc-discon | hw-discon | off
         /// </summary>
-        [FhirElement("statusReason", Order=130)]
+        [FhirElement("statusReason", Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -1050,7 +1298,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The distinct identification string
         /// </summary>
-        [FhirElement("distinctIdentifier", Order=140)]
+        [FhirElement("distinctIdentifier", Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DistinctIdentifierElement
         {
@@ -1082,7 +1330,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of device manufacturer
         /// </summary>
-        [FhirElement("manufacturer", Order=150)]
+        [FhirElement("manufacturer", Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ManufacturerElement
         {
@@ -1114,7 +1362,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date when the device was made
         /// </summary>
-        [FhirElement("manufactureDate", Order=160)]
+        [FhirElement("manufactureDate", Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ManufactureDateElement
         {
@@ -1146,7 +1394,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date and time of expiry of this device (if applicable)
         /// </summary>
-        [FhirElement("expirationDate", Order=170)]
+        [FhirElement("expirationDate", Order=180)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
         {
@@ -1178,7 +1426,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Lot number of manufacture
         /// </summary>
-        [FhirElement("lotNumber", Order=180)]
+        [FhirElement("lotNumber", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString LotNumberElement
         {
@@ -1210,7 +1458,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Serial number assigned by the manufacturer
         /// </summary>
-        [FhirElement("serialNumber", Order=190)]
+        [FhirElement("serialNumber", Order=200)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString SerialNumberElement
         {
@@ -1240,9 +1488,9 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// The name of the device as given by the manufacturer
+        /// The name or names of the device as known to the manufacturer and/or patient
         /// </summary>
-        [FhirElement("deviceName", Order=200)]
+        [FhirElement("deviceName", Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Device.DeviceNameComponent> DeviceName
@@ -1256,7 +1504,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The manufacturer's model number for the device
         /// </summary>
-        [FhirElement("modelNumber", Order=210)]
+        [FhirElement("modelNumber", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString ModelNumberElement
         {
@@ -1288,7 +1536,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The part number or catalog number of the device
         /// </summary>
-        [FhirElement("partNumber", Order=220)]
+        [FhirElement("partNumber", Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PartNumberElement
         {
@@ -1320,20 +1568,21 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The kind or type of device
         /// </summary>
-        [FhirElement("type", Order=230)]
+        [FhirElement("type", Order=240)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.CodeableConcept Type
+        public List<Hl7.Fhir.Model.CodeableConcept> Type
         {
-            get { return _Type; }
+            get { if(_Type==null) _Type = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Type; }
             set { _Type = value; OnPropertyChanged("Type"); }
         }
         
-        private Hl7.Fhir.Model.CodeableConcept _Type;
+        private List<Hl7.Fhir.Model.CodeableConcept> _Type;
         
         /// <summary>
         /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
         /// </summary>
-        [FhirElement("specialization", Order=240)]
+        [FhirElement("specialization", Order=250)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Device.SpecializationComponent> Specialization
@@ -1347,7 +1596,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual design of the device or software version running on the device
         /// </summary>
-        [FhirElement("version", Order=250)]
+        [FhirElement("version", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Device.VersionComponent> Version
@@ -1361,7 +1610,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
         /// </summary>
-        [FhirElement("property", Order=260)]
+        [FhirElement("property", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Device.PropertyComponent> Property
@@ -1375,7 +1624,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient to whom Device is affixed
         /// </summary>
-        [FhirElement("patient", Order=270)]
+        [FhirElement("patient", Order=280)]
         [CLSCompliant(false)]
 		[References("Patient")]
         [DataMember]
@@ -1388,9 +1637,35 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Patient;
         
         /// <summary>
+        /// The status of the device itself - whether it is switched on, or activated, etc
+        /// </summary>
+        [FhirElement("operationalStatus", Order=290)]
+        [DataMember]
+        public Hl7.Fhir.Model.Device.OperationalStatusComponent OperationalStatus
+        {
+            get { return _OperationalStatus; }
+            set { _OperationalStatus = value; OnPropertyChanged("OperationalStatus"); }
+        }
+        
+        private Hl7.Fhir.Model.Device.OperationalStatusComponent _OperationalStatus;
+        
+        /// <summary>
+        /// The state of the usage or application of the device
+        /// </summary>
+        [FhirElement("associationStatus", Order=300)]
+        [DataMember]
+        public Hl7.Fhir.Model.Device.AssociationStatusComponent AssociationStatus
+        {
+            get { return _AssociationStatus; }
+            set { _AssociationStatus = value; OnPropertyChanged("AssociationStatus"); }
+        }
+        
+        private Hl7.Fhir.Model.Device.AssociationStatusComponent _AssociationStatus;
+        
+        /// <summary>
         /// Organization responsible for device
         /// </summary>
-        [FhirElement("owner", Order=280)]
+        [FhirElement("owner", Order=310)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -1405,7 +1680,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Details for human/organization for support
         /// </summary>
-        [FhirElement("contact", Order=290)]
+        [FhirElement("contact", Order=320)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -1419,7 +1694,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Where the device is found
         /// </summary>
-        [FhirElement("location", Order=300)]
+        [FhirElement("location", Order=330)]
         [CLSCompliant(false)]
 		[References("Location")]
         [DataMember]
@@ -1434,7 +1709,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Network address to contact device
         /// </summary>
-        [FhirElement("url", Order=310)]
+        [FhirElement("url", Order=340)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri UrlElement
         {
@@ -1466,7 +1741,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device notes and comments
         /// </summary>
-        [FhirElement("note", Order=320)]
+        [FhirElement("note", Order=350)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -1480,7 +1755,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Safety Characteristics of Device
         /// </summary>
-        [FhirElement("safety", InSummary=true, Order=330)]
+        [FhirElement("safety", InSummary=true, Order=360)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Safety
@@ -1494,7 +1769,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The device that this device is attached to or is part of
         /// </summary>
-        [FhirElement("parent", Order=340)]
+        [FhirElement("parent", Order=370)]
         [CLSCompliant(false)]
 		[References("Device")]
         [DataMember]
@@ -1521,6 +1796,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
+                if(DisplayNameElement != null) dest.DisplayNameElement = (Hl7.Fhir.Model.FhirString)DisplayNameElement.DeepCopy();
                 if(Definition != null) dest.Definition = (Hl7.Fhir.Model.ResourceReference)Definition.DeepCopy();
                 if(UdiCarrier != null) dest.UdiCarrier = new List<Hl7.Fhir.Model.Device.UdiCarrierComponent>(UdiCarrier.DeepCopy());
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus>)StatusElement.DeepCopy();
@@ -1534,11 +1810,13 @@ namespace Hl7.Fhir.Model
                 if(DeviceName != null) dest.DeviceName = new List<Hl7.Fhir.Model.Device.DeviceNameComponent>(DeviceName.DeepCopy());
                 if(ModelNumberElement != null) dest.ModelNumberElement = (Hl7.Fhir.Model.FhirString)ModelNumberElement.DeepCopy();
                 if(PartNumberElement != null) dest.PartNumberElement = (Hl7.Fhir.Model.FhirString)PartNumberElement.DeepCopy();
-                if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
                 if(Specialization != null) dest.Specialization = new List<Hl7.Fhir.Model.Device.SpecializationComponent>(Specialization.DeepCopy());
                 if(Version != null) dest.Version = new List<Hl7.Fhir.Model.Device.VersionComponent>(Version.DeepCopy());
                 if(Property != null) dest.Property = new List<Hl7.Fhir.Model.Device.PropertyComponent>(Property.DeepCopy());
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(OperationalStatus != null) dest.OperationalStatus = (Hl7.Fhir.Model.Device.OperationalStatusComponent)OperationalStatus.DeepCopy();
+                if(AssociationStatus != null) dest.AssociationStatus = (Hl7.Fhir.Model.Device.AssociationStatusComponent)AssociationStatus.DeepCopy();
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
@@ -1564,6 +1842,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.Matches(DisplayNameElement, otherT.DisplayNameElement)) return false;
             if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
             if( !DeepComparable.Matches(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
@@ -1582,6 +1861,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Version, otherT.Version)) return false;
             if( !DeepComparable.Matches(Property, otherT.Property)) return false;
             if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(OperationalStatus, otherT.OperationalStatus)) return false;
+            if( !DeepComparable.Matches(AssociationStatus, otherT.AssociationStatus)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
             if( !DeepComparable.Matches(Location, otherT.Location)) return false;
@@ -1600,6 +1881,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
+            if( !DeepComparable.IsExactly(DisplayNameElement, otherT.DisplayNameElement)) return false;
             if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
             if( !DeepComparable.IsExactly(UdiCarrier, otherT.UdiCarrier)) return false;
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
@@ -1618,6 +1900,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Version, otherT.Version)) return false;
             if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
             if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(OperationalStatus, otherT.OperationalStatus)) return false;
+            if( !DeepComparable.IsExactly(AssociationStatus, otherT.AssociationStatus)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
             if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
@@ -1636,6 +1920,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
+				if (DisplayNameElement != null) yield return DisplayNameElement;
 				if (Definition != null) yield return Definition;
 				foreach (var elem in UdiCarrier) { if (elem != null) yield return elem; }
 				if (StatusElement != null) yield return StatusElement;
@@ -1649,11 +1934,13 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in DeviceName) { if (elem != null) yield return elem; }
 				if (ModelNumberElement != null) yield return ModelNumberElement;
 				if (PartNumberElement != null) yield return PartNumberElement;
-				if (Type != null) yield return Type;
+				foreach (var elem in Type) { if (elem != null) yield return elem; }
 				foreach (var elem in Specialization) { if (elem != null) yield return elem; }
 				foreach (var elem in Version) { if (elem != null) yield return elem; }
 				foreach (var elem in Property) { if (elem != null) yield return elem; }
 				if (Patient != null) yield return Patient;
+				if (OperationalStatus != null) yield return OperationalStatus;
+				if (AssociationStatus != null) yield return AssociationStatus;
 				if (Owner != null) yield return Owner;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
 				if (Location != null) yield return Location;
@@ -1671,6 +1958,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
+                if (DisplayNameElement != null) yield return new ElementValue("displayName", DisplayNameElement);
                 if (Definition != null) yield return new ElementValue("definition", Definition);
                 foreach (var elem in UdiCarrier) { if (elem != null) yield return new ElementValue("udiCarrier", elem); }
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
@@ -1684,11 +1972,13 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in DeviceName) { if (elem != null) yield return new ElementValue("deviceName", elem); }
                 if (ModelNumberElement != null) yield return new ElementValue("modelNumber", ModelNumberElement);
                 if (PartNumberElement != null) yield return new ElementValue("partNumber", PartNumberElement);
-                if (Type != null) yield return new ElementValue("type", Type);
+                foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
                 foreach (var elem in Specialization) { if (elem != null) yield return new ElementValue("specialization", elem); }
                 foreach (var elem in Version) { if (elem != null) yield return new ElementValue("version", elem); }
                 foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
                 if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (OperationalStatus != null) yield return new ElementValue("operationalStatus", OperationalStatus);
+                if (AssociationStatus != null) yield return new ElementValue("associationStatus", AssociationStatus);
                 if (Owner != null) yield return new ElementValue("owner", Owner);
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
                 if (Location != null) yield return new ElementValue("location", Location);

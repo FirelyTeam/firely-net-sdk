@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -737,17 +737,8 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_1 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "verificationStatus='entered-in-error' or clinicalStatus.exists()",
-            Key = "ait-1",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
-            Xpath = "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
-        };
-
-        public static ElementDefinition.ConstraintComponent AllergyIntolerance_AIT_2 = new ElementDefinition.ConstraintComponent()
-        { 
             Expression = "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
-            Key = "ait-2",
+            Key = "ait-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
             Xpath = "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
@@ -758,7 +749,6 @@ namespace Hl7.Fhir.Model
             base.AddDefaultConstraints();
 
             InvariantConstraints.Add(AllergyIntolerance_AIT_1);
-            InvariantConstraints.Add(AllergyIntolerance_AIT_2);
         }
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)

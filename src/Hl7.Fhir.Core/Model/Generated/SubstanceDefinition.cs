@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -652,18 +652,18 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent _MolecularWeight;
             
             /// <summary>
-            /// Describes the source of information
+            /// The method used to elucidate the structure or characterization of the drug substance. Examples: X-ray, HPLC, NMR, Peptide mapping, Ligand binding assay
             /// </summary>
-            [FhirElement("sourceCoding", InSummary=true, Order=100)]
+            [FhirElement("technique", InSummary=true, Order=100)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
-            public List<Hl7.Fhir.Model.Coding> SourceCoding
+            public List<Hl7.Fhir.Model.CodeableConcept> Technique
             {
-                get { if(_SourceCoding==null) _SourceCoding = new List<Hl7.Fhir.Model.Coding>(); return _SourceCoding; }
-                set { _SourceCoding = value; OnPropertyChanged("SourceCoding"); }
+                get { if(_Technique==null) _Technique = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Technique; }
+                set { _Technique = value; OnPropertyChanged("Technique"); }
             }
             
-            private List<Hl7.Fhir.Model.Coding> _SourceCoding;
+            private List<Hl7.Fhir.Model.CodeableConcept> _Technique;
             
             /// <summary>
             /// Supporting literature about the source of information
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
                     if(MolecularFormulaByMoietyElement != null) dest.MolecularFormulaByMoietyElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaByMoietyElement.DeepCopy();
                     if(Isotope != null) dest.Isotope = new List<Hl7.Fhir.Model.SubstanceDefinition.IsotopeComponent>(Isotope.DeepCopy());
                     if(MolecularWeight != null) dest.MolecularWeight = (Hl7.Fhir.Model.SubstanceDefinition.MolecularWeightComponent)MolecularWeight.DeepCopy();
-                    if(SourceCoding != null) dest.SourceCoding = new List<Hl7.Fhir.Model.Coding>(SourceCoding.DeepCopy());
+                    if(Technique != null) dest.Technique = new List<Hl7.Fhir.Model.CodeableConcept>(Technique.DeepCopy());
                     if(SourceDocument != null) dest.SourceDocument = new List<Hl7.Fhir.Model.ResourceReference>(SourceDocument.DeepCopy());
                     if(Representation != null) dest.Representation = new List<Hl7.Fhir.Model.SubstanceDefinition.RepresentationComponent>(Representation.DeepCopy());
                     return dest;
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(MolecularFormulaByMoietyElement, otherT.MolecularFormulaByMoietyElement)) return false;
                 if( !DeepComparable.Matches(Isotope, otherT.Isotope)) return false;
                 if( !DeepComparable.Matches(MolecularWeight, otherT.MolecularWeight)) return false;
-                if( !DeepComparable.Matches(SourceCoding, otherT.SourceCoding)) return false;
+                if( !DeepComparable.Matches(Technique, otherT.Technique)) return false;
                 if( !DeepComparable.Matches(SourceDocument, otherT.SourceDocument)) return false;
                 if( !DeepComparable.Matches(Representation, otherT.Representation)) return false;
                 
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(MolecularFormulaByMoietyElement, otherT.MolecularFormulaByMoietyElement)) return false;
                 if( !DeepComparable.IsExactly(Isotope, otherT.Isotope)) return false;
                 if( !DeepComparable.IsExactly(MolecularWeight, otherT.MolecularWeight)) return false;
-                if( !DeepComparable.IsExactly(SourceCoding, otherT.SourceCoding)) return false;
+                if( !DeepComparable.IsExactly(Technique, otherT.Technique)) return false;
                 if( !DeepComparable.IsExactly(SourceDocument, otherT.SourceDocument)) return false;
                 if( !DeepComparable.IsExactly(Representation, otherT.Representation)) return false;
                 
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
                     if (MolecularFormulaByMoietyElement != null) yield return MolecularFormulaByMoietyElement;
                     foreach (var elem in Isotope) { if (elem != null) yield return elem; }
                     if (MolecularWeight != null) yield return MolecularWeight;
-                    foreach (var elem in SourceCoding) { if (elem != null) yield return elem; }
+                    foreach (var elem in Technique) { if (elem != null) yield return elem; }
                     foreach (var elem in SourceDocument) { if (elem != null) yield return elem; }
                     foreach (var elem in Representation) { if (elem != null) yield return elem; }
                 }
@@ -791,7 +791,7 @@ namespace Hl7.Fhir.Model
                     if (MolecularFormulaByMoietyElement != null) yield return new ElementValue("molecularFormulaByMoiety", MolecularFormulaByMoietyElement);
                     foreach (var elem in Isotope) { if (elem != null) yield return new ElementValue("isotope", elem); }
                     if (MolecularWeight != null) yield return new ElementValue("molecularWeight", MolecularWeight);
-                    foreach (var elem in SourceCoding) { if (elem != null) yield return new ElementValue("sourceCoding", elem); }
+                    foreach (var elem in Technique) { if (elem != null) yield return new ElementValue("technique", elem); }
                     foreach (var elem in SourceDocument) { if (elem != null) yield return new ElementValue("sourceDocument", elem); }
                     foreach (var elem in Representation) { if (elem != null) yield return new ElementValue("representation", elem); }
                 }
@@ -1102,7 +1102,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX
+            /// The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF
             /// </summary>
             [FhirElement("representation", InSummary=true, Order=50)]
             [DataMember]
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _RepresentationElement;
             
             /// <summary>
-            /// The structural representation as text string in a format e.g. InChI, SMILES, MOLFILE, CDX
+            /// The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1134,9 +1134,22 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
+            /// The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF
+            /// </summary>
+            [FhirElement("format", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Format
+            {
+                get { return _Format; }
+                set { _Format = value; OnPropertyChanged("Format"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Format;
+            
+            /// <summary>
             /// An attached file with the structural representation
             /// </summary>
-            [FhirElement("attachment", InSummary=true, Order=60)]
+            [FhirElement("attachment", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment Attachment
             {
@@ -1155,6 +1168,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopy();
+                    if(Format != null) dest.Format = (Hl7.Fhir.Model.CodeableConcept)Format.DeepCopy();
                     if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopy();
                     return dest;
                 }
@@ -1175,6 +1189,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(RepresentationElement, otherT.RepresentationElement)) return false;
+                if( !DeepComparable.Matches(Format, otherT.Format)) return false;
                 if( !DeepComparable.Matches(Attachment, otherT.Attachment)) return false;
                 
                 return true;
@@ -1188,6 +1203,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(RepresentationElement, otherT.RepresentationElement)) return false;
+                if( !DeepComparable.IsExactly(Format, otherT.Format)) return false;
                 if( !DeepComparable.IsExactly(Attachment, otherT.Attachment)) return false;
                 
                 return true;
@@ -1202,6 +1218,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (RepresentationElement != null) yield return RepresentationElement;
+                    if (Format != null) yield return Format;
                     if (Attachment != null) yield return Attachment;
                 }
             }
@@ -1214,6 +1231,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Type != null) yield return new ElementValue("type", Type);
                     if (RepresentationElement != null) yield return new ElementValue("representation", RepresentationElement);
+                    if (Format != null) yield return new ElementValue("format", Format);
                     if (Attachment != null) yield return new ElementValue("attachment", Attachment);
                 }
             }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -386,18 +386,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device requested
         /// </summary>
-        [FhirElement("code", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
+        [FhirElement("code", InSummary=true, Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Code
+        public Hl7.Fhir.Model.CodeableReference Code
         {
             get { return _Code; }
             set { _Code = value; OnPropertyChanged("Code"); }
         }
         
-        private Hl7.Fhir.Model.Element _Code;
+        private Hl7.Fhir.Model.CodeableReference _Code;
         
         /// <summary>
         /// Device details
@@ -633,7 +631,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
                 if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)IntentElement.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
-                if(Code != null) dest.Code = (Hl7.Fhir.Model.Element)Code.DeepCopy();
+                if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableReference)Code.DeepCopy();
                 if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.DeviceRequest.ParameterComponent>(Parameter.DeepCopy());
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

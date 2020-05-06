@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -612,6 +612,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("Citation", "http://hl7.org/fhir/resource-types"), Description("Citation")]
+            Citation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Claim", "http://hl7.org/fhir/resource-types"), Description("Claim")]
             Claim,
             /// <summary>
@@ -812,6 +818,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Evidence", "http://hl7.org/fhir/resource-types"), Description("Evidence")]
             Evidence,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("EvidenceFocus", "http://hl7.org/fhir/resource-types"), Description("EvidenceFocus")]
+            EvidenceFocus,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1044,6 +1056,12 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/resource-types"), Description("NutritionProduct")]
+            NutritionProduct,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Observation", "http://hl7.org/fhir/resource-types"), Description("Observation")]
             Observation,
             /// <summary>
@@ -1106,6 +1124,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/resource-types"), Description("PaymentReconciliation")]
             PaymentReconciliation,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("Permission", "http://hl7.org/fhir/resource-types"), Description("Permission")]
+            Permission,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
@@ -1254,6 +1278,18 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)
             /// </summary>
+            [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/resource-types"), Description("SubscriptionStatus")]
+            SubscriptionStatus,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
+            [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/resource-types"), Description("SubscriptionTopic")]
+            SubscriptionTopic,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/resource-types)
+            /// </summary>
             [EnumLiteral("Substance", "http://hl7.org/fhir/resource-types"), Description("Substance")]
             Substance,
             /// <summary>
@@ -1328,12 +1364,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
             TestScript,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/resource-types)
-            /// </summary>
-            [EnumLiteral("Topic", "http://hl7.org/fhir/resource-types"), Description("Topic")]
-            Topic,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/resource-types)

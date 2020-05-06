@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A population, intervention, or exposure definition
+    /// A definition of an exposure, outcome, or other variable
     /// </summary>
     [FhirType("EvidenceVariable", IsResource=true)]
     [DataContract]
@@ -80,6 +80,27 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("descriptive", "http://hl7.org/fhir/variable-type"), Description("Descriptive")]
             Descriptive,
+        }
+
+        /// <summary>
+        /// Logical grouping of characteristics.
+        /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
+        /// </summary>
+        [FhirEnumeration("CharacteristicCombination")]
+        public enum CharacteristicCombination
+        {
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/characteristic-combination)
+            /// </summary>
+            [EnumLiteral("intersection", "http://hl7.org/fhir/characteristic-combination"), Description("intersection")]
+            Intersection,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/characteristic-combination)
+            /// </summary>
+            [EnumLiteral("union", "http://hl7.org/fhir/characteristic-combination"), Description("union")]
+            Union,
         }
 
         /// <summary>
@@ -171,7 +192,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Expression),typeof(DataRequirement),typeof(TriggerDefinition))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Expression))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.Element Definition
@@ -211,42 +232,9 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.ResourceReference _Device;
             
             /// <summary>
-            /// What code/value pairs define members?
-            /// </summary>
-            [FhirElement("booleanSet", Order=80)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> BooleanSetElement
-            {
-                get { if(_BooleanSetElement==null) _BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(); return _BooleanSetElement; }
-                set { _BooleanSetElement = value; OnPropertyChanged("BooleanSetElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.FhirString> _BooleanSetElement;
-            
-            /// <summary>
-            /// What code/value pairs define members?
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> BooleanSet
-            {
-                get { return BooleanSetElement != null ? BooleanSetElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        BooleanSetElement = null; 
-                    else
-                        BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                    OnPropertyChanged("BooleanSet");
-                }
-            }
-            
-            /// <summary>
             /// Whether the characteristic includes or excludes members
             /// </summary>
-            [FhirElement("exclude", Order=90)]
+            [FhirElement("exclude", Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.FhirBoolean ExcludeElement
             {
@@ -276,37 +264,22 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// What time period do participants cover
-            /// </summary>
-            [FhirElement("participantEffective", Order=100, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
-            [DataMember]
-            public Hl7.Fhir.Model.Element ParticipantEffective
-            {
-                get { return _ParticipantEffective; }
-                set { _ParticipantEffective = value; OnPropertyChanged("ParticipantEffective"); }
-            }
-            
-            private Hl7.Fhir.Model.Element _ParticipantEffective;
-            
-            /// <summary>
             /// Observation time from study start
             /// </summary>
-            [FhirElement("timeFromStart", Order=110)]
+            [FhirElement("timeFromStart", Order=90)]
             [DataMember]
-            public Duration TimeFromStart
+            public Hl7.Fhir.Model.EvidenceVariable.TimeFromStartComponent TimeFromStart
             {
                 get { return _TimeFromStart; }
                 set { _TimeFromStart = value; OnPropertyChanged("TimeFromStart"); }
             }
             
-            private Duration _TimeFromStart;
+            private Hl7.Fhir.Model.EvidenceVariable.TimeFromStartComponent _TimeFromStart;
             
             /// <summary>
             /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
             /// </summary>
-            [FhirElement("groupMeasure", Order=120)]
+            [FhirElement("groupMeasure", Order=100)]
             [DataMember]
             public Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> GroupMeasure_Element
             {
@@ -346,10 +319,8 @@ namespace Hl7.Fhir.Model
                     if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
-                    if(BooleanSetElement != null) dest.BooleanSetElement = new List<Hl7.Fhir.Model.FhirString>(BooleanSetElement.DeepCopy());
                     if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
-                    if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.Element)ParticipantEffective.DeepCopy();
-                    if(TimeFromStart != null) dest.TimeFromStart = (Duration)TimeFromStart.DeepCopy();
+                    if(TimeFromStart != null) dest.TimeFromStart = (Hl7.Fhir.Model.EvidenceVariable.TimeFromStartComponent)TimeFromStart.DeepCopy();
                     if(GroupMeasure_Element != null) dest.GroupMeasure_Element = (Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure>)GroupMeasure_Element.DeepCopy();
                     return dest;
                 }
@@ -372,9 +343,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.Matches(Method, otherT.Method)) return false;
                 if( !DeepComparable.Matches(Device, otherT.Device)) return false;
-                if( !DeepComparable.Matches(BooleanSetElement, otherT.BooleanSetElement)) return false;
                 if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
-                if( !DeepComparable.Matches(ParticipantEffective, otherT.ParticipantEffective)) return false;
                 if( !DeepComparable.Matches(TimeFromStart, otherT.TimeFromStart)) return false;
                 if( !DeepComparable.Matches(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
                 
@@ -391,9 +360,7 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
                 if( !DeepComparable.IsExactly(Method, otherT.Method)) return false;
                 if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
-                if( !DeepComparable.IsExactly(BooleanSetElement, otherT.BooleanSetElement)) return false;
                 if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
-                if( !DeepComparable.IsExactly(ParticipantEffective, otherT.ParticipantEffective)) return false;
                 if( !DeepComparable.IsExactly(TimeFromStart, otherT.TimeFromStart)) return false;
                 if( !DeepComparable.IsExactly(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
                 
@@ -411,9 +378,7 @@ namespace Hl7.Fhir.Model
                     if (Definition != null) yield return Definition;
                     if (Method != null) yield return Method;
                     if (Device != null) yield return Device;
-                    foreach (var elem in BooleanSetElement) { if (elem != null) yield return elem; }
                     if (ExcludeElement != null) yield return ExcludeElement;
-                    if (ParticipantEffective != null) yield return ParticipantEffective;
                     if (TimeFromStart != null) yield return TimeFromStart;
                     if (GroupMeasure_Element != null) yield return GroupMeasure_Element;
                 }
@@ -429,11 +394,169 @@ namespace Hl7.Fhir.Model
                     if (Definition != null) yield return new ElementValue("definition", Definition);
                     if (Method != null) yield return new ElementValue("method", Method);
                     if (Device != null) yield return new ElementValue("device", Device);
-                    foreach (var elem in BooleanSetElement) { if (elem != null) yield return new ElementValue("booleanSet", elem); }
                     if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
-                    if (ParticipantEffective != null) yield return new ElementValue("participantEffective", ParticipantEffective);
                     if (TimeFromStart != null) yield return new ElementValue("timeFromStart", TimeFromStart);
                     if (GroupMeasure_Element != null) yield return new ElementValue("groupMeasure", GroupMeasure_Element);
+                }
+            }
+
+            
+        }
+        
+        
+        [FhirType("TimeFromStartComponent", NamedBackboneElement=true)]
+        [DataContract]
+        public partial class TimeFromStartComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        {
+            [NotMapped]
+            public override string TypeName { get { return "TimeFromStartComponent"; } }
+            
+            /// <summary>
+            /// Human readable description
+            /// </summary>
+            [FhirElement("description", Order=40)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString DescriptionElement
+            {
+                get { return _DescriptionElement; }
+                set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _DescriptionElement;
+            
+            /// <summary>
+            /// Human readable description
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string Description
+            {
+                get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DescriptionElement = null; 
+                    else
+                        DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Description");
+                }
+            }
+            
+            /// <summary>
+            /// Used to express the observation at a defined amount of time after the study start
+            /// </summary>
+            [FhirElement("quantity", Order=50)]
+            [DataMember]
+            public Quantity Quantity
+            {
+                get { return _Quantity; }
+                set { _Quantity = value; OnPropertyChanged("Quantity"); }
+            }
+            
+            private Quantity _Quantity;
+            
+            /// <summary>
+            /// Used to express the observation within a period after the study start
+            /// </summary>
+            [FhirElement("range", Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.Range Range
+            {
+                get { return _Range; }
+                set { _Range = value; OnPropertyChanged("Range"); }
+            }
+            
+            private Hl7.Fhir.Model.Range _Range;
+            
+            /// <summary>
+            /// Used for footnotes or explanatory notes
+            /// </summary>
+            [FhirElement("note", Order=70)]
+            [Cardinality(Min=0,Max=-1)]
+            [DataMember]
+            public List<Hl7.Fhir.Model.Annotation> Note
+            {
+                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
+                set { _Note = value; OnPropertyChanged("Note"); }
+            }
+            
+            private List<Hl7.Fhir.Model.Annotation> _Note;
+            
+            public override IDeepCopyable CopyTo(IDeepCopyable other)
+            {
+                var dest = other as TimeFromStartComponent;
+                
+                if (dest != null)
+                {
+                    base.CopyTo(dest);
+                    if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
+                    if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
+                    if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
+                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
+                    return dest;
+                }
+                else
+                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            }
+            
+            public override IDeepCopyable DeepCopy()
+            {
+                return CopyTo(new TimeFromStartComponent());
+            }
+            
+            public override bool Matches(IDeepComparable other)
+            {
+                var otherT = other as TimeFromStartComponent;
+                if(otherT == null) return false;
+                
+                if(!base.Matches(otherT)) return false;
+                if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.Matches(Range, otherT.Range)) return false;
+                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+            
+            public override bool IsExactly(IDeepComparable other)
+            {
+                var otherT = other as TimeFromStartComponent;
+                if(otherT == null) return false;
+                
+                if(!base.IsExactly(otherT)) return false;
+                if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+                if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
+                if( !DeepComparable.IsExactly(Range, otherT.Range)) return false;
+                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
+                
+                return true;
+            }
+
+
+            [NotMapped]
+            public override IEnumerable<Base> Children
+            {
+                get
+                {
+                    foreach (var item in base.Children) yield return item;
+                    if (DescriptionElement != null) yield return DescriptionElement;
+                    if (Quantity != null) yield return Quantity;
+                    if (Range != null) yield return Range;
+                    foreach (var elem in Note) { if (elem != null) yield return elem; }
+                }
+            }
+
+            [NotMapped]
+            public override IEnumerable<ElementValue> NamedChildren
+            {
+                get
+                {
+                    foreach (var item in base.NamedChildren) yield return item;
+                    if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+                    if (Quantity != null) yield return new ElementValue("quantity", Quantity);
+                    if (Range != null) yield return new ElementValue("range", Range);
+                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 }
             }
 
@@ -1052,9 +1175,41 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// intersection | union
+        /// </summary>
+        [FhirElement("characteristicCombination", Order=360)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination> CharacteristicCombination_Element
+        {
+            get { return _CharacteristicCombination_Element; }
+            set { _CharacteristicCombination_Element = value; OnPropertyChanged("CharacteristicCombination_Element"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination> _CharacteristicCombination_Element;
+        
+        /// <summary>
+        /// intersection | union
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination? CharacteristicCombination_
+        {
+            get { return CharacteristicCombination_Element != null ? CharacteristicCombination_Element.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  CharacteristicCombination_Element = null; 
+                else
+                  CharacteristicCombination_Element = new Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination>(value);
+                OnPropertyChanged("CharacteristicCombination_");
+            }
+        }
+        
+        /// <summary>
         /// What defines the members of the evidence element
         /// </summary>
-        [FhirElement("characteristic", InSummary=true, Order=360)]
+        [FhirElement("characteristic", InSummary=true, Order=370)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> Characteristic
@@ -1116,6 +1271,7 @@ namespace Hl7.Fhir.Model
                 if(RelatedArtifact != null) dest.RelatedArtifact = new List<RelatedArtifact>(RelatedArtifact.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.EvidenceVariable.EvidenceVariableType>)TypeElement.DeepCopy();
                 if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
+                if(CharacteristicCombination_Element != null) dest.CharacteristicCombination_Element = (Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination>)CharacteristicCombination_Element.DeepCopy();
                 if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent>(Characteristic.DeepCopy());
                 return dest;
             }
@@ -1161,6 +1317,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
+            if( !DeepComparable.Matches(CharacteristicCombination_Element, otherT.CharacteristicCombination_Element)) return false;
             if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
             
             return true;
@@ -1199,6 +1356,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
             if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
+            if( !DeepComparable.IsExactly(CharacteristicCombination_Element, otherT.CharacteristicCombination_Element)) return false;
             if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
             
             return true;
@@ -1237,6 +1395,7 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
 				if (ActualElement != null) yield return ActualElement;
+				if (CharacteristicCombination_Element != null) yield return CharacteristicCombination_Element;
 				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
             }
         }
@@ -1274,6 +1433,7 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
                 if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
+                if (CharacteristicCombination_Element != null) yield return new ElementValue("characteristicCombination", CharacteristicCombination_Element);
                 foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
             }
         }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -306,18 +306,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication(s) or MedicinalProductIngredient(s) contained in the medication
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("item", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.CodeableReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.CodeableReference _Item;
             
             /// <summary>
             /// Active ingredient indicator
@@ -373,7 +371,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Element)Strength.DeepCopy();
                     return dest;
@@ -732,17 +730,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indication for use that apply to the specific administration guidelines
             /// </summary>
-            [FhirElement("indication", Order=50, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("indication", Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Indication
+            public Hl7.Fhir.Model.CodeableReference Indication
             {
                 get { return _Indication; }
                 set { _Indication = value; OnPropertyChanged("Indication"); }
             }
             
-            private Hl7.Fhir.Model.Element _Indication;
+            private Hl7.Fhir.Model.CodeableReference _Indication;
             
             /// <summary>
             /// Characteristics of the patient that are relevant to the administration guidelines
@@ -766,7 +762,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent>(Dosage.DeepCopy());
-                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
+                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.CodeableReference)Indication.DeepCopy();
                     if(PatientCharacteristic != null) dest.PatientCharacteristic = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicComponent>(PatientCharacteristic.DeepCopy());
                     return dest;
                 }
@@ -948,53 +944,33 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "PatientCharacteristicComponent"; } }
             
             /// <summary>
-            /// Specific characteristic that is relevant to the administration guideline
+            /// Categorization of specific characteristic that is relevant to the administration guideline
             /// </summary>
-            [FhirElement("characteristic", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.SimpleQuantity))]
+            [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Characteristic
+            public Hl7.Fhir.Model.CodeableConcept Type
             {
-                get { return _Characteristic; }
-                set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
             }
             
-            private Hl7.Fhir.Model.Element _Characteristic;
+            private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// The specific characteristic
             /// </summary>
-            [FhirElement("value", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
+            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [CLSCompliant(false)]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> ValueElement
+            public Hl7.Fhir.Model.Element Value
             {
-                get { if(_ValueElement==null) _ValueElement = new List<Hl7.Fhir.Model.FhirString>(); return _ValueElement; }
-                set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+                get { return _Value; }
+                set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private List<Hl7.Fhir.Model.FhirString> _ValueElement;
-            
-            /// <summary>
-            /// The specific characteristic
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Value
-            {
-                get { return ValueElement != null ? ValueElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        ValueElement = null; 
-                    else
-                        ValueElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                    OnPropertyChanged("Value");
-                }
-            }
+            private Hl7.Fhir.Model.Element _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1003,8 +979,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Characteristic != null) dest.Characteristic = (Hl7.Fhir.Model.Element)Characteristic.DeepCopy();
-                    if(ValueElement != null) dest.ValueElement = new List<Hl7.Fhir.Model.FhirString>(ValueElement.DeepCopy());
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1022,8 +998,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
-                if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -1034,8 +1010,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
-                if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
             }
@@ -1047,8 +1023,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Characteristic != null) yield return Characteristic;
-                    foreach (var elem in ValueElement) { if (elem != null) yield return elem; }
+                    if (Type != null) yield return Type;
+                    if (Value != null) yield return Value;
                 }
             }
 
@@ -1058,8 +1034,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Characteristic != null) yield return new ElementValue("characteristic", Characteristic);
-                    foreach (var elem in ValueElement) { if (elem != null) yield return new ElementValue("value", elem); }
+                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
 
@@ -1359,7 +1335,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Base64Binary))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.Attachment))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {

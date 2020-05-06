@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -170,28 +170,28 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("material", InSummary=true, Order=40)]
+            [FhirElement("code", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Material
+            public Hl7.Fhir.Model.CodeableConcept Code
             {
-                get { return _Material; }
-                set { _Material = value; OnPropertyChanged("Material"); }
+                get { return _Code; }
+                set { _Code = value; OnPropertyChanged("Code"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Material;
+            private Hl7.Fhir.Model.CodeableConcept _Code;
             
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("type", InSummary=true, Order=50)]
+            [FhirElement("category", InSummary=true, Order=50)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Type
+            public Hl7.Fhir.Model.CodeableConcept Category
             {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
+                get { return _Category; }
+                set { _Category = value; OnPropertyChanged("Category"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Type;
+            private Hl7.Fhir.Model.CodeableConcept _Category;
             
             /// <summary>
             /// Todo
@@ -245,8 +245,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Material != null) dest.Material = (Hl7.Fhir.Model.CodeableConcept)Material.DeepCopy();
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
+                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopy();
                     if(Amount != null) dest.Amount = (SubstanceAmount)Amount.DeepCopy();
                     return dest;
@@ -266,8 +266,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Material, otherT.Material)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
+                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Category, otherT.Category)) return false;
                 if( !DeepComparable.Matches(IsDefiningElement, otherT.IsDefiningElement)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
                 
@@ -280,8 +280,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Material, otherT.Material)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
+                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
                 if( !DeepComparable.IsExactly(IsDefiningElement, otherT.IsDefiningElement)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 
@@ -295,8 +295,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Material != null) yield return Material;
-                    if (Type != null) yield return Type;
+                    if (Code != null) yield return Code;
+                    if (Category != null) yield return Category;
                     if (IsDefiningElement != null) yield return IsDefiningElement;
                     if (Amount != null) yield return Amount;
                 }
@@ -308,8 +308,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Material != null) yield return new ElementValue("material", Material);
-                    if (Type != null) yield return new ElementValue("type", Type);
+                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Category != null) yield return new ElementValue("category", Category);
                     if (IsDefiningElement != null) yield return new ElementValue("isDefining", IsDefiningElement);
                     if (Amount != null) yield return new ElementValue("amount", Amount);
                 }
@@ -508,28 +508,15 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("orientationOfPolymerisation", InSummary=true, Order=40)]
+            [FhirElement("unit", InSummary=true, Order=40)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept OrientationOfPolymerisation
+            public Hl7.Fhir.Model.FhirString UnitElement
             {
-                get { return _OrientationOfPolymerisation; }
-                set { _OrientationOfPolymerisation = value; OnPropertyChanged("OrientationOfPolymerisation"); }
+                get { return _UnitElement; }
+                set { _UnitElement = value; OnPropertyChanged("UnitElement"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _OrientationOfPolymerisation;
-            
-            /// <summary>
-            /// Todo
-            /// </summary>
-            [FhirElement("repeatUnit", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirString RepeatUnitElement
-            {
-                get { return _RepeatUnitElement; }
-                set { _RepeatUnitElement = value; OnPropertyChanged("RepeatUnitElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirString _RepeatUnitElement;
+            private Hl7.Fhir.Model.FhirString _UnitElement;
             
             /// <summary>
             /// Todo
@@ -537,18 +524,31 @@ namespace Hl7.Fhir.Model
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string RepeatUnit
+            public string Unit
             {
-                get { return RepeatUnitElement != null ? RepeatUnitElement.Value : null; }
+                get { return UnitElement != null ? UnitElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        RepeatUnitElement = null; 
+                        UnitElement = null; 
                     else
-                        RepeatUnitElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("RepeatUnit");
+                        UnitElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("Unit");
                 }
             }
+            
+            /// <summary>
+            /// Todo
+            /// </summary>
+            [FhirElement("orientation", InSummary=true, Order=50)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Orientation
+            {
+                get { return _Orientation; }
+                set { _Orientation = value; OnPropertyChanged("Orientation"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Orientation;
             
             /// <summary>
             /// Todo
@@ -598,8 +598,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(OrientationOfPolymerisation != null) dest.OrientationOfPolymerisation = (Hl7.Fhir.Model.CodeableConcept)OrientationOfPolymerisation.DeepCopy();
-                    if(RepeatUnitElement != null) dest.RepeatUnitElement = (Hl7.Fhir.Model.FhirString)RepeatUnitElement.DeepCopy();
+                    if(UnitElement != null) dest.UnitElement = (Hl7.Fhir.Model.FhirString)UnitElement.DeepCopy();
+                    if(Orientation != null) dest.Orientation = (Hl7.Fhir.Model.CodeableConcept)Orientation.DeepCopy();
                     if(Amount != null) dest.Amount = (SubstanceAmount)Amount.DeepCopy();
                     if(DegreeOfPolymerisation != null) dest.DegreeOfPolymerisation = new List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent>(DegreeOfPolymerisation.DeepCopy());
                     if(StructuralRepresentation != null) dest.StructuralRepresentation = new List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent>(StructuralRepresentation.DeepCopy());
@@ -620,8 +620,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(OrientationOfPolymerisation, otherT.OrientationOfPolymerisation)) return false;
-                if( !DeepComparable.Matches(RepeatUnitElement, otherT.RepeatUnitElement)) return false;
+                if( !DeepComparable.Matches(UnitElement, otherT.UnitElement)) return false;
+                if( !DeepComparable.Matches(Orientation, otherT.Orientation)) return false;
                 if( !DeepComparable.Matches(Amount, otherT.Amount)) return false;
                 if( !DeepComparable.Matches(DegreeOfPolymerisation, otherT.DegreeOfPolymerisation)) return false;
                 if( !DeepComparable.Matches(StructuralRepresentation, otherT.StructuralRepresentation)) return false;
@@ -635,8 +635,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(OrientationOfPolymerisation, otherT.OrientationOfPolymerisation)) return false;
-                if( !DeepComparable.IsExactly(RepeatUnitElement, otherT.RepeatUnitElement)) return false;
+                if( !DeepComparable.IsExactly(UnitElement, otherT.UnitElement)) return false;
+                if( !DeepComparable.IsExactly(Orientation, otherT.Orientation)) return false;
                 if( !DeepComparable.IsExactly(Amount, otherT.Amount)) return false;
                 if( !DeepComparable.IsExactly(DegreeOfPolymerisation, otherT.DegreeOfPolymerisation)) return false;
                 if( !DeepComparable.IsExactly(StructuralRepresentation, otherT.StructuralRepresentation)) return false;
@@ -651,8 +651,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (OrientationOfPolymerisation != null) yield return OrientationOfPolymerisation;
-                    if (RepeatUnitElement != null) yield return RepeatUnitElement;
+                    if (UnitElement != null) yield return UnitElement;
+                    if (Orientation != null) yield return Orientation;
                     if (Amount != null) yield return Amount;
                     foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return elem; }
                     foreach (var elem in StructuralRepresentation) { if (elem != null) yield return elem; }
@@ -665,8 +665,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (OrientationOfPolymerisation != null) yield return new ElementValue("orientationOfPolymerisation", OrientationOfPolymerisation);
-                    if (RepeatUnitElement != null) yield return new ElementValue("repeatUnit", RepeatUnitElement);
+                    if (UnitElement != null) yield return new ElementValue("unit", UnitElement);
+                    if (Orientation != null) yield return new ElementValue("orientation", Orientation);
                     if (Amount != null) yield return new ElementValue("amount", Amount);
                     foreach (var elem in DegreeOfPolymerisation) { if (elem != null) yield return new ElementValue("degreeOfPolymerisation", elem); }
                     foreach (var elem in StructuralRepresentation) { if (elem != null) yield return new ElementValue("structuralRepresentation", elem); }
@@ -836,7 +836,20 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Todo
             /// </summary>
-            [FhirElement("attachment", InSummary=true, Order=60)]
+            [FhirElement("format", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.CodeableConcept Format
+            {
+                get { return _Format; }
+                set { _Format = value; OnPropertyChanged("Format"); }
+            }
+            
+            private Hl7.Fhir.Model.CodeableConcept _Format;
+            
+            /// <summary>
+            /// Todo
+            /// </summary>
+            [FhirElement("attachment", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Attachment Attachment
             {
@@ -855,6 +868,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(RepresentationElement != null) dest.RepresentationElement = (Hl7.Fhir.Model.FhirString)RepresentationElement.DeepCopy();
+                    if(Format != null) dest.Format = (Hl7.Fhir.Model.CodeableConcept)Format.DeepCopy();
                     if(Attachment != null) dest.Attachment = (Hl7.Fhir.Model.Attachment)Attachment.DeepCopy();
                     return dest;
                 }
@@ -875,6 +889,7 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(RepresentationElement, otherT.RepresentationElement)) return false;
+                if( !DeepComparable.Matches(Format, otherT.Format)) return false;
                 if( !DeepComparable.Matches(Attachment, otherT.Attachment)) return false;
                 
                 return true;
@@ -888,6 +903,7 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(RepresentationElement, otherT.RepresentationElement)) return false;
+                if( !DeepComparable.IsExactly(Format, otherT.Format)) return false;
                 if( !DeepComparable.IsExactly(Attachment, otherT.Attachment)) return false;
                 
                 return true;
@@ -902,6 +918,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Type != null) yield return Type;
                     if (RepresentationElement != null) yield return RepresentationElement;
+                    if (Format != null) yield return Format;
                     if (Attachment != null) yield return Attachment;
                 }
             }
@@ -914,6 +931,7 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Type != null) yield return new ElementValue("type", Type);
                     if (RepresentationElement != null) yield return new ElementValue("representation", RepresentationElement);
+                    if (Format != null) yield return new ElementValue("format", Format);
                     if (Attachment != null) yield return new ElementValue("attachment", Attachment);
                 }
             }
@@ -925,7 +943,20 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("class", InSummary=true, Order=90)]
+        [FhirElement("identifier", InSummary=true, Order=90)]
+        [DataMember]
+        public Hl7.Fhir.Model.Identifier Identifier
+        {
+            get { return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private Hl7.Fhir.Model.Identifier _Identifier;
+        
+        /// <summary>
+        /// Todo
+        /// </summary>
+        [FhirElement("class", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Class
         {
@@ -938,7 +969,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("geometry", InSummary=true, Order=100)]
+        [FhirElement("geometry", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Geometry
         {
@@ -951,7 +982,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("copolymerConnectivity", InSummary=true, Order=110)]
+        [FhirElement("copolymerConnectivity", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> CopolymerConnectivity
@@ -963,34 +994,33 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _CopolymerConnectivity;
         
         /// <summary>
-        /// Todo
+        /// Todo. This is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder
         /// </summary>
-        [FhirElement("modification", InSummary=true, Order=120)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("modification", InSummary=true, Order=130)]
         [DataMember]
-        public List<Hl7.Fhir.Model.FhirString> ModificationElement
+        public Hl7.Fhir.Model.FhirString ModificationElement
         {
-            get { if(_ModificationElement==null) _ModificationElement = new List<Hl7.Fhir.Model.FhirString>(); return _ModificationElement; }
+            get { return _ModificationElement; }
             set { _ModificationElement = value; OnPropertyChanged("ModificationElement"); }
         }
         
-        private List<Hl7.Fhir.Model.FhirString> _ModificationElement;
+        private Hl7.Fhir.Model.FhirString _ModificationElement;
         
         /// <summary>
-        /// Todo
+        /// Todo. This is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IEnumerable<string> Modification
+        public string Modification
         {
-            get { return ModificationElement != null ? ModificationElement.Select(elem => elem.Value) : null; }
+            get { return ModificationElement != null ? ModificationElement.Value : null; }
             set
             {
                 if (value == null)
                   ModificationElement = null; 
                 else
-                  ModificationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                  ModificationElement = new Hl7.Fhir.Model.FhirString(value);
                 OnPropertyChanged("Modification");
             }
         }
@@ -998,7 +1028,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("monomerSet", InSummary=true, Order=130)]
+        [FhirElement("monomerSet", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> MonomerSet
@@ -1012,7 +1042,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Todo
         /// </summary>
-        [FhirElement("repeat", InSummary=true, Order=140)]
+        [FhirElement("repeat", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> Repeat
@@ -1037,10 +1067,11 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
+                if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Class != null) dest.Class = (Hl7.Fhir.Model.CodeableConcept)Class.DeepCopy();
                 if(Geometry != null) dest.Geometry = (Hl7.Fhir.Model.CodeableConcept)Geometry.DeepCopy();
                 if(CopolymerConnectivity != null) dest.CopolymerConnectivity = new List<Hl7.Fhir.Model.CodeableConcept>(CopolymerConnectivity.DeepCopy());
-                if(ModificationElement != null) dest.ModificationElement = new List<Hl7.Fhir.Model.FhirString>(ModificationElement.DeepCopy());
+                if(ModificationElement != null) dest.ModificationElement = (Hl7.Fhir.Model.FhirString)ModificationElement.DeepCopy();
                 if(MonomerSet != null) dest.MonomerSet = new List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent>(MonomerSet.DeepCopy());
                 if(Repeat != null) dest.Repeat = new List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent>(Repeat.DeepCopy());
                 return dest;
@@ -1060,6 +1091,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.Matches(otherT)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Class, otherT.Class)) return false;
             if( !DeepComparable.Matches(Geometry, otherT.Geometry)) return false;
             if( !DeepComparable.Matches(CopolymerConnectivity, otherT.CopolymerConnectivity)) return false;
@@ -1076,6 +1108,7 @@ namespace Hl7.Fhir.Model
             if(otherT == null) return false;
             
             if(!base.IsExactly(otherT)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Class, otherT.Class)) return false;
             if( !DeepComparable.IsExactly(Geometry, otherT.Geometry)) return false;
             if( !DeepComparable.IsExactly(CopolymerConnectivity, otherT.CopolymerConnectivity)) return false;
@@ -1092,10 +1125,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.Children) yield return item;
+				if (Identifier != null) yield return Identifier;
 				if (Class != null) yield return Class;
 				if (Geometry != null) yield return Geometry;
 				foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return elem; }
-				foreach (var elem in ModificationElement) { if (elem != null) yield return elem; }
+				if (ModificationElement != null) yield return ModificationElement;
 				foreach (var elem in MonomerSet) { if (elem != null) yield return elem; }
 				foreach (var elem in Repeat) { if (elem != null) yield return elem; }
             }
@@ -1107,10 +1141,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 foreach (var item in base.NamedChildren) yield return item;
+                if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (Class != null) yield return new ElementValue("class", Class);
                 if (Geometry != null) yield return new ElementValue("geometry", Geometry);
                 foreach (var elem in CopolymerConnectivity) { if (elem != null) yield return new ElementValue("copolymerConnectivity", elem); }
-                foreach (var elem in ModificationElement) { if (elem != null) yield return new ElementValue("modification", elem); }
+                if (ModificationElement != null) yield return new ElementValue("modification", ModificationElement);
                 foreach (var elem in MonomerSet) { if (elem != null) yield return new ElementValue("monomerSet", elem); }
                 foreach (var elem in Repeat) { if (elem != null) yield return new ElementValue("repeat", elem); }
             }

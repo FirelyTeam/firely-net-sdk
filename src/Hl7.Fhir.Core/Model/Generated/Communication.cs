@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// A record of information transmitted from a sender to a receiver
+    /// A clinical or business level record of information being transmitted or shared
     /// </summary>
     [FhirType("Communication", IsResource=true)]
     [DataContract]

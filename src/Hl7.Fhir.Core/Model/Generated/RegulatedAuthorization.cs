@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// The regulatory authorization of a medicinal product
+    /// The regulatory authorization of a type of medicinal item or service
     /// </summary>
     [FhirType("RegulatedAuthorization", IsResource=true)]
     [DataContract]
@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CaseComponent"; } }
             
             /// <summary>
-            /// Identifier for this case
+            /// Identifier by which this case can be referenced
             /// </summary>
             [FhirElement("identifier", InSummary=true, Order=40)]
             [DataMember]
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Identifier _Identifier;
             
             /// <summary>
-            /// Type of case
+            /// The defining type of case
             /// </summary>
             [FhirElement("type", InSummary=true, Order=50)]
             [DataMember]
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// The status of the case
+            /// The status associated with the case
             /// </summary>
             [FhirElement("status", InSummary=true, Order=60)]
             [DataMember]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Status;
             
             /// <summary>
-            /// Date of case
+            /// Relevant date for this of case
             /// </summary>
             [FhirElement("date", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
         
         
         /// <summary>
-        /// Business identifier for the marketing authorization, as assigned by a regulator
+        /// Business identifier for the authorization, typically assigned by the authorizing body
         /// </summary>
         [FhirElement("identifier", InSummary=true, Order=90)]
         [Cardinality(Min=0,Max=-1)]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// The product that is being authorized
+        /// The type of product or service that is being authorized
         /// </summary>
         [FhirElement("subject", InSummary=true, Order=100)]
         [CLSCompliant(false)]
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
-        /// Type of this authorization, for example drug marketing approval, orphan drug designation
+        /// Overall type of this authorization, for example drug marketing approval, orphan drug designation
         /// </summary>
         [FhirElement("type", InSummary=true, Order=110)]
         [DataMember]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Region;
         
         /// <summary>
-        /// The status of the marketing authorization
+        /// The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications
         /// </summary>
         [FhirElement("status", InSummary=true, Order=140)]
         [DataMember]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Status;
         
         /// <summary>
-        /// The date at which the given status has become applicable
+        /// The date at which the given status became applicable
         /// </summary>
         [FhirElement("statusDate", InSummary=true, Order=150)]
         [DataMember]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirDateTime _StatusDateElement;
         
         /// <summary>
-        /// The date at which the given status has become applicable
+        /// The date at which the given status became applicable
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -452,9 +452,37 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Period _ValidityPeriod;
         
         /// <summary>
-        /// The legal framework against which this authorization is granted, or other reasons for it
+        /// Condition for which the medicinal use applies
         /// </summary>
-        [FhirElement("basis", InSummary=true, Order=170)]
+        [FhirElement("indication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [CLSCompliant(false)]
+		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [DataMember]
+        public Hl7.Fhir.Model.Element Indication
+        {
+            get { return _Indication; }
+            set { _Indication = value; OnPropertyChanged("Indication"); }
+        }
+        
+        private Hl7.Fhir.Model.Element _Indication;
+        
+        /// <summary>
+        /// The intended use of the product, e.g. prevention, treatment
+        /// </summary>
+        [FhirElement("intendedUse", InSummary=true, Order=180)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept IntendedUse
+        {
+            get { return _IntendedUse; }
+            set { _IntendedUse = value; OnPropertyChanged("IntendedUse"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _IntendedUse;
+        
+        /// <summary>
+        /// The legal or regulatory framework against which this authorization is granted, or other reasons for it
+        /// </summary>
+        [FhirElement("basis", InSummary=true, Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Basis
@@ -468,7 +496,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Other dates associated with the authorization. It is common for an authorization to have renewal dates, initial time limited phases and so on
         /// </summary>
-        [FhirElement("relatedDate", InSummary=true, Order=180)]
+        [FhirElement("relatedDate", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.RegulatedAuthorization.RelatedDateComponent> RelatedDate
@@ -482,7 +510,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Authorization in areas within a country
         /// </summary>
-        [FhirElement("jurisdictionalAuthorization", InSummary=true, Order=190)]
+        [FhirElement("jurisdictionalAuthorization", InSummary=true, Order=210)]
         [CLSCompliant(false)]
 		[References("RegulatedAuthorization")]
         [Cardinality(Min=0,Max=-1)]
@@ -498,7 +526,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Marketing Authorization Holder
         /// </summary>
-        [FhirElement("holder", InSummary=true, Order=200)]
+        [FhirElement("holder", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -513,7 +541,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medicines Regulatory Agency
         /// </summary>
-        [FhirElement("regulator", InSummary=true, Order=210)]
+        [FhirElement("regulator", InSummary=true, Order=230)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [DataMember]
@@ -528,7 +556,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The case or regulatory procedure for granting or amending a marketing authorization
         /// </summary>
-        [FhirElement("case", InSummary=true, Order=220)]
+        [FhirElement("case", InSummary=true, Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.RegulatedAuthorization.CaseComponent Case
         {
@@ -560,6 +588,8 @@ namespace Hl7.Fhir.Model
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                 if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
                 if(ValidityPeriod != null) dest.ValidityPeriod = (Hl7.Fhir.Model.Period)ValidityPeriod.DeepCopy();
+                if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
+                if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
                 if(Basis != null) dest.Basis = new List<Hl7.Fhir.Model.CodeableConcept>(Basis.DeepCopy());
                 if(RelatedDate != null) dest.RelatedDate = new List<Hl7.Fhir.Model.RegulatedAuthorization.RelatedDateComponent>(RelatedDate.DeepCopy());
                 if(JurisdictionalAuthorization != null) dest.JurisdictionalAuthorization = new List<Hl7.Fhir.Model.ResourceReference>(JurisdictionalAuthorization.DeepCopy());
@@ -591,6 +621,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Status, otherT.Status)) return false;
             if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.Matches(ValidityPeriod, otherT.ValidityPeriod)) return false;
+            if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.Matches(IntendedUse, otherT.IntendedUse)) return false;
             if( !DeepComparable.Matches(Basis, otherT.Basis)) return false;
             if( !DeepComparable.Matches(RelatedDate, otherT.RelatedDate)) return false;
             if( !DeepComparable.Matches(JurisdictionalAuthorization, otherT.JurisdictionalAuthorization)) return false;
@@ -615,6 +647,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
             if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
             if( !DeepComparable.IsExactly(ValidityPeriod, otherT.ValidityPeriod)) return false;
+            if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+            if( !DeepComparable.IsExactly(IntendedUse, otherT.IntendedUse)) return false;
             if( !DeepComparable.IsExactly(Basis, otherT.Basis)) return false;
             if( !DeepComparable.IsExactly(RelatedDate, otherT.RelatedDate)) return false;
             if( !DeepComparable.IsExactly(JurisdictionalAuthorization, otherT.JurisdictionalAuthorization)) return false;
@@ -639,6 +673,8 @@ namespace Hl7.Fhir.Model
 				if (Status != null) yield return Status;
 				if (StatusDateElement != null) yield return StatusDateElement;
 				if (ValidityPeriod != null) yield return ValidityPeriod;
+				if (Indication != null) yield return Indication;
+				if (IntendedUse != null) yield return IntendedUse;
 				foreach (var elem in Basis) { if (elem != null) yield return elem; }
 				foreach (var elem in RelatedDate) { if (elem != null) yield return elem; }
 				foreach (var elem in JurisdictionalAuthorization) { if (elem != null) yield return elem; }
@@ -662,6 +698,8 @@ namespace Hl7.Fhir.Model
                 if (Status != null) yield return new ElementValue("status", Status);
                 if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
                 if (ValidityPeriod != null) yield return new ElementValue("validityPeriod", ValidityPeriod);
+                if (Indication != null) yield return new ElementValue("indication", Indication);
+                if (IntendedUse != null) yield return new ElementValue("intendedUse", IntendedUse);
                 foreach (var elem in Basis) { if (elem != null) yield return new ElementValue("basis", elem); }
                 foreach (var elem in RelatedDate) { if (elem != null) yield return new ElementValue("relatedDate", elem); }
                 foreach (var elem in JurisdictionalAuthorization) { if (elem != null) yield return new ElementValue("jurisdictionalAuthorization", elem); }

@@ -39,7 +39,7 @@ using Hl7.Fhir.Specification;
 */
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("dose", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Dose
             {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("rate", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
 			[CLSCompliant(false)]
-            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
+            [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.SimpleQuantity))]
             [DataMember]
             public Hl7.Fhir.Model.Element Rate
             {

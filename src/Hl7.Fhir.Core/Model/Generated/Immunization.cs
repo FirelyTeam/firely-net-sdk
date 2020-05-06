@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -638,33 +638,67 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dose number within series
             /// </summary>
-            [FhirElement("doseNumber", Order=70, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+            [FhirElement("doseNumber", Order=70)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element DoseNumber
+            public Hl7.Fhir.Model.FhirString DoseNumberElement
             {
-                get { return _DoseNumber; }
-                set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
+                get { return _DoseNumberElement; }
+                set { _DoseNumberElement = value; OnPropertyChanged("DoseNumberElement"); }
             }
             
-            private Hl7.Fhir.Model.Element _DoseNumber;
+            private Hl7.Fhir.Model.FhirString _DoseNumberElement;
+            
+            /// <summary>
+            /// Dose number within series
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string DoseNumber
+            {
+                get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        DoseNumberElement = null; 
+                    else
+                        DoseNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("DoseNumber");
+                }
+            }
             
             /// <summary>
             /// Recommended number of doses for immunity
             /// </summary>
-            [FhirElement("seriesDoses", Order=80, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+            [FhirElement("seriesDoses", Order=80)]
             [DataMember]
-            public Hl7.Fhir.Model.Element SeriesDoses
+            public Hl7.Fhir.Model.FhirString SeriesDosesElement
             {
-                get { return _SeriesDoses; }
-                set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
+                get { return _SeriesDosesElement; }
+                set { _SeriesDosesElement = value; OnPropertyChanged("SeriesDosesElement"); }
             }
             
-            private Hl7.Fhir.Model.Element _SeriesDoses;
+            private Hl7.Fhir.Model.FhirString _SeriesDosesElement;
+            
+            /// <summary>
+            /// Recommended number of doses for immunity
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string SeriesDoses
+            {
+                get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        SeriesDosesElement = null; 
+                    else
+                        SeriesDosesElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("SeriesDoses");
+                }
+            }
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -676,8 +710,8 @@ namespace Hl7.Fhir.Model
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(TargetDisease != null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
-                    if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
-                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
+                    if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.FhirString)DoseNumberElement.DeepCopy();
+                    if(SeriesDosesElement != null) dest.SeriesDosesElement = (Hl7.Fhir.Model.FhirString)SeriesDosesElement.DeepCopy();
                     return dest;
                 }
                 else
@@ -698,8 +732,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
                 if( !DeepComparable.Matches(Authority, otherT.Authority)) return false;
                 if( !DeepComparable.Matches(TargetDisease, otherT.TargetDisease)) return false;
-                if( !DeepComparable.Matches(DoseNumber, otherT.DoseNumber)) return false;
-                if( !DeepComparable.Matches(SeriesDoses, otherT.SeriesDoses)) return false;
+                if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
+                if( !DeepComparable.Matches(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
                 
                 return true;
             }
@@ -713,8 +747,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
                 if( !DeepComparable.IsExactly(Authority, otherT.Authority)) return false;
                 if( !DeepComparable.IsExactly(TargetDisease, otherT.TargetDisease)) return false;
-                if( !DeepComparable.IsExactly(DoseNumber, otherT.DoseNumber)) return false;
-                if( !DeepComparable.IsExactly(SeriesDoses, otherT.SeriesDoses)) return false;
+                if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
+                if( !DeepComparable.IsExactly(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
                 
                 return true;
             }
@@ -729,8 +763,8 @@ namespace Hl7.Fhir.Model
                     if (SeriesElement != null) yield return SeriesElement;
                     if (Authority != null) yield return Authority;
                     foreach (var elem in TargetDisease) { if (elem != null) yield return elem; }
-                    if (DoseNumber != null) yield return DoseNumber;
-                    if (SeriesDoses != null) yield return SeriesDoses;
+                    if (DoseNumberElement != null) yield return DoseNumberElement;
+                    if (SeriesDosesElement != null) yield return SeriesDosesElement;
                 }
             }
 
@@ -743,8 +777,8 @@ namespace Hl7.Fhir.Model
                     if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
                     if (Authority != null) yield return new ElementValue("authority", Authority);
                     foreach (var elem in TargetDisease) { if (elem != null) yield return new ElementValue("targetDisease", elem); }
-                    if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
-                    if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
+                    if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
+                    if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", SeriesDosesElement);
                 }
             }
 

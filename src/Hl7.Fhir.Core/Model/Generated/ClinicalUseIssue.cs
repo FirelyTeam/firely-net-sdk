@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -90,8 +90,8 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/clinical-use-issue-type)
             /// </summary>
-            [EnumLiteral("other", "http://hl7.org/fhir/clinical-use-issue-type"), Description("Other")]
-            Other,
+            [EnumLiteral("warning", "http://hl7.org/fhir/clinical-use-issue-type"), Description("Warning")]
+            Warning,
         }
 
         [FhirType("ContraindicationComponent", NamedBackboneElement=true)]
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Identifier> _Identifier;
         
         /// <summary>
-        /// indication | contraindication | interaction | undesirable-effect | other
+        /// indication | contraindication | interaction | undesirable-effect | warning
         /// </summary>
         [FhirElement("type", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.ClinicalUseIssue.ClinicalUseIssueType> _TypeElement;
         
         /// <summary>
-        /// indication | contraindication | interaction | undesirable-effect | other
+        /// indication | contraindication | interaction | undesirable-effect | warning
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -982,9 +982,22 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy and Lactation", "Overdose", "Effects Ability to Drive and Use Machines"
+        /// </summary>
+        [FhirElement("category", InSummary=true, Order=110)]
+        [DataMember]
+        public Hl7.Fhir.Model.CodeableConcept Category
+        {
+            get { return _Category; }
+            set { _Category = value; OnPropertyChanged("Category"); }
+        }
+        
+        private Hl7.Fhir.Model.CodeableConcept _Category;
+        
+        /// <summary>
         /// The medication or procedure for which this is an indication
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=110)]
+        [FhirElement("subject", InSummary=true, Order=120)]
         [CLSCompliant(false)]
 		[References("MedicinalProductDefinition","Medication","ActivityDefinition","PlanDefinition","Device","DeviceDefinition","Substance")]
         [Cardinality(Min=0,Max=-1)]
@@ -1000,7 +1013,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// General description
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=120)]
+        [FhirElement("status", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Status
         {
@@ -1013,7 +1026,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// General description
         /// </summary>
-        [FhirElement("description", InSummary=true, Order=130)]
+        [FhirElement("description", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -1026,7 +1039,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specifics for when this is a contraindication
         /// </summary>
-        [FhirElement("contraindication", InSummary=true, Order=140)]
+        [FhirElement("contraindication", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.ClinicalUseIssue.ContraindicationComponent Contraindication
         {
@@ -1039,7 +1052,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specifics for when this is an indication
         /// </summary>
-        [FhirElement("indication", InSummary=true, Order=150)]
+        [FhirElement("indication", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.ClinicalUseIssue.IndicationComponent Indication
         {
@@ -1052,7 +1065,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Specifics for when this is an interaction
         /// </summary>
-        [FhirElement("interaction", InSummary=true, Order=160)]
+        [FhirElement("interaction", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.ClinicalUseIssue.InteractionComponent Interaction
         {
@@ -1065,7 +1078,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The population group to which this applies
         /// </summary>
-        [FhirElement("population", InSummary=true, Order=170)]
+        [FhirElement("population", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Population> Population
@@ -1079,7 +1092,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A possible negative outcome from the use of this treatment
         /// </summary>
-        [FhirElement("undesirableEffect", InSummary=true, Order=180)]
+        [FhirElement("undesirableEffect", InSummary=true, Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.ClinicalUseIssue.UndesirableEffectComponent UndesirableEffect
         {
@@ -1105,6 +1118,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ClinicalUseIssue.ClinicalUseIssueType>)TypeElement.DeepCopy();
+                if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
                 if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
@@ -1132,6 +1146,7 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.Matches(Category, otherT.Category)) return false;
             if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(Status, otherT.Status)) return false;
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
@@ -1152,6 +1167,7 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
+            if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
             if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
@@ -1172,6 +1188,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (TypeElement != null) yield return TypeElement;
+				if (Category != null) yield return Category;
 				foreach (var elem in Subject) { if (elem != null) yield return elem; }
 				if (Status != null) yield return Status;
 				if (Description != null) yield return Description;
@@ -1191,6 +1208,7 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (TypeElement != null) yield return new ElementValue("type", TypeElement);
+                if (Category != null) yield return new ElementValue("category", Category);
                 foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
                 if (Status != null) yield return new ElementValue("status", Status);
                 if (Description != null) yield return new ElementValue("description", Description);

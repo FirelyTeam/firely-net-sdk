@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent _Container;
             
             /// <summary>
-            /// Specimen requirements
+            /// Requirements for specimen delivery and special handling
             /// </summary>
             [FhirElement("requirement", Order=80)]
             [DataMember]
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _RequirementElement;
             
             /// <summary>
-            /// Specimen requirements
+            /// Requirements for specimen delivery and special handling
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Specimen retention time
+            /// The usual time for retaining this kind of specimen
             /// </summary>
             [FhirElement("retentionTime", Order=90)]
             [DataMember]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Rejection criterion
+            /// Criterion specified for specimen rejection
             /// </summary>
             [FhirElement("rejectionCriterion", Order=110)]
             [Cardinality(Min=0,Max=-1)]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "ContainerComponent"; } }
             
             /// <summary>
-            /// Container material
+            /// The material type used for the container
             /// </summary>
             [FhirElement("material", Order=40)]
             [DataMember]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Cap;
             
             /// <summary>
-            /// Container description
+            /// The description of the kind of container
             /// </summary>
             [FhirElement("description", Order=70)]
             [DataMember]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _DescriptionElement;
             
             /// <summary>
-            /// Container description
+            /// The description of the kind of container
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Container capacity
+            /// The capacity of this kind of container
             /// </summary>
             [FhirElement("capacity", Order=80)]
             [DataMember]
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.SimpleQuantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
             public Hl7.Fhir.Model.Element MinimumVolume
             {
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> _Additive;
             
             /// <summary>
-            /// Specimen container preparation
+            /// Special processing applied to the container for this specimen type
             /// </summary>
             [FhirElement("preparation", Order=110)]
             [DataMember]
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _PreparationElement;
             
             /// <summary>
-            /// Specimen container preparation
+            /// Special processing applied to the container for this specimen type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "HandlingComponent"; } }
             
             /// <summary>
-            /// Temperature qualifier
+            /// Qualifies the interval of temperature
             /// </summary>
             [FhirElement("temperatureQualifier", Order=40)]
             [DataMember]
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _TemperatureQualifier;
             
             /// <summary>
-            /// Temperature range
+            /// Temperature range for these handling instructions
             /// </summary>
             [FhirElement("temperatureRange", Order=50)]
             [DataMember]
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Last review date for the SpecimenDefinition
+        /// The date on which the asset content was last reviewed
         /// </summary>
         [FhirElement("lastReviewDate", Order=270)]
         [DataMember]
@@ -1334,7 +1334,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Date _LastReviewDateElement;
         
         /// <summary>
-        /// Last review date for the SpecimenDefinition
+        /// The date on which the asset content was last reviewed
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

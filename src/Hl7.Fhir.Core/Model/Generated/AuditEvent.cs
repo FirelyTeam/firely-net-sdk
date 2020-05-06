@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -149,39 +149,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("Debug", "http://hl7.org/fhir/audit-event-severity"), Description("Debug")]
             Debug,
-        }
-
-        /// <summary>
-        /// Indicates whether the event succeeded or failed.
-        /// (url: http://hl7.org/fhir/ValueSet/audit-event-outcome)
-        /// </summary>
-        [FhirEnumeration("AuditEventOutcome")]
-        public enum AuditEventOutcome
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/audit-event-outcome)
-            /// </summary>
-            [EnumLiteral("0", "http://hl7.org/fhir/audit-event-outcome"), Description("Success")]
-            N0,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/audit-event-outcome)
-            /// </summary>
-            [EnumLiteral("4", "http://hl7.org/fhir/audit-event-outcome"), Description("Minor failure")]
-            N4,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/audit-event-outcome)
-            /// </summary>
-            [EnumLiteral("8", "http://hl7.org/fhir/audit-event-outcome"), Description("Serious failure")]
-            N8,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/audit-event-outcome)
-            /// </summary>
-            [EnumLiteral("12", "http://hl7.org/fhir/audit-event-outcome"), Description("Major failure")]
-            N12,
         }
 
         /// <summary>
@@ -1384,69 +1351,18 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [FhirElement("outcome", InSummary=true, Order=150)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
+        public Hl7.Fhir.Model.CodeableConcept Outcome
         {
-            get { return _OutcomeElement; }
-            set { _OutcomeElement = value; OnPropertyChanged("OutcomeElement"); }
+            get { return _Outcome; }
+            set { _Outcome = value; OnPropertyChanged("Outcome"); }
         }
         
-        private Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> _OutcomeElement;
-        
-        /// <summary>
-        /// Whether the event succeeded or failed
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.AuditEvent.AuditEventOutcome? Outcome
-        {
-            get { return OutcomeElement != null ? OutcomeElement.Value : null; }
-            set
-            {
-                if (!value.HasValue)
-                  OutcomeElement = null; 
-                else
-                  OutcomeElement = new Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>(value);
-                OnPropertyChanged("Outcome");
-            }
-        }
-        
-        /// <summary>
-        /// Description of the event outcome
-        /// </summary>
-        [FhirElement("outcomeDesc", InSummary=true, Order=160)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString OutcomeDescElement
-        {
-            get { return _OutcomeDescElement; }
-            set { _OutcomeDescElement = value; OnPropertyChanged("OutcomeDescElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirString _OutcomeDescElement;
-        
-        /// <summary>
-        /// Description of the event outcome
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string OutcomeDesc
-        {
-            get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  OutcomeDescElement = null; 
-                else
-                  OutcomeDescElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("OutcomeDesc");
-            }
-        }
+        private Hl7.Fhir.Model.CodeableConcept _Outcome;
         
         /// <summary>
         /// The purposeOfUse of the event
         /// </summary>
-        [FhirElement("purposeOfEvent", InSummary=true, Order=170)]
+        [FhirElement("purposeOfEvent", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
@@ -1460,7 +1376,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Actor involved in the event
         /// </summary>
-        [FhirElement("agent", Order=180)]
+        [FhirElement("agent", Order=170)]
         [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
@@ -1474,7 +1390,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Audit Event Reporter
         /// </summary>
-        [FhirElement("source", Order=190)]
+        [FhirElement("source", Order=180)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
@@ -1488,7 +1404,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Data or objects used
         /// </summary>
-        [FhirElement("entity", Order=200)]
+        [FhirElement("entity", Order=190)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
@@ -1529,8 +1445,7 @@ namespace Hl7.Fhir.Model
                 if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity>)SeverityElement.DeepCopy();
                 if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
-                if(OutcomeElement != null) dest.OutcomeElement = (Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome>)OutcomeElement.DeepCopy();
-                if(OutcomeDescElement != null) dest.OutcomeDescElement = (Hl7.Fhir.Model.FhirString)OutcomeDescElement.DeepCopy();
+                if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
                 if(PurposeOfEvent != null) dest.PurposeOfEvent = new List<Hl7.Fhir.Model.CodeableConcept>(PurposeOfEvent.DeepCopy());
                 if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.AuditEvent.AgentComponent>(Agent.DeepCopy());
                 if(Source != null) dest.Source = (Hl7.Fhir.Model.AuditEvent.SourceComponent)Source.DeepCopy();
@@ -1558,8 +1473,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
             if( !DeepComparable.Matches(Period, otherT.Period)) return false;
             if( !DeepComparable.Matches(RecordedElement, otherT.RecordedElement)) return false;
-            if( !DeepComparable.Matches(OutcomeElement, otherT.OutcomeElement)) return false;
-            if( !DeepComparable.Matches(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+            if( !DeepComparable.Matches(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.Matches(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
             if( !DeepComparable.Matches(Agent, otherT.Agent)) return false;
             if( !DeepComparable.Matches(Source, otherT.Source)) return false;
@@ -1580,8 +1494,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
             if( !DeepComparable.IsExactly(Period, otherT.Period)) return false;
             if( !DeepComparable.IsExactly(RecordedElement, otherT.RecordedElement)) return false;
-            if( !DeepComparable.IsExactly(OutcomeElement, otherT.OutcomeElement)) return false;
-            if( !DeepComparable.IsExactly(OutcomeDescElement, otherT.OutcomeDescElement)) return false;
+            if( !DeepComparable.IsExactly(Outcome, otherT.Outcome)) return false;
             if( !DeepComparable.IsExactly(PurposeOfEvent, otherT.PurposeOfEvent)) return false;
             if( !DeepComparable.IsExactly(Agent, otherT.Agent)) return false;
             if( !DeepComparable.IsExactly(Source, otherT.Source)) return false;
@@ -1602,8 +1515,7 @@ namespace Hl7.Fhir.Model
 				if (SeverityElement != null) yield return SeverityElement;
 				if (Period != null) yield return Period;
 				if (RecordedElement != null) yield return RecordedElement;
-				if (OutcomeElement != null) yield return OutcomeElement;
-				if (OutcomeDescElement != null) yield return OutcomeDescElement;
+				if (Outcome != null) yield return Outcome;
 				foreach (var elem in PurposeOfEvent) { if (elem != null) yield return elem; }
 				foreach (var elem in Agent) { if (elem != null) yield return elem; }
 				if (Source != null) yield return Source;
@@ -1623,8 +1535,7 @@ namespace Hl7.Fhir.Model
                 if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
                 if (Period != null) yield return new ElementValue("period", Period);
                 if (RecordedElement != null) yield return new ElementValue("recorded", RecordedElement);
-                if (OutcomeElement != null) yield return new ElementValue("outcome", OutcomeElement);
-                if (OutcomeDescElement != null) yield return new ElementValue("outcomeDesc", OutcomeDescElement);
+                if (Outcome != null) yield return new ElementValue("outcome", Outcome);
                 foreach (var elem in PurposeOfEvent) { if (elem != null) yield return new ElementValue("purposeOfEvent", elem); }
                 foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
                 if (Source != null) yield return new ElementValue("source", Source);

@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -78,14 +78,14 @@ namespace Hl7.Fhir.Model
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("broader", "http://hl7.org/fhir/concept-map-relationship"), Description("Broader")]
-            Broader,
+            [EnumLiteral("source-is-narrower-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Narrower Than Target")]
+            SourceIsNarrowerThanTarget,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-relationship)
             /// </summary>
-            [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-relationship"), Description("Narrower")]
-            Narrower,
+            [EnumLiteral("source-is-broader-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Broader Than Target")]
+            SourceIsBroaderThanTarget,
             /// <summary>
             /// MISSING DESCRIPTION
             /// (system: http://hl7.org/fhir/concept-map-relationship)
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// related-to | equivalent | broader | narrower | not-related-to
+            /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to
             /// </summary>
             [FhirElement("relationship", Order=60)]
             [Cardinality(Min=1,Max=1)]
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
             private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> _RelationshipElement;
             
             /// <summary>
-            /// related-to | equivalent | broader | narrower | not-related-to
+            /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -1678,11 +1678,11 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_1 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "group.element.target.all(comment.exists() or relationship.empty() or ((relationship != 'narrower') and (relationship != 'not-related-to')))",
+            Expression = "group.element.target.all(comment.exists() or relationship.empty() or ((relationship != 'source-is-broader-than-target') and (relationship != 'not-related-to')))",
             Key = "cmd-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "If the map is narrower or not-related-to, there SHALL be some comments",
-            Xpath = "exists(f:comment) or not(exists(f:relationship)) or ((f:relationship/@value != 'narrower') and (f:v/@value != 'not-related-to'))"
+            Human = "If the map is source-is-broader-than-target or not-related-to, there SHALL be some comments",
+            Xpath = "exists(f:comment) or not(exists(f:relationship)) or ((f:relationship/@value != 'source-is-broader-than-target') and (f:v/@value != 'not-related-to'))"
         };
 
         public static ElementDefinition.ConstraintComponent ConceptMap_CMD_3 = new ElementDefinition.ConstraintComponent()

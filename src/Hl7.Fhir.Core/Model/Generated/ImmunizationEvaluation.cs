@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -64,15 +64,15 @@ namespace Hl7.Fhir.Model
         {
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-admin-status)
             /// </summary>
-            [EnumLiteral("completed", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Completed")]
+            [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medication-admin-status"), Description("Completed")]
             Completed,
             /// <summary>
             /// MISSING DESCRIPTION
-            /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
+            /// (system: http://hl7.org/fhir/CodeSystem/medication-admin-status)
             /// </summary>
-            [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Entered in Error")]
+            [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-admin-status"), Description("Entered in Error")]
             EnteredInError,
         }
 
@@ -311,32 +311,66 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dose number within series
         /// </summary>
-        [FhirElement("doseNumber", Order=200, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+        [FhirElement("doseNumber", Order=200)]
         [DataMember]
-        public Hl7.Fhir.Model.Element DoseNumber
+        public Hl7.Fhir.Model.FhirString DoseNumberElement
         {
-            get { return _DoseNumber; }
-            set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
+            get { return _DoseNumberElement; }
+            set { _DoseNumberElement = value; OnPropertyChanged("DoseNumberElement"); }
         }
         
-        private Hl7.Fhir.Model.Element _DoseNumber;
+        private Hl7.Fhir.Model.FhirString _DoseNumberElement;
+        
+        /// <summary>
+        /// Dose number within series
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string DoseNumber
+        {
+            get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  DoseNumberElement = null; 
+                else
+                  DoseNumberElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("DoseNumber");
+            }
+        }
         
         /// <summary>
         /// Recommended number of doses for immunity
         /// </summary>
-        [FhirElement("seriesDoses", Order=210, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
+        [FhirElement("seriesDoses", Order=210)]
         [DataMember]
-        public Hl7.Fhir.Model.Element SeriesDoses
+        public Hl7.Fhir.Model.FhirString SeriesDosesElement
         {
-            get { return _SeriesDoses; }
-            set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
+            get { return _SeriesDosesElement; }
+            set { _SeriesDosesElement = value; OnPropertyChanged("SeriesDosesElement"); }
         }
         
-        private Hl7.Fhir.Model.Element _SeriesDoses;
+        private Hl7.Fhir.Model.FhirString _SeriesDosesElement;
+        
+        /// <summary>
+        /// Recommended number of doses for immunity
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string SeriesDoses
+        {
+            get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  SeriesDosesElement = null; 
+                else
+                  SeriesDosesElement = new Hl7.Fhir.Model.FhirString(value);
+                OnPropertyChanged("SeriesDoses");
+            }
+        }
         
 
         public override void AddDefaultConstraints()
@@ -363,8 +397,8 @@ namespace Hl7.Fhir.Model
                 if(DoseStatusReason != null) dest.DoseStatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(DoseStatusReason.DeepCopy());
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-                if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
-                if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
+                if(DoseNumberElement != null) dest.DoseNumberElement = (Hl7.Fhir.Model.FhirString)DoseNumberElement.DeepCopy();
+                if(SeriesDosesElement != null) dest.SeriesDosesElement = (Hl7.Fhir.Model.FhirString)SeriesDosesElement.DeepCopy();
                 return dest;
             }
             else
@@ -393,8 +427,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(DoseStatusReason, otherT.DoseStatusReason)) return false;
             if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.Matches(SeriesElement, otherT.SeriesElement)) return false;
-            if( !DeepComparable.Matches(DoseNumber, otherT.DoseNumber)) return false;
-            if( !DeepComparable.Matches(SeriesDoses, otherT.SeriesDoses)) return false;
+            if( !DeepComparable.Matches(DoseNumberElement, otherT.DoseNumberElement)) return false;
+            if( !DeepComparable.Matches(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
             
             return true;
         }
@@ -416,8 +450,8 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(DoseStatusReason, otherT.DoseStatusReason)) return false;
             if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
             if( !DeepComparable.IsExactly(SeriesElement, otherT.SeriesElement)) return false;
-            if( !DeepComparable.IsExactly(DoseNumber, otherT.DoseNumber)) return false;
-            if( !DeepComparable.IsExactly(SeriesDoses, otherT.SeriesDoses)) return false;
+            if( !DeepComparable.IsExactly(DoseNumberElement, otherT.DoseNumberElement)) return false;
+            if( !DeepComparable.IsExactly(SeriesDosesElement, otherT.SeriesDosesElement)) return false;
             
             return true;
         }
@@ -439,8 +473,8 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in DoseStatusReason) { if (elem != null) yield return elem; }
 				if (DescriptionElement != null) yield return DescriptionElement;
 				if (SeriesElement != null) yield return SeriesElement;
-				if (DoseNumber != null) yield return DoseNumber;
-				if (SeriesDoses != null) yield return SeriesDoses;
+				if (DoseNumberElement != null) yield return DoseNumberElement;
+				if (SeriesDosesElement != null) yield return SeriesDosesElement;
             }
         }
 
@@ -461,8 +495,8 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in DoseStatusReason) { if (elem != null) yield return new ElementValue("doseStatusReason", elem); }
                 if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
                 if (SeriesElement != null) yield return new ElementValue("series", SeriesElement);
-                if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
-                if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
+                if (DoseNumberElement != null) yield return new ElementValue("doseNumber", DoseNumberElement);
+                if (SeriesDosesElement != null) yield return new ElementValue("seriesDoses", SeriesDosesElement);
             }
         }
 
