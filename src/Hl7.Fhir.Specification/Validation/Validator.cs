@@ -599,12 +599,12 @@ namespace Hl7.Fhir.Validation
             return t == typeof(FhirDateTime) ||
                    t == typeof(Date) ||
                    t == typeof(Instant) ||
-                   t == typeof(Model.Time) ||
+                   t == typeof(Fhir.Model.Time) ||
                    t == typeof(FhirDecimal) ||
                    t == typeof(Integer) ||
                    t == typeof(PositiveInt) ||
                    t == typeof(UnsignedInt) ||
-                   t == typeof(Model.Quantity) ||
+                   t == typeof(Fhir.Model.Quantity) ||
                    t == typeof(FhirString);
         }
 

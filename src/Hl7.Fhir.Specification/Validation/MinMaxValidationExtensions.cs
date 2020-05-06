@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Validation
             if (!(definition is Primitive || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
             if (definition is Primitive pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
-            if (instance is Model.Primitives.PartialDateTime)
+            if (instance is Fhir.Model.Primitives.PartialDateTime)
             {
                 if (definition is FhirDateTime fdt)
                     return instance.CompareTo(fdt.ToPartialDateTime());
@@ -43,9 +43,9 @@ namespace Hl7.Fhir.Validation
                     return instance.CompareTo(ins.ToPartialDateTime());
             }
 
-            else if (instance is Model.Primitives.PartialTime && definition is Time t)
+            else if (instance is Fhir.Model.Primitives.PartialTime && definition is Time t)
                 return instance.CompareTo(t.ToTime());
-            else if (instance is Model.Primitives.PartialDate && definition is Date dt)
+            else if (instance is Fhir.Model.Primitives.PartialDate && definition is Date dt)
                 return instance.CompareTo(dt.ToPartialDate());
 
             else if (instance is decimal && definition is FhirDecimal d)
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Validation
             else if (instance is string && definition is FhirString fs)
                 return instance.CompareTo(fs.Value);
 
-            else if (instance is Model.Primitives.Quantity && definition is Quantity q)
+            else if (instance is Fhir.Model.Primitives.Quantity && definition is Quantity q)
                 return instance.CompareTo(q.ToQuantity());
 
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Validation
             return instance.Value as IComparable;
         }
 
-        private static Model.Primitives.Quantity ParseQuantity(this ITypedElement instance)
+        private static Fhir.Model.Primitives.Quantity ParseQuantity(this ITypedElement instance)
         {
             var value = instance.Children("value").SingleOrDefault()?.Value as decimal?;
             var unit = instance.Children("unit").GetString();
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Validation
             if (value == null)
                 throw Error.NotSupported("Cannot interpret quantities without a value");
 
-            return new Model.Primitives.Quantity(value.Value, unit);
+            return new Fhir.Model.Primitives.Quantity(value.Value, unit);
         }
 
         internal static OperationOutcome ValidateMinMaxValue(this Validator validator, ElementDefinition definition, ITypedElement instance)

@@ -11,39 +11,39 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestGetComparable()
         {
-            var nodeQ = (new Model.FhirDateTime(1972, 11, 30)).ToTypedElement();
-            Assert.Equal(0, nodeQ.GetComparableValue().CompareTo(Model.Primitives.PartialDateTime.Parse("1972-11-30")));
+            var nodeQ = (new Fhir.Model.FhirDateTime(1972, 11, 30)).ToTypedElement();
+            Assert.Equal(0, nodeQ.GetComparableValue().CompareTo(Fhir.Model.Primitives.PartialDateTime.Parse("1972-11-30")));
 
-            nodeQ = (new Model.Quantity(3.14m, "kg")).ToTypedElement();
-            Assert.Equal(-1, nodeQ.GetComparableValue().CompareTo(new Model.Primitives.Quantity(5.0m, "kg")));
+            nodeQ = (new Fhir.Model.Quantity(3.14m, "kg")).ToTypedElement();
+            Assert.Equal(-1, nodeQ.GetComparableValue().CompareTo(new Fhir.Model.Primitives.Quantity(5.0m, "kg")));
 
-            nodeQ = (new Model.HumanName()).ToTypedElement();
+            nodeQ = (new Fhir.Model.HumanName()).ToTypedElement();
             Assert.Null(nodeQ.GetComparableValue());
 
-            var nodeQ2 = (new Model.Quantity(3.14m, "kg")
-            { Comparator = Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
+            var nodeQ2 = (new Fhir.Model.Quantity(3.14m, "kg")
+            { Comparator = Fhir.Model.Quantity.QuantityComparator.GreaterOrEqual }).ToTypedElement();
             Assert.Throws<NotSupportedException>(() => nodeQ2.GetComparableValue());
 
-            var nodeQ3 = (new Model.Quantity()).ToTypedElement();
+            var nodeQ3 = (new Fhir.Model.Quantity()).ToTypedElement();
             Assert.Throws<NotSupportedException>(() => nodeQ3.GetComparableValue());
         }
 
         [Fact]
         public void TestCompare()
         {
-            Assert.Equal(0, MinMaxValidationExtensions.Compare(Model.Primitives.PartialDateTime.Parse("1972-11-30"), new Model.FhirDateTime(1972, 11, 30)));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(Model.Primitives.PartialDateTime.Parse("1972-12-01"), new Model.Date(1972, 11, 30)));
+            Assert.Equal(0, MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialDateTime.Parse("1972-11-30"), new Fhir.Model.FhirDateTime(1972, 11, 30)));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialDateTime.Parse("1972-12-01"), new Fhir.Model.Date(1972, 11, 30)));
             Assert.Equal(-1,
-                MinMaxValidationExtensions.Compare(Model.Primitives.PartialDateTime.Parse("1972-12-01T13:00:00Z"),
-                    new Model.Instant(new DateTimeOffset(1972, 12, 01, 14, 00, 00, TimeSpan.Zero))));
-            Assert.Equal(0, MinMaxValidationExtensions.Compare(Model.Primitives.PartialTime.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(Model.Primitives.PartialDate.Parse("2016-02-01"), new Model.Date("2016-01-01")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Model.FhirDecimal(2.14m)));
-            Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Model.Integer(3)));
-            Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Model.FhirString("bbb")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(new Model.Primitives.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
+                MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialDateTime.Parse("1972-12-01T13:00:00Z"),
+                    new Fhir.Model.Instant(new DateTimeOffset(1972, 12, 01, 14, 00, 00, TimeSpan.Zero))));
+            Assert.Equal(0, MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialTime.Parse("12:00:00Z"), new Fhir.Model.Time("12:00:00Z")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialDate.Parse("2016-02-01"), new Fhir.Model.Date("2016-01-01")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Fhir.Model.FhirDecimal(2.14m)));
+            Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Fhir.Model.Integer(3)));
+            Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Fhir.Model.FhirString("bbb")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(new Fhir.Model.Primitives.Quantity(5.0m, "kg"), new Fhir.Model.Quantity(4.0m, "kg")));
 
-            Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(Model.Primitives.PartialDateTime.Parse("1972-11-30"), new Model.Quantity(4.0m, "kg")));
+            Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(Fhir.Model.Primitives.PartialDateTime.Parse("1972-11-30"), new Fhir.Model.Quantity(4.0m, "kg")));
         }
 
         [Fact]
@@ -53,37 +53,37 @@ namespace Hl7.Fhir.Validation
 
             var ed = new ElementDefinition
             {
-                MinValue = new Model.Integer(4),
-                MaxValue = new Model.Integer(6)
+                MinValue = new Fhir.Model.Integer(4),
+                MaxValue = new Fhir.Model.Integer(6)
             };
 
-            var node = (new Model.Integer(5)).ToTypedElement();
+            var node = (new Fhir.Model.Integer(5)).ToTypedElement();
             var outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            node = (new Model.Integer(4)).ToTypedElement();
+            node = (new Fhir.Model.Integer(4)).ToTypedElement();
             outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            node = (new Model.Integer(6)).ToTypedElement();
+            node = (new Fhir.Model.Integer(6)).ToTypedElement();
             outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            node = (new Model.Integer(1)).ToTypedElement();
+            node = (new Fhir.Model.Integer(1)).ToTypedElement();
             outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.False(outcome.Success);
             Assert.Equal(0, outcome.Warnings);
 
-            node = (new Model.FhirString("hi")).ToTypedElement();
+            node = (new Fhir.Model.FhirString("hi")).ToTypedElement();
             outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(2, outcome.Warnings);
 
-            ed.MinValue = new Model.HumanName();
-            ed.MaxValue = new Model.FhirString("i comes after hi");
+            ed.MinValue = new Fhir.Model.HumanName();
+            ed.MaxValue = new Fhir.Model.FhirString("i comes after hi");
             outcome = validator.ValidateMinMaxValue(ed, node);
             Assert.True(outcome.Success);
             Assert.Equal(1, outcome.Warnings);

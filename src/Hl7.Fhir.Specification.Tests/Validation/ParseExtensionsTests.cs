@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseQuantity()
         {
-            var i = new Model.Quantity(3.14m, "kg", "http://mysystsem.org");
+            var i = new Fhir.Model.Quantity(3.14m, "kg", "http://mysystsem.org");
             var node = i.ToTypedElement();
             var p = PocoBuilderExtensions.ParseQuantity(node);
             Assert.True(p.IsExactly(i));
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseCoding()
         {
-            var i = new Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1");
+            var i = new Fhir.Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1");
             var node = i.ToTypedElement();
             var p = PocoBuilderExtensions.ParseCoding(node);
             Assert.True(p.IsExactly(i));
@@ -41,9 +41,9 @@ namespace Hl7.Fhir.Validation
                 Text = "Entered text"
             };
             i.Coding.Add(
-                new Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1"));
+                new Fhir.Model.Coding("http://example.org/fhir/system1", "code1", "Code1 in System1"));
             i.Coding.Add(
-                new Model.Coding("http://example.org/fhir/system2", "code2", "Code2 in System2"));
+                new Fhir.Model.Coding("http://example.org/fhir/system2", "code2", "Code2 in System2"));
 
             var node = i.ToTypedElement();
             var p = node.ParseCodeableConcept();
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseResourceReference()
         {
-            var i = new Model.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
+            var i = new Fhir.Model.ResourceReference("http://example.org/fhir/Patient/1", "a patient");
             var node = i.ToTypedElement();
             var p = node.ParseResourceReference();
             Assert.True(p.IsExactly(i));
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseBindableQuantity()
         {
-            var iq = new Model.Quantity(4.0m, "kg", system: null);
+            var iq = new Fhir.Model.Quantity(4.0m, "kg", system: null);
             var node = iq.ToTypedElement();
             var c = PocoBuilderExtensions.ParseBindable(node) as Coding;
             Assert.NotNull(c);
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseBindableString()
         {
-            var ist = new Model.FhirString("Ewout");
+            var ist = new Fhir.Model.FhirString("Ewout");
             var node = ist.ToTypedElement();
             var c = PocoBuilderExtensions.ParseBindable(node) as Code;
             Assert.NotNull(c);
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestParseBindableUri()
         {
-            var iu = new Model.FhirUri("http://somewhere.org");
+            var iu = new Fhir.Model.FhirUri("http://somewhere.org");
             var node = iu.ToTypedElement();
             var c = PocoBuilderExtensions.ParseBindable(node) as Code;
             Assert.NotNull(c);
