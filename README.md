@@ -6,7 +6,7 @@
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
 
 ## Release notes ##
-Read the releases notes and the documentation on [simplifier](http://docs.simplifier.net/fhirnetapi/releasenotes.html)
+Read the releases notes on [fhir-net-api/releases](https://github.com/FirelyTeam/fhir-net-api/releases). You can find documentation about this API on [simplifier][netapi-docu].
 
 ## What's in the box?
 This library provides:
@@ -33,11 +33,12 @@ and develop branches in this repository below:
 
 |Spec version|Git branch|Core NuGet|
 |---|---|---|
-|R4|https://github.com/FirelyTeam/fhir-net-api/tree/develop-r4|https://www.nuget.org/packages/Hl7.Fhir.R4/|
-|STU3|https://github.com/FirelyTeam/fhir-net-api/tree/develop-stu3|https://www.nuget.org/packages/Hl7.Fhir.STU3/|
-|DSTU 2.1|N/A|https://www.nuget.org/packages/Hl7.Fhir.DSTU21/|
-|DSTU2| https://github.com/FirelyTeam/fhir-net-api/tree/develop|https://www.nuget.org/packages/Hl7.Fhir.DSTU2/|
-|DSTU1| https://github.com/FirelyTeam/fhir-net-api/tree/master-dstu1|https://www.nuget.org/packages/Hl7.Fhir.DSTU/|
+|R5 (experimental)| https://github.com/FirelyTeam/fhir-net-api/tree/develop-1.x/r5 | https://www.myget.org/feed/fhir-net-api/package/nuget/Hl7.Fhir.R5 |
+|R4| https://github.com/FirelyTeam/fhir-net-api/tree/develop-r4 | https://www.nuget.org/packages/Hl7.Fhir.R4 |
+|STU3| https://github.com/FirelyTeam/fhir-net-api/tree/develop-stu3 | https://www.nuget.org/packages/Hl7.Fhir.STU3 |
+|DSTU 2.1| N/A| https://www.nuget.org/packages/Hl7.Fhir.DSTU21 |
+|DSTU2| https://github.com/FirelyTeam/fhir-net-api/tree/develop | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 |
+|DSTU1| https://github.com/FirelyTeam/fhir-net-api/tree/master-dstu1 | https://www.nuget.org/packages/Hl7.Fhir.DSTU |
 
 Please note that the source code for the FHIR .NET API is split up into two GitHub repos: one (with the branches listed above) with code that is specific to a FHIR release (this repo), and one that contains the code that is applicable across all FHIR releases (a separate [common repository][common-repo]).  This second repository is included in the first one using a Git Submodule, so all you have to do is check out the main repo (this one) and learn how to work with Submodules. To clone this repository with submodules, you can do:
 

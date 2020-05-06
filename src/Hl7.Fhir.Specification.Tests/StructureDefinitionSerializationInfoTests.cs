@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -11,7 +12,11 @@ namespace Hl7.Fhir.Serialization.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext t)
         {
-            source = new MultiResolver(ZipSource.CreateValidationSource(), new DirectorySource("TestData", new DirectorySourceSettings(includeSubdirectories: true)));
+            source = new MultiResolver(
+                ZipSource.CreateValidationSource(), 
+                new DirectorySource("TestData", new DirectorySourceSettings(includeSubdirectories: true)),
+                new TestProfileArtifactSource()
+                );
         }
 
         static IResourceResolver source = null;
@@ -33,6 +38,9 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         public void TestXmlRepresetation() => SerializationInfoTestHelpers.TestXmlRepresetation(new StructureDefinitionSummaryProvider(source));
+
+        [TestMethod]
+        public void TestRequiresSnapshot() => SerializationInfoTestHelpers.TestRequiresSnapshot(new StructureDefinitionSummaryProvider(source));
 
     }
 }

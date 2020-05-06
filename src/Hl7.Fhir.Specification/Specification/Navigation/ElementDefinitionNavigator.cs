@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Navigation
         public static ElementDefinitionNavigator ForSnapshot(StructureDefinition sd)
         {
             if (sd == null) throw Error.ArgumentNull(nameof(sd));
-            if (sd.Snapshot == null) throw Error.Argument(nameof(sd), "The specified StructureDefinition has no snapshot component.");
+            if (sd.Snapshot == null) throw Error.Argument(nameof(sd), $"StructureDefinition '{sd.Url}' has no snapshot component.");
 
             return new ElementDefinitionNavigator(sd.Snapshot.Element, sd);
         }
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Specification.Navigation
         public static ElementDefinitionNavigator ForDifferential(StructureDefinition sd)
         {
             if (sd == null) throw Error.ArgumentNull(nameof(sd));
-            if (sd.Differential == null) throw Error.ArgumentNull(nameof(sd), "The specified StructureDefinition has no differential component.");
+            if (sd.Differential == null) throw Error.ArgumentNull(nameof(sd), $"StructureDefinition '{sd.Url}' has no differential component.");
 
             return new ElementDefinitionNavigator(sd.Differential.Element, sd);
         }
