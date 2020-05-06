@@ -1,0 +1,3 @@
+[submodule "fhir-net-common"]
+	path = common
+	url = https://github.com/FirelyTeam/fhir-net-common.git

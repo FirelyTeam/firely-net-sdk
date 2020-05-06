@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-<Import Project="..\fhir-net-api.props" />
+  <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
 
   <PropertyGroup>
@@ -13,7 +13,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,11 +36,6 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Compile Remove="OldJsonAssert.cs" />
-    <Compile Remove="Rest\NewSearchParamsTests.cs" />
-    <None Remove="TestData\fp-test-patient.xml" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\XmlAssert.cs" Link="XmlAssert.cs" />
-    <Compile Include="..\Hl7.Fhir.Support.Tests\Utils\JsonAssert.cs" Link="JsonAssert.cs" />
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -55,17 +51,4 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Update="TestData\fp-test-patient.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>  
-
-   <!-- Necessary to make the Test Explorer find the tests in this assembly
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DebugType>full</DebugType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup> -->
 </Project>

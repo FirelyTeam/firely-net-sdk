@@ -56,9 +56,10 @@
     <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
