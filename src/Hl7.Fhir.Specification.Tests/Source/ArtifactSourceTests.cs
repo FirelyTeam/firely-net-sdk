@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -260,14 +260,15 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
 
             // xhtml is not represented in the pocos
-            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");
 
             //remove interface datatypes, which are not represented in the pocos
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/Base");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/PrimitiveType");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/DataType");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/BackboneType");
-          
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/BackboneElement");
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/Element");
 
 
             // + total number of known FHIR core types
@@ -352,11 +353,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                     // Abort unit test if we can't access file permissions
                     var fs = forbiddenFile.GetAccessControl();
-                    
+
                     // Revoke file read permissions for the current user
                     fs.AddAccessRule(rule);
                     Debug.Print($"Removing read permissions from file: '{forbiddenFile}' ...");
-                    
+
                     // Abort unit test if we can't modify file permissions
                     forbiddenFile.SetAccessControl(fs);
 
@@ -377,7 +378,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                         // [WMR 20170823] Also test ListResourceUris => prepareResources()
                         var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
-                        
+
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
                         Assert.IsFalse(urlList.Contains(profileUrl1));

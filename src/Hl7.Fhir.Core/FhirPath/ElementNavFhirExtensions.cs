@@ -14,7 +14,6 @@ using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -56,9 +55,9 @@ namespace Hl7.Fhir.FhirPath
             ITypedElement resolver(ITypedElement f, EvaluationContext ctx)
             {
                 if (ctx is FhirEvaluationContext fctx)
-                    return f.Resolve(fctx.ElementResolver);
+                    return f?.Resolve(fctx.ElementResolver);
                 else
-                    return f.Resolve();
+                    return f?.Resolve();
             }
         }
 
@@ -168,7 +167,7 @@ namespace Hl7.Fhir.FhirPath
             => focus.ToTypedElement().HasValue();
 
         [Obsolete("Use HtmlChecks(this ITypedElement focus) instead. Obsolete since 2018-10-17")]
-        public static bool HtmlChecks(this IElementNavigator focus) 
+        public static bool HtmlChecks(this IElementNavigator focus)
             => focus.ToTypedElement().HtmlChecks();
 
         [Obsolete("Use ToFhirValues(this IEnumerable<ITypedElement> results) instead. Obsolete since 2018-10-17")]
