@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011+, HL7, Inc.
@@ -39,7 +35,6 @@ using System.Runtime.Serialization;
 // Generated for FHIR v4.4.0
 //
 
-using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Model
 {
@@ -49,7 +44,7 @@ namespace Hl7.Fhir.Model
     */
     public static partial class ModelInfo
     {
-        public static List<string> SupportedResources = 
+        public static List<string> SupportedResources =
             new List<string>
             {
                 "Account",
@@ -199,19 +194,22 @@ namespace Hl7.Fhir.Model
                 "VerificationResult",
                 "VisionPrescription",
             };
-        
+
         public static string Version
         {
             get { return "4.4.0"; }
         }
-        
-        public static Dictionary<string,Type> FhirTypeToCsType =
-            new Dictionary<string,Type>()
+
+        public static Dictionary<string, Type> FhirTypeToCsType =
+            new Dictionary<string, Type>()
             {
                 { "Address", typeof(Hl7.Fhir.Model.Address) },
                 { "Age", typeof(Age) },
                 { "Annotation", typeof(Hl7.Fhir.Model.Annotation) },
                 { "Attachment", typeof(Hl7.Fhir.Model.Attachment) },
+                //Manually added BackboneElement here
+                //TODO: fix t4 template to auto-generate this again
+                { "BackboneElement", typeof(BackboneElement) },
                 { "base64Binary", typeof(Hl7.Fhir.Model.Base64Binary) },
                 { "boolean", typeof(Hl7.Fhir.Model.FhirBoolean) },
                 { "canonical", typeof(Hl7.Fhir.Model.Canonical) },
@@ -230,6 +228,9 @@ namespace Hl7.Fhir.Model
                 { "Distance", typeof(Distance) },
                 { "Dosage", typeof(Dosage) },
                 { "Duration", typeof(Duration) },
+                //Manually added Element here
+                //TODO: fix t4 template to auto-generate this again
+                { "Element", typeof(Element) },
                 { "ElementDefinition", typeof(Hl7.Fhir.Model.ElementDefinition) },
                 { "Expression", typeof(Expression) },
                 { "Extension", typeof(Hl7.Fhir.Model.Extension) },
@@ -423,9 +424,9 @@ namespace Hl7.Fhir.Model
                 { "VerificationResult", typeof(Hl7.Fhir.Model.VerificationResult) },
                 { "VisionPrescription", typeof(Hl7.Fhir.Model.VisionPrescription) },
             };
-        
-        public static Dictionary<Type,string> FhirCsTypeToString =
-            new Dictionary<Type,string>()
+
+        public static Dictionary<Type, string> FhirCsTypeToString =
+            new Dictionary<Type, string>()
             {
                 { typeof(Hl7.Fhir.Model.Address), "Address" },
                 { typeof(Age), "Age" },
@@ -641,9 +642,9 @@ namespace Hl7.Fhir.Model
                 { typeof(Hl7.Fhir.Model.VerificationResult), "VerificationResult" },
                 { typeof(Hl7.Fhir.Model.VisionPrescription), "VisionPrescription" },
             };
-        
-		// http://build.fhir.org/searchparameter-registry.html
-        public static List<SearchParamDefinition> SearchParameters = 
+
+        // http://build.fhir.org/searchparameter-registry.html
+        public static List<SearchParamDefinition> SearchParameters =
             new List<SearchParamDefinition>
             {
                 new SearchParamDefinition() { Resource = "Account", Name = "identifier", Description = new Markdown(@"Account number"), Type = SearchParamType.Token, Path = new string[] { "Account.identifier", }, XPath = "f:Account/f:identifier", Expression = "Account.identifier", Url = "http://hl7.org/fhir/SearchParameter/Account-identifier" },
@@ -2391,5 +2392,5 @@ namespace Hl7.Fhir.Model
                 new SearchParamDefinition() { Resource = "VisionPrescription", Name = "prescriber", Description = new Markdown(@"Who authorized the vision prescription"), Type = SearchParamType.Reference, Path = new string[] { "VisionPrescription.prescriber", }, Target = new ResourceType[] { ResourceType.Practitioner, ResourceType.PractitionerRole, }, XPath = "f:VisionPrescription/f:prescriber", Expression = "VisionPrescription.prescriber", Url = "http://hl7.org/fhir/SearchParameter/VisionPrescription-prescriber" },
                 new SearchParamDefinition() { Resource = "VisionPrescription", Name = "status", Description = new Markdown(@"The status of the vision prescription"), Type = SearchParamType.Token, Path = new string[] { "VisionPrescription.status", }, XPath = "f:VisionPrescription/f:status", Expression = "VisionPrescription.status", Url = "http://hl7.org/fhir/SearchParameter/VisionPrescription-status" },
             };
-        }
+    }
 }
