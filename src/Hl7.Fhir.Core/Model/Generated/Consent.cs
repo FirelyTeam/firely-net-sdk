@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1098,17 +1098,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Who the consent applies to
         /// </summary>
-        [FhirElement("patient", InSummary=true, Order=130)]
+        [FhirElement("subject", InSummary=true, Order=130)]
         [CLSCompliant(false)]
-		[References("Patient")]
+		[References("Patient","Practitioner")]
         [DataMember]
-        public Hl7.Fhir.Model.ResourceReference Patient
+        public Hl7.Fhir.Model.ResourceReference Subject
         {
-            get { return _Patient; }
-            set { _Patient = value; OnPropertyChanged("Patient"); }
+            get { return _Subject; }
+            set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.ResourceReference _Patient;
+        private Hl7.Fhir.Model.ResourceReference _Subject;
         
         /// <summary>
         /// When consent was agreed to
@@ -1259,57 +1259,47 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Consent.provisionComponent _Provision;
         
 
-        public static ElementDefinition.ConstraintComponent Consent_PPC_6 = new ElementDefinition.ConstraintComponent()
+        public static ElementDefinition.ConstraintComponent Consent_PPC_4 = new ElementDefinition.ConstraintComponent()
         { 
             Expression = "Consent.provision.extension(\"http://hl7.org/fhir/StructureDefinition/consent-ResearchStudyContext\").exists() or scope.coding.where(system='something' and code='research').exists().not()",
-            Key = "ppc-6",
+            Key = "ppc-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
             Human = "IF Scope=research, ResearchStudyContext allowed",
-            Xpath = "exists(f:Consent.provision.extension('http://hl7.org/fhir/StructureDefinition/consent-ResearchStudyContext')  or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
-        };
-
-        public static ElementDefinition.ConstraintComponent Consent_PPC_5 = new ElementDefinition.ConstraintComponent()
-        { 
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='treatment').exists().not()",
-            Key = "ppc-5",
-            Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "IF Scope=treatment, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))"
+            Xpath = "exists(f:Consent.provision.extension('http://hl7.org/fhir/StructureDefinition/consent-ResearchStudyContext') or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_2 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='patient-privacy').exists().not()",
+            Expression = "(scope = 'research' and subject.resolve().exists()) implies (subject.resolve() is Patient)",
             Key = "ppc-2",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "IF Scope=privacy, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))"
+            Human = "IF Scope=research, Consent.subject must be a patient",
+            Xpath = "(exists(f:subject) and (f:subject/f:Reference/@value='Patient'])) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_3 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "patient.exists() or scope.coding.where(system='something' and code='research').exists().not()",
+            Expression = "(scope = 'treatment' and subject.resolve().exists()) implies (subject.resolve() is Patient)",
             Key = "ppc-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "IF Scope=research, there must be a patient",
-            Xpath = "exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))"
+            Human = "IF Scope=treatment, Consent.subject must be a patient",
+            Xpath = "(exists(f:subject) and (f:subject/f:Reference/@value='Patient'])) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))"
         };
 
         public static ElementDefinition.ConstraintComponent Consent_PPC_1 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "policy.exists() or policyRule.exists()",
+            Expression = "(scope = 'privacy' and subject.resolve().exists()) implies (subject.resolve() is Patient)",
             Key = "ppc-1",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "Either a Policy or PolicyRule",
-            Xpath = "exists(f:policy) or exists(f:policyRule)"
+            Human = "IF Scope=privacy, Consent.subject must be a patient",
+            Xpath = "(exists(f:subject) and (f:subject/f:Reference/@value='Patient'])) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))"
         };
 
         public override void AddDefaultConstraints()
         {
             base.AddDefaultConstraints();
 
-            InvariantConstraints.Add(Consent_PPC_6);
-            InvariantConstraints.Add(Consent_PPC_5);
+            InvariantConstraints.Add(Consent_PPC_4);
             InvariantConstraints.Add(Consent_PPC_2);
             InvariantConstraints.Add(Consent_PPC_3);
             InvariantConstraints.Add(Consent_PPC_1);
@@ -1326,7 +1316,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Consent.ConsentState>)StatusElement.DeepCopy();
                 if(Scope != null) dest.Scope = (Hl7.Fhir.Model.CodeableConcept)Scope.DeepCopy();
                 if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-                if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Organization != null) dest.Organization = new List<Hl7.Fhir.Model.ResourceReference>(Organization.DeepCopy());
@@ -1357,7 +1347,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.Matches(Scope, otherT.Scope)) return false;
             if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-            if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
             if( !DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
             if( !DeepComparable.Matches(Organization, otherT.Organization)) return false;
@@ -1381,7 +1371,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
             if( !DeepComparable.IsExactly(Scope, otherT.Scope)) return false;
             if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-            if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
+            if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
             if( !DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;
             if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
             if( !DeepComparable.IsExactly(Organization, otherT.Organization)) return false;
@@ -1405,7 +1395,7 @@ namespace Hl7.Fhir.Model
 				if (StatusElement != null) yield return StatusElement;
 				if (Scope != null) yield return Scope;
 				foreach (var elem in Category) { if (elem != null) yield return elem; }
-				if (Patient != null) yield return Patient;
+				if (Subject != null) yield return Subject;
 				if (DateTimeElement != null) yield return DateTimeElement;
 				foreach (var elem in Performer) { if (elem != null) yield return elem; }
 				foreach (var elem in Organization) { if (elem != null) yield return elem; }
@@ -1428,7 +1418,7 @@ namespace Hl7.Fhir.Model
                 if (StatusElement != null) yield return new ElementValue("status", StatusElement);
                 if (Scope != null) yield return new ElementValue("scope", Scope);
                 foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-                if (Patient != null) yield return new ElementValue("patient", Patient);
+                if (Subject != null) yield return new ElementValue("subject", Subject);
                 if (DateTimeElement != null) yield return new ElementValue("dateTime", DateTimeElement);
                 foreach (var elem in Performer) { if (elem != null) yield return new ElementValue("performer", elem); }
                 foreach (var elem in Organization) { if (elem != null) yield return new ElementValue("organization", elem); }

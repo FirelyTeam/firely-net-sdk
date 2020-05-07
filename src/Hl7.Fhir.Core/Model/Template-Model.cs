@@ -1,6 +1,6 @@
 ﻿
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 // Generated Shared Enumeration: FinancialResourceStatusCodes (http://hl7.org/fhir/ValueSet/fm-status)
 	// Used in model class (resource): Claim.status
@@ -36,7 +36,7 @@
 	// Used in model class (resource): Questionnaire.subjectType
 	// Used in model class (resource): SearchParameter.base
 	// Used in model class (resource): SearchParameter.target
-	// Used in model class (resource): Topic.resourceTrigger.resourceType
+	// Used in model class (resource): SubscriptionTopic.resourceTrigger.resourceType
 
 // Generated Shared Enumeration: CapabilityStatementKind (http://hl7.org/fhir/ValueSet/capability-statement-kind)
 	// Used in model class (resource): CapabilityStatement.kind
@@ -148,7 +148,12 @@
 // Generated Shared Enumeration: EventStatus (http://hl7.org/fhir/ValueSet/event-status)
 	// Used in model class (resource): ClinicalImpression.status
 	// Used in model class (resource): Communication.status
+	// Used in model class (resource): NutritionIntake.status
 	// Used in model class (resource): Procedure.status
+
+// Generated Shared Enumeration: SubscriptionSearchModifier (http://hl7.org/fhir/ValueSet/subscription-search-modifier)
+	// Used in model class (resource): Subscription.filterBy.searchModifier
+	// Used in model class (resource): SubscriptionTopic.canFilterBy.searchModifier
 
 // Generated Shared Enumeration: ActionGroupingBehavior (http://hl7.org/fhir/ValueSet/action-grouping-behavior)
 	// Used in model class (resource): PlanDefinition.action.groupingBehavior
@@ -183,6 +188,10 @@
 	// Used in model class (resource): OperationDefinition.parameter.binding.strength
 	// Used in model class (type): ElementDefinition.binding.strength
 
+// Generated Shared Enumeration: SubscriptionState (http://hl7.org/fhir/ValueSet/subscription-state)
+	// Used in model class (resource): Subscription.status
+	// Used in model class (resource): SubscriptionStatus.status
+
 // Generated Shared Enumeration: ParticipationStatus (http://hl7.org/fhir/ValueSet/participationstatus)
 	// Used in model class (resource): Appointment.participant.status
 	// Used in model class (resource): AppointmentResponse.participantStatus
@@ -211,7 +220,6 @@
 
 // Generated Shared Enumeration: PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
 	// Used in model class (resource): ActivityDefinition.status
-	// Used in model class (resource): CanonicalResource.status
 	// Used in model class (resource): CapabilityStatement.status
 	// Used in model class (resource): CapabilityStatement2.status
 	// Used in model class (resource): ChargeItemDefinition.status
@@ -221,6 +229,7 @@
 	// Used in model class (resource): ConditionDefinition.status
 	// Used in model class (resource): EventDefinition.status
 	// Used in model class (resource): Evidence.status
+	// Used in model class (resource): EvidenceFocus.status
 	// Used in model class (resource): EvidenceVariable.status
 	// Used in model class (resource): ExampleScenario.status
 	// Used in model class (resource): GraphDefinition.status
@@ -238,9 +247,9 @@
 	// Used in model class (resource): SpecimenDefinition.status
 	// Used in model class (resource): StructureDefinition.status
 	// Used in model class (resource): StructureMap.status
+	// Used in model class (resource): SubscriptionTopic.status
 	// Used in model class (resource): TerminologyCapabilities.status
 	// Used in model class (resource): TestScript.status
-	// Used in model class (resource): Topic.status
 	// Used in model class (resource): ValueSet.status
 
 // Generated helper templates
@@ -298,7 +307,6 @@
 // Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs
 // Hl7.Fhir.Core\Model\Generated\VerificationResult.cs
 // Hl7.Fhir.Core\Model\Generated\ValueSet.cs
-// Hl7.Fhir.Core\Model\Generated\Topic.cs
 // Hl7.Fhir.Core\Model\Generated\TestScript.cs
 // Hl7.Fhir.Core\Model\Generated\TestReport.cs
 // Hl7.Fhir.Core\Model\Generated\TerminologyCapabilities.cs
@@ -312,6 +320,8 @@
 // Hl7.Fhir.Core\Model\Generated\SubstanceNucleicAcid.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Substance.cs
+// Hl7.Fhir.Core\Model\Generated\SubscriptionTopic.cs
+// Hl7.Fhir.Core\Model\Generated\SubscriptionStatus.cs
 // Hl7.Fhir.Core\Model\Generated\Subscription.cs
 // Hl7.Fhir.Core\Model\Generated\StructureMap.cs
 // Hl7.Fhir.Core\Model\Generated\StructureDefinition.cs
@@ -335,6 +345,7 @@
 // Hl7.Fhir.Core\Model\Generated\Practitioner.cs
 // Hl7.Fhir.Core\Model\Generated\PlanDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Person.cs
+// Hl7.Fhir.Core\Model\Generated\Permission.cs
 // Hl7.Fhir.Core\Model\Generated\PaymentReconciliation.cs
 // Hl7.Fhir.Core\Model\Generated\PaymentNotice.cs
 // Hl7.Fhir.Core\Model\Generated\Patient.cs
@@ -346,11 +357,11 @@
 // Hl7.Fhir.Core\Model\Generated\OperationDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\ObservationDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\Observation.cs
+// Hl7.Fhir.Core\Model\Generated\NutritionProduct.cs
 // Hl7.Fhir.Core\Model\Generated\NutritionOrder.cs
 // Hl7.Fhir.Core\Model\Generated\NutritionIntake.cs
 // Hl7.Fhir.Core\Model\Generated\NamingSystem.cs
 // Hl7.Fhir.Core\Model\Generated\MolecularSequence.cs
-// Hl7.Fhir.Core\Model\Generated\MetadataResource.cs
 // Hl7.Fhir.Core\Model\Generated\MessageHeader.cs
 // Hl7.Fhir.Core\Model\Generated\MessageDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\MedicinalProductDefinition.cs
@@ -385,6 +396,7 @@
 // Hl7.Fhir.Core\Model\Generated\ExplanationOfBenefit.cs
 // Hl7.Fhir.Core\Model\Generated\ExampleScenario.cs
 // Hl7.Fhir.Core\Model\Generated\EvidenceVariable.cs
+// Hl7.Fhir.Core\Model\Generated\EvidenceFocus.cs
 // Hl7.Fhir.Core\Model\Generated\Evidence.cs
 // Hl7.Fhir.Core\Model\Generated\EventDefinition.cs
 // Hl7.Fhir.Core\Model\Generated\EpisodeOfCare.cs
@@ -426,7 +438,6 @@
 // Hl7.Fhir.Core\Model\Generated\CarePlan.cs
 // Hl7.Fhir.Core\Model\Generated\CapabilityStatement2.cs
 // Hl7.Fhir.Core\Model\Generated\CapabilityStatement.cs
-// Hl7.Fhir.Core\Model\Generated\CanonicalResource.cs
 // Hl7.Fhir.Core\Model\Generated\Bundle.cs
 // Hl7.Fhir.Core\Model\Generated\BodyStructure.cs
 // Hl7.Fhir.Core\Model\Generated\BiologicallyDerivedProduct.cs

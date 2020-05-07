@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -306,18 +306,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication, Substance, or Device requested to be supplied
         /// </summary>
-        [FhirElement("item", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
-        [CLSCompliant(false)]
-		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+        [FhirElement("item", InSummary=true, Order=130)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Item
+        public Hl7.Fhir.Model.CodeableReference Item
         {
             get { return _Item; }
             set { _Item = value; OnPropertyChanged("Item"); }
         }
         
-        private Hl7.Fhir.Model.Element _Item;
+        private Hl7.Fhir.Model.CodeableReference _Item;
         
         /// <summary>
         /// The requested amount of the item indicated
@@ -487,7 +485,7 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus>)StatusElement.DeepCopy();
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                 if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
-                if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
                 if(Parameter != null) dest.Parameter = new List<Hl7.Fhir.Model.SupplyRequest.ParameterComponent>(Parameter.DeepCopy());
                 if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();

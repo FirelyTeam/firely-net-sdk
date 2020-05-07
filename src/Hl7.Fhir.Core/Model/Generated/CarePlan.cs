@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -603,16 +603,14 @@ namespace Hl7.Fhir.Model
             /// Where it should happen
             /// </summary>
             [FhirElement("location", Order=140)]
-            [CLSCompliant(false)]
-			[References("Location")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference Location
+            public Hl7.Fhir.Model.CodeableReference Location
             {
                 get { return _Location; }
                 set { _Location = value; OnPropertyChanged("Location"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _Location;
+            private Hl7.Fhir.Model.CodeableReference _Location;
             
             /// <summary>
             /// Reported rather than primary record
@@ -735,7 +733,7 @@ namespace Hl7.Fhir.Model
                     if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
                     if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
                     if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
-                    if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
+                    if(Location != null) dest.Location = (Hl7.Fhir.Model.CodeableReference)Location.DeepCopy();
                     if(Reported != null) dest.Reported = (Hl7.Fhir.Model.Element)Reported.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                     if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();

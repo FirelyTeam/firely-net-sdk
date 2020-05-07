@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -54,169 +54,6 @@ namespace Hl7.Fhir.Model
         public override ResourceType ResourceType { get { return ResourceType.Evidence; } }
         [NotMapped]
         public override string TypeName { get { return "Evidence"; } }
-        
-        [FhirType("ReferentGroupComponent", NamedBackboneElement=true)]
-        [DataContract]
-        public partial class ReferentGroupComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ReferentGroupComponent"; } }
-            
-            /// <summary>
-            /// Textual description of referent group
-            /// </summary>
-            [FhirElement("description", Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Markdown Description
-            {
-                get { return _Description; }
-                set { _Description = value; OnPropertyChanged("Description"); }
-            }
-            
-            private Hl7.Fhir.Model.Markdown _Description;
-            
-            /// <summary>
-            /// Footnotes and/or explanatory notes
-            /// </summary>
-            [FhirElement("note", Order=50)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.Annotation> Note
-            {
-                get { if(_Note==null) _Note = new List<Hl7.Fhir.Model.Annotation>(); return _Note; }
-                set { _Note = value; OnPropertyChanged("Note"); }
-            }
-            
-            private List<Hl7.Fhir.Model.Annotation> _Note;
-            
-            /// <summary>
-            /// Various information categories of group
-            /// </summary>
-            [FhirElement("evidenceSource", Order=60)]
-            [CLSCompliant(false)]
-			[References("Group")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference EvidenceSource
-            {
-                get { return _EvidenceSource; }
-                set { _EvidenceSource = value; OnPropertyChanged("EvidenceSource"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _EvidenceSource;
-            
-            /// <summary>
-            /// Non-actual group that is a set of characteristics
-            /// </summary>
-            [FhirElement("intendedGroup", Order=70)]
-            [CLSCompliant(false)]
-			[References("Group")]
-            [DataMember]
-            public Hl7.Fhir.Model.ResourceReference IntendedGroup
-            {
-                get { return _IntendedGroup; }
-                set { _IntendedGroup = value; OnPropertyChanged("IntendedGroup"); }
-            }
-            
-            private Hl7.Fhir.Model.ResourceReference _IntendedGroup;
-            
-            /// <summary>
-            /// low | moderate | high | exact
-            /// </summary>
-            [FhirElement("directnessMatch", Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept DirectnessMatch
-            {
-                get { return _DirectnessMatch; }
-                set { _DirectnessMatch = value; OnPropertyChanged("DirectnessMatch"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _DirectnessMatch;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ReferentGroupComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-                    if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                    if(EvidenceSource != null) dest.EvidenceSource = (Hl7.Fhir.Model.ResourceReference)EvidenceSource.DeepCopy();
-                    if(IntendedGroup != null) dest.IntendedGroup = (Hl7.Fhir.Model.ResourceReference)IntendedGroup.DeepCopy();
-                    if(DirectnessMatch != null) dest.DirectnessMatch = (Hl7.Fhir.Model.CodeableConcept)DirectnessMatch.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ReferentGroupComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ReferentGroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-                if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-                if( !DeepComparable.Matches(EvidenceSource, otherT.EvidenceSource)) return false;
-                if( !DeepComparable.Matches(IntendedGroup, otherT.IntendedGroup)) return false;
-                if( !DeepComparable.Matches(DirectnessMatch, otherT.DirectnessMatch)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ReferentGroupComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-                if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-                if( !DeepComparable.IsExactly(EvidenceSource, otherT.EvidenceSource)) return false;
-                if( !DeepComparable.IsExactly(IntendedGroup, otherT.IntendedGroup)) return false;
-                if( !DeepComparable.IsExactly(DirectnessMatch, otherT.DirectnessMatch)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Description != null) yield return Description;
-                    foreach (var elem in Note) { if (elem != null) yield return elem; }
-                    if (EvidenceSource != null) yield return EvidenceSource;
-                    if (IntendedGroup != null) yield return IntendedGroup;
-                    if (DirectnessMatch != null) yield return DirectnessMatch;
-                }
-            }
-
-            [NotMapped]
-            public override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Description != null) yield return new ElementValue("description", Description);
-                    foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-                    if (EvidenceSource != null) yield return new ElementValue("evidenceSource", EvidenceSource);
-                    if (IntendedGroup != null) yield return new ElementValue("intendedGroup", IntendedGroup);
-                    if (DirectnessMatch != null) yield return new ElementValue("directnessMatch", DirectnessMatch);
-                }
-            }
-
-            
-        }
-        
         
         [FhirType("VariableDefinitionComponent", NamedBackboneElement=true)]
         [DataContract]
@@ -253,9 +90,10 @@ namespace Hl7.Fhir.Model
             private List<Hl7.Fhir.Model.Annotation> _Note;
             
             /// <summary>
-            /// exposure | referenceExposure | measuredVariable | confounder
+            /// population | subpopulation | exposure | referenceExposure | measuredVariable | confounder
             /// </summary>
-            [FhirElement("variableRole", Order=60)]
+            [FhirElement("variableRole", InSummary=true, Order=60)]
+            [Cardinality(Min=1,Max=1)]
             [DataMember]
             public Hl7.Fhir.Model.CodeableConcept VariableRole
             {
@@ -268,32 +106,32 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Definition of the actual variable related to the statistic(s)
             /// </summary>
-            [FhirElement("actualDefinition", InSummary=true, Order=70)]
+            [FhirElement("observed", InSummary=true, Order=70)]
             [CLSCompliant(false)]
-			[References("EvidenceVariable")]
+			[References("Group","EvidenceVariable")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference ActualDefinition
+            public Hl7.Fhir.Model.ResourceReference Observed
             {
-                get { return _ActualDefinition; }
-                set { _ActualDefinition = value; OnPropertyChanged("ActualDefinition"); }
+                get { return _Observed; }
+                set { _Observed = value; OnPropertyChanged("Observed"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _ActualDefinition;
+            private Hl7.Fhir.Model.ResourceReference _Observed;
             
             /// <summary>
             /// Definition of the intended variable related to the Evidence
             /// </summary>
-            [FhirElement("intendedDefinition", Order=80)]
+            [FhirElement("intended", Order=80)]
             [CLSCompliant(false)]
-			[References("EvidenceVariable")]
+			[References("Group","EvidenceVariable")]
             [DataMember]
-            public Hl7.Fhir.Model.ResourceReference IntendedDefinition
+            public Hl7.Fhir.Model.ResourceReference Intended
             {
-                get { return _IntendedDefinition; }
-                set { _IntendedDefinition = value; OnPropertyChanged("IntendedDefinition"); }
+                get { return _Intended; }
+                set { _Intended = value; OnPropertyChanged("Intended"); }
             }
             
-            private Hl7.Fhir.Model.ResourceReference _IntendedDefinition;
+            private Hl7.Fhir.Model.ResourceReference _Intended;
             
             /// <summary>
             /// low | moderate | high | exact
@@ -318,8 +156,8 @@ namespace Hl7.Fhir.Model
                     if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                     if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                     if(VariableRole != null) dest.VariableRole = (Hl7.Fhir.Model.CodeableConcept)VariableRole.DeepCopy();
-                    if(ActualDefinition != null) dest.ActualDefinition = (Hl7.Fhir.Model.ResourceReference)ActualDefinition.DeepCopy();
-                    if(IntendedDefinition != null) dest.IntendedDefinition = (Hl7.Fhir.Model.ResourceReference)IntendedDefinition.DeepCopy();
+                    if(Observed != null) dest.Observed = (Hl7.Fhir.Model.ResourceReference)Observed.DeepCopy();
+                    if(Intended != null) dest.Intended = (Hl7.Fhir.Model.ResourceReference)Intended.DeepCopy();
                     if(DirectnessMatch != null) dest.DirectnessMatch = (Hl7.Fhir.Model.CodeableConcept)DirectnessMatch.DeepCopy();
                     return dest;
                 }
@@ -341,8 +179,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.Matches(Description, otherT.Description)) return false;
                 if( !DeepComparable.Matches(Note, otherT.Note)) return false;
                 if( !DeepComparable.Matches(VariableRole, otherT.VariableRole)) return false;
-                if( !DeepComparable.Matches(ActualDefinition, otherT.ActualDefinition)) return false;
-                if( !DeepComparable.Matches(IntendedDefinition, otherT.IntendedDefinition)) return false;
+                if( !DeepComparable.Matches(Observed, otherT.Observed)) return false;
+                if( !DeepComparable.Matches(Intended, otherT.Intended)) return false;
                 if( !DeepComparable.Matches(DirectnessMatch, otherT.DirectnessMatch)) return false;
                 
                 return true;
@@ -357,8 +195,8 @@ namespace Hl7.Fhir.Model
                 if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
                 if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
                 if( !DeepComparable.IsExactly(VariableRole, otherT.VariableRole)) return false;
-                if( !DeepComparable.IsExactly(ActualDefinition, otherT.ActualDefinition)) return false;
-                if( !DeepComparable.IsExactly(IntendedDefinition, otherT.IntendedDefinition)) return false;
+                if( !DeepComparable.IsExactly(Observed, otherT.Observed)) return false;
+                if( !DeepComparable.IsExactly(Intended, otherT.Intended)) return false;
                 if( !DeepComparable.IsExactly(DirectnessMatch, otherT.DirectnessMatch)) return false;
                 
                 return true;
@@ -374,8 +212,8 @@ namespace Hl7.Fhir.Model
                     if (Description != null) yield return Description;
                     foreach (var elem in Note) { if (elem != null) yield return elem; }
                     if (VariableRole != null) yield return VariableRole;
-                    if (ActualDefinition != null) yield return ActualDefinition;
-                    if (IntendedDefinition != null) yield return IntendedDefinition;
+                    if (Observed != null) yield return Observed;
+                    if (Intended != null) yield return Intended;
                     if (DirectnessMatch != null) yield return DirectnessMatch;
                 }
             }
@@ -389,8 +227,8 @@ namespace Hl7.Fhir.Model
                     if (Description != null) yield return new ElementValue("description", Description);
                     foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                     if (VariableRole != null) yield return new ElementValue("variableRole", VariableRole);
-                    if (ActualDefinition != null) yield return new ElementValue("actualDefinition", ActualDefinition);
-                    if (IntendedDefinition != null) yield return new ElementValue("intendedDefinition", IntendedDefinition);
+                    if (Observed != null) yield return new ElementValue("observed", Observed);
+                    if (Intended != null) yield return new ElementValue("intended", Intended);
                     if (DirectnessMatch != null) yield return new ElementValue("directnessMatch", DirectnessMatch);
                 }
             }
@@ -600,7 +438,7 @@ namespace Hl7.Fhir.Model
             }
             
             /// <summary>
-            /// Textual note of certainty subcomponent
+            /// Footnotes and/or explanatory notes
             /// </summary>
             [FhirElement("note", Order=50)]
             [DataMember]
@@ -613,7 +451,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Annotation _Note;
             
             /// <summary>
-            /// Footnotes and/or explanatory notes
+            /// Type of certainty being rated
             /// </summary>
             [FhirElement("type", Order=60)]
             [Cardinality(Min=0,Max=-1)]
@@ -1043,24 +881,10 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.Annotation> _Note;
         
         /// <summary>
-        /// Group being referenced
-        /// </summary>
-        [FhirElement("referentGroup", InSummary=true, Order=230)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Hl7.Fhir.Model.Evidence.ReferentGroupComponent ReferentGroup
-        {
-            get { return _ReferentGroup; }
-            set { _ReferentGroup = value; OnPropertyChanged("ReferentGroup"); }
-        }
-        
-        private Hl7.Fhir.Model.Evidence.ReferentGroupComponent _ReferentGroup;
-        
-        /// <summary>
         /// Evidence variable
         /// </summary>
-        [FhirElement("variableDefinition", Order=240)]
-        [Cardinality(Min=0,Max=-1)]
+        [FhirElement("variableDefinition", Order=230)]
+        [Cardinality(Min=1,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent> VariableDefinition
         {
@@ -1073,7 +897,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The particular type of synthesis if this is a synthesis summary
         /// </summary>
-        [FhirElement("synthesisType", Order=250)]
+        [FhirElement("synthesisType", Order=240)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept SynthesisType
         {
@@ -1086,7 +910,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The type of study that produced this summary
         /// </summary>
-        [FhirElement("studyType", Order=260)]
+        [FhirElement("studyType", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept StudyType
         {
@@ -1099,7 +923,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Values and parameters for a single statistic
         /// </summary>
-        [FhirElement("statistic", Order=270)]
+        [FhirElement("statistic", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Statistic> Statistic
@@ -1113,7 +937,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// An ordered group of statistics
         /// </summary>
-        [FhirElement("distribution", Order=280)]
+        [FhirElement("distribution", Order=270)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<OrderedDistribution> Distribution
@@ -1127,7 +951,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Level of certainty
         /// </summary>
-        [FhirElement("certainty", Order=290)]
+        [FhirElement("certainty", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Evidence.CertaintyComponent> Certainty
@@ -1176,7 +1000,6 @@ namespace Hl7.Fhir.Model
                 if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(Assertion != null) dest.Assertion = (Hl7.Fhir.Model.Markdown)Assertion.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
-                if(ReferentGroup != null) dest.ReferentGroup = (Hl7.Fhir.Model.Evidence.ReferentGroupComponent)ReferentGroup.DeepCopy();
                 if(VariableDefinition != null) dest.VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(VariableDefinition.DeepCopy());
                 if(SynthesisType != null) dest.SynthesisType = (Hl7.Fhir.Model.CodeableConcept)SynthesisType.DeepCopy();
                 if(StudyType != null) dest.StudyType = (Hl7.Fhir.Model.CodeableConcept)StudyType.DeepCopy();
@@ -1214,7 +1037,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(Assertion, otherT.Assertion)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
-            if( !DeepComparable.Matches(ReferentGroup, otherT.ReferentGroup)) return false;
             if( !DeepComparable.Matches(VariableDefinition, otherT.VariableDefinition)) return false;
             if( !DeepComparable.Matches(SynthesisType, otherT.SynthesisType)) return false;
             if( !DeepComparable.Matches(StudyType, otherT.StudyType)) return false;
@@ -1245,7 +1067,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(Assertion, otherT.Assertion)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
-            if( !DeepComparable.IsExactly(ReferentGroup, otherT.ReferentGroup)) return false;
             if( !DeepComparable.IsExactly(VariableDefinition, otherT.VariableDefinition)) return false;
             if( !DeepComparable.IsExactly(SynthesisType, otherT.SynthesisType)) return false;
             if( !DeepComparable.IsExactly(StudyType, otherT.StudyType)) return false;
@@ -1276,7 +1097,6 @@ namespace Hl7.Fhir.Model
 				if (Description != null) yield return Description;
 				if (Assertion != null) yield return Assertion;
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
-				if (ReferentGroup != null) yield return ReferentGroup;
 				foreach (var elem in VariableDefinition) { if (elem != null) yield return elem; }
 				if (SynthesisType != null) yield return SynthesisType;
 				if (StudyType != null) yield return StudyType;
@@ -1306,7 +1126,6 @@ namespace Hl7.Fhir.Model
                 if (Description != null) yield return new ElementValue("description", Description);
                 if (Assertion != null) yield return new ElementValue("assertion", Assertion);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
-                if (ReferentGroup != null) yield return new ElementValue("referentGroup", ReferentGroup);
                 foreach (var elem in VariableDefinition) { if (elem != null) yield return new ElementValue("variableDefinition", elem); }
                 if (SynthesisType != null) yield return new ElementValue("synthesisType", SynthesisType);
                 if (StudyType != null) yield return new ElementValue("studyType", StudyType);

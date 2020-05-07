@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "DeviceNameComponent"; } }
             
             /// <summary>
-            /// The name of the device
+            /// A name that is used to refer to the device
             /// </summary>
             [FhirElement("name", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.FhirString _NameElement;
             
             /// <summary>
-            /// The name of the device
+            /// A name that is used to refer to the device
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "CapabilityComponent"; } }
             
             /// <summary>
-            /// Type of capability
+            /// The type of capability - whether it is a physical attribute, a customization needed
             /// </summary>
             [FhirElement("type", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
-            /// Description of capability
+            /// The actual capability of the device
             /// </summary>
             [FhirElement("description", Order=50)]
             [Cardinality(Min=0,Max=-1)]
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "MaterialComponent"; } }
             
             /// <summary>
-            /// The substance
+            /// A relevant substance that the device contains, may contain, or is made of
             /// </summary>
             [FhirElement("substance", Order=40)]
             [Cardinality(Min=1,Max=1)]
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Element _Manufacturer;
         
         /// <summary>
-        /// A name given to the device to identify it
+        /// The name or names of the device as given by the manufacturer
         /// </summary>
         [FhirElement("deviceName", Order=120)]
         [Cardinality(Min=0,Max=-1)]
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent> _DeviceName;
         
         /// <summary>
-        /// The model number for the device
+        /// The catalog or model number for the device for example as defined by the manufacturer
         /// </summary>
         [FhirElement("modelNumber", Order=130)]
         [DataMember]
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.FhirString _ModelNumberElement;
         
         /// <summary>
-        /// The model number for the device
+        /// The catalog or model number for the device for example as defined by the manufacturer
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
         private List<ProductShelfLife> _ShelfLifeStorage;
         
         /// <summary>
-        /// Dimensions, color etc.
+        /// Physical characteristics to define or specify the product - for example dimensions, color etc.
         /// </summary>
         [FhirElement("physicalCharacteristics", Order=190)]
         [DataMember]
@@ -1121,7 +1121,7 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _LanguageCode;
         
         /// <summary>
-        /// Device capabilities
+        /// Additional capabilities of the device
         /// </summary>
         [FhirElement("capability", Order=210)]
         [Cardinality(Min=0,Max=-1)]
@@ -1178,41 +1178,9 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.ContactPoint> _Contact;
         
         /// <summary>
-        /// Network address to contact device
-        /// </summary>
-        [FhirElement("url", Order=250)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri UrlElement
-        {
-            get { return _UrlElement; }
-            set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-        }
-        
-        private Hl7.Fhir.Model.FhirUri _UrlElement;
-        
-        /// <summary>
-        /// Network address to contact device
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Url
-        {
-            get { return UrlElement != null ? UrlElement.Value : null; }
-            set
-            {
-                if (value == null)
-                  UrlElement = null; 
-                else
-                  UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("Url");
-            }
-        }
-        
-        /// <summary>
         /// Access to on-line information
         /// </summary>
-        [FhirElement("onlineInformation", Order=260)]
+        [FhirElement("onlineInformation", Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.FhirUri OnlineInformationElement
         {
@@ -1244,7 +1212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Device notes and comments
         /// </summary>
-        [FhirElement("note", Order=270)]
+        [FhirElement("note", Order=260)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Annotation> Note
@@ -1258,7 +1226,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The quantity of the device present in the packaging (e.g. the number of devices present in a pack, or the number of devices in the same package of the medicinal product)
         /// </summary>
-        [FhirElement("quantity", Order=280)]
+        [FhirElement("quantity", Order=270)]
         [DataMember]
         public Quantity Quantity
         {
@@ -1271,7 +1239,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The parent device it can be part of
         /// </summary>
-        [FhirElement("parentDevice", InSummary=true, Order=290)]
+        [FhirElement("parentDevice", InSummary=true, Order=280)]
         [CLSCompliant(false)]
 		[References("DeviceDefinition")]
         [DataMember]
@@ -1286,7 +1254,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A substance used to create the material(s) of which the device is made
         /// </summary>
-        [FhirElement("material", Order=300)]
+        [FhirElement("material", Order=290)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.DeviceDefinition.MaterialComponent> Material
@@ -1327,7 +1295,6 @@ namespace Hl7.Fhir.Model
                 if(Property != null) dest.Property = new List<Hl7.Fhir.Model.DeviceDefinition.PropertyComponent>(Property.DeepCopy());
                 if(Owner != null) dest.Owner = (Hl7.Fhir.Model.ResourceReference)Owner.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
-                if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
                 if(OnlineInformationElement != null) dest.OnlineInformationElement = (Hl7.Fhir.Model.FhirUri)OnlineInformationElement.DeepCopy();
                 if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
                 if(Quantity != null) dest.Quantity = (Quantity)Quantity.DeepCopy();
@@ -1366,7 +1333,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(Property, otherT.Property)) return false;
             if( !DeepComparable.Matches(Owner, otherT.Owner)) return false;
             if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.Matches(OnlineInformationElement, otherT.OnlineInformationElement)) return false;
             if( !DeepComparable.Matches(Note, otherT.Note)) return false;
             if( !DeepComparable.Matches(Quantity, otherT.Quantity)) return false;
@@ -1398,7 +1364,6 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
             if( !DeepComparable.IsExactly(Owner, otherT.Owner)) return false;
             if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-            if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
             if( !DeepComparable.IsExactly(OnlineInformationElement, otherT.OnlineInformationElement)) return false;
             if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
             if( !DeepComparable.IsExactly(Quantity, otherT.Quantity)) return false;
@@ -1430,7 +1395,6 @@ namespace Hl7.Fhir.Model
 				foreach (var elem in Property) { if (elem != null) yield return elem; }
 				if (Owner != null) yield return Owner;
 				foreach (var elem in Contact) { if (elem != null) yield return elem; }
-				if (UrlElement != null) yield return UrlElement;
 				if (OnlineInformationElement != null) yield return OnlineInformationElement;
 				foreach (var elem in Note) { if (elem != null) yield return elem; }
 				if (Quantity != null) yield return Quantity;
@@ -1461,7 +1425,6 @@ namespace Hl7.Fhir.Model
                 foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
                 if (Owner != null) yield return new ElementValue("owner", Owner);
                 foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-                if (UrlElement != null) yield return new ElementValue("url", UrlElement);
                 if (OnlineInformationElement != null) yield return new ElementValue("onlineInformation", OnlineInformationElement);
                 foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
                 if (Quantity != null) yield return new ElementValue("quantity", Quantity);

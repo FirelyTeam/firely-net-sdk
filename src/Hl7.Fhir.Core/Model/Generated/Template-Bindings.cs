@@ -29,7 +29,7 @@
 */
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -413,6 +413,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("4.2.0", "http://hl7.org/fhir/FHIR-version"), Description("4.2.0")]
         N4_2_0,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/FHIR-version)
+        /// </summary>
+        [EnumLiteral("4.4.0", "http://hl7.org/fhir/FHIR-version"), Description("4.4.0")]
+        N4_4_0,
     }
 
     /// <summary>
@@ -563,6 +569,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("ChargeItemDefinition", "http://hl7.org/fhir/resource-types"), Description("ChargeItemDefinition")]
         ChargeItemDefinition,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("Citation", "http://hl7.org/fhir/resource-types"), Description("Citation")]
+        Citation,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -767,6 +779,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Evidence", "http://hl7.org/fhir/resource-types"), Description("Evidence")]
         Evidence,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("EvidenceFocus", "http://hl7.org/fhir/resource-types"), Description("EvidenceFocus")]
+        EvidenceFocus,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -999,6 +1017,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/resource-types"), Description("NutritionProduct")]
+        NutritionProduct,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Observation", "http://hl7.org/fhir/resource-types"), Description("Observation")]
         Observation,
         /// <summary>
@@ -1061,6 +1085,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/resource-types"), Description("PaymentReconciliation")]
         PaymentReconciliation,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("Permission", "http://hl7.org/fhir/resource-types"), Description("Permission")]
+        Permission,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -1209,6 +1239,18 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/resource-types"), Description("SubscriptionStatus")]
+        SubscriptionStatus,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/resource-types"), Description("SubscriptionTopic")]
+        SubscriptionTopic,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Substance", "http://hl7.org/fhir/resource-types"), Description("Substance")]
         Substance,
         /// <summary>
@@ -1283,12 +1325,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
         TestScript,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("Topic", "http://hl7.org/fhir/resource-types"), Description("Topic")]
-        Topic,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -2727,6 +2763,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("Citation", "http://hl7.org/fhir/resource-types"), Description("Citation")]
+        Citation,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Claim", "http://hl7.org/fhir/resource-types"), Description("Claim")]
         Claim,
         /// <summary>
@@ -2927,6 +2969,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("Evidence", "http://hl7.org/fhir/resource-types"), Description("Evidence")]
         Evidence,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("EvidenceFocus", "http://hl7.org/fhir/resource-types"), Description("EvidenceFocus")]
+        EvidenceFocus,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -3159,6 +3207,12 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/resource-types"), Description("NutritionProduct")]
+        NutritionProduct,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Observation", "http://hl7.org/fhir/resource-types"), Description("Observation")]
         Observation,
         /// <summary>
@@ -3221,6 +3275,12 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/resource-types"), Description("PaymentReconciliation")]
         PaymentReconciliation,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("Permission", "http://hl7.org/fhir/resource-types"), Description("Permission")]
+        Permission,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -3369,6 +3429,18 @@ namespace Hl7.Fhir.Model
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
         /// </summary>
+        [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/resource-types"), Description("SubscriptionStatus")]
+        SubscriptionStatus,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
+        [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/resource-types"), Description("SubscriptionTopic")]
+        SubscriptionTopic,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://hl7.org/fhir/resource-types)
+        /// </summary>
         [EnumLiteral("Substance", "http://hl7.org/fhir/resource-types"), Description("Substance")]
         Substance,
         /// <summary>
@@ -3443,12 +3515,6 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
         TestScript,
-        /// <summary>
-        /// MISSING DESCRIPTION<br/>
-        /// (system: http://hl7.org/fhir/resource-types)
-        /// </summary>
-        [EnumLiteral("Topic", "http://hl7.org/fhir/resource-types"), Description("Topic")]
-        Topic,
         /// <summary>
         /// MISSING DESCRIPTION<br/>
         /// (system: http://hl7.org/fhir/resource-types)
@@ -3743,6 +3809,138 @@ namespace Hl7.Fhir.Model
         /// </summary>
         [EnumLiteral("multiple", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Multiple")]
         Multiple,
+    }
+
+    /// <summary>
+    /// State values for FHIR Subscriptions.
+    /// (url: http://hl7.org/fhir/ValueSet/subscription-state)
+    /// </summary>
+    [FhirEnumeration("SubscriptionState")]
+    public enum SubscriptionState
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-state)
+        /// </summary>
+        [EnumLiteral("requested", "http://terminology.hl7.org/CodeSystem/subscription-state"), Description("Requested")]
+        Requested,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-state)
+        /// </summary>
+        [EnumLiteral("active", "http://terminology.hl7.org/CodeSystem/subscription-state"), Description("Active")]
+        Active,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-state)
+        /// </summary>
+        [EnumLiteral("error", "http://terminology.hl7.org/CodeSystem/subscription-state"), Description("Error")]
+        Error,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-state)
+        /// </summary>
+        [EnumLiteral("off", "http://terminology.hl7.org/CodeSystem/subscription-state"), Description("Off")]
+        Off,
+    }
+
+    /// <summary>
+    /// FHIR search modifiers allowed for use in Subscriptions and SubscriptionTopics.
+    /// (url: http://hl7.org/fhir/ValueSet/subscription-search-modifier)
+    /// </summary>
+    [FhirEnumeration("SubscriptionSearchModifier")]
+    public enum SubscriptionSearchModifier
+    {
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("=", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("=")]
+        Equal,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("eq", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Equal")]
+        Eq,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("ne", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Not Equal")]
+        Ne,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("gt", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Greater Than")]
+        Gt,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("lt", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Less Than")]
+        Lt,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("ge", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Greater Than or Equal")]
+        Ge,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("le", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Less Than or Equal")]
+        Le,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("sa", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Starts After")]
+        Sa,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("eb", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Ends Before")]
+        Eb,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("ap", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Approximately")]
+        Ap,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("above", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Above")]
+        Above,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("below", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Below")]
+        Below,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("in", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("In")]
+        In,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("not-in", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Not In")]
+        NotIn,
+        /// <summary>
+        /// MISSING DESCRIPTION<br/>
+        /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
+        /// </summary>
+        [EnumLiteral("of-type", "http://terminology.hl7.org/CodeSystem/subscription-search-modifier"), Description("Of Type")]
+        OfType,
     }
 
 }

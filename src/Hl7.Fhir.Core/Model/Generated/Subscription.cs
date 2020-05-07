@@ -39,12 +39,12 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
     /// <summary>
-    /// Notification about a Topic
+    /// Notification about a SubscriptionTopic
     /// </summary>
     [FhirType("Subscription", IsResource=true)]
     [DataContract]
@@ -55,78 +55,6 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "Subscription"; } }
         
-        /// <summary>
-        /// The status of a subscription.
-        /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
-        /// </summary>
-        [FhirEnumeration("SubscriptionStatus")]
-        public enum SubscriptionStatus
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-status)
-            /// </summary>
-            [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
-            Requested,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-status)
-            /// </summary>
-            [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
-            Active,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-status)
-            /// </summary>
-            [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
-            Error,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-status)
-            /// </summary>
-            [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
-            Off,
-        }
-
-        /// <summary>
-        /// Operator to apply to filter label.
-        /// (url: http://hl7.org/fhir/ValueSet/subscription-operator)
-        /// </summary>
-        [FhirEnumeration("SubscriptionFilterByMatchType")]
-        public enum SubscriptionFilterByMatchType
-        {
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-operator)
-            /// </summary>
-            [EnumLiteral("=", "http://hl7.org/fhir/subscription-operator"), Description("=")]
-            Equal,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-operator)
-            /// </summary>
-            [EnumLiteral("in", "http://hl7.org/fhir/subscription-operator"), Description("in")]
-            In,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-operator)
-            /// </summary>
-            [EnumLiteral("not-in", "http://hl7.org/fhir/subscription-operator"), Description("not-in")]
-            NotIn,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-operator)
-            /// </summary>
-            [EnumLiteral("above", "http://hl7.org/fhir/subscription-operator"), Description("above")]
-            Above,
-            /// <summary>
-            /// MISSING DESCRIPTION
-            /// (system: http://hl7.org/fhir/subscription-operator)
-            /// </summary>
-            [EnumLiteral("below", "http://hl7.org/fhir/subscription-operator"), Description("below")]
-            Below,
-        }
-
         /// <summary>
         /// Codes to represent how much resource content to send in the notification payload.
         /// (url: http://hl7.org/fhir/ValueSet/subscription-payload-content)
@@ -162,67 +90,67 @@ namespace Hl7.Fhir.Model
             public override string TypeName { get { return "FilterByComponent"; } }
             
             /// <summary>
-            /// Filter label defined in Topic
+            /// Filter label defined in SubscriptionTopic
             /// </summary>
-            [FhirElement("name", InSummary=true, Order=40)]
+            [FhirElement("searchParamName", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.FhirString NameElement
+            public Hl7.Fhir.Model.FhirString SearchParamNameElement
             {
-                get { return _NameElement; }
-                set { _NameElement = value; OnPropertyChanged("NameElement"); }
+                get { return _SearchParamNameElement; }
+                set { _SearchParamNameElement = value; OnPropertyChanged("SearchParamNameElement"); }
             }
             
-            private Hl7.Fhir.Model.FhirString _NameElement;
+            private Hl7.Fhir.Model.FhirString _SearchParamNameElement;
             
             /// <summary>
-            /// Filter label defined in Topic
+            /// Filter label defined in SubscriptionTopic
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public string Name
+            public string SearchParamName
             {
-                get { return NameElement != null ? NameElement.Value : null; }
+                get { return SearchParamNameElement != null ? SearchParamNameElement.Value : null; }
                 set
                 {
                     if (value == null)
-                        NameElement = null; 
+                        SearchParamNameElement = null; 
                     else
-                        NameElement = new Hl7.Fhir.Model.FhirString(value);
-                    OnPropertyChanged("Name");
+                        SearchParamNameElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("SearchParamName");
                 }
             }
             
             /// <summary>
-            /// = | in | not-in | above | below
+            /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type
             /// </summary>
-            [FhirElement("matchType", InSummary=true, Order=50)]
+            [FhirElement("searchModifier", InSummary=true, Order=50)]
             [DataMember]
-            public Code<Hl7.Fhir.Model.Subscription.SubscriptionFilterByMatchType> MatchTypeElement
+            public Code<Hl7.Fhir.Model.SubscriptionSearchModifier> SearchModifierElement
             {
-                get { return _MatchTypeElement; }
-                set { _MatchTypeElement = value; OnPropertyChanged("MatchTypeElement"); }
+                get { return _SearchModifierElement; }
+                set { _SearchModifierElement = value; OnPropertyChanged("SearchModifierElement"); }
             }
             
-            private Code<Hl7.Fhir.Model.Subscription.SubscriptionFilterByMatchType> _MatchTypeElement;
+            private Code<Hl7.Fhir.Model.SubscriptionSearchModifier> _SearchModifierElement;
             
             /// <summary>
-            /// = | in | not-in | above | below
+            /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
             [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Subscription.SubscriptionFilterByMatchType? MatchType
+            public Hl7.Fhir.Model.SubscriptionSearchModifier? SearchModifier
             {
-                get { return MatchTypeElement != null ? MatchTypeElement.Value : null; }
+                get { return SearchModifierElement != null ? SearchModifierElement.Value : null; }
                 set
                 {
                     if (!value.HasValue)
-                        MatchTypeElement = null; 
+                        SearchModifierElement = null; 
                     else
-                        MatchTypeElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionFilterByMatchType>(value);
-                    OnPropertyChanged("MatchType");
+                        SearchModifierElement = new Code<Hl7.Fhir.Model.SubscriptionSearchModifier>(value);
+                    OnPropertyChanged("SearchModifier");
                 }
             }
             
@@ -266,8 +194,8 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(MatchTypeElement != null) dest.MatchTypeElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionFilterByMatchType>)MatchTypeElement.DeepCopy();
+                    if(SearchParamNameElement != null) dest.SearchParamNameElement = (Hl7.Fhir.Model.FhirString)SearchParamNameElement.DeepCopy();
+                    if(SearchModifierElement != null) dest.SearchModifierElement = (Code<Hl7.Fhir.Model.SubscriptionSearchModifier>)SearchModifierElement.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirString)ValueElement.DeepCopy();
                     return dest;
                 }
@@ -286,8 +214,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.Matches(MatchTypeElement, otherT.MatchTypeElement)) return false;
+                if( !DeepComparable.Matches(SearchParamNameElement, otherT.SearchParamNameElement)) return false;
+                if( !DeepComparable.Matches(SearchModifierElement, otherT.SearchModifierElement)) return false;
                 if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
                 
                 return true;
@@ -299,8 +227,8 @@ namespace Hl7.Fhir.Model
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-                if( !DeepComparable.IsExactly(MatchTypeElement, otherT.MatchTypeElement)) return false;
+                if( !DeepComparable.IsExactly(SearchParamNameElement, otherT.SearchParamNameElement)) return false;
+                if( !DeepComparable.IsExactly(SearchModifierElement, otherT.SearchModifierElement)) return false;
                 if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
                 
                 return true;
@@ -313,8 +241,8 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (NameElement != null) yield return NameElement;
-                    if (MatchTypeElement != null) yield return MatchTypeElement;
+                    if (SearchParamNameElement != null) yield return SearchParamNameElement;
+                    if (SearchModifierElement != null) yield return SearchModifierElement;
                     if (ValueElement != null) yield return ValueElement;
                 }
             }
@@ -325,368 +253,9 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (NameElement != null) yield return new ElementValue("name", NameElement);
-                    if (MatchTypeElement != null) yield return new ElementValue("matchType", MatchTypeElement);
+                    if (SearchParamNameElement != null) yield return new ElementValue("searchParamName", SearchParamNameElement);
+                    if (SearchModifierElement != null) yield return new ElementValue("searchModifier", SearchModifierElement);
                     if (ValueElement != null) yield return new ElementValue("value", ValueElement);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("ChannelComponent", NamedBackboneElement=true)]
-        [DataContract]
-        public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "ChannelComponent"; } }
-            
-            /// <summary>
-            /// rest-hook | websocket | email | message
-            /// </summary>
-            [FhirElement("type", InSummary=true, Order=40)]
-            [Cardinality(Min=1,Max=1)]
-            [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Type
-            {
-                get { return _Type; }
-                set { _Type = value; OnPropertyChanged("Type"); }
-            }
-            
-            private Hl7.Fhir.Model.CodeableConcept _Type;
-            
-            /// <summary>
-            /// Where the channel points to
-            /// </summary>
-            [FhirElement("endpoint", InSummary=true, Order=50)]
-            [DataMember]
-            public Hl7.Fhir.Model.FhirUrl EndpointElement
-            {
-                get { return _EndpointElement; }
-                set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
-            }
-            
-            private Hl7.Fhir.Model.FhirUrl _EndpointElement;
-            
-            /// <summary>
-            /// Where the channel points to
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string Endpoint
-            {
-                get { return EndpointElement != null ? EndpointElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        EndpointElement = null; 
-                    else
-                        EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
-                    OnPropertyChanged("Endpoint");
-                }
-            }
-            
-            /// <summary>
-            /// Usage depends on the channel type
-            /// </summary>
-            [FhirElement("header", InSummary=true, Order=60)]
-            [Cardinality(Min=0,Max=-1)]
-            [DataMember]
-            public List<Hl7.Fhir.Model.FhirString> HeaderElement
-            {
-                get { if(_HeaderElement==null) _HeaderElement = new List<Hl7.Fhir.Model.FhirString>(); return _HeaderElement; }
-                set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
-            }
-            
-            private List<Hl7.Fhir.Model.FhirString> _HeaderElement;
-            
-            /// <summary>
-            /// Usage depends on the channel type
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public IEnumerable<string> Header
-            {
-                get { return HeaderElement != null ? HeaderElement.Select(elem => elem.Value) : null; }
-                set
-                {
-                    if (value == null)
-                        HeaderElement = null; 
-                    else
-                        HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
-                    OnPropertyChanged("Header");
-                }
-            }
-            
-            /// <summary>
-            /// Interval in seconds to send 'heartbeat' notification
-            /// </summary>
-            [FhirElement("heartbeatPeriod", InSummary=true, Order=70)]
-            [DataMember]
-            public Hl7.Fhir.Model.UnsignedInt HeartbeatPeriodElement
-            {
-                get { return _HeartbeatPeriodElement; }
-                set { _HeartbeatPeriodElement = value; OnPropertyChanged("HeartbeatPeriodElement"); }
-            }
-            
-            private Hl7.Fhir.Model.UnsignedInt _HeartbeatPeriodElement;
-            
-            /// <summary>
-            /// Interval in seconds to send 'heartbeat' notification
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public int? HeartbeatPeriod
-            {
-                get { return HeartbeatPeriodElement != null ? HeartbeatPeriodElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        HeartbeatPeriodElement = null; 
-                    else
-                        HeartbeatPeriodElement = new Hl7.Fhir.Model.UnsignedInt(value);
-                    OnPropertyChanged("HeartbeatPeriod");
-                }
-            }
-            
-            /// <summary>
-            /// Payload definition
-            /// </summary>
-            [FhirElement("payload", InSummary=true, Order=80)]
-            [DataMember]
-            public Hl7.Fhir.Model.Subscription.PayloadComponent Payload
-            {
-                get { return _Payload; }
-                set { _Payload = value; OnPropertyChanged("Payload"); }
-            }
-            
-            private Hl7.Fhir.Model.Subscription.PayloadComponent _Payload;
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as ChannelComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
-                    if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
-                    if(HeartbeatPeriodElement != null) dest.HeartbeatPeriodElement = (Hl7.Fhir.Model.UnsignedInt)HeartbeatPeriodElement.DeepCopy();
-                    if(Payload != null) dest.Payload = (Hl7.Fhir.Model.Subscription.PayloadComponent)Payload.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new ChannelComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as ChannelComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-                if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
-                if( !DeepComparable.Matches(HeaderElement, otherT.HeaderElement)) return false;
-                if( !DeepComparable.Matches(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
-                if( !DeepComparable.Matches(Payload, otherT.Payload)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as ChannelComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-                if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
-                if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
-                if( !DeepComparable.IsExactly(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
-                if( !DeepComparable.IsExactly(Payload, otherT.Payload)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (Type != null) yield return Type;
-                    if (EndpointElement != null) yield return EndpointElement;
-                    foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
-                    if (HeartbeatPeriodElement != null) yield return HeartbeatPeriodElement;
-                    if (Payload != null) yield return Payload;
-                }
-            }
-
-            [NotMapped]
-            public override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (Type != null) yield return new ElementValue("type", Type);
-                    if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
-                    foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
-                    if (HeartbeatPeriodElement != null) yield return new ElementValue("heartbeatPeriod", HeartbeatPeriodElement);
-                    if (Payload != null) yield return new ElementValue("payload", Payload);
-                }
-            }
-
-            
-        }
-        
-        
-        [FhirType("PayloadComponent", NamedBackboneElement=true)]
-        [DataContract]
-        public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
-        {
-            [NotMapped]
-            public override string TypeName { get { return "PayloadComponent"; } }
-            
-            /// <summary>
-            /// MIME type to send, or omit for no payload
-            /// </summary>
-            [FhirElement("contentType", InSummary=true, Order=40)]
-            [DataMember]
-            public Hl7.Fhir.Model.Code ContentTypeElement
-            {
-                get { return _ContentTypeElement; }
-                set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
-            }
-            
-            private Hl7.Fhir.Model.Code _ContentTypeElement;
-            
-            /// <summary>
-            /// MIME type to send, or omit for no payload
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public string ContentType
-            {
-                get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
-                set
-                {
-                    if (value == null)
-                        ContentTypeElement = null; 
-                    else
-                        ContentTypeElement = new Hl7.Fhir.Model.Code(value);
-                    OnPropertyChanged("ContentType");
-                }
-            }
-            
-            /// <summary>
-            /// empty | id-only | full-resource
-            /// </summary>
-            [FhirElement("content", InSummary=true, Order=50)]
-            [DataMember]
-            public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> ContentElement
-            {
-                get { return _ContentElement; }
-                set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
-            }
-            
-            private Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> _ContentElement;
-            
-            /// <summary>
-            /// empty | id-only | full-resource
-            /// </summary>
-            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-            [NotMapped]
-            [IgnoreDataMemberAttribute]
-            public Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent? Content
-            {
-                get { return ContentElement != null ? ContentElement.Value : null; }
-                set
-                {
-                    if (!value.HasValue)
-                        ContentElement = null; 
-                    else
-                        ContentElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>(value);
-                    OnPropertyChanged("Content");
-                }
-            }
-            
-            public override IDeepCopyable CopyTo(IDeepCopyable other)
-            {
-                var dest = other as PayloadComponent;
-                
-                if (dest != null)
-                {
-                    base.CopyTo(dest);
-                    if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
-                    if(ContentElement != null) dest.ContentElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>)ContentElement.DeepCopy();
-                    return dest;
-                }
-                else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
-            }
-            
-            public override IDeepCopyable DeepCopy()
-            {
-                return CopyTo(new PayloadComponent());
-            }
-            
-            public override bool Matches(IDeepComparable other)
-            {
-                var otherT = other as PayloadComponent;
-                if(otherT == null) return false;
-                
-                if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
-                if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
-                
-                return true;
-            }
-            
-            public override bool IsExactly(IDeepComparable other)
-            {
-                var otherT = other as PayloadComponent;
-                if(otherT == null) return false;
-                
-                if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
-                if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
-                
-                return true;
-            }
-
-
-            [NotMapped]
-            public override IEnumerable<Base> Children
-            {
-                get
-                {
-                    foreach (var item in base.Children) yield return item;
-                    if (ContentTypeElement != null) yield return ContentTypeElement;
-                    if (ContentElement != null) yield return ContentElement;
-                }
-            }
-
-            [NotMapped]
-            public override IEnumerable<ElementValue> NamedChildren
-            {
-                get
-                {
-                    foreach (var item in base.NamedChildren) yield return item;
-                    if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
-                    if (ContentElement != null) yield return new ElementValue("content", ContentElement);
                 }
             }
 
@@ -746,13 +315,13 @@ namespace Hl7.Fhir.Model
         [FhirElement("status", InSummary=true, Order=110)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement
+        public Code<Hl7.Fhir.Model.SubscriptionState> StatusElement
         {
             get { return _StatusElement; }
             set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> _StatusElement;
+        private Code<Hl7.Fhir.Model.SubscriptionState> _StatusElement;
         
         /// <summary>
         /// requested | active | error | off
@@ -760,7 +329,7 @@ namespace Hl7.Fhir.Model
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Subscription.SubscriptionStatus? Status
+        public Hl7.Fhir.Model.SubscriptionState? Status
         {
             get { return StatusElement != null ? StatusElement.Value : null; }
             set
@@ -768,17 +337,17 @@ namespace Hl7.Fhir.Model
                 if (!value.HasValue)
                   StatusElement = null; 
                 else
-                  StatusElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>(value);
+                  StatusElement = new Code<Hl7.Fhir.Model.SubscriptionState>(value);
                 OnPropertyChanged("Status");
             }
         }
         
         /// <summary>
-        /// Reference to the topic being subscribed to
+        /// Reference to the subscription topic being subscribed to
         /// </summary>
         [FhirElement("topic", InSummary=true, Order=120)]
         [CLSCompliant(false)]
-		[References("Topic")]
+		[References("SubscriptionTopic")]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.ResourceReference Topic
@@ -868,7 +437,7 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
-        /// Criteria for narrowing the topic stream
+        /// Criteria for narrowing the subscription topic stream
         /// </summary>
         [FhirElement("filterBy", InSummary=true, Order=160)]
         [Cardinality(Min=0,Max=-1)]
@@ -896,50 +465,211 @@ namespace Hl7.Fhir.Model
         private List<Hl7.Fhir.Model.CodeableConcept> _Error;
         
         /// <summary>
-        /// Notification event counter
+        /// Channel type for notifications
         /// </summary>
-        [FhirElement("eventCount", InSummary=true, Order=180)]
+        [FhirElement("channelType", InSummary=true, Order=180)]
+        [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.UnsignedInt EventCountElement
+        public Hl7.Fhir.Model.Coding ChannelType
         {
-            get { return _EventCountElement; }
-            set { _EventCountElement = value; OnPropertyChanged("EventCountElement"); }
+            get { return _ChannelType; }
+            set { _ChannelType = value; OnPropertyChanged("ChannelType"); }
         }
         
-        private Hl7.Fhir.Model.UnsignedInt _EventCountElement;
+        private Hl7.Fhir.Model.Coding _ChannelType;
         
         /// <summary>
-        /// Notification event counter
+        /// Where the channel points to
+        /// </summary>
+        [FhirElement("endpoint", InSummary=true, Order=190)]
+        [DataMember]
+        public Hl7.Fhir.Model.FhirUrl EndpointElement
+        {
+            get { return _EndpointElement; }
+            set { _EndpointElement = value; OnPropertyChanged("EndpointElement"); }
+        }
+        
+        private Hl7.Fhir.Model.FhirUrl _EndpointElement;
+        
+        /// <summary>
+        /// Where the channel points to
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public int? EventCount
+        public string Endpoint
         {
-            get { return EventCountElement != null ? EventCountElement.Value : null; }
+            get { return EndpointElement != null ? EndpointElement.Value : null; }
             set
             {
-                if (!value.HasValue)
-                  EventCountElement = null; 
+                if (value == null)
+                  EndpointElement = null; 
                 else
-                  EventCountElement = new Hl7.Fhir.Model.UnsignedInt(value);
-                OnPropertyChanged("EventCount");
+                  EndpointElement = new Hl7.Fhir.Model.FhirUrl(value);
+                OnPropertyChanged("Endpoint");
             }
         }
         
         /// <summary>
-        /// The channel on which to report matches to the criteria
+        /// Usage depends on the channel type
         /// </summary>
-        [FhirElement("channel", InSummary=true, Order=190)]
-        [Cardinality(Min=1,Max=1)]
+        [FhirElement("header", InSummary=true, Order=200)]
+        [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public Hl7.Fhir.Model.Subscription.ChannelComponent Channel
+        public List<Hl7.Fhir.Model.FhirString> HeaderElement
         {
-            get { return _Channel; }
-            set { _Channel = value; OnPropertyChanged("Channel"); }
+            get { if(_HeaderElement==null) _HeaderElement = new List<Hl7.Fhir.Model.FhirString>(); return _HeaderElement; }
+            set { _HeaderElement = value; OnPropertyChanged("HeaderElement"); }
         }
         
-        private Hl7.Fhir.Model.Subscription.ChannelComponent _Channel;
+        private List<Hl7.Fhir.Model.FhirString> _HeaderElement;
+        
+        /// <summary>
+        /// Usage depends on the channel type
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IEnumerable<string> Header
+        {
+            get { return HeaderElement != null ? HeaderElement.Select(elem => elem.Value) : null; }
+            set
+            {
+                if (value == null)
+                  HeaderElement = null; 
+                else
+                  HeaderElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem=>new Hl7.Fhir.Model.FhirString(elem)));
+                OnPropertyChanged("Header");
+            }
+        }
+        
+        /// <summary>
+        /// Interval in seconds to send 'heartbeat' notification
+        /// </summary>
+        [FhirElement("heartbeatPeriod", InSummary=true, Order=210)]
+        [DataMember]
+        public Hl7.Fhir.Model.UnsignedInt HeartbeatPeriodElement
+        {
+            get { return _HeartbeatPeriodElement; }
+            set { _HeartbeatPeriodElement = value; OnPropertyChanged("HeartbeatPeriodElement"); }
+        }
+        
+        private Hl7.Fhir.Model.UnsignedInt _HeartbeatPeriodElement;
+        
+        /// <summary>
+        /// Interval in seconds to send 'heartbeat' notification
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? HeartbeatPeriod
+        {
+            get { return HeartbeatPeriodElement != null ? HeartbeatPeriodElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  HeartbeatPeriodElement = null; 
+                else
+                  HeartbeatPeriodElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                OnPropertyChanged("HeartbeatPeriod");
+            }
+        }
+        
+        /// <summary>
+        /// Timeout in seconds to attempt notification delivery
+        /// </summary>
+        [FhirElement("timeout", InSummary=true, Order=220)]
+        [DataMember]
+        public Hl7.Fhir.Model.UnsignedInt TimeoutElement
+        {
+            get { return _TimeoutElement; }
+            set { _TimeoutElement = value; OnPropertyChanged("TimeoutElement"); }
+        }
+        
+        private Hl7.Fhir.Model.UnsignedInt _TimeoutElement;
+        
+        /// <summary>
+        /// Timeout in seconds to attempt notification delivery
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public int? Timeout
+        {
+            get { return TimeoutElement != null ? TimeoutElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  TimeoutElement = null; 
+                else
+                  TimeoutElement = new Hl7.Fhir.Model.UnsignedInt(value);
+                OnPropertyChanged("Timeout");
+            }
+        }
+        
+        /// <summary>
+        /// MIME type to send, or omit for no payload
+        /// </summary>
+        [FhirElement("contentType", InSummary=true, Order=230)]
+        [DataMember]
+        public Hl7.Fhir.Model.Code ContentTypeElement
+        {
+            get { return _ContentTypeElement; }
+            set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+        }
+        
+        private Hl7.Fhir.Model.Code _ContentTypeElement;
+        
+        /// <summary>
+        /// MIME type to send, or omit for no payload
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public string ContentType
+        {
+            get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+            set
+            {
+                if (value == null)
+                  ContentTypeElement = null; 
+                else
+                  ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+                OnPropertyChanged("ContentType");
+            }
+        }
+        
+        /// <summary>
+        /// empty | id-only | full-resource
+        /// </summary>
+        [FhirElement("content", InSummary=true, Order=240)]
+        [DataMember]
+        public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> ContentElement
+        {
+            get { return _ContentElement; }
+            set { _ContentElement = value; OnPropertyChanged("ContentElement"); }
+        }
+        
+        private Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> _ContentElement;
+        
+        /// <summary>
+        /// empty | id-only | full-resource
+        /// </summary>
+        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent? Content
+        {
+            get { return ContentElement != null ? ContentElement.Value : null; }
+            set
+            {
+                if (!value.HasValue)
+                  ContentElement = null; 
+                else
+                  ContentElement = new Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>(value);
+                OnPropertyChanged("Content");
+            }
+        }
         
 
         public override void AddDefaultConstraints()
@@ -957,15 +687,20 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus>)StatusElement.DeepCopy();
+                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.SubscriptionState>)StatusElement.DeepCopy();
                 if(Topic != null) dest.Topic = (Hl7.Fhir.Model.ResourceReference)Topic.DeepCopy();
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactPoint>(Contact.DeepCopy());
                 if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Instant)EndElement.DeepCopy();
                 if(ReasonElement != null) dest.ReasonElement = (Hl7.Fhir.Model.FhirString)ReasonElement.DeepCopy();
                 if(FilterBy != null) dest.FilterBy = new List<Hl7.Fhir.Model.Subscription.FilterByComponent>(FilterBy.DeepCopy());
                 if(Error != null) dest.Error = new List<Hl7.Fhir.Model.CodeableConcept>(Error.DeepCopy());
-                if(EventCountElement != null) dest.EventCountElement = (Hl7.Fhir.Model.UnsignedInt)EventCountElement.DeepCopy();
-                if(Channel != null) dest.Channel = (Hl7.Fhir.Model.Subscription.ChannelComponent)Channel.DeepCopy();
+                if(ChannelType != null) dest.ChannelType = (Hl7.Fhir.Model.Coding)ChannelType.DeepCopy();
+                if(EndpointElement != null) dest.EndpointElement = (Hl7.Fhir.Model.FhirUrl)EndpointElement.DeepCopy();
+                if(HeaderElement != null) dest.HeaderElement = new List<Hl7.Fhir.Model.FhirString>(HeaderElement.DeepCopy());
+                if(HeartbeatPeriodElement != null) dest.HeartbeatPeriodElement = (Hl7.Fhir.Model.UnsignedInt)HeartbeatPeriodElement.DeepCopy();
+                if(TimeoutElement != null) dest.TimeoutElement = (Hl7.Fhir.Model.UnsignedInt)TimeoutElement.DeepCopy();
+                if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
+                if(ContentElement != null) dest.ContentElement = (Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent>)ContentElement.DeepCopy();
                 return dest;
             }
             else
@@ -992,8 +727,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(ReasonElement, otherT.ReasonElement)) return false;
             if( !DeepComparable.Matches(FilterBy, otherT.FilterBy)) return false;
             if( !DeepComparable.Matches(Error, otherT.Error)) return false;
-            if( !DeepComparable.Matches(EventCountElement, otherT.EventCountElement)) return false;
-            if( !DeepComparable.Matches(Channel, otherT.Channel)) return false;
+            if( !DeepComparable.Matches(ChannelType, otherT.ChannelType)) return false;
+            if( !DeepComparable.Matches(EndpointElement, otherT.EndpointElement)) return false;
+            if( !DeepComparable.Matches(HeaderElement, otherT.HeaderElement)) return false;
+            if( !DeepComparable.Matches(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
+            if( !DeepComparable.Matches(TimeoutElement, otherT.TimeoutElement)) return false;
+            if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.Matches(ContentElement, otherT.ContentElement)) return false;
             
             return true;
         }
@@ -1013,8 +753,13 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(ReasonElement, otherT.ReasonElement)) return false;
             if( !DeepComparable.IsExactly(FilterBy, otherT.FilterBy)) return false;
             if( !DeepComparable.IsExactly(Error, otherT.Error)) return false;
-            if( !DeepComparable.IsExactly(EventCountElement, otherT.EventCountElement)) return false;
-            if( !DeepComparable.IsExactly(Channel, otherT.Channel)) return false;
+            if( !DeepComparable.IsExactly(ChannelType, otherT.ChannelType)) return false;
+            if( !DeepComparable.IsExactly(EndpointElement, otherT.EndpointElement)) return false;
+            if( !DeepComparable.IsExactly(HeaderElement, otherT.HeaderElement)) return false;
+            if( !DeepComparable.IsExactly(HeartbeatPeriodElement, otherT.HeartbeatPeriodElement)) return false;
+            if( !DeepComparable.IsExactly(TimeoutElement, otherT.TimeoutElement)) return false;
+            if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
+            if( !DeepComparable.IsExactly(ContentElement, otherT.ContentElement)) return false;
             
             return true;
         }
@@ -1034,8 +779,13 @@ namespace Hl7.Fhir.Model
 				if (ReasonElement != null) yield return ReasonElement;
 				foreach (var elem in FilterBy) { if (elem != null) yield return elem; }
 				foreach (var elem in Error) { if (elem != null) yield return elem; }
-				if (EventCountElement != null) yield return EventCountElement;
-				if (Channel != null) yield return Channel;
+				if (ChannelType != null) yield return ChannelType;
+				if (EndpointElement != null) yield return EndpointElement;
+				foreach (var elem in HeaderElement) { if (elem != null) yield return elem; }
+				if (HeartbeatPeriodElement != null) yield return HeartbeatPeriodElement;
+				if (TimeoutElement != null) yield return TimeoutElement;
+				if (ContentTypeElement != null) yield return ContentTypeElement;
+				if (ContentElement != null) yield return ContentElement;
             }
         }
 
@@ -1054,8 +804,13 @@ namespace Hl7.Fhir.Model
                 if (ReasonElement != null) yield return new ElementValue("reason", ReasonElement);
                 foreach (var elem in FilterBy) { if (elem != null) yield return new ElementValue("filterBy", elem); }
                 foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
-                if (EventCountElement != null) yield return new ElementValue("eventCount", EventCountElement);
-                if (Channel != null) yield return new ElementValue("channel", Channel);
+                if (ChannelType != null) yield return new ElementValue("channelType", ChannelType);
+                if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
+                foreach (var elem in HeaderElement) { if (elem != null) yield return new ElementValue("header", elem); }
+                if (HeartbeatPeriodElement != null) yield return new ElementValue("heartbeatPeriod", HeartbeatPeriodElement);
+                if (TimeoutElement != null) yield return new ElementValue("timeout", TimeoutElement);
+                if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
+                if (ContentElement != null) yield return new ElementValue("content", ContentElement);
             }
         }
 

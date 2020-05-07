@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -1650,9 +1650,23 @@ namespace Hl7.Fhir.Model
         }
         
         /// <summary>
+        /// Additional identifier for the terminology capabilities
+        /// </summary>
+        [FhirElement("identifier", InSummary=true, Order=100)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.Identifier> Identifier
+        {
+            get { if(_Identifier==null) _Identifier = new List<Hl7.Fhir.Model.Identifier>(); return _Identifier; }
+            set { _Identifier = value; OnPropertyChanged("Identifier"); }
+        }
+        
+        private List<Hl7.Fhir.Model.Identifier> _Identifier;
+        
+        /// <summary>
         /// Business version of the terminology capabilities
         /// </summary>
-        [FhirElement("version", InSummary=true, Order=100)]
+        [FhirElement("version", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString VersionElement
         {
@@ -1684,7 +1698,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name for this terminology capabilities (computer friendly)
         /// </summary>
-        [FhirElement("name", InSummary=true, Order=110)]
+        [FhirElement("name", InSummary=true, Order=120)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString NameElement
         {
@@ -1716,7 +1730,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name for this terminology capabilities (human friendly)
         /// </summary>
-        [FhirElement("title", InSummary=true, Order=120)]
+        [FhirElement("title", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TitleElement
         {
@@ -1748,7 +1762,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// draft | active | retired | unknown
         /// </summary>
-        [FhirElement("status", InSummary=true, Order=130)]
+        [FhirElement("status", InSummary=true, Order=140)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1781,7 +1795,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// For testing purposes, not real usage
         /// </summary>
-        [FhirElement("experimental", InSummary=true, Order=140)]
+        [FhirElement("experimental", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
         {
@@ -1813,7 +1827,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Date last changed
         /// </summary>
-        [FhirElement("date", InSummary=true, Order=150)]
+        [FhirElement("date", InSummary=true, Order=160)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1846,7 +1860,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Name of the publisher (organization or individual)
         /// </summary>
-        [FhirElement("publisher", InSummary=true, Order=160)]
+        [FhirElement("publisher", InSummary=true, Order=170)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PublisherElement
         {
@@ -1878,7 +1892,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contact details for the publisher
         /// </summary>
-        [FhirElement("contact", InSummary=true, Order=170)]
+        [FhirElement("contact", InSummary=true, Order=180)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<ContactDetail> Contact
@@ -1892,7 +1906,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Natural language description of the terminology capabilities
         /// </summary>
-        [FhirElement("description", Order=180)]
+        [FhirElement("description", Order=190)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Description
         {
@@ -1905,7 +1919,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The context that the content is intended to support
         /// </summary>
-        [FhirElement("useContext", InSummary=true, Order=190)]
+        [FhirElement("useContext", InSummary=true, Order=200)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<UsageContext> UseContext
@@ -1919,7 +1933,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Intended jurisdiction for terminology capabilities (if applicable)
         /// </summary>
-        [FhirElement("jurisdiction", InSummary=true, Order=200)]
+        [FhirElement("jurisdiction", InSummary=true, Order=210)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1933,7 +1947,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Why this terminology capabilities is defined
         /// </summary>
-        [FhirElement("purpose", Order=210)]
+        [FhirElement("purpose", Order=220)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Purpose
         {
@@ -1946,7 +1960,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Use and/or publishing restrictions
         /// </summary>
-        [FhirElement("copyright", InSummary=true, Order=220)]
+        [FhirElement("copyright", InSummary=true, Order=230)]
         [DataMember]
         public Hl7.Fhir.Model.Markdown Copyright
         {
@@ -1959,7 +1973,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// instance | capability | requirements
         /// </summary>
-        [FhirElement("kind", InSummary=true, Order=230)]
+        [FhirElement("kind", InSummary=true, Order=240)]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
         public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -1992,7 +2006,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Software that is covered by this terminology capability statement
         /// </summary>
-        [FhirElement("software", InSummary=true, Order=240)]
+        [FhirElement("software", InSummary=true, Order=250)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.SoftwareComponent Software
         {
@@ -2005,7 +2019,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// If this describes a specific instance
         /// </summary>
-        [FhirElement("implementation", InSummary=true, Order=250)]
+        [FhirElement("implementation", InSummary=true, Order=260)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.ImplementationComponent Implementation
         {
@@ -2018,7 +2032,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether lockedDate is supported
         /// </summary>
-        [FhirElement("lockedDate", InSummary=true, Order=260)]
+        [FhirElement("lockedDate", InSummary=true, Order=270)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean LockedDateElement
         {
@@ -2050,7 +2064,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A code system supported by the server
         /// </summary>
-        [FhirElement("codeSystem", Order=270)]
+        [FhirElement("codeSystem", Order=280)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent> CodeSystem
@@ -2064,7 +2078,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the [ValueSet/$expand](valueset-operation-expand.html) operation
         /// </summary>
-        [FhirElement("expansion", Order=280)]
+        [FhirElement("expansion", Order=290)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.ExpansionComponent Expansion
         {
@@ -2077,7 +2091,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// explicit | all
         /// </summary>
-        [FhirElement("codeSearch", Order=290)]
+        [FhirElement("codeSearch", Order=300)]
         [DataMember]
         public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport> CodeSearchElement
         {
@@ -2109,7 +2123,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the [ValueSet/$validate-code](valueset-operation-validate-code.html) operation
         /// </summary>
-        [FhirElement("validateCode", Order=300)]
+        [FhirElement("validateCode", Order=310)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.ValidateCodeComponent ValidateCode
         {
@@ -2122,7 +2136,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the [ConceptMap/$translate](conceptmap-operation-translate.html) operation
         /// </summary>
-        [FhirElement("translation", Order=310)]
+        [FhirElement("translation", Order=320)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.TranslationComponent Translation
         {
@@ -2135,7 +2149,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Information about the [ConceptMap/$closure](conceptmap-operation-closure.html) operation
         /// </summary>
-        [FhirElement("closure", Order=320)]
+        [FhirElement("closure", Order=330)]
         [DataMember]
         public Hl7.Fhir.Model.TerminologyCapabilities.ClosureComponent Closure
         {
@@ -2220,6 +2234,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
+                if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                 if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
@@ -2261,6 +2276,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
@@ -2295,6 +2311,7 @@ namespace Hl7.Fhir.Model
             
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
+            if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
             if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
             if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
@@ -2329,6 +2346,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.Children) yield return item;
 				if (UrlElement != null) yield return UrlElement;
+				foreach (var elem in Identifier) { if (elem != null) yield return elem; }
 				if (VersionElement != null) yield return VersionElement;
 				if (NameElement != null) yield return NameElement;
 				if (TitleElement != null) yield return TitleElement;
@@ -2362,6 +2380,7 @@ namespace Hl7.Fhir.Model
             {
                 foreach (var item in base.NamedChildren) yield return item;
                 if (UrlElement != null) yield return new ElementValue("url", UrlElement);
+                foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
                 if (VersionElement != null) yield return new ElementValue("version", VersionElement);
                 if (NameElement != null) yield return new ElementValue("name", NameElement);
                 if (TitleElement != null) yield return new ElementValue("title", TitleElement);

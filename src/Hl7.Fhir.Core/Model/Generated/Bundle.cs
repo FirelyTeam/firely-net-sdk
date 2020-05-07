@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -116,6 +116,12 @@ namespace Hl7.Fhir.Model
             /// </summary>
             [EnumLiteral("collection", "http://hl7.org/fhir/bundle-type"), Description("Collection")]
             Collection,
+            /// <summary>
+            /// MISSING DESCRIPTION
+            /// (system: http://hl7.org/fhir/bundle-type)
+            /// </summary>
+            [EnumLiteral("subscription-notification", "http://hl7.org/fhir/bundle-type"), Description("Subscription Notification")]
+            SubscriptionNotification,
         }
 
         /// <summary>
@@ -1217,7 +1223,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
+        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification
         /// </summary>
         [FhirElement("type", InSummary=true, Order=60)]
         [Cardinality(Min=1,Max=1)]
@@ -1231,7 +1237,7 @@ namespace Hl7.Fhir.Model
         private Code<Hl7.Fhir.Model.Bundle.BundleType> _TypeElement;
         
         /// <summary>
-        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
+        /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection | subscription-notification
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
@@ -1375,20 +1381,29 @@ namespace Hl7.Fhir.Model
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_3 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "entry.all(request.exists() = (%resource.type = 'batch' or %resource.type = 'transaction' or %resource.type = 'history'))",
+            Expression = "entry.all(request.exists() = (%resource.type = 'batch' or %resource.type = 'transaction' or %resource.type = 'history')) or (type='subscription-notification')",
             Key = "bdl-3",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.request mandatory for batch/transaction/history, otherwise prohibited",
-            Xpath = "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history')"
+            Human = "entry.request mandatory for batch/transaction/history, allowed for subscription-notification, otherwise prohibited",
+            Xpath = "not(f:entry/f:request) or (f:type/@value = 'batch') or (f:type/@value = 'transaction') or (f:type/@value = 'history') or (f:type/@value = 'subscription-notification)"
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_4 = new ElementDefinition.ConstraintComponent()
         { 
-            Expression = "entry.all(response.exists() = (%resource.type = 'batch-response' or %resource.type = 'transaction-response' or %resource.type = 'history'))",
+            Expression = "entry.all(response.exists() = (%resource.type = 'batch-response' or %resource.type = 'transaction-response' or %resource.type = 'history')) or (type='subscription-notification')",
             Key = "bdl-4",
             Severity = ElementDefinition.ConstraintSeverity.Warning,
-            Human = "entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited",
-            Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response') or (f:type/@value = 'history')"
+            Human = "entry.response mandatory for batch-response/transaction-response/history, allowed for subscription-notification, otherwise prohibited",
+            Xpath = "not(f:entry/f:response) or (f:type/@value = 'batch-response') or (f:type/@value = 'transaction-response') or (f:type/@value = 'history') or (f:type/@value = 'subscription-notification)"
+        };
+
+        public static ElementDefinition.ConstraintComponent Bundle_BDL_13 = new ElementDefinition.ConstraintComponent()
+        { 
+            Expression = "type = 'subscription-notification' implies entry.first().resource.is(SubscriptionStatus)",
+            Key = "bdl-13",
+            Severity = ElementDefinition.ConstraintSeverity.Warning,
+            Human = "A subscription-notification must have a SubscriptionStatus as the first resource",
+            Xpath = "not(f:type/@value='subscription-notification') or f:entry[1]/f:resource/f:SubscriptionStatus"
         };
 
         public static ElementDefinition.ConstraintComponent Bundle_BDL_12 = new ElementDefinition.ConstraintComponent()
@@ -1462,6 +1477,7 @@ namespace Hl7.Fhir.Model
             InvariantConstraints.Add(Bundle_BDL_9);
             InvariantConstraints.Add(Bundle_BDL_3);
             InvariantConstraints.Add(Bundle_BDL_4);
+            InvariantConstraints.Add(Bundle_BDL_13);
             InvariantConstraints.Add(Bundle_BDL_12);
             InvariantConstraints.Add(Bundle_BDL_1);
             InvariantConstraints.Add(Bundle_BDL_2);

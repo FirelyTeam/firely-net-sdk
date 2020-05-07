@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class ArtifactSummaryTests
     {
         // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
-        static readonly string ApiFhirVersion = "4.2.0"; // ModelInfo.Version;
+        static readonly string ApiFhirVersion = "4.4.0"; // ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
@@ -305,8 +305,9 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20181213] R4 NEW
             // [MV 20191212] R4.0.1 NEW
             // [MS 20200127] R4.2.0 NEW
-            Assert.AreEqual(5177, summaries.Count); // STU3: 7941 R4.0.1: 11611
-            Assert.AreEqual(985, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581 R4.0.1: 7430
+            // [MS 20200507] R4.4.0 NEW
+            Assert.AreEqual(5302, summaries.Count); // STU3: 7941 R4.0.1: 11611
+            Assert.AreEqual(987, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581 R4.0.1: 7430
             Assert.IsTrue(!summaries.Errors().Any());
         }
 

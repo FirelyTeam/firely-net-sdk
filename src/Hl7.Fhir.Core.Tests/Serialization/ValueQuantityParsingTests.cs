@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 // Min = 1 for Status, Subject, Medication
                 Status = MedicationUsage.MedicationUsageStatusCodes.Intended,
                 Subject = new ResourceReference("Patient/123"),
-                Medication = new ResourceReference("#med0309"),
+                Medication = new CodeableReference() { Reference = new ResourceReference("#med0309") },
                 Dosage = new List<Dosage> { dosage }
             };
 

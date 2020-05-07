@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,33 +55,33 @@ namespace Hl7.Fhir.Model
         [NotMapped]
         public override string TypeName { get { return "ManufacturedItemDefinition"; } }
         
-        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
+        [FhirType("PropertyComponent", NamedBackboneElement=true)]
         [DataContract]
-        public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
+        public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement, System.ComponentModel.INotifyPropertyChanged
         {
             [NotMapped]
-            public override string TypeName { get { return "CharacteristicComponent"; } }
+            public override string TypeName { get { return "PropertyComponent"; } }
             
             /// <summary>
             /// A code expressing the type of characteristic
             /// </summary>
-            [FhirElement("code", InSummary=true, Order=40)]
+            [FhirElement("type", InSummary=true, Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.CodeableConcept Code
+            public Hl7.Fhir.Model.CodeableConcept Type
             {
-                get { return _Code; }
-                set { _Code = value; OnPropertyChanged("Code"); }
+                get { return _Type; }
+                set { _Type = value; OnPropertyChanged("Type"); }
             }
             
-            private Hl7.Fhir.Model.CodeableConcept _Code;
+            private Hl7.Fhir.Model.CodeableConcept _Type;
             
             /// <summary>
             /// A value for the characteristic
             /// </summary>
             [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
             [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Quantity),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
+			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
             [DataMember]
             public Hl7.Fhir.Model.Element Value
             {
@@ -93,12 +93,12 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
-                var dest = other as CharacteristicComponent;
+                var dest = other as PropertyComponent;
                 
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+                    if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
                     return dest;
                 }
@@ -108,16 +108,16 @@ namespace Hl7.Fhir.Model
             
             public override IDeepCopyable DeepCopy()
             {
-                return CopyTo(new CharacteristicComponent());
+                return CopyTo(new PropertyComponent());
             }
             
             public override bool Matches(IDeepComparable other)
             {
-                var otherT = other as CharacteristicComponent;
+                var otherT = other as PropertyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.Matches(otherT)) return false;
-                if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+                if( !DeepComparable.Matches(Type, otherT.Type)) return false;
                 if( !DeepComparable.Matches(Value, otherT.Value)) return false;
                 
                 return true;
@@ -125,11 +125,11 @@ namespace Hl7.Fhir.Model
             
             public override bool IsExactly(IDeepComparable other)
             {
-                var otherT = other as CharacteristicComponent;
+                var otherT = other as PropertyComponent;
                 if(otherT == null) return false;
                 
                 if(!base.IsExactly(otherT)) return false;
-                if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+                if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
                 if( !DeepComparable.IsExactly(Value, otherT.Value)) return false;
                 
                 return true;
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.Children) yield return item;
-                    if (Code != null) yield return Code;
+                    if (Type != null) yield return Type;
                     if (Value != null) yield return Value;
                 }
             }
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
                 get
                 {
                     foreach (var item in base.NamedChildren) yield return item;
-                    if (Code != null) yield return new ElementValue("code", Code);
+                    if (Type != null) yield return new ElementValue("type", Type);
                     if (Value != null) yield return new ElementValue("value", Value);
                 }
             }
@@ -238,16 +238,16 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// General characteristics of this item
         /// </summary>
-        [FhirElement("characteristic", InSummary=true, Order=140)]
+        [FhirElement("property", InSummary=true, Order=140)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
-        public List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent> Characteristic
+        public List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> Property
         {
-            get { if(_Characteristic==null) _Characteristic = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent>(); return _Characteristic; }
-            set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
+            get { if(_Property==null) _Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(); return _Property; }
+            set { _Property = value; OnPropertyChanged("Property"); }
         }
         
-        private List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent> _Characteristic;
+        private List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent> _Property;
         
 
         public override void AddDefaultConstraints()
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
                 if(UnitOfPresentation != null) dest.UnitOfPresentation = (Hl7.Fhir.Model.CodeableConcept)UnitOfPresentation.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                 if(Ingredient != null) dest.Ingredient = new List<Hl7.Fhir.Model.ResourceReference>(Ingredient.DeepCopy());
-                if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.CharacteristicComponent>(Characteristic.DeepCopy());
+                if(Property != null) dest.Property = new List<Hl7.Fhir.Model.ManufacturedItemDefinition.PropertyComponent>(Property.DeepCopy());
                 return dest;
             }
             else
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.Matches(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.Matches(Ingredient, otherT.Ingredient)) return false;
-            if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
+            if( !DeepComparable.Matches(Property, otherT.Property)) return false;
             
             return true;
         }
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
             if( !DeepComparable.IsExactly(UnitOfPresentation, otherT.UnitOfPresentation)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.IsExactly(Ingredient, otherT.Ingredient)) return false;
-            if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
+            if( !DeepComparable.IsExactly(Property, otherT.Property)) return false;
             
             return true;
         }
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
 				if (UnitOfPresentation != null) yield return UnitOfPresentation;
 				foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
 				foreach (var elem in Ingredient) { if (elem != null) yield return elem; }
-				foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
+				foreach (var elem in Property) { if (elem != null) yield return elem; }
             }
         }
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
                 if (UnitOfPresentation != null) yield return new ElementValue("unitOfPresentation", UnitOfPresentation);
                 foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
                 foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
-                foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
+                foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
             }
         }
 

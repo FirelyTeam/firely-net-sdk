@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -234,9 +234,41 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _PresentationHighLimit;
             
             /// <summary>
+            /// A textual represention of either the whole of the presentation strength or a part of it - with the rest being in Strength.presentation as a ratio
+            /// </summary>
+            [FhirElement("presentationText", InSummary=true, Order=60)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString PresentationTextElement
+            {
+                get { return _PresentationTextElement; }
+                set { _PresentationTextElement = value; OnPropertyChanged("PresentationTextElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _PresentationTextElement;
+            
+            /// <summary>
+            /// A textual represention of either the whole of the presentation strength or a part of it - with the rest being in Strength.presentation as a ratio
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string PresentationText
+            {
+                get { return PresentationTextElement != null ? PresentationTextElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        PresentationTextElement = null; 
+                    else
+                        PresentationTextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("PresentationText");
+                }
+            }
+            
+            /// <summary>
             /// The strength per unitary volume (or mass)
             /// </summary>
-            [FhirElement("concentration", InSummary=true, Order=60)]
+            [FhirElement("concentration", InSummary=true, Order=70)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio Concentration
             {
@@ -249,7 +281,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// An upper limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the lower limit
             /// </summary>
-            [FhirElement("concentrationHighLimit", InSummary=true, Order=70)]
+            [FhirElement("concentrationHighLimit", InSummary=true, Order=80)]
             [DataMember]
             public Hl7.Fhir.Model.Ratio ConcentrationHighLimit
             {
@@ -260,9 +292,41 @@ namespace Hl7.Fhir.Model
             private Hl7.Fhir.Model.Ratio _ConcentrationHighLimit;
             
             /// <summary>
+            /// A textual represention of either the whole of the concentration strength or a part of it - with the rest being in Strength.concentration as a ratio
+            /// </summary>
+            [FhirElement("concentrationText", InSummary=true, Order=90)]
+            [DataMember]
+            public Hl7.Fhir.Model.FhirString ConcentrationTextElement
+            {
+                get { return _ConcentrationTextElement; }
+                set { _ConcentrationTextElement = value; OnPropertyChanged("ConcentrationTextElement"); }
+            }
+            
+            private Hl7.Fhir.Model.FhirString _ConcentrationTextElement;
+            
+            /// <summary>
+            /// A textual represention of either the whole of the concentration strength or a part of it - with the rest being in Strength.concentration as a ratio
+            /// </summary>
+            /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+            [NotMapped]
+            [IgnoreDataMemberAttribute]
+            public string ConcentrationText
+            {
+                get { return ConcentrationTextElement != null ? ConcentrationTextElement.Value : null; }
+                set
+                {
+                    if (value == null)
+                        ConcentrationTextElement = null; 
+                    else
+                        ConcentrationTextElement = new Hl7.Fhir.Model.FhirString(value);
+                    OnPropertyChanged("ConcentrationText");
+                }
+            }
+            
+            /// <summary>
             /// For when strength is measured at a particular point or distance
             /// </summary>
-            [FhirElement("measurementPoint", InSummary=true, Order=80)]
+            [FhirElement("measurementPoint", InSummary=true, Order=100)]
             [DataMember]
             public Hl7.Fhir.Model.FhirString MeasurementPointElement
             {
@@ -294,7 +358,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The country or countries for which the strength range applies
             /// </summary>
-            [FhirElement("country", InSummary=true, Order=90)]
+            [FhirElement("country", InSummary=true, Order=110)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -308,7 +372,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Strength expressed in terms of a reference substance
             /// </summary>
-            [FhirElement("referenceStrength", InSummary=true, Order=100)]
+            [FhirElement("referenceStrength", InSummary=true, Order=120)]
             [Cardinality(Min=0,Max=-1)]
             [DataMember]
             public List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> ReferenceStrength
@@ -328,8 +392,10 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Presentation != null) dest.Presentation = (Hl7.Fhir.Model.Ratio)Presentation.DeepCopy();
                     if(PresentationHighLimit != null) dest.PresentationHighLimit = (Hl7.Fhir.Model.Ratio)PresentationHighLimit.DeepCopy();
+                    if(PresentationTextElement != null) dest.PresentationTextElement = (Hl7.Fhir.Model.FhirString)PresentationTextElement.DeepCopy();
                     if(Concentration != null) dest.Concentration = (Hl7.Fhir.Model.Ratio)Concentration.DeepCopy();
                     if(ConcentrationHighLimit != null) dest.ConcentrationHighLimit = (Hl7.Fhir.Model.Ratio)ConcentrationHighLimit.DeepCopy();
+                    if(ConcentrationTextElement != null) dest.ConcentrationTextElement = (Hl7.Fhir.Model.FhirString)ConcentrationTextElement.DeepCopy();
                     if(MeasurementPointElement != null) dest.MeasurementPointElement = (Hl7.Fhir.Model.FhirString)MeasurementPointElement.DeepCopy();
                     if(Country != null) dest.Country = new List<Hl7.Fhir.Model.CodeableConcept>(Country.DeepCopy());
                     if(ReferenceStrength != null) dest.ReferenceStrength = new List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent>(ReferenceStrength.DeepCopy());
@@ -352,8 +418,10 @@ namespace Hl7.Fhir.Model
                 if(!base.Matches(otherT)) return false;
                 if( !DeepComparable.Matches(Presentation, otherT.Presentation)) return false;
                 if( !DeepComparable.Matches(PresentationHighLimit, otherT.PresentationHighLimit)) return false;
+                if( !DeepComparable.Matches(PresentationTextElement, otherT.PresentationTextElement)) return false;
                 if( !DeepComparable.Matches(Concentration, otherT.Concentration)) return false;
                 if( !DeepComparable.Matches(ConcentrationHighLimit, otherT.ConcentrationHighLimit)) return false;
+                if( !DeepComparable.Matches(ConcentrationTextElement, otherT.ConcentrationTextElement)) return false;
                 if( !DeepComparable.Matches(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.Matches(Country, otherT.Country)) return false;
                 if( !DeepComparable.Matches(ReferenceStrength, otherT.ReferenceStrength)) return false;
@@ -369,8 +437,10 @@ namespace Hl7.Fhir.Model
                 if(!base.IsExactly(otherT)) return false;
                 if( !DeepComparable.IsExactly(Presentation, otherT.Presentation)) return false;
                 if( !DeepComparable.IsExactly(PresentationHighLimit, otherT.PresentationHighLimit)) return false;
+                if( !DeepComparable.IsExactly(PresentationTextElement, otherT.PresentationTextElement)) return false;
                 if( !DeepComparable.IsExactly(Concentration, otherT.Concentration)) return false;
                 if( !DeepComparable.IsExactly(ConcentrationHighLimit, otherT.ConcentrationHighLimit)) return false;
+                if( !DeepComparable.IsExactly(ConcentrationTextElement, otherT.ConcentrationTextElement)) return false;
                 if( !DeepComparable.IsExactly(MeasurementPointElement, otherT.MeasurementPointElement)) return false;
                 if( !DeepComparable.IsExactly(Country, otherT.Country)) return false;
                 if( !DeepComparable.IsExactly(ReferenceStrength, otherT.ReferenceStrength)) return false;
@@ -387,8 +457,10 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.Children) yield return item;
                     if (Presentation != null) yield return Presentation;
                     if (PresentationHighLimit != null) yield return PresentationHighLimit;
+                    if (PresentationTextElement != null) yield return PresentationTextElement;
                     if (Concentration != null) yield return Concentration;
                     if (ConcentrationHighLimit != null) yield return ConcentrationHighLimit;
+                    if (ConcentrationTextElement != null) yield return ConcentrationTextElement;
                     if (MeasurementPointElement != null) yield return MeasurementPointElement;
                     foreach (var elem in Country) { if (elem != null) yield return elem; }
                     foreach (var elem in ReferenceStrength) { if (elem != null) yield return elem; }
@@ -403,8 +475,10 @@ namespace Hl7.Fhir.Model
                     foreach (var item in base.NamedChildren) yield return item;
                     if (Presentation != null) yield return new ElementValue("presentation", Presentation);
                     if (PresentationHighLimit != null) yield return new ElementValue("presentationHighLimit", PresentationHighLimit);
+                    if (PresentationTextElement != null) yield return new ElementValue("presentationText", PresentationTextElement);
                     if (Concentration != null) yield return new ElementValue("concentration", Concentration);
                     if (ConcentrationHighLimit != null) yield return new ElementValue("concentrationHighLimit", ConcentrationHighLimit);
+                    if (ConcentrationTextElement != null) yield return new ElementValue("concentrationText", ConcentrationTextElement);
                     if (MeasurementPointElement != null) yield return new ElementValue("measurementPoint", MeasurementPointElement);
                     foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
                     foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", elem); }
@@ -718,7 +792,7 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.Identifier _Identifier;
         
         /// <summary>
-        /// Ingredient role e.g. Active ingredient, excipient
+        /// Ingredient role within a drug product e.g. Active ingredient, Excipient
         /// </summary>
         [FhirElement("role", InSummary=true, Order=100)]
         [Cardinality(Min=1,Max=1)]
@@ -732,9 +806,36 @@ namespace Hl7.Fhir.Model
         private Hl7.Fhir.Model.CodeableConcept _Role;
         
         /// <summary>
+        /// A classification of the ingredient identifying its precise purpose(s) in the drug product. This extends the Ingredient.role to add more detail. Example: Antioxidant, Alkalizing Agent
+        /// </summary>
+        [FhirElement("function", InSummary=true, Order=110)]
+        [Cardinality(Min=0,Max=-1)]
+        [DataMember]
+        public List<Hl7.Fhir.Model.CodeableConcept> Function
+        {
+            get { if(_Function==null) _Function = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Function; }
+            set { _Function = value; OnPropertyChanged("Function"); }
+        }
+        
+        private List<Hl7.Fhir.Model.CodeableConcept> _Function;
+        
+        /// <summary>
+        /// A general description of the ingredient, or any supporting text. May be used for an unstructured list of excipients
+        /// </summary>
+        [FhirElement("description", InSummary=true, Order=120)]
+        [DataMember]
+        public Hl7.Fhir.Model.Markdown Description
+        {
+            get { return _Description; }
+            set { _Description = value; OnPropertyChanged("Description"); }
+        }
+        
+        private Hl7.Fhir.Model.Markdown _Description;
+        
+        /// <summary>
         /// If the ingredient is a known or suspected allergen
         /// </summary>
-        [FhirElement("allergenicIndicator", InSummary=true, Order=110)]
+        [FhirElement("allergenicIndicator", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.FhirBoolean AllergenicIndicatorElement
         {
@@ -766,7 +867,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The organization that manufactures this ingredient
         /// </summary>
-        [FhirElement("manufacturer", InSummary=true, Order=120)]
+        [FhirElement("manufacturer", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[References("Organization")]
         [Cardinality(Min=0,Max=-1)]
@@ -782,7 +883,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A specified substance that comprises this ingredient
         /// </summary>
-        [FhirElement("specifiedSubstance", InSummary=true, Order=130)]
+        [FhirElement("specifiedSubstance", InSummary=true, Order=150)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent> SpecifiedSubstance
@@ -796,7 +897,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The substance that comprises this ingredient
         /// </summary>
-        [FhirElement("substance", InSummary=true, Order=140)]
+        [FhirElement("substance", InSummary=true, Order=160)]
         [DataMember]
         public Hl7.Fhir.Model.Ingredient.SubstanceComponent Substance
         {
@@ -822,6 +923,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
                 if(Role != null) dest.Role = (Hl7.Fhir.Model.CodeableConcept)Role.DeepCopy();
+                if(Function != null) dest.Function = new List<Hl7.Fhir.Model.CodeableConcept>(Function.DeepCopy());
+                if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
                 if(AllergenicIndicatorElement != null) dest.AllergenicIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)AllergenicIndicatorElement.DeepCopy();
                 if(Manufacturer != null) dest.Manufacturer = new List<Hl7.Fhir.Model.ResourceReference>(Manufacturer.DeepCopy());
                 if(SpecifiedSubstance != null) dest.SpecifiedSubstance = new List<Hl7.Fhir.Model.Ingredient.SpecifiedSubstanceComponent>(SpecifiedSubstance.DeepCopy());
@@ -845,6 +948,8 @@ namespace Hl7.Fhir.Model
             if(!base.Matches(otherT)) return false;
             if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.Matches(Role, otherT.Role)) return false;
+            if( !DeepComparable.Matches(Function, otherT.Function)) return false;
+            if( !DeepComparable.Matches(Description, otherT.Description)) return false;
             if( !DeepComparable.Matches(AllergenicIndicatorElement, otherT.AllergenicIndicatorElement)) return false;
             if( !DeepComparable.Matches(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.Matches(SpecifiedSubstance, otherT.SpecifiedSubstance)) return false;
@@ -861,6 +966,8 @@ namespace Hl7.Fhir.Model
             if(!base.IsExactly(otherT)) return false;
             if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
             if( !DeepComparable.IsExactly(Role, otherT.Role)) return false;
+            if( !DeepComparable.IsExactly(Function, otherT.Function)) return false;
+            if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
             if( !DeepComparable.IsExactly(AllergenicIndicatorElement, otherT.AllergenicIndicatorElement)) return false;
             if( !DeepComparable.IsExactly(Manufacturer, otherT.Manufacturer)) return false;
             if( !DeepComparable.IsExactly(SpecifiedSubstance, otherT.SpecifiedSubstance)) return false;
@@ -877,6 +984,8 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.Children) yield return item;
 				if (Identifier != null) yield return Identifier;
 				if (Role != null) yield return Role;
+				foreach (var elem in Function) { if (elem != null) yield return elem; }
+				if (Description != null) yield return Description;
 				if (AllergenicIndicatorElement != null) yield return AllergenicIndicatorElement;
 				foreach (var elem in Manufacturer) { if (elem != null) yield return elem; }
 				foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return elem; }
@@ -892,6 +1001,8 @@ namespace Hl7.Fhir.Model
                 foreach (var item in base.NamedChildren) yield return item;
                 if (Identifier != null) yield return new ElementValue("identifier", Identifier);
                 if (Role != null) yield return new ElementValue("role", Role);
+                foreach (var elem in Function) { if (elem != null) yield return new ElementValue("function", elem); }
+                if (Description != null) yield return new ElementValue("description", Description);
                 if (AllergenicIndicatorElement != null) yield return new ElementValue("allergenicIndicator", AllergenicIndicatorElement);
                 foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
                 foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return new ElementValue("specifiedSubstance", elem); }

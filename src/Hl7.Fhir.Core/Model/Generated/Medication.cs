@@ -39,7 +39,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings 
 
 //
-// Generated for FHIR v4.2.0
+// Generated for FHIR v4.4.0
 //
 namespace Hl7.Fhir.Model
 {
@@ -92,18 +92,16 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The ingredient (substance or medication) that the ingredient.strength relates to
             /// </summary>
-            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
-            [CLSCompliant(false)]
-			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
+            [FhirElement("item", Order=40)]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.CodeableReference Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.CodeableReference _Item;
             
             /// <summary>
             /// Active ingredient indicator
@@ -159,7 +157,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.CodeableReference)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Element)Strength.DeepCopy();
                     return dest;
