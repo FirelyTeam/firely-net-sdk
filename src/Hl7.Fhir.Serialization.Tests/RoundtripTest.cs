@@ -6,16 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using Hl7.Fhir.Model;
-using System.IO.Compression;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
-using System.Collections.Generic;
-using System;
 using Hl7.Fhir.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 #if NET40
 using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
@@ -25,13 +25,13 @@ namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class RoundtripTest
-    { 
+    {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXmlPoco()
         {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
-                "Roundtripping xml->json->xml", usingPoco: true, provider:null);
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
         }
 
         [TestMethod]
@@ -275,6 +275,13 @@ namespace Hl7.Fhir.Serialization.Tests
             if (file.Contains("v2-tables"))
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+
+            // The following examples are skipped because of R5. This should be solved when R5 is offiaclly released
+            if (file.Contains("citation-"))
+                return true; // Citation is not add to R5 yet. TODO: with official release of R5 there examples should not be skipped anymore
+            if (file.Contains("xver-paths-4.4"))
+                return true; // this file does not contain a resource
+
             return false;
         }
 
@@ -306,7 +313,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     else
                         convertResourceNav(file, outputFile, provider);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     errors.Add($"{exampleName}{ext}: " + ex.Message);
                 }
@@ -397,8 +404,8 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
-                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
+                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider,
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true });
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }
