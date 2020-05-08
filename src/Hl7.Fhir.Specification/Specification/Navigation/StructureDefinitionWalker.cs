@@ -14,6 +14,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification
 {
@@ -25,20 +26,25 @@ namespace Hl7.Fhir.Specification
     /// </summary>
     public class StructureDefinitionWalker
     {
-        public readonly IResourceResolver Resolver;
+        public IResourceResolver Resolver => _resolver as IResourceResolver;
+        public IAsyncResourceResolver AsyncResolver => _resolver.AsAsync();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        private readonly ISyncOrAsyncResourceResolver _resolver;
 
         public readonly ElementDefinitionNavigator Current;
 
-        public StructureDefinitionWalker(StructureDefinition sd, IResourceResolver resolver)
+        public StructureDefinitionWalker(StructureDefinition sd, ISyncOrAsyncResourceResolver resolver)
             : this(ElementDefinitionNavigator.ForSnapshot(sd), resolver)
         {
             // nothing more
         }
 
-        public StructureDefinitionWalker(ElementDefinitionNavigator element, IResourceResolver resolver)
+        public StructureDefinitionWalker(ElementDefinitionNavigator element, ISyncOrAsyncResourceResolver resolver)
         {
+#pragma warning restore CS0618 // Type or member is obsolete
             Current = element.ShallowCopy();
-            Resolver = resolver;
+            _resolver = resolver;
 
             // Make sure there is always a current item
             if (Current.AtRoot) Current.MoveToFirstChild();
@@ -47,16 +53,19 @@ namespace Hl7.Fhir.Specification
         public StructureDefinitionWalker(StructureDefinitionWalker other)
         {
             Current = other.Current.ShallowCopy();
-            Resolver = other.Resolver;
+            _resolver = other._resolver;
         }
 
-        public StructureDefinitionWalker FromCanonical(string canonical)
+        public StructureDefinitionWalker FromCanonical(string canonical) =>
+            TaskHelper.Await(() => FromCanonicalAsync(canonical));
+
+        public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical)
         {
-            var sd = Resolver.FindStructureDefinition(canonical, requireSnapshot: true);
+            var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical);
             if (sd == null)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'");
 
-            return new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), Resolver);
+            return new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), _resolver);
         }
 
 
@@ -75,9 +84,9 @@ namespace Hl7.Fhir.Specification
             if (definitions.Count == 0)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown child '{childName}' at '{Current.CanonicalPath()}'.");
             else if (definitions.Count == 1) // Single element, no slice
-                return new StructureDefinitionWalker(definitions.Single(), Resolver);
+                return new StructureDefinitionWalker(definitions.Single(), _resolver);
             else if (definitions.Count == 2) // element with an entry + single slice
-                return new StructureDefinitionWalker(definitions[1], Resolver);
+                return new StructureDefinitionWalker(definitions[1], _resolver);
             else
                 throw new StructureDefinitionWalkerException($"Child with name '{childName}' is sliced to more than one choice and cannot be used as a discriminator at '{Current.CanonicalPath()}' ");
         }
@@ -127,7 +136,7 @@ namespace Hl7.Fhir.Specification
 
                 if (!reference.JumpToNameReference(name))
                     new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
-                return new[] { new StructureDefinitionWalker(reference, Resolver) };
+                return new[] { new StructureDefinitionWalker(reference, _resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
             {
@@ -231,7 +240,7 @@ namespace Hl7.Fhir.Specification
             if (selection.Count == 0)
                 return FromCanonical(url);
             else if (selection.Count == 1)
-                return new StructureDefinitionWalker(selection.Single(), Resolver);
+                return new StructureDefinitionWalker(selection.Single(), _resolver);
             else
                 throw new StructureDefinitionWalkerException($"extension('{url}') found multiple extension slices constraining the same extension, with is not allowed for the discriminator at '{Current.CanonicalPath()}'.");
 

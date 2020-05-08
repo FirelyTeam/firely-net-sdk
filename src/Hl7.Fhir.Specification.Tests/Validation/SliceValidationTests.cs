@@ -11,15 +11,13 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class SliceValidationTests : IClassFixture<ValidationFixture>
     {
-        private readonly Xunit.Abstractions.ITestOutputHelper output;
-        private IResourceResolver _resolver;
-        private Validator _validator;
+        private readonly IResourceResolver _resolver;
+        private readonly Validator _validator;
 
-        public SliceValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
+        public SliceValidationTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
             _resolver = new CachedResolver(new SnapshotSource(fixture.Resolver));
             _validator = fixture.Validator;
-            this.output = output;
         }
 
         private IBucket createPatientReslices()
@@ -27,7 +25,10 @@ namespace Hl7.Fhir.Specification.Tests
 
         private IBucket createSliceDefs(string url, string path)
         {
+// We don't want to rewrite the slice/bucket factories right now
+#pragma warning disable CS0618 // Type or member is obsolete
             var sd = _resolver.FindStructureDefinition(url);
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.NotNull(sd);
 
             var nav = new ElementDefinitionNavigator(sd);
@@ -254,9 +255,8 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestProfileSliceCreation()
         {
-            var s = createSliceDefs("http://example.org/fhir/StructureDefinition/list-with-profile-slicing", 
+            _ = createSliceDefs("http://example.org/fhir/StructureDefinition/list-with-profile-slicing", 
                     "List.entry") as SliceGroupBucket;
-
         }
 
 
