@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -22,33 +23,20 @@ namespace Hl7.Fhir.Specification.Snapshot
 
     partial class SnapshotGenerator
     {
-        /// <summary>Initialize the <see cref="ElementDefinition.Base"/> components of the <see cref="StructureDefinition.Snapshot"/> component.</summary>
-        /// <param name="structureDef">A <see cref="StructureDefinition"/> instance with a valid snapshot component.</param>
-        /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        public void GenerateSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
-        {
-            if (structureDef == null) { throw Error.ArgumentNull(nameof(structureDef)); }
-            if (!structureDef.HasSnapshot) { throw Error.Argument(nameof(structureDef), "The StructureDefinition.Snapshot component is null or empty."); }
-            clearIssues();
-            ensureSnapshotBaseComponents(structureDef, force);
-        }
-
-        void ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false)
-        {
+        private T.Task ensureSnapshotBaseComponents(StructureDefinition structureDef, bool force = false) =>
             ensureBaseComponents(structureDef.Snapshot.Element, structureDef.BaseDefinition, force);
-        }
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
         /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.Base"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
-        void ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
+        private async T.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
         {
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
-                var sd = _resolver.FindStructureDefinition(baseProfileUrl);
-                if (ensureSnapshot(sd, baseProfileUrl))
+                var sd = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUrl);
+                if (await ensureSnapshot(sd, baseProfileUrl))
                 {
                     var baseNav = new ElementDefinitionNavigator(sd);
                     if (baseNav.MoveToFirstChild())
@@ -59,7 +47,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             do
                             {
-                                ensureBaseComponents(nav, baseNav, force);
+                                await ensureBaseComponents(nav, baseNav, force);
                             } while (nav.MoveToNext());
                         }
                     }
@@ -68,7 +56,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        void ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
+        private async T.Task ensureBaseComponents(ElementDefinitionNavigator nav, ElementDefinitionNavigator baseNav, bool force = false)
         {
             // Debug.Print($"[nameof(generateElementBase)}] Path = '{nav.Path}'  Base = '{baseNav.Path}'");
             var elem = nav.Current;
@@ -89,7 +77,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     do
                     {
-                        ensureBaseComponents(nav, baseNav, force);
+                        await ensureBaseComponents(nav, baseNav, force);
                     } while (nav.MoveToNext());
 
                     nav.ReturnToBookmark(navBm);
@@ -107,13 +95,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var baseUrl = baseNav.StructureDefinition.BaseDefinition;
                 if (baseUrl != null)
                 {
-                    var baseDef = _resolver.FindStructureDefinition(baseUrl);
-                    if (ensureSnapshot(baseDef, baseUrl, elem.Path))
+                    var baseDef = await AsyncResolver.FindStructureDefinitionAsync(baseUrl);
+                    if (await ensureSnapshot(baseDef, baseUrl, elem.Path))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())
                         {
-                            ensureBaseComponents(nav, baseNav, force);
+                            await ensureBaseComponents(nav, baseNav, force);
                             return;
                         }
                     }
