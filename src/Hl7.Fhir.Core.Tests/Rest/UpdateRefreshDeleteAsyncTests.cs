@@ -20,6 +20,24 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
+            await updateDelete(client);
+        }
+        
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
+        {
+            using (var client = new FhirHttpClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await updateDelete(client);
+            }           
+        }
+
+
+        private static async System.Threading.Tasks.Task updateDelete(IFhirClient client)
+        {
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
@@ -53,9 +71,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             // VERIFY //
             await ExceptionAssert.Throws<FhirOperationException>(act);
-            
+
             Console.WriteLine("Test Completed");
         }
-        
     }
 }
