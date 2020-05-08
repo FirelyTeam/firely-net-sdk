@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("CodeableConcept")]
     [DataContract]
-    public partial class CodeableConcept : Hl7.Fhir.Model.Element
+    public partial class CodeableConcept : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "CodeableConcept"; } }
         

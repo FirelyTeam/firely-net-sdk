@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Coverage"; } }
         
-        [FhirType("GroupComponent")]
+        [FhirType("Coverage#Coverage.grouping", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {

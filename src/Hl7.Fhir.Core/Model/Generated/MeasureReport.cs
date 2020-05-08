@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             Summary,
         }
 
-        [FhirType("GroupComponent")]
+        [FhirType("MeasureReport#MeasureReport.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent")]
+        [FhirType("MeasureReport#MeasureReport.group.population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent")]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupComponent")]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupPopulationComponent")]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum.population", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
         {

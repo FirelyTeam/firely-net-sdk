@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("ItemComponent")]
+        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerComponent")]
+        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item.answer", IsNestedType=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -336,13 +336,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             /// <summary>
             /// Nested groups and questions
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     if(Item != null) dest.Item = new List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent>(Item.DeepCopy());
                     return dest;
                 }

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.Element
+    public partial class Dosage : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Dosage"; } }
         
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
-        public Hl7.Fhir.Model.Element AsNeeded
+        public Hl7.Fhir.Model.DataType AsNeeded
         {
             get { return _AsNeeded; }
             set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
         }
         
-        private Hl7.Fhir.Model.Element _AsNeeded;
+        private Hl7.Fhir.Model.DataType _AsNeeded;
         
         /// <summary>
         /// Body site to administer to
@@ -233,13 +233,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Dose
+        public Hl7.Fhir.Model.DataType Dose
         {
             get { return _Dose; }
             set { _Dose = value; OnPropertyChanged("Dose"); }
         }
         
-        private Hl7.Fhir.Model.Element _Dose;
+        private Hl7.Fhir.Model.DataType _Dose;
         
         /// <summary>
         /// Upper limit on medication per unit of time
@@ -287,13 +287,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Rate
+        public Hl7.Fhir.Model.DataType Rate
         {
             get { return _Rate; }
             set { _Rate = value; OnPropertyChanged("Rate"); }
         }
         
-        private Hl7.Fhir.Model.Element _Rate;
+        private Hl7.Fhir.Model.DataType _Rate;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -308,15 +308,15 @@ namespace Hl7.Fhir.Model
                 if(AdditionalInstruction != null) dest.AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalInstruction.DeepCopy());
                 if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
-                if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
+                if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.DataType)AsNeeded.DeepCopy();
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
-                if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
+                if(Dose != null) dest.Dose = (Hl7.Fhir.Model.DataType)Dose.DeepCopy();
                 if(MaxDosePerPeriod != null) dest.MaxDosePerPeriod = (Hl7.Fhir.Model.Ratio)MaxDosePerPeriod.DeepCopy();
                 if(MaxDosePerAdministration != null) dest.MaxDosePerAdministration = (Hl7.Fhir.Model.Quantity)MaxDosePerAdministration.DeepCopy();
                 if(MaxDosePerLifetime != null) dest.MaxDosePerLifetime = (Hl7.Fhir.Model.Quantity)MaxDosePerLifetime.DeepCopy();
-                if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopy();
                 return dest;
             }
             else

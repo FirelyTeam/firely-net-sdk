@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Status,
         }
 
-        [FhirType("ItemsComponent")]
+        [FhirType("ProcessRequest#ProcessRequest.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {

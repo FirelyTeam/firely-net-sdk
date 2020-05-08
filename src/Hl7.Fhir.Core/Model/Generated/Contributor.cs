@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Contributor")]
     [DataContract]
-    public partial class Contributor : Hl7.Fhir.Model.Element
+    public partial class Contributor : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Contributor"; } }
         

@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             Kind,
         }
 
-        [FhirType("PositionComponent")]
+        [FhirType("Location#Location.position", IsNestedType=true)]
         [DataContract]
         public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Serialization
                                 RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.ElementType.Name}'", _current.Location);
                         }
 
-                        ((Primitive)existing).ObjectValue = value;
+                        ((PrimitiveType)existing).ObjectValue = value;
                         //var prop = ReflectionHelper.FindPublicProperty(mapping.NativeType, "RawValue");
                         //prop.SetValue(existing, value, null);
                         //mappedProperty.SetValue(existing, null);                           

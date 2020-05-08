@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
             Severe,
         }
 
-        [FhirType("ReactionComponent")]
+        [FhirType("AllergyIntolerance#AllergyIntolerance.reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -674,13 +674,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Onset
+        public Hl7.Fhir.Model.DataType Onset
         {
             get { return _Onset; }
             set { _Onset = value; OnPropertyChanged("Onset"); }
         }
         
-        private Hl7.Fhir.Model.Element _Onset;
+        private Hl7.Fhir.Model.DataType _Onset;
         
         /// <summary>
         /// Date record was believed accurate
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
                 if(CriticalityElement != null) dest.CriticalityElement = (Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality>)CriticalityElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Onset != null) dest.Onset = (Hl7.Fhir.Model.Element)Onset.DeepCopy();
+                if(Onset != null) dest.Onset = (Hl7.Fhir.Model.DataType)Onset.DeepCopy();
                 if(AssertedDateElement != null) dest.AssertedDateElement = (Hl7.Fhir.Model.FhirDateTime)AssertedDateElement.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
                 if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();

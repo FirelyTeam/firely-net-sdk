@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             FatalError,
         }
 
-        [FhirType("MessageDestinationComponent")]
+        [FhirType("MessageHeader#MessageHeader.destination", IsNestedType=true)]
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessageSourceComponent")]
+        [FhirType("MessageHeader#MessageHeader.source", IsNestedType=true)]
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent")]
+        [FhirType("MessageHeader#MessageHeader.response", IsNestedType=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {

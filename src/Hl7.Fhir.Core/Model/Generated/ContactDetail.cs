@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("ContactDetail")]
     [DataContract]
-    public partial class ContactDetail : Hl7.Fhir.Model.Element
+    public partial class ContactDetail : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "ContactDetail"; } }
         

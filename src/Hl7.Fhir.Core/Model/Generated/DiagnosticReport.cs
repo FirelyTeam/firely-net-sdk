@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent")]
+        [FhirType("DiagnosticReport#DiagnosticReport.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImageComponent")]
+        [FhirType("DiagnosticReport#DiagnosticReport.image", IsNestedType=true)]
         [DataContract]
         public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -473,13 +473,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Effective
+        public Hl7.Fhir.Model.DataType Effective
         {
             get { return _Effective; }
             set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _Effective;
+        private Hl7.Fhir.Model.DataType _Effective;
         
         /// <summary>
         /// DateTime this version was released
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
-                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.DataType)Effective.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent>(Performer.DeepCopy());
                 if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());

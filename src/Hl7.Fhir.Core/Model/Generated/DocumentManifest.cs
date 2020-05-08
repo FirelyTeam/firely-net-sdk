@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DocumentManifest"; } }
         
-        [FhirType("ContentComponent")]
+        [FhirType("DocumentManifest#DocumentManifest.content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element P
+            public Hl7.Fhir.Model.DataType P
             {
                 get { return _P; }
                 set { _P = value; OnPropertyChanged("P"); }
             }
             
-            private Hl7.Fhir.Model.Element _P;
+            private Hl7.Fhir.Model.DataType _P;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(P != null) dest.P = (Hl7.Fhir.Model.Element)P.DeepCopy();
+                    if(P != null) dest.P = (Hl7.Fhir.Model.DataType)P.DeepCopy();
                     return dest;
                 }
                 else
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedComponent")]
+        [FhirType("DocumentManifest#DocumentManifest.related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {

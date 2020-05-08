@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
             Manual,
         }
 
-        [FhirType("ProductionSpecificationComponent")]
+        [FhirType("DeviceComponent#DeviceComponent.productionSpecification", IsNestedType=true)]
         [DataContract]
         public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
         {

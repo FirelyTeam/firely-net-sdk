@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "CommunicationRequest"; } }
         
-        [FhirType("PayloadComponent")]
+        [FhirType("CommunicationRequest#CommunicationRequest.payload", IsNestedType=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Content
+            public Hl7.Fhir.Model.DataType Content
             {
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.Element _Content;
+            private Hl7.Fhir.Model.DataType _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
                     return dest;
                 }
                 else
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequesterComponent")]
+        [FhirType("CommunicationRequest#CommunicationRequest.requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -477,13 +477,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Occurrence
+        public Hl7.Fhir.Model.DataType Occurrence
         {
             get { return _Occurrence; }
             set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
         }
         
-        private Hl7.Fhir.Model.Element _Occurrence;
+        private Hl7.Fhir.Model.DataType _Occurrence;
         
         /// <summary>
         /// When request transitioned to being actionable
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
                 if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.ResourceReference>(Topic.DeepCopy());
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(Payload != null) dest.Payload = new List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent>(Payload.DeepCopy());
-                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
+                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
                 if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Requester != null) dest.Requester = (Hl7.Fhir.Model.CommunicationRequest.RequesterComponent)Requester.DeepCopy();

@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             Informational,
         }
 
-        [FhirType("IssueComponent")]
+        [FhirType("OperationOutcome#OperationOutcome.issue", IsNestedType=true)]
         [DataContract]
         public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
         {

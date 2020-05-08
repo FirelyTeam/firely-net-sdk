@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ActivityDefinition"; } }
         
-        [FhirType("ParticipantComponent")]
+        [FhirType("ActivityDefinition#ActivityDefinition.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent")]
+        [FhirType("ActivityDefinition#ActivityDefinition.dynamicValue", IsNestedType=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -940,13 +940,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Timing
+        public Hl7.Fhir.Model.DataType Timing
         {
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
         
-        private Hl7.Fhir.Model.Element _Timing;
+        private Hl7.Fhir.Model.DataType _Timing;
         
         /// <summary>
         /// Where it should happen
@@ -984,13 +984,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Product
+        public Hl7.Fhir.Model.DataType Product
         {
             get { return _Product; }
             set { _Product = value; OnPropertyChanged("Product"); }
         }
         
-        private Hl7.Fhir.Model.Element _Product;
+        private Hl7.Fhir.Model.DataType _Product;
         
         /// <summary>
         /// How much is administered/consumed/supplied
@@ -1094,10 +1094,10 @@ namespace Hl7.Fhir.Model
                 if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
                 if(KindElement != null) dest.KindElement = (Code<Hl7.Fhir.Model.ResourceType>)KindElement.DeepCopy();
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                 if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent>(Participant.DeepCopy());
-                if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
+                if(Product != null) dest.Product = (Hl7.Fhir.Model.DataType)Product.DeepCopy();
                 if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                 if(Dosage != null) dest.Dosage = new List<Dosage>(Dosage.DeepCopy());
                 if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());

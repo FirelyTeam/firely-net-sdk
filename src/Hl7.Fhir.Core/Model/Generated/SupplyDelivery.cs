@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("SuppliedItemComponent")]
+        [FhirType("SupplyDelivery#SupplyDelivery.suppliedItem", IsNestedType=true)]
         [DataContract]
         public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -111,13 +111,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.DataType Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.DataType _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopy();
                     return dest;
                 }
                 else
@@ -312,13 +312,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Occurrence
+        public Hl7.Fhir.Model.DataType Occurrence
         {
             get { return _Occurrence; }
             set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
         }
         
-        private Hl7.Fhir.Model.Element _Occurrence;
+        private Hl7.Fhir.Model.DataType _Occurrence;
         
         /// <summary>
         /// Dispenser
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(SuppliedItem != null) dest.SuppliedItem = (Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent)SuppliedItem.DeepCopy();
-                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
+                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
                 if(Supplier != null) dest.Supplier = (Hl7.Fhir.Model.ResourceReference)Supplier.DeepCopy();
                 if(Destination != null) dest.Destination = (Hl7.Fhir.Model.ResourceReference)Destination.DeepCopy();
                 if(Receiver != null) dest.Receiver = new List<Hl7.Fhir.Model.ResourceReference>(Receiver.DeepCopy());

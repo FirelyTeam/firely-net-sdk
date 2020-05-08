@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
             InformationOnly,
         }
 
-        [FhirType("ParticipantComponent")]
+        [FhirType("Appointment#Appointment.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {

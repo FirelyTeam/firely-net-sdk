@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("OralDietComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet", IsNestedType=true)]
         [DataContract]
         public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NutrientComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet.nutrient", IsNestedType=true)]
         [DataContract]
         public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TextureComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.oralDiet.texture", IsNestedType=true)]
         [DataContract]
         public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplementComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.supplement", IsNestedType=true)]
         [DataContract]
         public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -705,7 +705,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnteralFormulaComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.enteralFormula", IsNestedType=true)]
         [DataContract]
         public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -987,7 +987,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationComponent")]
+        [FhirType("NutritionOrder#NutritionOrder.enteralFormula.administration", IsNestedType=true)]
         [DataContract]
         public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1026,13 +1026,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Rate
+            public Hl7.Fhir.Model.DataType Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Element _Rate;
+            private Hl7.Fhir.Model.DataType _Rate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1043,7 +1043,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Schedule != null) dest.Schedule = (Hl7.Fhir.Model.Timing)Schedule.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopy();
                     return dest;
                 }
                 else
