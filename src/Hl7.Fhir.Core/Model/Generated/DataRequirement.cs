@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DataRequirement"; } }
         
-        [FhirType("DataRequirement#DataRequirement.codeFilter", IsNestedType=true)]
+        [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "CodeFilterComponent"; } }
+            public override string TypeName { get { return "DataRequirement#CodeFilter"; } }
             
             /// <summary>
             /// The code-valued attribute of the filter
@@ -246,11 +246,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DataRequirement#DataRequirement.dateFilter", IsNestedType=true)]
+        [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "DateFilterComponent"; } }
+            public override string TypeName { get { return "DataRequirement#DateFilter"; } }
             
             /// <summary>
             /// The date-valued attribute of the filter

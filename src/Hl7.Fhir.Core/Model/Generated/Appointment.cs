@@ -136,11 +136,11 @@ namespace Hl7.Fhir.Model
             InformationOnly,
         }
 
-        [FhirType("Appointment#Appointment.participant", IsNestedType=true)]
+        [FhirType("Appointment#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "Appointment#Participant"; } }
             
             /// <summary>
             /// Role of participant in the appointment

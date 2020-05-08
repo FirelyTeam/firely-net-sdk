@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Organization"; } }
         
-        [FhirType("Organization#Organization.contact", IsNestedType=true)]
+        [FhirType("Organization#Contact", IsNestedType=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContactComponent"; } }
+            public override string TypeName { get { return "Organization#Contact"; } }
             
             /// <summary>
             /// The type of contact

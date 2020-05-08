@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             Override,
         }
 
-        [FhirType("ExpansionProfile#ExpansionProfile.fixedVersion", IsNestedType=true)]
+        [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
         [DataContract]
         public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FixedVersionComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#FixedVersion"; } }
             
             /// <summary>
             /// System to have its version fixed
@@ -255,11 +255,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.excludedSystem", IsNestedType=true)]
+        [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
         [DataContract]
         public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExcludedSystemComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#ExcludedSystem"; } }
             
             /// <summary>
             /// The specific code system to be excluded
@@ -393,11 +393,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.designation", IsNestedType=true)]
+        [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#Designation"; } }
             
             /// <summary>
             /// Designations to be included
@@ -494,11 +494,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.designation.include", IsNestedType=true)]
+        [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
         [DataContract]
         public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationIncludeComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#DesignationInclude"; } }
             
             /// <summary>
             /// The designation to be included
@@ -578,11 +578,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.designation.include.designation", IsNestedType=true)]
+        [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationIncludeDesignationComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#DesignationIncludeDesignation"; } }
             
             /// <summary>
             /// Human language of the designation to be included
@@ -697,11 +697,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.designation.exclude", IsNestedType=true)]
+        [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
         [DataContract]
         public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationExcludeComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#DesignationExclude"; } }
             
             /// <summary>
             /// The designation to be excluded
@@ -781,11 +781,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionProfile#ExpansionProfile.designation.exclude.designation", IsNestedType=true)]
+        [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationExcludeDesignationComponent"; } }
+            public override string TypeName { get { return "ExpansionProfile#DesignationExcludeDesignation"; } }
             
             /// <summary>
             /// Human language of the designation to be excluded

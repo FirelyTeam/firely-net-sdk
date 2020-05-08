@@ -272,20 +272,29 @@ if(true) {
 	foreach (System.Xml.XmlElement e2 in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element[fhir:type/fhir:code/@value = 'BackboneElement']", nsR))
     {
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
-		string v = componentElement.Value;
-		string definingPath = componentElement.Value;
-
-		if (v.Contains("."))
-        {
-			int index = v.LastIndexOf(".");
-			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
-        }
-		string componentName = v + "Component";
 		System.Xml.XmlAttribute componentNameElement = (System.Xml.XmlAttribute)e2.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
+
+		string componentStartName;
+
 		if (componentNameElement != null)
         {
-			componentName = componentNameElement.Value + "Component";
+			componentStartName = componentNameElement.Value;		
         }
+		else
+		{
+			componentStartName = componentElement.Value;
+
+			if(componentStartName.Contains("."))
+			{
+				int index = componentStartName.LastIndexOf(".");
+		        componentStartName = componentStartName.Substring(index+1,1).ToUpper() + componentStartName.Substring(index+2);
+			}
+			
+		//	WriteLine("Encountered a nested component without a name at " + componentElement.Value);
+		}
+
+		string fhirTypeName = resourceName + "#" + componentStartName;
+		string componentName = componentStartName + "Component";
 
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
@@ -295,11 +304,11 @@ if(true) {
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= resourceName + '#' + definingPath #>", IsNestedType=true)]
+        [FhirType("<#= fhirTypeName #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "<#= componentName #>"; } }
+            public override string TypeName { get { return "<#= fhirTypeName #>"; } }
             
 <#
 	int nComponentPropNum = 30;

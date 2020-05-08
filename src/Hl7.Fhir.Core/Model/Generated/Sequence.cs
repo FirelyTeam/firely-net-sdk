@@ -118,11 +118,11 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("Sequence#Sequence.referenceSeq", IsNestedType=true)]
+        [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReferenceSeqComponent"; } }
+            public override string TypeName { get { return "Sequence#ReferenceSeq"; } }
             
             /// <summary>
             /// Chromosome containing genetic finding
@@ -421,11 +421,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Sequence#Sequence.variant", IsNestedType=true)]
+        [FhirType("Sequence#Variant", IsNestedType=true)]
         [DataContract]
         public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VariantComponent"; } }
+            public override string TypeName { get { return "Sequence#Variant"; } }
             
             /// <summary>
             /// Start position of the variant on the  reference sequence
@@ -686,11 +686,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Sequence#Sequence.quality", IsNestedType=true)]
+        [FhirType("Sequence#Quality", IsNestedType=true)]
         [DataContract]
         public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "QualityComponent"; } }
+            public override string TypeName { get { return "Sequence#Quality"; } }
             
             /// <summary>
             /// indel | snp | unknown
@@ -1202,11 +1202,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Sequence#Sequence.repository", IsNestedType=true)]
+        [FhirType("Sequence#Repository", IsNestedType=true)]
         [DataContract]
         public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RepositoryComponent"; } }
+            public override string TypeName { get { return "Sequence#Repository"; } }
             
             /// <summary>
             /// directlink | openapi | login | oauth | other

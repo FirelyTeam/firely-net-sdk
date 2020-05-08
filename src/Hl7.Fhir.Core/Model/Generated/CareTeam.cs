@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CareTeam#CareTeam.participant", IsNestedType=true)]
+        [FhirType("CareTeam#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "CareTeam#Participant"; } }
             
             /// <summary>
             /// Type of involvement

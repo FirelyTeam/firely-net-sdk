@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "EligibilityResponse"; } }
         
-        [FhirType("EligibilityResponse#EligibilityResponse.insurance", IsNestedType=true)]
+        [FhirType("EligibilityResponse#Insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InsuranceComponent"; } }
+            public override string TypeName { get { return "EligibilityResponse#Insurance"; } }
             
             /// <summary>
             /// Updated Coverage details
@@ -176,11 +176,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EligibilityResponse#EligibilityResponse.insurance.benefitBalance", IsNestedType=true)]
+        [FhirType("EligibilityResponse#Benefits", IsNestedType=true)]
         [DataContract]
         public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BenefitsComponent"; } }
+            public override string TypeName { get { return "EligibilityResponse#Benefits"; } }
             
             /// <summary>
             /// Type of services covered
@@ -459,11 +459,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EligibilityResponse#EligibilityResponse.insurance.benefitBalance.financial", IsNestedType=true)]
+        [FhirType("EligibilityResponse#Benefit", IsNestedType=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BenefitComponent"; } }
+            public override string TypeName { get { return "EligibilityResponse#Benefit"; } }
             
             /// <summary>
             /// Deductable, visits, benefit amount
@@ -583,11 +583,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EligibilityResponse#EligibilityResponse.error", IsNestedType=true)]
+        [FhirType("EligibilityResponse#Errors", IsNestedType=true)]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ErrorsComponent"; } }
+            public override string TypeName { get { return "EligibilityResponse#Errors"; } }
             
             /// <summary>
             /// Error code detailing processing issues
