@@ -12,7 +12,6 @@ using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Diagnostics;
 using System.Reflection;
 using Hl7.Fhir.Utility;
 
@@ -24,7 +23,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Private static helper for <see cref="SnapshotGenerator"/>.
         /// Merge two <see cref="ElementDefinition"/> instances and all their properties.
         /// </summary>
-        struct ElementDefnMerger
+        internal struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
             public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
@@ -107,7 +106,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
                 snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
-                snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
+                //snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
+                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.base should already be there, and is not changed by the diff
 
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>Notify clients about a snapshot element with differential constraints.</summary>
             void onConstraint(Element snap)
             {
-                _generator.OnConstraint(snap);
+                _generator?.OnConstraint(snap);
             }
 
             /// <summary>
@@ -237,6 +237,52 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                     return snap;
+            }
+
+            // The diamond problem is especially painful for min/max -
+            // most datatypes roots have a cardinality of 0..*, so
+            // a non-repeating element referring to a profiled datatype
+            // (with 0..*) onto an element which needs to be expanded
+            // and which has no diff constraints on max will get the 
+            // max from the base -> a non-repeating element will become repeating.
+            internal FhirString mergeMax(FhirString snap, FhirString diff)
+            {
+                if (!diff.IsNullOrEmpty() && !snap.IsNullOrEmpty() && !diff.IsExactly(snap))
+                {
+                    // If diff is unlimited, we can just take the original snap as the lowest limit
+                    if (diff.Value == "*")
+                        return snap;
+
+                    // Now, diff has a numeric limit
+                    // So, if snap has no limit, take the diff
+                    if(snap.Value == "*")
+                        return deepCopyAndRaiseOnConstraint(diff);
+
+                    // snap and diff both have a numeric value
+                    if (int.TryParse(snap.Value, out var sv) &&
+                        int.TryParse(diff.Value, out var dv))
+                    {
+                        // compare them if they are both numerics
+                        return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
+                    }
+                    
+                    // one of the two values cannot be parsed, just don't
+                    // do anything to not break it any further.
+                    return snap;
+                }
+                else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+                {
+                    return deepCopyAndRaiseOnConstraint(diff);
+                }
+                else
+                    return snap;
+            }
+
+            private FhirString deepCopyAndRaiseOnConstraint(FhirString elt)
+            {
+                var result = (FhirString)elt.DeepCopy();
+                onConstraint(result);
+                return result;
             }
 
             T mergeComplexAttribute<T>(T snap, T diff) where T : Element

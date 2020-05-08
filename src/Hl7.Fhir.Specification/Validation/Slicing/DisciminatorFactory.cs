@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -29,10 +30,16 @@ namespace Hl7.Fhir.Validation
 
             switch (spec.Type.Value)
             {
+                //This was the situation before implementing #1246 and #1185
+                //case ElementDefinition.DiscriminatorType.Value:
+                //    return buildValueDiscriminator(condition, spec.Path, validator);
+                //case ElementDefinition.DiscriminatorType.Pattern:
+                //    return buildPatternDiscriminator(condition, spec.Path, validator);
+                
                 case ElementDefinition.DiscriminatorType.Value:
-                    return buildValueDiscriminator(condition, spec.Path, validator);
+                    return buildCombinedDiscriminator("value", condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Pattern:
-                    return buildPatternDiscriminator(condition, spec.Path, validator);
+                    return buildCombinedDiscriminator("pattern", condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Type:
                     return buildTypeDiscriminator(condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Profile:
@@ -64,6 +71,28 @@ namespace Hl7.Fhir.Validation
                 return new PatternDiscriminator(spec.Pattern, discriminator, validator);
             else
                 throw new IncorrectElementDefinitionException($"The pattern discriminator should have a 'pattern[x]' element set on '{nav.CanonicalPath()}'.");
+        }
+
+        private static IDiscriminator buildCombinedDiscriminator(string name, ElementDefinitionNavigator nav, string discriminator, Validator validator)
+        {
+            return new CombinedDiscriminator(listDiscriminators());
+
+            IEnumerable<IDiscriminator> listDiscriminators()
+            {
+                var spec = nav.Current;
+
+                if(spec.Fixed == null && spec.Binding == null && spec.Pattern == null)
+                    throw new IncorrectElementDefinitionException($"The {name} discriminator should have a 'fixed[x]', 'pattern[x]' or binding element set on '{nav.CanonicalPath()}'.");
+
+                if (spec.Fixed != null)
+                    yield return new ValueDiscriminator(spec.Fixed, discriminator, validator);
+                
+                if (spec.Binding != null)
+                    yield return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
+                
+                if (spec.Pattern != null)
+                    yield return new PatternDiscriminator(spec.Pattern, discriminator, validator);                
+            }
         }
 
         private static IDiscriminator buildTypeDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
