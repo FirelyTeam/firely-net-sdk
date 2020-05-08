@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             Potential,
         }
 
-        [FhirType("SuspectEntityComponent", NamedBackboneElement=true)]
+        [FhirType("AdverseEvent#AdverseEvent.suspectEntity", IsNestedType=true)]
         [DataContract]
         public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CausalityComponent", NamedBackboneElement=true)]
+        [FhirType("AdverseEvent#AdverseEvent.suspectEntity.causality", IsNestedType=true)]
         [DataContract]
         public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
         {

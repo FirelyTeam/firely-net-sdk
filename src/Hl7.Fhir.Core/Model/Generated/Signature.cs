@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
-    public partial class Signature : Hl7.Fhir.Model.Element
+    public partial class Signature : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Signature"; } }
         

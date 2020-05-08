@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Coverage"; } }
         
-        [FhirType("ClassComponent", NamedBackboneElement=true)]
+        [FhirType("Coverage#Coverage.class", IsNestedType=true)]
         [DataContract]
         public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostToBeneficiaryComponent", NamedBackboneElement=true)]
+        [FhirType("Coverage#Coverage.costToBeneficiary", IsNestedType=true)]
         [DataContract]
         public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -236,13 +236,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Money))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             /// <summary>
             /// Exceptions for patient payments
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     if(Exception != null) dest.Exception = new List<Hl7.Fhir.Model.Coverage.ExemptionComponent>(Exception.DeepCopy());
                     return dest;
                 }
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExemptionComponent", NamedBackboneElement=true)]
+        [FhirType("Coverage#Coverage.costToBeneficiary.exception", IsNestedType=true)]
         [DataContract]
         public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
         {

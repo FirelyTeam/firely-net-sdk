@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductPharmaceutical"; } }
         
-        [FhirType("CharacteristicsComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPharmaceutical#MedicinalProductPharmaceutical.characteristics", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RouteOfAdministrationComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPharmaceutical#MedicinalProductPharmaceutical.routeOfAdministration", IsNestedType=true)]
         [DataContract]
         public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetSpeciesComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPharmaceutical#MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies", IsNestedType=true)]
         [DataContract]
         public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("WithdrawalPeriodComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductPharmaceutical#MedicinalProductPharmaceutical.routeOfAdministration.targetSpecies.withdrawalPeriod", IsNestedType=true)]
         [DataContract]
         public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
         {

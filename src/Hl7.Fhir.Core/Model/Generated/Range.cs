@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Range")]
     [DataContract]
-    public partial class Range : Hl7.Fhir.Model.Element
+    public partial class Range : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Range"; } }
         

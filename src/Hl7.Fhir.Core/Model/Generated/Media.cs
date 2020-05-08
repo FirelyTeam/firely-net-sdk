@@ -206,13 +206,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Created
+        public Hl7.Fhir.Model.DataType Created
         {
             get { return _Created; }
             set { _Created = value; OnPropertyChanged("Created"); }
         }
         
-        private Hl7.Fhir.Model.Element _Created;
+        private Hl7.Fhir.Model.DataType _Created;
         
         /// <summary>
         /// Date/Time this version was made available
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
                 if(View != null) dest.View = (Hl7.Fhir.Model.CodeableConcept)View.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Created != null) dest.Created = (Hl7.Fhir.Model.Element)Created.DeepCopy();
+                if(Created != null) dest.Created = (Hl7.Fhir.Model.DataType)Created.DeepCopy();
                 if(IssuedElement != null) dest.IssuedElement = (Hl7.Fhir.Model.Instant)IssuedElement.DeepCopy();
                 if(Operator != null) dest.Operator = (Hl7.Fhir.Model.ResourceReference)Operator.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());

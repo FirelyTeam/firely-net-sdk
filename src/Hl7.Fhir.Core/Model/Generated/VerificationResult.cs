@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             RevalFail,
         }
 
-        [FhirType("PrimarySourceComponent", NamedBackboneElement=true)]
+        [FhirType("VerificationResult#VerificationResult.primarySource", IsNestedType=true)]
         [DataContract]
         public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AttestationComponent", NamedBackboneElement=true)]
+        [FhirType("VerificationResult#VerificationResult.attestation", IsNestedType=true)]
         [DataContract]
         public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValidatorComponent", NamedBackboneElement=true)]
+        [FhirType("VerificationResult#VerificationResult.validator", IsNestedType=true)]
         [DataContract]
         public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ActivityComponent", NamedBackboneElement=true)]
+        [FhirType("CarePlan#CarePlan.activity", IsNestedType=true)]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent", NamedBackboneElement=true)]
+        [FhirType("CarePlan#CarePlan.activity.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -610,13 +610,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Scheduled
+            public Hl7.Fhir.Model.DataType Scheduled
             {
                 get { return _Scheduled; }
                 set { _Scheduled = value; OnPropertyChanged("Scheduled"); }
             }
             
-            private Hl7.Fhir.Model.Element _Scheduled;
+            private Hl7.Fhir.Model.DataType _Scheduled;
             
             /// <summary>
             /// Where it should happen
@@ -656,13 +656,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Product
+            public Hl7.Fhir.Model.DataType Product
             {
                 get { return _Product; }
                 set { _Product = value; OnPropertyChanged("Product"); }
             }
             
-            private Hl7.Fhir.Model.Element _Product;
+            private Hl7.Fhir.Model.DataType _Product;
             
             /// <summary>
             /// How to consume/day?
@@ -738,10 +738,10 @@ namespace Hl7.Fhir.Model
                     if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus>)StatusElement.DeepCopy();
                     if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
                     if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
-                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.Element)Scheduled.DeepCopy();
+                    if(Scheduled != null) dest.Scheduled = (Hl7.Fhir.Model.DataType)Scheduled.DeepCopy();
                     if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();
                     if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
-                    if(Product != null) dest.Product = (Hl7.Fhir.Model.Element)Product.DeepCopy();
+                    if(Product != null) dest.Product = (Hl7.Fhir.Model.DataType)Product.DeepCopy();
                     if(DailyAmount != null) dest.DailyAmount = (Hl7.Fhir.Model.Quantity)DailyAmount.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("DataRequirement")]
     [DataContract]
-    public partial class DataRequirement : Hl7.Fhir.Model.Element
+    public partial class DataRequirement : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "DataRequirement"; } }
         
@@ -73,9 +73,9 @@ namespace Hl7.Fhir.Model
             Descending,
         }
 
-        [FhirType("CodeFilterComponent", NamedBackboneElement=true)]
+        [FhirType("DataRequirement#DataRequirement.codeFilter", IsNestedType=true)]
         [DataContract]
-        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "CodeFilterComponent"; } }
             
@@ -262,9 +262,9 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DateFilterComponent", NamedBackboneElement=true)]
+        [FhirType("DataRequirement#DataRequirement.dateFilter", IsNestedType=true)]
         [DataContract]
-        public partial class DateFilterComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class DateFilterComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "DateFilterComponent"; } }
             
@@ -337,13 +337,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
                     if(SearchParamElement != null) dest.SearchParamElement = (Hl7.Fhir.Model.FhirString)SearchParamElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -416,9 +416,9 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("SortComponent", NamedBackboneElement=true)]
+        [FhirType("DataRequirement#DataRequirement.sort", IsNestedType=true)]
         [DataContract]
-        public partial class SortComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class SortComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "SortComponent"; } }
             
@@ -623,13 +623,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Subject
+        public Hl7.Fhir.Model.DataType Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.Element _Subject;
+        private Hl7.Fhir.Model.DataType _Subject;
         
         /// <summary>
         /// Indicates specific structure elements that are referenced by the knowledge module
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.FHIRAllTypes>)TypeElement.DeepCopy();
                 if(ProfileElement != null) dest.ProfileElement = new List<Hl7.Fhir.Model.Canonical>(ProfileElement.DeepCopy());
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
                 if(MustSupportElement != null) dest.MustSupportElement = new List<Hl7.Fhir.Model.FhirString>(MustSupportElement.DeepCopy());
                 if(CodeFilter != null) dest.CodeFilter = new List<Hl7.Fhir.Model.DataRequirement.CodeFilterComponent>(CodeFilter.DeepCopy());
                 if(DateFilter != null) dest.DateFilter = new List<Hl7.Fhir.Model.DataRequirement.DateFilterComponent>(DateFilter.DeepCopy());

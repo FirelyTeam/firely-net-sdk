@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             Low,
         }
 
-        [FhirType("EvidenceComponent", NamedBackboneElement=true)]
+        [FhirType("DetectedIssue#DetectedIssue.evidence", IsNestedType=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MitigationComponent", NamedBackboneElement=true)]
+        [FhirType("DetectedIssue#DetectedIssue.mitigation", IsNestedType=true)]
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -436,13 +436,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Identified
+        public Hl7.Fhir.Model.DataType Identified
         {
             get { return _Identified; }
             set { _Identified = value; OnPropertyChanged("Identified"); }
         }
         
-        private Hl7.Fhir.Model.Element _Identified;
+        private Hl7.Fhir.Model.DataType _Identified;
         
         /// <summary>
         /// The provider or device that identified the issue
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity>)SeverityElement.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
-                if(Identified != null) dest.Identified = (Hl7.Fhir.Model.Element)Identified.DeepCopy();
+                if(Identified != null) dest.Identified = (Hl7.Fhir.Model.DataType)Identified.DeepCopy();
                 if(Author != null) dest.Author = (Hl7.Fhir.Model.ResourceReference)Author.DeepCopy();
                 if(Implicated != null) dest.Implicated = new List<Hl7.Fhir.Model.ResourceReference>(Implicated.DeepCopy());
                 if(Evidence != null) dest.Evidence = new List<Hl7.Fhir.Model.DetectedIssue.EvidenceComponent>(Evidence.DeepCopy());

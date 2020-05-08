@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceSpecification"; } }
         
-        [FhirType("MoietyComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.moiety", IsNestedType=true)]
         [DataContract]
         public partial class MoietyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Amount
+            public Hl7.Fhir.Model.DataType Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Element _Amount;
+            private Hl7.Fhir.Model.DataType _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
                     if(Stereochemistry != null) dest.Stereochemistry = (Hl7.Fhir.Model.CodeableConcept)Stereochemistry.DeepCopy();
                     if(OpticalActivity != null) dest.OpticalActivity = (Hl7.Fhir.Model.CodeableConcept)OpticalActivity.DeepCopy();
                     if(MolecularFormulaElement != null) dest.MolecularFormulaElement = (Hl7.Fhir.Model.FhirString)MolecularFormulaElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -351,13 +351,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element DefiningSubstance
+            public Hl7.Fhir.Model.DataType DefiningSubstance
             {
                 get { return _DefiningSubstance; }
                 set { _DefiningSubstance = value; OnPropertyChanged("DefiningSubstance"); }
             }
             
-            private Hl7.Fhir.Model.Element _DefiningSubstance;
+            private Hl7.Fhir.Model.DataType _DefiningSubstance;
             
             /// <summary>
             /// Quantitative value for this property
@@ -366,13 +366,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Amount
+            public Hl7.Fhir.Model.DataType Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Element _Amount;
+            private Hl7.Fhir.Model.DataType _Amount;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -384,8 +384,8 @@ namespace Hl7.Fhir.Model
                     if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
                     if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                     if(ParametersElement != null) dest.ParametersElement = (Hl7.Fhir.Model.FhirString)ParametersElement.DeepCopy();
-                    if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.Element)DefiningSubstance.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(DefiningSubstance != null) dest.DefiningSubstance = (Hl7.Fhir.Model.DataType)DefiningSubstance.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
                     return dest;
                 }
                 else
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.structure", IsNestedType=true)]
         [DataContract]
         public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IsotopeComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.structure.isotope", IsNestedType=true)]
         [DataContract]
         public partial class IsotopeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularWeightComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.structure.isotope.molecularWeight", IsNestedType=true)]
         [DataContract]
         public partial class MolecularWeightComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RepresentationComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.structure.representation", IsNestedType=true)]
         [DataContract]
         public partial class RepresentationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1119,7 +1119,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.code", IsNestedType=true)]
         [DataContract]
         public partial class CodeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1313,7 +1313,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NameComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.name", IsNestedType=true)]
         [DataContract]
         public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1622,7 +1622,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OfficialComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.name.official", IsNestedType=true)]
         [DataContract]
         public partial class OfficialComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1759,7 +1759,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelationshipComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceSpecification#SubstanceSpecification.relationship", IsNestedType=true)]
         [DataContract]
         public partial class RelationshipComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1772,13 +1772,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Substance
+            public Hl7.Fhir.Model.DataType Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
             
-            private Hl7.Fhir.Model.Element _Substance;
+            private Hl7.Fhir.Model.DataType _Substance;
             
             /// <summary>
             /// For example "salt to parent", "active moiety", "starting material"
@@ -1831,13 +1831,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Amount
+            public Hl7.Fhir.Model.DataType Amount
             {
                 get { return _Amount; }
                 set { _Amount = value; OnPropertyChanged("Amount"); }
             }
             
-            private Hl7.Fhir.Model.Element _Amount;
+            private Hl7.Fhir.Model.DataType _Amount;
             
             /// <summary>
             /// For use when the numeric
@@ -1888,10 +1888,10 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.DataType)Substance.DeepCopy();
                     if(Relationship != null) dest.Relationship = (Hl7.Fhir.Model.CodeableConcept)Relationship.DeepCopy();
                     if(IsDefiningElement != null) dest.IsDefiningElement = (Hl7.Fhir.Model.FhirBoolean)IsDefiningElement.DeepCopy();
-                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                    if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
                     if(AmountRatioLowLimit != null) dest.AmountRatioLowLimit = (Hl7.Fhir.Model.Ratio)AmountRatioLowLimit.DeepCopy();
                     if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
                     if(Source != null) dest.Source = new List<Hl7.Fhir.Model.ResourceReference>(Source.DeepCopy());

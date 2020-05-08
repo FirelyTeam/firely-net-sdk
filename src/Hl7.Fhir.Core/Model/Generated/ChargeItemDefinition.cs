@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ChargeItemDefinition"; } }
         
-        [FhirType("ApplicabilityComponent", NamedBackboneElement=true)]
+        [FhirType("ChargeItemDefinition#ChargeItemDefinition.applicability", IsNestedType=true)]
         [DataContract]
         public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyGroupComponent", NamedBackboneElement=true)]
+        [FhirType("ChargeItemDefinition#ChargeItemDefinition.propertyGroup", IsNestedType=true)]
         [DataContract]
         public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
+        [FhirType("ChargeItemDefinition#ChargeItemDefinition.propertyGroup.priceComponent", IsNestedType=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -20,8 +20,8 @@ namespace Hl7.Fhir.Validation
         {
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
             if (definition == null) throw Error.ArgumentNull(nameof(definition));
-            if (!(definition is Primitive || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
-            if (definition is Primitive pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
+            if (!(definition is PrimitiveType || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
+            if (definition is PrimitiveType pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
             if (instance is Model.Primitives.PartialDateTime)
             {

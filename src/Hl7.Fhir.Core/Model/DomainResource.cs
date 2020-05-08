@@ -40,7 +40,6 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
-    [InvokeIValidatableObject]
     [FhirType("DomainResource")]
     public abstract partial class DomainResource : IModifierExtendable
     {

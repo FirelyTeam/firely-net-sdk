@@ -65,21 +65,10 @@ namespace Hl7.Fhir.Specification
             _classMapping = classMapping;
         }
 
-        public string TypeName
-        {
-            get
-            {
-                return !_classMapping.IsNamedBackboneElement ? 
-                    substituteQuantity(_classMapping.Name) :
-                        (_classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
-                            "BackboneElement" 
-                            : "Element");
-
-                string substituteQuantity(string name) =>
-                    ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
-            }
-        }
-
+        public string TypeName => !_classMapping.IsNestedType ? 
+                _classMapping.Name 
+                : _classMapping.NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
+                    "BackboneElement" : "Element";
 
         public bool IsAbstract => _classMapping.NativeType.GetTypeInfo().IsAbstract;
         public bool IsResource => _classMapping.IsResource;
@@ -133,7 +122,9 @@ namespace Hl7.Fhir.Specification
         {
             var pm = _pm;
 
-            if (pm.IsBackboneElement)
+            var elementType = PocoStructureDefinitionSummaryProvider.GetMappingForType(pm.FhirType[0]);
+
+            if (elementType.IsNestedType)
             {
                 var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
                 return new ITypeSerializationInfo[] { info };

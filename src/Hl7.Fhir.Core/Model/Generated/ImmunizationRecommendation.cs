@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("RecommendationComponent", NamedBackboneElement=true)]
+        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation", IsNestedType=true)]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -210,13 +210,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element DoseNumber
+            public Hl7.Fhir.Model.DataType DoseNumber
             {
                 get { return _DoseNumber; }
                 set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
             }
             
-            private Hl7.Fhir.Model.Element _DoseNumber;
+            private Hl7.Fhir.Model.DataType _DoseNumber;
             
             /// <summary>
             /// Recommended number of doses for immunity
@@ -225,13 +225,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element SeriesDoses
+            public Hl7.Fhir.Model.DataType SeriesDoses
             {
                 get { return _SeriesDoses; }
                 set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
             }
             
-            private Hl7.Fhir.Model.Element _SeriesDoses;
+            private Hl7.Fhir.Model.DataType _SeriesDoses;
             
             /// <summary>
             /// Past immunizations supporting recommendation
@@ -280,8 +280,8 @@ namespace Hl7.Fhir.Model
                     if(DateCriterion != null) dest.DateCriterion = new List<Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent>(DateCriterion.DeepCopy());
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
-                    if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
-                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
+                    if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.DataType)DoseNumber.DeepCopy();
+                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.DataType)SeriesDoses.DeepCopy();
                     if(SupportingImmunization != null) dest.SupportingImmunization = new List<Hl7.Fhir.Model.ResourceReference>(SupportingImmunization.DeepCopy());
                     if(SupportingPatientInformation != null) dest.SupportingPatientInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingPatientInformation.DeepCopy());
                     return dest;
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DateCriterionComponent", NamedBackboneElement=true)]
+        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation.dateCriterion", IsNestedType=true)]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
         {

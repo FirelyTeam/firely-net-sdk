@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DocumentReference"; } }
         
-        [FhirType("RelatesToComponent", NamedBackboneElement=true)]
+        [FhirType("DocumentReference#DocumentReference.relatesTo", IsNestedType=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContentComponent", NamedBackboneElement=true)]
+        [FhirType("DocumentReference#DocumentReference.content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContextComponent", NamedBackboneElement=true)]
+        [FhirType("DocumentReference#DocumentReference.context", IsNestedType=true)]
         [DataContract]
         public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
         {

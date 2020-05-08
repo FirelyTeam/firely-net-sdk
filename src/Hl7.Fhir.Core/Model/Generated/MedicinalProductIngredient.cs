@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductIngredient"; } }
         
-        [FhirType("SpecifiedSubstanceComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductIngredient#MedicinalProductIngredient.specifiedSubstance", IsNestedType=true)]
         [DataContract]
         public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StrengthComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductIngredient#MedicinalProductIngredient.specifiedSubstance.strength", IsNestedType=true)]
         [DataContract]
         public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReferenceStrengthComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductIngredient#MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductIngredient#MedicinalProductIngredient.substance", IsNestedType=true)]
         [DataContract]
         public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
         {

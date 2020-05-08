@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ClaimResponse"; } }
         
-        [FhirType("ItemComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdjudicationComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.item.adjudication", IsNestedType=true)]
         [DataContract]
         public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ItemDetailComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.item.detail", IsNestedType=true)]
         [DataContract]
         public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubDetailComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.item.detail.subDetail", IsNestedType=true)]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -720,7 +720,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.addItem", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -887,13 +887,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Serviced
+            public Hl7.Fhir.Model.DataType Serviced
             {
                 get { return _Serviced; }
                 set { _Serviced = value; OnPropertyChanged("Serviced"); }
             }
             
-            private Hl7.Fhir.Model.Element _Serviced;
+            private Hl7.Fhir.Model.DataType _Serviced;
             
             /// <summary>
             /// Place of service or where product was supplied
@@ -902,13 +902,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Location
+            public Hl7.Fhir.Model.DataType Location
             {
                 get { return _Location; }
                 set { _Location = value; OnPropertyChanged("Location"); }
             }
             
-            private Hl7.Fhir.Model.Element _Location;
+            private Hl7.Fhir.Model.DataType _Location;
             
             /// <summary>
             /// Count of products or services
@@ -1081,8 +1081,8 @@ namespace Hl7.Fhir.Model
                     if(ProductOrService != null) dest.ProductOrService = (Hl7.Fhir.Model.CodeableConcept)ProductOrService.DeepCopy();
                     if(Modifier != null) dest.Modifier = new List<Hl7.Fhir.Model.CodeableConcept>(Modifier.DeepCopy());
                     if(ProgramCode != null) dest.ProgramCode = new List<Hl7.Fhir.Model.CodeableConcept>(ProgramCode.DeepCopy());
-                    if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.Element)Serviced.DeepCopy();
-                    if(Location != null) dest.Location = (Hl7.Fhir.Model.Element)Location.DeepCopy();
+                    if(Serviced != null) dest.Serviced = (Hl7.Fhir.Model.DataType)Serviced.DeepCopy();
+                    if(Location != null) dest.Location = (Hl7.Fhir.Model.DataType)Location.DeepCopy();
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
                     if(UnitPrice != null) dest.UnitPrice = (Money)UnitPrice.DeepCopy();
                     if(FactorElement != null) dest.FactorElement = (Hl7.Fhir.Model.FhirDecimal)FactorElement.DeepCopy();
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemDetailComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.addItem.detail", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AddedItemSubDetailComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.addItem.detail.subDetail", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemSubDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TotalComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.total", IsNestedType=true)]
         [DataContract]
         public partial class TotalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1836,7 +1836,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PaymentComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.payment", IsNestedType=true)]
         [DataContract]
         public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2029,7 +2029,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NoteComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.processNote", IsNestedType=true)]
         [DataContract]
         public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2221,7 +2221,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InsuranceComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2437,7 +2437,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ErrorComponent", NamedBackboneElement=true)]
+        [FhirType("ClaimResponse#ClaimResponse.error", IsNestedType=true)]
         [DataContract]
         public partial class ErrorComponent : Hl7.Fhir.Model.BackboneElement
         {

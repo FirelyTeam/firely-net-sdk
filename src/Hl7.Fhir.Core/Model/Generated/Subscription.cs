@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
             Message,
         }
 
-        [FhirType("ChannelComponent", NamedBackboneElement=true)]
+        [FhirType("Subscription#Subscription.channel", IsNestedType=true)]
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
         {

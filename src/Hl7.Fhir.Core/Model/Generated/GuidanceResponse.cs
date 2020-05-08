@@ -132,13 +132,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Module
+        public Hl7.Fhir.Model.DataType Module
         {
             get { return _Module; }
             set { _Module = value; OnPropertyChanged("Module"); }
         }
         
-        private Hl7.Fhir.Model.Element _Module;
+        private Hl7.Fhir.Model.DataType _Module;
         
         /// <summary>
         /// success | data-requested | data-required | in-progress | failure | entered-in-error
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(RequestIdentifier != null) dest.RequestIdentifier = (Hl7.Fhir.Model.Identifier)RequestIdentifier.DeepCopy();
                 if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-                if(Module != null) dest.Module = (Hl7.Fhir.Model.Element)Module.DeepCopy();
+                if(Module != null) dest.Module = (Hl7.Fhir.Model.DataType)Module.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus>)StatusElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();

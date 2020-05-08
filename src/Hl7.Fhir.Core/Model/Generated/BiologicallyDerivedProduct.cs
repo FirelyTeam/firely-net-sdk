@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
             Kelvin,
         }
 
-        [FhirType("CollectionComponent", NamedBackboneElement=true)]
+        [FhirType("BiologicallyDerivedProduct#BiologicallyDerivedProduct.collection", IsNestedType=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -182,13 +182,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Collected
+            public Hl7.Fhir.Model.DataType Collected
             {
                 get { return _Collected; }
                 set { _Collected = value; OnPropertyChanged("Collected"); }
             }
             
-            private Hl7.Fhir.Model.Element _Collected;
+            private Hl7.Fhir.Model.DataType _Collected;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(Collector != null) dest.Collector = (Hl7.Fhir.Model.ResourceReference)Collector.DeepCopy();
                     if(Source != null) dest.Source = (Hl7.Fhir.Model.ResourceReference)Source.DeepCopy();
-                    if(Collected != null) dest.Collected = (Hl7.Fhir.Model.Element)Collected.DeepCopy();
+                    if(Collected != null) dest.Collected = (Hl7.Fhir.Model.DataType)Collected.DeepCopy();
                     return dest;
                 }
                 else
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProcessingComponent", NamedBackboneElement=true)]
+        [FhirType("BiologicallyDerivedProduct#BiologicallyDerivedProduct.processing", IsNestedType=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -336,13 +336,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Time
+            public Hl7.Fhir.Model.DataType Time
             {
                 get { return _Time; }
                 set { _Time = value; OnPropertyChanged("Time"); }
             }
             
-            private Hl7.Fhir.Model.Element _Time;
+            private Hl7.Fhir.Model.DataType _Time;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Procedure != null) dest.Procedure = (Hl7.Fhir.Model.CodeableConcept)Procedure.DeepCopy();
                     if(Additive != null) dest.Additive = (Hl7.Fhir.Model.ResourceReference)Additive.DeepCopy();
-                    if(Time != null) dest.Time = (Hl7.Fhir.Model.Element)Time.DeepCopy();
+                    if(Time != null) dest.Time = (Hl7.Fhir.Model.DataType)Time.DeepCopy();
                     return dest;
                 }
                 else
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManipulationComponent", NamedBackboneElement=true)]
+        [FhirType("BiologicallyDerivedProduct#BiologicallyDerivedProduct.manipulation", IsNestedType=true)]
         [DataContract]
         public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -467,13 +467,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Time
+            public Hl7.Fhir.Model.DataType Time
             {
                 get { return _Time; }
                 set { _Time = value; OnPropertyChanged("Time"); }
             }
             
-            private Hl7.Fhir.Model.Element _Time;
+            private Hl7.Fhir.Model.DataType _Time;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Time != null) dest.Time = (Hl7.Fhir.Model.Element)Time.DeepCopy();
+                    if(Time != null) dest.Time = (Hl7.Fhir.Model.DataType)Time.DeepCopy();
                     return dest;
                 }
                 else
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StorageComponent", NamedBackboneElement=true)]
+        [FhirType("BiologicallyDerivedProduct#BiologicallyDerivedProduct.storage", IsNestedType=true)]
         [DataContract]
         public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement
         {

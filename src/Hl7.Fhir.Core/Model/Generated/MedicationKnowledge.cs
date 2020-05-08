@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("RelatedMedicationKnowledgeComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.relatedMedicationKnowledge", IsNestedType=true)]
         [DataContract]
         public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonographComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.monograph", IsNestedType=true)]
         [DataContract]
         public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IngredientComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.DataType Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.DataType _Item;
             
             /// <summary>
             /// Active ingredient indicator
@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
                     return dest;
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.cost", IsNestedType=true)]
         [DataContract]
         public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MonitoringProgramComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.monitoringProgram", IsNestedType=true)]
         [DataContract]
         public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdministrationGuidelinesComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.administrationGuidelines", IsNestedType=true)]
         [DataContract]
         public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -712,13 +712,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Indication
+            public Hl7.Fhir.Model.DataType Indication
             {
                 get { return _Indication; }
                 set { _Indication = value; OnPropertyChanged("Indication"); }
             }
             
-            private Hl7.Fhir.Model.Element _Indication;
+            private Hl7.Fhir.Model.DataType _Indication;
             
             /// <summary>
             /// Characteristics of the patient that are relevant to the administration guidelines
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Dosage != null) dest.Dosage = new List<Hl7.Fhir.Model.MedicationKnowledge.DosageComponent>(Dosage.DeepCopy());
-                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
+                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.DataType)Indication.DeepCopy();
                     if(PatientCharacteristics != null) dest.PatientCharacteristics = new List<Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent>(PatientCharacteristics.DeepCopy());
                     return dest;
                 }
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.administrationGuidelines.dosage", IsNestedType=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PatientCharacteristicsComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.administrationGuidelines.patientCharacteristics", IsNestedType=true)]
         [DataContract]
         public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -925,13 +925,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Characteristic
+            public Hl7.Fhir.Model.DataType Characteristic
             {
                 get { return _Characteristic; }
                 set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
             }
             
-            private Hl7.Fhir.Model.Element _Characteristic;
+            private Hl7.Fhir.Model.DataType _Characteristic;
             
             /// <summary>
             /// The specific characteristic
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Characteristic != null) dest.Characteristic = (Hl7.Fhir.Model.Element)Characteristic.DeepCopy();
+                    if(Characteristic != null) dest.Characteristic = (Hl7.Fhir.Model.DataType)Characteristic.DeepCopy();
                     if(ValueElement != null) dest.ValueElement = new List<Hl7.Fhir.Model.FhirString>(ValueElement.DeepCopy());
                     return dest;
                 }
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicineClassificationComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.medicineClassification", IsNestedType=true)]
         [DataContract]
         public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1137,7 +1137,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PackagingComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.packaging", IsNestedType=true)]
         [DataContract]
         public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DrugCharacteristicComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.drugCharacteristic", IsNestedType=true)]
         [DataContract]
         public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1264,13 +1264,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Base64Binary))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1341,7 +1341,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RegulatoryComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.regulatory", IsNestedType=true)]
         [DataContract]
         public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1483,7 +1483,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstitutionComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.regulatory.substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ScheduleComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.regulatory.schedule", IsNestedType=true)]
         [DataContract]
         public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1688,7 +1688,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MaxDispenseComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.regulatory.maxDispense", IsNestedType=true)]
         [DataContract]
         public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1790,7 +1790,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("KineticsComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationKnowledge#MedicationKnowledge.kinetics", IsNestedType=true)]
         [DataContract]
         public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
+        [FhirType("Invoice#Invoice.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LineItemComponent", NamedBackboneElement=true)]
+        [FhirType("Invoice#Invoice.lineItem", IsNestedType=true)]
         [DataContract]
         public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -240,13 +240,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element ChargeItem
+            public Hl7.Fhir.Model.DataType ChargeItem
             {
                 get { return _ChargeItem; }
                 set { _ChargeItem = value; OnPropertyChanged("ChargeItem"); }
             }
             
-            private Hl7.Fhir.Model.Element _ChargeItem;
+            private Hl7.Fhir.Model.DataType _ChargeItem;
             
             /// <summary>
             /// Components of total line item price
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.PositiveInt)SequenceElement.DeepCopy();
-                    if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.Element)ChargeItem.DeepCopy();
+                    if(ChargeItem != null) dest.ChargeItem = (Hl7.Fhir.Model.DataType)ChargeItem.DeepCopy();
                     if(PriceComponent != null) dest.PriceComponent = new List<Hl7.Fhir.Model.Invoice.PriceComponentComponent>(PriceComponent.DeepCopy());
                     return dest;
                 }
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PriceComponentComponent", NamedBackboneElement=true)]
+        [FhirType("Invoice#Invoice.lineItem.priceComponent", IsNestedType=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {

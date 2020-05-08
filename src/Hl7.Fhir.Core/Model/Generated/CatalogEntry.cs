@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             IsReplacedBy,
         }
 
-        [FhirType("RelatedEntryComponent", NamedBackboneElement=true)]
+        [FhirType("CatalogEntry#CatalogEntry.relatedEntry", IsNestedType=true)]
         [DataContract]
         public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
         {

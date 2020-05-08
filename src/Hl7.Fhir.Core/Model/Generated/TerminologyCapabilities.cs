@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             All,
         }
 
-        [FhirType("SoftwareComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.software", IsNestedType=true)]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.implementation", IsNestedType=true)]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystemComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem", IsNestedType=true)]
         [DataContract]
         public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem.version", IsNestedType=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FilterComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem.version.filter", IsNestedType=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.expansion", IsNestedType=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.expansion.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1258,7 +1258,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ValidateCodeComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.validateCode", IsNestedType=true)]
         [DataContract]
         public partial class ValidateCodeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1360,7 +1360,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TranslationComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.translation", IsNestedType=true)]
         [DataContract]
         public partial class TranslationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1462,7 +1462,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClosureComponent", NamedBackboneElement=true)]
+        [FhirType("TerminologyCapabilities#TerminologyCapabilities.closure", IsNestedType=true)]
         [DataContract]
         public partial class ClosureComponent : Hl7.Fhir.Model.BackboneElement
         {
