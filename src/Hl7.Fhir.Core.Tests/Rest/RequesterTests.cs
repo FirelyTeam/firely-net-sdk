@@ -58,29 +58,29 @@ namespace Hl7.Fhir.Test
 
             var settings = _Settings;
 
-            var request = entry.ToHttpRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("return=minimal", request.Headers["Prefer"]);
 
             settings.PreferredReturn = Prefer.RespondAsync;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("respond-async", request.Headers["Prefer"]);
             
             settings.PreferredReturn = null;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsNull(request.Headers["Prefer"]);
 
             entry.Type = InteractionType.Search;
             settings.PreferredReturn = Prefer.OperationOutcome;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient", request.Headers["Prefer"]);
             
             settings.PreferredReturn = Prefer.RespondAsync;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient, respond-async", request.Headers["Prefer"]);
             
             settings.PreferredReturn = Prefer.ReturnRepresentation;
             settings.PreferredParameterHandling = null;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsNull(request.Headers["Prefer"]);
         }
 
@@ -91,10 +91,10 @@ namespace Hl7.Fhir.Test
             entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
             var settings = _Settings;
             
-            ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpRequest(_endpoint, settings));
+            ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpWebRequest(_endpoint, settings));
             
             entry.Method = HTTPVerb.POST;
-            var request = entry.ToHttpRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
         }
 
         [TestMethod]
@@ -104,11 +104,11 @@ namespace Hl7.Fhir.Test
 
             var settings = _Settings;
 
-            var request = entry.ToHttpRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("application/fhir+json;charset=utf-8", request.Accept);
 
             settings.UseFormatParameter = true;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
         }
 
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Test
 
             var settings = _Settings;
 
-            var request = entry.ToHttpRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("Test-IfMatch", request.Headers["If-Match"]);
             Assert.AreEqual(entry.Headers.IfModifiedSince.Value.UtcDateTime.ToString("r"), request.Headers["If-Modified-Since"]);
             Assert.AreEqual("Test-IfNoneExists", request.Headers["If-None-Exist"]);
@@ -140,11 +140,11 @@ namespace Hl7.Fhir.Test
             entry.Agent = "testAgent";
             var settings = _Settings;
 
-            var request = entry.ToHttpRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
 
             EntryToHttpExtensions.SetUserAgentUsingReflection = false;
-            request = entry.ToHttpRequest(_endpoint, settings);
+            request = entry.ToHttpWebRequest(_endpoint, settings);
             try
             {
                 Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);

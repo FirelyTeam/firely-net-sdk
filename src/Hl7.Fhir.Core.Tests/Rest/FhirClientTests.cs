@@ -30,15 +30,17 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
         //public static Uri testEndpoint = new Uri("https://localhost:44346/fhir");
         //public static Uri testEndpoint = new Uri("http://localhost:1396/fhir");
-        public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
+        //public static Uri testEndpoint = new Uri("http://test.fhir.org/r3");
         //public static Uri testEndpoint = new Uri("http://localhost:4080");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
+        public static Uri testEndpoint = new Uri("https://vonk.fire.ly/r3");
 
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir"); 
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
+        //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
 
         public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
 
@@ -735,7 +737,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNull(patC);
 
-            if (client.LastBody != null)
+            if (client.LastBody != null && client.LastBody.Length > 0)
             {
                 var returned = client.LastBodyAsResource;
                 Assert.IsTrue(returned is OperationOutcome);
@@ -1019,7 +1021,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestWithParam()
         {
-            var client = new FhirClient("http://test.fhir.org/r4");
+            var client = new FhirClient(testEndpoint);
             gettWithParam(client);
         }
 
@@ -1057,8 +1059,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testManipulateMeta(IFhirClient client)
         {
-            var pat = new Patient();
-            pat.Meta = new Meta();
+            var pat = new Patient
+            {
+                Meta = new Meta()
+            };
             var key = new Random().Next();
             pat.Meta.ProfileElement.Add(new FhirUri("http://someserver.org/fhir/StructureDefinition/XYZ1-" + key));
             pat.Meta.Security.Add(new Coding("http://mysystem.com/sec", "1234-" + key));

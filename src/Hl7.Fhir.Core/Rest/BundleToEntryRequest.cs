@@ -49,9 +49,8 @@ namespace Hl7.Fhir.Rest
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
-            if (data is Binary)
+            if (data is Binary bin)
             {
-                var bin = (Binary)data;
 
                 //Binary.Content is available for STU3. This has changed for R4 as it is Binary.Data
                 request.RequestBodyContent = bin.Content;

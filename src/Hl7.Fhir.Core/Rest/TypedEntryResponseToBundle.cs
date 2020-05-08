@@ -54,18 +54,20 @@ namespace Hl7.Fhir.Rest
                 }
                 else
                 {
-                    try
+                    if(entry.TypedElement != null)
                     {
-                        result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement);
+                        try
+                        {
+                            result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement);
 
-                        if (result.Response.Location != null)
-                            result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
+                            if (result.Response.Location != null)
+                                result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
+                        }
+                        catch (AggregateException ae)
+                        {
+                            throw ae.GetBaseException();
+                        }
                     }
-                    catch (AggregateException ae)
-                    {
-                        throw ae.GetBaseException();
-                    }
-
                 }
             }
             return result;

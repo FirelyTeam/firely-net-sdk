@@ -899,8 +899,10 @@ namespace Hl7.Fhir.Rest
                 }
                 else if(entryResponse.BodyException != null)
                 {
-                    var errorResult = new Bundle.EntryComponent();
-                    errorResult.Response = new Bundle.ResponseComponent();
+                    var errorResult = new Bundle.EntryComponent
+                    {
+                        Response = new Bundle.ResponseComponent()
+                    };
                     errorResult.Response.Status = entryResponse.Status;
 
                     OperationOutcome operationOutcome = OperationOutcome.ForException(entryResponse.BodyException, OperationOutcome.IssueType.Invalid);
