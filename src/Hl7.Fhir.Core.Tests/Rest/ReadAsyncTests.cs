@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
@@ -11,8 +12,8 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public partial class FhirClientAsyncTests
     {
-        private string _endpoint = "http://localhost:4080/";
-        
+        private string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+
         [ClassInitialize]
         public void ClassInitialize(TestContext context)
         {
@@ -69,7 +70,25 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
             };
-            
+
+            await readUsingResourceId(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
+        {
+            using (var client = new FhirHttpClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await readUsingResourceId(client);
+            }          
+        }
+
+
+        private static async System.Threading.Tasks.Task readUsingResourceId(IFhirClient client)
+        {
             Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/pat1"));
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);
@@ -88,6 +107,23 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
+            await readUsingLocationString(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedHttpClient()
+        {
+            using (var client = new FhirHttpClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await readUsingLocationString(client);
+            }            
+        }
+
+        private static async System.Threading.Tasks.Task readUsingLocationString(IFhirClient client)
+        {
             Patient p = await client.ReadAsync<Patient>("/Patient/pat1");
             Assert.IsNotNull(p);
             Assert.IsNotNull(p.Name[0].Given);

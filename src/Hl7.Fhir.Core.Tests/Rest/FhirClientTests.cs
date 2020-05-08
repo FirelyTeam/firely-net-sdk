@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Tests.Rest
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
 
-        public static Uri TerminologyEndpoint = new Uri("http://ontoserver.csiro.au/stu3-latest");
+        public static Uri TerminologyEndpoint = new Uri("https://stu3.ontoserver.csiro.au/fhir");
 
 #if !NETCOREAPP2_1
         [ClassInitialize]

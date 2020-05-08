@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Rest
     public static class FhirClientTermSvcExtensions
     {
         #region Expand
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<ValueSet> ExpandValueSetAsync(this IFhirClient client, Uri valueset, FhirString filter = null, FhirDateTime date = null)
         {
             if (valueset == null) throw Error.ArgumentNull(nameof(valueset));
 
@@ -74,13 +74,13 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<ValueSet>();
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, Uri valueset, FhirString filter = null,
+        public static ValueSet ExpandValueSet(this IFhirClient client, Uri valueset, FhirString filter = null,
             FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, valueset, filter, date).WaitResult();
         }
 
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<ValueSet> ExpandValueSetAsync(this IFhirClient client, FhirUri identifier, FhirString filter = null, FhirDateTime date = null)
         {
             if (identifier == null) throw Error.ArgumentNull(nameof(identifier));
 
@@ -94,13 +94,13 @@ namespace Hl7.Fhir.Rest
                         .OperationResult<ValueSet>();
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, FhirUri identifier, FhirString filter = null,
+        public static ValueSet ExpandValueSet(this IFhirClient client, FhirUri identifier, FhirString filter = null,
             FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, identifier, filter, date).WaitResult();
         }
 
-        public static async Task<ValueSet> ExpandValueSetAsync(this FhirClient client, ValueSet vs, FhirString filter = null, FhirDateTime date = null)
+        public static async Task<ValueSet> ExpandValueSetAsync(this IFhirClient client, ValueSet vs, FhirString filter = null, FhirDateTime date = null)
         {
             if (vs == null) throw Error.ArgumentNull(nameof(vs));
 
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Rest
                     .OperationResult<ValueSet>();
         }
 
-        public static ValueSet ExpandValueSet(this FhirClient client, ValueSet vs, FhirString filter = null,
+        public static ValueSet ExpandValueSet(this IFhirClient client, ValueSet vs, FhirString filter = null,
             FhirDateTime date = null)
         {
             return ExpandValueSetAsync(client, vs, filter, date).WaitResult();

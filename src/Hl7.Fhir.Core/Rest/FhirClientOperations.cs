@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
 
         #region Fetch
 
-        public static async Task<Bundle> FetchPatientRecordAsync(this FhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
+        public static async Task<Bundle> FetchPatientRecordAsync(this IFhirClient client, Uri patient = null, FhirDateTime start = null, FhirDateTime end = null)
         {
             var par = new Parameters();
 
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Rest
 
             return OperationResult<Bundle>(result);
         }
-        public static Bundle FetchPatientRecord(this FhirClient client, Uri patient = null, FhirDateTime start = null,
+        public static Bundle FetchPatientRecord(this IFhirClient client, Uri patient = null, FhirDateTime start = null,
             FhirDateTime end = null)
         {
             return FetchPatientRecordAsync(client, patient, start, end).WaitResult();
