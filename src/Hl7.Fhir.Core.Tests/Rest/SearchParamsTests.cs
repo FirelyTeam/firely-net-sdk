@@ -415,5 +415,16 @@ namespace Hl7.Fhir.Test.Rest
             Assert.Fail("Should have failed");
             return null;
         }
+
+        [TestMethod]
+        public void CheckManualFixesOfTemplateModelInfo()
+        {
+            //Manualy removed target of EpisodeOfCare from searchparameter DiagnosticReport.encounter
+            //Commit: 05bfc4f1d0a4568ca405e248c055a8a16d857ffb
+            var sp = ModelInfo.SearchParameters.Where(s => s.Resource == "DiagnosticReport" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp);
+            Assert.IsTrue(sp.Path.Contains("DiagnosticReport.encounter"));
+            Assert.IsFalse(sp.Target.Contains(ResourceType.EpisodeOfCare));
+        }
     }
 }

@@ -7,6 +7,7 @@ using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
+using Hl7.FhirPath;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using T = System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -196,7 +197,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestDuplicateOperationOutcomeIssues()
         {
-            var outcome = new OperationOutcome
+            var duplicateErrors = new OperationOutcome
             {
                 Issue = new List<OperationOutcome.IssueComponent>
                 {
@@ -221,8 +222,36 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            outcome = outcome.RemoveDuplicateMessages();
-            Assert.Single(outcome.Issue);
+            var sameErrorOnDifferentElement = new OperationOutcome
+            {
+                Issue = new List<OperationOutcome.IssueComponent>
+                {
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.value"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ele-1: value or child"
+                        }
+                    },
+                    new OperationOutcome.IssueComponent
+                    {
+                        Location = new string[]{"active.extension"},
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Details = new CodeableConcept
+                        {
+                            Text = "ele-1: value or child"
+                        }
+                    }
+                }
+            };
+
+            duplicateErrors = duplicateErrors.RemoveDuplicateMessages();
+            sameErrorOnDifferentElement = sameErrorOnDifferentElement.RemoveDuplicateMessages();
+
+            Assert.Single(duplicateErrors.Issue);
+            Assert.Equal(2, sameErrorOnDifferentElement.Issue.Count);
         }
 
         [Fact]
@@ -762,6 +791,22 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
+        /// <summary>
+        /// The sdf-8 constraint on element StructureDefinition.Snapshot in the differential is not correct encoded. We manually changed 
+        /// this in Hl7.Fhir.Specification\data\profiles-resources.xml. 
+        /// See also issue https://github.com/FirelyTeam/fhir-net-api/issues/1302
+        /// </summary>
+        [Fact]
+        public async T.Task CheckSdf8Expression()
+        {
+            var structDef = await _asyncSource.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/StructureDefinition");
+            var sdf8 = structDef.Differential.Element.FirstOrDefault(e => e.ElementId is "StructureDefinition.snapshot")?.Constraint.FirstOrDefault(c => c.Key is "sdf-8");
+
+            var sdf8Expression = @"(%resource.kind = 'logical' or element.first().path = %resource.type) and element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.'))";
+
+            Assert.Equal(sdf8Expression, sdf8.Expression);
+        }
+
         [Fact]
         public void RunXsdValidation()
         {
@@ -1100,6 +1145,23 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
             Assert.Equal(0, report.Warnings);
+        }
+
+
+        /// <summary>
+        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1140
+        /// </summary>
+        [Fact]
+        public async T.Task ValidatePrimitiveWithEmptyTypeElement()
+        {
+            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
+            var elem = def.Snapshot.Element.Where(e => e.Path == "code.value").Single();
+            var data = elem.ToTypedElement();
+
+            Assert.True(data.IsBoolean("type.select(code&profile&targetProfile).isDistinct()", true));
+
+            var result = _validator.Validate(def);
+            Assert.True(result.Success, result.ToString());
         }
 
 

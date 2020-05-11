@@ -251,7 +251,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-
         [Fact]
         public void TestProfileSliceCreation()
         {
@@ -259,6 +258,37 @@ namespace Hl7.Fhir.Specification.Tests
                     "List.entry") as SliceGroupBucket;
         }
 
+        [Fact]
+        public void TestValueSlicingWithPattern()
+        {
+            var s = createSliceDefs("http://validationtest.org/fhir/StructureDefinition/ValueDiscriminatorWithPattern",
+                    "Practitioner.identifier") as SliceGroupBucket;
+            Assert.NotNull(s);
+            Assert.True(s is SliceGroupBucket sgb && sgb.ChildSlices.OfType<DiscriminatorBucket>().Count() == 3);
+            var childSlices = ((SliceGroupBucket)s).ChildSlices.Cast<DiscriminatorBucket>().ToList();
+
+            test("DL", "ID-TYPE-1", 0);  // should match slice1
+            test("DL", "ID-TYPE-2", 1); // should match slice2
+            test("DL", null, 2); // should match slice3
+            test("DL", "ID-TYPE-OTHER", 2); // should match slice3
+            test("XXX", "ID-TYPE-OTHER", -1); // should not match at all
+           
+            void test(string fhirCode, string localCode, int slice)
+            {
+                // STU3: http://hl7.org/fhir/v2/0203
+                // R4: http://terminology.hl7.org/CodeSystem/v2-0203
+                var data = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v2-0203", fhirCode);
+                if (localCode != null)
+                    data.Coding.Add(new Coding("http://local-codes.nl/identifier-types", localCode));
+
+                var testee = new Identifier("http://nu.nl", "12345") { Type = data }.ToTypedElement();
+
+                if (slice != -1)
+                    Assert.True(childSlices[slice].Add(testee));
+                else
+                    Assert.True(childSlices.All(m => !m.Add(testee)));
+            }
+        }
 
         private void DebugDumpOutputXml(Base fragment)
         {

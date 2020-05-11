@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Validation
         public readonly Validator Validator;
         public readonly string[] Profiles;
 
-        protected override bool matchInternal(ITypedElement instance) =>
+        protected override bool MatchInternal(ITypedElement instance) =>
             Profiles.Any(profile => validates(instance, profile));
 
         private bool validates(ITypedElement instance, string profile)
