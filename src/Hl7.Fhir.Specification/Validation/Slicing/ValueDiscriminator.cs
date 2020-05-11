@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Validation
         public readonly Validator Validator;
         public readonly Element FixedValue;
 
-        protected override bool matchInternal(ITypedElement instance)
+        protected override bool MatchInternal(ITypedElement instance)
         {
             var result = Validator.ValidateFixed(FixedValue, instance);
             return result.Success;

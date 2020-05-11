@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
         public readonly Validator Validator;
         public readonly ElementDefinition.ElementDefinitionBindingComponent Binding;
 
-        protected override bool matchInternal(ITypedElement instance)
+        protected override bool MatchInternal(ITypedElement instance)
         {
             var result = Validator.ValidateBinding(Binding, instance, ErrorLocation);
             return result.Success;
