@@ -20,6 +20,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -85,6 +86,30 @@ namespace Hl7.Fhir.Specification.Tests
                     Element = elements.ToList()
                 }
             };
+        }
+
+        [TestMethod]
+        public void TestMergeMax()
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            test(null, "1", "1");
+            test("1", null, "1");
+            test("1", "1", "1");
+            test("1", "*", "1");
+            test("2", "*", "2");
+            test("*", "*", "*");
+            test("*", "2", "2");
+            test("*", null, "*");
+            test(null, "*", "*");
+            test("3", "2", "2");
+            test("2", "3", "2");
+
+            void test(string snap, string diff, string expected)
+            {
+                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+                Assert.AreEqual(expected, actual.Value);
+            }
         }
 
         [TestMethod]
@@ -154,7 +179,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
@@ -258,7 +283,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             // dumpBasePaths(expanded);
@@ -287,7 +312,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -299,12 +324,12 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20161005] This generated exceptions in an early version of the snapshot generator (fixed)
 
             var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/MeasureReport");
-            (_,var expanded) = await generateSnapshotAndCompare(sd);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
             sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
-            (_,expanded) = await generateSnapshotAndCompare(sd);
+            (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
@@ -328,6 +353,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(expanded);
             dumpBaseElems(expanded);
+
+            var identifierValueElement = expanded.Single(element => element.Path == "Organization.identifier.value");
+            identifierValueElement.Extension.Should().BeEmpty("Extensions on the value type should not be inherited");
 
             Assert.IsNull(_generator.Outcome);
         }
@@ -474,7 +502,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                (_,snapshot) = await generateSnapshotAndCompare(sd);
+                (_, snapshot) = await generateSnapshotAndCompare(sd);
 
                 Assert.IsNotNull(snapshot);
                 Assert.IsTrue(snapshot.HasSnapshot);
@@ -529,7 +557,7 @@ namespace Hl7.Fhir.Specification.Tests
             bool exceptionRaised = false;
             try
             {
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 dumpBasePaths(expanded);
             }
@@ -559,7 +587,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -599,7 +627,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(structure);
             Assert.IsTrue(structure.HasSnapshot);
             preprocessor?.Invoke(structure);
-            (_,var expanded) = await generateSnapshotAndCompare(structure);
+            (_, var expanded) = await generateSnapshotAndCompare(structure);
             dumpOutcome(_generator.Outcome);
             return expanded;
         }
@@ -916,7 +944,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -1018,8 +1046,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             return expanded;
         }
-      
-        private async T.Task<(bool,StructureDefinition expanded)> generateSnapshotAndCompare(StructureDefinition original)
+
+        private async T.Task<(bool, StructureDefinition expanded)> generateSnapshotAndCompare(StructureDefinition original)
         {
             var expanded = await generateSnapshot(original);
 
@@ -1039,7 +1067,7 @@ namespace Hl7.Fhir.Specification.Tests
                 original.Name, original.HasSnapshot ? original.Snapshot.Element.Count : 0, expanded.HasSnapshot ? expanded.Snapshot.Element.Count : 0)
             );
 
-            return (areEqual,expanded);
+            return (areEqual, expanded);
         }
 
         IEnumerable<StructureDefinition> findConstraintStrucDefs()
@@ -1471,7 +1499,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements) 
+        static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements)
             => elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
 
         static string formatElementPathName(ElementDefinition elem) =>
@@ -1612,7 +1640,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
 
                 dumpOutcome(_generator.Outcome);
 
@@ -1636,7 +1664,7 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsTrue(sdId.HasSnapshot);
                     Assert.IsFalse(sdId.Snapshot.IsCreatedBySnapshotGenerator());
                     // Re-generate the snapshot and verify base references
-                    (_,expanded) = await generateSnapshotAndCompare(sdId);
+                    (_, expanded) = await generateSnapshotAndCompare(sdId);
                     assertBaseDefs(expanded, settings);
                 }
 
@@ -1702,7 +1730,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1794,7 +1822,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1902,7 +1930,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
@@ -2099,7 +2127,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(sd);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -2471,7 +2499,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var (result,expanded) = await generateSnapshotAndCompare(sd);
+            var (result, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -2741,7 +2769,7 @@ namespace Hl7.Fhir.Specification.Tests
             var diffNav = ElementDefinitionNavigator.ForDifferential(sd);
             assertPatientTelecomReslice(diffNav);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             Debug.Print("Verify snapshot...");
             var snapNav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -2914,7 +2942,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            (_,var expanded) = await generateSnapshotAndCompare(profile);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3229,7 +3257,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // dumpReferences(sd);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             expanded.Snapshot.Element.Dump();
@@ -3264,7 +3292,7 @@ namespace Hl7.Fhir.Specification.Tests
             List<ElementDefinition> elems;
             try
             {
-                var (_,expanded) = await generateSnapshotAndCompare(obs);
+                var (_, expanded) = await generateSnapshotAndCompare(obs);
 
                 dumpOutcome(_generator.Outcome);
 
@@ -3442,7 +3470,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3648,7 +3676,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(profile);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -5103,7 +5131,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(patientProfile);
+                (_, expanded) = await generateSnapshotAndCompare(patientProfile);
             }
             finally
             {
@@ -5195,7 +5223,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(sd);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -5266,7 +5294,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(derivedObs);
+                (_, expanded) = await generateSnapshotAndCompare(derivedObs);
             }
             finally
             {
@@ -5339,7 +5367,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                (_,expanded) = await generateSnapshotAndCompare(moreDerivedObs);
+                (_, expanded) = await generateSnapshotAndCompare(moreDerivedObs);
             }
             finally
             {
@@ -5573,7 +5601,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Dosage);
             _generator = new SnapshotGenerator(_testResolver, _settings);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
             var elems = expanded.Snapshot.Element;
@@ -5884,7 +5912,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -6075,7 +6103,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
@@ -6164,7 +6192,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
@@ -6237,7 +6265,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            var (_,expanded) = await generateSnapshotAndCompare(sd);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
@@ -6314,7 +6342,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                var (_,expanded) = await generateSnapshotAndCompare(sd);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
 
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
@@ -6758,7 +6786,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            var (_,expanded) = await generateSnapshotAndCompare(sdDerived);
+            var (_, expanded) = await generateSnapshotAndCompare(sdDerived);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6918,7 +6946,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            (_,var expanded) = await generateSnapshotAndCompare(ReportProfile);
+            (_, var expanded) = await generateSnapshotAndCompare(ReportProfile);
 
             dumpOutcome(generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6983,7 +7011,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            (_,var expanded) = await generateSnapshotAndCompare(SimpleTestExtension);
+            (_, var expanded) = await generateSnapshotAndCompare(SimpleTestExtension);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -7170,6 +7198,23 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(refElem.Base);
                 Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
             }
+        }
+
+        // #1108/#1303 - incorrectly copies the 0..* root cardinality of a referenced datatype profile
+        // over unto an element that has base cardinality 0..1
+        [TestMethod]
+        public async T.Task ShouldRespectMaxCardinalityFromBase()
+        {
+            var cr = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(new TestProfileArtifactSource()),
+                        new ZipSource("specification.zip"))));
+
+            var range = await cr.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality");
+            var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
+            Assert.AreEqual(1, lowElement.Min);
+            Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
         }
     }
 }
