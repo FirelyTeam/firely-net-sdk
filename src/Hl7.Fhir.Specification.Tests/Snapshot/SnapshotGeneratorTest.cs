@@ -7211,7 +7211,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new CachedResolver(new TestProfileArtifactSource()),
                         new ZipSource("specification.zip"))));
 
-            var range = await cr.FindExtensionDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality");
+            var range = await cr.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality");
             var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
             Assert.AreEqual(1, lowElement.Min);
             Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
