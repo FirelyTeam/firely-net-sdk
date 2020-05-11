@@ -8,7 +8,6 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Hl7.FhirPath;
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -16,9 +15,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using T = System.Threading.Tasks;
 using System.Xml.Linq;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -798,9 +797,9 @@ namespace Hl7.Fhir.Specification.Tests
         /// See also issue https://github.com/FirelyTeam/fhir-net-api/issues/1302
         /// </summary>
         [Fact]
-        public void CheckSdf8Expression()
+        public async T.Task CheckSdf8Expression()
         {
-            var structDef = _source.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/StructureDefinition");
+            var structDef = await _asyncSource.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/StructureDefinition");
             var sdf8 = structDef.Differential.Element.FirstOrDefault(e => e.ElementId is "StructureDefinition.snapshot")?.Constraint.FirstOrDefault(c => c.Key is "sdf-8");
 
             var sdf8Expression = @"(%resource.kind = 'logical' or element.first().path = %resource.type) and element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.'))";
@@ -1153,9 +1152,9 @@ namespace Hl7.Fhir.Specification.Tests
         /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1140
         /// </summary>
         [Fact]
-        public void ValidatePrimitiveWithEmptyTypeElement()
+        public async T.Task ValidatePrimitiveWithEmptyTypeElement()
         {
-            var def = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.Code);
+            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
             var elem = def.Snapshot.Element.Where(e => e.Path == "code.value").Single();
             var data = elem.ToTypedElement();
 
