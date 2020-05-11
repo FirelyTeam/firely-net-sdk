@@ -17,9 +17,6 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
 using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Snapshot
@@ -473,7 +470,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // Now, diff has a numeric limit
                     // So, if snap has no limit, take the diff
-                    if(snap.Value == "*")
+                    if (snap.Value == "*")
                         return deepCopyAndRaiseOnConstraint(diff);
 
                     // snap and diff both have a numeric value
@@ -483,7 +480,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // compare them if they are both numerics
                         return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
                     }
-                    
+
                     // one of the two values cannot be parsed, just don't
                     // do anything to not break it any further.
                     return snap;
