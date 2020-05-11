@@ -14,6 +14,7 @@ using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Hl7.Fhir.Test
@@ -49,7 +50,7 @@ namespace Hl7.Fhir.Test
             }
         }
 
-        #region EntryRequest To Http
+        #region EntryRequest To Webclient
 
         [TestMethod]
         public void TestPreferSetting()
@@ -156,6 +157,107 @@ namespace Hl7.Fhir.Test
 
             EntryToHttpExtensions.SetUserAgentUsingReflection = true;
             EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation = true;
+        }
+
+        #endregion
+
+        #region EntryRequest To Httpclient
+        [TestMethod]
+        public void TestPreferSettingHttpClient()
+        {
+            var entry = _Entry;
+            var settings = _Settings;
+
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual("return=minimal", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
+
+            settings.PreferredReturn = Prefer.RespondAsync;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual("respond-async", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
+
+            settings.PreferredReturn = null;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.IsNull(request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value);
+
+            entry.Type = InteractionType.Search;
+            settings.PreferredReturn = Prefer.OperationOutcome;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual("handling=lenient", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
+
+            settings.PreferredReturn = Prefer.RespondAsync;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual("handling=lenient, respond-async", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
+
+            settings.PreferredReturn = Prefer.ReturnRepresentation;
+            settings.PreferredParameterHandling = null;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.IsNull(request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value);
+        }
+
+        [TestMethod]
+        public void TestRequestedBodyContentHttpClient()
+        {
+            var entry = _Entry;
+            entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
+            var settings = _Settings;
+
+            ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpRequestMessage(_endpoint, settings));
+
+            entry.Method = HTTPVerb.POST;
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
+        }
+
+        [TestMethod]
+        public void TestFormatParametersHttpClient()
+        {
+            var entry = _Entry;
+
+            var settings = _Settings;
+
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual("application/fhir+json; charset=utf-8", request.Headers.Accept.ToString());
+
+            settings.UseFormatParameter = true;
+            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
+        }
+
+        [TestMethod]
+        public void TestEntryRequestHeadersHttpClient()
+        {
+            var entry = _Entry;
+
+            string testIfMatch = "W/\"23/\"";
+            var testIfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
+            string testIfNoneExists = "testifnneexists";
+            string testIfNoneMatch = "W/\"28/\"";
+
+            entry.Headers = new EntryRequestHeaders
+            {
+                IfMatch = testIfMatch,
+                IfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
+                IfNoneExist = testIfNoneExists,
+                IfNoneMatch = testIfNoneMatch
+            };
+
+            var settings = _Settings;
+
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual(testIfMatch, request.Headers.IfMatch.ToString());
+            Assert.AreEqual(testIfModifiedSince.ToString(), request.Headers.IfModifiedSince.ToString());
+            Assert.AreEqual(testIfNoneExists, request.Headers.Where(h => h.Key == "If-None-Exist").FirstOrDefault().Value.FirstOrDefault());
+            Assert.AreEqual(testIfNoneMatch, request.Headers.IfNoneMatch.ToString());
+        }
+
+        [TestMethod]
+        public void TestSetAgentHttpClient()
+        {
+            var entry = _Entry;
+            entry.Agent = "testAgent";
+            var settings = _Settings;
+
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
+            Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.Headers.UserAgent.ToString());
         }
 
         #endregion
