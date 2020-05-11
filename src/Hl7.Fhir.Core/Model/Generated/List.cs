@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("EntryComponent")]
+        [FhirType("List#List.entry", IsNestedType=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
         {

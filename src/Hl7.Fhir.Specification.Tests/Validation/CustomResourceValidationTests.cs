@@ -8,16 +8,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests.Validation
 {
     public class CustomResourceValidationTests
     {
-        private static string _custom1 = "{\"resourceType\":\"CustomBasic\", \"id\": \"custom1\"}"; //, \"meta\":{\"profile\": [\"http://fire.ly/fhir/StructureDefinition/CustomBasic\"]}}";
-        private static string _bundleWithCustom1 = "{\"resourceType\": \"Bundle\", \"type\": \"collection\", \"entry\": [{\"resource\": " + _custom1 + "}]}";
+        private static readonly string _custom1 = "{\"resourceType\":\"CustomBasic\", \"id\": \"custom1\"}"; //, \"meta\":{\"profile\": [\"http://fire.ly/fhir/StructureDefinition/CustomBasic\"]}}";
+        private static readonly string _bundleWithCustom1 = "{\"resourceType\": \"Bundle\", \"type\": \"collection\", \"entry\": [{\"resource\": " + _custom1 + "}]}";
 
         [Fact]
-        public void CustomResourceCanBeValidated()
+        public async T.Task CustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
             var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             #region Create a Provider that knows this CustomBasic resource
             var structureDef = new FhirJsonParser().Parse<StructureDefinition>(structureDefJson);
             var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
-            snapShotGenerator.Update(structureDef);
+            await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
             bool mapTypeName(string typename, out string canonical) //It needs a custom typemapper to properly map CustomBasic to the full canonical url
@@ -57,7 +58,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         }
 
         [Fact]
-        public void BundleWithCustomResourceCanBeValidated()
+        public async T.Task BundleWithCustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
             var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R3.json");
@@ -68,7 +69,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             
             #region Create a Provider that knows this CustomBasic resource
             var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
-            snapShotGenerator.Update(structureDef);
+            await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
             var provider = new StructureDefinitionSummaryProvider(customResolver, mapTypeName);

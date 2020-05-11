@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ArmComponent")]
+        [FhirType("ResearchStudy#ResearchStudy.arm", IsNestedType=true)]
         [DataContract]
         public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
         {

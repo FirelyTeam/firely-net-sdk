@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Signature")]
     [DataContract]
-    public partial class Signature : Hl7.Fhir.Model.Element
+    public partial class Signature : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Signature"; } }
         
@@ -106,13 +106,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Who
+        public Hl7.Fhir.Model.DataType Who
         {
             get { return _Who; }
             set { _Who = value; OnPropertyChanged("Who"); }
         }
         
-        private Hl7.Fhir.Model.Element _Who;
+        private Hl7.Fhir.Model.DataType _Who;
         
         /// <summary>
         /// The party represented
@@ -121,13 +121,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element OnBehalfOf
+        public Hl7.Fhir.Model.DataType OnBehalfOf
         {
             get { return _OnBehalfOf; }
             set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
         }
         
-        private Hl7.Fhir.Model.Element _OnBehalfOf;
+        private Hl7.Fhir.Model.DataType _OnBehalfOf;
         
         /// <summary>
         /// The technical format of the signature
@@ -201,8 +201,8 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
                 if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
-                if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
-                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
+                if(Who != null) dest.Who = (Hl7.Fhir.Model.DataType)Who.DeepCopy();
+                if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.DataType)OnBehalfOf.DeepCopy();
                 if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
                 if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
                 return dest;

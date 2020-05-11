@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net45;net40</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net45</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -41,6 +41,7 @@
   <ItemGroup>
     <None Remove="TestData\BundleWithOneEntry.json" />
     <None Remove="TestData\mask-text.xml" />
+    <None Remove="TestData\no-namespace.xml" />
     <None Remove="TestData\patient-out-of-order.xml" />
     <None Remove="TestData\profiles-types.json" />
     <None Remove="TestData\profiles-types.xml" />

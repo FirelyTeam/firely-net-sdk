@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("DispenseComponent")]
+        [FhirType("VisionPrescription#VisionPrescription.dispense", IsNestedType=true)]
         [DataContract]
         public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -786,13 +786,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Reason
+        public Hl7.Fhir.Model.DataType Reason
         {
             get { return _Reason; }
             set { _Reason = value; OnPropertyChanged("Reason"); }
         }
         
-        private Hl7.Fhir.Model.Element _Reason;
+        private Hl7.Fhir.Model.DataType _Reason;
         
         /// <summary>
         /// Vision supply authorization
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
                 if(DateWrittenElement != null) dest.DateWrittenElement = (Hl7.Fhir.Model.FhirDateTime)DateWrittenElement.DeepCopy();
                 if(Prescriber != null) dest.Prescriber = (Hl7.Fhir.Model.ResourceReference)Prescriber.DeepCopy();
-                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.Element)Reason.DeepCopy();
+                if(Reason != null) dest.Reason = (Hl7.Fhir.Model.DataType)Reason.DeepCopy();
                 if(Dispense != null) dest.Dispense = new List<Hl7.Fhir.Model.VisionPrescription.DispenseComponent>(Dispense.DeepCopy());
                 return dest;
             }

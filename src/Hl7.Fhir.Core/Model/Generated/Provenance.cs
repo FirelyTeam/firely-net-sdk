@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             Removal,
         }
 
-        [FhirType("AgentComponent")]
+        [FhirType("Provenance#Provenance.agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -119,13 +119,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Who
+            public Hl7.Fhir.Model.DataType Who
             {
                 get { return _Who; }
                 set { _Who = value; OnPropertyChanged("Who"); }
             }
             
-            private Hl7.Fhir.Model.Element _Who;
+            private Hl7.Fhir.Model.DataType _Who;
             
             /// <summary>
             /// Who the agent is representing
@@ -134,13 +134,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element OnBehalfOf
+            public Hl7.Fhir.Model.DataType OnBehalfOf
             {
                 get { return _OnBehalfOf; }
                 set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
             }
             
-            private Hl7.Fhir.Model.Element _OnBehalfOf;
+            private Hl7.Fhir.Model.DataType _OnBehalfOf;
             
             /// <summary>
             /// Type of relationship between agents
@@ -163,8 +163,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Role != null) dest.Role = new List<Hl7.Fhir.Model.CodeableConcept>(Role.DeepCopy());
-                    if(Who != null) dest.Who = (Hl7.Fhir.Model.Element)Who.DeepCopy();
-                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.Element)OnBehalfOf.DeepCopy();
+                    if(Who != null) dest.Who = (Hl7.Fhir.Model.DataType)Who.DeepCopy();
+                    if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.DataType)OnBehalfOf.DeepCopy();
                     if(RelatedAgentType != null) dest.RelatedAgentType = (Hl7.Fhir.Model.CodeableConcept)RelatedAgentType.DeepCopy();
                     return dest;
                 }
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent")]
+        [FhirType("Provenance#Provenance.entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -280,13 +280,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Identifier))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element What
+            public Hl7.Fhir.Model.DataType What
             {
                 get { return _What; }
                 set { _What = value; OnPropertyChanged("What"); }
             }
             
-            private Hl7.Fhir.Model.Element _What;
+            private Hl7.Fhir.Model.DataType _What;
             
             /// <summary>
             /// Entity is attributed to this agent
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(RoleElement != null) dest.RoleElement = (Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>)RoleElement.DeepCopy();
-                    if(What != null) dest.What = (Hl7.Fhir.Model.Element)What.DeepCopy();
+                    if(What != null) dest.What = (Hl7.Fhir.Model.DataType)What.DeepCopy();
                     if(Agent != null) dest.Agent = new List<Hl7.Fhir.Model.Provenance.AgentComponent>(Agent.DeepCopy());
                     return dest;
                 }

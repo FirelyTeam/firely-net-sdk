@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("RelatedArtifact")]
     [DataContract]
-    public partial class RelatedArtifact : Hl7.Fhir.Model.Element
+    public partial class RelatedArtifact : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "RelatedArtifact"; } }
         

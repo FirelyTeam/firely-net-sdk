@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="rawRequest">The request as it is about to be sent to the server</param>
         /// <param name="body">The data in the body of the request as it is about to be sent to the server</param>
-        protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body) 
+        protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body)
         {
             // Default implementation: call event
             OnBeforeRequest?.Invoke(this, new BeforeRequestEventArgs(rawRequest, body));

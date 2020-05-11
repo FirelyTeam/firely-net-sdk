@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
             Flexible,
         }
 
-        [FhirType("MappingComponent")]
+        [FhirType("DataElement#DataElement.mapping", IsNestedType=true)]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             Query,
         }
 
-        [FhirType("ParameterComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BindingComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.parameter.binding", IsNestedType=true)]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -497,13 +497,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element ValueSet
+            public Hl7.Fhir.Model.DataType ValueSet
             {
                 get { return _ValueSet; }
                 set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
             }
             
-            private Hl7.Fhir.Model.Element _ValueSet;
+            private Hl7.Fhir.Model.DataType _ValueSet;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)StrengthElement.DeepCopy();
-                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.Element)ValueSet.DeepCopy();
+                    if(ValueSet != null) dest.ValueSet = (Hl7.Fhir.Model.DataType)ValueSet.DeepCopy();
                     return dest;
                 }
                 else
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OverloadComponent")]
+        [FhirType("OperationDefinition#OperationDefinition.overload", IsNestedType=true)]
         [DataContract]
         public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
         {

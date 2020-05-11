@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Communication"; } }
         
-        [FhirType("PayloadComponent")]
+        [FhirType("Communication#Communication.payload", IsNestedType=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Content
+            public Hl7.Fhir.Model.DataType Content
             {
                 get { return _Content; }
                 set { _Content = value; OnPropertyChanged("Content"); }
             }
             
-            private Hl7.Fhir.Model.Element _Content;
+            private Hl7.Fhir.Model.DataType _Content;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Content != null) dest.Content = (Hl7.Fhir.Model.Element)Content.DeepCopy();
+                    if(Content != null) dest.Content = (Hl7.Fhir.Model.DataType)Content.DeepCopy();
                     return dest;
                 }
                 else

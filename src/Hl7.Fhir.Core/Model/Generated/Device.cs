@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("UdiComponent")]
+        [FhirType("Device#Device.udi", IsNestedType=true)]
         [DataContract]
         public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
         {

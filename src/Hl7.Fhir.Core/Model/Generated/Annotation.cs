@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Annotation")]
     [DataContract]
-    public partial class Annotation : Hl7.Fhir.Model.Element
+    public partial class Annotation : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Annotation"; } }
         
@@ -59,13 +59,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Author
+        public Hl7.Fhir.Model.DataType Author
         {
             get { return _Author; }
             set { _Author = value; OnPropertyChanged("Author"); }
         }
         
-        private Hl7.Fhir.Model.Element _Author;
+        private Hl7.Fhir.Model.DataType _Author;
         
         /// <summary>
         /// When the annotation was made
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Author != null) dest.Author = (Hl7.Fhir.Model.Element)Author.DeepCopy();
+                if(Author != null) dest.Author = (Hl7.Fhir.Model.DataType)Author.DeepCopy();
                 if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
                 if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
                 return dest;

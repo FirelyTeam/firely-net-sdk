@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
             Unspecified,
         }
 
-        [FhirType("CalibrationComponent")]
+        [FhirType("DeviceMetric#DeviceMetric.calibration", IsNestedType=true)]
         [DataContract]
         public partial class CalibrationComponent : Hl7.Fhir.Model.BackboneElement
         {

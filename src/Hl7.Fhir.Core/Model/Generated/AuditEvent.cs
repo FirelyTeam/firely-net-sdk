@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
             N5,
         }
 
-        [FhirType("AgentComponent")]
+        [FhirType("AuditEvent#AuditEvent.agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NetworkComponent")]
+        [FhirType("AuditEvent#AuditEvent.agent.network", IsNestedType=true)]
         [DataContract]
         public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceComponent")]
+        [FhirType("AuditEvent#AuditEvent.source", IsNestedType=true)]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent")]
+        [FhirType("AuditEvent#AuditEvent.entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetailComponent")]
+        [FhirType("AuditEvent#AuditEvent.entity.detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {

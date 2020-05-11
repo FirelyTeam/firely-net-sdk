@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ValueSet"; } }
         
-        [FhirType("ComposeComponent")]
+        [FhirType("ValueSet#ValueSet.compose", IsNestedType=true)]
         [DataContract]
         public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptSetComponent")]
+        [FhirType("ValueSet#ValueSet.compose.include", IsNestedType=true)]
         [DataContract]
         public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptReferenceComponent")]
+        [FhirType("ValueSet#ValueSet.compose.include.concept", IsNestedType=true)]
         [DataContract]
         public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DesignationComponent")]
+        [FhirType("ValueSet#ValueSet.compose.include.concept.designation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FilterComponent")]
+        [FhirType("ValueSet#ValueSet.compose.include.filter", IsNestedType=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExpansionComponent")]
+        [FhirType("ValueSet#ValueSet.expansion", IsNestedType=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent")]
+        [FhirType("ValueSet#ValueSet.expansion.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1222,13 +1222,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Code))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1238,7 +1238,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else
@@ -1299,7 +1299,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainsComponent")]
+        [FhirType("ValueSet#ValueSet.expansion.contains", IsNestedType=true)]
         [DataContract]
         public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement
         {

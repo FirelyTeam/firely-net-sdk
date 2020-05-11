@@ -3,10 +3,11 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    class InMemoryProfileResolver : IResourceResolver, IConformanceSource
+    class InMemoryProfileResolver : IResourceResolver, IConformanceSource, IAsyncResourceResolver
     {
         ILookup<string, Resource> _resources;
 
@@ -36,6 +37,9 @@ namespace Hl7.Fhir.Specification.Tests
 
         public Resource ResolveByUri(string uri) => null;
 
+        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+
         #endregion
 
         #region IConformanceResource
@@ -49,9 +53,8 @@ namespace Hl7.Fhir.Specification.Tests
         public NamingSystem FindNamingSystem(string uniqueid)
             => throw new NotImplementedException();
 
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
             => _resources.Select(g => g.Key);
-
         #endregion
     }
 

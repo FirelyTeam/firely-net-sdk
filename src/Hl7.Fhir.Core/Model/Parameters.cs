@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
                     new ParameterComponent()
                     {
                         Name = name,
-                        Value = value as Element,
+                        Value = value as DataType,
                         Resource = value as Resource
                     });
             }
@@ -94,8 +94,8 @@ namespace Hl7.Fhir.Model
                 var newPart = new ParameterComponent() { Name = tuple.Item1 };
                 newParam.Part.Add(newPart);
 
-                if (tuple.Item2 is Element)
-                    newPart.Value = (Element)tuple.Item2;
+                if (tuple.Item2 is DataType dt)
+                    newPart.Value = dt;
                 else
                 {
                     //TODO: Due to an error in the jan2015 version of DSTU2, this is not yet possible

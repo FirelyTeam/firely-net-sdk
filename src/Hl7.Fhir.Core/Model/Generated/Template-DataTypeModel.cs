@@ -1,7 +1,7 @@
-﻿
+
 
 //
-// Model Generated on Mon, 23 Mar 2020 23:39:32 GMT for FHIR v3.0.2
+// Model Generated on Mon, 20 Apr 2020 12:22:40 GMT for FHIR v3.0.2
 //
 // Generated Shared Enumeration: ResourceType
 

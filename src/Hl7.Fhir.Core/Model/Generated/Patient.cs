@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Seealso,
         }
 
-        [FhirType("ContactComponent")]
+        [FhirType("Patient#Patient.contact", IsNestedType=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnimalComponent")]
+        [FhirType("Patient#Patient.animal", IsNestedType=true)]
         [DataContract]
         public partial class AnimalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CommunicationComponent")]
+        [FhirType("Patient#Patient.communication", IsNestedType=true)]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkComponent")]
+        [FhirType("Patient#Patient.link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -803,13 +803,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Deceased
+        public Hl7.Fhir.Model.DataType Deceased
         {
             get { return _Deceased; }
             set { _Deceased = value; OnPropertyChanged("Deceased"); }
         }
         
-        private Hl7.Fhir.Model.Element _Deceased;
+        private Hl7.Fhir.Model.DataType _Deceased;
         
         /// <summary>
         /// Addresses for the individual
@@ -845,13 +845,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer))]
         [DataMember]
-        public Hl7.Fhir.Model.Element MultipleBirth
+        public Hl7.Fhir.Model.DataType MultipleBirth
         {
             get { return _MultipleBirth; }
             set { _MultipleBirth = value; OnPropertyChanged("MultipleBirth"); }
         }
         
-        private Hl7.Fhir.Model.Element _MultipleBirth;
+        private Hl7.Fhir.Model.DataType _MultipleBirth;
         
         /// <summary>
         /// Image of the patient
@@ -966,10 +966,10 @@ namespace Hl7.Fhir.Model
                 if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
                 if(GenderElement != null) dest.GenderElement = (Code<Hl7.Fhir.Model.AdministrativeGender>)GenderElement.DeepCopy();
                 if(BirthDateElement != null) dest.BirthDateElement = (Hl7.Fhir.Model.Date)BirthDateElement.DeepCopy();
-                if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.Element)Deceased.DeepCopy();
+                if(Deceased != null) dest.Deceased = (Hl7.Fhir.Model.DataType)Deceased.DeepCopy();
                 if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
                 if(MaritalStatus != null) dest.MaritalStatus = (Hl7.Fhir.Model.CodeableConcept)MaritalStatus.DeepCopy();
-                if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.Element)MultipleBirth.DeepCopy();
+                if(MultipleBirth != null) dest.MultipleBirth = (Hl7.Fhir.Model.DataType)MultipleBirth.DeepCopy();
                 if(Photo != null) dest.Photo = new List<Hl7.Fhir.Model.Attachment>(Photo.DeepCopy());
                 if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.Patient.ContactComponent>(Contact.DeepCopy());
                 if(Animal != null) dest.Animal = (Hl7.Fhir.Model.Patient.AnimalComponent)Animal.DeepCopy();
