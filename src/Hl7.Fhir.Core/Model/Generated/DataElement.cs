@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             Flexible,
         }
 
-        [FhirType("DataElement#DataElement.mapping", IsNestedType=true)]
+        [FhirType("DataElement#Mapping", IsNestedType=true)]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MappingComponent"; } }
+            public override string TypeName { get { return "DataElement#Mapping"; } }
             
             /// <summary>
             /// Internal id when this mapping is used

@@ -337,11 +337,11 @@ namespace Hl7.Fhir.Model
             Cp,
         }
 
-        [FhirType("StructureMap#StructureMap.structure", IsNestedType=true)]
+        [FhirType("StructureMap#Structure", IsNestedType=true)]
         [DataContract]
         public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StructureComponent"; } }
+            public override string TypeName { get { return "StructureMap#Structure"; } }
             
             /// <summary>
             /// Canonical URL for structure definition
@@ -548,11 +548,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group", IsNestedType=true)]
+        [FhirType("StructureMap#Group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GroupComponent"; } }
+            public override string TypeName { get { return "StructureMap#Group"; } }
             
             /// <summary>
             /// Human-readable label
@@ -797,11 +797,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.input", IsNestedType=true)]
+        [FhirType("StructureMap#Input", IsNestedType=true)]
         [DataContract]
         public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InputComponent"; } }
+            public override string TypeName { get { return "StructureMap#Input"; } }
             
             /// <summary>
             /// Name for this instance of data
@@ -1008,11 +1008,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.rule", IsNestedType=true)]
+        [FhirType("StructureMap#Rule", IsNestedType=true)]
         [DataContract]
         public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RuleComponent"; } }
+            public override string TypeName { get { return "StructureMap#Rule"; } }
             
             /// <summary>
             /// Name of the rule for internal references
@@ -1222,11 +1222,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.rule.source", IsNestedType=true)]
+        [FhirType("StructureMap#Source", IsNestedType=true)]
         [DataContract]
         public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SourceComponent"; } }
+            public override string TypeName { get { return "StructureMap#Source"; } }
             
             /// <summary>
             /// Type or variable this rule applies to
@@ -1632,11 +1632,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.rule.target", IsNestedType=true)]
+        [FhirType("StructureMap#Target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TargetComponent"; } }
+            public override string TypeName { get { return "StructureMap#Target"; } }
             
             /// <summary>
             /// Type or variable this rule applies to
@@ -1969,11 +1969,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.rule.target.parameter", IsNestedType=true)]
+        [FhirType("StructureMap#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "StructureMap#Parameter"; } }
             
             /// <summary>
             /// Parameter value - variable or literal
@@ -2055,11 +2055,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StructureMap#StructureMap.group.rule.dependent", IsNestedType=true)]
+        [FhirType("StructureMap#Dependent", IsNestedType=true)]
         [DataContract]
         public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DependentComponent"; } }
+            public override string TypeName { get { return "StructureMap#Dependent"; } }
             
             /// <summary>
             /// Name of a rule or group to apply

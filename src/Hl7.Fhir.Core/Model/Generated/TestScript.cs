@@ -1354,11 +1354,11 @@ namespace Hl7.Fhir.Model
             Unprocessable,
         }
 
-        [FhirType("TestScript#TestScript.origin", IsNestedType=true)]
+        [FhirType("TestScript#Origin", IsNestedType=true)]
         [DataContract]
         public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OriginComponent"; } }
+            public override string TypeName { get { return "TestScript#Origin"; } }
             
             /// <summary>
             /// The index of the abstract origin server starting at 1
@@ -1475,11 +1475,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.destination", IsNestedType=true)]
+        [FhirType("TestScript#Destination", IsNestedType=true)]
         [DataContract]
         public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DestinationComponent"; } }
+            public override string TypeName { get { return "TestScript#Destination"; } }
             
             /// <summary>
             /// The index of the abstract destination server starting at 1
@@ -1596,11 +1596,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.metadata", IsNestedType=true)]
+        [FhirType("TestScript#Metadata", IsNestedType=true)]
         [DataContract]
         public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MetadataComponent"; } }
+            public override string TypeName { get { return "TestScript#Metadata"; } }
             
             /// <summary>
             /// Links to the FHIR specification
@@ -1699,11 +1699,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.metadata.link", IsNestedType=true)]
+        [FhirType("TestScript#Link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkComponent"; } }
+            public override string TypeName { get { return "TestScript#Link"; } }
             
             /// <summary>
             /// URL to the specification
@@ -1837,11 +1837,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.metadata.capability", IsNestedType=true)]
+        [FhirType("TestScript#Capability", IsNestedType=true)]
         [DataContract]
         public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CapabilityComponent"; } }
+            public override string TypeName { get { return "TestScript#Capability"; } }
             
             /// <summary>
             /// Are the capabilities required?
@@ -2141,11 +2141,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.fixture", IsNestedType=true)]
+        [FhirType("TestScript#Fixture", IsNestedType=true)]
         [DataContract]
         public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FixtureComponent"; } }
+            public override string TypeName { get { return "TestScript#Fixture"; } }
             
             /// <summary>
             /// Whether or not to implicitly create the fixture during setup
@@ -2298,11 +2298,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.variable", IsNestedType=true)]
+        [FhirType("TestScript#Variable", IsNestedType=true)]
         [DataContract]
         public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VariableComponent"; } }
+            public override string TypeName { get { return "TestScript#Variable"; } }
             
             /// <summary>
             /// Descriptive name for this variable
@@ -2652,11 +2652,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.rule", IsNestedType=true)]
+        [FhirType("TestScript#Rule", IsNestedType=true)]
         [DataContract]
         public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RuleComponent"; } }
+            public override string TypeName { get { return "TestScript#Rule"; } }
             
             /// <summary>
             /// Assert rule resource reference
@@ -2757,11 +2757,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.rule.param", IsNestedType=true)]
+        [FhirType("TestScript#RuleParam", IsNestedType=true)]
         [DataContract]
         public partial class RuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RuleParamComponent"; } }
+            public override string TypeName { get { return "TestScript#RuleParam"; } }
             
             /// <summary>
             /// Parameter name matching external assert rule parameter
@@ -2895,11 +2895,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.ruleset", IsNestedType=true)]
+        [FhirType("TestScript#Ruleset", IsNestedType=true)]
         [DataContract]
         public partial class RulesetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RulesetComponent"; } }
+            public override string TypeName { get { return "TestScript#Ruleset"; } }
             
             /// <summary>
             /// Assert ruleset resource reference
@@ -3000,11 +3000,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.ruleset.rule", IsNestedType=true)]
+        [FhirType("TestScript#RulesetRule", IsNestedType=true)]
         [DataContract]
         public partial class RulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RulesetRuleComponent"; } }
+            public override string TypeName { get { return "TestScript#RulesetRule"; } }
             
             /// <summary>
             /// Id of referenced rule within the ruleset
@@ -3121,11 +3121,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.ruleset.rule.param", IsNestedType=true)]
+        [FhirType("TestScript#RulesetRuleParam", IsNestedType=true)]
         [DataContract]
         public partial class RulesetRuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RulesetRuleParamComponent"; } }
+            public override string TypeName { get { return "TestScript#RulesetRuleParam"; } }
             
             /// <summary>
             /// Parameter name matching external assert ruleset rule parameter
@@ -3259,11 +3259,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup", IsNestedType=true)]
+        [FhirType("TestScript#Setup", IsNestedType=true)]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SetupComponent"; } }
+            public override string TypeName { get { return "TestScript#Setup"; } }
             
             /// <summary>
             /// A setup operation or assert to perform
@@ -3343,11 +3343,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action", IsNestedType=true)]
+        [FhirType("TestScript#SetupAction", IsNestedType=true)]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SetupActionComponent"; } }
+            public override string TypeName { get { return "TestScript#SetupAction"; } }
             
             /// <summary>
             /// The setup operation to perform
@@ -3444,11 +3444,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.operation", IsNestedType=true)]
+        [FhirType("TestScript#Operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OperationComponent"; } }
+            public override string TypeName { get { return "TestScript#Operation"; } }
             
             /// <summary>
             /// The operation code type that will be executed
@@ -4050,11 +4050,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.operation.requestHeader", IsNestedType=true)]
+        [FhirType("TestScript#RequestHeader", IsNestedType=true)]
         [DataContract]
         public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RequestHeaderComponent"; } }
+            public override string TypeName { get { return "TestScript#RequestHeader"; } }
             
             /// <summary>
             /// HTTP header field name
@@ -4189,11 +4189,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert", IsNestedType=true)]
+        [FhirType("TestScript#Assert", IsNestedType=true)]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AssertComponent"; } }
+            public override string TypeName { get { return "TestScript#Assert"; } }
             
             /// <summary>
             /// Tracking/logging assertion label
@@ -5082,11 +5082,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert.rule", IsNestedType=true)]
+        [FhirType("TestScript#ActionAssertRule", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActionAssertRuleComponent"; } }
+            public override string TypeName { get { return "TestScript#ActionAssertRule"; } }
             
             /// <summary>
             /// Id of the TestScript.rule
@@ -5203,11 +5203,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert.rule.param", IsNestedType=true)]
+        [FhirType("TestScript#ActionAssertRuleParam", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRuleParamComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActionAssertRuleParamComponent"; } }
+            public override string TypeName { get { return "TestScript#ActionAssertRuleParam"; } }
             
             /// <summary>
             /// Parameter name matching external assert rule parameter
@@ -5342,11 +5342,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert.ruleset", IsNestedType=true)]
+        [FhirType("TestScript#ActionAssertRuleset", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRulesetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActionAssertRulesetComponent"; } }
+            public override string TypeName { get { return "TestScript#ActionAssertRuleset"; } }
             
             /// <summary>
             /// Id of the TestScript.ruleset
@@ -5463,11 +5463,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert.ruleset.rule", IsNestedType=true)]
+        [FhirType("TestScript#ActionAssertRulesetRule", IsNestedType=true)]
         [DataContract]
         public partial class ActionAssertRulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActionAssertRulesetRuleComponent"; } }
+            public override string TypeName { get { return "TestScript#ActionAssertRulesetRule"; } }
             
             /// <summary>
             /// Id of referenced rule within the ruleset
@@ -5584,11 +5584,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.setup.action.assert.ruleset.rule.param", IsNestedType=true)]
+        [FhirType("TestScript#Param", IsNestedType=true)]
         [DataContract]
         public partial class ParamComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParamComponent"; } }
+            public override string TypeName { get { return "TestScript#Param"; } }
             
             /// <summary>
             /// Parameter name matching external assert ruleset rule parameter
@@ -5723,11 +5723,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.test", IsNestedType=true)]
+        [FhirType("TestScript#Test", IsNestedType=true)]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TestComponent"; } }
+            public override string TypeName { get { return "TestScript#Test"; } }
             
             /// <summary>
             /// Tracking/logging name of this test
@@ -5879,11 +5879,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.test.action", IsNestedType=true)]
+        [FhirType("TestScript#TestAction", IsNestedType=true)]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TestActionComponent"; } }
+            public override string TypeName { get { return "TestScript#TestAction"; } }
             
             /// <summary>
             /// The setup operation to perform
@@ -5980,11 +5980,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.teardown", IsNestedType=true)]
+        [FhirType("TestScript#Teardown", IsNestedType=true)]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TeardownComponent"; } }
+            public override string TypeName { get { return "TestScript#Teardown"; } }
             
             /// <summary>
             /// One or more teardown operations to perform
@@ -6064,11 +6064,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestScript#TestScript.teardown.action", IsNestedType=true)]
+        [FhirType("TestScript#TeardownAction", IsNestedType=true)]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TeardownActionComponent"; } }
+            public override string TypeName { get { return "TestScript#TeardownAction"; } }
             
             /// <summary>
             /// The teardown operation to perform

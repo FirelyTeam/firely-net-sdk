@@ -103,11 +103,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("SupplyRequest#SupplyRequest.orderedItem", IsNestedType=true)]
+        [FhirType("SupplyRequest#OrderedItem", IsNestedType=true)]
         [DataContract]
         public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OrderedItemComponent"; } }
+            public override string TypeName { get { return "SupplyRequest#OrderedItem"; } }
             
             /// <summary>
             /// The requested amount of the item indicated
@@ -207,11 +207,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupplyRequest#SupplyRequest.requester", IsNestedType=true)]
+        [FhirType("SupplyRequest#Requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RequesterComponent"; } }
+            public override string TypeName { get { return "SupplyRequest#Requester"; } }
             
             /// <summary>
             /// Individual making the request

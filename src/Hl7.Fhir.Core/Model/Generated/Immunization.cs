@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Immunization#Immunization.practitioner", IsNestedType=true)]
+        [FhirType("Immunization#Practitioner", IsNestedType=true)]
         [DataContract]
         public partial class PractitionerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PractitionerComponent"; } }
+            public override string TypeName { get { return "Immunization#Practitioner"; } }
             
             /// <summary>
             /// What type of performance was done
@@ -177,11 +177,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.explanation", IsNestedType=true)]
+        [FhirType("Immunization#Explanation", IsNestedType=true)]
         [DataContract]
         public partial class ExplanationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExplanationComponent"; } }
+            public override string TypeName { get { return "Immunization#Explanation"; } }
             
             /// <summary>
             /// Why immunization occurred
@@ -280,11 +280,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.reaction", IsNestedType=true)]
+        [FhirType("Immunization#Reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReactionComponent"; } }
+            public override string TypeName { get { return "Immunization#Reaction"; } }
             
             /// <summary>
             /// When reaction started
@@ -437,11 +437,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.vaccinationProtocol", IsNestedType=true)]
+        [FhirType("Immunization#VaccinationProtocol", IsNestedType=true)]
         [DataContract]
         public partial class VaccinationProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VaccinationProtocolComponent"; } }
+            public override string TypeName { get { return "Immunization#VaccinationProtocol"; } }
             
             /// <summary>
             /// Dose number within series

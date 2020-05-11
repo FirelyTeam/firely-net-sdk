@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Specimen#Specimen.collection", IsNestedType=true)]
+        [FhirType("Specimen#Collection", IsNestedType=true)]
         [DataContract]
         public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CollectionComponent"; } }
+            public override string TypeName { get { return "Specimen#Collection"; } }
             
             /// <summary>
             /// Who collected the specimen
@@ -244,11 +244,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Specimen#Specimen.processing", IsNestedType=true)]
+        [FhirType("Specimen#Processing", IsNestedType=true)]
         [DataContract]
         public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProcessingComponent"; } }
+            public override string TypeName { get { return "Specimen#Processing"; } }
             
             /// <summary>
             /// Textual description of procedure
@@ -404,11 +404,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Specimen#Specimen.container", IsNestedType=true)]
+        [FhirType("Specimen#Container", IsNestedType=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContainerComponent"; } }
+            public override string TypeName { get { return "Specimen#Container"; } }
             
             /// <summary>
             /// Id for the container

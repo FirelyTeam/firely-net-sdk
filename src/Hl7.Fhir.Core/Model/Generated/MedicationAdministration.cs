@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("MedicationAdministration#MedicationAdministration.performer", IsNestedType=true)]
+        [FhirType("MedicationAdministration#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "MedicationAdministration#Performer"; } }
             
             /// <summary>
             /// Individual who was performing
@@ -203,11 +203,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationAdministration#MedicationAdministration.dosage", IsNestedType=true)]
+        [FhirType("MedicationAdministration#Dosage", IsNestedType=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DosageComponent"; } }
+            public override string TypeName { get { return "MedicationAdministration#Dosage"; } }
             
             /// <summary>
             /// Free text dosage instructions e.g. SIG

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ImagingManifest"; } }
         
-        [FhirType("ImagingManifest#ImagingManifest.study", IsNestedType=true)]
+        [FhirType("ImagingManifest#Study", IsNestedType=true)]
         [DataContract]
         public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StudyComponent"; } }
+            public override string TypeName { get { return "ImagingManifest#Study"; } }
             
             /// <summary>
             /// Study instance UID
@@ -214,11 +214,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImagingManifest#ImagingManifest.study.series", IsNestedType=true)]
+        [FhirType("ImagingManifest#Series", IsNestedType=true)]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SeriesComponent"; } }
+            public override string TypeName { get { return "ImagingManifest#Series"; } }
             
             /// <summary>
             /// Series instance UID
@@ -356,11 +356,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImagingManifest#ImagingManifest.study.series.instance", IsNestedType=true)]
+        [FhirType("ImagingManifest#Instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InstanceComponent"; } }
+            public override string TypeName { get { return "ImagingManifest#Instance"; } }
             
             /// <summary>
             /// SOP class UID of instance

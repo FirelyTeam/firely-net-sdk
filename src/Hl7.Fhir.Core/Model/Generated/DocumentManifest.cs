@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DocumentManifest"; } }
         
-        [FhirType("DocumentManifest#DocumentManifest.content", IsNestedType=true)]
+        [FhirType("DocumentManifest#Content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContentComponent"; } }
+            public override string TypeName { get { return "DocumentManifest#Content"; } }
             
             /// <summary>
             /// Contents of this set of documents
@@ -138,11 +138,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentManifest#DocumentManifest.related", IsNestedType=true)]
+        [FhirType("DocumentManifest#Related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatedComponent"; } }
+            public override string TypeName { get { return "DocumentManifest#Related"; } }
             
             /// <summary>
             /// Identifiers of things that are related

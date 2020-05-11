@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ImmunizationRecommendation"; } }
         
-        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation", IsNestedType=true)]
+        [FhirType("ImmunizationRecommendation#Recommendation", IsNestedType=true)]
         [DataContract]
         public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RecommendationComponent"; } }
+            public override string TypeName { get { return "ImmunizationRecommendation#Recommendation"; } }
             
             /// <summary>
             /// Date recommendation created
@@ -324,11 +324,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation.dateCriterion", IsNestedType=true)]
+        [FhirType("ImmunizationRecommendation#DateCriterion", IsNestedType=true)]
         [DataContract]
         public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DateCriterionComponent"; } }
+            public override string TypeName { get { return "ImmunizationRecommendation#DateCriterion"; } }
             
             /// <summary>
             /// Type of date
@@ -445,11 +445,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImmunizationRecommendation#ImmunizationRecommendation.recommendation.protocol", IsNestedType=true)]
+        [FhirType("ImmunizationRecommendation#Protocol", IsNestedType=true)]
         [DataContract]
         public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProtocolComponent"; } }
+            public override string TypeName { get { return "ImmunizationRecommendation#Protocol"; } }
             
             /// <summary>
             /// Dose number within sequence

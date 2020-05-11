@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Practitioner"; } }
         
-        [FhirType("Practitioner#Practitioner.qualification", IsNestedType=true)]
+        [FhirType("Practitioner#Qualification", IsNestedType=true)]
         [DataContract]
         public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "QualificationComponent"; } }
+            public override string TypeName { get { return "Practitioner#Qualification"; } }
             
             /// <summary>
             /// An identifier for this qualification for the practitioner

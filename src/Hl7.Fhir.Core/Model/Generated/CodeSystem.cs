@@ -163,11 +163,11 @@ namespace Hl7.Fhir.Model
             DateTime,
         }
 
-        [FhirType("CodeSystem#CodeSystem.filter", IsNestedType=true)]
+        [FhirType("CodeSystem#Filter", IsNestedType=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FilterComponent"; } }
+            public override string TypeName { get { return "CodeSystem#Filter"; } }
             
             /// <summary>
             /// Code that identifies the filter
@@ -375,11 +375,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystem#CodeSystem.property", IsNestedType=true)]
+        [FhirType("CodeSystem#Property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PropertyComponent"; } }
+            public override string TypeName { get { return "CodeSystem#Property"; } }
             
             /// <summary>
             /// Identifies the property on the concepts, and when referred to in operations
@@ -586,11 +586,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystem#CodeSystem.concept", IsNestedType=true)]
+        [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
         [DataContract]
         public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ConceptDefinitionComponent"; } }
+            public override string TypeName { get { return "CodeSystem#ConceptDefinition"; } }
             
             /// <summary>
             /// Code that identifies concept
@@ -817,11 +817,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystem#CodeSystem.concept.designation", IsNestedType=true)]
+        [FhirType("CodeSystem#Designation", IsNestedType=true)]
         [DataContract]
         public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DesignationComponent"; } }
+            public override string TypeName { get { return "CodeSystem#Designation"; } }
             
             /// <summary>
             /// Human language of the designation
@@ -973,11 +973,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CodeSystem#CodeSystem.concept.property", IsNestedType=true)]
+        [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
         [DataContract]
         public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ConceptPropertyComponent"; } }
+            public override string TypeName { get { return "CodeSystem#ConceptProperty"; } }
             
             /// <summary>
             /// Reference to CodeSystem.property.code

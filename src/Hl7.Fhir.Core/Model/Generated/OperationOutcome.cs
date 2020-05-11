@@ -268,11 +268,11 @@ namespace Hl7.Fhir.Model
             Informational,
         }
 
-        [FhirType("OperationOutcome#OperationOutcome.issue", IsNestedType=true)]
+        [FhirType("OperationOutcome#Issue", IsNestedType=true)]
         [DataContract]
         public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "IssueComponent"; } }
+            public override string TypeName { get { return "OperationOutcome#Issue"; } }
             
             /// <summary>
             /// fatal | error | warning | information

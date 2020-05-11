@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ClaimResponse"; } }
         
-        [FhirType("ClaimResponse#ClaimResponse.item", IsNestedType=true)]
+        [FhirType("ClaimResponse#Item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Item"; } }
             
             /// <summary>
             /// Service instance
@@ -229,11 +229,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.item.adjudication", IsNestedType=true)]
+        [FhirType("ClaimResponse#Adjudication", IsNestedType=true)]
         [DataContract]
         public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AdjudicationComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Adjudication"; } }
             
             /// <summary>
             /// Adjudication category such as co-pay, eligible, benefit, etc.
@@ -385,11 +385,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.item.detail", IsNestedType=true)]
+        [FhirType("ClaimResponse#ItemDetail", IsNestedType=true)]
         [DataContract]
         public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemDetailComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#ItemDetail"; } }
             
             /// <summary>
             /// Service instance
@@ -562,11 +562,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.item.detail.subDetail", IsNestedType=true)]
+        [FhirType("ClaimResponse#SubDetail", IsNestedType=true)]
         [DataContract]
         public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SubDetailComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#SubDetail"; } }
             
             /// <summary>
             /// Service instance
@@ -720,11 +720,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.addItem", IsNestedType=true)]
+        [FhirType("ClaimResponse#AddedItem", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AddedItemComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#AddedItem"; } }
             
             /// <summary>
             /// Service instances
@@ -988,11 +988,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.addItem.detail", IsNestedType=true)]
+        [FhirType("ClaimResponse#AddedItemsDetail", IsNestedType=true)]
         [DataContract]
         public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AddedItemsDetailComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#AddedItemsDetail"; } }
             
             /// <summary>
             /// Revenue or cost center code
@@ -1200,11 +1200,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.error", IsNestedType=true)]
+        [FhirType("ClaimResponse#Error", IsNestedType=true)]
         [DataContract]
         public partial class ErrorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ErrorComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Error"; } }
             
             /// <summary>
             /// Item sequence number
@@ -1392,11 +1392,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.payment", IsNestedType=true)]
+        [FhirType("ClaimResponse#Payment", IsNestedType=true)]
         [DataContract]
         public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PaymentComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Payment"; } }
             
             /// <summary>
             /// Partial or Complete
@@ -1583,11 +1583,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.processNote", IsNestedType=true)]
+        [FhirType("ClaimResponse#Note", IsNestedType=true)]
         [DataContract]
         public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NoteComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Note"; } }
             
             /// <summary>
             /// Sequence Number for this note
@@ -1756,11 +1756,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClaimResponse#ClaimResponse.insurance", IsNestedType=true)]
+        [FhirType("ClaimResponse#Insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InsuranceComponent"; } }
+            public override string TypeName { get { return "ClaimResponse#Insurance"; } }
             
             /// <summary>
             /// Service instance identifier

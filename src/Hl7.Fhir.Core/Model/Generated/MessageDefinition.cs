@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MessageDefinition"; } }
         
-        [FhirType("MessageDefinition#MessageDefinition.focus", IsNestedType=true)]
+        [FhirType("MessageDefinition#Focus", IsNestedType=true)]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FocusComponent"; } }
+            public override string TypeName { get { return "MessageDefinition#Focus"; } }
             
             /// <summary>
             /// Type of resource
@@ -246,11 +246,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessageDefinition#MessageDefinition.allowedResponse", IsNestedType=true)]
+        [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AllowedResponseComponent"; } }
+            public override string TypeName { get { return "MessageDefinition#AllowedResponse"; } }
             
             /// <summary>
             /// Reference to allowed message definition response
