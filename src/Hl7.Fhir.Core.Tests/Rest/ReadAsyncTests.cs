@@ -12,10 +12,10 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public partial class FhirClientAsyncTests
     {
-        private string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
 
         [ClassInitialize]
-        public void ClassInitialize(TestContext context)
+        public static void ClassInitialize(TestContext context)
         {
             var client = new FhirClient(_endpoint)
             {
