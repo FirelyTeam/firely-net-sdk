@@ -3,8 +3,10 @@ using Hl7.Fhir.Validation.Model;
 
 namespace Hl7.Fhir.Specification.Validation.Model
 {
-    internal class StructureDefMapper : ITransferMapper<StructureDefinition, UniStructureDef>
+    public class StructureDefMapper : ITransferMapper<StructureDefinition, UniStructureDef>
     {
+        public static readonly StructureDefMapper Current = new StructureDefMapper();
+
         private static readonly EnumMapper<PublicationStatus, UniStructureDefStatus> _statusMapper
             = new EnumMapper<PublicationStatus, UniStructureDefStatus>(
                 (PublicationStatus.Active, UniStructureDefStatus.Active),
