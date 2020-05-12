@@ -1,4 +1,4 @@
-[submodule "fhir-net-api"]
+[submodule "common"]
 	path = common
 	url = https://github.com/FirelyTeam/fhir-net-common.git
 	branch = develop
