@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
     internal static class MinMaxValidationExtensions
     {
         /// <summary>
-        //  TODO MV 20190801: Just to make it compile...
+        ///  TODO MV 20190801: Just to make it compile...
         /// </summary>
         internal static int Compare(IComparable instance, ITypedElement definition)
         {
