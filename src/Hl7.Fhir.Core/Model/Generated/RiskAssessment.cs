@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RiskAssessment"; } }
         
-        [FhirType("PredictionComponent", NamedBackboneElement=true)]
+        [FhirType("RiskAssessment#RiskAssessment.prediction", IsNestedType=true)]
         [DataContract]
         public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -78,13 +78,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Probability
+            public Hl7.Fhir.Model.DataType Probability
             {
                 get { return _Probability; }
                 set { _Probability = value; OnPropertyChanged("Probability"); }
             }
             
-            private Hl7.Fhir.Model.Element _Probability;
+            private Hl7.Fhir.Model.DataType _Probability;
             
             /// <summary>
             /// Likelihood of specified outcome as a qualitative value
@@ -137,13 +137,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Element When
+            public Hl7.Fhir.Model.DataType When
             {
                 get { return _When; }
                 set { _When = value; OnPropertyChanged("When"); }
             }
             
-            private Hl7.Fhir.Model.Element _When;
+            private Hl7.Fhir.Model.DataType _When;
             
             /// <summary>
             /// Explanation of prediction
@@ -184,10 +184,10 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Outcome != null) dest.Outcome = (Hl7.Fhir.Model.CodeableConcept)Outcome.DeepCopy();
-                    if(Probability != null) dest.Probability = (Hl7.Fhir.Model.Element)Probability.DeepCopy();
+                    if(Probability != null) dest.Probability = (Hl7.Fhir.Model.DataType)Probability.DeepCopy();
                     if(QualitativeRisk != null) dest.QualitativeRisk = (Hl7.Fhir.Model.CodeableConcept)QualitativeRisk.DeepCopy();
                     if(RelativeRiskElement != null) dest.RelativeRiskElement = (Hl7.Fhir.Model.FhirDecimal)RelativeRiskElement.DeepCopy();
-                    if(When != null) dest.When = (Hl7.Fhir.Model.Element)When.DeepCopy();
+                    if(When != null) dest.When = (Hl7.Fhir.Model.DataType)When.DeepCopy();
                     if(RationaleElement != null) dest.RationaleElement = (Hl7.Fhir.Model.FhirString)RationaleElement.DeepCopy();
                     return dest;
                 }
@@ -405,13 +405,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Occurrence
+        public Hl7.Fhir.Model.DataType Occurrence
         {
             get { return _Occurrence; }
             set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
         }
         
-        private Hl7.Fhir.Model.Element _Occurrence;
+        private Hl7.Fhir.Model.DataType _Occurrence;
         
         /// <summary>
         /// Condition assessed
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
+                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
                 if(Condition != null) dest.Condition = (Hl7.Fhir.Model.ResourceReference)Condition.DeepCopy();
                 if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());

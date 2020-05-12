@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             NotDone,
         }
 
-        [FhirType("PerformerComponent", NamedBackboneElement=true)]
+        [FhirType("Immunization#Immunization.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EducationComponent", NamedBackboneElement=true)]
+        [FhirType("Immunization#Immunization.education", IsNestedType=true)]
         [DataContract]
         public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ReactionComponent", NamedBackboneElement=true)]
+        [FhirType("Immunization#Immunization.reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ProtocolAppliedComponent", NamedBackboneElement=true)]
+        [FhirType("Immunization#Immunization.protocolApplied", IsNestedType=true)]
         [DataContract]
         public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -623,13 +623,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element DoseNumber
+            public Hl7.Fhir.Model.DataType DoseNumber
             {
                 get { return _DoseNumber; }
                 set { _DoseNumber = value; OnPropertyChanged("DoseNumber"); }
             }
             
-            private Hl7.Fhir.Model.Element _DoseNumber;
+            private Hl7.Fhir.Model.DataType _DoseNumber;
             
             /// <summary>
             /// Recommended number of doses for immunity
@@ -638,13 +638,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element SeriesDoses
+            public Hl7.Fhir.Model.DataType SeriesDoses
             {
                 get { return _SeriesDoses; }
                 set { _SeriesDoses = value; OnPropertyChanged("SeriesDoses"); }
             }
             
-            private Hl7.Fhir.Model.Element _SeriesDoses;
+            private Hl7.Fhir.Model.DataType _SeriesDoses;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -656,8 +656,8 @@ namespace Hl7.Fhir.Model
                     if(SeriesElement != null) dest.SeriesElement = (Hl7.Fhir.Model.FhirString)SeriesElement.DeepCopy();
                     if(Authority != null) dest.Authority = (Hl7.Fhir.Model.ResourceReference)Authority.DeepCopy();
                     if(TargetDisease != null) dest.TargetDisease = new List<Hl7.Fhir.Model.CodeableConcept>(TargetDisease.DeepCopy());
-                    if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.Element)DoseNumber.DeepCopy();
-                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.Element)SeriesDoses.DeepCopy();
+                    if(DoseNumber != null) dest.DoseNumber = (Hl7.Fhir.Model.DataType)DoseNumber.DeepCopy();
+                    if(SeriesDoses != null) dest.SeriesDoses = (Hl7.Fhir.Model.DataType)SeriesDoses.DeepCopy();
                     return dest;
                 }
                 else
@@ -842,13 +842,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirString))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Occurrence
+        public Hl7.Fhir.Model.DataType Occurrence
         {
             get { return _Occurrence; }
             set { _Occurrence = value; OnPropertyChanged("Occurrence"); }
         }
         
-        private Hl7.Fhir.Model.Element _Occurrence;
+        private Hl7.Fhir.Model.DataType _Occurrence;
         
         /// <summary>
         /// When the immunization was first captured in the subject's record
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
                 if(VaccineCode != null) dest.VaccineCode = (Hl7.Fhir.Model.CodeableConcept)VaccineCode.DeepCopy();
                 if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.Element)Occurrence.DeepCopy();
+                if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.FhirDateTime)RecordedElement.DeepCopy();
                 if(PrimarySourceElement != null) dest.PrimarySourceElement = (Hl7.Fhir.Model.FhirBoolean)PrimarySourceElement.DeepCopy();
                 if(ReportOrigin != null) dest.ReportOrigin = (Hl7.Fhir.Model.CodeableConcept)ReportOrigin.DeepCopy();

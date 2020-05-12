@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             OnSuccess,
         }
 
-        [FhirType("FocusComponent", NamedBackboneElement=true)]
+        [FhirType("MessageDefinition#MessageDefinition.focus", IsNestedType=true)]
         [DataContract]
         public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AllowedResponseComponent", NamedBackboneElement=true)]
+        [FhirType("MessageDefinition#MessageDefinition.allowedResponse", IsNestedType=true)]
         [DataContract]
         public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -891,13 +891,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Event
+        public Hl7.Fhir.Model.DataType Event
         {
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private Hl7.Fhir.Model.Element _Event;
+        private Hl7.Fhir.Model.DataType _Event;
         
         /// <summary>
         /// consequence | currency | notification
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Model
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
                 if(BaseElement != null) dest.BaseElement = (Hl7.Fhir.Model.Canonical)BaseElement.DeepCopy();
                 if(ParentElement != null) dest.ParentElement = new List<Hl7.Fhir.Model.Canonical>(ParentElement.DeepCopy());
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Element)Event.DeepCopy();
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.DataType)Event.DeepCopy();
                 if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>)CategoryElement.DeepCopy();
                 if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>(Focus.DeepCopy());
                 if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.MessageDefinition.messageheader_response_request>)ResponseRequiredElement.DeepCopy();

@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
-
-/*
+﻿/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -38,9 +28,14 @@ using Hl7.Fhir.Specification;
 
 */
 
-//
-// Generated for FHIR v1.0.2
-//
+using System;
+using System.Collections.Generic;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Validation;
+using System.Runtime.Serialization;
+using Hl7.Fhir.Utility;
+using Hl7.Fhir.Specification;
+
 namespace Hl7.Fhir.Model
 {
     /// <summary>
@@ -48,7 +43,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Narrative")]
     [DataContract]
-    public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+    public class Narrative : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Narrative"; } }
         

@@ -2239,7 +2239,7 @@ namespace Hl7.Fhir.Model
             HtmlTemplate,
         }
 
-        [FhirType("DependsOnComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.dependsOn", IsNestedType=true)]
         [DataContract]
         public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2413,7 +2413,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GlobalComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.global", IsNestedType=true)]
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2552,7 +2552,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DefinitionComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition", IsNestedType=true)]
         [DataContract]
         public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2711,7 +2711,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GroupingComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition.grouping", IsNestedType=true)]
         [DataContract]
         public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2849,7 +2849,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResourceComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition.resource", IsNestedType=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2972,13 +2972,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Example
+            public Hl7.Fhir.Model.DataType Example
             {
                 get { return _Example; }
                 set { _Example = value; OnPropertyChanged("Example"); }
             }
             
-            private Hl7.Fhir.Model.Element _Example;
+            private Hl7.Fhir.Model.DataType _Example;
             
             /// <summary>
             /// Grouping this is part of
@@ -3022,7 +3022,7 @@ namespace Hl7.Fhir.Model
                     if(FhirVersionElement != null) dest.FhirVersionElement = new List<Code<Hl7.Fhir.Model.FHIRVersion>>(FhirVersionElement.DeepCopy());
                     if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
+                    if(Example != null) dest.Example = (Hl7.Fhir.Model.DataType)Example.DeepCopy();
                     if(GroupingIdElement != null) dest.GroupingIdElement = (Hl7.Fhir.Model.Id)GroupingIdElement.DeepCopy();
                     return dest;
                 }
@@ -3100,7 +3100,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PageComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition.page", IsNestedType=true)]
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3114,13 +3114,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Name
+            public Hl7.Fhir.Model.DataType Name
             {
                 get { return _Name; }
                 set { _Name = value; OnPropertyChanged("Name"); }
             }
             
-            private Hl7.Fhir.Model.Element _Name;
+            private Hl7.Fhir.Model.DataType _Name;
             
             /// <summary>
             /// Short title shown for navigational assistance
@@ -3207,7 +3207,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Name != null) dest.Name = (Hl7.Fhir.Model.Element)Name.DeepCopy();
+                    if(Name != null) dest.Name = (Hl7.Fhir.Model.DataType)Name.DeepCopy();
                     if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
                     if(GenerationElement != null) dest.GenerationElement = (Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageGeneration>)GenerationElement.DeepCopy();
                     if(Page != null) dest.Page = new List<Hl7.Fhir.Model.ImplementationGuide.PageComponent>(Page.DeepCopy());
@@ -3279,7 +3279,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParameterComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition.parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3418,7 +3418,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TemplateComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.definition.template", IsNestedType=true)]
         [DataContract]
         public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3593,7 +3593,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.manifest", IsNestedType=true)]
         [DataContract]
         public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3806,7 +3806,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestResourceComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.manifest.resource", IsNestedType=true)]
         [DataContract]
         public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -3835,13 +3835,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Example
+            public Hl7.Fhir.Model.DataType Example
             {
                 get { return _Example; }
                 set { _Example = value; OnPropertyChanged("Example"); }
             }
             
-            private Hl7.Fhir.Model.Element _Example;
+            private Hl7.Fhir.Model.DataType _Example;
             
             /// <summary>
             /// Relative path for page in IG
@@ -3882,7 +3882,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
-                    if(Example != null) dest.Example = (Hl7.Fhir.Model.Element)Example.DeepCopy();
+                    if(Example != null) dest.Example = (Hl7.Fhir.Model.DataType)Example.DeepCopy();
                     if(RelativePathElement != null) dest.RelativePathElement = (Hl7.Fhir.Model.FhirUrl)RelativePathElement.DeepCopy();
                     return dest;
                 }
@@ -3948,7 +3948,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManifestPageComponent", NamedBackboneElement=true)]
+        [FhirType("ImplementationGuide#ImplementationGuide.manifest.page", IsNestedType=true)]
         [DataContract]
         public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
         {

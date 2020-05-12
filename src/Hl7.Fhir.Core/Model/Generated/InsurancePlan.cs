@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "InsurancePlan"; } }
         
-        [FhirType("ContactComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.contact", IsNestedType=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.coverage", IsNestedType=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageBenefitComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.coverage.benefit", IsNestedType=true)]
         [DataContract]
         public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LimitComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.coverage.benefit.limit", IsNestedType=true)]
         [DataContract]
         public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PlanComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.plan", IsNestedType=true)]
         [DataContract]
         public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GeneralCostComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.plan.generalCost", IsNestedType=true)]
         [DataContract]
         public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecificCostComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.plan.specificCost", IsNestedType=true)]
         [DataContract]
         public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1012,7 +1012,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PlanBenefitComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.plan.specificCost.benefit", IsNestedType=true)]
         [DataContract]
         public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1115,7 +1115,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CostComponent", NamedBackboneElement=true)]
+        [FhirType("InsurancePlan#InsurancePlan.plan.specificCost.benefit.cost", IsNestedType=true)]
         [DataContract]
         public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
         {

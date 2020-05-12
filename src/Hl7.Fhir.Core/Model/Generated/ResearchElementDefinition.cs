@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             Outcome,
         }
 
-        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
+        [FhirType("ResearchElementDefinition#ResearchElementDefinition.characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Expression),typeof(DataRequirement))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Definition
+            public Hl7.Fhir.Model.DataType Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.Element _Definition;
+            private Hl7.Fhir.Model.DataType _Definition;
             
             /// <summary>
             /// What code/value pairs define members?
@@ -197,13 +197,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element StudyEffective
+            public Hl7.Fhir.Model.DataType StudyEffective
             {
                 get { return _StudyEffective; }
                 set { _StudyEffective = value; OnPropertyChanged("StudyEffective"); }
             }
             
-            private Hl7.Fhir.Model.Element _StudyEffective;
+            private Hl7.Fhir.Model.DataType _StudyEffective;
             
             /// <summary>
             /// Observation time from study start
@@ -287,13 +287,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element ParticipantEffective
+            public Hl7.Fhir.Model.DataType ParticipantEffective
             {
                 get { return _ParticipantEffective; }
                 set { _ParticipantEffective = value; OnPropertyChanged("ParticipantEffective"); }
             }
             
-            private Hl7.Fhir.Model.Element _ParticipantEffective;
+            private Hl7.Fhir.Model.DataType _ParticipantEffective;
             
             /// <summary>
             /// Observation time from study start
@@ -346,16 +346,16 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.DataType)Definition.DeepCopy();
                     if(UsageContext != null) dest.UsageContext = new List<UsageContext>(UsageContext.DeepCopy());
                     if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
                     if(UnitOfMeasure != null) dest.UnitOfMeasure = (Hl7.Fhir.Model.CodeableConcept)UnitOfMeasure.DeepCopy();
                     if(StudyEffectiveDescriptionElement != null) dest.StudyEffectiveDescriptionElement = (Hl7.Fhir.Model.FhirString)StudyEffectiveDescriptionElement.DeepCopy();
-                    if(StudyEffective != null) dest.StudyEffective = (Hl7.Fhir.Model.Element)StudyEffective.DeepCopy();
+                    if(StudyEffective != null) dest.StudyEffective = (Hl7.Fhir.Model.DataType)StudyEffective.DeepCopy();
                     if(StudyEffectiveTimeFromStart != null) dest.StudyEffectiveTimeFromStart = (Duration)StudyEffectiveTimeFromStart.DeepCopy();
                     if(StudyEffectiveGroupMeasureElement != null) dest.StudyEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)StudyEffectiveGroupMeasureElement.DeepCopy();
                     if(ParticipantEffectiveDescriptionElement != null) dest.ParticipantEffectiveDescriptionElement = (Hl7.Fhir.Model.FhirString)ParticipantEffectiveDescriptionElement.DeepCopy();
-                    if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.Element)ParticipantEffective.DeepCopy();
+                    if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.DataType)ParticipantEffective.DeepCopy();
                     if(ParticipantEffectiveTimeFromStart != null) dest.ParticipantEffectiveTimeFromStart = (Duration)ParticipantEffectiveTimeFromStart.DeepCopy();
                     if(ParticipantEffectiveGroupMeasureElement != null) dest.ParticipantEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)ParticipantEffectiveGroupMeasureElement.DeepCopy();
                     return dest;
@@ -728,13 +728,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Subject
+        public Hl7.Fhir.Model.DataType Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.Element _Subject;
+        private Hl7.Fhir.Model.DataType _Subject;
         
         /// <summary>
         /// Date last changed
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Model
                 if(SubtitleElement != null) dest.SubtitleElement = (Hl7.Fhir.Model.FhirString)SubtitleElement.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());

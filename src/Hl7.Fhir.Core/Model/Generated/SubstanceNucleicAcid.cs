@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceNucleicAcid"; } }
         
-        [FhirType("SubunitComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit", IsNestedType=true)]
         [DataContract]
         public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LinkageComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit.linkage", IsNestedType=true)]
         [DataContract]
         public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SugarComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit.sugar", IsNestedType=true)]
         [DataContract]
         public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
         {

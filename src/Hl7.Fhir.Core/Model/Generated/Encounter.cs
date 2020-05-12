@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             Completed,
         }
 
-        [FhirType("StatusHistoryComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.statusHistory", IsNestedType=true)]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClassHistoryComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.classHistory", IsNestedType=true)]
         [DataContract]
         public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HospitalizationComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.hospitalization", IsNestedType=true)]
         [DataContract]
         public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("LocationComponent", NamedBackboneElement=true)]
+        [FhirType("Encounter#Encounter.location", IsNestedType=true)]
         [DataContract]
         public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
         {

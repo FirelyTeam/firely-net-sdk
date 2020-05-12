@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Address")]
     [DataContract]
-    public partial class Address : Hl7.Fhir.Model.Element
+    public partial class Address : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Address"; } }
         

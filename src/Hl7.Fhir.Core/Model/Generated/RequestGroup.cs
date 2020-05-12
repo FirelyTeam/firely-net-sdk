@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RequestGroup"; } }
         
-        [FhirType("ActionComponent", NamedBackboneElement=true)]
+        [FhirType("RequestGroup#RequestGroup.action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -276,13 +276,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Timing
+            public Hl7.Fhir.Model.DataType Timing
             {
                 get { return _Timing; }
                 set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
-            private Hl7.Fhir.Model.Element _Timing;
+            private Hl7.Fhir.Model.DataType _Timing;
             
             /// <summary>
             /// Who should perform the action
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
                     if(Documentation != null) dest.Documentation = new List<RelatedArtifact>(Documentation.DeepCopy());
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.RequestGroup.ConditionComponent>(Condition.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<Hl7.Fhir.Model.RequestGroup.RelatedActionComponent>(RelatedAction.DeepCopy());
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.ResourceReference>(Participant.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionComponent", NamedBackboneElement=true)]
+        [FhirType("RequestGroup#RequestGroup.action.condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedActionComponent", NamedBackboneElement=true)]
+        [FhirType("RequestGroup#RequestGroup.action.relatedAction", IsNestedType=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -848,13 +848,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Offset
+            public Hl7.Fhir.Model.DataType Offset
             {
                 get { return _Offset; }
                 set { _Offset = value; OnPropertyChanged("Offset"); }
             }
             
-            private Hl7.Fhir.Model.Element _Offset;
+            private Hl7.Fhir.Model.DataType _Offset;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(ActionIdElement != null) dest.ActionIdElement = (Hl7.Fhir.Model.Id)ActionIdElement.DeepCopy();
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
-                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
+                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.DataType)Offset.DeepCopy();
                     return dest;
                 }
                 else

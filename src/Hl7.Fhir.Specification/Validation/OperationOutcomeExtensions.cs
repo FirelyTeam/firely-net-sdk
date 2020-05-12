@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Validation
                     return true;
                 else if (x is null || y is null)
                     return false;
-                else if (x.Location?.FirstOrDefault() == x.Location?.FirstOrDefault() && x.Details?.Text == y.Details?.Text)
+                else if (x.Location?.FirstOrDefault() == y.Location?.FirstOrDefault() && x.Details?.Text == y.Details?.Text)
                     return true;
                 else
                     return false;

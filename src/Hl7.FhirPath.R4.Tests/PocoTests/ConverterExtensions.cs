@@ -67,7 +67,8 @@ namespace Hl7.FhirPath.R4.Tests
         {
             return me.Probability;
         }
-        public static Model.RiskAssessment.PredictionComponent setProbability(this Model.RiskAssessment.PredictionComponent me, Model.Element value)
+        public static Model.RiskAssessment.PredictionComponent setProbability(this Model.RiskAssessment.PredictionComponent me, 
+            Model.DataType value)
         {
             me.Probability = value;
             return me;

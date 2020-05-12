@@ -48,13 +48,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Dosage")]
     [DataContract]
-    public partial class Dosage : Hl7.Fhir.Model.BackboneElement
+    public partial class Dosage : Hl7.Fhir.Model.BackboneType
     {
         public override string TypeName { get { return "Dosage"; } }
         
-        [FhirType("DoseAndRateComponent", NamedBackboneElement=true)]
+        [FhirType("Dosage#Dosage.doseAndRate", IsNestedType=true)]
         [DataContract]
-        public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "DoseAndRateComponent"; } }
             
@@ -78,13 +78,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Dose
+            public Hl7.Fhir.Model.DataType Dose
             {
                 get { return _Dose; }
                 set { _Dose = value; OnPropertyChanged("Dose"); }
             }
             
-            private Hl7.Fhir.Model.Element _Dose;
+            private Hl7.Fhir.Model.DataType _Dose;
             
             /// <summary>
             /// Amount of medication per unit of time
@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Model
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Rate
+            public Hl7.Fhir.Model.DataType Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Element _Rate;
+            private Hl7.Fhir.Model.DataType _Rate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -109,8 +109,8 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Element)Dose.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(Dose != null) dest.Dose = (Hl7.Fhir.Model.DataType)Dose.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopy();
                     return dest;
                 }
                 else
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The order of the dosage instructions
         /// </summary>
-        [FhirElement("sequence", InSummary=true, Order=90)]
+        [FhirElement("sequence", InSummary=true, Order=30)]
         [DataMember]
         public Hl7.Fhir.Model.Integer SequenceElement
         {
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Free text dosage instructions e.g. SIG
         /// </summary>
-        [FhirElement("text", InSummary=true, Order=100)]
+        [FhirElement("text", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString TextElement
         {
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Supplemental instruction or warnings to the patient - e.g. "with meals", "may cause drowsiness"
         /// </summary>
-        [FhirElement("additionalInstruction", InSummary=true, Order=110)]
+        [FhirElement("additionalInstruction", InSummary=true, Order=50)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.CodeableConcept> AdditionalInstruction
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Patient or consumer oriented instructions
         /// </summary>
-        [FhirElement("patientInstruction", InSummary=true, Order=120)]
+        [FhirElement("patientInstruction", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString PatientInstructionElement
         {
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When medication should be administered
         /// </summary>
-        [FhirElement("timing", InSummary=true, Order=130)]
+        [FhirElement("timing", InSummary=true, Order=70)]
         [DataMember]
         public Hl7.Fhir.Model.Timing Timing
         {
@@ -295,22 +295,22 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Take "as needed" (for x)
         /// </summary>
-        [FhirElement("asNeeded", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
-        public Hl7.Fhir.Model.Element AsNeeded
+        public Hl7.Fhir.Model.DataType AsNeeded
         {
             get { return _AsNeeded; }
             set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
         }
         
-        private Hl7.Fhir.Model.Element _AsNeeded;
+        private Hl7.Fhir.Model.DataType _AsNeeded;
         
         /// <summary>
         /// Body site to administer to
         /// </summary>
-        [FhirElement("site", InSummary=true, Order=150)]
+        [FhirElement("site", InSummary=true, Order=90)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Site
         {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// How drug should enter body
         /// </summary>
-        [FhirElement("route", InSummary=true, Order=160)]
+        [FhirElement("route", InSummary=true, Order=100)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Route
         {
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Technique for administering medication
         /// </summary>
-        [FhirElement("method", InSummary=true, Order=170)]
+        [FhirElement("method", InSummary=true, Order=110)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Method
         {
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Amount of medication administered
         /// </summary>
-        [FhirElement("doseAndRate", InSummary=true, Order=180)]
+        [FhirElement("doseAndRate", InSummary=true, Order=120)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Dosage.DoseAndRateComponent> DoseAndRate
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit on medication per unit of time
         /// </summary>
-        [FhirElement("maxDosePerPeriod", InSummary=true, Order=190)]
+        [FhirElement("maxDosePerPeriod", InSummary=true, Order=130)]
         [DataMember]
         public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
         {
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit on medication per administration
         /// </summary>
-        [FhirElement("maxDosePerAdministration", InSummary=true, Order=200)]
+        [FhirElement("maxDosePerAdministration", InSummary=true, Order=140)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity MaxDosePerAdministration
         {
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Upper limit on medication per lifetime of the patient
         /// </summary>
-        [FhirElement("maxDosePerLifetime", InSummary=true, Order=210)]
+        [FhirElement("maxDosePerLifetime", InSummary=true, Order=150)]
         [DataMember]
         public Hl7.Fhir.Model.Quantity MaxDosePerLifetime
         {
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
                 if(AdditionalInstruction != null) dest.AdditionalInstruction = new List<Hl7.Fhir.Model.CodeableConcept>(AdditionalInstruction.DeepCopy());
                 if(PatientInstructionElement != null) dest.PatientInstructionElement = (Hl7.Fhir.Model.FhirString)PatientInstructionElement.DeepCopy();
                 if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Timing)Timing.DeepCopy();
-                if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.Element)AsNeeded.DeepCopy();
+                if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.DataType)AsNeeded.DeepCopy();
                 if(Site != null) dest.Site = (Hl7.Fhir.Model.CodeableConcept)Site.DeepCopy();
                 if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                 if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();

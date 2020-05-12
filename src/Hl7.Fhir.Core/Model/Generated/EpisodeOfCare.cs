@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("StatusHistoryComponent", NamedBackboneElement=true)]
+        [FhirType("EpisodeOfCare#EpisodeOfCare.statusHistory", IsNestedType=true)]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosisComponent", NamedBackboneElement=true)]
+        [FhirType("EpisodeOfCare#EpisodeOfCare.diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {

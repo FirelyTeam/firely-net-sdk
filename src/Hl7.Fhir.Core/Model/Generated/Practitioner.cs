@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Practitioner"; } }
         
-        [FhirType("QualificationComponent", NamedBackboneElement=true)]
+        [FhirType("Practitioner#Practitioner.qualification", IsNestedType=true)]
         [DataContract]
         public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
         {

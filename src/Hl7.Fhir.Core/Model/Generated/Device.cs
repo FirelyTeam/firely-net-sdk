@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("UdiCarrierComponent", NamedBackboneElement=true)]
+        [FhirType("Device#Device.udiCarrier", IsNestedType=true)]
         [DataContract]
         public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DeviceNameComponent", NamedBackboneElement=true)]
+        [FhirType("Device#Device.deviceName", IsNestedType=true)]
         [DataContract]
         public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecializationComponent", NamedBackboneElement=true)]
+        [FhirType("Device#Device.specialization", IsNestedType=true)]
         [DataContract]
         public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VersionComponent", NamedBackboneElement=true)]
+        [FhirType("Device#Device.version", IsNestedType=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PropertyComponent", NamedBackboneElement=true)]
+        [FhirType("Device#Device.property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {

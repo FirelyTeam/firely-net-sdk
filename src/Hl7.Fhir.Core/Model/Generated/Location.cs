@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
             Kind,
         }
 
-        [FhirType("PositionComponent", NamedBackboneElement=true)]
+        [FhirType("Location#Location.position", IsNestedType=true)]
         [DataContract]
         public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HoursOfOperationComponent", NamedBackboneElement=true)]
+        [FhirType("Location#Location.hoursOfOperation", IsNestedType=true)]
         [DataContract]
         public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
         {

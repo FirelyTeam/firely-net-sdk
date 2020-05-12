@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductContraindication"; } }
         
-        [FhirType("OtherTherapyComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductContraindication#MedicinalProductContraindication.otherTherapy", IsNestedType=true)]
         [DataContract]
         public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -80,13 +80,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Medication
+            public Hl7.Fhir.Model.DataType Medication
             {
                 get { return _Medication; }
                 set { _Medication = value; OnPropertyChanged("Medication"); }
             }
             
-            private Hl7.Fhir.Model.Element _Medication;
+            private Hl7.Fhir.Model.DataType _Medication;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(TherapyRelationshipType != null) dest.TherapyRelationshipType = (Hl7.Fhir.Model.CodeableConcept)TherapyRelationshipType.DeepCopy();
-                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
+                    if(Medication != null) dest.Medication = (Hl7.Fhir.Model.DataType)Medication.DeepCopy();
                     return dest;
                 }
                 else

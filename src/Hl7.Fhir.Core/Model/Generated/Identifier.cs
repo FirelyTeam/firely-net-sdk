@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Identifier")]
     [DataContract]
-    public partial class Identifier : Hl7.Fhir.Model.Element
+    public partial class Identifier : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Identifier"; } }
         

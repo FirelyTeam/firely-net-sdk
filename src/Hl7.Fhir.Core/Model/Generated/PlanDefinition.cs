@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "PlanDefinition"; } }
         
-        [FhirType("GoalComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.goal", IsNestedType=true)]
         [DataContract]
         public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.goal.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -273,13 +273,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Detail
+            public Hl7.Fhir.Model.DataType Detail
             {
                 get { return _Detail; }
                 set { _Detail = value; OnPropertyChanged("Detail"); }
             }
             
-            private Hl7.Fhir.Model.Element _Detail;
+            private Hl7.Fhir.Model.DataType _Detail;
             
             /// <summary>
             /// Reach goal within
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Measure != null) dest.Measure = (Hl7.Fhir.Model.CodeableConcept)Measure.DeepCopy();
-                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.Element)Detail.DeepCopy();
+                    if(Detail != null) dest.Detail = (Hl7.Fhir.Model.DataType)Detail.DeepCopy();
                     if(Due != null) dest.Due = (Duration)Due.DeepCopy();
                     return dest;
                 }
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActionComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -610,13 +610,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Subject
+            public Hl7.Fhir.Model.DataType Subject
             {
                 get { return _Subject; }
                 set { _Subject = value; OnPropertyChanged("Subject"); }
             }
             
-            private Hl7.Fhir.Model.Element _Subject;
+            private Hl7.Fhir.Model.DataType _Subject;
             
             /// <summary>
             /// When the action should be triggered
@@ -695,13 +695,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Timing
+            public Hl7.Fhir.Model.DataType Timing
             {
                 get { return _Timing; }
                 set { _Timing = value; OnPropertyChanged("Timing"); }
             }
             
-            private Hl7.Fhir.Model.Element _Timing;
+            private Hl7.Fhir.Model.DataType _Timing;
             
             /// <summary>
             /// Who should participate in the action
@@ -892,13 +892,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Definition
+            public Hl7.Fhir.Model.DataType Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.Element _Definition;
+            private Hl7.Fhir.Model.DataType _Definition;
             
             /// <summary>
             /// Transform to apply the template
@@ -975,13 +975,13 @@ namespace Hl7.Fhir.Model
                     if(Reason != null) dest.Reason = new List<Hl7.Fhir.Model.CodeableConcept>(Reason.DeepCopy());
                     if(Documentation != null) dest.Documentation = new List<RelatedArtifact>(Documentation.DeepCopy());
                     if(GoalIdElement != null) dest.GoalIdElement = new List<Hl7.Fhir.Model.Id>(GoalIdElement.DeepCopy());
-                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
+                    if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
                     if(Trigger != null) dest.Trigger = new List<TriggerDefinition>(Trigger.DeepCopy());
                     if(Condition != null) dest.Condition = new List<Hl7.Fhir.Model.PlanDefinition.ConditionComponent>(Condition.DeepCopy());
                     if(Input != null) dest.Input = new List<DataRequirement>(Input.DeepCopy());
                     if(Output != null) dest.Output = new List<DataRequirement>(Output.DeepCopy());
                     if(RelatedAction != null) dest.RelatedAction = new List<Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent>(RelatedAction.DeepCopy());
-                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                    if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
                     if(Participant != null) dest.Participant = new List<Hl7.Fhir.Model.PlanDefinition.ParticipantComponent>(Participant.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(GroupingBehaviorElement != null) dest.GroupingBehaviorElement = (Code<Hl7.Fhir.Model.ActionGroupingBehavior>)GroupingBehaviorElement.DeepCopy();
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
                     if(RequiredBehaviorElement != null) dest.RequiredBehaviorElement = (Code<Hl7.Fhir.Model.ActionRequiredBehavior>)RequiredBehaviorElement.DeepCopy();
                     if(PrecheckBehaviorElement != null) dest.PrecheckBehaviorElement = (Code<Hl7.Fhir.Model.ActionPrecheckBehavior>)PrecheckBehaviorElement.DeepCopy();
                     if(CardinalityBehaviorElement != null) dest.CardinalityBehaviorElement = (Code<Hl7.Fhir.Model.ActionCardinalityBehavior>)CardinalityBehaviorElement.DeepCopy();
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.DataType)Definition.DeepCopy();
                     if(TransformElement != null) dest.TransformElement = (Hl7.Fhir.Model.Canonical)TransformElement.DeepCopy();
                     if(DynamicValue != null) dest.DynamicValue = new List<Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent>(DynamicValue.DeepCopy());
                     if(Action != null) dest.Action = new List<Hl7.Fhir.Model.PlanDefinition.ActionComponent>(Action.DeepCopy());
@@ -1153,7 +1153,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConditionComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.action.condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1273,7 +1273,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RelatedActionComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.action.relatedAction", IsNestedType=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1350,13 +1350,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Offset
+            public Hl7.Fhir.Model.DataType Offset
             {
                 get { return _Offset; }
                 set { _Offset = value; OnPropertyChanged("Offset"); }
             }
             
-            private Hl7.Fhir.Model.Element _Offset;
+            private Hl7.Fhir.Model.DataType _Offset;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1367,7 +1367,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(ActionIdElement != null) dest.ActionIdElement = (Hl7.Fhir.Model.Id)ActionIdElement.DeepCopy();
                     if(RelationshipElement != null) dest.RelationshipElement = (Code<Hl7.Fhir.Model.ActionRelationshipType>)RelationshipElement.DeepCopy();
-                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.Element)Offset.DeepCopy();
+                    if(Offset != null) dest.Offset = (Hl7.Fhir.Model.DataType)Offset.DeepCopy();
                     return dest;
                 }
                 else
@@ -1432,7 +1432,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.action.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1552,7 +1552,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DynamicValueComponent", NamedBackboneElement=true)]
+        [FhirType("PlanDefinition#PlanDefinition.action.dynamicValue", IsNestedType=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1923,13 +1923,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Subject
+        public Hl7.Fhir.Model.DataType Subject
         {
             get { return _Subject; }
             set { _Subject = value; OnPropertyChanged("Subject"); }
         }
         
-        private Hl7.Fhir.Model.Element _Subject;
+        private Hl7.Fhir.Model.DataType _Subject;
         
         /// <summary>
         /// Date last changed
@@ -2342,7 +2342,7 @@ namespace Hl7.Fhir.Model
                 if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
                 if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
-                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.Element)Subject.DeepCopy();
+                if(Subject != null) dest.Subject = (Hl7.Fhir.Model.DataType)Subject.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
                 if(Contact != null) dest.Contact = new List<ContactDetail>(Contact.DeepCopy());

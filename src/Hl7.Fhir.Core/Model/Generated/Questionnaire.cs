@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             Any,
         }
 
-        [FhirType("ItemComponent", NamedBackboneElement=true)]
+        [FhirType("Questionnaire#Questionnaire.item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EnableWhenComponent", NamedBackboneElement=true)]
+        [FhirType("Questionnaire#Questionnaire.item.enableWhen", IsNestedType=true)]
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -865,13 +865,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Answer
+            public Hl7.Fhir.Model.DataType Answer
             {
                 get { return _Answer; }
                 set { _Answer = value; OnPropertyChanged("Answer"); }
             }
             
-            private Hl7.Fhir.Model.Element _Answer;
+            private Hl7.Fhir.Model.DataType _Answer;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
                     base.CopyTo(dest);
                     if(QuestionElement != null) dest.QuestionElement = (Hl7.Fhir.Model.FhirString)QuestionElement.DeepCopy();
                     if(OperatorElement != null) dest.OperatorElement = (Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemOperator>)OperatorElement.DeepCopy();
-                    if(Answer != null) dest.Answer = (Hl7.Fhir.Model.Element)Answer.DeepCopy();
+                    if(Answer != null) dest.Answer = (Hl7.Fhir.Model.DataType)Answer.DeepCopy();
                     return dest;
                 }
                 else
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AnswerOptionComponent", NamedBackboneElement=true)]
+        [FhirType("Questionnaire#Questionnaire.item.answerOption", IsNestedType=true)]
         [DataContract]
         public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -961,13 +961,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             /// <summary>
             /// Whether option is selected by default
@@ -1007,7 +1007,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     if(InitialSelectedElement != null) dest.InitialSelectedElement = (Hl7.Fhir.Model.FhirBoolean)InitialSelectedElement.DeepCopy();
                     return dest;
                 }
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("InitialComponent", NamedBackboneElement=true)]
+        [FhirType("Questionnaire#Questionnaire.item.initial", IsNestedType=true)]
         [DataContract]
         public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1083,13 +1083,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Value
+            public Hl7.Fhir.Model.DataType Value
             {
                 get { return _Value; }
                 set { _Value = value; OnPropertyChanged("Value"); }
             }
             
-            private Hl7.Fhir.Model.Element _Value;
+            private Hl7.Fhir.Model.DataType _Value;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                    if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                     return dest;
                 }
                 else

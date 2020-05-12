@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceProtein"; } }
         
-        [FhirType("SubunitComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceProtein#SubstanceProtein.subunit", IsNestedType=true)]
         [DataContract]
         public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {

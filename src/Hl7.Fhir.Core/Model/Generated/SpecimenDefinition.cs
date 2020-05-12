@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
             Alternate,
         }
 
-        [FhirType("TypeTestedComponent", NamedBackboneElement=true)]
+        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested", IsNestedType=true)]
         [DataContract]
         public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ContainerComponent", NamedBackboneElement=true)]
+        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.container", IsNestedType=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -435,13 +435,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
-            public Hl7.Fhir.Model.Element MinimumVolume
+            public Hl7.Fhir.Model.DataType MinimumVolume
             {
                 get { return _MinimumVolume; }
                 set { _MinimumVolume = value; OnPropertyChanged("MinimumVolume"); }
             }
             
-            private Hl7.Fhir.Model.Element _MinimumVolume;
+            private Hl7.Fhir.Model.DataType _MinimumVolume;
             
             /// <summary>
             /// Additive associated with container
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
                     if(Cap != null) dest.Cap = (Hl7.Fhir.Model.CodeableConcept)Cap.DeepCopy();
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                     if(Capacity != null) dest.Capacity = (Hl7.Fhir.Model.Quantity)Capacity.DeepCopy();
-                    if(MinimumVolume != null) dest.MinimumVolume = (Hl7.Fhir.Model.Element)MinimumVolume.DeepCopy();
+                    if(MinimumVolume != null) dest.MinimumVolume = (Hl7.Fhir.Model.DataType)MinimumVolume.DeepCopy();
                     if(Additive != null) dest.Additive = new List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent>(Additive.DeepCopy());
                     if(PreparationElement != null) dest.PreparationElement = (Hl7.Fhir.Model.FhirString)PreparationElement.DeepCopy();
                     return dest;
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdditiveComponent", NamedBackboneElement=true)]
+        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.container.additive", IsNestedType=true)]
         [DataContract]
         public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -601,13 +601,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Additive
+            public Hl7.Fhir.Model.DataType Additive
             {
                 get { return _Additive; }
                 set { _Additive = value; OnPropertyChanged("Additive"); }
             }
             
-            private Hl7.Fhir.Model.Element _Additive;
+            private Hl7.Fhir.Model.DataType _Additive;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.Element)Additive.DeepCopy();
+                    if(Additive != null) dest.Additive = (Hl7.Fhir.Model.DataType)Additive.DeepCopy();
                     return dest;
                 }
                 else
@@ -673,7 +673,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HandlingComponent", NamedBackboneElement=true)]
+        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.handling", IsNestedType=true)]
         [DataContract]
         public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
         {
