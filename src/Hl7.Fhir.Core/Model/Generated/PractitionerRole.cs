@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "PractitionerRole"; } }
         
-        [FhirType("PractitionerRole#PractitionerRole.availableTime", IsNestedType=true)]
+        [FhirType("PractitionerRole#AvailableTime", IsNestedType=true)]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AvailableTimeComponent"; } }
+            public override string TypeName { get { return "PractitionerRole#AvailableTime"; } }
             
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
@@ -262,11 +262,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PractitionerRole#PractitionerRole.notAvailable", IsNestedType=true)]
+        [FhirType("PractitionerRole#NotAvailable", IsNestedType=true)]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NotAvailableComponent"; } }
+            public override string TypeName { get { return "PractitionerRole#NotAvailable"; } }
             
             /// <summary>
             /// Reason presented to the user explaining why time not available

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstancePolymer"; } }
         
-        [FhirType("SubstancePolymer#SubstancePolymer.monomerSet", IsNestedType=true)]
+        [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
         [DataContract]
         public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MonomerSetComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#MonomerSet"; } }
             
             /// <summary>
             /// Todo
@@ -154,11 +154,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstancePolymer#SubstancePolymer.monomerSet.startingMaterial", IsNestedType=true)]
+        [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
         [DataContract]
         public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StartingMaterialComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#StartingMaterial"; } }
             
             /// <summary>
             /// Todo
@@ -309,11 +309,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstancePolymer#SubstancePolymer.repeat", IsNestedType=true)]
+        [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
         [DataContract]
         public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RepeatComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#Repeat"; } }
             
             /// <summary>
             /// Todo
@@ -483,11 +483,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstancePolymer#SubstancePolymer.repeat.repeatUnit", IsNestedType=true)]
+        [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
         [DataContract]
         public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RepeatUnitComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#RepeatUnit"; } }
             
             /// <summary>
             /// Todo
@@ -658,11 +658,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstancePolymer#SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation", IsNestedType=true)]
+        [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
         [DataContract]
         public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DegreeOfPolymerisationComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#DegreeOfPolymerisation"; } }
             
             /// <summary>
             /// Todo
@@ -759,11 +759,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstancePolymer#SubstancePolymer.repeat.repeatUnit.structuralRepresentation", IsNestedType=true)]
+        [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
         [DataContract]
         public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StructuralRepresentationComponent"; } }
+            public override string TypeName { get { return "SubstancePolymer#StructuralRepresentation"; } }
             
             /// <summary>
             /// Todo

@@ -112,11 +112,11 @@ namespace Hl7.Fhir.Model
             DataCollection,
         }
 
-        [FhirType("MeasureReport#MeasureReport.group", IsNestedType=true)]
+        [FhirType("MeasureReport#Group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GroupComponent"; } }
+            public override string TypeName { get { return "MeasureReport#Group"; } }
             
             /// <summary>
             /// Meaning of the group
@@ -251,11 +251,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MeasureReport#MeasureReport.group.population", IsNestedType=true)]
+        [FhirType("MeasureReport#Population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PopulationComponent"; } }
+            public override string TypeName { get { return "MeasureReport#Population"; } }
             
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
@@ -390,11 +390,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MeasureReport#MeasureReport.group.stratifier", IsNestedType=true)]
+        [FhirType("MeasureReport#Stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StratifierComponent"; } }
+            public override string TypeName { get { return "MeasureReport#Stratifier"; } }
             
             /// <summary>
             /// What stratifier of the group
@@ -493,11 +493,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum", IsNestedType=true)]
+        [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StratifierGroupComponent"; } }
+            public override string TypeName { get { return "MeasureReport#StratifierGroup"; } }
             
             /// <summary>
             /// The stratum value, e.g. male
@@ -632,11 +632,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum.component", IsNestedType=true)]
+        [FhirType("MeasureReport#Component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComponentComponent"; } }
+            public override string TypeName { get { return "MeasureReport#Component"; } }
             
             /// <summary>
             /// What stratifier component of the group
@@ -735,11 +735,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum.population", IsNestedType=true)]
+        [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StratifierGroupPopulationComponent"; } }
+            public override string TypeName { get { return "MeasureReport#StratifierGroupPopulation"; } }
             
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation

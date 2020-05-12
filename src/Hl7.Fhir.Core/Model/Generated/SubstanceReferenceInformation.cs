@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceReferenceInformation"; } }
         
-        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.gene", IsNestedType=true)]
+        [FhirType("SubstanceReferenceInformation#Gene", IsNestedType=true)]
         [DataContract]
         public partial class GeneComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GeneComponent"; } }
+            public override string TypeName { get { return "SubstanceReferenceInformation#Gene"; } }
             
             /// <summary>
             /// Todo
@@ -174,11 +174,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.geneElement", IsNestedType=true)]
+        [FhirType("SubstanceReferenceInformation#GeneElement", IsNestedType=true)]
         [DataContract]
         public partial class GeneElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GeneElementComponent"; } }
+            public override string TypeName { get { return "SubstanceReferenceInformation#GeneElement"; } }
             
             /// <summary>
             /// Todo
@@ -296,11 +296,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.classification", IsNestedType=true)]
+        [FhirType("SubstanceReferenceInformation#Classification", IsNestedType=true)]
         [DataContract]
         public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ClassificationComponent"; } }
+            public override string TypeName { get { return "SubstanceReferenceInformation#Classification"; } }
             
             /// <summary>
             /// Todo
@@ -437,11 +437,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceReferenceInformation#SubstanceReferenceInformation.target", IsNestedType=true)]
+        [FhirType("SubstanceReferenceInformation#Target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TargetComponent"; } }
+            public override string TypeName { get { return "SubstanceReferenceInformation#Target"; } }
             
             /// <summary>
             /// Todo

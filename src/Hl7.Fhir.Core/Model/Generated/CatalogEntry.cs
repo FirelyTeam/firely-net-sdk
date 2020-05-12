@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             IsReplacedBy,
         }
 
-        [FhirType("CatalogEntry#CatalogEntry.relatedEntry", IsNestedType=true)]
+        [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
         [DataContract]
         public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatedEntryComponent"; } }
+            public override string TypeName { get { return "CatalogEntry#RelatedEntry"; } }
             
             /// <summary>
             /// triggers | is-replaced-by

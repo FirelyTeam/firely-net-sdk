@@ -121,11 +121,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("DiagnosticReport#DiagnosticReport.media", IsNestedType=true)]
+        [FhirType("DiagnosticReport#Media", IsNestedType=true)]
         [DataContract]
         public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MediaComponent"; } }
+            public override string TypeName { get { return "DiagnosticReport#Media"; } }
             
             /// <summary>
             /// Comment about the image (e.g. explanation)

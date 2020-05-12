@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             All,
         }
 
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.software", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Software", IsNestedType=true)]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SoftwareComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Software"; } }
             
             /// <summary>
             /// A name the software is known by
@@ -211,11 +211,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.implementation", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Implementation", IsNestedType=true)]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ImplementationComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Implementation"; } }
             
             /// <summary>
             /// Describes this specific instance
@@ -349,11 +349,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#CodeSystem", IsNestedType=true)]
         [DataContract]
         public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CodeSystemComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#CodeSystem"; } }
             
             /// <summary>
             /// URI for the Code System
@@ -505,11 +505,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem.version", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Version", IsNestedType=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VersionComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Version"; } }
             
             /// <summary>
             /// Version identifier for this version
@@ -771,11 +771,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.codeSystem.version.filter", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Filter", IsNestedType=true)]
         [DataContract]
         public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FilterComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Filter"; } }
             
             /// <summary>
             /// Code of the property supported
@@ -910,11 +910,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.expansion", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Expansion", IsNestedType=true)]
         [DataContract]
         public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExpansionComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Expansion"; } }
             
             /// <summary>
             /// Whether the server can return nested value sets
@@ -1120,11 +1120,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.expansion.parameter", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Parameter"; } }
             
             /// <summary>
             /// Expansion Parameter name
@@ -1258,11 +1258,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.validateCode", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#ValidateCode", IsNestedType=true)]
         [DataContract]
         public partial class ValidateCodeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ValidateCodeComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#ValidateCode"; } }
             
             /// <summary>
             /// Whether translations are validated
@@ -1360,11 +1360,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.translation", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Translation", IsNestedType=true)]
         [DataContract]
         public partial class TranslationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TranslationComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Translation"; } }
             
             /// <summary>
             /// Whether the client must identify the map
@@ -1462,11 +1462,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TerminologyCapabilities#TerminologyCapabilities.closure", IsNestedType=true)]
+        [FhirType("TerminologyCapabilities#Closure", IsNestedType=true)]
         [DataContract]
         public partial class ClosureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ClosureComponent"; } }
+            public override string TypeName { get { return "TerminologyCapabilities#Closure"; } }
             
             /// <summary>
             /// If cross-system closure is supported

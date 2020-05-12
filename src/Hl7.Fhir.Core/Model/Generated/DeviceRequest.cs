@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DeviceRequest"; } }
         
-        [FhirType("DeviceRequest#DeviceRequest.parameter", IsNestedType=true)]
+        [FhirType("DeviceRequest#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "DeviceRequest#Parameter"; } }
             
             /// <summary>
             /// Device detail

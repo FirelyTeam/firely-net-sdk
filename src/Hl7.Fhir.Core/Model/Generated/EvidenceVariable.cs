@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "EvidenceVariable"; } }
         
-        [FhirType("EvidenceVariable#EvidenceVariable.characteristic", IsNestedType=true)]
+        [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CharacteristicComponent"; } }
+            public override string TypeName { get { return "EvidenceVariable#Characteristic"; } }
             
             /// <summary>
             /// Natural language description of the characteristic

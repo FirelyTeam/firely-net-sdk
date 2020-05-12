@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceSourceMaterial"; } }
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.fractionDescription", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#FractionDescription", IsNestedType=true)]
         [DataContract]
         public partial class FractionDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FractionDescriptionComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#FractionDescription"; } }
             
             /// <summary>
             /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation
@@ -171,11 +171,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#Organism", IsNestedType=true)]
         [DataContract]
         public partial class OrganismComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OrganismComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#Organism"; } }
             
             /// <summary>
             /// The family of an organism shall be specified
@@ -399,11 +399,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.author", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#Author", IsNestedType=true)]
         [DataContract]
         public partial class AuthorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AuthorComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#Author"; } }
             
             /// <summary>
             /// The type of author of an organism species shall be specified. The parenthetical author of an organism species refers to the first author who published the plant/animal name (of any rank). The primary author of an organism species refers to the first author(s), who validly published the plant/animal name
@@ -518,11 +518,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.hybrid", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#Hybrid", IsNestedType=true)]
         [DataContract]
         public partial class HybridComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "HybridComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#Hybrid"; } }
             
             /// <summary>
             /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
@@ -745,11 +745,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.organism.organismGeneral", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#OrganismGeneral", IsNestedType=true)]
         [DataContract]
         public partial class OrganismGeneralComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OrganismGeneralComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#OrganismGeneral"; } }
             
             /// <summary>
             /// The kingdom of an organism shall be specified
@@ -882,11 +882,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceSourceMaterial#SubstanceSourceMaterial.partDescription", IsNestedType=true)]
+        [FhirType("SubstanceSourceMaterial#PartDescription", IsNestedType=true)]
         [DataContract]
         public partial class PartDescriptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PartDescriptionComponent"; } }
+            public override string TypeName { get { return "SubstanceSourceMaterial#PartDescription"; } }
             
             /// <summary>
             /// Entity of anatomical origin of source material within an organism

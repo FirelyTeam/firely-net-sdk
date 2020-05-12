@@ -337,11 +337,11 @@ namespace Hl7.Fhir.Model
             Consumer,
         }
 
-        [FhirType("CapabilityStatement#CapabilityStatement.software", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Software", IsNestedType=true)]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SoftwareComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Software"; } }
             
             /// <summary>
             /// A name the software is known by
@@ -511,11 +511,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.implementation", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Implementation", IsNestedType=true)]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ImplementationComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Implementation"; } }
             
             /// <summary>
             /// Describes this specific instance
@@ -669,11 +669,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Rest", IsNestedType=true)]
         [DataContract]
         public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RestComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Rest"; } }
             
             /// <summary>
             /// client | server
@@ -920,11 +920,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.security", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Security", IsNestedType=true)]
         [DataContract]
         public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SecurityComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Security"; } }
             
             /// <summary>
             /// Adds CORS Headers (http://enable-cors.org/)
@@ -1058,11 +1058,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Resource", IsNestedType=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResourceComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Resource"; } }
             
             /// <summary>
             /// A resource type that is supported
@@ -1671,11 +1671,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.interaction", IsNestedType=true)]
+        [FhirType("CapabilityStatement#ResourceInteraction", IsNestedType=true)]
         [DataContract]
         public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResourceInteractionComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#ResourceInteraction"; } }
             
             /// <summary>
             /// read | vread | update | patch | delete | history-instance | history-type | create | search-type
@@ -1791,11 +1791,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.searchParam", IsNestedType=true)]
+        [FhirType("CapabilityStatement#SearchParam", IsNestedType=true)]
         [DataContract]
         public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SearchParamComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#SearchParam"; } }
             
             /// <summary>
             /// Name of search parameter
@@ -1984,11 +1984,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.operation", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OperationComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Operation"; } }
             
             /// <summary>
             /// Name by which the operation/query is invoked
@@ -2141,11 +2141,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.rest.interaction", IsNestedType=true)]
+        [FhirType("CapabilityStatement#SystemInteraction", IsNestedType=true)]
         [DataContract]
         public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SystemInteractionComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#SystemInteraction"; } }
             
             /// <summary>
             /// transaction | batch | search-system | history-system
@@ -2261,11 +2261,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.messaging", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Messaging", IsNestedType=true)]
         [DataContract]
         public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MessagingComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Messaging"; } }
             
             /// <summary>
             /// Where messages should be sent
@@ -2418,11 +2418,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.messaging.endpoint", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Endpoint", IsNestedType=true)]
         [DataContract]
         public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EndpointComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Endpoint"; } }
             
             /// <summary>
             /// http | ftp | mllp +
@@ -2539,11 +2539,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.messaging.supportedMessage", IsNestedType=true)]
+        [FhirType("CapabilityStatement#SupportedMessage", IsNestedType=true)]
         [DataContract]
         public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SupportedMessageComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#SupportedMessage"; } }
             
             /// <summary>
             /// sender | receiver
@@ -2678,11 +2678,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CapabilityStatement#CapabilityStatement.document", IsNestedType=true)]
+        [FhirType("CapabilityStatement#Document", IsNestedType=true)]
         [DataContract]
         public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DocumentComponent"; } }
+            public override string TypeName { get { return "CapabilityStatement#Document"; } }
             
             /// <summary>
             /// producer | consumer

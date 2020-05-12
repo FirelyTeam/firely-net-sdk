@@ -232,11 +232,11 @@ namespace Hl7.Fhir.Model
             Warning,
         }
 
-        [FhirType("ElementDefinition#ElementDefinition.slicing", IsNestedType=true)]
+        [FhirType("Slicing", IsNestedType=true)]
         [DataContract]
         public partial class SlicingComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "SlicingComponent"; } }
+            public override string TypeName { get { return "Slicing"; } }
             
             /// <summary>
             /// Element values that are used to distinguish the slices
@@ -422,11 +422,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.slicing.discriminator", IsNestedType=true)]
+        [FhirType("Discriminator", IsNestedType=true)]
         [DataContract]
         public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "DiscriminatorComponent"; } }
+            public override string TypeName { get { return "Discriminator"; } }
             
             /// <summary>
             /// value | exists | pattern | type | profile
@@ -558,11 +558,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.base", IsNestedType=true)]
+        [FhirType("Base", IsNestedType=true)]
         [DataContract]
         public partial class BaseComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "BaseComponent"; } }
+            public override string TypeName { get { return "Base"; } }
             
             /// <summary>
             /// Path that identifies the base element
@@ -731,11 +731,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.type", IsNestedType=true)]
+        [FhirType("TypeRef", IsNestedType=true)]
         [DataContract]
         public partial class TypeRefComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "TypeRefComponent"; } }
+            public override string TypeName { get { return "TypeRef"; } }
             
             /// <summary>
             /// Data type or Resource (reference to definition)
@@ -977,11 +977,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.example", IsNestedType=true)]
+        [FhirType("Example", IsNestedType=true)]
         [DataContract]
         public partial class ExampleComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "ExampleComponent"; } }
+            public override string TypeName { get { return "Example"; } }
             
             /// <summary>
             /// Describes the purpose of this example
@@ -1097,11 +1097,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.constraint", IsNestedType=true)]
+        [FhirType("Constraint", IsNestedType=true)]
         [DataContract]
         public partial class ConstraintComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "ConstraintComponent"; } }
+            public override string TypeName { get { return "Constraint"; } }
             
             /// <summary>
             /// Target of 'condition' reference above
@@ -1414,11 +1414,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.binding", IsNestedType=true)]
+        [FhirType("ElementDefinitionBinding", IsNestedType=true)]
         [DataContract]
         public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "ElementDefinitionBindingComponent"; } }
+            public override string TypeName { get { return "ElementDefinitionBinding"; } }
             
             /// <summary>
             /// required | extensible | preferred | example
@@ -1585,11 +1585,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("ElementDefinition#ElementDefinition.mapping", IsNestedType=true)]
+        [FhirType("Mapping", IsNestedType=true)]
         [DataContract]
         public partial class MappingComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "MappingComponent"; } }
+            public override string TypeName { get { return "Mapping"; } }
             
             /// <summary>
             /// Reference to mapping declaration

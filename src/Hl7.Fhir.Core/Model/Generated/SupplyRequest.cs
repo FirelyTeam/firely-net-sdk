@@ -103,11 +103,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("SupplyRequest#SupplyRequest.parameter", IsNestedType=true)]
+        [FhirType("SupplyRequest#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "SupplyRequest#Parameter"; } }
             
             /// <summary>
             /// Item detail

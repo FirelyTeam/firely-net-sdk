@@ -154,11 +154,11 @@ namespace Hl7.Fhir.Model
             Absolute,
         }
 
-        [FhirType("ObservationDefinition#ObservationDefinition.quantitativeDetails", IsNestedType=true)]
+        [FhirType("ObservationDefinition#QuantitativeDetails", IsNestedType=true)]
         [DataContract]
         public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "QuantitativeDetailsComponent"; } }
+            public override string TypeName { get { return "ObservationDefinition#QuantitativeDetails"; } }
             
             /// <summary>
             /// Customary unit for quantitative results
@@ -327,11 +327,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ObservationDefinition#ObservationDefinition.qualifiedInterval", IsNestedType=true)]
+        [FhirType("ObservationDefinition#QualifiedInterval", IsNestedType=true)]
         [DataContract]
         public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "QualifiedIntervalComponent"; } }
+            public override string TypeName { get { return "ObservationDefinition#QualifiedInterval"; } }
             
             /// <summary>
             /// reference | critical | absolute

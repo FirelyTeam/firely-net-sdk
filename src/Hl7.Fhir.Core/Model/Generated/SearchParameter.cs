@@ -235,11 +235,11 @@ namespace Hl7.Fhir.Model
             OfType,
         }
 
-        [FhirType("SearchParameter#SearchParameter.component", IsNestedType=true)]
+        [FhirType("SearchParameter#Component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComponentComponent"; } }
+            public override string TypeName { get { return "SearchParameter#Component"; } }
             
             /// <summary>
             /// Defines how the part works

@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             Removal,
         }
 
-        [FhirType("Provenance#Provenance.agent", IsNestedType=true)]
+        [FhirType("Provenance#Agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AgentComponent"; } }
+            public override string TypeName { get { return "Provenance#Agent"; } }
             
             /// <summary>
             /// How the agent participated
@@ -234,11 +234,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Provenance#Provenance.entity", IsNestedType=true)]
+        [FhirType("Provenance#Entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EntityComponent"; } }
+            public override string TypeName { get { return "Provenance#Entity"; } }
             
             /// <summary>
             /// derivation | revision | quotation | source | removal

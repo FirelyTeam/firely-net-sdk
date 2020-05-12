@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceNucleicAcid"; } }
         
-        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit", IsNestedType=true)]
+        [FhirType("SubstanceNucleicAcid#Subunit", IsNestedType=true)]
         [DataContract]
         public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SubunitComponent"; } }
+            public override string TypeName { get { return "SubstanceNucleicAcid#Subunit"; } }
             
             /// <summary>
             /// Index of linear sequences of nucleic acids in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
@@ -317,11 +317,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit.linkage", IsNestedType=true)]
+        [FhirType("SubstanceNucleicAcid#Linkage", IsNestedType=true)]
         [DataContract]
         public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkageComponent"; } }
+            public override string TypeName { get { return "SubstanceNucleicAcid#Linkage"; } }
             
             /// <summary>
             /// The entity that links the sugar residues together should also be captured for nearly all naturally occurring nucleic acid the linkage is a phosphate group. For many synthetic oligonucleotides phosphorothioate linkages are often seen. Linkage connectivity is assumed to be 3’-5’. If the linkage is either 3’-3’ or 5’-5’ this should be specified
@@ -508,11 +508,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SubstanceNucleicAcid#SubstanceNucleicAcid.subunit.sugar", IsNestedType=true)]
+        [FhirType("SubstanceNucleicAcid#Sugar", IsNestedType=true)]
         [DataContract]
         public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SugarComponent"; } }
+            public override string TypeName { get { return "SubstanceNucleicAcid#Sugar"; } }
             
             /// <summary>
             /// The Substance ID of the sugar or sugar-like component that make up the nucleotide

@@ -160,11 +160,11 @@ namespace Hl7.Fhir.Model
             Severe,
         }
 
-        [FhirType("AllergyIntolerance#AllergyIntolerance.reaction", IsNestedType=true)]
+        [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReactionComponent"; } }
+            public override string TypeName { get { return "AllergyIntolerance#Reaction"; } }
             
             /// <summary>
             /// Specific substance or pharmaceutical product considered to be responsible for event

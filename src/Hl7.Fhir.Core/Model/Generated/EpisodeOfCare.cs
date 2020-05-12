@@ -103,11 +103,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("EpisodeOfCare#EpisodeOfCare.statusHistory", IsNestedType=true)]
+        [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
         [DataContract]
         public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StatusHistoryComponent"; } }
+            public override string TypeName { get { return "EpisodeOfCare#StatusHistory"; } }
             
             /// <summary>
             /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
@@ -224,11 +224,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EpisodeOfCare#EpisodeOfCare.diagnosis", IsNestedType=true)]
+        [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
         [DataContract]
         public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DiagnosisComponent"; } }
+            public override string TypeName { get { return "EpisodeOfCare#Diagnosis"; } }
             
             /// <summary>
             /// Conditions/problems/diagnoses this episode of care is for

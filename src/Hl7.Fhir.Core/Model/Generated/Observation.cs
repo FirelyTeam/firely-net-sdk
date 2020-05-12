@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Observation"; } }
         
-        [FhirType("Observation#Observation.referenceRange", IsNestedType=true)]
+        [FhirType("Observation#ReferenceRange", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReferenceRangeComponent"; } }
+            public override string TypeName { get { return "Observation#ReferenceRange"; } }
             
             /// <summary>
             /// Low Range, if relevant
@@ -244,11 +244,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Observation#Observation.component", IsNestedType=true)]
+        [FhirType("Observation#Component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComponentComponent"; } }
+            public override string TypeName { get { return "Observation#Component"; } }
             
             /// <summary>
             /// Type of component observation (code / type)

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Coverage"; } }
         
-        [FhirType("Coverage#Coverage.class", IsNestedType=true)]
+        [FhirType("Coverage#Class", IsNestedType=true)]
         [DataContract]
         public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ClassComponent"; } }
+            public override string TypeName { get { return "Coverage#Class"; } }
             
             /// <summary>
             /// Type of class such as 'group' or 'plan'
@@ -209,11 +209,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Coverage#Coverage.costToBeneficiary", IsNestedType=true)]
+        [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
         [DataContract]
         public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CostToBeneficiaryComponent"; } }
+            public override string TypeName { get { return "Coverage#CostToBeneficiary"; } }
             
             /// <summary>
             /// Cost category
@@ -332,11 +332,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Coverage#Coverage.costToBeneficiary.exception", IsNestedType=true)]
+        [FhirType("Coverage#Exemption", IsNestedType=true)]
         [DataContract]
         public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExemptionComponent"; } }
+            public override string TypeName { get { return "Coverage#Exemption"; } }
             
             /// <summary>
             /// Exception category
