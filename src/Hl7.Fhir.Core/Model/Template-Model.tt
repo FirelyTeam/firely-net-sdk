@@ -922,6 +922,18 @@ namespace Hl7.Fhir.Model
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
+
+				// HACK: for http://hl7.org/fhir/SearchParameter/clinical-encounter,
+				// none of the base resources have EpisodeOfCare as target, except
+				// DocumentReference. There is no way you can see this from the
+				// source data we generate this from, afaik, so we need to make
+				// a special case here.
+				if(url == "http://hl7.org/fhir/SearchParameter/clinical-encounter")
+				{
+					if(resourceName == "DocumentReference")
+						sc.Add("ResourceType.EpisodeOfCare");
+				}
+
 				var exprNode = sp.SelectSingleNode("fhir:expression/@value", nsR);
 				if (exprNode != null)
 					expression = exprNode.Value;
