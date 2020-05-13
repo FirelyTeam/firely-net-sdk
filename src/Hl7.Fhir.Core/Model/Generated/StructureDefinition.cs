@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         
         [FhirType("StructureDefinition#StructureDefinition.context", IsNestedType=true)]
         [DataContract]
-        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
+        public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement, IStructureDefinitionContextComponent
         {
             public override string TypeName { get { return "ContextComponent"; } }
             
@@ -478,7 +478,12 @@ namespace Hl7.Fhir.Model
                 }
             }
 
-            
+            Code<StructureDefinitionExtensionContextType> IStructureDefinitionContextComponent.TypeElement
+            {
+                // This must be done using some kind of wrapper returned as ICode<T>
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException(); 
+            }
         }
         
         

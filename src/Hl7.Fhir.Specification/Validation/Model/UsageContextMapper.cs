@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Specification.Validation.Model
     {
         public static readonly UsageContextMapper Current = new UsageContextMapper();
 
-        private static readonly ElementMapper<Element> _elementMapper = new ElementMapper<Element>()
+        private static readonly DataTypeChoiceMapper<DataType> _elementMapper = new DataTypeChoiceMapper<DataType>()
             .Add(CodeableConceptMapper.Current)
             .Add(QuantityMapper.Current)
             .Add(RangeMapper.Current)
