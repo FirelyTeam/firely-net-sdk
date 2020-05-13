@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "EvidenceVariable"; } }
         
-        [FhirType("CharacteristicComponent", NamedBackboneElement=true)]
+        [FhirType("EvidenceVariable#EvidenceVariable.characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -97,13 +97,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Expression),typeof(DataRequirement),typeof(TriggerDefinition))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Definition
+            public Hl7.Fhir.Model.DataType Definition
             {
                 get { return _Definition; }
                 set { _Definition = value; OnPropertyChanged("Definition"); }
             }
             
-            private Hl7.Fhir.Model.Element _Definition;
+            private Hl7.Fhir.Model.DataType _Definition;
             
             /// <summary>
             /// What code/value pairs define members?
@@ -157,13 +157,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
-            public Hl7.Fhir.Model.Element ParticipantEffective
+            public Hl7.Fhir.Model.DataType ParticipantEffective
             {
                 get { return _ParticipantEffective; }
                 set { _ParticipantEffective = value; OnPropertyChanged("ParticipantEffective"); }
             }
             
-            private Hl7.Fhir.Model.Element _ParticipantEffective;
+            private Hl7.Fhir.Model.DataType _ParticipantEffective;
             
             /// <summary>
             /// Observation time from study start
@@ -217,10 +217,10 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Element)Definition.DeepCopy();
+                    if(Definition != null) dest.Definition = (Hl7.Fhir.Model.DataType)Definition.DeepCopy();
                     if(UsageContext != null) dest.UsageContext = new List<UsageContext>(UsageContext.DeepCopy());
                     if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
-                    if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.Element)ParticipantEffective.DeepCopy();
+                    if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.DataType)ParticipantEffective.DeepCopy();
                     if(TimeFromStart != null) dest.TimeFromStart = (Duration)TimeFromStart.DeepCopy();
                     if(GroupMeasureElement != null) dest.GroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)GroupMeasureElement.DeepCopy();
                     return dest;

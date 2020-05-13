@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Procedure"; } }
         
-        [FhirType("PerformerComponent", NamedBackboneElement=true)]
+        [FhirType("Procedure#Procedure.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FocalDeviceComponent", NamedBackboneElement=true)]
+        [FhirType("Procedure#Procedure.focalDevice", IsNestedType=true)]
         [DataContract]
         public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -499,13 +499,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString),typeof(Age),typeof(Hl7.Fhir.Model.Range))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Performed
+        public Hl7.Fhir.Model.DataType Performed
         {
             get { return _Performed; }
             set { _Performed = value; OnPropertyChanged("Performed"); }
         }
         
-        private Hl7.Fhir.Model.Element _Performed;
+        private Hl7.Fhir.Model.DataType _Performed;
         
         /// <summary>
         /// Who recorded the procedure
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Performed != null) dest.Performed = (Hl7.Fhir.Model.Element)Performed.DeepCopy();
+                if(Performed != null) dest.Performed = (Hl7.Fhir.Model.DataType)Performed.DeepCopy();
                 if(Recorder != null) dest.Recorder = (Hl7.Fhir.Model.ResourceReference)Recorder.DeepCopy();
                 if(Asserter != null) dest.Asserter = (Hl7.Fhir.Model.ResourceReference)Asserter.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.Procedure.PerformerComponent>(Performer.DeepCopy());

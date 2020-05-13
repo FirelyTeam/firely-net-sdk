@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("PerformerComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationAdministration#MedicationAdministration.performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DosageComponent", NamedBackboneElement=true)]
+        [FhirType("MedicationAdministration#MedicationAdministration.dosage", IsNestedType=true)]
         [DataContract]
         public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -303,13 +303,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Quantity))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Rate
+            public Hl7.Fhir.Model.DataType Rate
             {
                 get { return _Rate; }
                 set { _Rate = value; OnPropertyChanged("Rate"); }
             }
             
-            private Hl7.Fhir.Model.Element _Rate;
+            private Hl7.Fhir.Model.DataType _Rate;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
                     if(Route != null) dest.Route = (Hl7.Fhir.Model.CodeableConcept)Route.DeepCopy();
                     if(Method != null) dest.Method = (Hl7.Fhir.Model.CodeableConcept)Method.DeepCopy();
                     if(Dose != null) dest.Dose = (Hl7.Fhir.Model.Quantity)Dose.DeepCopy();
-                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.Element)Rate.DeepCopy();
+                    if(Rate != null) dest.Rate = (Hl7.Fhir.Model.DataType)Rate.DeepCopy();
                     return dest;
                 }
                 else
@@ -529,13 +529,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Medication
+        public Hl7.Fhir.Model.DataType Medication
         {
             get { return _Medication; }
             set { _Medication = value; OnPropertyChanged("Medication"); }
         }
         
-        private Hl7.Fhir.Model.Element _Medication;
+        private Hl7.Fhir.Model.DataType _Medication;
         
         /// <summary>
         /// Who received medication
@@ -592,13 +592,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Effective
+        public Hl7.Fhir.Model.DataType Effective
         {
             get { return _Effective; }
             set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _Effective;
+        private Hl7.Fhir.Model.DataType _Effective;
         
         /// <summary>
         /// Who performed the medication administration and what they did
@@ -733,11 +733,11 @@ namespace Hl7.Fhir.Model
                 if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes>)StatusElement.DeepCopy();
                 if(StatusReason != null) dest.StatusReason = new List<Hl7.Fhir.Model.CodeableConcept>(StatusReason.DeepCopy());
                 if(Category != null) dest.Category = (Hl7.Fhir.Model.CodeableConcept)Category.DeepCopy();
-                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.Element)Medication.DeepCopy();
+                if(Medication != null) dest.Medication = (Hl7.Fhir.Model.DataType)Medication.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
                 if(SupportingInformation != null) dest.SupportingInformation = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInformation.DeepCopy());
-                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.DataType)Effective.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.MedicationAdministration.PerformerComponent>(Performer.DeepCopy());
                 if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
                 if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());

@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductInteraction"; } }
         
-        [FhirType("InteractantComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProductInteraction#MedicinalProductInteraction.interactant", IsNestedType=true)]
         [DataContract]
         public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -66,13 +66,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.DataType Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.DataType _Item;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopy();
                     return dest;
                 }
                 else

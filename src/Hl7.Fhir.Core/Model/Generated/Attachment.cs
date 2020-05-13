@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Attachment")]
     [DataContract]
-    public partial class Attachment : Hl7.Fhir.Model.Element
+    public partial class Attachment : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Attachment"; } }
         

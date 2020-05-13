@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("IngredientComponent", NamedBackboneElement=true)]
+        [FhirType("Medication#Medication.ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -93,13 +93,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Item
+            public Hl7.Fhir.Model.DataType Item
             {
                 get { return _Item; }
                 set { _Item = value; OnPropertyChanged("Item"); }
             }
             
-            private Hl7.Fhir.Model.Element _Item;
+            private Hl7.Fhir.Model.DataType _Item;
             
             /// <summary>
             /// Active ingredient indicator
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
                 if (dest != null)
                 {
                     base.CopyTo(dest);
-                    if(Item != null) dest.Item = (Hl7.Fhir.Model.Element)Item.DeepCopy();
+                    if(Item != null) dest.Item = (Hl7.Fhir.Model.DataType)Item.DeepCopy();
                     if(IsActiveElement != null) dest.IsActiveElement = (Hl7.Fhir.Model.FhirBoolean)IsActiveElement.DeepCopy();
                     if(Strength != null) dest.Strength = (Hl7.Fhir.Model.Ratio)Strength.DeepCopy();
                     return dest;
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("BatchComponent", NamedBackboneElement=true)]
+        [FhirType("Medication#Medication.batch", IsNestedType=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
         {

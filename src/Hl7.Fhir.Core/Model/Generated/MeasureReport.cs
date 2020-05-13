@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             DataCollection,
         }
 
-        [FhirType("GroupComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PopulationComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group.population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ComponentComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum.component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("StratifierGroupPopulationComponent", NamedBackboneElement=true)]
+        [FhirType("MeasureReport#MeasureReport.group.stratifier.stratum.population", IsNestedType=true)]
         [DataContract]
         public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
         {

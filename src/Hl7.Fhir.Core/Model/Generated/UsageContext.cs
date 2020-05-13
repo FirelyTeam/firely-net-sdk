@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("UsageContext")]
     [DataContract]
-    public partial class UsageContext : Hl7.Fhir.Model.Element
+    public partial class UsageContext : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "UsageContext"; } }
         
@@ -74,13 +74,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Value
+        public Hl7.Fhir.Model.DataType Value
         {
             get { return _Value; }
             set { _Value = value; OnPropertyChanged("Value"); }
         }
         
-        private Hl7.Fhir.Model.Element _Value;
+        private Hl7.Fhir.Model.DataType _Value;
         
 
         public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
-                if(Value != null) dest.Value = (Hl7.Fhir.Model.Element)Value.DeepCopy();
+                if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
                 return dest;
             }
             else

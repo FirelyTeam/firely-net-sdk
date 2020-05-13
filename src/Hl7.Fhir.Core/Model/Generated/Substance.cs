@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("InstanceComponent", NamedBackboneElement=true)]
+        [FhirType("Substance#Substance.instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("IngredientComponent", NamedBackboneElement=true)]
+        [FhirType("Substance#Substance.ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -243,13 +243,13 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
             [DataMember]
-            public Hl7.Fhir.Model.Element Substance
+            public Hl7.Fhir.Model.DataType Substance
             {
                 get { return _Substance; }
                 set { _Substance = value; OnPropertyChanged("Substance"); }
             }
             
-            private Hl7.Fhir.Model.Element _Substance;
+            private Hl7.Fhir.Model.DataType _Substance;
             
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
                 {
                     base.CopyTo(dest);
                     if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Ratio)Quantity.DeepCopy();
-                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.Element)Substance.DeepCopy();
+                    if(Substance != null) dest.Substance = (Hl7.Fhir.Model.DataType)Substance.DeepCopy();
                     return dest;
                 }
                 else

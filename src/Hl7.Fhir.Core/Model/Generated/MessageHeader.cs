@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             FatalError,
         }
 
-        [FhirType("MessageDestinationComponent", NamedBackboneElement=true)]
+        [FhirType("MessageHeader#MessageHeader.destination", IsNestedType=true)]
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessageSourceComponent", NamedBackboneElement=true)]
+        [FhirType("MessageHeader#MessageHeader.source", IsNestedType=true)]
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResponseComponent", NamedBackboneElement=true)]
+        [FhirType("MessageHeader#MessageHeader.response", IsNestedType=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -652,13 +652,13 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
         [Cardinality(Min=1,Max=1)]
         [DataMember]
-        public Hl7.Fhir.Model.Element Event
+        public Hl7.Fhir.Model.DataType Event
         {
             get { return _Event; }
             set { _Event = value; OnPropertyChanged("Event"); }
         }
         
-        private Hl7.Fhir.Model.Element _Event;
+        private Hl7.Fhir.Model.DataType _Event;
         
         /// <summary>
         /// Message destination application(s)
@@ -830,7 +830,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Event != null) dest.Event = (Hl7.Fhir.Model.Element)Event.DeepCopy();
+                if(Event != null) dest.Event = (Hl7.Fhir.Model.DataType)Event.DeepCopy();
                 if(Destination != null) dest.Destination = new List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent>(Destination.DeepCopy());
                 if(Sender != null) dest.Sender = (Hl7.Fhir.Model.ResourceReference)Sender.DeepCopy();
                 if(Enterer != null) dest.Enterer = (Hl7.Fhir.Model.ResourceReference)Enterer.DeepCopy();

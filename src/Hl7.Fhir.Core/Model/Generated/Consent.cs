@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
             Authoredby,
         }
 
-        [FhirType("PolicyComponent", NamedBackboneElement=true)]
+        [FhirType("Consent#Consent.policy", IsNestedType=true)]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VerificationComponent", NamedBackboneElement=true)]
+        [FhirType("Consent#Consent.verification", IsNestedType=true)]
         [DataContract]
         public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionComponent", NamedBackboneElement=true)]
+        [FhirType("Consent#Consent.provision", IsNestedType=true)]
         [DataContract]
         public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -735,7 +735,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionActorComponent", NamedBackboneElement=true)]
+        [FhirType("Consent#Consent.provision.actor", IsNestedType=true)]
         [DataContract]
         public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("provisionDataComponent", NamedBackboneElement=true)]
+        [FhirType("Consent#Consent.provision.data", IsNestedType=true)]
         [DataContract]
         public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1122,13 +1122,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Source
+        public Hl7.Fhir.Model.DataType Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.Element _Source;
+        private Hl7.Fhir.Model.DataType _Source;
         
         /// <summary>
         /// Policies covered by this consent
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
                 if(DateTimeElement != null) dest.DateTimeElement = (Hl7.Fhir.Model.FhirDateTime)DateTimeElement.DeepCopy();
                 if(Performer != null) dest.Performer = new List<Hl7.Fhir.Model.ResourceReference>(Performer.DeepCopy());
                 if(Organization != null) dest.Organization = new List<Hl7.Fhir.Model.ResourceReference>(Organization.DeepCopy());
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.DataType)Source.DeepCopy();
                 if(Policy != null) dest.Policy = new List<Hl7.Fhir.Model.Consent.PolicyComponent>(Policy.DeepCopy());
                 if(PolicyRule != null) dest.PolicyRule = (Hl7.Fhir.Model.CodeableConcept)PolicyRule.DeepCopy();
                 if(Verification != null) dest.Verification = new List<Hl7.Fhir.Model.Consent.VerificationComponent>(Verification.DeepCopy());

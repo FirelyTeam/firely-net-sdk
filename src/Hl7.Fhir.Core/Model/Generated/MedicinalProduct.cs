@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProduct"; } }
         
-        [FhirType("NameComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProduct#MedicinalProduct.name", IsNestedType=true)]
         [DataContract]
         public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NamePartComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProduct#MedicinalProduct.name.namePart", IsNestedType=true)]
         [DataContract]
         public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CountryLanguageComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProduct#MedicinalProduct.name.countryLanguage", IsNestedType=true)]
         [DataContract]
         public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ManufacturingBusinessOperationComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProduct#MedicinalProduct.manufacturingBusinessOperation", IsNestedType=true)]
         [DataContract]
         public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecialDesignationComponent", NamedBackboneElement=true)]
+        [FhirType("MedicinalProduct#MedicinalProduct.specialDesignation", IsNestedType=true)]
         [DataContract]
         public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -683,13 +683,13 @@ namespace Hl7.Fhir.Model
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
-            public Hl7.Fhir.Model.Element Indication
+            public Hl7.Fhir.Model.DataType Indication
             {
                 get { return _Indication; }
                 set { _Indication = value; OnPropertyChanged("Indication"); }
             }
             
-            private Hl7.Fhir.Model.Element _Indication;
+            private Hl7.Fhir.Model.DataType _Indication;
             
             /// <summary>
             /// For example granted, pending, expired or withdrawn
@@ -758,7 +758,7 @@ namespace Hl7.Fhir.Model
                     if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
                     if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
                     if(IntendedUse != null) dest.IntendedUse = (Hl7.Fhir.Model.CodeableConcept)IntendedUse.DeepCopy();
-                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Element)Indication.DeepCopy();
+                    if(Indication != null) dest.Indication = (Hl7.Fhir.Model.DataType)Indication.DeepCopy();
                     if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
                     if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                     if(Species != null) dest.Species = (Hl7.Fhir.Model.CodeableConcept)Species.DeepCopy();

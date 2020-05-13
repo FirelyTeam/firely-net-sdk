@@ -48,29 +48,29 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Population")]
     [DataContract]
-    public partial class Population : Hl7.Fhir.Model.BackboneElement
+    public partial class Population : Hl7.Fhir.Model.BackboneType
     {
         public override string TypeName { get { return "Population"; } }
         
         /// <summary>
         /// The age of the specific population
         /// </summary>
-        [FhirElement("age", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Age
+        public Hl7.Fhir.Model.DataType Age
         {
             get { return _Age; }
             set { _Age = value; OnPropertyChanged("Age"); }
         }
         
-        private Hl7.Fhir.Model.Element _Age;
+        private Hl7.Fhir.Model.DataType _Age;
         
         /// <summary>
         /// The gender of the specific population
         /// </summary>
-        [FhirElement("gender", InSummary=true, Order=100)]
+        [FhirElement("gender", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Gender
         {
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Race of the specific population
         /// </summary>
-        [FhirElement("race", InSummary=true, Order=110)]
+        [FhirElement("race", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept Race
         {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The existing physiological conditions of the specific population to which this applies
         /// </summary>
-        [FhirElement("physiologicalCondition", InSummary=true, Order=120)]
+        [FhirElement("physiologicalCondition", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
         {
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Age != null) dest.Age = (Hl7.Fhir.Model.Element)Age.DeepCopy();
+                if(Age != null) dest.Age = (Hl7.Fhir.Model.DataType)Age.DeepCopy();
                 if(Gender != null) dest.Gender = (Hl7.Fhir.Model.CodeableConcept)Gender.DeepCopy();
                 if(Race != null) dest.Race = (Hl7.Fhir.Model.CodeableConcept)Race.DeepCopy();
                 if(PhysiologicalCondition != null) dest.PhysiologicalCondition = (Hl7.Fhir.Model.CodeableConcept)PhysiologicalCondition.DeepCopy();

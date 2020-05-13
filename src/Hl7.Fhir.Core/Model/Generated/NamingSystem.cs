@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("UniqueIdComponent", NamedBackboneElement=true)]
+        [FhirType("NamingSystem#NamingSystem.uniqueId", IsNestedType=true)]
         [DataContract]
         public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
         {

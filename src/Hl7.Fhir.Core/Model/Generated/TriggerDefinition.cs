@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("TriggerDefinition")]
     [DataContract]
-    public partial class TriggerDefinition : Hl7.Fhir.Model.Element
+    public partial class TriggerDefinition : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "TriggerDefinition"; } }
         
@@ -179,13 +179,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Timing
+        public Hl7.Fhir.Model.DataType Timing
         {
             get { return _Timing; }
             set { _Timing = value; OnPropertyChanged("Timing"); }
         }
         
-        private Hl7.Fhir.Model.Element _Timing;
+        private Hl7.Fhir.Model.DataType _Timing;
         
         /// <summary>
         /// Triggering data of the event (multiple = 'and')
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
                 base.CopyTo(dest);
                 if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType>)TypeElement.DeepCopy();
                 if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.Element)Timing.DeepCopy();
+                if(Timing != null) dest.Timing = (Hl7.Fhir.Model.DataType)Timing.DeepCopy();
                 if(Data != null) dest.Data = new List<DataRequirement>(Data.DeepCopy());
                 if(Condition != null) dest.Condition = (Expression)Condition.DeepCopy();
                 return dest;

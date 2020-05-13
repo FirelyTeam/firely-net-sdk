@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
             Consumer,
         }
 
-        [FhirType("SoftwareComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.software", IsNestedType=true)]
         [DataContract]
         public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.implementation", IsNestedType=true)]
         [DataContract]
         public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RestComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest", IsNestedType=true)]
         [DataContract]
         public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SecurityComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.security", IsNestedType=true)]
         [DataContract]
         public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1058,7 +1058,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResourceComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource", IsNestedType=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1671,7 +1671,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ResourceInteractionComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.interaction", IsNestedType=true)]
         [DataContract]
         public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1791,7 +1791,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SearchParamComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.searchParam", IsNestedType=true)]
         [DataContract]
         public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1984,7 +1984,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.resource.operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2141,7 +2141,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SystemInteractionComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.rest.interaction", IsNestedType=true)]
         [DataContract]
         public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2261,7 +2261,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessagingComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.messaging", IsNestedType=true)]
         [DataContract]
         public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2418,7 +2418,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EndpointComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.messaging.endpoint", IsNestedType=true)]
         [DataContract]
         public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2539,7 +2539,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SupportedMessageComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.messaging.supportedMessage", IsNestedType=true)]
         [DataContract]
         public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -2678,7 +2678,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentComponent", NamedBackboneElement=true)]
+        [FhirType("CapabilityStatement#CapabilityStatement.document", IsNestedType=true)]
         [DataContract]
         public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement
         {

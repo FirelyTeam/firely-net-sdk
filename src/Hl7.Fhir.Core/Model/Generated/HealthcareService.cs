@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "HealthcareService"; } }
         
-        [FhirType("EligibilityComponent", NamedBackboneElement=true)]
+        [FhirType("HealthcareService#HealthcareService.eligibility", IsNestedType=true)]
         [DataContract]
         public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AvailableTimeComponent", NamedBackboneElement=true)]
+        [FhirType("HealthcareService#HealthcareService.availableTime", IsNestedType=true)]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("NotAvailableComponent", NamedBackboneElement=true)]
+        [FhirType("HealthcareService#HealthcareService.notAvailable", IsNestedType=true)]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {

@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
             Error,
         }
 
-        [FhirType("ParticipantComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SetupComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.setup", IsNestedType=true)]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SetupActionComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.setup.action", IsNestedType=true)]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.setup.action.operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AssertComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.setup.action.assert", IsNestedType=true)]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.test", IsNestedType=true)]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1012,7 +1012,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestActionComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.test.action", IsNestedType=true)]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.teardown", IsNestedType=true)]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TeardownActionComponent", NamedBackboneElement=true)]
+        [FhirType("TestReport#TestReport.teardown.action", IsNestedType=true)]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {

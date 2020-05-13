@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("LensSpecificationComponent", NamedBackboneElement=true)]
+        [FhirType("VisionPrescription#VisionPrescription.lensSpecification", IsNestedType=true)]
         [DataContract]
         public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PrismComponent", NamedBackboneElement=true)]
+        [FhirType("VisionPrescription#VisionPrescription.lensSpecification.prism", IsNestedType=true)]
         [DataContract]
         public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
         {

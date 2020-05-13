@@ -111,7 +111,7 @@ namespace Hl7.Fhir.ElementModel
             }
         }
 
-        public static T ParsePrimitive<T>(this ITypedElement instance) where T : Primitive, new()
+        public static T ParsePrimitive<T>(this ITypedElement instance) where T : PrimitiveType, new()
                     => new T() { ObjectValue = instance.Value };
 
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.ElementModel
 
 
         [Obsolete("Use ParsePrimitive<T>(this ITypedElement instance) instead")]
-        public static T ParsePrimitive<T>(this IElementNavigator instance) where T : Primitive, new()
+        public static T ParsePrimitive<T>(this IElementNavigator instance) where T : PrimitiveType, new()
             => ParsePrimitive<T>(instance.ToTypedElement());
 
         [Obsolete("Use ParseCoding(this ITypedElement instance) instead")]

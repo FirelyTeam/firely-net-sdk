@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("Expression")]
     [DataContract]
-    public partial class Expression : Hl7.Fhir.Model.Element
+    public partial class Expression : Hl7.Fhir.Model.DataType
     {
         public override string TypeName { get { return "Expression"; } }
         

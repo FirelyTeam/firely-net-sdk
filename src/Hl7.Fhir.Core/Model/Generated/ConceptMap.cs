@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
             OtherMap,
         }
 
-        [FhirType("GroupComponent", NamedBackboneElement=true)]
+        [FhirType("ConceptMap#ConceptMap.group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SourceElementComponent", NamedBackboneElement=true)]
+        [FhirType("ConceptMap#ConceptMap.group.element", IsNestedType=true)]
         [DataContract]
         public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TargetElementComponent", NamedBackboneElement=true)]
+        [FhirType("ConceptMap#ConceptMap.group.element.target", IsNestedType=true)]
         [DataContract]
         public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OtherElementComponent", NamedBackboneElement=true)]
+        [FhirType("ConceptMap#ConceptMap.group.element.target.dependsOn", IsNestedType=true)]
         [DataContract]
         public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("UnmappedComponent", NamedBackboneElement=true)]
+        [FhirType("ConceptMap#ConceptMap.group.unmapped", IsNestedType=true)]
         [DataContract]
         public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -1569,13 +1569,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Source
+        public Hl7.Fhir.Model.DataType Source
         {
             get { return _Source; }
             set { _Source = value; OnPropertyChanged("Source"); }
         }
         
-        private Hl7.Fhir.Model.Element _Source;
+        private Hl7.Fhir.Model.DataType _Source;
         
         /// <summary>
         /// The target value set which provides context for the mappings
@@ -1584,13 +1584,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Target
+        public Hl7.Fhir.Model.DataType Target
         {
             get { return _Target; }
             set { _Target = value; OnPropertyChanged("Target"); }
         }
         
-        private Hl7.Fhir.Model.Element _Target;
+        private Hl7.Fhir.Model.DataType _Target;
         
         /// <summary>
         /// Same source and target systems
@@ -1630,8 +1630,8 @@ namespace Hl7.Fhir.Model
                 if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
                 if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
                 if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
-                if(Source != null) dest.Source = (Hl7.Fhir.Model.Element)Source.DeepCopy();
-                if(Target != null) dest.Target = (Hl7.Fhir.Model.Element)Target.DeepCopy();
+                if(Source != null) dest.Source = (Hl7.Fhir.Model.DataType)Source.DeepCopy();
+                if(Target != null) dest.Target = (Hl7.Fhir.Model.DataType)Target.DeepCopy();
                 if(Group != null) dest.Group = new List<Hl7.Fhir.Model.ConceptMap.GroupComponent>(Group.DeepCopy());
                 return dest;
             }

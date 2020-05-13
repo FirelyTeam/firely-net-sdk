@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
             Removal,
         }
 
-        [FhirType("AgentComponent", NamedBackboneElement=true)]
+        [FhirType("Provenance#Provenance.agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EntityComponent", NamedBackboneElement=true)]
+        [FhirType("Provenance#Provenance.entity", IsNestedType=true)]
         [DataContract]
         public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -399,13 +399,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Occurred
+        public Hl7.Fhir.Model.DataType Occurred
         {
             get { return _Occurred; }
             set { _Occurred = value; OnPropertyChanged("Occurred"); }
         }
         
-        private Hl7.Fhir.Model.Element _Occurred;
+        private Hl7.Fhir.Model.DataType _Occurred;
         
         /// <summary>
         /// When the activity was recorded / updated
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
             {
                 base.CopyTo(dest);
                 if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
-                if(Occurred != null) dest.Occurred = (Hl7.Fhir.Model.Element)Occurred.DeepCopy();
+                if(Occurred != null) dest.Occurred = (Hl7.Fhir.Model.DataType)Occurred.DeepCopy();
                 if(RecordedElement != null) dest.RecordedElement = (Hl7.Fhir.Model.Instant)RecordedElement.DeepCopy();
                 if(PolicyElement != null) dest.PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(PolicyElement.DeepCopy());
                 if(Location != null) dest.Location = (Hl7.Fhir.Model.ResourceReference)Location.DeepCopy();

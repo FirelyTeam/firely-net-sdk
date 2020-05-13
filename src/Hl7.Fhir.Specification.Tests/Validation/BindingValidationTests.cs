@@ -16,12 +16,10 @@ namespace Hl7.Fhir.Specification.Tests
     {
         private readonly IResourceResolver _resolver;
         private readonly ITerminologyService _termService;
-        private readonly Validator _validator;
 
         public BindingValidationTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
-            _validator = fixture.Validator;
             _termService = new LocalTerminologyService(_resolver);
         }
 

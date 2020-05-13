@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("InvestigationComponent", NamedBackboneElement=true)]
+        [FhirType("ClinicalImpression#ClinicalImpression.investigation", IsNestedType=true)]
         [DataContract]
         public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("FindingComponent", NamedBackboneElement=true)]
+        [FhirType("ClinicalImpression#ClinicalImpression.finding", IsNestedType=true)]
         [DataContract]
         public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -464,13 +464,13 @@ namespace Hl7.Fhir.Model
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Effective
+        public Hl7.Fhir.Model.DataType Effective
         {
             get { return _Effective; }
             set { _Effective = value; OnPropertyChanged("Effective"); }
         }
         
-        private Hl7.Fhir.Model.Element _Effective;
+        private Hl7.Fhir.Model.DataType _Effective;
         
         /// <summary>
         /// When the assessment was documented
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
                 if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
                 if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
                 if(Encounter != null) dest.Encounter = (Hl7.Fhir.Model.ResourceReference)Encounter.DeepCopy();
-                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.Element)Effective.DeepCopy();
+                if(Effective != null) dest.Effective = (Hl7.Fhir.Model.DataType)Effective.DeepCopy();
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Assessor != null) dest.Assessor = (Hl7.Fhir.Model.ResourceReference)Assessor.DeepCopy();
                 if(Previous != null) dest.Previous = (Hl7.Fhir.Model.ResourceReference)Previous.DeepCopy();

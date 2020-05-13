@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
             Absolute,
         }
 
-        [FhirType("QuantitativeDetailsComponent", NamedBackboneElement=true)]
+        [FhirType("ObservationDefinition#ObservationDefinition.quantitativeDetails", IsNestedType=true)]
         [DataContract]
         public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("QualifiedIntervalComponent", NamedBackboneElement=true)]
+        [FhirType("ObservationDefinition#ObservationDefinition.qualifiedInterval", IsNestedType=true)]
         [DataContract]
         public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
         {

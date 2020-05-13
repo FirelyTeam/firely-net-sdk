@@ -48,13 +48,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirType("SubstanceAmount")]
     [DataContract]
-    public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneElement
+    public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneType
     {
         public override string TypeName { get { return "SubstanceAmount"; } }
         
-        [FhirType("ReferenceRangeComponent", NamedBackboneElement=true)]
+        [FhirType("SubstanceAmount#SubstanceAmount.referenceRange", IsNestedType=true)]
         [DataContract]
-        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element, IBackboneElement
+        public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element
         {
             public override string TypeName { get { return "ReferenceRangeComponent"; } }
             
@@ -153,22 +153,22 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("amount", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
-        public Hl7.Fhir.Model.Element Amount
+        public Hl7.Fhir.Model.DataType Amount
         {
             get { return _Amount; }
             set { _Amount = value; OnPropertyChanged("Amount"); }
         }
         
-        private Hl7.Fhir.Model.Element _Amount;
+        private Hl7.Fhir.Model.DataType _Amount;
         
         /// <summary>
         /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements
         /// </summary>
-        [FhirElement("amountType", InSummary=true, Order=100)]
+        [FhirElement("amountType", InSummary=true, Order=40)]
         [DataMember]
         public Hl7.Fhir.Model.CodeableConcept AmountType
         {
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// A textual comment on a numeric value
         /// </summary>
-        [FhirElement("amountText", InSummary=true, Order=110)]
+        [FhirElement("amountText", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString AmountTextElement
         {
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reference range of possible or expected values
         /// </summary>
-        [FhirElement("referenceRange", InSummary=true, Order=120)]
+        [FhirElement("referenceRange", InSummary=true, Order=60)]
         [DataMember]
         public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent ReferenceRange
         {
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
             if (dest != null)
             {
                 base.CopyTo(dest);
-                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.Element)Amount.DeepCopy();
+                if(Amount != null) dest.Amount = (Hl7.Fhir.Model.DataType)Amount.DeepCopy();
                 if(AmountType != null) dest.AmountType = (Hl7.Fhir.Model.CodeableConcept)AmountType.DeepCopy();
                 if(AmountTextElement != null) dest.AmountTextElement = (Hl7.Fhir.Model.FhirString)AmountTextElement.DeepCopy();
                 if(ReferenceRange != null) dest.ReferenceRange = (Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent)ReferenceRange.DeepCopy();

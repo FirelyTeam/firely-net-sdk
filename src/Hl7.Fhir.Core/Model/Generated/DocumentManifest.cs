@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DocumentManifest"; } }
         
-        [FhirType("RelatedComponent", NamedBackboneElement=true)]
+        [FhirType("DocumentManifest#DocumentManifest.related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
