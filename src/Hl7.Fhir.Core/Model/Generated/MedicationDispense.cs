@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("MedicationDispense#MedicationDispense.performer", IsNestedType=true)]
+        [FhirType("MedicationDispense#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "MedicationDispense#Performer"; } }
             
             /// <summary>
             /// Individual who was performing
@@ -203,11 +203,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationDispense#MedicationDispense.substitution", IsNestedType=true)]
+        [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SubstitutionComponent"; } }
+            public override string TypeName { get { return "MedicationDispense#Substitution"; } }
             
             /// <summary>
             /// Whether a substitution was or was not performed on the dispense

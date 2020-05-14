@@ -1,7 +1,7 @@
 
 
 //
-// Model Generated on Wed, 22 Apr 2020 14:53:13 GMT for FHIR v3.0.2
+// Model Generated on Fri, 08 May 2020 16:21:05 GMT for FHIR v3.0.2
 //
 // Generated Shared Enumeration: ResourceType
 
@@ -72,7 +72,6 @@
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
-// Hl7.Fhir.Core\Model\Generated\Timing.cs
 // Hl7.Fhir.Core\Model\Generated\Signature.cs
 // Hl7.Fhir.Core\Model\Generated\SampledData.cs
 // Hl7.Fhir.Core\Model\Generated\RelatedArtifact.cs
@@ -94,8 +93,3 @@
 // Hl7.Fhir.Core\Model\Generated\Attachment.cs
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
-// Hl7.Fhir.Core\Model\Generated\Time.cs
-// Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
-// Hl7.Fhir.Core\Model\Generated\Markdown.cs
-// Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs

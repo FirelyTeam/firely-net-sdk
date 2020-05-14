@@ -121,11 +121,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("DiagnosticReport#DiagnosticReport.performer", IsNestedType=true)]
+        [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "DiagnosticReport#Performer"; } }
             
             /// <summary>
             /// Type of performer
@@ -225,11 +225,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DiagnosticReport#DiagnosticReport.image", IsNestedType=true)]
+        [FhirType("DiagnosticReport#Image", IsNestedType=true)]
         [DataContract]
         public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ImageComponent"; } }
+            public override string TypeName { get { return "DiagnosticReport#Image"; } }
             
             /// <summary>
             /// Comment about the image (e.g. explanation)

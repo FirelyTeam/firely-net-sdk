@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Medication#Medication.ingredient", IsNestedType=true)]
+        [FhirType("Medication#Ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "IngredientComponent"; } }
+            public override string TypeName { get { return "Medication#Ingredient"; } }
             
             /// <summary>
             /// The product contained
@@ -219,11 +219,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Medication#Medication.package", IsNestedType=true)]
+        [FhirType("Medication#Package", IsNestedType=true)]
         [DataContract]
         public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PackageComponent"; } }
+            public override string TypeName { get { return "Medication#Package"; } }
             
             /// <summary>
             /// E.g. box, vial, blister-pack
@@ -340,11 +340,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Medication#Medication.package.content", IsNestedType=true)]
+        [FhirType("Medication#Content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContentComponent"; } }
+            public override string TypeName { get { return "Medication#Content"; } }
             
             /// <summary>
             /// The item in the package
@@ -444,11 +444,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Medication#Medication.package.batch", IsNestedType=true)]
+        [FhirType("Medication#Batch", IsNestedType=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BatchComponent"; } }
+            public override string TypeName { get { return "Medication#Batch"; } }
             
             /// <summary>
             /// Identifier assigned to batch

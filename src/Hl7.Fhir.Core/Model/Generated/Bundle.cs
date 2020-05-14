@@ -175,11 +175,11 @@ namespace Hl7.Fhir.Model
             DELETE,
         }
 
-        [FhirType("Bundle#Bundle.link", IsNestedType=true)]
+        [FhirType("Bundle#Link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkComponent"; } }
+            public override string TypeName { get { return "Bundle#Link"; } }
             
             /// <summary>
             /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
@@ -314,11 +314,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Bundle#Bundle.entry", IsNestedType=true)]
+        [FhirType("Bundle#Entry", IsNestedType=true)]
         [DataContract]
         public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EntryComponent"; } }
+            public override string TypeName { get { return "Bundle#Entry"; } }
             
             /// <summary>
             /// Links related to this entry
@@ -508,11 +508,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Bundle#Bundle.entry.search", IsNestedType=true)]
+        [FhirType("Bundle#Search", IsNestedType=true)]
         [DataContract]
         public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SearchComponent"; } }
+            public override string TypeName { get { return "Bundle#Search"; } }
             
             /// <summary>
             /// match | include | outcome - why this is in the result set
@@ -645,11 +645,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Bundle#Bundle.entry.request", IsNestedType=true)]
+        [FhirType("Bundle#Request", IsNestedType=true)]
         [DataContract]
         public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RequestComponent"; } }
+            public override string TypeName { get { return "Bundle#Request"; } }
             
             /// <summary>
             /// GET | POST | PUT | DELETE
@@ -928,11 +928,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Bundle#Bundle.entry.response", IsNestedType=true)]
+        [FhirType("Bundle#Response", IsNestedType=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResponseComponent"; } }
+            public override string TypeName { get { return "Bundle#Response"; } }
             
             /// <summary>
             /// Status response code (text optional)

@@ -157,11 +157,11 @@ namespace Hl7.Fhir.Model
             Quantity,
         }
 
-        [FhirType("Questionnaire#Questionnaire.item", IsNestedType=true)]
+        [FhirType("Questionnaire#Item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemComponent"; } }
+            public override string TypeName { get { return "Questionnaire#Item"; } }
             
             /// <summary>
             /// Unique id for item in questionnaire
@@ -664,11 +664,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Questionnaire#Questionnaire.item.enableWhen", IsNestedType=true)]
+        [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
         [DataContract]
         public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EnableWhenComponent"; } }
+            public override string TypeName { get { return "Questionnaire#EnableWhen"; } }
             
             /// <summary>
             /// Question that determines whether item is enabled
@@ -822,11 +822,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Questionnaire#Questionnaire.item.option", IsNestedType=true)]
+        [FhirType("Questionnaire#Option", IsNestedType=true)]
         [DataContract]
         public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OptionComponent"; } }
+            public override string TypeName { get { return "Questionnaire#Option"; } }
             
             /// <summary>
             /// Answer value

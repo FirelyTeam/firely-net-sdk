@@ -103,11 +103,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ChargeItem#ChargeItem.participant", IsNestedType=true)]
+        [FhirType("ChargeItem#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "ChargeItem#Participant"; } }
             
             /// <summary>
             /// What type of performance was done

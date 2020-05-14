@@ -13,11 +13,10 @@ using System.Diagnostics;
 using Hl7.Fhir.Specification.Source;
 using System.Net;
 using Hl7.Fhir.Support;
-using System.Xml.Linq;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
-using Hl7.Fhir.Utility;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -27,7 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
         const int DefaultTimeOut = 15 * 1000; // 15 seconds
 
         [ClassInitialize]
-        public static void SetupSource(TestContext t)
+        public static void SetupSource(TestContext _)
         {
             source = ZipSource.CreateValidationSource();
         }
@@ -134,15 +133,15 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod,TestCategory("IntegrationTest")]
-        public void RetrieveArtifactMulti()
+        public async T.Task RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
 
-            var vs = resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            var vs = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
-            var artifact = resolver.ResolveByUri("http://test.fhir.org/r3/StructureDefinition/Patient");
+            var artifact = await resolver.ResolveByUriAsync("http://test.fhir.org/r3/StructureDefinition/Patient");
 
             Assert.IsNotNull(artifact);
             Assert.IsTrue(artifact is StructureDefinition);
@@ -151,7 +150,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod, TestCategory("IntegrationTest")]
-        public void TestSourceCaching()
+        public async T.Task TestSourceCaching()
         {
             var src = new CachedResolver(
                 new MultiResolver(
@@ -162,13 +161,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Ensure looking up a failed endpoint repeatedly does not cost much time
             sw1.Start();
-            src.ResolveByUri("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
+            await src.ResolveByUriAsync("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
             sw1.Stop();
 
             var sw2 = new Stopwatch();
 
             sw2.Start();
-            src.ResolveByUri("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
+            await src.ResolveByUriAsync("http://some.none.existant.address.nl/fhir/StructureDefinition/bla");
             sw2.Stop();
 
             Debug.WriteLine("sw2 {0}, sw1 {1}", sw2.ElapsedMilliseconds, sw1.ElapsedMilliseconds);
@@ -176,18 +175,18 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now try an existing artifact
             sw1.Restart();
-            src.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            await src.ResolveByUriAsync("http://hl7.org/fhir/ValueSet/v2-0292");
             sw1.Stop();
 
             sw2.Restart();
-            src.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            await src.ResolveByUriAsync("http://hl7.org/fhir/ValueSet/v2-0292");
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw1.ElapsedMilliseconds && sw2.ElapsedMilliseconds < 100);
         }
 
         [TestMethod]
-        public void TestCacheInvalidation()
+        public async T.Task TestCacheInvalidation()
         {
             var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
@@ -195,14 +194,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify that the Load event is fired on the initial load
             const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
-            var resource = src.ResolveByUri(resourceUri);
+            var resource = await src.ResolveByUriAsync(resourceUri);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
             Assert.AreEqual(resource, eventArgs.Resource);
 
             // Verify that the Load event is not fired on subsequent load
             eventArgs = null;
-            resource = src.ResolveByUri(resourceUri);
+            resource = await src.ResolveByUriAsync(resourceUri);
             Assert.IsNull(eventArgs);
 
             // Verify that we can remove the cache entry
@@ -214,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(result);
 
             // Verify that the Load event is fired again on the next load
-            var resource2 = src.ResolveByUri(resourceUri);
+            var resource2 = await src.ResolveByUriAsync(resourceUri);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
             Assert.AreEqual(resource2, eventArgs.Resource);
@@ -225,7 +224,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestCacheLoadingStrategy()
+        public async T.Task TestCacheLoadingStrategy()
         {
             const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
 
@@ -234,7 +233,7 @@ namespace Hl7.Fhir.Specification.Tests
             var cache = new CachedResolver(mem);
             
             // Load on demand should return null
-            var resource = cache.ResolveByCanonicalUri(resourceUri);
+            var resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNull(resource);
 
             // Resolve core resource from ZIP and refresh in-memory resolver
@@ -244,18 +243,18 @@ namespace Hl7.Fhir.Specification.Tests
             mem.Reload(original);
 
             // Load on demand should still return null
-            resource = cache.ResolveByCanonicalUri(resourceUri);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNull(resource);
 
             // Invalidate the cache, delete existing cache entry
             cache.InvalidateByCanonicalUri(resourceUri);
 
             // Load from cache should still return null
-            resource = cache.ResolveByCanonicalUri(resourceUri, CachedResolverLoadingStrategy.LoadFromCache);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri, CachedResolverLoadingStrategy.LoadFromCache);
             Assert.IsNull(resource);
 
             // Load on demand should now resolve instance and update cache
-            resource = cache.ResolveByCanonicalUri(resourceUri);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNotNull(resource);
             Assert.AreEqual(original, resource);
             Assert.IsTrue(cache.IsCachedCanonicalUri(resourceUri));
@@ -267,12 +266,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Load on demand should still return the original, unmodified instance from cache
             // As the cache is unaware that the internal source has changed
-            resource = cache.ResolveByCanonicalUri(resourceUri);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNotNull(resource);
             Assert.AreEqual(original, resource);
 
             // Forced load should update cache and return new, modified instance
-            resource = cache.ResolveByCanonicalUri(resourceUri, CachedResolverLoadingStrategy.LoadFromSource);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri, CachedResolverLoadingStrategy.LoadFromSource);
             Assert.IsNotNull(resource);
             Assert.AreEqual(modified, resource);
 
@@ -281,13 +280,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Load on demand should still return the modified instance from cache
             // As the cache is unaware that the internal source has changed
-            resource = cache.ResolveByCanonicalUri(resourceUri);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNotNull(resource);
             Assert.AreEqual(modified, resource);
             Assert.IsTrue(cache.IsCachedCanonicalUri(resourceUri));
 
             // Forced load should update cache and now return null
-            resource = cache.ResolveByCanonicalUri(resourceUri, CachedResolverLoadingStrategy.LoadFromSource);
+            resource = await cache.ResolveByCanonicalUriAsync(resourceUri, CachedResolverLoadingStrategy.LoadFromSource);
             Assert.IsNull(resource);
             Assert.IsFalse(cache.IsCachedCanonicalUri(resourceUri));
         }
@@ -299,12 +298,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             var sw = new Stopwatch();
             sw.Start();
-            var vs = fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
+            fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
             sw.Stop();
 
             var sw2 = new Stopwatch();
             sw2.Start();
-            var vs2 = fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
+            fa.ResolveByCanonicalUri("http://hl7.org/fhir/v2/vs/0292");
             sw2.Stop();
 
             Assert.IsTrue(sw2.ElapsedMilliseconds < sw.ElapsedMilliseconds);

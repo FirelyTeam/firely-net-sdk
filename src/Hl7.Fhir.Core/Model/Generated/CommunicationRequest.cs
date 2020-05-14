@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "CommunicationRequest"; } }
         
-        [FhirType("CommunicationRequest#CommunicationRequest.payload", IsNestedType=true)]
+        [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
         [DataContract]
         public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PayloadComponent"; } }
+            public override string TypeName { get { return "CommunicationRequest#Payload"; } }
             
             /// <summary>
             /// Message part content
@@ -138,11 +138,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CommunicationRequest#CommunicationRequest.requester", IsNestedType=true)]
+        [FhirType("CommunicationRequest#Requester", IsNestedType=true)]
         [DataContract]
         public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RequesterComponent"; } }
+            public override string TypeName { get { return "CommunicationRequest#Requester"; } }
             
             /// <summary>
             /// Individual making the request

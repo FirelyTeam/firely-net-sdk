@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "DocumentReference"; } }
         
-        [FhirType("DocumentReference#DocumentReference.relatesTo", IsNestedType=true)]
+        [FhirType("DocumentReference#RelatesTo", IsNestedType=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatesToComponent"; } }
+            public override string TypeName { get { return "DocumentReference#RelatesTo"; } }
             
             /// <summary>
             /// replaces | transforms | signs | appends
@@ -175,11 +175,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReference#DocumentReference.content", IsNestedType=true)]
+        [FhirType("DocumentReference#Content", IsNestedType=true)]
         [DataContract]
         public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContentComponent"; } }
+            public override string TypeName { get { return "DocumentReference#Content"; } }
             
             /// <summary>
             /// Where to access the document
@@ -277,11 +277,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReference#DocumentReference.context", IsNestedType=true)]
+        [FhirType("DocumentReference#Context", IsNestedType=true)]
         [DataContract]
         public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContextComponent"; } }
+            public override string TypeName { get { return "DocumentReference#Context"; } }
             
             /// <summary>
             /// Context of the document  content
@@ -474,11 +474,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DocumentReference#DocumentReference.context.related", IsNestedType=true)]
+        [FhirType("DocumentReference#Related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatedComponent"; } }
+            public override string TypeName { get { return "DocumentReference#Related"; } }
             
             /// <summary>
             /// Identifier of related objects or events

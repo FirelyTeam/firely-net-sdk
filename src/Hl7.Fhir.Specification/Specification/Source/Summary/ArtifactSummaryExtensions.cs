@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Source
                 switch (list.Count)
                 {
                     case 0:
-                        return default(TSource);
+                        return default;
                     case 1:
                         return list[0];
                 }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     if (!enumerator.MoveNext())
                     {
-                        return default(TSource);
+                        return default;
                     }
                     TSource current = enumerator.Current;
                     if (!enumerator.MoveNext())

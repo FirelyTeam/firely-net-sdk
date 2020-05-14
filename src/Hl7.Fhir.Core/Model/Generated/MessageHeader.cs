@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             FatalError,
         }
 
-        [FhirType("MessageHeader#MessageHeader.destination", IsNestedType=true)]
+        [FhirType("MessageHeader#MessageDestination", IsNestedType=true)]
         [DataContract]
         public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MessageDestinationComponent"; } }
+            public override string TypeName { get { return "MessageHeader#MessageDestination"; } }
             
             /// <summary>
             /// Name of system
@@ -237,11 +237,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessageHeader#MessageHeader.source", IsNestedType=true)]
+        [FhirType("MessageHeader#MessageSource", IsNestedType=true)]
         [DataContract]
         public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MessageSourceComponent"; } }
+            public override string TypeName { get { return "MessageHeader#MessageSource"; } }
             
             /// <summary>
             /// Name of system
@@ -465,11 +465,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MessageHeader#MessageHeader.response", IsNestedType=true)]
+        [FhirType("MessageHeader#Response", IsNestedType=true)]
         [DataContract]
         public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResponseComponent"; } }
+            public override string TypeName { get { return "MessageHeader#Response"; } }
             
             /// <summary>
             /// Id of original message

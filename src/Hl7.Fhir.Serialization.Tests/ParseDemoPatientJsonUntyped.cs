@@ -1,23 +1,19 @@
-﻿using System;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using System.Linq;
-using Hl7.Fhir.Introspection;
-using Hl7.FhirPath;
-using Newtonsoft.Json;
+﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public ISourceNode getJsonNodeU(string json, FhirJsonParsingSettings settings=null) => 
-            FhirJsonNode.Parse(json, settings:settings);
+        public ISourceNode getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
+            FhirJsonNode.Parse(json, settings: settings);
 
         ISourceNode FhirJsonNodeParse(string json, string rootName) =>
                FhirJsonNode.Parse(json, rootName, new FhirJsonParsingSettings() { PermissiveParsing = false });
@@ -61,7 +57,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void RoundtripJsonUntyped()
         {
-            ParseDemoPatient.RoundtripJson(jsonText => 
+            ParseDemoPatient.RoundtripJson(jsonText =>
                 getJsonNodeU(jsonText, new FhirJsonParsingSettings { AllowJsonComments = true }));
         }
 
@@ -189,6 +185,14 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException), "Expected an InvalidOperationException about resourceType is missing.")]
+        public void CatchResourceTypeMissing()
+        {
+            var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
+            _ = FhirJsonNodeParse(json, null);
+        }
+
+        [TestMethod]
         public void CatchNullErrors()
         {
             var nav = FhirJsonNodeParse("{ 'a': null }", "test");
@@ -216,10 +220,10 @@ namespace Hl7.Fhir.Serialization.Tests
                 var dummy = nav.Text;
                 Assert.Fail();
             }
-            catch(FormatException fe)
+            catch (FormatException fe)
             {
                 Assert.IsInstanceOfType(fe.InnerException, typeof(JsonException));
-            }                        
+            }
         }
 
         [TestMethod]

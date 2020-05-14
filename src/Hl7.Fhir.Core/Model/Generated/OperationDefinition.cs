@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             Query,
         }
 
-        [FhirType("OperationDefinition#OperationDefinition.parameter", IsNestedType=true)]
+        [FhirType("OperationDefinition#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "OperationDefinition#Parameter"; } }
             
             /// <summary>
             /// Name in Parameters.parameter.name or in URL
@@ -451,11 +451,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationDefinition#OperationDefinition.parameter.binding", IsNestedType=true)]
+        [FhirType("OperationDefinition#Binding", IsNestedType=true)]
         [DataContract]
         public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BindingComponent"; } }
+            public override string TypeName { get { return "OperationDefinition#Binding"; } }
             
             /// <summary>
             /// required | extensible | preferred | example
@@ -574,11 +574,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("OperationDefinition#OperationDefinition.overload", IsNestedType=true)]
+        [FhirType("OperationDefinition#Overload", IsNestedType=true)]
         [DataContract]
         public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OverloadComponent"; } }
+            public override string TypeName { get { return "OperationDefinition#Overload"; } }
             
             /// <summary>
             /// Name of parameter to include in overload

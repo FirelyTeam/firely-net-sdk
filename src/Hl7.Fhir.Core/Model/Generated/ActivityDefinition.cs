@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ActivityDefinition"; } }
         
-        [FhirType("ActivityDefinition#ActivityDefinition.participant", IsNestedType=true)]
+        [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "ActivityDefinition#Participant"; } }
             
             /// <summary>
             /// patient | practitioner | related-person
@@ -172,11 +172,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ActivityDefinition#ActivityDefinition.dynamicValue", IsNestedType=true)]
+        [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
         [DataContract]
         public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DynamicValueComponent"; } }
+            public override string TypeName { get { return "ActivityDefinition#DynamicValue"; } }
             
             /// <summary>
             /// Natural language description of the dynamic value

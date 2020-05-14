@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("SupplyDelivery#SupplyDelivery.suppliedItem", IsNestedType=true)]
+        [FhirType("SupplyDelivery#SuppliedItem", IsNestedType=true)]
         [DataContract]
         public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SuppliedItemComponent"; } }
+            public override string TypeName { get { return "SupplyDelivery#SuppliedItem"; } }
             
             /// <summary>
             /// Amount dispensed

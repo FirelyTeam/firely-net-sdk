@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             Stopped,
         }
 
-        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item", IsNestedType=true)]
+        [FhirType("QuestionnaireResponse#Item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemComponent"; } }
+            public override string TypeName { get { return "QuestionnaireResponse#Item"; } }
             
             /// <summary>
             /// Pointer to specific item from Questionnaire
@@ -323,11 +323,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("QuestionnaireResponse#QuestionnaireResponse.item.answer", IsNestedType=true)]
+        [FhirType("QuestionnaireResponse#Answer", IsNestedType=true)]
         [DataContract]
         public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AnswerComponent"; } }
+            public override string TypeName { get { return "QuestionnaireResponse#Answer"; } }
             
             /// <summary>
             /// Single-valued answer to the question

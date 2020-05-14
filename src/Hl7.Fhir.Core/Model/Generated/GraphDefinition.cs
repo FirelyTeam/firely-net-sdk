@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             Custom,
         }
 
-        [FhirType("GraphDefinition#GraphDefinition.link", IsNestedType=true)]
+        [FhirType("GraphDefinition#Link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkComponent"; } }
+            public override string TypeName { get { return "GraphDefinition#Link"; } }
             
             /// <summary>
             /// Path in the resource that contains the link
@@ -350,11 +350,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GraphDefinition#GraphDefinition.link.target", IsNestedType=true)]
+        [FhirType("GraphDefinition#Target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TargetComponent"; } }
+            public override string TypeName { get { return "GraphDefinition#Target"; } }
             
             /// <summary>
             /// Type of resource this link refers to
@@ -526,11 +526,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("GraphDefinition#GraphDefinition.link.target.compartment", IsNestedType=true)]
+        [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
         [DataContract]
         public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CompartmentComponent"; } }
+            public override string TypeName { get { return "GraphDefinition#Compartment"; } }
             
             /// <summary>
             /// Identifies the compartment

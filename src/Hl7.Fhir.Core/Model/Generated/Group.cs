@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             Substance,
         }
 
-        [FhirType("Group#Group.characteristic", IsNestedType=true)]
+        [FhirType("Group#Characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CharacteristicComponent"; } }
+            public override string TypeName { get { return "Group#Characteristic"; } }
             
             /// <summary>
             /// Kind of characteristic
@@ -257,11 +257,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Group#Group.member", IsNestedType=true)]
+        [FhirType("Group#Member", IsNestedType=true)]
         [DataContract]
         public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MemberComponent"; } }
+            public override string TypeName { get { return "Group#Member"; } }
             
             /// <summary>
             /// Reference to the group member

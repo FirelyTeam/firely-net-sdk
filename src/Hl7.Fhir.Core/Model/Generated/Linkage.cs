@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             Historical,
         }
 
-        [FhirType("Linkage#Linkage.item", IsNestedType=true)]
+        [FhirType("Linkage#Item", IsNestedType=true)]
         [DataContract]
         public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemComponent"; } }
+            public override string TypeName { get { return "Linkage#Item"; } }
             
             /// <summary>
             /// source | alternate | historical

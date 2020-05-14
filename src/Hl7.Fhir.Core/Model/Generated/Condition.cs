@@ -136,11 +136,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("Condition#Condition.stage", IsNestedType=true)]
+        [FhirType("Condition#Stage", IsNestedType=true)]
         [DataContract]
         public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StageComponent"; } }
+            public override string TypeName { get { return "Condition#Stage"; } }
             
             /// <summary>
             /// Simple summary (disease specific)
@@ -240,11 +240,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Condition#Condition.evidence", IsNestedType=true)]
+        [FhirType("Condition#Evidence", IsNestedType=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EvidenceComponent"; } }
+            public override string TypeName { get { return "Condition#Evidence"; } }
             
             /// <summary>
             /// Manifestation/symptom

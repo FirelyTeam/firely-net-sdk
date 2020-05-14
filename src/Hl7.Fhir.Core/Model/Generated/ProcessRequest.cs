@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             Status,
         }
 
-        [FhirType("ProcessRequest#ProcessRequest.item", IsNestedType=true)]
+        [FhirType("ProcessRequest#Items", IsNestedType=true)]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemsComponent"; } }
+            public override string TypeName { get { return "ProcessRequest#Items"; } }
             
             /// <summary>
             /// Service instance

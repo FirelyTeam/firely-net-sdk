@@ -20,6 +20,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -30,6 +31,7 @@ using System.Linq;
 using System.Text;
 using System.Xml;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -42,7 +44,7 @@ namespace Hl7.Fhir.Specification.Tests
     {
         SnapshotGenerator _generator;
         ZipSource _zipSource;
-        IResourceResolver _testResolver;
+        CachedResolver _testResolver;
         TimingSource _source;
 
         readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
@@ -87,7 +89,31 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void OverriddenNestedStructureDefinitionLists()
+        public void TestMergeMax()
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            test(null, "1", "1");
+            test("1", null, "1");
+            test("1", "1", "1");
+            test("1", "*", "1");
+            test("2", "*", "2");
+            test("*", "*", "*");
+            test("*", "2", "2");
+            test("*", null, "*");
+            test(null, "*", "*");
+            test("3", "2", "2");
+            test("2", "3", "2");
+
+            void test(string snap, string diff, string expected)
+            {
+                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+                Assert.AreEqual(expected, actual.Value);
+            }
+        }
+
+        [TestMethod]
+        public async T.Task OverriddenNestedStructureDefinitionLists()
         {
             var baseCanonical = "http://yourdomain.org/fhir/StructureDefinition/Base";
             var code = "someCode";
@@ -139,21 +165,21 @@ namespace Hl7.Fhir.Specification.Tests
             var resourceResolver = new Mock<IResourceResolver>();
             resourceResolver.Setup(resolver => resolver.ResolveByCanonicalUri(It.IsAny<string>())).Returns(baseSD);
             var snapshotGenerator = new SnapshotGenerator(resourceResolver.Object, new SnapshotGeneratorSettings());
-            snapshotGenerator.Update(derivedSD);
+            await snapshotGenerator.UpdateAsync(derivedSD);
 
             derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier").Slicing.Discriminator.First().Path.Should().Be(discriminatorPath, "The discriminator should be copied from base");
             derivedSD.Snapshot.Element.Single(element => element.Path == "Practitioner.identifier:test").Code.First().Code.Should().Be(code, "The code should be copied from base");
         }
 
         [TestMethod]
-        public void GenerateExtensionSnapshot()
+        public async T.Task GenerateExtensionSnapshot()
         {
-            var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-address-official");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://fhir.nl/fhir/StructureDefinition/nl-core-address-official");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
@@ -172,92 +198,92 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void GenerateSnapshotForExternalProfiles()
+        public async T.Task GenerateSnapshotForExternalProfiles()
         {
             //Test external type profile
-            var sd = _testResolver.FindStructureDefinition(@"http://issue.com/fhir/StructureDefinition/MyPatient");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://issue.com/fhir/StructureDefinition/MyPatient");
             Assert.IsNotNull(sd);
 
             _settings.GenerateSnapshotForExternalProfiles = false;
             _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.Update(sd);
+            await _generator.UpdateAsync(sd);
             Assert.IsNotNull(sd.Snapshot);
 
-            var sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            var sdRef = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyHumanName");
             Assert.IsNull(sdRef.Snapshot);
             dumpOutcome(_generator.Outcome);
 
             _settings.GenerateSnapshotForExternalProfiles = true;
             _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.Update(sd);
+            await _generator.UpdateAsync(sd);
 
-            sdRef = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyHumanName");
+            sdRef = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyHumanName");
             Assert.IsNotNull(sdRef.Snapshot);
             dumpOutcome(_generator.Outcome);
 
 
             //Test external base profile
-            var sdDerived = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
+            var sdDerived = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyDerivedPatient");
             Assert.IsNotNull(sdDerived);
 
             _settings.GenerateSnapshotForExternalProfiles = false;
             _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.Update(sdDerived);
+            await _generator.UpdateAsync(sdDerived);
             Assert.IsNotNull(sdDerived.Snapshot);
 
-            var sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            var sdBase = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyBase");
             Assert.IsNull(sdBase.Snapshot);
             dumpOutcome(_generator.Outcome);
 
             _settings.GenerateSnapshotForExternalProfiles = true;
             _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.Update(sdDerived);
+            await _generator.UpdateAsync(sdDerived);
 
-            sdBase = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBase");
+            sdBase = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyBase");
             Assert.IsNotNull(sdBase.Snapshot);
             dumpOutcome(_generator.Outcome);
         }
 
         [TestMethod]
-        public void GenerateSingleSnapshot()
+        public async T.Task GenerateSingleSnapshot()
         {
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-alternate");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-result");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/gao-procedurerequest");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/xdsdocumentreference");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/gao-medicationorder");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/gao-alternate");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/gao-result");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/gao-procedurerequest");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
 
             // [WMR 20160825] Examples by Simone Heckman - custom, free-form canonical url
             // => ResourceIdentity is obsolete!
-            // var sd = _testResolver.FindStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/betriebsstaette");
-            // var sd = _testResolver.FindStructureDefinition(@"http://fhir.de/StructureDefinition/kbv/istNebenbetriebsstaette");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://fhir.de/StructureDefinition/kbv/betriebsstaette");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://fhir.de/StructureDefinition/kbv/istNebenbetriebsstaette");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBasic");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyBasic");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation2");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyObservation2");
 
             // [WMR 20161219] Problem: Composition.section element in core resource has name 'section' (b/o name reference)
             // Ambiguous... snapshot generator slicing logic cannot handle this...
 
             // [WMR 20161222] Example by EK from validator
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Composition");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/StructureDefinition/DocumentComposition");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Composition");
 
             // [WMR 20170110] Test problematic extension
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/us-core-direct");
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Account");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Account");
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
 
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             // dumpBasePaths(expanded);
@@ -265,7 +291,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestChoiceTypeWithMultipleProfileConstraints()
+        public async T.Task TestChoiceTypeWithMultipleProfileConstraints()
         {
             // [WMR 20161005] The following profile defines several type constraints on Observation.value[x]
             // - Type = Quantity, Profile = WeightQuantity
@@ -280,60 +306,63 @@ namespace Hl7.Fhir.Specification.Tests
             // var sdWeightQty = validationTestProfiles.FirstOrDefault(s => s.Url == "http://validationtest.org/fhir/StructureDefinition/WeightQuantity");
             // File.WriteAllText(Path.Combine(tempPath, "WeightQuantity.StructureDefinition.xml"), FhirSerializer.SerializeResourceToXml(sdWeightQty));
 
-            var sd = _testResolver.FindStructureDefinition(@"http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
 
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
         [TestMethod]
-        public void GenerateRepeatedSnapshot()
+        public async T.Task GenerateRepeatedSnapshot()
         {
             // [WMR 20161005] This generated exceptions in an early version of the snapshot generator (fixed)
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/MeasureReport");
-            generateSnapshotAndCompare(sd, out var expanded);
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/MeasureReport");
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
 
-            sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
-            generateSnapshotAndCompare(sd, out expanded);
+            sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/clinicaldocument");
+            (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
-        public void TestFullyExpandCoreOrganization()
+        public async T.Task TestFullyExpandCoreOrganization()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
 
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Organization");
-            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Organization);
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Organization");
+            var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Organization);
             Assert.IsNotNull(sd);
-            generateSnapshot(sd);
+            await generateSnapshot(sd);
             Assert.IsTrue(sd.HasSnapshot);
-            var elems = sd.Snapshot.Element;
+            _ = sd.Snapshot.Element;
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var expanded = fullyExpand(sd.Snapshot.Element, issues);
+            var expanded = await fullyExpand(sd.Snapshot.Element, issues);
 
             Assert.IsNotNull(expanded);
             dumpBaseElems(expanded);
+
+            var identifierValueElement = expanded.Single(element => element.Path == "Organization.identifier.value");
+            identifierValueElement.Extension.Should().BeEmpty("Extensions on the value type should not be inherited");
 
             Assert.IsNull(_generator.Outcome);
         }
 
         // [WMR 20180115] NEW - Replacement for expandAllComplexElements (OBSOLETE)
         // Expand all elements with complex type and no children
-        IList<ElementDefinition> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues = null)
+        private async T.Task<List<ElementDefinition>> fullyExpand(IList<ElementDefinition> elements, List<OperationOutcome.IssueComponent> issues = null)
         {
             var nav = new ElementDefinitionNavigator(elements);
             // Skip root element
@@ -343,16 +372,16 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     _generator = new SnapshotGenerator(_testResolver, _settings);
                 }
-                fullyExpandElement(nav, issues);
-                return nav.Elements;
+                await fullyExpandElement(nav, issues);
+                return nav.Elements.ToList();
             }
-            return elements;
+            return elements.ToList();
         }
 
         // Expand current element if it has a complex type and no children (recursively)
-        void fullyExpandElement(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
+        private async T.Task fullyExpandElement(ElementDefinitionNavigator nav, List<OperationOutcome.IssueComponent> issues)
         {
-            if (nav.HasChildren || (isExpandableElement(nav.Current) && _generator.ExpandElement(nav)))
+            if (nav.HasChildren || (isExpandableElement(nav.Current) && await _generator.ExpandElementAsync(nav)))
             {
                 if (issues != null && _generator.Outcome != null)
                 {
@@ -365,7 +394,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     do
                     {
-                        fullyExpandElement(nav, issues);
+                        await fullyExpandElement(nav, issues);
                     } while (nav.MoveToNext());
                     Assert.IsTrue(nav.ReturnToBookmark(bm));
                 }
@@ -417,17 +446,16 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
         [TestMethod]
-        public void TestFullyExpandCorePatient()
+        public async T.Task TestFullyExpandCorePatient()
         {
             // [WMR 20180115] Iteratively expand all complex elements
             // 1. First generate regular snapshot
             // 2. Re-iterate elements, expand complex elements w/o children (recursively)
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(sd);
 
-            StructureDefinition snapshot = null;
-            generateSnapshotAndCompare(sd, out snapshot);
+            (_, var snapshot) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(snapshot);
             Assert.IsTrue(snapshot.HasSnapshot);
 
@@ -437,7 +465,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(52, snapElems.Count);
 
             var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-            var fullElems = fullyExpand(snapElems, issues);
+            var fullElems = await fullyExpand(snapElems, issues);
             Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
             dumpBaseElems(fullElems);
             Assert.AreEqual(310, fullElems.Count);
@@ -448,7 +476,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 if (isExpandableElement(fullElems[j]))
                 {
-                    verifyExpandElement(fullElems[j], fullElems, fullElems);
+                    await verifyExpandElement(fullElems[j], fullElems, fullElems);
                 }
             }
         }
@@ -457,14 +485,14 @@ namespace Hl7.Fhir.Specification.Tests
         // Note: result is different from TestCoreOrganizationNL, contains more elements - correct!
         // Older approach was flawed, e.g. see exclusion for Organization.type
         [TestMethod]
-        public void TestFullyExpandNLCoreOrganization()
+        public async T.Task TestFullyExpandNLCoreOrganization()
         {
             // core-organization-nl references extension core-address-nl
             // BUG: expanded extension child elements have incorrect .Base.Path ...?!
             // e.g. Organization.address.type - Base = Organization.address.use
             // Fixed by adding conditional to copyChildren
 
-            var sd = _testResolver.FindStructureDefinition(@"http://fhir.nl/fhir/StructureDefinition/nl-core-organization");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://fhir.nl/fhir/StructureDefinition/nl-core-organization");
             Assert.IsNotNull(sd);
 
             StructureDefinition snapshot = null;
@@ -474,7 +502,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(sd, out snapshot);
+                (_, snapshot) = await generateSnapshotAndCompare(sd);
 
                 Assert.IsNotNull(snapshot);
                 Assert.IsTrue(snapshot.HasSnapshot);
@@ -487,7 +515,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNull(_generator.Outcome);
 
                 var issues = new List<OperationOutcome.IssueComponent>();
-                var fullElems = fullyExpand(snapElems, issues);
+                var fullElems = await fullyExpand(snapElems, issues);
                 Debug.WriteLine($"Full expansion: {fullElems.Count} elements");
                 dumpBaseElems(fullElems);
                 dumpIssues(issues);
@@ -499,7 +527,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     if (isExpandableElement(fullElems[j]))
                     {
-                        verifyExpandElement(fullElems[j], fullElems, fullElems);
+                        await verifyExpandElement(fullElems[j], fullElems, fullElems);
                     }
                 }
             }
@@ -515,12 +543,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestSnapshotRecursionChecker()
+        public async T.Task TestSnapshotRecursionChecker()
         {
             // Following structuredefinition has a recursive element type profile
             // Verify that the snapshot generator detects recursion and aborts with exception
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyBundle");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyBundle");
 
             Assert.IsNotNull(sd);
 
@@ -529,7 +557,7 @@ namespace Hl7.Fhir.Specification.Tests
             bool exceptionRaised = false;
             try
             {
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 dumpBasePaths(expanded);
             }
@@ -544,22 +572,22 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20170424] Add qicore-encounter.xml (STU3) as separate content file
         // Source: http://build.fhir.org/ig/cqframework/qi-core/StructureDefinition-qicore-encounter.xml.html
         [TestMethod]
-        public void GenerateDerivedProfileSnapshot()
+        public async T.Task GenerateDerivedProfileSnapshot()
         {
             // [WMR 20161005] Verify that the snapshot generator supports profiles on profiles
 
             // cqif-guidanceartifact profile is derived from cqif-knowledgemodule
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
-            // var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/qicore-patient");
+            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/qicore-encounter");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/us/qicore/StructureDefinition/qicore-encounter");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -593,13 +621,13 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        StructureDefinition generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
+        private async T.Task<StructureDefinition> generateSnapshot(string url, Action<StructureDefinition> preprocessor = null)
         {
-            var structure = _testResolver.FindStructureDefinition(url);
+            var structure = await _testResolver.FindStructureDefinitionAsync(url);
             Assert.IsNotNull(structure);
             Assert.IsTrue(structure.HasSnapshot);
             preprocessor?.Invoke(structure);
-            generateSnapshotAndCompare(structure, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(structure);
             dumpOutcome(_generator.Outcome);
             return expanded;
         }
@@ -643,7 +671,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170412] Fixed
         [TestMethod]
-        public void GeneratePatientWithExtensionsSnapshot()
+        public async T.Task GeneratePatientWithExtensionsSnapshot()
         {
             // [WMR 20161005] Very complex set of examples by Chris Grenz
             // https://github.com/chrisgrenz/FHIR-Primer/blob/master/profiles/patient-extensions-profile.xml
@@ -662,7 +690,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify complex extension used by patient-with-extensions profile
             // patient-research-authorization-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
+            sd = await generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-research-authorization");
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Extension.extension", null, "Extension.extension");
             verifier.VerifyElement("Extension.extension", "type", "Extension.extension:type");
@@ -675,7 +703,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Basic Patient profile that references a set of extensions
             // patient-extensions-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            sd = await generateSnapshot(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.extension", null, "Patient.extension");
             verifier.VerifyElement("Patient.extension", "doNotCall", "Patient.extension:doNotCall");
@@ -695,7 +723,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Each of the following profiles is derived from the previous profile
 
             // patient-name-slice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-name-slice"
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-name-slice"
                 , structure => insertElementsBefore(structure,
                      "Patient.name.use", 2,
                      // Add named parent slicing entry
@@ -716,7 +744,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifier.VerifyElement("Patient.name.family", null, "Patient.name:maidenName.family");
 
             // patient-telecom-slice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-telecom-slice"
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-telecom-slice"
                 , structure => insertElementsBefore(structure,
                      // new ElementDefinition() { Path = "Patient.telecom.system", SliceName = "workEmail.system" },
                      "Patient.telecom.system", 4,
@@ -744,14 +772,14 @@ namespace Hl7.Fhir.Specification.Tests
             // Original snapshot contains constraints for both deceased[x] and deceasedDateTime - invalid!
             // Generated snapshot merges both constraints to deceasedDateTime type slice
             // patient-deceasedDatetime-slice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-deceasedDatetime-slice");
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-deceasedDatetime-slice");
             assertContainsElement(sd.Differential, "Patient.deceased[x]");                  // Differential contains a type slice on deceased[x]
             // Assert.IsFalse(sd.Snapshot.Element.Any(e => e.Path == "Patient.deceased[x]"));  // Snapshot only contains renamed element constraint
             // assertContainsElement(sd, "Patient.deceasedDateTime", null, "Patient.deceasedDateTime");
             verifier.VerifyElement("Patient.deceased[x]", null, "Patient.deceased[x]");
 
             // patient-careprovider-type-slice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-slice");
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
@@ -759,7 +787,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify re-slicing
             // patient-careprovider-type-reslice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-careprovider-type-reslice");
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Patient.careProvider", null, "Patient.careProvider");
             verifier.VerifyElement("Patient.careProvider", "organizationCare", "Patient.careProvider:organizationCare");
@@ -768,7 +796,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Identifier Datatype profile
             // patient-mrn-id-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-mrn-id");
             verifier = new ElementVerifier(sd, _settings);
             verifier.VerifyElement("Identifier", null, "Identifier");
             verifier.VerifyElement("Identifier.system", null, "Identifier.system", new FhirUri(@"http://example.com/fhir/localsystems/PATIENT-ID-MRN"));
@@ -776,7 +804,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify inline re-slicing
             // Profile slices identifier and also re-slices the "mrn" slice
             // patient-identifier-profile-slice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-slice-by-profile"
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-slice-by-profile"
                 , structure => insertElementsBefore(structure,
                      "Patient.identifier.use", 1,
                      // Add named parent reslicing entry
@@ -792,7 +820,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify constraints on named slice in base profile
             // patient-identifier-slice-extension-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-identifier-subslice"
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-identifier-subslice"
                 , structure => insertElementsBefore(structure,
                      "Patient.identifier.extension", 1,
                      // Add named parent reslicing entry
@@ -817,7 +845,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify extension re-slice
             // patient-research-auth-reslice-profile.xml
-            sd = generateSnapshot(@"http://example.com/fhir/SD/patient-research-auth-reslice"
+            sd = await generateSnapshot(@"http://example.com/fhir/SD/patient-research-auth-reslice"
                 , structure => insertElementsBefore(structure,
                      // new ElementDefinition() { Path = "Patient.extension.extension.value[x]", SliceName = "researchAuth/grandfatheredResAuth.type.value[x]" },
                      "Patient.extension.extension.value[x]", 1,
@@ -891,12 +919,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void GenerateSnapshotExpandExternalProfile()
+        public async T.Task GenerateSnapshotExpandExternalProfile()
         {
             // Profile MyLocation references extension MyLocationExtension
             // MyLocationExtension extension profile does not have a snapshot component => expand on demand
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyLocation");
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
@@ -910,35 +938,36 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(extensionType.Profile);
             var extDefUrl = extensionType.Profile;
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyLocationExtension", extDefUrl);
-            var ext = _testResolver.FindStructureDefinition(extDefUrl);
+            var ext = await _testResolver.FindStructureDefinitionAsync(extDefUrl);
             Assert.IsNotNull(ext);
             Assert.IsNull(ext.Snapshot);
 
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
         }
 
         [TestMethod]
-        public void GenerateSnapshotIgnoreMissingExternalProfile()
+        public async T.Task GenerateSnapshotIgnoreMissingExternalProfile()
         {
             // [WMR 20161005] Verify that the snapshot generator gracefully handles unresolved external profile references
             // This should generate a partial snapshot and OperationOutcome Issues for each missing dependency.
 
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyObservation");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyObservation");
             Assert.IsNotNull(sd);
 
             dumpReferences(sd, true);
 
             // Explicitly disable expansion of external snapshots
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateSnapshotForExternalProfiles = false;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateSnapshotForExternalProfiles = false
+            };
             _generator = new SnapshotGenerator(_testResolver, settings);
-
-            generateSnapshotAndCompare(sd, out var expanded);
+            _ = await generateSnapshotAndCompare(sd);
 
             var outcome = _generator.Outcome;
             dumpOutcome(outcome);
@@ -978,7 +1007,7 @@ namespace Hl7.Fhir.Specification.Tests
         //	// @"http://hl7.org/fhir/StructureDefinition/gao-medicationorder",
         //};
         [TestMethod, Ignore]
-        public void GenerateSnapshot()
+        public async T.Task GenerateSnapshot()
         {
             var sw = new Stopwatch();
             int count = 0;
@@ -995,7 +1024,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Debug.WriteLine("Generating Snapshot for " + original.Url);
 
-                generateSnapshotAndCompare(original);
+                await generateSnapshotAndCompare(original);
                 count++;
             }
 
@@ -1003,7 +1032,7 @@ namespace Hl7.Fhir.Specification.Tests
             _source.ShowDuration(count, sw.Elapsed);
         }
 
-        StructureDefinition generateSnapshot(StructureDefinition original)
+        private async T.Task<StructureDefinition> generateSnapshot(StructureDefinition original)
         {
             if (_generator == null)
             {
@@ -1013,19 +1042,14 @@ namespace Hl7.Fhir.Specification.Tests
             var expanded = (StructureDefinition)original.DeepCopy();
             Assert.IsTrue(original.IsExactly(expanded));
 
-            _generator.Update(expanded);
+            await _generator.UpdateAsync(expanded);
 
             return expanded;
         }
 
-        bool generateSnapshotAndCompare(StructureDefinition original)
+        private async T.Task<(bool, StructureDefinition expanded)> generateSnapshotAndCompare(StructureDefinition original)
         {
-            return generateSnapshotAndCompare(original, out var expanded);
-        }
-
-        bool generateSnapshotAndCompare(StructureDefinition original, out StructureDefinition expanded)
-        {
-            expanded = generateSnapshot(original);
+            var expanded = await generateSnapshot(original);
 
             var areEqual = original.IsExactly(expanded);
 
@@ -1043,7 +1067,7 @@ namespace Hl7.Fhir.Specification.Tests
                 original.Name, original.HasSnapshot ? original.Snapshot.Element.Count : 0, expanded.HasSnapshot ? expanded.Snapshot.Element.Count : 0)
             );
 
-            return areEqual;
+            return (areEqual, expanded);
         }
 
         IEnumerable<StructureDefinition> findConstraintStrucDefs()
@@ -1075,7 +1099,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var fileName = Path.GetFileNameWithoutExtension(testSD.GetOrigin());
                 if (fileName == "profiles-others")
                 {
-                    //var sd = _testResolver.FindStructureDefinition(sdInfo.Canonical);
+                    //var sd = await _testResolver.FindStructureDefinitionAsync(sdInfo.Canonical);
 
                     //if (sd == null) throw new InvalidOperationException(("Source listed canonical url {0} [source {1}], " +
                     //    "but could not get structure definition by that url later on!").FormatWith(sdInfo.Canonical, sdInfo.Origin));
@@ -1092,14 +1116,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTree()
         {
-            var e = new List<ElementDefinition>();
-
-            e.Add(new ElementDefinition() { Path = "A.B.C1" });
-            e.Add(new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }); // First slice of A.B.C1
-            e.Add(new ElementDefinition() { Path = "A.B.C2" });
-            e.Add(new ElementDefinition() { Path = "A.B", SliceName = "B-A" }); // First slice of A.B
-            e.Add(new ElementDefinition() { Path = "A.B.C1.D" });
-            e.Add(new ElementDefinition() { Path = "A.D.F" });
+            var e = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "A.B.C1" },
+                new ElementDefinition() { Path = "A.B.C1", SliceName = "C1-A" }, // First slice of A.B.C1
+                new ElementDefinition() { Path = "A.B.C2" },
+                new ElementDefinition() { Path = "A.B", SliceName = "B-A" }, // First slice of A.B
+                new ElementDefinition() { Path = "A.B.C1.D" },
+                new ElementDefinition() { Path = "A.D.F" }
+            };
 
             var tree = DifferentialTreeConstructor.MakeTree(e);
             Assert.IsNotNull(tree);
@@ -1127,10 +1152,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTreeMultipleRoots()
         {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient" });
+            var elements = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "Patient.identifier" },
+                new ElementDefinition() { Path = "Patient" }
+            };
 
             bool exceptionRaised = false;
             try
@@ -1149,16 +1175,17 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestDifferentialTreeForReslice()
         {
-            var elements = new List<ElementDefinition>();
-
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.use" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.type" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier.period.start" });
-            elements.Add(new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" });
+            var elements = new List<ElementDefinition>
+            {
+                new ElementDefinition() { Path = "Patient.identifier" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "A" },
+                new ElementDefinition() { Path = "Patient.identifier.use" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/1" },
+                new ElementDefinition() { Path = "Patient.identifier.type" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "B/2" },
+                new ElementDefinition() { Path = "Patient.identifier.period.start" },
+                new ElementDefinition() { Path = "Patient.identifier", SliceName = "C/1" }
+            };
 
             var tree = DifferentialTreeConstructor.MakeTree(elements);
             Assert.IsNotNull(tree);
@@ -1181,9 +1208,9 @@ namespace Hl7.Fhir.Specification.Tests
 
 #if false
         [TestMethod]
-        public void DebugDifferentialTree()
+        public async T.Task DebugDifferentialTree()
         {
-            var sd = _testResolver.FindStructureDefinition(@"http://example.com/fhir/SD/patient-research-auth-reslice");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.com/fhir/SD/patient-research-auth-reslice");
             Assert.IsNotNull(sd);
             var tree = sd.Differential.MakeTree();
             Assert.IsNotNull(tree);
@@ -1196,9 +1223,9 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20161005] internal expandElement method is no longer unit-testable; uninitialized recursion stack causes exceptions
 
         //[TestMethod]
-        //public void TestExpandChild()
+        //public async T.Task TestExpandChild()
         //{
-        //    var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Questionnaire);
+        //    var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Questionnaire);
         //    Assert.IsNotNull(sd);
         //    Assert.IsNotNull(sd.Snapshot);
         //    var nav = new ElementDefinitionNavigator(sd.Snapshot.Element);
@@ -1215,36 +1242,36 @@ namespace Hl7.Fhir.Specification.Tests
         //}
 
         [TestMethod]
-        public void TestExpandElement_PatientIdentifier()
+        public async T.Task TestExpandElement_PatientIdentifier()
         {
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
+            await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.identifier");
         }
 
         [TestMethod]
-        public void TestExpandElement_PatientName()
+        public async T.Task TestExpandElement_PatientName()
         {
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
+            await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Patient", "Patient.name");
         }
 
         [TestMethod]
-        public void TestExpandElement_QuestionnaireItem()
-        {
-            // Validate name reference expansion
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item");
-        }
-
-        [TestMethod]
-        public void TestExpandElement_QuestionnaireItemItem()
+        public async T.Task TestExpandElement_QuestionnaireItem()
         {
             // Validate name reference expansion
-            testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
+            await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item");
         }
 
         [TestMethod]
-        public void TestExpandElement_Slice()
+        public async T.Task TestExpandElement_QuestionnaireItemItem()
+        {
+            // Validate name reference expansion
+            await testExpandElement(@"http://hl7.org/fhir/StructureDefinition/Questionnaire", "Questionnaire.item.item");
+        }
+
+        [TestMethod]
+        public async T.Task TestExpandElement_Slice()
         {
             // Resolve lipid profile from profile-others.xml
-            var sd = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/lipidprofile");
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/lipidprofile");
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
@@ -1273,13 +1300,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Path, "DiagnosticReport.result");
             Assert.IsNotNull(nav.Current.SliceName);
 
-            testExpandElement(sd, nav.Current);
+            await testExpandElement(sd, nav.Current);
         }
 
-        void testExpandElement(string srcProfileUrl, string expandElemPath)
+        private async T.Task testExpandElement(string srcProfileUrl, string expandElemPath)
         {
             // Prepare...
-            var sd = _testResolver.FindStructureDefinition(srcProfileUrl);
+            var sd = await _testResolver.FindStructureDefinitionAsync(srcProfileUrl);
             Assert.IsNotNull(sd);
             Assert.IsNotNull(sd.Snapshot);
 
@@ -1292,10 +1319,10 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Unindent();
 
             var elem = elems.FirstOrDefault(e => e.Path == expandElemPath);
-            testExpandElement(sd, elem);
+            await testExpandElement(sd, elem);
         }
 
-        void testExpandElement(StructureDefinition sd, ElementDefinition elem)
+        private async T.Task testExpandElement(StructureDefinition sd, ElementDefinition elem)
         {
             Assert.IsNotNull(elem);
             var elems = sd.Snapshot.Element;
@@ -1307,7 +1334,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170614] NEW: ExpandElement should maintain the existing element ID...!
             var orgId = elem.ElementId;
 
-            var result = _generator.ExpandElement(elems, elem);
+            var result = await _generator.ExpandElementAsync(elems, elem);
 
             dumpOutcome(_generator.Outcome);
             Assert.IsNull(_generator.Outcome);
@@ -1315,10 +1342,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(orgId, elem.ElementId);
 
             // Verify results
-            verifyExpandElement(elem, elems, result);
+            await verifyExpandElement(elem, elems, result);
         }
 
-        void verifyExpandElement(ElementDefinition elem, IList<ElementDefinition> elems, IList<ElementDefinition> result)
+        private async T.Task verifyExpandElement(ElementDefinition elem, IList<ElementDefinition> elems, IList<ElementDefinition> result)
         {
             var expandElemPath = elem.Path;
 
@@ -1336,8 +1363,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var elemProfile = elemType.Profile;
                 var sdType = elemProfile != null && elemTypeCode != FHIRAllTypes.Reference.GetLiteral()
-                    ? _testResolver.FindStructureDefinition(elemProfile)
-                    : _testResolver.FindStructureDefinitionForCoreType(elemTypeCode);
+                    ? await _testResolver.FindStructureDefinitionAsync(elemProfile)
+                    : await _testResolver.FindStructureDefinitionForCoreTypeAsync(elemTypeCode);
 
                 // [WMR 20170220] External type profile may not be available
                 // Assert.IsNotNull(sdType);
@@ -1473,16 +1500,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         static IEnumerable<string> enumerateDistinctTypeProfiles(IList<ElementDefinition> elements)
-        {
-            return elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
-        }
+            => elements.SelectMany(e => e.Type).Select(t => t.Profile).Distinct();
 
-        static string formatElementPathName(ElementDefinition elem)
-        {
-            if (elem == null) { return null; }
-            if (!string.IsNullOrEmpty(elem.SliceName)) return $"{elem.Path}:{elem.SliceName}";
-            return elem.Path;
-        }
+        static string formatElementPathName(ElementDefinition elem) =>
+            elem == null
+                ? null
+                : !string.IsNullOrEmpty(elem.SliceName) ?
+                   $"{elem.Path}:{elem.SliceName}"
+                    : elem.Path;
 
         [Conditional("DEBUG")]
         static void dumpBaseElems(IEnumerable<ElementDefinition> elements)
@@ -1491,7 +1516,7 @@ namespace Hl7.Fhir.Specification.Tests
                 elements.Select(e =>
                 {
                     var bea = e.Annotation<BaseDefAnnotation>();
-                    var be = bea != null ? bea.BaseElementDefinition : null;
+                    var be = bea?.BaseElementDefinition;
                     //return "  #{0,-8} {1} '{2}' - {3} => #{4,-8} {5} '{6}' - {7}"
                     //    .FormatWith(
                     //        e.GetHashCode(),
@@ -1564,7 +1589,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public void GenerateSnapshotEmitBaseData()
+        public async T.Task GenerateSnapshotEmitBaseData()
         {
             // Verify that the SnapshotGenerator events provide stable references to associated base ElementDefinition instances.
             // If two different profile elements have the same type, then the PrepareElement event should provide the exact same
@@ -1574,37 +1599,39 @@ namespace Hl7.Fhir.Specification.Tests
             var source = _testResolver;
             Assert.IsNotNull(source);
 
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
-            // var sd = source.FindStructureDefinition(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
-            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyLocation");
-            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatient");
-            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/CarePlan");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/daf-condition");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.com/fhir/StructureDefinition/patient-with-extensions");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/sdc-questionnaire");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/shareablevalueset");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/qicore-goal");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/cqif-guidanceartifact");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyLocation");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyPatient");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/CarePlan");
 
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Meta");
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Money");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Element");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Meta");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Money");
 
-            // var sd = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/cqif-basic-guidance-action");
 
-            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
-            // var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+            // var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
 
-            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/CustomIdentifier");
+            var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/CustomIdentifier");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            // settings.GenerateExtensionsOnConstraints = true;
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                // settings.GenerateExtensionsOnConstraints = true;
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1613,7 +1640,7 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
 
                 dumpOutcome(_generator.Outcome);
 
@@ -1622,7 +1649,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Element))
                 {
                     // Element snapshot should be recursively expanded, as it is the fundamental base profile
-                    var sdElem = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Element);
+                    var sdElem = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Element);
                     Assert.IsNotNull(sdElem);
                     Assert.IsTrue(sdElem.HasSnapshot);
                     Assert.IsTrue(sdElem.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1632,30 +1659,30 @@ namespace Hl7.Fhir.Specification.Tests
                 if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Id))
                 {
                     // Id snapshot should not be (re-)generated, as derived profiles don't force expansion
-                    var sdId = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Id);
+                    var sdId = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Id);
                     Assert.IsNotNull(sdId);
                     Assert.IsTrue(sdId.HasSnapshot);
                     Assert.IsFalse(sdId.Snapshot.IsCreatedBySnapshotGenerator());
                     // Re-generate the snapshot and verify base references
-                    generateSnapshotAndCompare(sdId, out expanded);
+                    (_, expanded) = await generateSnapshotAndCompare(sdId);
                     assertBaseDefs(expanded, settings);
                 }
 
                 if (sd.Url == @"http://example.org/fhir/StructureDefinition/MyPatient")
                 {
-                    var sdBase = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Patient");
+                    var sdBase = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Patient");
                     assertBaseDefs(sdBase, settings);
 
-                    var sdElem = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Element");
+                    var sdElem = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Element");
                     assertBaseDefs(sdElem, settings);
 
-                    var sdExt = source.FindStructureDefinition(@"http://hl7.org/fhir/StructureDefinition/Extension");
+                    var sdExt = await source.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Extension");
                     assertBaseDefs(sdExt, settings);
 
-                    var sdExt1 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension1");
+                    var sdExt1 = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyExtension1");
                     assertBaseDefs(sdExt1, settings);
 
-                    var sdExt2 = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyExtension2");
+                    var sdExt2 = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyExtension2");
                     assertBaseDefs(sdExt2, settings);
                 }
 
@@ -1670,7 +1697,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestBaseAnnotations_ExplicitCoreTypeProfile()
+        public async T.Task TestBaseAnnotations_ExplicitCoreTypeProfile()
         {
             // Verify processing of explicit core element type profile in differential
             // e.g. if the differential specifies explicit core type profile url
@@ -1679,7 +1706,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = _testResolver;
             Assert.IsNotNull(source);
-            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExplicitCoreIdentifierProfile");
+            var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithExplicitCoreIdentifierProfile");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1691,8 +1718,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(typeProfileUrl);
             Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1701,14 +1730,14 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
                 assertBaseDefs(expanded, settings);
 
                 // Verify that the snapshot generator also expanded the referenced core Identifier type profile
-                var sdType = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Identifier);
+                var sdType = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Identifier);
                 Assert.IsNotNull(sdType);
                 Assert.IsTrue(sdType.HasSnapshot);
                 Assert.IsTrue(sdType.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1763,14 +1792,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestBaseAnnotations_CustomTypeProfile()
+        public async T.Task TestBaseAnnotations_CustomTypeProfile()
         {
             // Verify generated base annotations for a profile that references an external element type profile
             // e.g. Patient profile with a custom Identifier profile on the Patient.identifier element
 
             var source = _testResolver;
             Assert.IsNotNull(source);
-            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
+            var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithCustomIdentifier");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1781,8 +1810,10 @@ namespace Hl7.Fhir.Specification.Tests
             var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(typeProfileUrl);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1791,14 +1822,14 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
                 assertBaseDefs(expanded, settings);
 
                 // Verify that the snapshot generator also expanded the referenced external custom Identifier type profile
-                var sdType = source.FindStructureDefinition(typeProfileUrl);
+                var sdType = await source.FindStructureDefinitionAsync(typeProfileUrl);
                 Assert.IsNotNull(sdType);
                 Assert.IsTrue(sdType.HasSnapshot);
                 Assert.IsTrue(sdType.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1870,13 +1901,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestBaseAnnotations_InlineExtension()
+        public async T.Task TestBaseAnnotations_InlineExtension()
         {
             // Verify generated base annotations for a profile that references an external extension definition profile
 
             var source = _testResolver;
             Assert.IsNotNull(source);
-            var sd = source.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
+            var sd = await source.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/PatientWithExtension");
 
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
@@ -1887,8 +1918,10 @@ namespace Hl7.Fhir.Specification.Tests
             var extensionDefinitionUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(extensionDefinitionUrl);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -1897,14 +1930,14 @@ namespace Hl7.Fhir.Specification.Tests
                 _generator.PrepareElement += elementHandler;
                 _generator.Constraint += constraintHandler;
 
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
                 Assert.IsTrue(expanded.Snapshot.IsCreatedBySnapshotGenerator());
                 assertBaseDefs(expanded, settings);
 
                 // Verify that the snapshot generator also expanded the referenced external extension definition
-                var sdExtension = source.FindStructureDefinition(extensionDefinitionUrl);
+                var sdExtension = await source.FindStructureDefinitionAsync(extensionDefinitionUrl);
                 Assert.IsNotNull(sdExtension);
                 Assert.IsTrue(sdExtension.HasSnapshot);
                 Assert.IsTrue(sdExtension.Snapshot.IsCreatedBySnapshotGenerator());
@@ -1969,7 +2002,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20190805] Updated, verify base annotation on extension definition root element
         // Should point to core "Extension", not "Element"
         [TestMethod]
-        public void TestBaseAnnotations_ExtensionDefinition()
+        public async T.Task TestBaseAnnotations_ExtensionDefinition()
         {
             const string url = @"http://example.org/fhir/StructureDefinition/MyTestExtension";
             var sd = new StructureDefinition()
@@ -1998,8 +2031,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(source, settings);
 
             try
@@ -2010,7 +2045,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
                 // Replace root element and re-expand
-                var coreExtension = source.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
+                var coreExtension = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Extension);
 
                 // [WMR 20190806] SnapGen should never expose/leak internal annotations
                 //Debug.Assert(!coreExtension.Differential.Element[0].HasSnapshotElementAnnotation());
@@ -2018,7 +2053,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 Assert.IsNotNull(coreExtension);
                 coreExtension.Snapshot = null;
-                _generator.Update(coreExtension);
+                await _generator.UpdateAsync(coreExtension);
 
                 Assert.IsTrue(coreExtension.HasSnapshot);
                 var coreDiffRoot = coreExtension.Differential.Element[0];
@@ -2032,7 +2067,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 sd.Differential.Element[0] = userDiffRoot;
 
-                var expanded = _generator.Generate(sd);
+                var expanded = await _generator.GenerateAsync(sd);
                 dumpOutcome(_generator.Outcome);
                 assertBaseDefs(expanded, settings);
 
@@ -2080,7 +2115,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestBaseAnnotations_BackboneElement()
+        public async T.Task TestBaseAnnotations_BackboneElement()
         {
             var sd = MyTestObservation;
             var resolver = new InMemoryProfileResolver(sd);
@@ -2092,7 +2127,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(sd, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -2103,7 +2138,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(expanded.HasSnapshot);
 
             Debug.WriteLine("Core Observation:");
-            var obs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            var obs = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             Assert.IsNotNull(obs);
             Assert.IsTrue(obs.HasSnapshot);
             dumpBaseElems(obs.Snapshot.Element);
@@ -2183,8 +2218,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         void constraintHandler(object sender, SnapshotConstraintEventArgs e)
         {
-            var elem = e.Element as ElementDefinition;
-            if (elem != null)
+            if (e.Element is ElementDefinition elem)
             {
                 var changed = elem.IsConstrainedByDiff();
                 //Debug.Assert(!_settings.GenerateAnnotationsOnConstraints || changed);
@@ -2217,7 +2251,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // Assert.IsTrue(!isConstraint || elem.Base != null);
 
                 var ann = elem.Annotation<BaseDefAnnotation>();
-                var baseDef = ann != null ? ann.BaseElementDefinition : null;
+                var baseDef = ann?.BaseElementDefinition;
                 Assert.AreNotEqual(elem, baseDef);
 
                 var hasChanges = SnapshotGeneratorTest2.hasChanges(elem);
@@ -2249,9 +2283,9 @@ namespace Hl7.Fhir.Specification.Tests
                     + (hasConstraintAnnotations.HasValue ? (hasConstraintAnnotations.Value ? " (+)" : " (-)") : null),
                     getChangeDescription(elem),
                     elem.Path,
-                    elem.Base != null ? elem.Base.Path : null,
-                    baseDef != null ? baseDef.Path : null,
-                    baseDef != null ? baseDef.GetHashCode().ToString() : null,
+                    elem.Base?.Path,
+                    baseDef?.Path,
+                    baseDef?.GetHashCode().ToString(),
                     // !isValid ? "!!!" : ""
                     isRedundant ? "(redundant)" : ""
                 );
@@ -2372,80 +2406,77 @@ namespace Hl7.Fhir.Specification.Tests
             //if (IsChanged(element.Slicing)) { return "Slicing"; }
             //if (HasChanges(element.Type)) { return "Type"; }
 
-            if (isChanged(element)) { return "Element"; }           // Moved to back
-
-            return string.Empty;
+            return isChanged(element) ? "Element" : string.Empty;           // Moved to back
         }
 
         static bool hasChanges<T>(IList<T> elements) where T : Element => elements != null ? elements.Any(e => isChanged(e)) : false;
         static bool isChanged(Element elem) => elem != null && elem.IsConstrainedByDiff();
 
         [TestMethod]
-        public void TestExpandCoreElement()
+        public async T.Task TestExpandCoreElement()
         {
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Element");
         }
 
         [TestMethod]
-        public void TestExpandCoreBackBoneElement()
+        public async T.Task TestExpandCoreBackBoneElement()
         {
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/BackboneElement");
         }
 
         [TestMethod]
-        public void TestExpandCoreExtension()
+        public async T.Task TestExpandCoreExtension()
         {
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Extension");
         }
 
         [TestMethod]
-        public void TestExpandCoreArtifacts()
+        public async T.Task TestExpandCoreArtifacts()
         {
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/code");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
 
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/code");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/id");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Meta");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/HumanName");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Quantity");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Money");
 
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Meta");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/HumanName");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Quantity");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Money");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Resource");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Resource");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Basic");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
 
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Basic");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Patient");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Questionnaire");
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/AuditEvent");
-
-            testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
+            await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Organization");
         }
 
         [TestMethod]
-        public void TestExpandAllCoreTypes()
+        public async T.Task TestExpandAllCoreTypes()
         {
             // Generate snapshots for all core types, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. Element, Extension)
             var coreArtifactNames = ModelInfo.FhirCsTypeToString.Values;
             var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
-            testExpandResources(coreTypeUrls.ToArray());
+            await testExpandResources(coreTypeUrls.ToArray());
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void TestExpandAllCoreResources()
+        public async T.Task TestExpandAllCoreResources()
         {
             // Generate snapshots for all core resources, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
             var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
-            testExpandResources(coreResourceUrls.ToArray());
+            await testExpandResources(coreResourceUrls.ToArray());
         }
 
-        void testExpandResources(string[] profileUris)
+        async T.Task testExpandResources(string[] profileUris)
         {
             var sw = new Stopwatch();
             int count = profileUris.Length;
@@ -2454,21 +2485,21 @@ namespace Hl7.Fhir.Specification.Tests
 
             for (int i = 0; i < count; i++)
             {
-                testExpandResource(profileUris[i]);
+                await testExpandResource(profileUris[i]);
             }
 
             sw.Stop();
             _source.ShowDuration(count, sw.Elapsed);
         }
 
-        bool testExpandResource(string url)
+        async T.Task<bool> testExpandResource(string url)
         {
             Debug.Print("[testExpandResource] url = '{0}'", url);
-            var sd = _testResolver.FindStructureDefinition(url);
+            var sd = await _testResolver.FindStructureDefinitionAsync(url);
             Assert.IsNotNull(sd);
             // dumpReferences(sd);
 
-            var result = generateSnapshotAndCompare(sd, out var expanded);
+            var (result, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -2493,14 +2524,13 @@ namespace Hl7.Fhir.Specification.Tests
                 var bundle = parser.Parse<Bundle>(reader);
                 foreach (var entry in bundle.Entry)
                 {
-                    var res = entry.Resource as T;
-                    if (res != null) { yield return res; }
+                    if (entry.Resource is T res) { yield return res; }
                 }
             }
         }
 
         [TestMethod]
-        public void TestExpandCoreTypesByHierarchy()
+        public async T.Task TestExpandCoreTypesByHierarchy()
         {
             // [WMR 20160912] Expand all core data types
             // Start at root types without a base (Element, Extension), then recursively expand derived types
@@ -2525,7 +2555,7 @@ namespace Hl7.Fhir.Specification.Tests
                     var coreDefs = enumerateBundleStream<StructureDefinition>(stream);
                     coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
                 }
-                expandStructuresBasedOn(resolver, coreProfileInfo, null);
+                await expandStructuresBasedOn(resolver, coreProfileInfo, null);
             }
             finally
             {
@@ -2536,7 +2566,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         struct ProfileInfo { public string Url; public string BaseDefinition; }
 
-        void expandStructuresBasedOn(IResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
+        async T.Task expandStructuresBasedOn(IAsyncResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
         {
             var derivedStructures = profileInfo.Where(pi => pi.BaseDefinition == baseUrl);
             if (derivedStructures.Any())
@@ -2544,21 +2574,21 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLineIf(derivedStructures.Any(), "Expand structures derived from: '{0}'".FormatWith(baseUrl));
                 foreach (var info in derivedStructures)
                 {
-                    var sd = resolver.FindStructureDefinition(info.Url);
+                    var sd = await resolver.FindStructureDefinitionAsync(info.Url);
                     Assert.IsNotNull(sd);
-                    updateSnapshot(sd);
-                    expandStructuresBasedOn(resolver, profileInfo, sd.Url);
+                    await updateSnapshot(sd);
+                    await expandStructuresBasedOn(resolver, profileInfo, sd.Url);
                 }
             }
         }
 
-        void updateSnapshot(StructureDefinition sd)
+        async T.Task updateSnapshot(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
             Debug.Print("Profile: '{0}' : '{1}'".FormatWith(sd.Url, sd.BaseDefinition));
             // Important! Must expand original instances, not clones!
             // var original = sd.DeepCopy() as StructureDefinition;
-            _generator.Update(sd);
+            await _generator.UpdateAsync(sd);
             // result &= verifyElementBase(original, entry);
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(sd.Snapshot.Element);
@@ -2594,7 +2624,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var rootElemName = expandedElems[0].Path;
 
                 //var baseProfileUrl = expanded.Base;
-                //var baseProfile = baseProfileUrl != null ? _testResolver.FindStructureDefinition(baseProfileUrl) : null;
+                //var baseProfile = baseProfileUrl != null ? await _testResolver.FindStructureDefinitionAsync(baseProfileUrl) : null;
                 //var baseRootElemName = baseProfile != null && baseProfile.Snapshot != null ? baseProfile.Snapshot.Element[0].Path : null;
                 //if (expandedElems.Count > 0 && baseRootElemName != null)
                 //{
@@ -2684,7 +2714,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         static bool verifyBasePath(ElementDefinition elem, ElementDefinition orgElem, string path = "")
         {
-            bool result = false;
+            bool result;
             if (!string.IsNullOrEmpty(path))
             {
                 // Assert.IsNotNull(elem.Base);
@@ -2698,8 +2728,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLineIf(elem.Base == null, "EXPANDED: Path = {0}  => BASE IS MISSING".FormatWith(elem.Path));
                 Debug.WriteLineIf(orgElem.Base == null, "ORIGINAL: Path = {0}  => BASE IS MISSING".FormatWith(orgElem.Path));
 
-                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+                Debug.WriteLineIf(elem.Base != null && path != elem.Base.Path, "EXPANDED: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(elem.Path, elem.Base?.Path, path));
+                Debug.WriteLineIf(orgElem.Base != null && path != orgElem.Base.Path, "ORIGINAL: Path = {0} Base = {1} != {2} => INVALID BASE PATH".FormatWith(orgElem.Path, orgElem.Base?.Path, path));
             }
             else
             {
@@ -2709,8 +2739,8 @@ namespace Hl7.Fhir.Specification.Tests
 
                 result = elem.Base == null;
 
-                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base != null ? elem.Base.Path : null, path));
-                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base != null ? orgElem.Base.Path : null, path));
+                Debug.WriteLineIf(elem.Base != null, "EXPANDED: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(elem.Path, elem.Base?.Path, path));
+                Debug.WriteLineIf(orgElem.Base != null, "ORIGINAL: Path = {0} Base = {1} != '' => BASE SHOULD BE NULL".FormatWith(orgElem.Path, orgElem.Base?.Path, path));
 
             }
             return result;
@@ -2719,10 +2749,10 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20161207] NEW
         // Verify reslicing order
         [TestMethod]
-        public void TestReslicingOrder()
+        public async T.Task TestReslicingOrder()
         {
             var dirSource = new DirectorySource("TestData/validation");
-            var sd = dirSource.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            var sd = await dirSource.FindStructureDefinitionAsync("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(sd);
 
             //Patient.telecom : ''
@@ -2739,7 +2769,7 @@ namespace Hl7.Fhir.Specification.Tests
             var diffNav = ElementDefinitionNavigator.ForDifferential(sd);
             assertPatientTelecomReslice(diffNav);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             Debug.Print("Verify snapshot...");
             var snapNav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -2826,14 +2856,14 @@ namespace Hl7.Fhir.Specification.Tests
         // http://hl7.org/fhir/StructureDefinition/questionnaire-enableWhen : 'TestData/snapshot-test/extensions\extension-questionnaire-enablewhen.xml'
 
         [TestMethod]
-        public void FindComplexTestExtensions()
+        public async T.Task FindComplexTestExtensions()
         {
             Debug.WriteLine("Complex extension in TestData folder:");
             var dirSource = new DirectorySource("TestData/snapshot-test/extensions");
             var uris = dirSource.ListResourceUris(ResourceType.StructureDefinition);
             foreach (var uri in uris)
             {
-                var sd = dirSource.FindStructureDefinition(uri);
+                var sd = await dirSource.FindStructureDefinitionAsync(uri);
                 if (sd.IsExtension)
                 {
                     if (sd.Differential.Element.Any(e => e.Path.StartsWith("Extension.extension.", StringComparison.Ordinal)))
@@ -2903,7 +2933,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestTypeSlicing()
+        public async T.Task TestTypeSlicing()
         {
             // Create a profile with a type slice: { value[x], value[x] : String }
             var profile = ObservationTypeSliceProfile;
@@ -2912,7 +2942,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -2938,7 +2968,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             );
 
-            generateSnapshotAndCompare(profile, out expanded);
+            (_, expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -2957,7 +2987,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestMissingDifferential()
+        public async T.Task TestMissingDifferential()
         {
             // Create a profile without a differential
             var profile = ObservationTypeSliceProfile;
@@ -2967,7 +2997,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -2975,7 +3005,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestUnresolvedBaseProfile()
+        public async T.Task TestUnresolvedBaseProfile()
         {
             // Create a profile with an unresolved base profile reference
             var profile = ObservationTypeSliceProfile;
@@ -2985,7 +3015,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsFalse(expanded.HasSnapshot);
             var outcome = _generator.Outcome;
@@ -3044,7 +3074,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestTypeReslicing()
+        public async T.Task TestTypeReslicing()
         {
             // Create a derived profile from a base profile with a type slice
             var profile = ObservationTypeResliceProfile;
@@ -3055,7 +3085,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3102,7 +3132,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestChoiceTypeConstraint()
+        public async T.Task TestChoiceTypeConstraint()
         {
             // Create a profile with a choice type constraint: value[x] => valueString
             var profile = ObservationTypeConstraintProfile;
@@ -3111,7 +3141,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3127,7 +3157,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestInvalidChoiceTypeConstraints()
+        public async T.Task TestInvalidChoiceTypeConstraints()
         {
             // Create a profile with multiple (invalid!) choice type constraint: value[x] => { valueString, valueInteger }
             var profile = ObservationTypeConstraintProfile;
@@ -3145,7 +3175,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3197,7 +3227,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestEmptyClosedExtensionSlice()
+        public async T.Task TestEmptyClosedExtensionSlice()
         {
             var profile = ClosedExtensionSliceObservationProfile;
 
@@ -3205,7 +3235,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3220,14 +3250,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestSlicingEntryWithChilren()
+        public async T.Task TestSlicingEntryWithChilren()
         {
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/StructureDefinition/DocumentComposition");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/StructureDefinition/DocumentComposition");
             Assert.IsNotNull(sd);
 
             // dumpReferences(sd);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             expanded.Snapshot.Element.Dump();
@@ -3244,26 +3274,25 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestObservationProfileWithExtensions() => testObservationProfileWithExtensions(false);
+        public async T.Task TestObservationProfileWithExtensions() => await testObservationProfileWithExtensions(false);
 
         [TestMethod]
-        public void TestObservationProfileWithExtensions_ExpandAll() => testObservationProfileWithExtensions(true);
+        public async T.Task TestObservationProfileWithExtensions_ExpandAll() => await testObservationProfileWithExtensions(true);
 
-        void testObservationProfileWithExtensions(bool expandAll)
+        async T.Task testObservationProfileWithExtensions(bool expandAll)
         {
             // Same as TestObservationProfileWithExtensions, but with full expansion of all complex elements (inc. extensions!)
 
-            // var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation");
-            var obs = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyCustomObservation3");
+            // var obs = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyCustomObservation");
+            var obs = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyCustomObservation3");
             Assert.IsNotNull(obs);
 
-            StructureDefinition expanded;
             _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.PrepareElement += elementHandler;
             List<ElementDefinition> elems;
             try
             {
-                generateSnapshotAndCompare(obs, out expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(obs);
 
                 dumpOutcome(_generator.Outcome);
 
@@ -3276,7 +3305,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 if (expandAll)
                 {
-                    elems = fullyExpand(elems, issues).ToList();
+                    elems = await fullyExpand(elems, issues);
                     Debug.WriteLine($"Fully expanded: {elems.Count} elements");
                 }
             }
@@ -3307,21 +3336,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(otherExtElem);
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension", otherExtElem.Type.FirstOrDefault().Profile);
 
-            var labelExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
+            var labelExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/ObservationLabelExtension");
             Assert.IsNotNull(labelExt);
             if (expandAll) { Assert.AreEqual(true, labelExt.HasSnapshot); }
 
-            var locationExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension");
+            var locationExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/ObservationLocationExtension");
             Assert.IsNotNull(locationExt);
             if (expandAll) { Assert.AreEqual(true, locationExt.HasSnapshot); }
 
             // Third extension element maps to an unresolved extension definition
-            var otherExt = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension");
+            var otherExt = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/SomeOtherExtension");
             Assert.IsNull(otherExt);
 
             // Now verify the snapshot
             // First two extension elements should have been merged from the snapshot root Extension element of the associated extension definition 
-            var coreExtension = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Extension);
+            var coreExtension = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Extension);
             Assert.IsNotNull(coreExtension);
             Assert.IsTrue(coreExtension.HasSnapshot);
             var coreExtensionRootElem = coreExtension.Snapshot.Element[0];
@@ -3341,7 +3370,7 @@ namespace Hl7.Fhir.Specification.Tests
             verifyProfileExtensionBaseElement(locationExtElem);
 
             // Last (unresolved) extension element should have been merged with Observation.extension
-            var coreObservation = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            var coreObservation = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             Assert.IsNotNull(coreObservation);
             Assert.IsTrue(coreObservation.HasSnapshot);
             var coreObsExtensionElem = coreObservation.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.extension");
@@ -3368,9 +3397,9 @@ namespace Hl7.Fhir.Specification.Tests
         // Specifically, snapshot generator drops the slicing component from the slice entry element
         // Explanation: Organization.type is not a list (max = 1) and not a choice type => slicing is not allowed!
         [TestMethod]
-        public void TestOrganizationTypeSlice()
+        public async T.Task TestOrganizationTypeSlice()
         {
-            var org = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
+            var org = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MySlicedOrganization");
             Assert.IsNotNull(org);
 
             StructureDefinition expanded;
@@ -3400,7 +3429,7 @@ namespace Hl7.Fhir.Specification.Tests
         // If the diff constrains only Binding.Strength, then snapshot also contains only Binding.Strength - WRONG!
         // Expected: snapshot contains inherited properties from base, i.e. description, valueSetUri/valueSetReference
         [TestMethod]
-        public void TestElementBinding()
+        public async T.Task TestElementBinding()
         {
             var sd = new StructureDefinition()
             {
@@ -3441,7 +3470,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -3452,7 +3481,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(BindingStrength.Preferred, profileBinding.Strength);
 
-            var sdEncounter = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Encounter);
+            var sdEncounter = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Encounter);
             Assert.IsNotNull(sdEncounter);
             Assert.IsTrue(sdEncounter.HasSnapshot);
 
@@ -3471,7 +3500,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Reported by Thomas Tveit Rosenlund: https://simplifier.net/Velferdsteknologi2/FlagVFT (geoPositions)
         // Don't expand; emit outcome issue
         [TestMethod]
-        public void TestInvalidProfileExtensionTarget()
+        public async T.Task TestInvalidProfileExtensionTarget()
         {
             var sdLocation = new StructureDefinition()
             {
@@ -3536,7 +3565,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sdLocation, sdFlag);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sdFlag, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sdFlag);
 
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
@@ -3553,7 +3582,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var elems = expanded.Snapshot.Element;
             issues = new List<OperationOutcome.IssueComponent>();
-            elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+            elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
             Debug.WriteLine($"Fully expanded: {elems.Count} elements");
 
             expanded.Snapshot.Element.Dump();
@@ -3635,7 +3664,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestSliceBase_SlicedPatient()
+        public async T.Task TestSliceBase_SlicedPatient()
         {
             var profile = SlicedPatientProfile;
 
@@ -3647,7 +3676,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -3662,7 +3691,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             identifierConstraints.Dump("Constraints on Patient.identifier:");
 
-            var corePatientProfile = _testResolver.FindStructureDefinition(profile.BaseDefinition);
+            var corePatientProfile = await _testResolver.FindStructureDefinitionAsync(profile.BaseDefinition);
             Assert.IsNotNull(corePatientProfile);
             Assert.IsTrue(corePatientProfile.HasSnapshot);
             var corePatientIdentifierElem = corePatientProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
@@ -3806,7 +3835,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestSliceBase_SlicedNationalPatient()
+        public async T.Task TestSliceBase_SlicedNationalPatient()
         {
             var baseProfile = NationalPatientProfile;
             var profile = SlicedNationalPatientProfile;
@@ -3819,7 +3848,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -3834,7 +3863,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             identifierConstraints.Dump("Constraints on Patient.identifier:");
 
-            var nationalPatientProfile = resolver.FindStructureDefinition(profile.BaseDefinition);
+            var nationalPatientProfile = await resolver.FindStructureDefinitionAsync(profile.BaseDefinition);
             Assert.IsNotNull(nationalPatientProfile);
             Assert.IsTrue(nationalPatientProfile.HasSnapshot);
             var nationalPatientIdentifierElem = nationalPatientProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
@@ -3999,7 +4028,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestSliceBase_ReslicedNationalPatient()
+        public async T.Task TestSliceBase_ReslicedNationalPatient()
         {
             var baseProfile = NationalPatientProfile;
             var profile = ReslicedNationalPatientProfile;
@@ -4012,7 +4041,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -4027,7 +4056,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             identifierConstraints.Dump("Constraints on Patient.identifier:");
 
-            var nationalPatientProfile = resolver.FindStructureDefinition(profile.BaseDefinition);
+            var nationalPatientProfile = await resolver.FindStructureDefinitionAsync(profile.BaseDefinition);
             Assert.IsNotNull(nationalPatientProfile);
             Assert.IsTrue(nationalPatientProfile.HasSnapshot);
             var nationalPatientIdentifierElem = nationalPatientProfile.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
@@ -4119,25 +4148,27 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestSliceBase_PatientTelecomResliceEK()
+        public async T.Task TestSliceBase_PatientTelecomResliceEK()
         {
             var dirSource = new DirectorySource("TestData/validation");
             var source = new TimingSource(dirSource);
             var resolver = new CachedResolver(source);
             var multiResolver = new MultiResolver(resolver, _testResolver);
 
-            var profile = resolver.FindStructureDefinition("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
+            var profile = await resolver.FindStructureDefinitionAsync("http://example.com/StructureDefinition/patient-telecom-reslice-ek");
             Assert.IsNotNull(profile);
 
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateElementIds = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateElementIds = true
+            };
             _generator = new SnapshotGenerator(multiResolver, settings);
             StructureDefinition expanded = null;
 
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -4284,9 +4315,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementMappings()
+        public async T.Task TestElementMappings()
         {
-            var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
+            var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
             Assert.IsNotNull(profile);
 
             var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
@@ -4298,7 +4329,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -4359,7 +4390,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestPatientNonTypeSlice()
+        public async T.Task TestPatientNonTypeSlice()
         {
             var profile = PatientNonTypeSliceProfile;
 
@@ -4370,7 +4401,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Force expansion of Patient.deceased[x]
             var nav = ElementDefinitionNavigator.ForDifferential(profile);
             Assert.IsTrue(nav.MoveToFirstChild());
-            var result = _generator.ExpandElement(nav);
+            var result = await _generator.ExpandElementAsync(nav);
             profile.Differential.Element.Dump();
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(result);
@@ -4410,7 +4441,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170321] NEW
         [TestMethod]
-        public void TestSimpleQuantityProfile()
+        public async T.Task TestSimpleQuantityProfile()
         {
             var profile = ObservationSimpleQuantityProfile;
 
@@ -4418,7 +4449,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(profile, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump();
@@ -4431,7 +4462,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             issues = new List<OperationOutcome.IssueComponent>();
             var elems = expanded.Snapshot.Element;
-            elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+            elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
             // Generator should report same issue as during regular snapshot expansion
             Assert.AreEqual(1, issues.Count);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
@@ -4457,9 +4488,9 @@ namespace Hl7.Fhir.Specification.Tests
         // Profile defines constraints on child elements of the complex extension
         // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
         [TestMethod]   // test data needs to be converted from dstu2 -> stu3
-        public void TestProfileConstraintsOnComplexExtensionChildren()
+        public async T.Task TestProfileConstraintsOnComplexExtensionChildren()
         {
-            var profile = _testResolver.FindStructureDefinition("https://example.org/fhir/StructureDefinition/cds-basecancer");
+            var profile = await _testResolver.FindStructureDefinitionAsync("https://example.org/fhir/StructureDefinition/cds-basecancer");
             Assert.IsNotNull(profile);
 
             profile.Differential.Element.Dump("===== Differential =====");
@@ -4469,7 +4500,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
             }
             finally
             {
@@ -4578,10 +4609,10 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestElementIds_Questionnaire()
+        public async T.Task TestElementIds_Questionnaire()
         {
 #if false // DEBUG
-            var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Questionnaire);
+            var coreProfile = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Questionnaire);
             Assert.IsNotNull(coreProfile);
             Debug.WriteLine("Core Questionnaire:");
             foreach (var elem in coreProfile.Differential.Element)
@@ -4590,7 +4621,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             _generator = new SnapshotGenerator(_testResolver, _settings);
-            _generator.Update(coreProfile);
+            await _generator.UpdateAsync(coreProfile);
             dumpOutcome(_generator.Outcome);
 #endif
 
@@ -4605,7 +4636,7 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded = null;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
 
                 Assert.IsNotNull(expanded);
                 Assert.IsTrue(expanded.HasSnapshot);
@@ -4624,7 +4655,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 // IMPORTANT: also hook elementHandler event during fullExpansion, to emit (custom) base element annotations
                 var issues = new List<OperationOutcome.IssueComponent>();
-                elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+                elems = expanded.Snapshot.Element = await fullyExpand(elems, issues);
                 Assert.AreEqual(0, issues.Count);
                 Debug.WriteLine($"Full expansion: #{elems.Count} elements");
                 dumpBaseElems(elems);
@@ -4657,7 +4688,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        static void assertElementIds(ElementDefinition elem, ElementDefinition baseElem, bool equalLength = true)
+        private static void assertElementIds(ElementDefinition elem, ElementDefinition baseElem, bool equalLength = true)
         {
             // [WMR 20170614] derived profile may (further) slice the base profile
             // Element id's are not exactly equal, as the diff id's will introduce slice name(s)
@@ -4730,7 +4761,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestElementIds_PatientWithTypeSlice()
+        public async T.Task TestElementIds_PatientWithTypeSlice()
         {
             var profile = TestPatientTypeSliceProfile;
             var resolver = new InMemoryProfileResolver(profile);
@@ -4740,7 +4771,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(profile, out var expanded);
+                (_, var expanded) = await generateSnapshotAndCompare(profile);
                 Assert.IsNotNull(expanded);
                 Assert.IsTrue(expanded.HasSnapshot);
                 dumpOutcome(_generator.Outcome);
@@ -4748,7 +4779,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+                expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
                 Assert.AreEqual(0, issues.Count);
 
@@ -4814,7 +4845,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestElementIds_SlicedPatientWithCustomIdProfile()
+        public async T.Task TestElementIds_SlicedPatientWithCustomIdProfile()
         {
             var profile = TestSlicedPatientWithCustomIdProfile;
             var resolver = new InMemoryProfileResolver(profile);
@@ -4829,14 +4860,14 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded = null;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
                 Assert.IsNotNull(expanded);
                 Assert.IsTrue(expanded.HasSnapshot);
                 dumpOutcome(_generator.Outcome);
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+                expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
                 Assert.AreEqual(0, issues.Count);
             }
@@ -4899,9 +4930,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestElementIds_SlicedPatientWithCustomIdProfile2()
+        public async T.Task TestElementIds_SlicedPatientWithCustomIdProfile2()
         {
-            var profile = _testResolver.FindStructureDefinition("http://example.org/fhir/StructureDefinition/PatientWithCustomElementIds");
+            var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/PatientWithCustomElementIds");
             Assert.IsNotNull(profile);
 
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -4909,14 +4940,14 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition expanded = null;
             try
             {
-                generateSnapshotAndCompare(profile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(profile);
                 Assert.IsNotNull(expanded);
                 Assert.IsTrue(expanded.HasSnapshot);
                 dumpOutcome(_generator.Outcome);
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+                expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
                 dumpIssues(issues);
                 Assert.AreEqual(0, issues.Count);
             }
@@ -4944,21 +4975,21 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170426] NEW - Bug with generating base element annotations for merged external type profiles?
         [TestMethod]
-        public void TestPatientWithAddress()
+        public async T.Task TestPatientWithAddress()
         {
-            var sd = _testResolver.FindStructureDefinition(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://example.org/fhir/StructureDefinition/MyPatientWithAddress");
             Assert.IsNotNull(sd);
 
             _generator = new SnapshotGenerator(_testResolver, _settings);
             _generator.PrepareElement += elementHandler;
             try
             {
-                _generator.Update(sd);
+                await _generator.UpdateAsync(sd);
                 dumpOutcome(_generator.Outcome);
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                sd.Snapshot.Element = fullyExpand(sd.Snapshot.Element, issues).ToList();
+                sd.Snapshot.Element = await fullyExpand(sd.Snapshot.Element, issues);
                 dumpIssues(issues);
                 Assert.AreEqual(0, issues.Count);
             }
@@ -4969,7 +5000,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             dumpBaseDefId(sd);
 
-            var sdCore = _testResolver.FindStructureDefinitionForCoreType(sd.Type);
+            var sdCore = await _testResolver.FindStructureDefinitionForCoreTypeAsync(sd.Type);
             dumpBaseDefId(sdCore);
 
             // Verify that main profile MyPatientWithAddress inherited
@@ -4977,7 +5008,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elem = sd.Snapshot.Element.FirstOrDefault(e => e.SliceName == "patientExtension");
             Assert.IsNotNull(elem);
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientExtension", elem.Type[0]?.Profile);
-            var sdExt = _testResolver.FindExtensionDefinition(elem.Type[0].Profile);
+            var sdExt = await _testResolver.FindExtensionDefinitionAsync(elem.Type[0].Profile);
             Assert.IsNotNull(sdExt);
             var extRootshort = sdExt.Differential.Element[0].Short; // Explicit constraint on ext root
             Assert.IsNotNull(extRootshort);
@@ -4993,7 +5024,7 @@ namespace Hl7.Fhir.Specification.Tests
             elem = sd.Snapshot.Element.FirstOrDefault(e => e.Path == "Patient.address");
             Assert.IsNotNull(elem);
             Assert.AreEqual(@"http://example.org/fhir/StructureDefinition/MyPatientAddress", elem.Type[0]?.Profile);
-            var sdType = _testResolver.FindStructureDefinition(elem.Type[0].Profile);
+            var sdType = await _testResolver.FindStructureDefinitionAsync(elem.Type[0].Profile);
             Assert.IsNotNull(sdType);
             var typeChildElem = sdType.Snapshot.Element.FirstOrDefault(e => e.Path == "Address.country");
             Assert.IsNotNull(typeChildElem);
@@ -5007,17 +5038,17 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("land", baseElem.Alias.FirstOrDefault());
         }
 
-        static void dumpBaseDefId(StructureDefinition sd)
+        void dumpBaseDefId(StructureDefinition sd)
         {
             Debug.Print("===== " + sd.Name);
-            Debug.Print($"{"Path".PadRight(50)}| {"Base Path".PadRight(49)}| {"Base StructureDefinition".PadRight(69)}| {"Element Id".PadRight(49)}| {"Base Element Id".PadRight(49)}");
+            Debug.Print($"{"Path",50}| {"Base Path",49}| {"Base StructureDefinition",69}| {"Element Id",49}| {"Base Element Id",49}");
             foreach (var elem in sd.Snapshot.Element)
             {
                 var ann = elem.Annotation<BaseDefAnnotation>();
                 Assert.IsNotNull(ann);
                 var s49 = new string(' ', 49);
                 var s69 = new string(' ', 69);
-                Debug.Print($"{elem.Path.PadRight(50)}| {ann?.BaseElementDefinition?.Path?.PadRight(49) ?? s49}| {ann?.BaseStructureDefinition?.Url?.PadRight(69) ?? s69}| {elem?.ElementId?.PadRight(49) ?? s49}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49) ?? s49}");
+                Debug.Print($"{elem.Path,50}| {ann?.BaseElementDefinition?.Path?.PadRight(49) ?? s49}| {ann?.BaseStructureDefinition?.Url?.PadRight(69) ?? s69}| {elem?.ElementId?.PadRight(49) ?? s49}| {ann?.BaseElementDefinition?.ElementId?.PadRight(49) ?? s49}");
                 var elemId = elem.ElementId;
                 Assert.IsNotNull(elemId);
                 Assert.IsTrue(elem.IsRootElement() ? elemId == sd.Type : elemId.StartsWith(sd.Type + "."));
@@ -5088,7 +5119,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestTypeProfileWithChildElementBinding()
+        public async T.Task TestTypeProfileWithChildElementBinding()
         {
             var patientProfile = PatientProfileWithIdentifierProfile;
             var resolver = new InMemoryProfileResolver(patientProfile, PatientIdentifierProfile);
@@ -5100,7 +5131,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                generateSnapshotAndCompare(patientProfile, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(patientProfile);
             }
             finally
             {
@@ -5180,7 +5211,7 @@ namespace Hl7.Fhir.Specification.Tests
         //
         // However in STU3, the core def example binding DOES include a valueset reference.
         [TestMethod]
-        public void TestQRSliceChildrenBindings()
+        public async T.Task TestQRSliceChildrenBindings()
         {
             var sd = QuestionnaireResponseWithSlice;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5192,7 +5223,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.BeforeExpandElement += beforeExpandElementHandler_DEBUG;
             try
             {
-                generateSnapshotAndCompare(sd, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -5250,7 +5281,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestDerivedObservation()
+        public async T.Task TestDerivedObservation()
         {
             var derivedObs = MyDerivedObservation;
             var resolver = new InMemoryProfileResolver(derivedObs);
@@ -5263,7 +5294,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(derivedObs, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(derivedObs);
             }
             finally
             {
@@ -5280,7 +5311,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(derivedMethodElem);
             Assert.AreEqual("DerivedMethodShort", derivedMethodElem.Short);
 
-            var coreObs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            var coreObs = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             Assert.IsTrue(coreObs.HasSnapshot);
             var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
             Assert.IsNotNull(coreMethodElem);
@@ -5322,7 +5353,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestMoreDerivedObservation()
+        public async T.Task TestMoreDerivedObservation()
         {
             var derivedObs = MyDerivedObservation;
             var moreDerivedObs = MyMoreDerivedObservation;
@@ -5336,7 +5367,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(moreDerivedObs, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(moreDerivedObs);
             }
             finally
             {
@@ -5366,7 +5397,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(derivedMethodElem.Short, baseElem.Short);
 
             // MoreDerivedObservation:Observation.method.comments is inherited from Core:Observation.method.comments
-            var coreObs = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Observation);
+            var coreObs = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             Assert.IsTrue(coreObs.HasSnapshot);
             var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
             Assert.IsNotNull(coreMethodElem);
@@ -5411,7 +5442,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Instead, named slice base should always have Min = 0
         // Only slice entry inherits cardinality from base.
         [TestMethod]
-        public void TestNamedSliceMinCardinality()
+        public async T.Task TestNamedSliceMinCardinality()
         {
             var sd = MySlicedDocumentReference;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5424,7 +5455,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(sd, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -5437,7 +5468,7 @@ namespace Hl7.Fhir.Specification.Tests
             // dumpElements(expanded.Snapshot.Element);
             dumpBaseElems(expanded.Snapshot.Element);
 
-            var coreProfile = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.DocumentReference);
+            var coreProfile = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.DocumentReference);
             Assert.IsNotNull(coreProfile);
             Assert.IsTrue(coreProfile.HasSnapshot);
 
@@ -5520,7 +5551,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // https://trello.com/c/Mnn0EBOg
         [TestMethod]
-        public void TestConstraintOnSliceEntry()
+        public async T.Task TestConstraintOnSliceEntry()
         {
             var sd = MyMoreDerivedPatient;
             var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
@@ -5533,7 +5564,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(sd, out expanded);
+                (_, expanded) = await generateSnapshotAndCompare(sd);
             }
             finally
             {
@@ -5564,13 +5595,13 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170810] https://trello.com/c/KNMYa44V
         [TestMethod]
-        public void TestDosage()
+        public async T.Task TestDosage()
         {
             // Note: resolved from TestData\snapshot-test\profiles-types.xml
-            var sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Dosage);
+            var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Dosage);
             _generator = new SnapshotGenerator(_testResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
             var elems = expanded.Snapshot.Element;
@@ -5583,7 +5614,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Also verify the expanded snapshot of the referenced SimpleQuantity profile
-            sd = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.SimpleQuantity);
+            sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.SimpleQuantity);
             Assert.IsNotNull(sd);
             Assert.IsTrue(sd.HasSnapshot);
             Assert.IsNull(sd.Differential.GetRootElement()?.SliceName);
@@ -5645,7 +5676,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestSimpleQuantitySlice()
+        public async T.Task TestSimpleQuantitySlice()
         {
             var sd = MedicationStatementWithSimpleQuantitySlice;
             var resolver = new InMemoryProfileResolver(sd);
@@ -5653,7 +5684,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
             var elems = expanded.Snapshot.Element;
@@ -5800,7 +5831,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestPatientDe()
+        public async T.Task TestPatientDe()
         {
             var sd = SL_PatientDerived;
             var resolver = new InMemoryProfileResolver(sd, SL_PatientBasis, SL_HumanNameBasis, SL_HumanNameTitleSuffix);
@@ -5808,7 +5839,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
             var elems = expanded.Snapshot.Element;
@@ -5850,7 +5881,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Observation.component.referenceRange => Observation.referenceRange
         // https://trello.com/c/p1RbTjwi
         [TestMethod]
-        public void TestObservationComponentReferenceRange()
+        public async T.Task TestObservationComponentReferenceRange()
         {
             var sd = new StructureDefinition()
             {
@@ -5881,7 +5912,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -5892,7 +5923,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
-            expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+            expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
             // Assert.AreEqual(1, issues.Count);
 
@@ -5910,7 +5941,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // https://trello.com/c/pA4uF7IR
         [TestMethod]
-        public void TestInheritedDataTypeProfileExtensions()
+        public async T.Task TestInheritedDataTypeProfileExtensions()
         {
             var sdHumanNameExtension = new StructureDefinition()
             {
@@ -6007,7 +6038,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sdHumanNameExtension, sdHumanName, sdBasePatient, sdDerivedPatient);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sdDerivedPatient, out var expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sdDerivedPatient);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
@@ -6016,7 +6047,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
-            expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+            expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
             Assert.AreEqual(0, issues.Count);
 
@@ -6033,7 +6064,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Verify generated outcome issue for incompatible type profile
         // Also verify that choice type element renaming is not affected
         [TestMethod]
-        public void TestIncompatibleTypeProfile()
+        public async T.Task TestIncompatibleTypeProfile()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6072,7 +6103,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
@@ -6086,7 +6117,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
-            expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+            expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
             Assert.AreEqual(1, issues.Count);
             assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE, extensionUrl, sd.Differential.Element[1].Path);
@@ -6115,7 +6146,7 @@ namespace Hl7.Fhir.Specification.Tests
         // Verify no outcome issue for incompatible type profiles
         // Also verify that choice type element renaming is not affected
         [TestMethod]
-        public void TestMultipleIncompatibleTypeProfiles()
+        public async T.Task TestMultipleIncompatibleTypeProfiles()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6161,7 +6192,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
 
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
@@ -6174,7 +6205,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
-            expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+            expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
             Assert.AreEqual(0, issues.Count);
 
@@ -6192,7 +6223,7 @@ namespace Hl7.Fhir.Specification.Tests
         // even if there are multiple type options (with same code)
         // https://trello.com/c/OvQFRdCJ
         [TestMethod]
-        public void TestExtensionValueReferenceRenaming()
+        public async T.Task TestExtensionValueReferenceRenaming()
         {
             const string extensionUrl = @"http://example.org/fhir/StructureDefinition/ValueReferenceExtension";
             var sd = new StructureDefinition()
@@ -6234,7 +6265,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            generateSnapshotAndCompare(sd, out var expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sd);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
             dumpOutcome(_generator.Outcome);
@@ -6244,7 +6275,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             var issues = new List<OperationOutcome.IssueComponent>();
-            expanded.Snapshot.Element = fullyExpand(expanded.Snapshot.Element, issues).ToList();
+            expanded.Snapshot.Element = await fullyExpand(expanded.Snapshot.Element, issues);
             dumpIssues(issues);
             Assert.AreEqual(0, issues.Count);
 
@@ -6257,7 +6288,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestExpandBundleEntryResource()
+        public async T.Task TestExpandBundleEntryResource()
         {
             // Verify that the snapshot generator is capable of expanding Bundle.entry.resource,
             // if constrained to a resource type
@@ -6295,14 +6326,14 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Print("===== Prepare ===== ");
             // Prepare standard snapshots for core Bundle & List
 
-            var sdBundle = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.Bundle);
+            var sdBundle = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Bundle);
             Assert.IsNotNull(sdBundle);
-            _generator.Update(sdBundle);
+            await _generator.UpdateAsync(sdBundle);
             Assert.IsTrue(sdBundle.HasSnapshot);
 
-            var sdList = _testResolver.FindStructureDefinitionForCoreType(FHIRAllTypes.List);
+            var sdList = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.List);
             Assert.IsNotNull(sdList);
-            _generator.Update(sdList);
+            await _generator.UpdateAsync(sdList);
             Assert.IsTrue(sdList.HasSnapshot);
 
             Debug.Print("===== Generate ===== ");
@@ -6311,7 +6342,7 @@ namespace Hl7.Fhir.Specification.Tests
             _generator.PrepareElement += elementHandler;
             try
             {
-                generateSnapshotAndCompare(sd, out var expanded);
+                var (_, expanded) = await generateSnapshotAndCompare(sd);
 
                 dumpOutcome(_generator.Outcome);
                 Assert.IsTrue(expanded.HasSnapshot);
@@ -6324,7 +6355,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                elems = fullyExpand(elems, issues).ToList();
+                elems = await fullyExpand(elems, issues);
                 Assert.AreEqual(0, issues.Count);
 
                 // Verify that Bundle.entry.resource : List was properly expanded
@@ -6356,7 +6387,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/fhir-net-api/issues/510
         // "Missing diff annotation on ElementDefinition.TypeRefComponent"
         [TestMethod]
-        public void TestConstrainedByDiff_Type()
+        public async T.Task TestConstrainedByDiff_Type()
         {
             StructureDefinition sd = new StructureDefinition()
             {
@@ -6397,11 +6428,13 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             // Enable annotations on snapshot elements with diff constraints
-            var settings = new SnapshotGeneratorSettings(_settings);
-            settings.GenerateAnnotationsOnConstraints = true;
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
             _generator = new SnapshotGenerator(_testResolver, settings);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -6427,14 +6460,14 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestAuPatientWithExtensions()
+        public async T.Task TestAuPatientWithExtensions()
         {
             // Forge issue: https://trello.com/c/Q13pabzq
 
-            var sd = _testResolver.FindStructureDefinition(@"http://hl7.org.au/fhir/StructureDefinition/au-patient");
+            var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org.au/fhir/StructureDefinition/au-patient");
             Assert.IsNotNull(sd);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6479,7 +6512,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180410] Unit test to investigate issue reported by David McKillop
         [TestMethod]
-        public void TestAuPatientDerived()
+        public async T.Task TestAuPatientDerived()
         {
             var sd = new StructureDefinition()
             {
@@ -6515,7 +6548,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             };
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6531,7 +6564,7 @@ namespace Hl7.Fhir.Specification.Tests
         // TODO: Gracefully handle multiple matches, emit issue, use first match
         [Ignore]
         [TestMethod]
-        public void TestAuPatientDerived2()
+        public async T.Task TestAuPatientDerived2()
         {
             var sd = new StructureDefinition()
             {
@@ -6567,7 +6600,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             };
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6603,11 +6636,11 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         [TestMethod]
-        public void TestContentReferenceQuestionnaire()
+        public async T.Task TestContentReferenceQuestionnaire()
         {
             var sd = QuestionnaireWithNestedItems;
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6628,7 +6661,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestContentReferenceQuestionnaireDerived()
+        public async T.Task TestContentReferenceQuestionnaireDerived()
         {
             var sd = new StructureDefinition
             {
@@ -6656,7 +6689,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6681,7 +6714,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/fhir-net-api/issues/611
 
         [TestMethod]
-        public void TestSnapshotForDerivedSlice()
+        public async T.Task TestSnapshotForDerivedSlice()
         {
             var sdBase = new StructureDefinition
             {
@@ -6753,7 +6786,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sdDerived, out StructureDefinition expanded);
+            var (_, expanded) = await generateSnapshotAndCompare(sdDerived);
 
             dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6798,7 +6831,7 @@ namespace Hl7.Fhir.Specification.Tests
         // then element in snapshot only contains the first code entry.
 
         [TestMethod]
-        public void TestObservationWithDisplayCodes()
+        public async T.Task TestObservationWithDisplayCodes()
         {
             var sd = new StructureDefinition
             {
@@ -6827,7 +6860,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6853,7 +6886,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestReferenceTargetProfile()
+        public async T.Task TestReferenceTargetProfile()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
             var ReferenceProfile = new StructureDefinition()
@@ -6913,7 +6946,7 @@ namespace Hl7.Fhir.Specification.Tests
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            generateSnapshotAndCompare(ReportProfile, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(ReportProfile);
 
             dumpOutcome(generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
@@ -6938,7 +6971,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.HasChildren);
 
             // Explicitly expand children of element DiagnosticReport.imagingStudy
-            Assert.IsTrue(generator.ExpandElement(nav));
+            Assert.IsTrue(await generator.ExpandElementAsync(nav));
             Assert.IsTrue(nav.HasChildren);
             Assert.IsTrue(nav.MoveToChild("reference"));
             Assert.IsNotNull(nav.Current);
@@ -6952,7 +6985,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://chat.fhir.org/#narrow/stream/179177-conformance/topic/Extension.2Eurl.20-.20fixedString.20or.20fixedUri.3F
 
         [TestMethod]
-        public void TestExtensionUrlFixedValueSimple()
+        public async T.Task TestExtensionUrlFixedValueSimple()
         {
             StructureDefinition SimpleTestExtension = new StructureDefinition()
             {
@@ -6978,7 +7011,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            generateSnapshotAndCompare(SimpleTestExtension, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(SimpleTestExtension);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -6988,7 +7021,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void TestExtensionUrlFixedValueComplex()
+        public async T.Task TestExtensionUrlFixedValueComplex()
         {
             StructureDefinition ComplexTestExtension = new StructureDefinition()
             {
@@ -7031,7 +7064,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            generateSnapshotAndCompare(ComplexTestExtension, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(ComplexTestExtension);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
@@ -7059,7 +7092,7 @@ namespace Hl7.Fhir.Specification.Tests
         // fixedUri should inherit values from base profile
         // i.e. do NOT replace with canonical url of derived profile...!
 
-        void AssertExtensionUrlChildElement(ElementDefinitionNavigator nav, string url)
+        static void AssertExtensionUrlChildElement(ElementDefinitionNavigator nav, string url)
         {
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("url"));
@@ -7067,7 +7100,7 @@ namespace Hl7.Fhir.Specification.Tests
             nav.ReturnToBookmark(bm);
         }
 
-        void AssertExtensionUrlElement(ElementDefinitionNavigator nav, string url)
+        static void AssertExtensionUrlElement(ElementDefinitionNavigator nav, string url)
         {
             Assert.IsTrue(nav.Path.ToLowerInvariant().EndsWith("extension.url"));
             var fixedValue = nav.Current.Fixed;
@@ -7080,7 +7113,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [TestMethod]
-        public void TestElementWithoutPath()
+        public async T.Task TestElementWithoutPath()
         {
             var sd = new StructureDefinition()
             {
@@ -7103,19 +7136,19 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            void generate()
+            async T.Task generate()
             {
-                generateSnapshotAndCompare(sd, out StructureDefinition expanded);
+                await generateSnapshotAndCompare(sd);
             }
 
             // [WMR 20190910] Expecting exception from DifferentialTreeConstructor
-            Assert.ThrowsException<InvalidOperationException>(generate);
+            await Assert.ThrowsExceptionAsync<InvalidOperationException>(generate);
         }
 
         // #1123 SnapshotGenerator - ElementDefinition.base is empty for children of contentreference
 
         [TestMethod]
-        public void TestElementDefinitionBase_ContentReference()
+        public async T.Task TestElementDefinitionBase_ContentReference()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
             var ProvenanceProfile = new StructureDefinition()
@@ -7136,7 +7169,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            generateSnapshotAndCompare(ProvenanceProfile, out StructureDefinition expanded);
+            (_, var expanded) = await generateSnapshotAndCompare(ProvenanceProfile);
 
             dumpOutcome(_generator.Outcome);
             dumpBasePaths(expanded);
@@ -7165,6 +7198,23 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(refElem.Base);
                 Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
             }
+        }
+
+        // #1108/#1303 - incorrectly copies the 0..* root cardinality of a referenced datatype profile
+        // over unto an element that has base cardinality 0..1
+        [TestMethod]
+        public async T.Task ShouldRespectMaxCardinalityFromBase()
+        {
+            var cr = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(new TestProfileArtifactSource()),
+                        new ZipSource("specification.zip"))));
+
+            var range = await cr.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality");
+            var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
+            Assert.AreEqual(1, lowElement.Min);
+            Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
         }
     }
 }
