@@ -166,6 +166,10 @@ namespace Hl7.Fhir.ElementModel
                             if (!fint.Value.HasValue)
                                 return null;
                             return (int)fint.Value;
+                        case Hl7.Fhir.Model.Integer64 fint64:
+                            if (!fint64.Value.HasValue)
+                                return null;
+                            return (long)fint64.Value;
                         case Hl7.Fhir.Model.PositiveInt pint:
                             if (!pint.Value.HasValue)
                                 return null;
