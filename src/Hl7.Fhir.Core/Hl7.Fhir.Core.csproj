@@ -5,6 +5,7 @@
 
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\platforms.props" />
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
@@ -17,9 +18,16 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
+   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
+     <DefineConstants>TRACE;USE_CODE_GEN</DefineConstants>
+   </PropertyGroup>
+
   <ItemGroup>
+    <Compile Remove="Rest\OldFhirClient\**" />
     <Compile Remove="Rest\Search\**" />
+    <EmbeddedResource Remove="Rest\OldFhirClient\**" />
     <EmbeddedResource Remove="Rest\Search\**" />
+    <None Remove="Rest\OldFhirClient\**" />
     <None Remove="Rest\Search\**" />
   </ItemGroup>
 

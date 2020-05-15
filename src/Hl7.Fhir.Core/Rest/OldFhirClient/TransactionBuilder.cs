@@ -36,7 +36,24 @@ namespace Hl7.Fhir.Rest
             : this(baseUri.OriginalString, type)
         {
         }
-        
+
+
+        internal enum InteractionType
+        {
+            Search,
+            Unspecified,
+            Read,
+            VRead,
+            Update,
+            Delete,
+            Create,
+            Capabilities,
+            History,
+            Operation,
+            Transaction,
+            Patch
+        }
+
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
             var newEntry = new Bundle.EntryComponent();

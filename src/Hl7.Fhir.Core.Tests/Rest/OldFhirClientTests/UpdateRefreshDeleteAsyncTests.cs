@@ -1,17 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    public partial class FhirClientAsyncTests
+    [TestClass]
+    public class UpdateRefreshDeleteAsyncTests
     {
+        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedWebClient()
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
             var client = new FhirClient(_endpoint)
             {
@@ -19,24 +23,6 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            await updateDelete(client);
-        }
-        
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
-        {
-            using (var client = new FhirHttpClient(_endpoint))
-            {
-                client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-                await updateDelete(client);
-            }           
-        }
-
-
-        private static async System.Threading.Tasks.Task updateDelete(IFhirClient client)
-        {
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
@@ -69,9 +55,11 @@ namespace Hl7.Fhir.Core.AsyncTests
             };
 
             // VERIFY //
-            await ExceptionAssert.Throws<FhirOperationException>(act);
-
+            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
+            
+            
             Console.WriteLine("Test Completed");
         }
+        
     }
 }
