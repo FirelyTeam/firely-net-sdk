@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v1.0.2, v4.0.0, v3.0.1
+// Generated for FHIR v1.0.2, v4.0.1, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -152,13 +152,13 @@ namespace Hl7.Fhir.Model
                 severity: ConstraintSeverity.Warning,
                 expression: "contained.where((('#'+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = '#').exists() or descendants().where(as(canonical) = '#').exists() or descendants().where(as(canonical) = '#').exists()).not()).trace('unmatched', id).empty()",
                 human: "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource",
-                xpath: "not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
+                xpath: "not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))"
             ),
             new ElementDefinitionConstraint(
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "dom-6",
                 severity: ConstraintSeverity.Warning,
-                expression: "text.div.exists()",
+                expression: "text.`div`.exists()",
                 human: "A resource should have narrative for robust management",
                 xpath: "exists(f:text/h:div)"
             ),

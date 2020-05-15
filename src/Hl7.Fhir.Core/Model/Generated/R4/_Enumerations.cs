@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -686,6 +686,12 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
         N4_0_0,
+        /// <summary>
+        /// MISSING DESCRIPTION
+        /// (system: http://hl7.org/fhir/FHIR-version)
+        /// </summary>
+        [EnumLiteral("4.0.1", "http://hl7.org/fhir/FHIR-version"), Description("4.0.1")]
+        N4_0_1,
     }
 
     /// <summary>
@@ -1343,51 +1349,6 @@ namespace Hl7.Fhir.Model.R4
         /// </summary>
         [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
         Unknown,
-    }
-
-    /// <summary>
-    ///  Set of codes used to value Act.Confidentiality and Role.Confidentiality attribute in accordance with the definition for concept domain "Confidentiality".
-    /// (url: http://terminology.hl7.org/ValueSet/v3-ConfidentialityClassification)
-    /// </summary>
-    [FhirEnumeration("v3_ConfidentialityClassification")]
-    public enum v3_ConfidentialityClassification
-    {
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("U", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("unrestricted")]
-        U,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("L", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("low")]
-        L,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("M", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("moderate")]
-        M,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("N", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("normal")]
-        N,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("R", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("restricted")]
-        R,
-        /// <summary>
-        /// MISSING DESCRIPTION
-        /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
-        /// </summary>
-        [EnumLiteral("V", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("very restricted")]
-        V,
     }
 
     /// <summary>

@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -1043,13 +1043,13 @@ namespace Hl7.Fhir.Model.R4
         [FhirElement("confidentiality", InSummary=Hl7.Fhir.Model.Version.All, Order=180)]
         [CLSCompliant(false)]
         [DataMember]
-        public Code<Hl7.Fhir.Model.R4.v3_ConfidentialityClassification> ConfidentialityElement
+        public Hl7.Fhir.Model.Code ConfidentialityElement
         {
             get { return _ConfidentialityElement; }
             set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
         }
         
-        private Code<Hl7.Fhir.Model.R4.v3_ConfidentialityClassification> _ConfidentialityElement;
+        private Hl7.Fhir.Model.Code _ConfidentialityElement;
         
         /// <summary>
         /// As defined by affinity domain
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model.R4
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.R4.v3_ConfidentialityClassification? Confidentiality
+        public string Confidentiality
         {
             get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
             set
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model.R4
                 if (value == null)
                     ConfidentialityElement = null;
                 else
-                    ConfidentialityElement = new Code<Hl7.Fhir.Model.R4.v3_ConfidentialityClassification>(value);
+                    ConfidentialityElement = new Hl7.Fhir.Model.Code(value);
                 OnPropertyChanged("Confidentiality");
             }
         }
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model.R4
                 if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
                 if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
                 if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.R4.v3_ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
+                if(ConfidentialityElement != null) dest.ConfidentialityElement = (Hl7.Fhir.Model.Code)ConfidentialityElement.DeepCopy();
                 if(Attester != null) dest.Attester = new List<AttesterComponent>(Attester.DeepCopy());
                 if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
                 if(RelatesTo != null) dest.RelatesTo = new List<RelatesToComponent>(RelatesTo.DeepCopy());

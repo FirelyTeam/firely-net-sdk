@@ -1641,8 +1641,11 @@ public class ResourceDetails
 
         var propertyTypes = new string[][]
         {
-            // Make the DSTU2 Element.Id a string as in STU3 - less restrictive
+            // Make the DSTU2 Element.Id a string as in STU3 and R4 - less restrictive
             new[] { "DSTU2", "Element", "IdElement", "Hl7.Fhir.Model.FhirString", "string"},
+            // Make the DSTU2 and STU3 Resource.Id a string as in R4 - less restrictive
+            new[] { "DSTU2", "Resource", "IdElement", "Hl7.Fhir.Model.FhirString", "string"},
+            new[] { "STU3", "Resource", "IdElement", "Hl7.Fhir.Model.FhirString", "string"},
             // Make the DSTU2 and STU3 Meta.Profile a Canonical as in R4 
             new[] {"DSTU2", "Meta", "ProfileElement", "Hl7.Fhir.Model.Canonical", null},
             new[] {"STU3", "Meta", "ProfileElement", "Hl7.Fhir.Model.Canonical", null},
@@ -1667,6 +1670,10 @@ public class ResourceDetails
         foreach (var propertyType in propertyTypes)
         {
             var property = resourcesByNameByVersion[propertyType[0]][propertyType[1]].GetProperty(propertyType[2]);
+            if (property == null)
+            {
+                throw new InvalidOperationException($"{propertyType[0]}.{propertyType[1]} does not have a property named '{propertyType[2]}'");
+            }
             property.PropType = propertyType[3];
             if (propertyType[4]  != null)
             {
@@ -2136,6 +2143,7 @@ public class ResourceDetails
 
     private static string ComputeInterfaceBase(string baseType, bool isPrimitive)
     {
+        if (string.IsNullOrEmpty(baseType)) return null;
         if (isPrimitive) return "IPrimitive";
         switch (baseType)
         {
@@ -3016,7 +3024,15 @@ public class PropertyDetails
         var typeCodeNode = element.SelectSingleNode("fhir:type/fhir:code/@value", ns);
         if (typeCodeNode != null)
         {
-            result.PropType = typeCodeNode.Value;
+            const string fhirPathPrefix = "http://hl7.org/fhirpath/System.";
+
+            var propType = typeCodeNode.Value ?? string.Empty;
+            if (propType.StartsWith(fhirPathPrefix))
+            {
+                // In R4 special primitive values have a FHIRPath system type
+                propType = propType.Substring(fhirPathPrefix.Length).ToLower();
+            }
+            result.PropType = propType;
         }
         else
         {

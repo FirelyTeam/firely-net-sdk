@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -667,17 +667,17 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "ait-1",
                 severity: ConstraintSeverity.Warning,
-                expression: "verificationStatus='entered-in-error' or clinicalStatus.exists()",
+                expression: "verificationStatus.coding.where(system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification' and code = 'entered-in-error').exists() or clinicalStatus.exists()",
                 human: "AllergyIntolerance.clinicalStatus SHALL be present if verificationStatus is not entered-in-error.",
-                xpath: "f:verificationStatus/@value='entered-in-error' or exists(f:clinicalStatus)"
+                xpath: "f:verificationStatus/f:coding/f:code/@value='entered-in-error' or exists(f:clinicalStatus)"
             ),
             new ElementDefinitionConstraint(
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "ait-2",
                 severity: ConstraintSeverity.Warning,
-                expression: "verificationStatus!='entered-in-error' or clinicalStatus.empty()",
+                expression: "verificationStatus.coding.where(system = 'http://terminology.hl7.org/CodeSystem/allergyintolerance-verification' and code = 'entered-in-error').empty() or clinicalStatus.empty()",
                 human: "AllergyIntolerance.clinicalStatus SHALL NOT be present if verification Status is entered-in-error",
-                xpath: "f:verificationStatus/@value!='entered-in-error' or not(exists(f:clinicalStatus))"
+                xpath: "not(f:verificationStatus/f:coding/f:code/@value='entered-in-error') or not(exists(f:clinicalStatus))"
             ),
         };
     

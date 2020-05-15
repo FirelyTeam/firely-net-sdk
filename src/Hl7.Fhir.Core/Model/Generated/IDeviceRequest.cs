@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0, v3.0.1
+// Generated for FHIR v4.0.1, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -69,12 +69,12 @@ namespace Hl7.Fhir.Model
         Hl7.Fhir.Model.Identifier GroupIdentifier { get; set; }
     
         /// <summary>
-        /// Indicates how quickly the {{title}} should be addressed with respect to other requests
+        /// routine | urgent | asap | stat
         /// </summary>
         Code<Hl7.Fhir.Model.RequestPriority> PriorityElement { get; set; }
         
         /// <summary>
-        /// Indicates how quickly the {{title}} should be addressed with respect to other requests
+        /// routine | urgent | asap | stat
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         Hl7.Fhir.Model.RequestPriority? Priority { get; set; }

@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
-        /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error | unknown
+        /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=120)]
         [CLSCompliant(false)]
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model.R4
         private Code<Hl7.Fhir.Model.R4.EventStatus> _StatusElement;
         
         /// <summary>
-        /// preparation | in-progress | not-done | suspended | aborted | completed | entered-in-error | unknown
+        /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

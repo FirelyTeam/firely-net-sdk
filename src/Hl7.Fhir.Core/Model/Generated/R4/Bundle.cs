@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -1398,9 +1398,9 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "bdl-10",
                 severity: ConstraintSeverity.Warning,
-                expression: "type = 'document' implies (meta.lastUpdated.hasValue())",
+                expression: "type = 'document' implies (timestamp.hasValue())",
                 human: "A document must have a date",
-                xpath: "not(f:type/@value = 'document') or exists(f:meta/f:lastUpdated/f:value)"
+                xpath: "not(f:type/@value = 'document') or exists(f:timestamp/@value)"
             ),
             new ElementDefinitionConstraint(
                 versions: new[] {Hl7.Fhir.Model.Version.R4},

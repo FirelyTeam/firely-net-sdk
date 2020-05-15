@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0, v1.0.2, v3.0.1
+// Generated for FHIR v4.0.1, v1.0.2, v3.0.1
 //
 namespace Hl7.Fhir.Model
 {
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         {
             new ElementDefinitionConstraint(
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
-                key: "mtqy-1",
+                key: "mqty-1",
                 severity: ConstraintSeverity.Warning,
                 expression: "(code.exists() or value.empty()) and (system.empty() or system = 'urn:iso:std:iso:4217')",
                 human: "There SHALL be a code if there is a value and it SHALL be an expression of currency.  If system is present, it SHALL be ISO 4217 (system = \"urn:iso:std:iso:4217\" - currency).",

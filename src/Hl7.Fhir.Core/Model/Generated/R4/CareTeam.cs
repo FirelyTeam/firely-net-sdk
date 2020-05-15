@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "ctm-1",
                 severity: ConstraintSeverity.Warning,
-                expression: "participant.all(onBehalfOf.exists() implies (member.resolve() is Practitioner))",
+                expression: "participant.all(onBehalfOf.exists() implies (member.resolve().iif(empty(), true, ofType(Practitioner).exists())))",
                 human: "CareTeam.participant.onBehalfOf can only be populated when CareTeam.participant.member is a Practitioner",
                 xpath: "starts-with(f:member/f:reference/@value, 'Practitioner/') or contains(f:member/f:reference/@value, '/Practitioner/') or exists(ancestor::*/f:contains/f:Practitioner/f:id[@value=substring-after(current()/f:member/f:reference/@value, '#')]) or not(exists(f:onBehalfOf))"
             ),

@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model.R4
             public override string TypeName { get { return "DetailComponent"; } }
             
             /// <summary>
-            /// Kind of resource
+            /// Appointment | CommunicationRequest | DeviceRequest | MedicationRequest | NutritionOrder | Task | ServiceRequest | VisionPrescription
             /// </summary>
             [FhirElement("kind", Order=40)]
             [DataMember]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model.R4
             private Code<Hl7.Fhir.Model.R4.CarePlanActivityKind> _KindElement;
             
             /// <summary>
-            /// Kind of resource
+            /// Appointment | CommunicationRequest | DeviceRequest | MedicationRequest | NutritionOrder | Task | ServiceRequest | VisionPrescription
             /// </summary>
             /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
             [NotMapped]
@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model.R4
         private List<Hl7.Fhir.Model.ResourceReference> _PartOf;
         
         /// <summary>
-        /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         [FhirElement("status", InSummary=Hl7.Fhir.Model.Version.All, Order=150)]
         [CLSCompliant(false)]
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model.R4
         private Code<Hl7.Fhir.Model.R4.RequestStatus> _StatusElement;
         
         /// <summary>
-        /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
+        /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
         /// </summary>
         /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
         [NotMapped]

@@ -38,7 +38,7 @@ using Hl7.Fhir.Utility;
 #pragma warning disable 1591 // suppress XML summary warnings
 
 //
-// Generated for FHIR v4.0.0
+// Generated for FHIR v4.0.1
 //
 namespace Hl7.Fhir.Model.R4
 {
@@ -1404,15 +1404,15 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "sdf-19",
                 severity: ConstraintSeverity.Warning,
-                expression: "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (differential.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')) and snapshot.element.type.code.all(hasValue() implies matches('^[a-zA-Z0-9]+$')))",
+                expression: "url.startsWith('http://hl7.org/fhir/StructureDefinition') implies (differential.element.type.code.all(matches('^[a-zA-Z0-9]+$') or matches('^http:\\\\/\\\\/hl7\\\\.org\\\\/fhirpath\\\\/System\\\\.[A-Z][A-Za-z]+$')) and snapshot.element.type.code.all(matches('^[a-zA-Z0-9\\\\.]+$') or matches('^http:\\\\/\\\\/hl7\\\\.org\\\\/fhirpath\\\\/System\\\\.[A-Z][A-Za-z]+$')))",
                 human: "FHIR Specification models only use FHIR defined types",
-                xpath: "not(starts-with(f:url/@value, 'http://hl7.org/fhir/StructureDefinition')) or count(f:differential/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$'))]) =0"
+                xpath: "not(starts-with(f:url/@value, 'http://hl7.org/fhir/StructureDefinition')) or count(f:differential/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9\\.]+$'))]|f:snapshot/f:element/f:type/f:code[@value and not(matches(string(@value), '^[a-zA-Z0-9]+$\\.'))]) =0"
             ),
             new ElementDefinitionConstraint(
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "sdf-16",
                 severity: ConstraintSeverity.Warning,
-                expression: "snapshot.element.all(id) and snapshot.element.id.trace('ids').isDistinct()",
+                expression: "snapshot.element.all(id.exists()) and snapshot.element.id.trace('ids').isDistinct()",
                 human: "All element definitions must have unique ids (snapshot)",
                 xpath: "count(f:snapshot/f:element)=count(f:snapshot/f:element/@id) and (count(f:snapshot/f:element)=count(distinct-values(f:snapshot/f:element/@id)))"
             ),
@@ -1420,7 +1420,7 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "sdf-15",
                 severity: ConstraintSeverity.Warning,
-                expression: "kind!='logical'  implies snapshot.element.first().type.empty()",
+                expression: "kind!='logical' implies snapshot.element.first().type.empty()",
                 human: "The first element in a snapshot has no type unless model is a logical model.",
                 xpath: "f:kind/@value='logical' or not(f:snapshot/f:element[1]/f:type)"
             ),
@@ -1436,7 +1436,7 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "sdf-17",
                 severity: ConstraintSeverity.Warning,
-                expression: "differential.element.all(id) and differential.element.id.trace('ids').isDistinct()",
+                expression: "differential.element.all(id.exists()) and differential.element.id.trace('ids').isDistinct()",
                 human: "All element definitions must have unique ids (diff)",
                 xpath: "count(f:differential/f:element)=count(f:differential/f:element/@id) and (count(f:differential/f:element)=count(distinct-values(f:differential/f:element/@id)))"
             ),
@@ -1572,7 +1572,7 @@ namespace Hl7.Fhir.Model.R4
                 versions: new[] {Hl7.Fhir.Model.Version.R4},
                 key: "sdf-8a",
                 severity: ConstraintSeverity.Warning,
-                expression: "differential.all((%resource.kind = 'logical' or element.first().path.startsWith(%resource.type)) and (element.tail().not() or  element.tail().all(path.startsWith(%resource.differential.element.first().path.replaceMatches('\\\\..*','')&'.'))))",
+                expression: "differential.all((%resource.kind = 'logical' or element.first().path.startsWith(%resource.type)) and (element.tail().empty() or element.tail().all(path.startsWith(%resource.differential.element.first().path.replaceMatches('\\\\..*','')&'.'))))",
                 human: "In any differential, all the elements must start with the StructureDefinition's specified type for non-logical models, or with the same type name for logical models",
                 xpath: "count(f:element)=count(f:element[f:path/@value=ancestor::f:StructureDefinition/f:type/@value or starts-with(f:path/@value, concat(ancestor::f:StructureDefinition/f:type/@value, '.'))])"
             ),
