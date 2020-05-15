@@ -986,10 +986,15 @@ namespace Hl7.Fhir.Rest
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
 
-            if (!conf.FhirVersion.StartsWith(ModelInfo.Version))
+            if (conf.Version == null)
             {
-                throw Error.NotSupported("This client support FHIR version {0}, but the server uses version {1}".FormatWith(ModelInfo.Version, conf.FhirVersion));
+                throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
+            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.Version))
+            {
+                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
+            }
+
         }
 
         #region IDisposable Support
