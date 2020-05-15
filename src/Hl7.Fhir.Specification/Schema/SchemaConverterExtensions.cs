@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Specification.Schema
                 list.Add(assertionFactory.CreateFhirPathAssertion("TODO", constraint.Key, constraint.Expression, constraint.Human, Convert(constraint.Severity), bestPractice));
             }
 
-            return list.Count > 0 ? assertionFactory.CreateElementSchemaAssertion(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
+            return list.Any() ? assertionFactory.CreateElementSchemaAssertion(id: new Uri("#constraints", UriKind.Relative), list) : null;
 
             IssueSeverity? Convert(ElementDefinition.ConstraintSeverity? constraintSeverity)
             {
@@ -141,14 +141,44 @@ namespace Hl7.Fhir.Specification.Schema
             //    return builder.BuildProfileRef("System.String", "http://hl7.org/fhir/StructureDefinition/System.String"); // TODO MV: this was profile and not profile.Single()
             //}
 
-
+            /*
             var result = Assertions.Empty;
             foreach (var (code, profile) in typeRefs)
             {
                 result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
             }
             return result.Count > 0 ? new AnyAssertion(result) : null;
+            */
 
+
+            if (isChoice(def))
+            {
+                var typeCases = typeRefs
+                    .GroupBy(tr => tr.code)
+                    .Select(tc => (code: tc.Key, profiles: tc.SelectMany(dp => dp.profile)));
+
+                return builder.BuildSliceAssertionForTypeCases(typeCases);
+            }
+            else
+            {
+                var result = Assertions.Empty;
+                foreach (var (code, profile) in typeRefs)
+                {
+                    result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
+                }
+                return result.Count > 0 ? new AnyAssertion(result) : null;
+            }
+            /*else if (typeRefs.Count() == 1)
+            {
+                var (code, profile) = typeRefs.Single();
+                var assertion = new FhirTypeLabel(code, "TODO");
+
+                var profileAssertions = new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
+                return new AllAssertion(assertion, profileAssertions);
+            }
+            else
+                return new TraceText("TODO");*/
+            //return builder.BuildSliceForProfiles(typeRefs.Select(tr => tr.profile));
             // return new AnyAssertion(typeRefs.SelectMany(t => t.profile.Select(p => builder.BuildProfileRef(t.code, p))));
 
             //if (typeRefs.Count() == 1)
@@ -191,11 +221,12 @@ namespace Hl7.Fhir.Specification.Schema
             else
                 return builder.BuildSliceForProfiles(typeRefs.Select(tr => tr.profile));
 
-            bool isChoice(ElementDefinition d) => d.Base?.Path?.EndsWith("[x]") == true ||
-                            d.Path.EndsWith("[x]");
+            
 
             */
             //return null;
+            bool isChoice(ElementDefinition d) => d.Base?.Path?.EndsWith("[x]") == true ||
+                            d.Path.EndsWith("[x]");
         }
 
         private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, IAssertion element)
