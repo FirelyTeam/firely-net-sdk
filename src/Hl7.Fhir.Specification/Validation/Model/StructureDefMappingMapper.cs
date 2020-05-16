@@ -14,12 +14,18 @@ namespace Hl7.Fhir.Specification.Validation.Model
 
         public void Transfer(MappingContext context, StructureDefinition.MappingComponent source, UniStructureDefMapping target)
         {
-            throw new NotImplementedException();
+            target.Comment = source.Comment;
+            target.Identity = source.Identity;
+            target.Name = source.Name;
+            target.Uri = source.Uri;
         }
 
         public void Transfer(MappingContext context, UniStructureDefMapping source, StructureDefinition.MappingComponent target)
         {
-            throw new NotImplementedException();
+            target.Comment = source.Comment;
+            target.Identity = source.Identity;
+            target.Name = source.Name;
+            target.Uri = source.Uri;
         }
     }
 }

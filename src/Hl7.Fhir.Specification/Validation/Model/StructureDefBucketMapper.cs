@@ -9,12 +9,12 @@ namespace Hl7.Fhir.Specification.Validation.Model
 
         public void Transfer(MappingContext context, ElementDefinition source, UniStructureDefElementBucket target)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void Transfer(MappingContext context, UniStructureDefElementBucket source, ElementDefinition target)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }
