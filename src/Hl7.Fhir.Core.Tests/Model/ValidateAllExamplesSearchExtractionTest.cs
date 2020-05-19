@@ -161,30 +161,7 @@ namespace Hl7.Fhir.Tests.Model
                     {
                         if (t2 != null)
                         {
-                            exampleSearchValues[index].count++;
-
-                            if (t2 is PocoElementNode && (t2 as PocoElementNode).FhirValue != null)
-                            {
-                                // Validate the type of data returned against the type of search parameter
-                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                                //    Debug.WriteLine((t2 as FhirPath.ModelNavigator).FhirValue.ToString());// + "\r\n";
-
-                            }
-                            //else if (t2.Value is Hl7.FhirPath.ConstantValue)
-                            //{
-                            //    //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                            //    //    Debug.WriteLine((t2.Value as Hl7.FhirPath.ConstantValue).Value);
-                            //}
-                            else if (t2.Value is bool)
-                            {
-                                //    Debug.Write(index.Resource + "." + index.Name + ": ");
-                                //    Debug.WriteLine((bool)t2.Value);
-                            }
-                            else
-                            {
-                                Debug.Write(index.Resource + "." + index.Name + ": ");
-                                Debug.WriteLine(t2.Value);
-                            }
+                            exampleSearchValues[index].count++;                         
                         }
                     }
                 }

@@ -18,92 +18,92 @@ namespace Hl7.Fhir
     public class PocoNavigatorTests
     {
 #pragma warning disable 612,618
-        [TestMethod]
-        public void TestPocoPath()
-        {
-            // Ensure the FHIR extensions are registered
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-            FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
-            (object f) =>
-            {
-                if (f is IEnumerable<ITypedElement>)
-                {
-                    var bits = (f as IEnumerable<ITypedElement>).Select(i =>
-                    {
-                        return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
-                    });
-                    return ElementNode.CreateList(bits);
-                }
-                return ElementNode.CreateList("?");
-            });
+        //[TestMethod]
+        //public void TestPocoPath()
+        //{
+        //    // Ensure the FHIR extensions are registered
+        //    ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+        //    FhirPathCompiler.DefaultSymbolTable.Add("shortpathname",
+        //    (object f) =>
+        //    {
+        //        if (f is IEnumerable<ITypedElement>)
+        //        {
+        //            var bits = (f as IEnumerable<ITypedElement>).Select(i =>
+        //            {
+        //                return i is PocoElementNode ? (i as PocoElementNode).ShortPath : "?";
+        //            });
+        //            return ElementNode.CreateList(bits);
+        //        }
+        //        return ElementNode.CreateList("?");
+        //    });
 
-            Patient p = new Patient
-            {
-                Active = true
-            };
-            p.ActiveElement.ElementId = "314";
-            p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
-            p.ActiveElement.AddExtension("http://something.org", new Integer(314));
-            p.Telecom = new List<ContactPoint>
-            {
-                new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone")
-            };
-            p.Telecom[0].Rank = 1;
+        //    Patient p = new Patient
+        //    {
+        //        Active = true
+        //    };
+        //    p.ActiveElement.ElementId = "314";
+        //    p.ActiveElement.AddExtension("http://something.org", new FhirBoolean(false));
+        //    p.ActiveElement.AddExtension("http://something.org", new Integer(314));
+        //    p.Telecom = new List<ContactPoint>
+        //    {
+        //        new ContactPoint(ContactPoint.ContactPointSystem.Phone, null, "555-phone")
+        //    };
+        //    p.Telecom[0].Rank = 1;
 
-            Assert.IsTrue(new FhirString("Patient.active").IsExactly(p.Select("descendants().shortpathname()").FirstOrDefault()));
+        //    Assert.IsTrue(new FhirString("Patient.active").IsExactly(p.Select("descendants().shortpathname()").FirstOrDefault()));
 
-            var patient = new PocoNavigator(p);
+        //    var patient = new PocoNavigator(p);
 
-            Assert.AreEqual("Patient", patient.Location);
+        //    Assert.AreEqual("Patient", patient.Location);
 
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.active[0]", patient.Location);
-            Assert.AreEqual("Patient.active", patient.ShortPath);
+        //    patient.MoveToFirstChild();
+        //    Assert.AreEqual("Patient.active[0]", patient.Location);
+        //    Assert.AreEqual("Patient.active", patient.ShortPath);
 
-            patient.MoveToFirstChild();
-            Assert.AreEqual("Patient.active[0].id[0]", patient.Location);
-            Assert.AreEqual("Patient.active.id", patient.ShortPath);
+        //    patient.MoveToFirstChild();
+        //    Assert.AreEqual("Patient.active[0].id[0]", patient.Location);
+        //    Assert.AreEqual("Patient.active.id", patient.ShortPath);
 
-            Assert.IsTrue(patient.MoveToNext());
-            Assert.AreEqual("Patient.active[0].extension[0]", patient.Location);
-            Assert.AreEqual("Patient.active.extension[0]", patient.ShortPath);
+        //    Assert.IsTrue(patient.MoveToNext());
+        //    Assert.AreEqual("Patient.active[0].extension[0]", patient.Location);
+        //    Assert.AreEqual("Patient.active.extension[0]", patient.ShortPath);
 
-            PocoNavigator v1 = patient.Clone() as PocoNavigator;
-            v1.MoveToFirstChild();
-            v1.MoveToNext();
-            Assert.AreEqual("Patient.active[0].extension[0].value[0]", v1.Location);
-            Assert.AreEqual("Patient.active.extension[0].value", v1.ShortPath);
-            Assert.IsFalse(v1.MoveToNext());
+        //    PocoNavigator v1 = patient.Clone() as PocoNavigator;
+        //    v1.MoveToFirstChild();
+        //    v1.MoveToNext();
+        //    Assert.AreEqual("Patient.active[0].extension[0].value[0]", v1.Location);
+        //    Assert.AreEqual("Patient.active.extension[0].value", v1.ShortPath);
+        //    Assert.IsFalse(v1.MoveToNext());
 
-            // Ensure that the original navigator hasn't changed
-            Assert.AreEqual("Patient.active[0].extension[0]", patient.Location);
-            Assert.AreEqual("Patient.active.extension[0]", patient.ShortPath);
+        //    // Ensure that the original navigator hasn't changed
+        //    Assert.AreEqual("Patient.active[0].extension[0]", patient.Location);
+        //    Assert.AreEqual("Patient.active.extension[0]", patient.ShortPath);
 
-            PocoNavigator v2 = patient.Clone() as PocoNavigator;
-            v2.MoveToNext();
-            v2.MoveToFirstChild();
-            v2.MoveToNext();
-            Assert.AreEqual("Patient.active[0].extension[1].value[0]", v2.Location);
-            Assert.AreEqual("Patient.active.extension[1].value", v2.ShortPath);
-            //Assert.AreEqual("Patient.active.extension('http://something.org').value", v2.CommonPath);
+        //    PocoNavigator v2 = patient.Clone() as PocoNavigator;
+        //    v2.MoveToNext();
+        //    v2.MoveToFirstChild();
+        //    v2.MoveToNext();
+        //    Assert.AreEqual("Patient.active[0].extension[1].value[0]", v2.Location);
+        //    Assert.AreEqual("Patient.active.extension[1].value", v2.ShortPath);
+        //    //Assert.AreEqual("Patient.active.extension('http://something.org').value", v2.CommonPath);
 
-            PocoNavigator v3 = new PocoNavigator(p);
-            v3.MoveToFirstChild(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            v3.MoveToFirstChild("system"); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
-            Assert.AreEqual("Patient.telecom[0].system[0]", v3.Location);
-            Assert.AreEqual("Patient.telecom[0].system", v3.ShortPath);
-            //Assert.AreEqual("Patient.telecom.where(system='phone').system", v3.CommonPath);
+        //    PocoNavigator v3 = new PocoNavigator(p);
+        //    v3.MoveToFirstChild(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+        //    v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+        //    // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+        //    // v3.MoveToNext(); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+        //    v3.MoveToFirstChild("system"); System.Diagnostics.Trace.WriteLine($"{v3.ShortPath} = {v3.FhirValue.ToString()}");
+        //    Assert.AreEqual("Patient.telecom[0].system[0]", v3.Location);
+        //    Assert.AreEqual("Patient.telecom[0].system", v3.ShortPath);
+        //    //Assert.AreEqual("Patient.telecom.where(system='phone').system", v3.CommonPath);
 
-            // Now check navigation bits
-            Assert.AreEqual("Patient.telecom[0].system",
-                (p.ToTypedElement().Select("Patient.telecom.where(system='phone').system").First() as PocoElementNode).ShortPath);
-            var v4 = new PocoNavigator(p);
-            Assert.AreEqual("Patient.telecom[0].system[0]",
-                (v4.Select("Patient.telecom.where(system='phone').system").First()).Location);
-        }
+        //    // Now check navigation bits
+        //    Assert.AreEqual("Patient.telecom[0].system",
+        //        (p.ToTypedElement().Select("Patient.telecom.where(system='phone').system").First() as PocoElementNode).ShortPath);
+        //    var v4 = new PocoNavigator(p);
+        //    Assert.AreEqual("Patient.telecom[0].system[0]",
+        //        (v4.Select("Patient.telecom.where(system='phone').system").First()).Location);
+        //}
 #pragma warning restore 612,618
 
         [TestMethod]
