@@ -13,8 +13,6 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoElementNodeExtensions
     {
         public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoElementNode(ModelInfo.GetStructureDefinitionSummaryProvider(), @base, rootName: rootName);
-       
-
+            new PocoElementNode(ModelInfo.GetStructureDefinitionSummaryProvider(), @base, rootName: rootName);      
     }
 }
