@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             Validation,
         }
 
-        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance", IsNestedType=true)]
+        [FhirType("CoverageEligibilityResponse#Insurance", IsNestedType=true)]
         [DataContract]
         public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InsuranceComponent"; } }
+            public override string TypeName { get { return "CoverageEligibilityResponse#Insurance"; } }
             
             /// <summary>
             /// Insurance information
@@ -244,11 +244,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance.item", IsNestedType=true)]
+        [FhirType("CoverageEligibilityResponse#Items", IsNestedType=true)]
         [DataContract]
         public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ItemsComponent"; } }
+            public override string TypeName { get { return "CoverageEligibilityResponse#Items"; } }
             
             /// <summary>
             /// Benefit classification
@@ -656,11 +656,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.insurance.item.benefit", IsNestedType=true)]
+        [FhirType("CoverageEligibilityResponse#Benefit", IsNestedType=true)]
         [DataContract]
         public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BenefitComponent"; } }
+            public override string TypeName { get { return "CoverageEligibilityResponse#Benefit"; } }
             
             /// <summary>
             /// Benefit classification
@@ -780,11 +780,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CoverageEligibilityResponse#CoverageEligibilityResponse.error", IsNestedType=true)]
+        [FhirType("CoverageEligibilityResponse#Errors", IsNestedType=true)]
         [DataContract]
         public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ErrorsComponent"; } }
+            public override string TypeName { get { return "CoverageEligibilityResponse#Errors"; } }
             
             /// <summary>
             /// Error code detailing processing issues

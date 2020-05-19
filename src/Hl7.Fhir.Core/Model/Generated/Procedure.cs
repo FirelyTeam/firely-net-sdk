@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Procedure"; } }
         
-        [FhirType("Procedure#Procedure.performer", IsNestedType=true)]
+        [FhirType("Procedure#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "Procedure#Performer"; } }
             
             /// <summary>
             /// Type of performance
@@ -176,11 +176,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Procedure#Procedure.focalDevice", IsNestedType=true)]
+        [FhirType("Procedure#FocalDevice", IsNestedType=true)]
         [DataContract]
         public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FocalDeviceComponent"; } }
+            public override string TypeName { get { return "Procedure#FocalDevice"; } }
             
             /// <summary>
             /// Kind of change to device

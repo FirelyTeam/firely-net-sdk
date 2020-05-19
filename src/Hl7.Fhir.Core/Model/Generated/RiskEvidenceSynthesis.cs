@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RiskEvidenceSynthesis"; } }
         
-        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.sampleSize", IsNestedType=true)]
+        [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
         [DataContract]
         public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SampleSizeComponent"; } }
+            public override string TypeName { get { return "RiskEvidenceSynthesis#SampleSize"; } }
             
             /// <summary>
             /// Description of sample size
@@ -225,11 +225,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.riskEstimate", IsNestedType=true)]
+        [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
         [DataContract]
         public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RiskEstimateComponent"; } }
+            public override string TypeName { get { return "RiskEvidenceSynthesis#RiskEstimate"; } }
             
             /// <summary>
             /// Description of risk estimate
@@ -489,11 +489,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.riskEstimate.precisionEstimate", IsNestedType=true)]
+        [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
         [DataContract]
         public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PrecisionEstimateComponent"; } }
+            public override string TypeName { get { return "RiskEvidenceSynthesis#PrecisionEstimate"; } }
             
             /// <summary>
             /// Type of precision estimate
@@ -680,11 +680,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.certainty", IsNestedType=true)]
+        [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
         [DataContract]
         public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CertaintyComponent"; } }
+            public override string TypeName { get { return "RiskEvidenceSynthesis#Certainty"; } }
             
             /// <summary>
             /// Certainty rating
@@ -802,11 +802,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RiskEvidenceSynthesis#RiskEvidenceSynthesis.certainty.certaintySubcomponent", IsNestedType=true)]
+        [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
         [DataContract]
         public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CertaintySubcomponentComponent"; } }
+            public override string TypeName { get { return "RiskEvidenceSynthesis#CertaintySubcomponent"; } }
             
             /// <summary>
             /// Type of subcomponent of certainty rating

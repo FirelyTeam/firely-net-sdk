@@ -239,7 +239,6 @@
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
-// Hl7.Fhir.Core\Model\Generated\Timing.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceAmount.cs
 // Hl7.Fhir.Core\Model\Generated\Signature.cs
 // Hl7.Fhir.Core\Model\Generated\SampledData.cs
@@ -268,11 +267,6 @@
 // Hl7.Fhir.Core\Model\Generated\Attachment.cs
 // Hl7.Fhir.Core\Model\Generated\Annotation.cs
 // Hl7.Fhir.Core\Model\Generated\Address.cs
-// Hl7.Fhir.Core\Model\Generated\UnsignedInt.cs
-// Hl7.Fhir.Core\Model\Generated\Time.cs
-// Hl7.Fhir.Core\Model\Generated\PositiveInt.cs
-// Hl7.Fhir.Core\Model\Generated\Markdown.cs
-// Hl7.Fhir.Core\Model\Generated\FhirDecimal.cs
 // Hl7.Fhir.Core\Model\Generated\Template-Bindings.cs
 // Hl7.Fhir.Core\Model\Generated\Template-ModelInfo.cs
 // Hl7.Fhir.Core\Model\Generated\VisionPrescription.cs

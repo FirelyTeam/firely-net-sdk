@@ -130,11 +130,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("Device#Device.udiCarrier", IsNestedType=true)]
+        [FhirType("Device#UdiCarrier", IsNestedType=true)]
         [DataContract]
         public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "UdiCarrierComponent"; } }
+            public override string TypeName { get { return "Device#UdiCarrier"; } }
             
             /// <summary>
             /// Mandatory fixed portion of UDI
@@ -411,11 +411,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Device#Device.deviceName", IsNestedType=true)]
+        [FhirType("Device#DeviceName", IsNestedType=true)]
         [DataContract]
         public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DeviceNameComponent"; } }
+            public override string TypeName { get { return "Device#DeviceName"; } }
             
             /// <summary>
             /// The name of the device
@@ -550,11 +550,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Device#Device.specialization", IsNestedType=true)]
+        [FhirType("Device#Specialization", IsNestedType=true)]
         [DataContract]
         public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SpecializationComponent"; } }
+            public override string TypeName { get { return "Device#Specialization"; } }
             
             /// <summary>
             /// The standard that is used to operate and communicate
@@ -670,11 +670,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Device#Device.version", IsNestedType=true)]
+        [FhirType("Device#Version", IsNestedType=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VersionComponent"; } }
+            public override string TypeName { get { return "Device#Version"; } }
             
             /// <summary>
             /// The type of the device version
@@ -808,11 +808,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Device#Device.property", IsNestedType=true)]
+        [FhirType("Device#Property", IsNestedType=true)]
         [DataContract]
         public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PropertyComponent"; } }
+            public override string TypeName { get { return "Device#Property"; } }
             
             /// <summary>
             /// Code that specifies the property DeviceDefinitionPropetyCode (Extensible)

@@ -296,18 +296,22 @@ if(!abstractType) {
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
 		string v = componentElement.Value;
 		string definingPath = componentElement.Value;
+		string fhirBackboneType = v;
 		if (v.Contains("."))
         {
 			int index = v.LastIndexOf(".");
 			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+			fhirBackboneType = v;
         }
 		string componentName = v + "Component";
 		System.Xml.XmlAttribute componentNameElement = (System.Xml.XmlAttribute)e2.SelectSingleNode("fhir:extension[@url = 'http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name']/fhir:valueString/@value", nsR);
 		if (componentNameElement != null)
         {
 			componentName = componentNameElement.Value + "Component";
+			fhirBackboneType = componentNameElement.Value;
         }
 
+		string fhirTypeName = resourceName + '#' + fhirBackboneType;
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
         {
@@ -316,11 +320,11 @@ if(!abstractType) {
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= resourceName + '#' + definingPath #>", IsNestedType=true)]
+        [FhirType("<#= fhirTypeName #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "<#= componentName #>"; } }
+            public override string TypeName { get { return "<#= fhirTypeName #>"; } }
             
 <#
 	int nComponentPropNum = 30;
@@ -918,6 +922,18 @@ namespace Hl7.Fhir.Model
 					sc.Add("ResourceType." + et.Value);
 					target += "ResourceType." + et.Value + ", ";
 				}
+
+				// HACK: for http://hl7.org/fhir/SearchParameter/clinical-encounter,
+				// none of the base resources have EpisodeOfCare as target, except
+				// DocumentReference. There is no way you can see this from the
+				// source data we generate this from, afaik, so we need to make
+				// a special case here.
+				if(url == "http://hl7.org/fhir/SearchParameter/clinical-encounter")
+				{
+					if(resourceName == "DocumentReference")
+						sc.Add("ResourceType.EpisodeOfCare");
+				}
+
 				var exprNode = sp.SelectSingleNode("fhir:expression/@value", nsR);
 				if (exprNode != null)
 					expression = exprNode.Value;
@@ -1311,7 +1327,7 @@ namespace Hl7.Fhir.Model
 			
 			var skippedTypes = new[] { "Narrative", "Extension", "Canonical", "Code", "Coding", "Date", "FhirBoolean", "BackboneElement",
 				"FhirDateTime", "FhirString", "FhirUri", "FhirUrl", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
-				"Base64Binary"};
+				"Base64Binary", "FhirDecimal", "Markdown", "PositiveInt", "Time", "Timing", "UnsignedInt"};
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
@@ -1557,10 +1573,12 @@ if (!abstractType){
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
 		string v = componentElement.Value;
 		string definingPath = componentElement.Value;
+		string fhirBackboneType;
 		if (v.Contains("."))
         {
 			int index = v.LastIndexOf(".");
 			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+			fhirBackboneType = v;
         }
 		else
 		{
@@ -1571,8 +1589,10 @@ if (!abstractType){
 		if (componentNameElement != null)
         {
 			componentName = componentNameElement.Value + "Component";
+			fhirBackboneType = componentNameElement.Value;
         }
 
+		string fhirTypeName = resourceName + '#' + fhirBackboneType;
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
         {
@@ -1581,11 +1601,11 @@ if (!abstractType){
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= resourceName + '#' + definingPath #>", IsNestedType=true)]
+        [FhirType("<#= fhirBackboneType #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "<#= componentName #>"; } }
+            public override string TypeName { get { return "<#= fhirBackboneType #>"; } }
             
 <#
 	int nComponentPropNum = 30;

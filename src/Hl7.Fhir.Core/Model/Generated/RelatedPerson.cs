@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RelatedPerson"; } }
         
-        [FhirType("RelatedPerson#RelatedPerson.communication", IsNestedType=true)]
+        [FhirType("RelatedPerson#Communication", IsNestedType=true)]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CommunicationComponent"; } }
+            public override string TypeName { get { return "RelatedPerson#Communication"; } }
             
             /// <summary>
             /// The language which can be used to communicate with the patient about his or her health

@@ -184,11 +184,11 @@ namespace Hl7.Fhir.Model
             Error,
         }
 
-        [FhirType("TestReport#TestReport.participant", IsNestedType=true)]
+        [FhirType("TestReport#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "TestReport#Participant"; } }
             
             /// <summary>
             /// test-engine | client | server
@@ -359,11 +359,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.setup", IsNestedType=true)]
+        [FhirType("TestReport#Setup", IsNestedType=true)]
         [DataContract]
         public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SetupComponent"; } }
+            public override string TypeName { get { return "TestReport#Setup"; } }
             
             /// <summary>
             /// A setup operation or assert that was executed
@@ -443,11 +443,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.setup.action", IsNestedType=true)]
+        [FhirType("TestReport#SetupAction", IsNestedType=true)]
         [DataContract]
         public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SetupActionComponent"; } }
+            public override string TypeName { get { return "TestReport#SetupAction"; } }
             
             /// <summary>
             /// The operation to perform
@@ -544,11 +544,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.setup.action.operation", IsNestedType=true)]
+        [FhirType("TestReport#Operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OperationComponent"; } }
+            public override string TypeName { get { return "TestReport#Operation"; } }
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -700,11 +700,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.setup.action.assert", IsNestedType=true)]
+        [FhirType("TestReport#Assert", IsNestedType=true)]
         [DataContract]
         public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AssertComponent"; } }
+            public override string TypeName { get { return "TestReport#Assert"; } }
             
             /// <summary>
             /// pass | skip | fail | warning | error
@@ -856,11 +856,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.test", IsNestedType=true)]
+        [FhirType("TestReport#Test", IsNestedType=true)]
         [DataContract]
         public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TestComponent"; } }
+            public override string TypeName { get { return "TestReport#Test"; } }
             
             /// <summary>
             /// Tracking/logging name of this test
@@ -1012,11 +1012,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.test.action", IsNestedType=true)]
+        [FhirType("TestReport#TestAction", IsNestedType=true)]
         [DataContract]
         public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TestActionComponent"; } }
+            public override string TypeName { get { return "TestReport#TestAction"; } }
             
             /// <summary>
             /// The operation performed
@@ -1113,11 +1113,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.teardown", IsNestedType=true)]
+        [FhirType("TestReport#Teardown", IsNestedType=true)]
         [DataContract]
         public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TeardownComponent"; } }
+            public override string TypeName { get { return "TestReport#Teardown"; } }
             
             /// <summary>
             /// One or more teardown operations performed
@@ -1197,11 +1197,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("TestReport#TestReport.teardown.action", IsNestedType=true)]
+        [FhirType("TestReport#TeardownAction", IsNestedType=true)]
         [DataContract]
         public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TeardownActionComponent"; } }
+            public override string TypeName { get { return "TestReport#TeardownAction"; } }
             
             /// <summary>
             /// The teardown operation performed

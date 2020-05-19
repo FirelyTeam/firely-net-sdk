@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             RevalFail,
         }
 
-        [FhirType("VerificationResult#VerificationResult.primarySource", IsNestedType=true)]
+        [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
         [DataContract]
         public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PrimarySourceComponent"; } }
+            public override string TypeName { get { return "VerificationResult#PrimarySource"; } }
             
             /// <summary>
             /// Reference to the primary source
@@ -311,11 +311,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VerificationResult#VerificationResult.attestation", IsNestedType=true)]
+        [FhirType("VerificationResult#Attestation", IsNestedType=true)]
         [DataContract]
         public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AttestationComponent"; } }
+            public override string TypeName { get { return "VerificationResult#Attestation"; } }
             
             /// <summary>
             /// The individual or organization attesting to information
@@ -578,11 +578,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VerificationResult#VerificationResult.validator", IsNestedType=true)]
+        [FhirType("VerificationResult#Validator", IsNestedType=true)]
         [DataContract]
         public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ValidatorComponent"; } }
+            public override string TypeName { get { return "VerificationResult#Validator"; } }
             
             /// <summary>
             /// Reference to the organization validating information

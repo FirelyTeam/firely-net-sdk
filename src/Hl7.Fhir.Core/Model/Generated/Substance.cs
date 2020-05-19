@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Substance#Substance.instance", IsNestedType=true)]
+        [FhirType("Substance#Instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InstanceComponent"; } }
+            public override string TypeName { get { return "Substance#Instance"; } }
             
             /// <summary>
             /// Identifier of the package/container
@@ -216,11 +216,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Substance#Substance.ingredient", IsNestedType=true)]
+        [FhirType("Substance#Ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "IngredientComponent"; } }
+            public override string TypeName { get { return "Substance#Ingredient"; } }
             
             /// <summary>
             /// Optional amount (concentration)

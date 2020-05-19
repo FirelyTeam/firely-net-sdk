@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceAmount"; } }
         
-        [FhirType("SubstanceAmount#SubstanceAmount.referenceRange", IsNestedType=true)]
+        [FhirType("ReferenceRange", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "ReferenceRangeComponent"; } }
+            public override string TypeName { get { return "ReferenceRange"; } }
             
             /// <summary>
             /// Lower limit possible or expected

@@ -425,6 +425,54 @@ namespace Hl7.Fhir.Test.Rest
             Assert.IsNotNull(sp);
             Assert.IsTrue(sp.Path.Contains("DiagnosticReport.encounter"));
             Assert.IsFalse(sp.Target.Contains(ResourceType.EpisodeOfCare));
-        }
+
+            //Manualy removed this target from more occurances of the same searchparameter
+            //Commit: 3b071d478ff3cb744cb6668ac8512dc7362e6737
+         
+
+            var sp3 = ModelInfo.SearchParameters.Where(s => s.Resource == "RiskAssessment" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp3);
+            Assert.IsFalse(sp3.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp4 = ModelInfo.SearchParameters.Where(s => s.Resource == "List" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp4);
+            Assert.IsFalse(sp4.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp5 = ModelInfo.SearchParameters.Where(s => s.Resource == "VisionPrescription" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp5);
+            Assert.IsFalse(sp5.Target.Contains(ResourceType.EpisodeOfCare));
+            
+            var sp6 = ModelInfo.SearchParameters.Where(s => s.Resource == "ServiceRequest" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp6);
+            Assert.IsFalse(sp6.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp7 = ModelInfo.SearchParameters.Where(s => s.Resource == "Flag" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp7);
+            Assert.IsFalse(sp7.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp8 = ModelInfo.SearchParameters.Where(s => s.Resource == "Observation" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp8);
+            Assert.IsFalse(sp8.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp9 = ModelInfo.SearchParameters.Where(s => s.Resource == "NutritionOrder" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp9);
+            Assert.IsFalse(sp9.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp10 = ModelInfo.SearchParameters.Where(s => s.Resource == "Composition" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp10);
+            Assert.IsFalse(sp10.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp11 = ModelInfo.SearchParameters.Where(s => s.Resource == "DeviceRequest" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp11);
+            Assert.IsFalse(sp11.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp12);
+            Assert.IsFalse(sp12.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp13 = ModelInfo.SearchParameters.Where(s => s.Resource == "DocumentReference" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp13);
+            Assert.IsTrue(sp13.Target.Contains(ResourceType.EpisodeOfCare));
+        }    
     }
 }

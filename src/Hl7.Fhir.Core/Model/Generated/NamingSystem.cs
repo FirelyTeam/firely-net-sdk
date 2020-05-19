@@ -112,11 +112,11 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("NamingSystem#NamingSystem.uniqueId", IsNestedType=true)]
+        [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
         [DataContract]
         public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "UniqueIdComponent"; } }
+            public override string TypeName { get { return "NamingSystem#UniqueId"; } }
             
             /// <summary>
             /// oid | uuid | uri | other

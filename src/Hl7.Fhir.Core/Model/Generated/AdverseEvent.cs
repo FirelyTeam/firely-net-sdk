@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             Potential,
         }
 
-        [FhirType("AdverseEvent#AdverseEvent.suspectEntity", IsNestedType=true)]
+        [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
         [DataContract]
         public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SuspectEntityComponent"; } }
+            public override string TypeName { get { return "AdverseEvent#SuspectEntity"; } }
             
             /// <summary>
             /// Refers to the specific entity that caused the adverse event
@@ -178,11 +178,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("AdverseEvent#AdverseEvent.suspectEntity.causality", IsNestedType=true)]
+        [FhirType("AdverseEvent#Causality", IsNestedType=true)]
         [DataContract]
         public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CausalityComponent"; } }
+            public override string TypeName { get { return "AdverseEvent#Causality"; } }
             
             /// <summary>
             /// Assessment of if the entity caused the event

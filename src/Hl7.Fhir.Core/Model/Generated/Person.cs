@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             Level4,
         }
 
-        [FhirType("Person#Person.link", IsNestedType=true)]
+        [FhirType("Person#Link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkComponent"; } }
+            public override string TypeName { get { return "Person#Link"; } }
             
             /// <summary>
             /// The resource to which this actual person is associated

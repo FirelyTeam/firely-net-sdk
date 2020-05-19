@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductInteraction"; } }
         
-        [FhirType("MedicinalProductInteraction#MedicinalProductInteraction.interactant", IsNestedType=true)]
+        [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
         [DataContract]
         public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InteractantComponent"; } }
+            public override string TypeName { get { return "MedicinalProductInteraction#Interactant"; } }
             
             /// <summary>
             /// The specific medication, food or laboratory test that interacts

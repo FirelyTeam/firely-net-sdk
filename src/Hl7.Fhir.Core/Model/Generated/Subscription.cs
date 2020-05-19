@@ -124,11 +124,11 @@ namespace Hl7.Fhir.Model
             Message,
         }
 
-        [FhirType("Subscription#Subscription.channel", IsNestedType=true)]
+        [FhirType("Subscription#Channel", IsNestedType=true)]
         [DataContract]
         public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ChannelComponent"; } }
+            public override string TypeName { get { return "Subscription#Channel"; } }
             
             /// <summary>
             /// rest-hook | websocket | email | sms | message

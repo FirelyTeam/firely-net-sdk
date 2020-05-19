@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Medication#Medication.ingredient", IsNestedType=true)]
+        [FhirType("Medication#Ingredient", IsNestedType=true)]
         [DataContract]
         public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "IngredientComponent"; } }
+            public override string TypeName { get { return "Medication#Ingredient"; } }
             
             /// <summary>
             /// The actual ingredient or content
@@ -219,11 +219,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Medication#Medication.batch", IsNestedType=true)]
+        [FhirType("Medication#Batch", IsNestedType=true)]
         [DataContract]
         public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BatchComponent"; } }
+            public override string TypeName { get { return "Medication#Batch"; } }
             
             /// <summary>
             /// Identifier assigned to batch
