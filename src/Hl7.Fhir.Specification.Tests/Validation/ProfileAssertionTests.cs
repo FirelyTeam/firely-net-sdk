@@ -18,12 +18,11 @@ namespace Hl7.Fhir.Specification.Tests
         public ValidationFixture()
         {
             AsyncResolver = new CachedResolver(
-                        new SnapshotSource( // TODO MV: is it a good idea to use a snapshotsource here?
-                        new MultiResolver(
+                         new MultiResolver(
                             new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
                             new DirectorySource(Path.Combine("TestData", "validation")),
-                            new TestProfileArtifactSource(),
-                            new ZipSource("specification.zip"))));
+                            new SnapshotSource(new TestProfileArtifactSource()),  // TODO: should we do this?
+                            new ZipSource("specification.zip")));
 
             var ctx = new ValidationSettings()
             {

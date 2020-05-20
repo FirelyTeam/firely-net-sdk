@@ -84,6 +84,8 @@ namespace Hl7.Fhir.Specification.Schema
 
         private IAssertion CreateSliceAssertion(ElementDefinitionNavigator root, IEnumerable<Bookmark> slices)
         {
+            var bm = root.Bookmark();
+
             var slicing = root.Current.Slicing;
             var discriminatorPath = slicing.Discriminator.Select(d => d.Path).FirstOrDefault();
 
@@ -97,30 +99,39 @@ namespace Hl7.Fhir.Specification.Schema
 
                 var condition = new PathSelectorAssertion(discriminatorPath, conditionNav.Current.ValueSlicingConditions(Source, _assertionFactory));
 
-                sliceList.Add(new SliceAssertion.Slice(root.Current.SliceName, condition, conditionNav.Current.Convert(Source, _assertionFactory)));
+                sliceList.Add(new SliceAssertion.Slice(root.Current.SliceName, condition, harvest(root)));
             }
-            return new SliceAssertion(slicing.Ordered ?? false, sliceList);
+            var sliceAssertion = new SliceAssertion(slicing.Ordered ?? false, sliceList);
+
+
+            root.ReturnToBookmark(bm);
+            return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { sliceAssertion });
+
         }
 
-        private IElementSchema SkipSlicingComponents(ElementDefinitionNavigator root)
+        private IAssertion SkipSlicingComponents(ElementDefinitionNavigator root)
         {
-            if (root.Current.Slicing != null && root.Current.Path is "Observation.component")
+            IAssertion result = null;
+            // 20200520: for now only value slicing
+            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true &&
+                !root.Current.Path.Contains(".extension"))
             {
-
                 var slices = root.FindMemberSlices(true);
-                var bm = root.Bookmark();
-                var result = CreateSliceAssertion(root, slices);
-                root.ReturnToBookmark(bm);
 
-                var curPath = root.Path;
+                result = CreateSliceAssertion(root, slices);
 
-                while (root.MoveToNext() && curPath == root.Path)
-                {
-                }
+                skipSlicingElements(root);
 
-                return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { result });
             }
-            return null;
+            return result;
+        }
+
+        private static void skipSlicingElements(ElementDefinitionNavigator root)
+        {
+            var curPath = root.Path;
+            while (root.MoveToNext() && curPath == root.Path)
+            {
+            }
         }
 
         private IReadOnlyDictionary<string, IAssertion> harvestChildren(ElementDefinitionNavigator childNav)

@@ -162,17 +162,6 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
         }
-
-        class InstanceTypeValidator
-        {
-            public string ExpectedInstanceName;
-        }
-
-        abstract class ElementNameSwitchValidator
-        {
-            public abstract void Add(string elementName, IValidatable rules);
-        }
-
         #region NewValidation stuff
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)

@@ -1248,12 +1248,20 @@ namespace Hl7.Fhir.Specification.Tests
                 Status = ObservationStatus.Final,
                 Code = new CodeableConcept("http://loinc.org", "85354-9", "Blood pressure panel with all children optional")
             };
-            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8480-1212", "Systolic blood pressure") });
-            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8462-4", "Diastolic blood pressure") });
+            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8480-6", display: "Systolic blood pressure", null) });
+            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8462-4", display: "Diastolic blood pressure", null), Value = new Quantity(80, "mmHg") });
 
             var report = _validator.Validate(instance, def);
-            Assert.False(report.Success); // value is missing
+            Assert.False(report.Success);  // value of component[0] is missing
 
+        }
+
+        [Fact]
+        public void ValidateCodeableConcept()
+        {
+            var instance = new FhirBoolean(true);//"http://loinc.org", "85354-9", "Blood pressure panel with all children optional");
+            var report = _validator.Validate(instance);
+            Assert.True(report.Success);
         }
 
         // Verify aggregated element constraints

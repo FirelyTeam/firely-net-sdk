@@ -129,8 +129,6 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             poco.Use = HumanName.NameUse.Usual;
             var element = poco.ToTypedElement();
 
-            var eltstring = TypedElementAsString(new ValueTypedElement(element));
-
             var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
 
             //var json = schemaElement.ToJson().ToString();
@@ -139,22 +137,8 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             Assert.IsNotNull(results);
             Assert.AreEqual(1, results.Count);
             Assert.IsFalse(results.Result.IsSuccessful, "HumanName is not valid");
-
-            /*
-            string json2 = "";
-            foreach (var item in _resolver.GetSchemas())
-            {
-                json2 = item.ToJson().ToString();
-            }
-            _resolver.GetSchemas().Select(s => json2 += s.ToJson().ToString());
-
-            var stringSchema = _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/string", UriKind.Absolute));
-            json = stringSchema.ToJson().ToString();
-
-            Debug.WriteLine(json);
-            //json.ToString();
-            */
         }
+
         [TestMethod]
         public async T.Task TestInstance()
         {
@@ -211,38 +195,5 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             Assert.IsFalse(assertResult.IsSuccessful, "poco should be not valid");
         }
 
-    }
-
-    public class ValueTypedElement : ITypedElement
-    {
-        private readonly ITypedElement _wrapped;
-
-        public ValueTypedElement(ITypedElement instance)
-        {
-            _wrapped = instance;
-        }
-
-        public string Name => _wrapped.Name;
-
-        public string InstanceType => _wrapped.InstanceType;
-
-        public object Value => _wrapped.Value;
-
-        public string Location => _wrapped.Location;
-
-        public IElementDefinitionSummary Definition => _wrapped.Definition;
-
-        public IEnumerable<ITypedElement> Children(string name = null)
-        {
-            foreach (var child in _wrapped.Children())
-            {
-                yield return new ValueTypedElement(child);
-
-            }
-            if (_wrapped.InstanceType == "string")
-            {
-                yield return new ValueElementNode(_wrapped.Value, _wrapped.Location);
-            }
-        }
     }
 }

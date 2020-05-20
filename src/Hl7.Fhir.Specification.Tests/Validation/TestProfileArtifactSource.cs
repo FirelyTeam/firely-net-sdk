@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Validation
                 ElementId = "Observation.component.code:systolic",
                 Min = 1
             }.Value(fix: new CodeableConcept("http://loinc.org", "8480-6", display: "Systolic blood pressure", null)));
-            cons.Add(new ElementDefinition("Observation.component.valueQuantity")
+            cons.Add(new ElementDefinition("Observation.component.value[x]")
             {
                 ElementId = "Observation.component.valueQuantity:systolic",
                 Min = 1
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Validation
                 ElementId = "Observation.component.code:diastolic ",
                 Min = 1
             }.Value(fix: new CodeableConcept("http://loinc.org", "8462-4", display: "Diastolic blood pressure", null)));
-            cons.Add(new ElementDefinition("Observation.component.valueQuantity")
+            cons.Add(new ElementDefinition("Observation.component.value[x]")
             {
                 ElementId = "Observation.component.valueQuantity:diastolic",
                 Min = 1

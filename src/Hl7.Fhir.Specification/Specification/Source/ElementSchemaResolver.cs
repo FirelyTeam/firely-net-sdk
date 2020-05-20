@@ -57,12 +57,13 @@ namespace Hl7.Fhir.Specification.Specification.Source
             {
                 schema = new ElementSchema(schemaUri);
             }
-
-
-            var sd = await this.FindStructureDefinitionAsync(schemaUri.OriginalString);
-            if (sd != null)
+            else
             {
-                schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
+                var sd = await this.FindStructureDefinitionAsync(schemaUri.OriginalString);
+                if (sd != null)
+                {
+                    schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
+                }
             }
 
             _cache.Add(schemaUri, schema);
