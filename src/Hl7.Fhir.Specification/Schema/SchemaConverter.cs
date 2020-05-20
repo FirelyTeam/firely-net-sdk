@@ -8,10 +8,13 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -57,10 +60,67 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 var childNav = nav.ShallowCopy();   // make sure closure is to a clone, not the original argument
                 var childAssertion = _assertionFactory.CreateChildren(() => harvestChildren(childNav));
-                return schema.With(_assertionFactory, childAssertion);
+                schema = schema.With(_assertionFactory, childAssertion);
             }
-            else
-                return schema;
+
+            var result = SkipSlicingComponents(nav);
+            if (result != null)
+                schema = schema.With(_assertionFactory, result);
+            return schema;
+        }
+
+        private static ElementDefinitionNavigator walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
+        {
+            var walker = new StructureDefinitionWalker(root, resolver);
+            var conditions = walker.Walk(discriminator);
+
+            // Well, we could check whether the conditions are Equal, since that's what really matters - they should not differ.
+            if (conditions.Count > 1)
+                throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.");
+
+            return conditions.Single().Current;
+        }
+
+
+        private IAssertion CreateSliceAssertion(ElementDefinitionNavigator root, IEnumerable<Bookmark> slices)
+        {
+            var slicing = root.Current.Slicing;
+            var discriminatorPath = slicing.Discriminator.Select(d => d.Path).FirstOrDefault();
+
+            var sliceList = new List<SliceAssertion.Slice>();
+
+            foreach (var slice in slices)
+            {
+                root.ReturnToBookmark(slice);
+
+                var conditionNav = walkToCondition(root, discriminatorPath, Source as IResourceResolver);
+
+                var condition = new PathSelectorAssertion(discriminatorPath, conditionNav.Current.ValueSlicingConditions(Source, _assertionFactory));
+
+                sliceList.Add(new SliceAssertion.Slice(root.Current.SliceName, condition, conditionNav.Current.Convert(Source, _assertionFactory)));
+            }
+            return new SliceAssertion(slicing.Ordered ?? false, sliceList);
+        }
+
+        private IElementSchema SkipSlicingComponents(ElementDefinitionNavigator root)
+        {
+            if (root.Current.Slicing != null && root.Current.Path is "Observation.component")
+            {
+
+                var slices = root.FindMemberSlices(true);
+                var bm = root.Bookmark();
+                var result = CreateSliceAssertion(root, slices);
+                root.ReturnToBookmark(bm);
+
+                var curPath = root.Path;
+
+                while (root.MoveToNext() && curPath == root.Path)
+                {
+                }
+
+                return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { result });
+            }
+            return null;
         }
 
         private IReadOnlyDictionary<string, IAssertion> harvestChildren(ElementDefinitionNavigator childNav)

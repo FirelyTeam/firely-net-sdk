@@ -32,8 +32,59 @@ namespace Hl7.Fhir.Validation
             buildOrganizationWithRegexConstraintOnType(),
             buildValueDescriminatorWithPattern(),
             buildQuantityWithUnlimitedRootCardinality(),
-            buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
+            buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality(),
+            buildBloodPressureSlicing()
         };
+
+        private static StructureDefinition buildBloodPressureSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/BloodPressureMeasurement", "Blood pressure measurement",
+                    "Test an observation with slicing on LOINC code", FHIRAllTypes.Observation);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Observation").OfType(FHIRAllTypes.Observation));
+
+            var slicingIntro = new ElementDefinition("Observation.component")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Open,
+               (ElementDefinition.DiscriminatorType.Value, "code")).Required(2, "*");
+            cons.Add(slicingIntro);
+
+            // Slice 1 - systolic
+            cons.Add(new ElementDefinition("Observation.component")
+            {
+                ElementId = "Observation.component:systolic",
+                SliceName = "systolic"
+            }.Required());
+            cons.Add(new ElementDefinition("Observation.component.code")
+            {
+                ElementId = "Observation.component.code:systolic",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "8480-6", display: "Systolic blood pressure", null)));
+            cons.Add(new ElementDefinition("Observation.component.valueQuantity")
+            {
+                ElementId = "Observation.component.valueQuantity:systolic",
+                Min = 1
+            }.OrType(FHIRAllTypes.Quantity));
+
+            // Slice 2 - diastolic 
+            cons.Add(new ElementDefinition("Observation.component")
+            {
+                ElementId = "Observation.component:diastolic ",
+                SliceName = "diastolic "
+            }.Required());
+            cons.Add(new ElementDefinition("Observation.component.code")
+            {
+                ElementId = "Observation.component.code:diastolic ",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "8462-4", display: "Diastolic blood pressure", null)));
+            cons.Add(new ElementDefinition("Observation.component.valueQuantity")
+            {
+                ElementId = "Observation.component.valueQuantity:diastolic",
+                Min = 1
+            }.OrType(FHIRAllTypes.Quantity));
+
+            return result;
+        }
 
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
         {

@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
+using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +43,19 @@ namespace Hl7.Fhir.Specification.Schema
             return assertionFactory.CreateElementSchemaAssertion(id: new Uri("#" + def.Path, UriKind.Relative), elements);
         }
 
+        public static IAssertion ValueSlicingConditions(this ElementDefinition def, ISchemaResolver resolver, IElementDefinitionAssertionFactory assertionFactory)
+        {
+            var elements = new List<IAssertion>()
+                   .MaybeAdd(BuildFixed(def, assertionFactory))
+                   .MaybeAdd(BuildPattern(def, assertionFactory))
+                   .MaybeAdd(BuildBinding(def, assertionFactory));
+
+            return new AllAssertion(elements);
+        }
+
+
         private static IAssertion BuildBinding(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
-            def.Binding != null ? assertionFactory.CreateBindingAssertion(def.Path, def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
+        def.Binding != null ? assertionFactory.CreateBindingAssertion(def.Path, def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
 
         private static BindingAssertion.BindingStrength ConvertStrength(BindingStrength? strength)
         {
@@ -77,7 +89,7 @@ namespace Hl7.Fhir.Specification.Schema
         private static IAssertion BuildMaxValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.Path, def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
-        private static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
+        public static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.Fixed != null ? assertionFactory.CreateFixedValueAssertion(def.Path, def.Fixed.ToTypedElement()) : null;
 
         private static IAssertion BuildPattern(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
@@ -148,6 +160,13 @@ namespace Hl7.Fhir.Specification.Schema
                 result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
             }
             return result.Count > 0 ? new AnyAssertion(result) : null;
+            */
+
+            /*
+            if (def.Slicing != null)
+            {
+                return BuildSlicing(def);
+            }
             */
 
 
@@ -227,6 +246,15 @@ namespace Hl7.Fhir.Specification.Schema
             //return null;
             bool isChoice(ElementDefinition d) => d.Base?.Path?.EndsWith("[x]") == true ||
                             d.Path.EndsWith("[x]");
+        }
+
+        private static IAssertion BuildSlicing(ElementDefinition def)
+        {
+            var condition1 = new AllAssertion(new[] { new FhirPathAssertion("TODO", "mykey1", "code", "I am working on it", IssueSeverity.Error, false) });
+
+            var slice1 = new SliceAssertion.Slice("Systolic", condition1, new ResultAssertion(ValidationResult.Success));
+            var slice2 = new SliceAssertion.Slice("Dystolic", new FhirPathAssertion("TODO", "mykey2", "code", "I am working on it", IssueSeverity.Error, false), new ResultAssertion(ValidationResult.Success));
+            return new SliceAssertion(false, slice1, slice2);
         }
 
         private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, IAssertion element)

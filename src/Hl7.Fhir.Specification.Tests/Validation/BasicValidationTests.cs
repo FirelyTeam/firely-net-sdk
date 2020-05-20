@@ -1238,6 +1238,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
         }
 
+        [Fact]
+        public async T.Task ValidateBloodPressure()
+        {
+            var def = await _asyncSource.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/BloodPressureMeasurement");
+
+            var instance = new Observation
+            {
+                Status = ObservationStatus.Final,
+                Code = new CodeableConcept("http://loinc.org", "85354-9", "Blood pressure panel with all children optional")
+            };
+            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8480-1212", "Systolic blood pressure") });
+            instance.Component.Add(new Observation.ComponentComponent() { Code = new CodeableConcept("http://loinc.org", "8462-4", "Diastolic blood pressure") });
+
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // value is missing
+
+        }
+
         // Verify aggregated element constraints
         private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
