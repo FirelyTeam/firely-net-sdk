@@ -2239,11 +2239,11 @@ namespace Hl7.Fhir.Model
             HtmlTemplate,
         }
 
-        [FhirType("ImplementationGuide#ImplementationGuide.dependsOn", IsNestedType=true)]
+        [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
         [DataContract]
         public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DependsOnComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#DependsOn"; } }
             
             /// <summary>
             /// Identity of the IG that this depends on
@@ -2413,11 +2413,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.global", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Global", IsNestedType=true)]
         [DataContract]
         public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GlobalComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Global"; } }
             
             /// <summary>
             /// Type this profile applies to
@@ -2552,11 +2552,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
         [DataContract]
         public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DefinitionComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Definition"; } }
             
             /// <summary>
             /// Grouping used to present related resources in the IG
@@ -2711,11 +2711,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition.grouping", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
         [DataContract]
         public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GroupingComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Grouping"; } }
             
             /// <summary>
             /// Descriptive name for the package
@@ -2849,11 +2849,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition.resource", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResourceComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Resource"; } }
             
             /// <summary>
             /// Location of the resource
@@ -3100,11 +3100,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition.page", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Page", IsNestedType=true)]
         [DataContract]
         public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PageComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Page"; } }
             
             /// <summary>
             /// Where to find that page
@@ -3279,11 +3279,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition.parameter", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Parameter"; } }
             
             /// <summary>
             /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
@@ -3418,11 +3418,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.definition.template", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Template", IsNestedType=true)]
         [DataContract]
         public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TemplateComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Template"; } }
             
             /// <summary>
             /// Type of template specified
@@ -3593,11 +3593,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.manifest", IsNestedType=true)]
+        [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
         [DataContract]
         public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ManifestComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#Manifest"; } }
             
             /// <summary>
             /// Location of rendered implementation guide
@@ -3806,11 +3806,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.manifest.resource", IsNestedType=true)]
+        [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
         [DataContract]
         public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ManifestResourceComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#ManifestResource"; } }
             
             /// <summary>
             /// Location of the resource
@@ -3948,11 +3948,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImplementationGuide#ImplementationGuide.manifest.page", IsNestedType=true)]
+        [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
         [DataContract]
         public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ManifestPageComponent"; } }
+            public override string TypeName { get { return "ImplementationGuide#ManifestPage"; } }
             
             /// <summary>
             /// HTML page name

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Dosage"; } }
         
-        [FhirType("Dosage#Dosage.doseAndRate", IsNestedType=true)]
+        [FhirType("DoseAndRate", IsNestedType=true)]
         [DataContract]
         public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "DoseAndRateComponent"; } }
+            public override string TypeName { get { return "DoseAndRate"; } }
             
             /// <summary>
             /// The kind of dose or rate specified

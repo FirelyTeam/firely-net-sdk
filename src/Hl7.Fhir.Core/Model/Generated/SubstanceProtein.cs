@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "SubstanceProtein"; } }
         
-        [FhirType("SubstanceProtein#SubstanceProtein.subunit", IsNestedType=true)]
+        [FhirType("SubstanceProtein#Subunit", IsNestedType=true)]
         [DataContract]
         public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SubunitComponent"; } }
+            public override string TypeName { get { return "SubstanceProtein#Subunit"; } }
             
             /// <summary>
             /// Index of primary sequences of amino acids linked through peptide bonds in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts

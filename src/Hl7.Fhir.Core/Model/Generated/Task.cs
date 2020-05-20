@@ -196,11 +196,11 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("Task#Task.restriction", IsNestedType=true)]
+        [FhirType("Task#Restriction", IsNestedType=true)]
         [DataContract]
         public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RestrictionComponent"; } }
+            public override string TypeName { get { return "Task#Restriction"; } }
             
             /// <summary>
             /// How many times to repeat
@@ -336,11 +336,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Task#Task.input", IsNestedType=true)]
+        [FhirType("Task#Parameter", IsNestedType=true)]
         [DataContract]
         public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParameterComponent"; } }
+            public override string TypeName { get { return "Task#Parameter"; } }
             
             /// <summary>
             /// Label for the input
@@ -441,11 +441,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Task#Task.output", IsNestedType=true)]
+        [FhirType("Task#Output", IsNestedType=true)]
         [DataContract]
         public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OutputComponent"; } }
+            public override string TypeName { get { return "Task#Output"; } }
             
             /// <summary>
             /// Label for output

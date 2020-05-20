@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             Low,
         }
 
-        [FhirType("DetectedIssue#DetectedIssue.evidence", IsNestedType=true)]
+        [FhirType("DetectedIssue#Evidence", IsNestedType=true)]
         [DataContract]
         public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EvidenceComponent"; } }
+            public override string TypeName { get { return "DetectedIssue#Evidence"; } }
             
             /// <summary>
             /// Manifestation
@@ -184,11 +184,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("DetectedIssue#DetectedIssue.mitigation", IsNestedType=true)]
+        [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
         [DataContract]
         public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "MitigationComponent"; } }
+            public override string TypeName { get { return "DetectedIssue#Mitigation"; } }
             
             /// <summary>
             /// What mitigation?

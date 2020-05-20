@@ -130,11 +130,11 @@ namespace Hl7.Fhir.Model
             Official,
         }
 
-        [FhirType("Composition#Composition.attester", IsNestedType=true)]
+        [FhirType("Composition#Attester", IsNestedType=true)]
         [DataContract]
         public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AttesterComponent"; } }
+            public override string TypeName { get { return "Composition#Attester"; } }
             
             /// <summary>
             /// personal | professional | legal | official
@@ -288,11 +288,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Composition#Composition.relatesTo", IsNestedType=true)]
+        [FhirType("Composition#RelatesTo", IsNestedType=true)]
         [DataContract]
         public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatesToComponent"; } }
+            public override string TypeName { get { return "Composition#RelatesTo"; } }
             
             /// <summary>
             /// replaces | transforms | signs | appends
@@ -411,11 +411,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Composition#Composition.event", IsNestedType=true)]
+        [FhirType("Composition#Event", IsNestedType=true)]
         [DataContract]
         public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EventComponent"; } }
+            public override string TypeName { get { return "Composition#Event"; } }
             
             /// <summary>
             /// Code(s) that apply to the event being documented
@@ -534,11 +534,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Composition#Composition.section", IsNestedType=true)]
+        [FhirType("Composition#Section", IsNestedType=true)]
         [DataContract]
         public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SectionComponent"; } }
+            public override string TypeName { get { return "Composition#Section"; } }
             
             /// <summary>
             /// Label for section (e.g. for ToC)

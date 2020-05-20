@@ -148,11 +148,11 @@ namespace Hl7.Fhir.Model
             OtherMap,
         }
 
-        [FhirType("ConceptMap#ConceptMap.group", IsNestedType=true)]
+        [FhirType("ConceptMap#Group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GroupComponent"; } }
+            public override string TypeName { get { return "ConceptMap#Group"; } }
             
             /// <summary>
             /// Source system where concepts to be mapped are defined
@@ -394,11 +394,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptMap#ConceptMap.group.element", IsNestedType=true)]
+        [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
         [DataContract]
         public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SourceElementComponent"; } }
+            public override string TypeName { get { return "ConceptMap#SourceElement"; } }
             
             /// <summary>
             /// Identifies element being mapped
@@ -550,11 +550,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptMap#ConceptMap.group.element.target", IsNestedType=true)]
+        [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
         [DataContract]
         public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TargetElementComponent"; } }
+            public override string TypeName { get { return "ConceptMap#TargetElement"; } }
             
             /// <summary>
             /// Code that identifies the target element
@@ -798,11 +798,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptMap#ConceptMap.group.element.target.dependsOn", IsNestedType=true)]
+        [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
         [DataContract]
         public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OtherElementComponent"; } }
+            public override string TypeName { get { return "ConceptMap#OtherElement"; } }
             
             /// <summary>
             /// Reference to property mapping depends on
@@ -1009,11 +1009,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ConceptMap#ConceptMap.group.unmapped", IsNestedType=true)]
+        [FhirType("ConceptMap#Unmapped", IsNestedType=true)]
         [DataContract]
         public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "UnmappedComponent"; } }
+            public override string TypeName { get { return "ConceptMap#Unmapped"; } }
             
             /// <summary>
             /// provided | fixed | other-map

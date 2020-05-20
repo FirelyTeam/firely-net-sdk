@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("Invoice#Invoice.participant", IsNestedType=true)]
+        [FhirType("Invoice#Participant", IsNestedType=true)]
         [DataContract]
         public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ParticipantComponent"; } }
+            public override string TypeName { get { return "Invoice#Participant"; } }
             
             /// <summary>
             /// Type of involvement in creation of this Invoice
@@ -195,11 +195,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Invoice#Invoice.lineItem", IsNestedType=true)]
+        [FhirType("Invoice#LineItem", IsNestedType=true)]
         [DataContract]
         public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LineItemComponent"; } }
+            public override string TypeName { get { return "Invoice#LineItem"; } }
             
             /// <summary>
             /// Sequence number of line item
@@ -336,11 +336,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Invoice#Invoice.lineItem.priceComponent", IsNestedType=true)]
+        [FhirType("Invoice#PriceComponent", IsNestedType=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PriceComponentComponent"; } }
+            public override string TypeName { get { return "Invoice#PriceComponent"; } }
             
             /// <summary>
             /// base | surcharge | deduction | discount | tax | informational

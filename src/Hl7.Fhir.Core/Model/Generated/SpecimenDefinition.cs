@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             Alternate,
         }
 
-        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested", IsNestedType=true)]
+        [FhirType("SpecimenDefinition#TypeTested", IsNestedType=true)]
         [DataContract]
         public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TypeTestedComponent"; } }
+            public override string TypeName { get { return "SpecimenDefinition#TypeTested"; } }
             
             /// <summary>
             /// Primary or secondary specimen
@@ -339,11 +339,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.container", IsNestedType=true)]
+        [FhirType("SpecimenDefinition#Container", IsNestedType=true)]
         [DataContract]
         public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContainerComponent"; } }
+            public override string TypeName { get { return "SpecimenDefinition#Container"; } }
             
             /// <summary>
             /// Container material
@@ -587,11 +587,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.container.additive", IsNestedType=true)]
+        [FhirType("SpecimenDefinition#Additive", IsNestedType=true)]
         [DataContract]
         public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AdditiveComponent"; } }
+            public override string TypeName { get { return "SpecimenDefinition#Additive"; } }
             
             /// <summary>
             /// Additive associated with container
@@ -673,11 +673,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("SpecimenDefinition#SpecimenDefinition.typeTested.handling", IsNestedType=true)]
+        [FhirType("SpecimenDefinition#Handling", IsNestedType=true)]
         [DataContract]
         public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "HandlingComponent"; } }
+            public override string TypeName { get { return "SpecimenDefinition#Handling"; } }
             
             /// <summary>
             /// Temperature qualifier

@@ -103,11 +103,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ChargeItem#ChargeItem.performer", IsNestedType=true)]
+        [FhirType("ChargeItem#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "ChargeItem#Performer"; } }
             
             /// <summary>
             /// What type of performance was done

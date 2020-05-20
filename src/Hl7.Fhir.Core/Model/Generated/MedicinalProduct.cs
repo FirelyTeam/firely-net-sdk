@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProduct"; } }
         
-        [FhirType("MedicinalProduct#MedicinalProduct.name", IsNestedType=true)]
+        [FhirType("MedicinalProduct#Name", IsNestedType=true)]
         [DataContract]
         public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NameComponent"; } }
+            public override string TypeName { get { return "MedicinalProduct#Name"; } }
             
             /// <summary>
             /// The full product name
@@ -192,11 +192,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProduct#MedicinalProduct.name.namePart", IsNestedType=true)]
+        [FhirType("MedicinalProduct#NamePart", IsNestedType=true)]
         [DataContract]
         public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NamePartComponent"; } }
+            public override string TypeName { get { return "MedicinalProduct#NamePart"; } }
             
             /// <summary>
             /// A fragment of a product name
@@ -313,11 +313,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProduct#MedicinalProduct.name.countryLanguage", IsNestedType=true)]
+        [FhirType("MedicinalProduct#CountryLanguage", IsNestedType=true)]
         [DataContract]
         public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CountryLanguageComponent"; } }
+            public override string TypeName { get { return "MedicinalProduct#CountryLanguage"; } }
             
             /// <summary>
             /// Country code for where this name applies
@@ -434,11 +434,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProduct#MedicinalProduct.manufacturingBusinessOperation", IsNestedType=true)]
+        [FhirType("MedicinalProduct#ManufacturingBusinessOperation", IsNestedType=true)]
         [DataContract]
         public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ManufacturingBusinessOperationComponent"; } }
+            public override string TypeName { get { return "MedicinalProduct#ManufacturingBusinessOperation"; } }
             
             /// <summary>
             /// The type of manufacturing operation
@@ -630,11 +630,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProduct#MedicinalProduct.specialDesignation", IsNestedType=true)]
+        [FhirType("MedicinalProduct#SpecialDesignation", IsNestedType=true)]
         [DataContract]
         public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SpecialDesignationComponent"; } }
+            public override string TypeName { get { return "MedicinalProduct#SpecialDesignation"; } }
             
             /// <summary>
             /// Identifier for the designation, or procedure number

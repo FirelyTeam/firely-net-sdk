@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             Outcome,
         }
 
-        [FhirType("ResearchElementDefinition#ResearchElementDefinition.characteristic", IsNestedType=true)]
+        [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
         [DataContract]
         public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CharacteristicComponent"; } }
+            public override string TypeName { get { return "ResearchElementDefinition#Characteristic"; } }
             
             /// <summary>
             /// What code or expression defines members?

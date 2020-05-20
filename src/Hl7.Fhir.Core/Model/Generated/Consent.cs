@@ -151,11 +151,11 @@ namespace Hl7.Fhir.Model
             Authoredby,
         }
 
-        [FhirType("Consent#Consent.policy", IsNestedType=true)]
+        [FhirType("Consent#Policy", IsNestedType=true)]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PolicyComponent"; } }
+            public override string TypeName { get { return "Consent#Policy"; } }
             
             /// <summary>
             /// Enforcement source for policy
@@ -288,11 +288,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.verification", IsNestedType=true)]
+        [FhirType("Consent#Verification", IsNestedType=true)]
         [DataContract]
         public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VerificationComponent"; } }
+            public override string TypeName { get { return "Consent#Verification"; } }
             
             /// <summary>
             /// Has been verified
@@ -446,11 +446,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.provision", IsNestedType=true)]
+        [FhirType("Consent#provision", IsNestedType=true)]
         [DataContract]
         public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "provisionComponent"; } }
+            public override string TypeName { get { return "Consent#provision"; } }
             
             /// <summary>
             /// deny | permit
@@ -735,11 +735,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.provision.actor", IsNestedType=true)]
+        [FhirType("Consent#provisionActor", IsNestedType=true)]
         [DataContract]
         public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "provisionActorComponent"; } }
+            public override string TypeName { get { return "Consent#provisionActor"; } }
             
             /// <summary>
             /// How the actor is involved
@@ -840,11 +840,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.provision.data", IsNestedType=true)]
+        [FhirType("Consent#provisionData", IsNestedType=true)]
         [DataContract]
         public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "provisionDataComponent"; } }
+            public override string TypeName { get { return "Consent#provisionData"; } }
             
             /// <summary>
             /// instance | related | dependents | authoredby

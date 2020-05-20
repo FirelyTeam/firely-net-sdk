@@ -13159,7 +13159,8 @@
         <xpath value="f:Composition/f:encounter | f:DeviceRequest/f:encounter | f:DiagnosticReport/f:encounter | f:DocumentReference/f:context/f:encounter | f:Flag/f:encounter | f:List/f:encounter | f:NutritionOrder/f:encounter | f:Observation/f:encounter | f:Procedure/f:encounter | f:RiskAssessment/f:encounter | f:ServiceRequest/f:encounter | f:VisionPrescription/f:encounter" />
         <xpathUsage value="normal" />
         <target value="Encounter" />
-        <target value="EpisodeOfCare" />
+        <!-- removed, see: https://github.com/FirelyTeam/fhir-net-api/issues/1298 -->
+    <!--    <target value="EpisodeOfCare" /> --> 
       </SearchParameter>
     </resource>
   </entry>

@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("Account#Account.coverage", IsNestedType=true)]
+        [FhirType("Account#Coverage", IsNestedType=true)]
         [DataContract]
         public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CoverageComponent"; } }
+            public override string TypeName { get { return "Account#Coverage"; } }
             
             /// <summary>
             /// The party(s), such as insurances, that may contribute to the payment of this account
@@ -213,11 +213,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Account#Account.guarantor", IsNestedType=true)]
+        [FhirType("Account#Guarantor", IsNestedType=true)]
         [DataContract]
         public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GuarantorComponent"; } }
+            public override string TypeName { get { return "Account#Guarantor"; } }
             
             /// <summary>
             /// Responsible entity

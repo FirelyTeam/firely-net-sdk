@@ -106,11 +106,11 @@ namespace Hl7.Fhir.Model
             Out,
         }
 
-        [FhirType("VisionPrescription#VisionPrescription.lensSpecification", IsNestedType=true)]
+        [FhirType("VisionPrescription#LensSpecification", IsNestedType=true)]
         [DataContract]
         public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LensSpecificationComponent"; } }
+            public override string TypeName { get { return "VisionPrescription#LensSpecification"; } }
             
             /// <summary>
             /// Product to be supplied
@@ -607,11 +607,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("VisionPrescription#VisionPrescription.lensSpecification.prism", IsNestedType=true)]
+        [FhirType("VisionPrescription#Prism", IsNestedType=true)]
         [DataContract]
         public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PrismComponent"; } }
+            public override string TypeName { get { return "VisionPrescription#Prism"; } }
             
             /// <summary>
             /// Amount of adjustment

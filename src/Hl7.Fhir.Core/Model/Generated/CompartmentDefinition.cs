@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "CompartmentDefinition"; } }
         
-        [FhirType("CompartmentDefinition#CompartmentDefinition.resource", IsNestedType=true)]
+        [FhirType("CompartmentDefinition#Resource", IsNestedType=true)]
         [DataContract]
         public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResourceComponent"; } }
+            public override string TypeName { get { return "CompartmentDefinition#Resource"; } }
             
             /// <summary>
             /// Name of resource type

@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             HealthUnknown,
         }
 
-        [FhirType("FamilyMemberHistory#FamilyMemberHistory.condition", IsNestedType=true)]
+        [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ConditionComponent"; } }
+            public override string TypeName { get { return "FamilyMemberHistory#Condition"; } }
             
             /// <summary>
             /// Condition suffered by relation
