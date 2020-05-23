@@ -3604,6 +3604,11 @@ public class SearchParameter
             // Hack to fix the 'patient' search parameters that incorrectly target multiple resouurces
             _targets = new List<string> { "ResourceType.Patient" };
         }
+        else if (code == "encounter" && searchType == "reference")
+        {
+            // Hack to fix the 'encounter' search parameters that incorrectly target multiple resouurces
+            _targets = new List<string> { "ResourceType.Encounter" };
+        }
         else
         {
             _targets = new List<string>();
