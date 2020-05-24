@@ -864,6 +864,7 @@ namespace Hl7.Fhir.Model
         }
     }
 #>
+				 { typeof(Hl7.Fhir.Model.FhirPatch), "Parameters" },
             };
         
 		// http://build.fhir.org/searchparameter-registry.html

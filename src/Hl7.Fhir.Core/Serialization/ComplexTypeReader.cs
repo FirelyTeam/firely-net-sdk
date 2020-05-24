@@ -59,7 +59,20 @@ namespace Hl7.Fhir.Serialization
             if (_current.InstanceType is null)
                 throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
 
-            var mapping = _inspector.FindClassMappingByName(_current.InstanceType);
+            ClassMapping mapping = null;
+            if ( existing != null )
+            {
+                mapping = _inspector.FindClassMappingByType(existing.GetType());
+                if ( mapping.Name.ToUpperInvariant() != _current.InstanceType.ToUpperInvariant() )
+                {
+                    mapping = null;
+                }
+            }
+
+            if (mapping == null)
+            {
+                mapping = _inspector.FindClassMappingByName(_current.InstanceType);
+            }
 
             if (mapping == null)
                 RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
