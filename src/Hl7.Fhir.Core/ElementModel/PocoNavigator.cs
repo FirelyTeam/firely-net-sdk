@@ -28,7 +28,7 @@ namespace Hl7.Fhir.ElementModel
             if (model == null) throw Error.ArgumentNull(nameof(model));
 
             Initialize(
-                new PocoElementNode(model, rootName: rootName));
+                new PocoElementNode(ModelInfo.GetStructureDefinitionSummaryProvider(), model, rootName: rootName));
         }
 
         private PocoNavigator()     // for clone
@@ -69,8 +69,5 @@ namespace Hl7.Fhir.ElementModel
         [Obsolete("Use ToTypedElement(this Base @base, string rootName = null) instead. Obsolete since 2018-10-17")]
         public static IElementNavigator ToElementNavigator(this Base @base, string rootName = null) =>
             new PocoNavigator(@base, rootName);
-
-        public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoElementNode(@base, rootName: rootName);
     }
 }

@@ -403,11 +403,21 @@ namespace Hl7.Fhir.Tests.Serialization
             public CustomBundle() : base() { }
         }
 
-        // [WMR 20170825] Richard Kavanagh: runtime exception while serializating derived PoCo classes
-        // Workaround: add the FhirType attribute to derived class
         [TestMethod]
         public void TestDerivedPoCoSerialization()
         {
+            try
+            {
+                _ = ModelInfo.GetStructureDefinitionSummaryProvider().GetOrAddClassMappingForType(typeof(CustomBundle));
+                Assert.Fail();
+            }
+            catch(ArgumentException ae)
+            {
+                Assert.IsTrue(ae.Message.Contains("already registered"));
+            }
+
+            ModelInfo.GetStructureDefinitionSummaryProvider().ImportType(typeof(CustomBundle));
+
             var bundle = new CustomBundle()
             {
                 Type = Bundle.BundleType.Collection,

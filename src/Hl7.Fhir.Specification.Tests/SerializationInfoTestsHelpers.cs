@@ -138,12 +138,12 @@ namespace Hl7.Fhir.Serialization.Tests
             }
             else
             {
-            CollectionAssert.AreEqual(types, child.Type
-                .Cast<IStructureDefinitionReference>()
-                .Select(t => t.ReferredType).ToArray());
+                CollectionAssert.AreEqual(types, child.Type
+                    .Cast<IStructureDefinitionReference>()
+                    .Select(t => t.ReferredType).ToArray());
+            }
         }
-        }
-
+        
         private static IStructureDefinitionSummary checkBBType(IStructureDefinitionSummary parent, string ename, string bbType, bool mayRepeat)
         {
             var child = parent.GetElements().SingleOrDefault(c => c.ElementName == ename);

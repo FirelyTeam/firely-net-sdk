@@ -391,6 +391,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
@@ -414,6 +415,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -522,6 +524,26 @@ namespace Hl7.Fhir.Model
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
+
+        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
+        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
+        private static readonly Lazy<VersionAwarePocoStructureDefinitionSummaryProvider> _versionedProvider
+            = new Lazy<VersionAwarePocoStructureDefinitionSummaryProvider>(createVersionedProvider);
+
+        private static VersionAwarePocoStructureDefinitionSummaryProvider createVersionedProvider()
+        {
+            var result = new VersionAwarePocoStructureDefinitionSummaryProvider(
+                VersionAwarePocoStructureDefinitionSummaryProvider.R3_VERSION);
+
+            result.Import(typeof(Resource).GetTypeInfo().Assembly);
+            result.Import(typeof(Patient).GetTypeInfo().Assembly);
+
+            return result;
+        }
+
+        public static VersionAwarePocoStructureDefinitionSummaryProvider GetStructureDefinitionSummaryProvider() =>
+            _versionedProvider.Value;
+
 
         public static readonly Type[] OpenTypes =
         {
