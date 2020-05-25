@@ -1601,11 +1601,11 @@ if (!abstractType){
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= fhirBackboneType #>", IsNestedType=true)]
+        [FhirType("<#= fhirTypeName #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "<#= fhirBackboneType #>"; } }
+            public override string TypeName { get { return "<#= fhirTypeName #>"; } }
             
 <#
 	int nComponentPropNum = 30;

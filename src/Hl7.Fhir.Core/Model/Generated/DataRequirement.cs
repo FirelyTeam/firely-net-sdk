@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             Descending,
         }
 
-        [FhirType("CodeFilter", IsNestedType=true)]
+        [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
         [DataContract]
         public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "CodeFilter"; } }
+            public override string TypeName { get { return "DataRequirement#CodeFilter"; } }
             
             /// <summary>
             /// A code-valued attribute to filter on
@@ -262,11 +262,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("DateFilter", IsNestedType=true)]
+        [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
         [DataContract]
         public partial class DateFilterComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "DateFilter"; } }
+            public override string TypeName { get { return "DataRequirement#DateFilter"; } }
             
             /// <summary>
             /// A date-valued attribute to filter on
@@ -416,11 +416,11 @@ namespace Hl7.Fhir.Model
             } 
             
         }                
-        [FhirType("Sort", IsNestedType=true)]
+        [FhirType("DataRequirement#Sort", IsNestedType=true)]
         [DataContract]
         public partial class SortComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "Sort"; } }
+            public override string TypeName { get { return "DataRequirement#Sort"; } }
             
             /// <summary>
             /// The name of the attribute to perform the sort

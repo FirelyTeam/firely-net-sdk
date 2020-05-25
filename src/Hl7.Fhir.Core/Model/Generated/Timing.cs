@@ -268,11 +268,11 @@ namespace Hl7.Fhir.Model
             PCV,
         }
 
-        [FhirType("Repeat", IsNestedType=true)]
+        [FhirType("Timing#Repeat", IsNestedType=true)]
         [DataContract]
         public partial class RepeatComponent : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "Repeat"; } }
+            public override string TypeName { get { return "Timing#Repeat"; } }
             
             /// <summary>
             /// Length/Range of lengths, or (Start and/or end) limits
