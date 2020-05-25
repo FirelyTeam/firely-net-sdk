@@ -161,7 +161,7 @@
 	
 	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean", "Base64Binary",
 				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
-				"BackboneElement", "FhirDecimal", "Markdown", "PositiveInt", "Time", "Timing", "UnsignedInt" };
+				"BackboneElement", "FhirDecimal", "Markdown", "PositiveInt", "Time", "UnsignedInt" };
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile(resourceName + ".cs");
