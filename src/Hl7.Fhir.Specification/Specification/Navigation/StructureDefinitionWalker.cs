@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification
 
         public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical)
         {
-            var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical);
+            var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
             if (sd == null)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'");
 
