@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical);
+            var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical).ConfigureAwait(false);
             
             return sd is null ? 
                 null 
