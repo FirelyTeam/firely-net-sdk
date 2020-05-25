@@ -1565,7 +1565,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The source value set that contains the concepts that are being mapped
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=240, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("source", InSummary=true, Order=240)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]
@@ -1580,7 +1580,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The target value set which provides context for the mappings
         /// </summary>
-        [FhirElement("target", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("target", InSummary=true, Order=250)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Canonical))]
         [DataMember]

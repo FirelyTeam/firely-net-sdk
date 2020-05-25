@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The age of the specific population
         /// </summary>
-        [FhirElement("age", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=true, Order=30)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]

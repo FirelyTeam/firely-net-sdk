@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date or dates of service or product delivery
             /// </summary>
-            [FhirElement("serviced", Order=110, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("serviced", Order=110)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Place of service or where product was supplied
             /// </summary>
-            [FhirElement("location", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("location", Order=120)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]

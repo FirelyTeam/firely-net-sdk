@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of individual the activity definition is intended for
         /// </summary>
-        [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When activity is to occur
         /// </summary>
-        [FhirElement("timing", Order=430, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("timing", Order=430)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range),typeof(Duration))]
         [DataMember]
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// What's administered/supplied
         /// </summary>
-        [FhirElement("product", Order=460, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("product", Order=460)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]

@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nature of illness or problem
             /// </summary>
-            [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("diagnosis", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Estimated date or dates of service
         /// </summary>
-        [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("serviced", Order=140)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
         /// </summary>
-        [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

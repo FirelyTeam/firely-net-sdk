@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether substitution is allowed or not
             /// </summary>
-            [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("allowed", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Reported rather than primary record
         /// </summary>
-        [FhirElement("reported", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("reported", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Medication to be taken
         /// </summary>
-        [FhirElement("medication", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("medication", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [Cardinality(Min=1,Max=1)]

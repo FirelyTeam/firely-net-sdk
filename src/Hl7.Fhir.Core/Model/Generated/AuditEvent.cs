@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Property value
             /// </summary>
-            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Base64Binary))]
             [Cardinality(Min=1,Max=1)]

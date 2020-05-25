@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to ChargeItem containing details of this line item or an inline billing code
             /// </summary>
-            [FhirElement("chargeItem", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("chargeItem", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]

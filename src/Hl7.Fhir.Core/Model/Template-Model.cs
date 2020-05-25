@@ -239,6 +239,7 @@
 // Generated items
 // Hl7.Fhir.Core\Model\Generated\UsageContext.cs
 // Hl7.Fhir.Core\Model\Generated\TriggerDefinition.cs
+// Hl7.Fhir.Core\Model\Generated\Timing.cs
 // Hl7.Fhir.Core\Model\Generated\SubstanceAmount.cs
 // Hl7.Fhir.Core\Model\Generated\Signature.cs
 // Hl7.Fhir.Core\Model\Generated\SampledData.cs

@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Likelihood of specified outcome
             /// </summary>
-            [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("probability", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Timeframe or age range
             /// </summary>
-            [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("when", Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When was assessment made?
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

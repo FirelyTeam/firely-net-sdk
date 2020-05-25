@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Collection time
             /// </summary>
-            [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("collected", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Whether or how long patient abstained from food and/or drink
             /// </summary>
-            [FhirElement("fastingStatus", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("fastingStatus", InSummary=true, Order=100)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Duration))]
             [DataMember]
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date and time of specimen processing
             /// </summary>
-            [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("time", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additive associated with container
             /// </summary>
-            [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("additive", Order=90)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]

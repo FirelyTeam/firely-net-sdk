@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Dose number within series
             /// </summary>
-            [FhirElement("doseNumber", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("doseNumber", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [Cardinality(Min=1,Max=1)]
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended number of doses for immunity
             /// </summary>
-            [FhirElement("seriesDoses", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("seriesDoses", Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Vaccine administration date
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=150)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirString))]
         [Cardinality(Min=1,Max=1)]

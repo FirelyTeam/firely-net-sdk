@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date of procedure
             /// </summary>
-            [FhirElement("date", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("date", InSummary=true, Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
             [DataMember]

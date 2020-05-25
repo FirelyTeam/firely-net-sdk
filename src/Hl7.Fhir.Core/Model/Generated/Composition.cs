@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Target of the relationship
             /// </summary>
-            [FhirElement("target", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("target", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

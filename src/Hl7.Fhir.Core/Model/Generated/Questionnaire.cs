@@ -860,7 +860,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value for question comparison based on operator
             /// </summary>
-            [FhirElement("answer", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("answer", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Answer value
             /// </summary>
-            [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Actual value for initializing the question
             /// </summary>
-            [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Event code  or link to the EventDefinition
         /// </summary>
-        [FhirElement("event", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("event", InSummary=true, Order=270)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
         [Cardinality(Min=1,Max=1)]

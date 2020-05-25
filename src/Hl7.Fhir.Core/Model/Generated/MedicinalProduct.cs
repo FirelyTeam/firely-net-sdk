@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Condition for which the medicinal use applies
             /// </summary>
-            [FhirElement("indication", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("indication", InSummary=true, Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]

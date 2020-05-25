@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication, Substance, or Device supplied
             /// </summary>
-            [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When event occurred
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]

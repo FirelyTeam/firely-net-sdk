@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Service amount
         /// </summary>
-        [FhirElement("quantity", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("quantity", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.Range))]
         [DataMember]
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When service should occur
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=250, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=250)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Preconditions for service
         /// </summary>
-        [FhirElement("asNeeded", InSummary=true, Order=260, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("asNeeded", InSummary=true, Order=260)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]

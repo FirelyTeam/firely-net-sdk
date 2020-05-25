@@ -2968,7 +2968,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is an example/What is this an example of?
             /// </summary>
-            [FhirElement("example", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("example", Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]
@@ -3109,7 +3109,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where to find that page
             /// </summary>
-            [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("name", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -3831,7 +3831,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Is an example/What is this an example of?
             /// </summary>
-            [FhirElement("example", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("example", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
             [DataMember]

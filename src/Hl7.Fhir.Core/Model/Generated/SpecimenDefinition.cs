@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Minimum volume
             /// </summary>
-            [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("minimumVolume", Order=90)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Additive associated with container
             /// </summary>
-            [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("additive", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]

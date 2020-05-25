@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When condition first manifested
             /// </summary>
-            [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("onset", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (approximate) date of birth
         /// </summary>
-        [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("born", Order=190)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// (approximate) age
         /// </summary>
-        [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("age", InSummary=true, Order=200)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]
@@ -554,7 +554,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Dead? How old/when?
         /// </summary>
-        [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("deceased", InSummary=true, Order=220)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]

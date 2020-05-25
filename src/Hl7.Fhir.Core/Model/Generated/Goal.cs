@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The target value to be achieved
             /// </summary>
-            [FhirElement("detail", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("detail", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reach goal on or before
             /// </summary>
-            [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("due", InSummary=true, Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Duration))]
             [DataMember]
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When goal pursuit begins
         /// </summary>
-        [FhirElement("start", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("start", InSummary=true, Order=160)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]

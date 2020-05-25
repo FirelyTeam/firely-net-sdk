@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When it occurred
             /// </summary>
-            [FhirElement("timing", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Data to be provided
             /// </summary>
-            [FhirElement("value", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Nature of illness or problem
             /// </summary>
-            [FhirElement("diagnosis", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("diagnosis", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific clinical procedure
             /// </summary>
-            [FhirElement("procedure", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("procedure", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -1371,7 +1371,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Where the event occurred
             /// </summary>
-            [FhirElement("location", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("location", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -1694,7 +1694,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Date or dates of service or product delivery
             /// </summary>
-            [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("serviced", Order=140)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
             [DataMember]
@@ -1709,7 +1709,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Place of service or where product was supplied
             /// </summary>
-            [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("location", Order=150)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]

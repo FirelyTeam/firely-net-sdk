@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
         /// </summary>
-        [FhirElement("amount", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("amount", InSummary=true, Order=30)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
         [DataMember]

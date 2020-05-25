@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Value of the property for this concept
             /// </summary>
-            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal))]
             [Cardinality(Min=1,Max=1)]

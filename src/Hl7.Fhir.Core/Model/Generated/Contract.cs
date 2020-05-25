@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Term Concern
             /// </summary>
-            [FhirElement("topic", Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("topic", Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -1367,7 +1367,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The actual answer response
             /// </summary>
-            [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -2013,7 +2013,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Valued Item Type
             /// </summary>
-            [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("entity", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -2630,7 +2630,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When action happens
             /// </summary>
-            [FhirElement("occurrence", Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("occurrence", Order=120)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -3305,7 +3305,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Easily comprehended representation of this Contract
             /// </summary>
-            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -3391,7 +3391,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Contract Legal Text
             /// </summary>
-            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -3477,7 +3477,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Computable Contract Rules
             /// </summary>
-            [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("content", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -4010,7 +4010,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Focus of contract interest
         /// </summary>
-        [FhirElement("topic", Order=300, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("topic", Order=300)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]
@@ -4167,7 +4167,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Binding Contract
         /// </summary>
-        [FhirElement("legallyBinding", Order=410, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("legallyBinding", Order=410)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

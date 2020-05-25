@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The amount or percentage due from the beneficiary
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Money))]
             [Cardinality(Min=1,Max=1)]

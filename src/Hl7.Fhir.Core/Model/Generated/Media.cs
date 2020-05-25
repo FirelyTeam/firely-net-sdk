@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When Media was collected
         /// </summary>
-        [FhirElement("created", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("created", InSummary=true, Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Speed with which the formula is provided per period of time
             /// </summary>
-            [FhirElement("rate", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("rate", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Ratio))]
             [DataMember]

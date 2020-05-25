@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The target value to be achieved
             /// </summary>
-            [FhirElement("detail", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("detail", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Type of individual the action is focused on
             /// </summary>
-            [FhirElement("subject", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("subject", Order=130)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// When the action should take place
             /// </summary>
-            [FhirElement("timing", Order=190, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("timing", Order=190)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Age),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the activity to be performed
             /// </summary>
-            [FhirElement("definition", Order=270, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("definition", Order=270)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.FhirUri))]
             [DataMember]
@@ -1346,7 +1346,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Time offset for the relationship
             /// </summary>
-            [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("offset", Order=60)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Duration),typeof(Hl7.Fhir.Model.Range))]
             [DataMember]
@@ -1919,7 +1919,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of individual the plan definition is focused on
         /// </summary>
-        [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

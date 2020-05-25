@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Source from which this consent is taken
         /// </summary>
-        [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("source", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

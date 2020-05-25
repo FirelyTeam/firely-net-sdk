@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The value of the filter, as a Period, DateTime, or Duration value
             /// </summary>
-            [FhirElement("value", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", InSummary=true, Order=60)]
 			[CLSCompliant(false)]
             [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration))]
             [DataMember]
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
         /// </summary>
-        [FhirElement("subject", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", InSummary=true, Order=50)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

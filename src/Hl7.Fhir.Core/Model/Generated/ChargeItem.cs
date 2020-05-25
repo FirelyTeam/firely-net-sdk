@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the charged service was applied
         /// </summary>
-        [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurrence", InSummary=true, Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
         [DataMember]
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Product charged
         /// </summary>
-        [FhirElement("product", Order=310, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("product", Order=310)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
         [DataMember]

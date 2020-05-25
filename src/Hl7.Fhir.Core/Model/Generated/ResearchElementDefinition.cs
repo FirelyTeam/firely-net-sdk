@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What code or expression defines members?
             /// </summary>
-            [FhirElement("definition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("definition", InSummary=true, Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Canonical),typeof(Expression),typeof(DataRequirement))]
             [Cardinality(Min=1,Max=1)]
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What time period does the study cover
             /// </summary>
-            [FhirElement("studyEffective", Order=90, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("studyEffective", Order=90)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What time period do participants cover
             /// </summary>
-            [FhirElement("participantEffective", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("participantEffective", Order=130)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
         /// </summary>
-        [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Medication(s) or substance(s) contained in the medication
             /// </summary>
-            [FhirElement("item", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Indication for use that apply to the specific administration guidelines
             /// </summary>
-            [FhirElement("indication", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("indication", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [DataMember]
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Specific characteristic that is relevant to the administration guideline
             /// </summary>
-            [FhirElement("characteristic", Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("characteristic", Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity))]
             [Cardinality(Min=1,Max=1)]
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Description of the characteristic
             /// </summary>
-            [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("value", Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Base64Binary))]
             [DataMember]

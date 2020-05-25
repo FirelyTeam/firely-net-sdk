@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// The specific medication, food or laboratory test that interacts
             /// </summary>
-            [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("item", InSummary=true, Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [Cardinality(Min=1,Max=1)]

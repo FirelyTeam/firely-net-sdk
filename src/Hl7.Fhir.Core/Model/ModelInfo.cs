@@ -34,6 +34,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
@@ -533,7 +534,7 @@ namespace Hl7.Fhir.Model
         private static VersionAwarePocoStructureDefinitionSummaryProvider createVersionedProvider()
         {
             var result = new VersionAwarePocoStructureDefinitionSummaryProvider(
-                VersionAwarePocoStructureDefinitionSummaryProvider.R3_VERSION);
+                VersionAwarePocoStructureDefinitionSummaryProvider.R4_VERSION);
 
             result.Import(typeof(Resource).GetTypeInfo().Assembly);
             result.Import(typeof(Patient).GetTypeInfo().Assembly);

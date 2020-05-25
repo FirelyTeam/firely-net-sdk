@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Type of individual the library content is focused on
         /// </summary>
-        [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=180)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

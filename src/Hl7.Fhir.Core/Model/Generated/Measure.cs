@@ -1033,7 +1033,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
         /// </summary>
-        [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("subject", Order=170)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
         [DataMember]

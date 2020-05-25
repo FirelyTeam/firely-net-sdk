@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended dose number within series
             /// </summary>
-            [FhirElement("doseNumber", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("doseNumber", InSummary=true, Order=120)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Recommended number of doses for immunity
             /// </summary>
-            [FhirElement("seriesDoses", Order=130, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("seriesDoses", Order=130)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]

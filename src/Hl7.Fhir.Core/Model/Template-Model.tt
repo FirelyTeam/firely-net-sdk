@@ -335,7 +335,7 @@ if(!abstractType) {
             /// <summary>
             /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n            /// ") #>
             /// </summary>
-            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference" && pd.ReferenceTargets != null) {#>
             [CLSCompliant(false)]
 			[References(<#= pd.ReferenceTargets #>)]
@@ -504,7 +504,7 @@ if(!abstractType) {
         /// <summary>
         /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n\n", "\n").Replace("\n", "\r\n        /// ") #>
         /// </summary>
-        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [CLSCompliant(false)]
 		[References(<#= pd.ReferenceTargets != null ? pd.ReferenceTargets : "\"Any\"" #>)]
@@ -1327,7 +1327,7 @@ namespace Hl7.Fhir.Model
 			
 			var skippedTypes = new[] { "Narrative", "Extension", "Canonical", "Code", "Coding", "Date", "FhirBoolean", "BackboneElement",
 				"FhirDateTime", "FhirString", "FhirUri", "FhirUrl", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
-				"Base64Binary", "FhirDecimal", "Markdown", "PositiveInt", "Time", "Timing", "UnsignedInt"};
+				"Base64Binary", "FhirDecimal", "Markdown", "PositiveInt", "Time", "UnsignedInt"};
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile("Generated\\"+resourceName + ".cs");
@@ -1616,7 +1616,7 @@ if (!abstractType){
             /// <summary>
             /// <#= pd.Summary.Replace("&", "&amp;") #>
             /// </summary>
-            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+            [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nComponentPropNum #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
             [CLSCompliant(false)]
 			[References(<#= pd.ReferenceTargets #>)]
@@ -1783,7 +1783,7 @@ if (!abstractType){
         /// <summary>
         /// <#= pd.Summary.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;") #>
         /// </summary>
-        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #><#= pd.PropType == "Hl7.Fhir.Model.DataType" ? ", Choice=ChoiceType.DatatypeChoice" : pd.PropType == "Hl7.Fhir.Model.Resource" ? ", Choice=ChoiceType.ResourceChoice" : "" #>)]
+        [FhirElement("<#= pd.FhirName #>", <# Write(pd.isSummaryProp ? "InSummary=true, " : ""); #>Order=<#= nPropNum #>)]
 <# if (pd.PropType == "Hl7.Fhir.Model.ResourceReference") {#>
         [CLSCompliant(false)]
 		[References(<#= pd.ReferenceTargets #>)]

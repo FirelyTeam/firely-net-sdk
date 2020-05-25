@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What code or expression defines members?
             /// </summary>
-            [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("definition", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Expression),typeof(DataRequirement),typeof(TriggerDefinition))]
             [Cardinality(Min=1,Max=1)]
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// What time period do participants cover
             /// </summary>
-            [FhirElement("participantEffective", Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("participantEffective", Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Duration),typeof(Hl7.Fhir.Model.Timing))]
             [DataMember]

@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When identified
         /// </summary>
-        [FhirElement("identified", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("identified", InSummary=true, Order=140)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
         [DataMember]

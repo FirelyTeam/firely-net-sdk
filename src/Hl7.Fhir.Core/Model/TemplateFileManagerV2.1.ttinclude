@@ -7,7 +7,8 @@
 <#@ assembly name="EnvDTE"#>
 <#@ assembly name="EnvDTE80" #>
 <#@ assembly name="Microsoft.VisualStudio.Shell.15.0"#>
-<#@ assembly name="Microsoft.VisualStudio.Shell.Interop "#>
+<#@ assembly name="Microsoft.VisualStudio.Shell.Interop"#>
+<#@ assembly name="Microsoft.VisualStudio.Shell.Framework"#>
 <#@ import namespace="Microsoft.VisualStudio.Shell.Interop"#>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Data" #>

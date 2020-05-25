@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Contained, inline Resources
         /// </summary>
-        [FhirElement("contained", Order=60, Choice=ChoiceType.ResourceChoice)]
+        [FhirElement("contained", Order=60)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
         [Cardinality(Min=0,Max=-1)]

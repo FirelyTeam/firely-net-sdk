@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantitative value for this moiety
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=true, Order=100)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A substance upon which a defining property depends (e.g. for solubility: in water, in alcohol)
             /// </summary>
-            [FhirElement("definingSubstance", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("definingSubstance", InSummary=true, Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Quantitative value for this property
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=true, Order=80)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]
@@ -1768,7 +1768,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A pointer to another substance, as a resource or just a representational code
             /// </summary>
-            [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("substance", InSummary=true, Order=40)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
             [DataMember]
@@ -1827,7 +1827,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// A numeric factor for the relationship, for instance to express that the salt of a substance has some percentage of the active substance in relation to some other
             /// </summary>
-            [FhirElement("amount", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("amount", InSummary=true, Order=70)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.FhirString))]
             [DataMember]

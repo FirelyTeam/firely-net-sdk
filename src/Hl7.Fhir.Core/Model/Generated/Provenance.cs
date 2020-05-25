@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// When the activity occurred
         /// </summary>
-        [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice)]
+        [FhirElement("occurred", Order=100)]
         [CLSCompliant(false)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
         [DataMember]

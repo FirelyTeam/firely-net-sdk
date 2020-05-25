@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Model
             /// <summary>
             /// Reference to a specific medication (active substance, medicinal product or class of products) as part of an indication or contraindication
             /// </summary>
-            [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+            [FhirElement("medication", InSummary=true, Order=50)]
             [CLSCompliant(false)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
             [Cardinality(Min=1,Max=1)]
