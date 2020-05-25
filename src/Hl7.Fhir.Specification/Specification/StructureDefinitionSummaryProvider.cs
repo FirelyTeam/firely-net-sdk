@@ -61,7 +61,8 @@ namespace Hl7.Fhir.Specification
 
         [Obsolete("StructureDefinitionSummaryProvider now works best with asynchronous resolvers. Use ProvideAsync() instead.")]
         public IStructureDefinitionSummary Provide(string canonical) =>
-            TaskHelper.Await(() => ProvideAsync(canonical));
+            //TaskHelper.Await(() => ProvideAsync(canonical));
+            ProvideAsync(canonical).GetAwaiter().GetResult();
     }
 
     internal struct BackboneElementComplexTypeSerializationInfo : IStructureDefinitionSummary
