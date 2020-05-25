@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             {
                                 // Expand and merge (only!) the root element of the external type profile
                                 // Note: full expansion may trigger recursion, e.g. Element.id => identifier => string => Element
-                                var typeRootElem = await getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode);
+                                var typeRootElem = await getSnapshotRootElement(typeStructure, primaryDiffTypeProfile, diffNode).ConfigureAwait(false);
                                 if (typeRootElem == null) { return false; }
 
                                 // Rebase before merging
