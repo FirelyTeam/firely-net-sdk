@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             try
             {
-                await handleCompose(source);
+                await handleCompose(source).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -60,8 +60,8 @@ namespace Hl7.Fhir.Specification.Terminology
             if (source.Compose == null) return;
 
             // handleImport(source);
-            await handleInclude(source);
-            await handleExclude(source);
+            await handleInclude(source).ConfigureAwait(false);
+            await handleExclude(source).ConfigureAwait(false);
         }
 
 
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 else
                 {
                     // Do a full import of the codesystem
-                    var importedConcepts = await getConceptsFromCodeSystem(conceptSet.System);
+                    var importedConcepts = await getConceptsFromCodeSystem(conceptSet.System).ConfigureAwait(false);
                     import(result, importedConcepts, conceptSet.System);
                 }
             }
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Terminology
                     throw new ValueSetExpansionTooComplexException($"ConceptSets with combined 'system' and 'valueset'(s) are not yet supported.");
 
                 var importedVs = conceptSet.ValueSet.Single();
-                var concepts = await getExpansionForValueSet(importedVs);
+                var concepts = await getExpansionForValueSet(importedVs).ConfigureAwait(false);
                 import(result, concepts, importedVs);
             }
             
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Terminology
             int csIndex = 0;
             foreach (var include in source.Compose.Include)
             {
-                var includedConcepts = await collectConcepts(include);
+                var includedConcepts = await collectConcepts(include).ConfigureAwait(false);
 
                 // Yes, exclusion could make this smaller again, but alas, before we have processed those we might have run out of memory
                 if (source.Expansion.Total + includedConcepts.Count > Settings.MaxExpansionSize)
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             foreach (var exclude in source.Compose.Exclude)
             {
-                var excludedConcepts = await collectConcepts(exclude);
+                var excludedConcepts = await collectConcepts(exclude).ConfigureAwait(false);
 
                 source.Expansion.Contains.Remove(excludedConcepts);
 
@@ -161,10 +161,10 @@ namespace Hl7.Fhir.Specification.Terminology
                 throw Error.InvalidOperation($"No valueset resolver available to resolve valueset '{uri}', " +
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri);
+            var importedVs = await Settings.ValueSetSource.AsAsync().FindValueSetAsync(uri).ConfigureAwait(false);
             if (importedVs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to ValueSet");
 
-            if (!importedVs.HasExpansion) await ExpandAsync(importedVs);
+            if (!importedVs.HasExpansion) await ExpandAsync(importedVs).ConfigureAwait(false);
 
             if (importedVs.HasExpansion)
                 return importedVs.Expansion.Contains;
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 throw Error.InvalidOperation($"No terminology service available to resolve references to codesystem '{uri}', " +
                         "set ValueSetExpander.Settings.ValueSetSource to fix.");
 
-            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri);
+            var importedCs = await Settings.ValueSetSource.AsAsync().FindCodeSystemAsync(uri).ConfigureAwait(false);
             if (importedCs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to CodeSystem");
 
             var result = new List<ValueSet.ContainsComponent>();

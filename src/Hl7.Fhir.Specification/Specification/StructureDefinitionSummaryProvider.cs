@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical);
+            var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical).ConfigureAwait(false);
             
             return sd is null ? 
                 null 
@@ -61,7 +61,8 @@ namespace Hl7.Fhir.Specification
 
         [Obsolete("StructureDefinitionSummaryProvider now works best with asynchronous resolvers. Use ProvideAsync() instead.")]
         public IStructureDefinitionSummary Provide(string canonical) =>
-            TaskHelper.Await(() => ProvideAsync(canonical));
+            //TaskHelper.Await(() => ProvideAsync(canonical));
+            ProvideAsync(canonical).GetAwaiter().GetResult();
     }
 
     internal struct BackboneElementComplexTypeSerializationInfo : IStructureDefinitionSummary

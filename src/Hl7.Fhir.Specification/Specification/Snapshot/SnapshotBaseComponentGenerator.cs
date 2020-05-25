@@ -35,8 +35,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             var nav = new ElementDefinitionNavigator(elements);
             if (nav.MoveToFirstChild() && !string.IsNullOrEmpty(baseProfileUrl))
             {
-                var sd = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUrl);
-                if (await ensureSnapshot(sd, baseProfileUrl))
+                var sd = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUrl).ConfigureAwait(false);
+                if (await ensureSnapshot(sd, baseProfileUrl).ConfigureAwait(false))
                 {
                     var baseNav = new ElementDefinitionNavigator(sd);
                     if (baseNav.MoveToFirstChild())
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             do
                             {
-                                await ensureBaseComponents(nav, baseNav, force);
+                                await ensureBaseComponents(nav, baseNav, force).ConfigureAwait(false);
                             } while (nav.MoveToNext());
                         }
                     }
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     do
                     {
-                        await ensureBaseComponents(nav, baseNav, force);
+                        await ensureBaseComponents(nav, baseNav, force).ConfigureAwait(false);
                     } while (nav.MoveToNext());
 
                     nav.ReturnToBookmark(navBm);
@@ -95,13 +95,13 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var baseUrl = baseNav.StructureDefinition.BaseDefinition;
                 if (baseUrl != null)
                 {
-                    var baseDef = await AsyncResolver.FindStructureDefinitionAsync(baseUrl);
-                    if (await ensureSnapshot(baseDef, baseUrl, elem.Path))
+                    var baseDef = await AsyncResolver.FindStructureDefinitionAsync(baseUrl).ConfigureAwait(false);
+                    if (await ensureSnapshot(baseDef, baseUrl, elem.Path).ConfigureAwait(false))
                     {
                         baseNav = new ElementDefinitionNavigator(baseDef);
                         if (baseNav.MoveToFirstChild())
                         {
-                            await ensureBaseComponents(nav, baseNav, force);
+                            await ensureBaseComponents(nav, baseNav, force).ConfigureAwait(false);
                             return;
                         }
                     }
