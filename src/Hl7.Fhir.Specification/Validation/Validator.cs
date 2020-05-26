@@ -164,6 +164,8 @@ namespace Hl7.Fhir.Validation
         }
         #region NewValidation stuff
 
+        public ElementSchemaResolver SchemaResolver { get; private set; }
+
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
@@ -182,7 +184,7 @@ namespace Hl7.Fhir.Validation
 
                 var node = instance as ScopedNode ?? new ScopedNode(instance);
 
-                var resolver = new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
+                SchemaResolver = new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
 
                 var symbolTable = new SymbolTable();
                 symbolTable.AddStandardFP();
@@ -200,9 +202,8 @@ namespace Hl7.Fhir.Validation
                 var result = Assertions.Empty;
                 foreach (var profile in processor.Result)
                 {
-                    var schema = resolver.GetSchema(profile);
+                    var schema = SchemaResolver.GetSchema(profile);
                     schema.LogSchema();
-                    resolver.DumpCache();
                     result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
                 }
                 outcome.Add(result.ToOperationOutcome());

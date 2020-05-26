@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Specification.Source
 {
-    internal class ElementSchemaResolver : IAsyncResourceResolver, ISchemaResolver
+    public class ElementSchemaResolver : IAsyncResourceResolver, ISchemaResolver // internal?
     {
         private readonly IElementDefinitionAssertionFactory _assertionFactory;
         private readonly IAsyncResourceResolver _wrapped;

@@ -1,4 +1,4 @@
-﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -596,16 +596,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("does not match regex", report.Issue[0].Details.Text);
         }
 
-
         [Fact]
         public void ValidateFhirDateFormat()
         {
-            Patient p = new Patient
-            {
-                BirthDate = "1974-12-25+03:00"
-            };
+            var date = new Date("1974-12-25+03:00");
 
-            var report = _validator.Validate(p);
+
+            var report = _validator.Validate(date);
             Assert.Equal(1, report.Errors);
             Assert.Contains("Value '1974-12-25+03:00' does not match regex", report.Issue[0].Details.Text);
             Assert.Equal(0, report.Warnings);
