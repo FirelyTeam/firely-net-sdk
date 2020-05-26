@@ -19,6 +19,9 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Introspection;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -26,6 +29,88 @@ namespace Hl7.FhirPath.Tests
     public class ElementNodeTests
     {
         readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
+
+        public interface IUniPatient
+        {
+            FhirBoolean Active { get; set; }
+            ElementNode Contacts { get; set; }
+        }
+
+        public class UniPatientWrapper : IUniPatient
+        {
+            private readonly dynamic _wrapped;
+
+            public UniPatientWrapper(dynamic wrapped)
+            {
+                _wrapped = wrapped;
+            }
+
+            public FhirBoolean Active { get => (FhirBoolean)(_wrapped.active); set => _wrapped.active = value; }
+            public ElementNode Contacts { get => _wrapped.contacts; set => _wrapped.contacts = value; }
+        }
+
+        [TestMethod]
+        public void DynamicCreatePatient()
+        {
+            var prov = ModelInfo.GetStructureDefinitionSummaryProvider();
+            var pat = ElementNode.Root(prov, "Patient");
+
+            dynamic patientRoot = pat.Dynamic(prov);
+            patientRoot.active = false;
+            Console.WriteLine(pat.ToJson());
+            
+            patientRoot.active = ElementNode.Root(prov, "boolean", value: true);
+            Console.WriteLine(((ITypedElement)patientRoot).ToJson());
+            Assert.AreEqual(true,((ITypedElement)patientRoot.active).Value);
+
+            patientRoot.contact = new Patient.ContactComponent() { Gender = AdministrativeGender.Female };
+            Console.WriteLine(((ElementNode)patientRoot).ToJson());
+
+            var names = new [] { makeName("Ewout", "Kramer"), makeName("Wouter", "Kramer") };
+            patientRoot.name = names;
+            Console.WriteLine(pat.ToJson());
+
+            List<dynamic> namesCheck = patientRoot.name;
+            Assert.AreEqual(2,namesCheck.Count);
+
+            patientRoot.contact = null;
+            patientRoot.name = makeName("Ewout", "Kramer");
+            namesCheck = patientRoot.name; // still a list!
+            Assert.AreEqual(1, namesCheck.Count);
+            Console.WriteLine(pat.ToJson());            
+
+            ElementNode given = patientRoot.name[0].given[0];
+            ElementNode given2 = patientRoot["name"][0].given[0];
+            Assert.AreEqual(given, given2);
+
+            //// try the casts
+            var sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < 1000; i++)
+            {
+                var given3 = patientRoot.name[0].given[0];
+                string name = given3;
+                Assert.AreEqual("Ewout", name);
+            }
+            sw.Stop();
+            Console.WriteLine(sw.ElapsedMilliseconds);
+
+            FhirBoolean b = patientRoot.active;
+            Assert.IsTrue(b.Value.Value);
+
+            var uni = new UniPatientWrapper(patientRoot);
+            Assert.IsTrue(uni.Active.Value.Value);
+
+
+            dynamic makeName(string given, string family)
+            {
+                dynamic hn = ElementNode.Root(prov, "HumanName").Dynamic(prov);
+                hn.use = "usual";
+                hn.given = new List<string> { given };
+                hn.family = family;
+                return hn;
+            }
+        }
 
         private ElementNode createPatient()
         {
