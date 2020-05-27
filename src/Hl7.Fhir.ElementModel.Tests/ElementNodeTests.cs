@@ -25,34 +25,34 @@ namespace Hl7.FhirPath.Tests
     [TestClass]
     public class ElementNodeTests
     {
-        readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
+        private readonly IStructureDefinitionSummaryProvider _provider = new PocoStructureDefinitionSummaryProvider();
 
         private ElementNode createPatient()
         {
-            var patientRoot = ElementNode.Root(provider, "Patient");
+            var patientRoot = ElementNode.Root(_provider, "Patient");
 
-            var containedObs = ElementNode.Root(provider, "Observation", "contained");
-            containedObs.Add(provider, "value", true, "boolean");
-            patientRoot.Add(provider, containedObs);
+            var containedObs = ElementNode.Root(_provider, "Observation", "contained");
+            containedObs.Add(_provider, "value", true, "boolean");
+            patientRoot.Add(_provider, containedObs);
 
-            var activeNode = patientRoot.Add(provider, "active", true);
-            activeNode.Add(provider, "id", "myId1");
+            var activeNode = patientRoot.Add(_provider, "active", true);
+            activeNode.Add(_provider, "id", "myId1");
                
             activeNode.AddAnnotation("a string annotation");
-            var ext1 = activeNode.Add(provider, "extension");
-            ext1.Add(provider, "value", 4, "integer");
-            ext1.Add(provider, "url", "urn:1");
-            var ext2 = activeNode.Add(provider, "extension");
-            ext2.Add(provider, "value", "world!", "string");
-            ext2.Add(provider, "url", "urn:2");
+            var ext1 = activeNode.Add(_provider, "extension");
+            ext1.Add(_provider, "value", 4, "integer");
+            ext1.Add(_provider, "url", "urn:1");
+            var ext2 = activeNode.Add(_provider, "extension");
+            ext2.Add(_provider, "value", "world!", "string");
+            ext2.Add(_provider, "url", "urn:2");
 
-            var identifier0 = patientRoot.Add(provider, "identifier");
-            identifier0.Add(provider, "system", "http://nu.nl");
-            identifier0.Add(provider, "value", "1234567");
+            var identifier0 = patientRoot.Add(_provider, "identifier");
+            identifier0.Add(_provider, "system", "http://nu.nl");
+            identifier0.Add(_provider, "value", "1234567");
 
-            var identifier1 = patientRoot.Add(provider, "identifier");
-            identifier1.Add(provider, "system", "http://toen.nl");
-            identifier1.Add(provider, "value", "7654321");
+            var identifier1 = patientRoot.Add(_provider, "identifier");
+            identifier1.Add(_provider, "system", "http://toen.nl");
+            identifier1.Add(_provider, "value", "7654321");
 
             return patientRoot;
         }
@@ -61,33 +61,33 @@ namespace Hl7.FhirPath.Tests
         public void TestAutoDeriveTypeForPolymorphicElement()
         {
             // Explicit types will be passed through on polymorphic elements
-            var obs = ElementNode.Root(provider, "Observation");
-            var value = obs.Add(provider, "value", true, "boolean");
+            var obs = ElementNode.Root(_provider, "Observation");
+            var value = obs.Add(_provider, "value", true, "boolean");
             Assert.AreEqual("boolean", value.InstanceType);
 
             // But if you leave the type out, Add() will try to determine the type
-            obs = ElementNode.Root(provider, "Observation");
+            obs = ElementNode.Root(_provider, "Observation");
 #if !NET40
-            Assert.ThrowsException<ArgumentException>(() => obs.Add(provider, "value", true));  // without an explicit type
+            Assert.ThrowsException<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
 #endif
-            value = obs.Add(provider, "value", true, "boolean");  // with an explicit type
+            value = obs.Add(_provider, "value", true, "boolean");  // with an explicit type
             Assert.AreEqual("boolean", value.InstanceType);
 
             // complex types are untouched
-            var id = obs.Add(provider, "identifier");
+            var id = obs.Add(_provider, "identifier");
             Assert.AreEqual("Identifier", id.InstanceType);
 
             // so are unvalued primitive non-polymorphic elements
-            var act = obs.Add(provider, "status");
+            var act = obs.Add(_provider, "status");
             Assert.AreEqual("code", act.InstanceType);
 
             // and valued non-polymorhpic primitives
-            act = obs.Add(provider, "status", "registered");
+            act = obs.Add(_provider, "status", "registered");
             Assert.AreEqual("code", act.InstanceType);
 
             // actual type from definition will always win
-            var data = ElementNode.Root(provider, "SampledData");
-            var dims = data.Add(provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
+            var data = ElementNode.Root(_provider, "SampledData");
+            var dims = data.Add(_provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
             Assert.AreEqual("positiveInt", dims.InstanceType);
         }
 
@@ -237,16 +237,16 @@ namespace Hl7.FhirPath.Tests
         {
             var patient = createPatient();
 
-            var newActive = ElementNode.Root(provider, "boolean");
+            var newActive = ElementNode.Root(_provider, "boolean");
             newActive.Value = false;
-            patient.Replace(provider, patient["active"].Single(), newActive);
+            patient.Replace(_provider, patient["active"].Single(), newActive);
             Assert.AreEqual(1, patient["active"].Count);
             Assert.AreEqual(false, patient["active"].Single().Value);
 
-            var newIdentifier = ElementNode.Root(provider, "Identifier");
-            newIdentifier.Add(provider, "system", "http://nos.nl");
-            newIdentifier.Add(provider, "value", "1234");
-            patient["identifier"].Last().ReplaceWith(provider, newIdentifier);
+            var newIdentifier = ElementNode.Root(_provider, "Identifier");
+            newIdentifier.Add(_provider, "system", "http://nos.nl");
+            newIdentifier.Add(_provider, "value", "1234");
+            patient["identifier"].Last().ReplaceWith(_provider, newIdentifier);
             Assert.AreEqual(2, patient["identifier"].Count());
             Assert.AreEqual(newIdentifier, patient["identifier"].Last());
         }
@@ -275,7 +275,7 @@ namespace Hl7.FhirPath.Tests
         {
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
             var bundle = FhirJsonNode.Parse(bundleJson);
-            var typedBundle = bundle.ToTypedElement(provider, "Bundle");
+            var typedBundle = bundle.ToTypedElement(_provider, "Bundle");
 
             //Type of entry is BackboneElement, but you can't set that, see below.
             Assert.AreEqual("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
@@ -285,7 +285,7 @@ namespace Hl7.FhirPath.Tests
             try
             {
                 var typedEntry =
-                    entry.ToTypedElement(provider, "Element");
+                    entry.ToTypedElement(_provider, "Element");
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
             }
             catch (ArgumentException)
@@ -293,5 +293,26 @@ namespace Hl7.FhirPath.Tests
             }
         }
 
+        [TestMethod]
+        public void CreateFromPrimitive()
+        {
+            var node = ElementNode.ForPrimitive("hi!");
+            Assert.AreEqual("hi!", node.Value);
+            Assert.AreEqual("System.String", node.InstanceType);   // should really be System.String I think.
+
+            node = ElementNode.ForPrimitive(AdministrativeGender.Female);
+            Assert.AreEqual("female", node.Value);
+            Assert.AreEqual("System.Code", node.InstanceType);
+
+            node = ElementNode.ForPrimitive(AdHoc.Now);
+            Assert.AreEqual("Now", node.Value);
+            Assert.AreEqual("System.Code", node.InstanceType);
+        }
+
+        private enum AdHoc
+        {
+            Now,
+            Spontaneous,
+        }
     }
 }
