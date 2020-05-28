@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         }
 
 
-        private static async System.Threading.Tasks.Task readUsingResourceId(IFhirClient client)
+        private static async System.Threading.Tasks.Task readUsingResourceId(BaseFhirClient client)
         {
             Patient p = await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/pat1"));
             Assert.IsNotNull(p);
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             }            
         }
 
-        private static async System.Threading.Tasks.Task readUsingLocationString(IFhirClient client)
+        private static async System.Threading.Tasks.Task readUsingLocationString(BaseFhirClient client)
         {
             Patient p = await client.ReadAsync<Patient>("/Patient/pat1");
             Assert.IsNotNull(p);

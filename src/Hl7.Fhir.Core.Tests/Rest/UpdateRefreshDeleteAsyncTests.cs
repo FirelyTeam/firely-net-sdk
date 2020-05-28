@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         }
 
 
-        private static async System.Threading.Tasks.Task updateDelete(IFhirClient client)
+        private static async System.Threading.Tasks.Task updateDelete(BaseFhirClient client)
         {
             var pat = new Patient()
             {

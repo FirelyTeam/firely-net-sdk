@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -14,7 +14,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : BaseFhirClient, IFhirClient
+    public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
