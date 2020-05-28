@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryRequest
             {
                 Agent = ModelInfo.Version,
-                Method = (HTTPVerb?)entry.Request.Method,
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
                 Headers = new EntryRequestHeaders
@@ -43,6 +43,33 @@ namespace Hl7.Fhir.Rest
             }
 
             return result;
+        }
+
+        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp)
+        {
+            switch(bundleHttp)
+            {
+                case Bundle.HTTPVerb.POST:
+                {
+                    return HTTPVerb.POST;
+                }
+                case Bundle.HTTPVerb.GET:
+                {
+                    return HTTPVerb.GET;
+                }
+                case Bundle.HTTPVerb.DELETE:
+                {
+                    return HTTPVerb.DELETE;
+                }
+                case Bundle.HTTPVerb.PUT:
+                {
+                    return HTTPVerb.PUT;
+                }
+                default:
+                {
+                    return null;
+                }
+            }
         }
 
         private static void setBodyAndContentType(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
