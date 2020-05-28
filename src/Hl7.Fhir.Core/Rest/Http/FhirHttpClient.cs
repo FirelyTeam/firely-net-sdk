@@ -202,18 +202,6 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
-
-        /// <summary>
-        /// Called just before the Http call is done
-        /// </summary>
-        public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
-
-        /// <summary>
-        /// Called just after the response was received
-        /// </summary>
-        public event EventHandler<AfterHttpResponseEventArgs> OnAfterResponse;
-
-
         /// <summary>
         /// Override dispose in order to clean up request headers tied to disposed requester.
         /// </summary>
