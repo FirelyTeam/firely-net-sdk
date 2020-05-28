@@ -1,4 +1,4 @@
-/* 
+﻿/* 
 * Copyright (c) 2014, Firely (info@fire.ly) and contributors
 * See the file CONTRIBUTORS for details.
 * 
@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -26,13 +27,10 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="settings">
+        /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
-        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) : base(endpoint, settings)
+        /// <param name="provider"></param>
+        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
             // If user does not supply message handler, add decompression strategy in default handler.
             var handler = messageHandler ?? new HttpClientHandler()
@@ -56,14 +54,11 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="settings">
+        /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
-        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
-            : this(new Uri(endpoint), settings, messageHandler)
+        /// <param name="provider"></param>
+        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
+            : this(new Uri(endpoint), settings, messageHandler, provider)
         {
         }
 

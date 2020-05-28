@@ -11,10 +11,12 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable
     {
-        protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null)
+        private IStructureDefinitionSummaryProvider _provider;
+        protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null)
         {
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
+            _provider = provider ?? new PocoStructureDefinitionSummaryProvider();
         }
 
         protected IRequester Requester { get; set; }
@@ -40,7 +42,12 @@ namespace Hl7.Fhir.Rest
         public string LastBodyAsText => LastResult?.GetBodyAsText();
         public Resource LastBodyAsResource { get; private set; }
 
+        //This is an object because of the different libraries we use for the client.
+        //This can either be a HttpWebRequest (FhirClient) or a HttpRequestMessage(FhirHttpClient)
         protected object LastClientRequest { get; set; }
+
+        //This is an object because of the different libraries we use for the client.
+        //This can either be a HttpWebResponse (FhirClient) or a HttpResponseMessage(FhirHttpClient)
         protected object LastClientResponse { get; set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
@@ -879,7 +886,7 @@ namespace Hl7.Fhir.Rest
             // entry -> ITyped -> tx
             var entryRequest = request.ToEntryRequest(Settings);
 
-            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, new PocoStructureDefinitionSummaryProvider());
+            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, _provider);
 
             Bundle.EntryComponent response = null;
             try
