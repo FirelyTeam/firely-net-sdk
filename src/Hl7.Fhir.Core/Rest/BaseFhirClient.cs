@@ -47,8 +47,7 @@ namespace Hl7.Fhir.Rest
         {
             if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
 
-            if (!endpoint.OriginalString.EndsWith("/"))
-                endpoint = new Uri(endpoint.OriginalString + "/");
+            endpoint.OriginalString.EnsureEndsWith("/");              
 
             if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
 
