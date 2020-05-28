@@ -18,19 +18,6 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net45|AnyCPU'">
-     <DefineConstants>TRACE;USE_CODE_GEN</DefineConstants>
-   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Rest\OldFhirClient\**" />
-    <Compile Remove="Rest\Search\**" />
-    <EmbeddedResource Remove="Rest\OldFhirClient\**" />
-    <EmbeddedResource Remove="Rest\Search\**" />
-    <None Remove="Rest\OldFhirClient\**" />
-    <None Remove="Rest\Search\**" />
-  </ItemGroup>
- 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
