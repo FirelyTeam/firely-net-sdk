@@ -126,7 +126,8 @@ namespace Hl7.FhirPath.R4.Tests
             // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
             // MV 20191210: For version 4.0.1 we added some extra functions in FhirPath (intersect and ` is allowed), so now 97 tests (instead of 103) are failing
             // MV 20200302: After merging 1.x into develop we have 131 failing tests
-            Assert.True(131 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            // EK 20200528: Managed it down to 108, by changing the type of integer constants back to long.
+            Assert.True(108 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)
