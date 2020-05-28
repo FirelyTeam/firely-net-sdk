@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private void testManipulateMeta(IFhirClient client)
+        private void testManipulateMeta(BaseFhirClient client)
         {
             var pat = new Patient
             {
@@ -1698,7 +1698,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private static void testAuthentication(IFhirClient validationFhirClient)
+        private static void testAuthentication(BaseFhirClient validationFhirClient)
         {
             try
             {
@@ -1756,14 +1756,6 @@ namespace Hl7.Fhir.Tests.Rest
                 var result = client.Create(binary);
 
                 Assert.IsNotNull(result);
-
-                void Client_OnBeforeHttpRequest(object sender, BeforeHttpRequestEventArgs e)
-                {
-                    // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
-                    e.RawRequest.Headers.Accept.Clear();
-                }
-
-                client.OnBeforeRequest += Client_OnBeforeHttpRequest;
 
                 var result2 = client.Get($"Binary/{result.Id}");
                 Assert.IsNotNull(result2);
