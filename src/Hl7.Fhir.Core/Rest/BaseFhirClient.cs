@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
 
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
-            if (endpoint == null) throw new ArgumentNullException("endpoint");
+            if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
 
             if (!endpoint.OriginalString.EndsWith("/"))
                 endpoint = new Uri(endpoint.OriginalString + "/");
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
         {
-            string collection = typeof(TResource).GetCollectionName();
+            string collection = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
         /// <summary>

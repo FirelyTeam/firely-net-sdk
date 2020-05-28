@@ -12,6 +12,8 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public partial class FhirClientAsyncTests
     {
+    #pragma warning disable CS0618
+
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
 
         [ClassInitialize]

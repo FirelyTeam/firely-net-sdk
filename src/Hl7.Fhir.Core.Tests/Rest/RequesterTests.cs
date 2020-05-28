@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Test
             {
                 Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, false);
             }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.Headers.UserAgent.ToString());
         }
 
-        #endregion
+        #endregion       
 
         #region Bundle.EntryComponent To EntryRequest
 

@@ -10,6 +10,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 {
     public partial class FhirClientAsyncTests
     {
+#pragma warning disable CS0618
+
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()

@@ -10,6 +10,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 {
     public partial class FhirClientAsyncTests
     {
+    #pragma warning disable CS0618
+
         //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
         private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
         

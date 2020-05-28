@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Rest
                 message = $"Operation was unsuccessful, and returned status {status}";
 
             if (body is OperationOutcome outcome)
-                return new FhirOperationException($"{message}. OperationOutcome: {outcome.ToString()}.", status, outcome);
+                return new FhirOperationException($"{message}. OperationOutcome: {outcome}.", status, outcome);
             else if (body != null)
                 return new FhirOperationException($"{message}. Body contains a {body.TypeName}.", status);
             else
