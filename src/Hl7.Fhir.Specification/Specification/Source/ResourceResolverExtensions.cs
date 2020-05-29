@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns>Returns a StructureDefinition if it is resolvable and defines an extension, otherwise <c>null</c>.</returns>
         public static async T.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
         {
-            if (!(await resolver.ResolveByCanonicalUriAsync(uri) is StructureDefinition sd)) return null;
+            if (!(await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) is StructureDefinition sd)) return null;
 
             if (!sd.IsExtension)
                 throw Error.Argument(nameof(uri), $"Found StructureDefinition at '{uri}', but is not an extension");
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <returns>The resolved StructureDefinition or <c>null</c> if it cannot be resolved or does not resolve to a StructureDefinition.</returns>
         public static async T.Task<StructureDefinition> FindStructureDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
-            => await resolver.ResolveByCanonicalUriAsync(uri) as StructureDefinition;
+            => await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as StructureDefinition;
 
         /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, string)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Source
         public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfo.CanonicalUriForFhirCoreType(typename);
-            return await resolver.FindStructureDefinitionAsync(url);
+            return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
         }
 
         /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
         /// </summary>
         public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
-            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type));
+            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
 
         /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindValueSetAsync() instead.")]
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Find a ValueSet by canonical url.
         /// </summary>
         public static async T.Task<ValueSet> FindValueSetAsync(this IAsyncResourceResolver source, string uri)
-            => await source.ResolveByCanonicalUriAsync(uri) as ValueSet;
+            => await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as ValueSet;
 
         /// <inheritdoc cref="FindCodeSystemAsync(IAsyncResourceResolver, string)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindCodeSystemAsync() instead.")]
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Find a CodeSystem by canonical url.
         /// </summary>
         public static async T.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
-            => await source.ResolveByCanonicalUriAsync(uri) as CodeSystem;
+            => await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as CodeSystem;
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {

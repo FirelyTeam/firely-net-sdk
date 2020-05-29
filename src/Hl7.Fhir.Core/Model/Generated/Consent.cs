@@ -151,11 +151,11 @@ namespace Hl7.Fhir.Model
             Permit,
         }
 
-        [FhirType("Consent#Consent.actor", IsNestedType=true)]
+        [FhirType("Consent#Actor", IsNestedType=true)]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActorComponent"; } }
+            public override string TypeName { get { return "Consent#Actor"; } }
             
             /// <summary>
             /// How the actor is involved
@@ -256,11 +256,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.policy", IsNestedType=true)]
+        [FhirType("Consent#Policy", IsNestedType=true)]
         [DataContract]
         public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PolicyComponent"; } }
+            public override string TypeName { get { return "Consent#Policy"; } }
             
             /// <summary>
             /// Enforcement source for policy
@@ -393,11 +393,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.data", IsNestedType=true)]
+        [FhirType("Consent#Data", IsNestedType=true)]
         [DataContract]
         public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DataComponent"; } }
+            public override string TypeName { get { return "Consent#Data"; } }
             
             /// <summary>
             /// instance | related | dependents | authoredby
@@ -516,11 +516,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.except", IsNestedType=true)]
+        [FhirType("Consent#Except", IsNestedType=true)]
         [DataContract]
         public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExceptComponent"; } }
+            public override string TypeName { get { return "Consent#Except"; } }
             
             /// <summary>
             /// deny | permit
@@ -787,11 +787,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.except.actor", IsNestedType=true)]
+        [FhirType("Consent#ExceptActor", IsNestedType=true)]
         [DataContract]
         public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExceptActorComponent"; } }
+            public override string TypeName { get { return "Consent#ExceptActor"; } }
             
             /// <summary>
             /// How the actor is involved
@@ -892,11 +892,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Consent#Consent.except.data", IsNestedType=true)]
+        [FhirType("Consent#ExceptData", IsNestedType=true)]
         [DataContract]
         public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ExceptDataComponent"; } }
+            public override string TypeName { get { return "Consent#ExceptData"; } }
             
             /// <summary>
             /// instance | related | dependents | authoredby

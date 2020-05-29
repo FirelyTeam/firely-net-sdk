@@ -160,7 +160,8 @@
 				resourceDescription = (e as System.Xml.XmlElement).SelectSingleNode("fhir:differential/fhir:element[fhir:path/@value='"+rawResourceName+"']/fhir:short/@value", nsR).Value;
 	
 	        var skippedTypes = new[] { "Narrative", "Extension", "Code", "Coding", "Date", "FhirBoolean", "Base64Binary",
-				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml","BackboneElement" };
+				"FhirDateTime", "FhirString", "FhirUri", "Id", "Instant", "Integer", "Meta", "Oid", "Uuid", "Xhtml",
+				"BackboneElement", "FhirDecimal", "Markdown", "PositiveInt", "Time", "Timing", "UnsignedInt" };
 			
 			if (skippedTypes.Contains(resourceName)) continue;
 			manager.StartNewFile(resourceName + ".cs");
@@ -397,10 +398,12 @@ if (!abstractType){
 		System.Xml.XmlAttribute componentElement = e2.SelectSingleNode("fhir:path/@value", nsR) as System.Xml.XmlAttribute;
 		string v = componentElement.Value;
 		string definingPath = componentElement.Value;
+		string fhirBackboneType;
 		if (v.Contains("."))
         {
 			int index = v.LastIndexOf(".");
 			v = v.Substring(index+1, 1).ToUpper() + v.Substring(index+2);
+			fhirBackboneType = v;
         }
 		else
 		{
@@ -411,8 +414,10 @@ if (!abstractType){
 		if (componentNameElement != null)
         {
 			componentName = componentNameElement.Value + "Component";
+			fhirBackboneType = componentName;
         }
 
+		string fhirTypeName = resourceName + '#' + fhirBackboneType;
 		List<PropertyDetails> component = new List<PropertyDetails>();
 		foreach (System.Xml.XmlElement snapshotElement in (e as System.Xml.XmlElement).SelectNodes("fhir:differential/fhir:element", nsR))
         {
@@ -421,11 +426,11 @@ if (!abstractType){
 				component.Add(pd);
         }
 #>
-        [FhirType("<#= resourceName + '#' + definingPath #>", IsNestedType=true)]
+        [FhirType("<#= fhirTypeName #>", IsNestedType=true)]
         [DataContract]
         public partial class <#= componentName #> : Hl7.Fhir.Model.Element
         {
-            public override string TypeName { get { return "<#= componentName #>"; } }
+            public override string TypeName { get { return "<#= fhirTypeName #>"; } }
             
 <#
 	int nComponentPropNum = 30;

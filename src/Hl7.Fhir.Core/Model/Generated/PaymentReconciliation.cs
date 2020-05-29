@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "PaymentReconciliation"; } }
         
-        [FhirType("PaymentReconciliation#PaymentReconciliation.detail", IsNestedType=true)]
+        [FhirType("PaymentReconciliation#Details", IsNestedType=true)]
         [DataContract]
         public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DetailsComponent"; } }
+            public override string TypeName { get { return "PaymentReconciliation#Details"; } }
             
             /// <summary>
             /// Type code
@@ -270,11 +270,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("PaymentReconciliation#PaymentReconciliation.processNote", IsNestedType=true)]
+        [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
         [DataContract]
         public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NotesComponent"; } }
+            public override string TypeName { get { return "PaymentReconciliation#Notes"; } }
             
             /// <summary>
             /// display | print | printoper

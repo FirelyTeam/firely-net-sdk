@@ -97,11 +97,11 @@ namespace Hl7.Fhir.Model
             InterferedBy,
         }
 
-        [FhirType("Observation#Observation.referenceRange", IsNestedType=true)]
+        [FhirType("Observation#ReferenceRange", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReferenceRangeComponent"; } }
+            public override string TypeName { get { return "Observation#ReferenceRange"; } }
             
             /// <summary>
             /// Low Range, if relevant
@@ -289,11 +289,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Observation#Observation.related", IsNestedType=true)]
+        [FhirType("Observation#Related", IsNestedType=true)]
         [DataContract]
         public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatedComponent"; } }
+            public override string TypeName { get { return "Observation#Related"; } }
             
             /// <summary>
             /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
@@ -411,11 +411,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Observation#Observation.component", IsNestedType=true)]
+        [FhirType("Observation#Component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComponentComponent"; } }
+            public override string TypeName { get { return "Observation#Component"; } }
             
             /// <summary>
             /// Type of component observation (code / type)

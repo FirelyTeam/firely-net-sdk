@@ -151,11 +151,11 @@ namespace Hl7.Fhir.Model
             Terminated,
         }
 
-        [FhirType("Contract#Contract.agent", IsNestedType=true)]
+        [FhirType("Contract#Agent", IsNestedType=true)]
         [DataContract]
         public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AgentComponent"; } }
+            public override string TypeName { get { return "Contract#Agent"; } }
             
             /// <summary>
             /// Contract Agent Type
@@ -256,11 +256,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.signer", IsNestedType=true)]
+        [FhirType("Contract#Signatory", IsNestedType=true)]
         [DataContract]
         public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SignatoryComponent"; } }
+            public override string TypeName { get { return "Contract#Signatory"; } }
             
             /// <summary>
             /// Contract Signatory Role
@@ -380,11 +380,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.valuedItem", IsNestedType=true)]
+        [FhirType("Contract#ValuedItem", IsNestedType=true)]
         [DataContract]
         public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ValuedItemComponent"; } }
+            public override string TypeName { get { return "Contract#ValuedItem"; } }
             
             /// <summary>
             /// Contract Valued Item Type
@@ -645,11 +645,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.term", IsNestedType=true)]
+        [FhirType("Contract#Term", IsNestedType=true)]
         [DataContract]
         public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TermComponent"; } }
+            public override string TypeName { get { return "Contract#Term"; } }
             
             /// <summary>
             /// Contract Term Number
@@ -989,11 +989,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.term.agent", IsNestedType=true)]
+        [FhirType("Contract#TermAgent", IsNestedType=true)]
         [DataContract]
         public partial class TermAgentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TermAgentComponent"; } }
+            public override string TypeName { get { return "Contract#TermAgent"; } }
             
             /// <summary>
             /// Contract Term Agent Subject
@@ -1094,11 +1094,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.term.valuedItem", IsNestedType=true)]
+        [FhirType("Contract#TermValuedItem", IsNestedType=true)]
         [DataContract]
         public partial class TermValuedItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TermValuedItemComponent"; } }
+            public override string TypeName { get { return "Contract#TermValuedItem"; } }
             
             /// <summary>
             /// Contract Term Valued Item Type
@@ -1359,11 +1359,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.friendly", IsNestedType=true)]
+        [FhirType("Contract#FriendlyLanguage", IsNestedType=true)]
         [DataContract]
         public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FriendlyLanguageComponent"; } }
+            public override string TypeName { get { return "Contract#FriendlyLanguage"; } }
             
             /// <summary>
             /// Easily comprehended representation of this Contract
@@ -1445,11 +1445,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.legal", IsNestedType=true)]
+        [FhirType("Contract#LegalLanguage", IsNestedType=true)]
         [DataContract]
         public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LegalLanguageComponent"; } }
+            public override string TypeName { get { return "Contract#LegalLanguage"; } }
             
             /// <summary>
             /// Contract Legal Text
@@ -1531,11 +1531,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Contract#Contract.rule", IsNestedType=true)]
+        [FhirType("Contract#ComputableLanguage", IsNestedType=true)]
         [DataContract]
         public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComputableLanguageComponent"; } }
+            public override string TypeName { get { return "Contract#ComputableLanguage"; } }
             
             /// <summary>
             /// Computable Contract Rules

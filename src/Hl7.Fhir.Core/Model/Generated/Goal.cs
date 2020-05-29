@@ -139,11 +139,11 @@ namespace Hl7.Fhir.Model
             Rejected,
         }
 
-        [FhirType("Goal#Goal.target", IsNestedType=true)]
+        [FhirType("Goal#Target", IsNestedType=true)]
         [DataContract]
         public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "TargetComponent"; } }
+            public override string TypeName { get { return "Goal#Target"; } }
             
             /// <summary>
             /// The parameter whose value is being tracked

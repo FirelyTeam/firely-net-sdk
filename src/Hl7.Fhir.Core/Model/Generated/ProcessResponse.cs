@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ProcessResponse"; } }
         
-        [FhirType("ProcessResponse#ProcessResponse.processNote", IsNestedType=true)]
+        [FhirType("ProcessResponse#ProcessNote", IsNestedType=true)]
         [DataContract]
         public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProcessNoteComponent"; } }
+            public override string TypeName { get { return "ProcessResponse#ProcessNote"; } }
             
             /// <summary>
             /// display | print | printoper
