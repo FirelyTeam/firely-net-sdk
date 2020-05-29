@@ -886,49 +886,60 @@ namespace Hl7.Fhir.Rest
             // entry -> ITyped -> tx
             var entryRequest = request.ToEntryRequest(Settings);
 
-            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(_provider);
+            
+            EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
+            TypedEntryResponse typedEntryResponse = null;
+            try
+            {
+                entryResponse.ToTypedEntryResponse(_provider);
+            }
+            catch(UnsupportedBodyTypeException ex)
+            {
+
+                typedEntryResponse.Status = entryResponse.Status;                 
+
+                var errorResult = new Bundle.EntryComponent
+                {
+                    Response = new Bundle.ResponseComponent()
+                };
+                errorResult.Response.Status = typedEntryResponse.Status;
+
+                OperationOutcome operationOutcome = OperationOutcome.ForException(ex, OperationOutcome.IssueType.Invalid);
+
+                LastResult = errorResult.Response;
+                LastBodyAsResource = errorResult.Resource;
+
+                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
+            }
+           
 
             Bundle.EntryComponent response = null;
             try
             {
-                response = entryResponse.ToBundleEntry(Settings.ParserSettings);
-                LastClientRequest = entryResponse.LastRequest;
-                LastClientResponse = entryResponse.LastResponse;
+                response = typedEntryResponse.ToBundleEntry(Settings.ParserSettings);
+                LastClientRequest = typedEntryResponse.LastRequest;
+                LastClientResponse = typedEntryResponse.LastResponse;
                 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;
 
-                if (!entryResponse.IsSuccessful())
+                if (!typedEntryResponse.IsSuccessful())
                 {
-                    Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
+                    Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                     throw FhirOperationException.BuildFhirOperationException(code, response.Resource);
                 }
-                else if(entryResponse.BodyException != null)
-                {
-                    var errorResult = new Bundle.EntryComponent
-                    {
-                        Response = new Bundle.ResponseComponent()
-                    };
-                    errorResult.Response.Status = entryResponse.Status;
-
-                    OperationOutcome operationOutcome = OperationOutcome.ForException(entryResponse.BodyException, OperationOutcome.IssueType.Invalid);
-                    
-                    LastResult = errorResult.Response;
-                    LastBodyAsResource = errorResult.Resource;
-                    
-                    Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
-                    throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
-                }
+                
             }
             catch (AggregateException ae)
             {
                 throw ae.GetBaseException();
             }
             
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(entryResponse.Status))
+            if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
             {
-                Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(entryResponse.Status), code);
+                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
             }
             
             Resource result;
@@ -981,7 +992,7 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            CapabilityStatement conf = null;
+            CapabilityStatement conf;
             try
             {
                 conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
