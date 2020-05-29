@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
             var client = new FhirClient(_endpoint);
-            await patientEverythingAsync(client);
+            await patientEverythingAsync(client).ConfigureAwait(false);
         }
 
         [TestMethod]
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Tests.Rest
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
             using (var client = new FhirHttpClient(_endpoint))
             {
-                await patientEverythingAsync(client);
+                await patientEverythingAsync(client).ConfigureAwait(false);
             }           
         }
 
@@ -311,8 +311,8 @@ namespace Hl7.Fhir.Tests.Rest
             var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
             var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
 
-            await bundleTask;
-            await bundle2Task;
+            await bundleTask.ConfigureAwait(false);
+            await bundle2Task.ConfigureAwait(false);
 
             var bundle = (Bundle)bundleTask.Result;
             Assert.IsTrue(bundle.Entry.Any());
