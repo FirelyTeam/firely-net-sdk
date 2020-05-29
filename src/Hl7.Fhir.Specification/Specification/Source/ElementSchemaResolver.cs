@@ -13,7 +13,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
     {
         private readonly IElementDefinitionAssertionFactory _assertionFactory;
         private readonly IAsyncResourceResolver _wrapped;
-        private readonly IDictionary<Uri, IElementSchema> _cache = new Dictionary<Uri, IElementSchema>();
+        private readonly ConcurrentDictionary<Uri, IElementSchema> _cache = new ConcurrentDictionary<Uri, IElementSchema>();
 
         public ElementSchemaResolver(IAsyncResourceResolver wrapped, IElementDefinitionAssertionFactory assertionFactory = null)
         {
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
 
             schema = new SchemaConverter(this, _assertionFactory).Convert(nav);
 
-            _cache.Add(schemaUri, schema);
+            _cache.TryAdd(schemaUri, schema);
             return schema;
         }
 
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
                 }
             }
 
-            _cache.Add(schemaUri, schema);
+            _cache.TryAdd(schemaUri, schema);
             return schema;
         }
 

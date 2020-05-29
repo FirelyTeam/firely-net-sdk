@@ -24,13 +24,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
         public SchemaConverterTests()
         {
-            _resolver = new ElementSchemaResolver(
-                new CachedResolver(
-                    new MultiResolver(
-                        new ZipSource("specification.zip"),
-                        new DirectorySource(@"C:\Users\Marco\Downloads")
-                    )
-                ));
+            _resolver = new ElementSchemaResolver(new CachedResolver(ZipSource.CreateValidationSource()));
 
             var symbolTable = new SymbolTable();
             symbolTable.AddStandardFP();
@@ -121,7 +115,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public async T.Task MyTestMethod2()
+        public async T.Task TestHumanName()
         {
             var poco = new HumanName() { Family = BigString() };
             poco.GivenElement.Add(new FhirString(BigString()));
@@ -135,8 +129,19 @@ namespace Hl7.Fhir.Specification.Tests.Schema
 
             var results = await schemaElement.Validate(new[] { element }, new ValidationContext());
             Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.Count);
-            Assert.IsFalse(results.Result.IsSuccessful, "HumanName is not valid");
+            Assert.IsTrue(results.Result.IsSuccessful, "HumanName is valid");
+        }
+
+        [TestMethod]
+        public async T.Task TestEmptyHuman()
+        {
+            var poco = new HumanName();
+            var element = poco.ToTypedElement();
+
+            var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
+            var results = await schemaElement.Validate(new[] { element }, new ValidationContext());
+            Assert.IsNotNull(results);
+            Assert.IsTrue(results.Result.IsSuccessful, "HumanName is valid"); // MV 20200529 is an empty element valid here?
         }
 
         [TestMethod]
@@ -163,37 +168,7 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             var results = await stringSchema.Validate(new[] { fhirString }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
 
             Assert.IsNotNull(results);
-
-            var validationResult = results.OfType<ResultAssertion>();
-
-            Assert.AreEqual(1, results.Count);
-            var assertResult = results.Result;
-            Assert.IsNotNull(assertResult);
-            Assert.IsFalse(assertResult.IsSuccessful, "fhirString is not valid");
+            Assert.IsFalse(results.Result.IsSuccessful, "fhirString is not valid");
         }
-
-        [TestMethod]
-        public async T.Task ValidateOwnProfile()
-        {
-
-
-            var stringSchema = await _resolver.GetSchema(new Uri("http://example.org/fhir/StructureDefinition/MyHumanName", UriKind.Absolute));
-
-            var json = stringSchema.ToJson().ToString();
-
-            var poco = new HumanName() { Family = "Visser" };
-            poco.Period = new Period(new FhirDateTime("2019-09-02"), new FhirDateTime("2019-09-05"));
-            poco.GivenElement.Add(new FhirString(BigString()));
-            poco.GivenElement.Add(new FhirString("Maria"));
-
-            var results = await stringSchema.Validate(new[] { poco.ToTypedElement() }, new ValidationContext() { FhirPathCompiler = _fpCompiler });
-
-            Assert.IsNotNull(results);
-            Assert.IsTrue(results.Count > 0);
-            var assertResult = results.Result;
-            Assert.IsNotNull(assertResult);
-            Assert.IsFalse(assertResult.IsSuccessful, "poco should be not valid");
-        }
-
     }
 }
