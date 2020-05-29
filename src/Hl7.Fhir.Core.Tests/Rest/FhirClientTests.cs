@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Hl7.Fhir.Utility;
 using static Hl7.Fhir.Model.Bundle;
 using System.Drawing;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -392,35 +393,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        public static void Compression_OnBeforeHttpRequestGZip(object sender, BeforeHttpRequestEventArgs e)
-        {
-            if (e.RawRequest != null)
-            {
-                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
-                e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip");
-            }
-        }
-
-        public static void Compression_OnBeforeHttpRequestDeflate(object sender, BeforeHttpRequestEventArgs e)
-        {
-            if (e.RawRequest != null)
-            {
-                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
-                e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.TryAddWithoutValidation("Accept-Encoding", "deflate");
-            }
-        }
-
-        public static void Compression_OnBeforeHttpRequestZipOrDeflate(object sender, BeforeHttpRequestEventArgs e)
-        {
-            if (e.RawRequest != null)
-            {
-                // e.RawRequest.AutomaticDecompression = System.Net.DecompressionMethods.Deflate | System.Net.DecompressionMethods.GZip;
-                e.RawRequest.Headers.Remove("Accept-Encoding");
-                e.RawRequest.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
-            }
-        }
+   
 
         [TestMethod, Ignore]   // Something does not work with the gzip
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -475,46 +448,33 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void SearchHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientHandler())
             using (FhirHttpClient client = new FhirHttpClient(testEndpoint, messageHandler: handler))
             {
                 Bundle result;
 
                 client.Settings.CompressRequestBody = true;
-                handler.OnBeforeRequest += Compression_OnBeforeHttpRequestGZip;
+                handler.AutomaticDecompression = DecompressionMethods.GZip;
 
                 result = client.Search<DiagnosticReport>();
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
-                handler.OnBeforeRequest -= Compression_OnBeforeHttpRequestZipOrDeflate;
-                handler.OnBeforeRequest += Compression_OnBeforeHttpRequestZipOrDeflate;
+                handler.AutomaticDecompression =  DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                
 
                 result = client.Search<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Entry.Count <= 10);
 
-                handler.OnBeforeRequest -= Compression_OnBeforeHttpRequestGZip;
+                handler.AutomaticDecompression = DecompressionMethods.GZip;
 
                 var withSubject = result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
                 Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
 
                 ResourceIdentity ri = withSubject.ResourceIdentity();
 
-                // TODO: The include on Grahame's server doesn't currently work
-                //result = client.SearchById<DiagnosticReport>(ri.Id,
-                //            includes: new string[] { "DiagnosticReport:subject" });
-                //Assert.IsNotNull(result);
-
-                //Assert.AreEqual(2, result.Entry.Count);  // should have subject too
-
-                //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
-                //            typeof(DiagnosticReport).GetCollectionName()));
-                //Assert.IsNotNull(result.Entry.Single(entry => entry.Resource.ResourceIdentity().ResourceType ==
-                //            typeof(Patient).GetCollectionName()));
-
-
-                handler.OnBeforeRequest += Compression_OnBeforeHttpRequestDeflate;
+                handler.AutomaticDecompression = DecompressionMethods.Deflate;
 
                 result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
@@ -767,10 +727,10 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateEditDeleteHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
+            using (var handler = new HttpClientHandler())
             using (FhirHttpClient client = new FhirHttpClient(testEndpoint, messageHandler: handler))
             {
-                handler.OnBeforeRequest += Compression_OnBeforeHttpRequestZipOrDeflate;
+                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 // client.CompressRequestBody = true;
                 testCreateEditDelete(client);
             }
@@ -1408,8 +1368,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void RequestFullResourceHttpClient()
         {
-            using (var handler = new HttpClientEventHandler())
-            using (var client = new FhirHttpClient(testEndpoint, messageHandler: handler))
+
+            using (var client = new FhirHttpClient(testEndpoint))
             {
                 testRequestFullResource(client);
             }
