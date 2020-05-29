@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable
     {
-        private IStructureDefinitionSummaryProvider _provider;
+        private readonly IStructureDefinitionSummaryProvider _provider;
         protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null)
         {
             Settings = (settings ?? new FhirClientSettings());
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Rest
             // entry -> ITyped -> tx
             var entryRequest = request.ToEntryRequest(Settings);
 
-            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(Settings.ParserSettings, _provider);
+            var entryResponse = (await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false)).ToTypedEntryResponse(_provider);
 
             Bundle.EntryComponent response = null;
             try

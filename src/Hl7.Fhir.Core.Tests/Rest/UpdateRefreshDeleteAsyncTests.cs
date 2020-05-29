@@ -66,10 +66,10 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            Func<System.Threading.Tasks.Task> act = async () =>
+            async System.Threading.Tasks.Task act()
             {
                 await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            };
+            }
 
             // VERIFY //
             await ExceptionAssert.Throws<FhirOperationException>(act);
