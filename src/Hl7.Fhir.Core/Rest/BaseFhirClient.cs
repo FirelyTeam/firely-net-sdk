@@ -888,10 +888,10 @@ namespace Hl7.Fhir.Rest
 
             
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
-            TypedEntryResponse typedEntryResponse = null;
+            TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                entryResponse.ToTypedEntryResponse(_provider);
+                typedEntryResponse = entryResponse.ToTypedEntryResponse(_provider);
             }
             catch(UnsupportedBodyTypeException ex)
             {

@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(result.Result?.Value == true);
         }
 
-        [TestMethod]//returns 500: validation of slices is not done yet.
+        [TestMethod]
         [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
