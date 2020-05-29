@@ -278,6 +278,10 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.identifier.value.first().toDecimal() = 654321");
             fixture.IsTrue(@"@2014-12-14T.toString() = '2014-12-14'");
             fixture.IsTrue(@"@2014-12-14.toString() = '2014-12-14'");
+
+            fixture.IsTrue(@"1.convertsToInteger()");
+            fixture.IsTrue(@"'14:34:28'.convertsToTime()");
+            fixture.IsTrue(@"1.convertsToQuantity()");
         }
 
         [TestMethod]
