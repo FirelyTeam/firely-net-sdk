@@ -917,7 +917,24 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(levin);
             DebugDumpOutputXml(report);
             Assert.False(report.Success);
-            Assert.Contains("The declared type of the element (Period) is incompatible with that of the instance ('string')", report.ToString());
+            Assert.Contains("but the instance does not use of the allowed choice types ('Period')", report.ToString());
+        }
+
+        [Fact]
+        public void ValidateExtensionBirthPlace()
+        {
+            var fhirBoolean = new FhirBoolean();
+
+            var nationality = new Extension() { Url = "http://hl7.org/fhir/StructureDefinition/patient-nationality" };
+            nationality.AddExtension("code", new CodeableConcept("http://acme.org/codes/general", "tt14j"));
+            nationality.AddExtension("period", new Period(new FhirDateTime(2020, 6, 2), null));
+
+            fhirBoolean.Extension.Add(nationality);
+
+            var report = _validator.Validate(fhirBoolean);
+
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
         }
 
         [Fact]

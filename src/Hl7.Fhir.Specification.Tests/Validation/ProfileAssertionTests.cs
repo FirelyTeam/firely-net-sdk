@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using System.IO;
@@ -17,12 +18,16 @@ namespace Hl7.Fhir.Specification.Tests
         public Validator Validator { get; }
         public ValidationFixture()
         {
+            var specSource = new CachedResolver(ZipSource.CreateValidationSource());
+
             AsyncResolver = new CachedResolver(
-                         new MultiResolver(
-                            new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
-                            new DirectorySource(Path.Combine("TestData", "validation")),
-                            new SnapshotSource(new TestProfileArtifactSource()),  // TODO: should we do this?
-                            new ZipSource("specification.zip")));
+                                 new MultiResolver(
+                                    new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
+                                    new DirectorySource(Path.Combine("TestData", "validation")),
+                                    TestProfileArtifactSourceWithSnapShots(specSource),
+                                    specSource
+                                 )
+                            );
 
             var ctx = new ValidationSettings()
             {
@@ -35,6 +40,17 @@ namespace Hl7.Fhir.Specification.Tests
 
 
             Validator = new Validator(ctx);
+        }
+
+        TestProfileArtifactSource TestProfileArtifactSourceWithSnapShots(IAsyncResourceResolver specSource)
+        {
+            var generator = new SnapshotGenerator(specSource);
+            var source = new TestProfileArtifactSource();
+            foreach (var sd in source.TestProfiles)
+            {
+                generator.Update(sd);
+            }
+            return source;
         }
     }
 

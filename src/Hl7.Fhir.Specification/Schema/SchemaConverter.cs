@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
 using Hl7.FhirPath.Sprache;
@@ -55,11 +56,16 @@ namespace Hl7.Fhir.Specification.Schema
         private IElementSchema harvest(ElementDefinitionNavigator nav)
         {
             var schema = nav.Current.Convert(Source, _assertionFactory);
+            bool isInlineChildren = !nav.Current.IsRootElement();
 
             if (nav.HasChildren)
             {
                 var childNav = nav.ShallowCopy();   // make sure closure is to a clone, not the original argument
-                var childAssertion = _assertionFactory.CreateChildren(() => harvestChildren(childNav));
+
+                bool allowAdditionalChildren = (isInlineChildren && nav.Current.IsResourcePlaceholder()) ||
+                                     (!isInlineChildren && nav.StructureDefinition.Abstract == true);
+
+                var childAssertion = _assertionFactory.CreateChildren(() => harvestChildren(childNav), allowAdditionalChildren);
                 schema = schema.With(_assertionFactory, childAssertion);
             }
 
@@ -113,8 +119,8 @@ namespace Hl7.Fhir.Specification.Schema
         {
             IAssertion result = null;
             // 20200520: for now only value slicing
-            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true &&
-                !root.Current.Path.Contains(".extension"))
+            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true) //&&
+                                                                                                                           //  !root.Current.Path.Contains(".extension"))
             {
                 var slices = root.FindMemberSlices(true);
 
@@ -128,9 +134,10 @@ namespace Hl7.Fhir.Specification.Schema
 
         private static void skipSlicingElements(ElementDefinitionNavigator root)
         {
-            var curPath = root.Path;
-            while (root.MoveToNext() && curPath == root.Path)
+            var pathName = root.PathName;
+            while (root.MoveToNext(pathName))
             {
+
             }
         }
 
