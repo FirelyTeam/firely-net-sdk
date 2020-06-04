@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver);
             }
 
-            ValidationContext vc = new ValidationContext();// { TerminologyService = ts };
+            ValidationContext vc = new ValidationContext() { TerminologyService = new TerminologyServiceAdapter(ts) };
 
             try
             {
