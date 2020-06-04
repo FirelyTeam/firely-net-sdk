@@ -295,11 +295,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
 
-            var report = _validator.Validate(extensionInstance, extensionSd);
-
-            Assert.Equal(0, report.Errors);
-            Assert.Equal(0, report.Warnings);
-
             // Now remove the choice available for OID
             var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
 
@@ -311,8 +306,9 @@ namespace Hl7.Fhir.Specification.Tests
                                          || t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Uri));
 
 
-            report = _validator.Validate(extensionInstance, extensionSd);
+            var report = _validator.Validate(extensionInstance, extensionSd);
 
+            Assert.False(report.Success, report.ToString());
             Assert.Equal(1, report.Errors);
             Assert.Equal(0, report.Warnings);
         }
@@ -519,14 +515,14 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var result = validator.Validate(p);
-            Assert.True(result.Success);
+            Assert.True(result.Success, result.ToString());
             Assert.Equal(1, result.Warnings);
             Assert.Contains("Cannot resolve reference http://reference.cannot.be.found.nl/fhir/Patient/1", result.Issue[0].ToString());
 
             validator.Settings.ResolveExternalReferences = false;
 
             result = validator.Validate(p);
-            Assert.True(result.Success);
+            Assert.True(result.Success, result.ToString());
             Assert.Equal(0, result.Warnings);
         }
 
@@ -1000,7 +996,7 @@ namespace Hl7.Fhir.Specification.Tests
             });
 
             var report = _validator.Validate(b, sd);
-            Assert.Equal(2, report.Errors);
+            Assert.Equal(2, report.Errors); // MessageHeader.Value[x] is missing and MessageHeader.Source is missing
             Assert.Equal(0, report.Warnings);
             Assert.DoesNotContain("Encountered unknown child elements 'timestamp'", report.ToString());
         }
@@ -1010,7 +1006,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
             var result = _validator.Validate(sd);
-            Assert.True(result.Success);
+            Assert.True(result.Success, result.ToString());
         }
 
         // [WMR 20161220] Example by Christiaan Knaap
@@ -1174,7 +1170,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var report = _validator.Validate(instance, def);
-            Assert.False(report.Success);
+            Assert.False(report.Success, report.ToString());
             Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
             Assert.Equal(0, report.Warnings);
         }
@@ -1248,7 +1244,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var patientSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
             var report = _validator.Validate(p, patientSd);
-            Assert.True(report.Success);
+            Assert.True(report.Success, report.ToString());
             Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
         }
 
@@ -1276,6 +1272,88 @@ namespace Hl7.Fhir.Specification.Tests
             var instance = new FhirBoolean(true);//"http://loinc.org", "85354-9", "Blood pressure panel with all children optional");
             var report = _validator.Validate(instance);
             Assert.True(report.Success);
+        }
+
+        [Fact]
+        public async T.Task ValidatePatientTelecom()
+        {
+            var def = await _asyncSource.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/PatientTelecomSlicing");
+
+            var instance = new Patient
+            {
+                Active = true
+            };
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success);  // Home phone is mandatory
+
+            instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Home, "5551234567"));
+            report = _validator.Validate(instance, def);
+            Assert.True(report.Success);  // Home phone is present
+
+            //instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Email, null, "someone@acme.org"));
+            //report = _validator.Validate(instance, def);
+            //Assert.True(report.Success);  // email address is allowed
+
+            instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Home, "0203467171"));
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success);  // Only 1 Home phone is allowed
+            instance.Telecom.RemoveAt(1);
+
+            //instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Email, null, "other@acme.org"));
+            //// report = _validator.Validate(instance, def);
+            ////Assert.False(report.Success);  // no 2 email address are allowed
+            //instance.Telecom.RemoveAt(2);
+
+            instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Phone, ContactPoint.ContactPointUse.Work, "0203467177"));
+            report = _validator.Validate(instance, def);
+            Assert.True(report.Success);  // 1 work phone is  allowed     
+
+            instance.Telecom.Add(new ContactPoint(ContactPoint.ContactPointSystem.Sms, ContactPoint.ContactPointUse.Work, "0203467174"));
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success);  // contactpoint sms is not allowed     
+        }
+
+        [Fact]
+        public async T.Task ValidateCompostion()
+        {
+            var def = await _asyncSource.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/CompositionNestedSlicing");
+
+            var instance = new Composition
+            {
+                Status = CompositionStatus.Preliminary,
+                Type = new CodeableConcept("http://loinc.org", "11488-4", "Consult note", null),
+                DateElement = new FhirDateTime(2020, 6, 3),
+                Title = "Composition example"
+            };
+            instance.Author.Add(new ResourceReference("Practioner/123"));
+
+            var report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // minimal of 3 sections is mandatory
+
+            instance.Section.Add(new Composition.SectionComponent { Text = createNarrative("slice1"), Code = new CodeableConcept("http://loinc.org", "29299-5", "Reason for visit Narrative", null) });
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // minimal of 3 sections is mandatory
+
+            var medicationSection = new Composition.SectionComponent { Text = createNarrative("slice2"), Code = new CodeableConcept("http://loinc.org", "46057-6", "Medications section", null) };
+            instance.Section.Add(medicationSection);
+            instance.Section.Add(new Composition.SectionComponent { Text = createNarrative("slice3"), Code = new CodeableConcept("http://loinc.org", "8716-3", "Vital signs", null) });
+
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // minimal 1 inner section is mandatory
+
+            medicationSection.Section.Add(new Composition.SectionComponent { Text = createNarrative("slice2B"), Code = new CodeableConcept("http://loinc.org", "66150-4", "Over the counter medications", null) });
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // missing section about precribed medication
+
+            medicationSection.Section.Add(new Composition.SectionComponent { Text = createNarrative("slice2B"), Code = new CodeableConcept("http://loinc.org", "66149-6", "Prescribed medications", null) });
+            report = _validator.Validate(instance, def);
+            Assert.False(report.Success); // because of ordering
+
+            medicationSection.Section.Reverse();
+            report = _validator.Validate(instance, def);
+            Assert.True(report.Success);
+
+            Narrative createNarrative(string content) => new Narrative { Status = Narrative.NarrativeStatus.Generated, Div = content };
         }
 
         // Verify aggregated element constraints

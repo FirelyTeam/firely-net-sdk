@@ -33,8 +33,185 @@ namespace Hl7.Fhir.Validation
             buildValueDescriminatorWithPattern(),
             buildQuantityWithUnlimitedRootCardinality(),
             buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality(),
-            buildBloodPressureSlicing()
+            buildBloodPressureSlicing(),
+            buildTelecomSlicing(),
+            buildNestedSlicing()
         };
+
+        private static StructureDefinition buildNestedSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/CompositionNestedSlicing", "Composition sections",
+                      "Test of nested slices in Composition sections", FHIRAllTypes.Composition);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Composition").OfType(FHIRAllTypes.Composition));
+
+            var slicingIntro = new ElementDefinition("Composition.section")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, ordered: true,
+                   (ElementDefinition.DiscriminatorType.Value, "code")
+               ).Required(3, "3");
+            cons.Add(slicingIntro);
+
+            // first slice: reason for visit
+            cons.Add(new ElementDefinition("Composition.section")
+            {
+                ElementId = "Composition.section:reason-for-visit",
+                SliceName = "reason-for-visit"
+            }.Required());
+            cons.Add(new ElementDefinition("Composition.section.code")
+            {
+                ElementId = "Composition.section.code:reason-for-visit",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "29299-5", "Reason for visit Narrative", null)));
+
+            // second slice: medications
+            cons.Add(new ElementDefinition("Composition.section")
+            {
+                ElementId = "Composition.section:medications",
+                SliceName = "medications"
+            }.Required());
+            cons.Add(new ElementDefinition("Composition.section.code")
+            {
+                ElementId = "Composition.section.code:medications",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "46057-6", "Medications section", null)));
+
+            // setting up the inner slicing on medication Composition.section.section
+            var nestedSlicingIntro = new ElementDefinition("Composition.section.section")
+            {
+                ElementId = "Composition.section.section:medication"
+            }.WithSlicingIntro(ElementDefinition.SlicingRules.Closed, ordered: true,
+                   (ElementDefinition.DiscriminatorType.Value, "code")
+               ).Required(1, "2");
+            cons.Add(nestedSlicingIntro);
+
+            // first inner slice: prescribed medications
+            cons.Add(new ElementDefinition("Composition.section.section")
+            {
+                ElementId = "Composition.section.section:prescibed",
+                SliceName = "prescibed"
+            }.Required());
+            cons.Add(new ElementDefinition("Composition.section.section.code")
+            {
+                ElementId = "Composition.section.section.code:prescibed",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "66149-6", "Prescribed medications", null)));
+
+            // second inner slice: over the counter medications
+            cons.Add(new ElementDefinition("Composition.section.section")
+            {
+                ElementId = "Composition.section.section:otc",
+                SliceName = "otc"
+            }.Required(min: 0, max: "1"));
+            cons.Add(new ElementDefinition("Composition.section.section.code")
+            {
+                ElementId = "Composition.section.section.code:otc",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "66150-4", "Over the counter medications", null)));
+
+            // third slice: Vital Signs
+            cons.Add(new ElementDefinition("Composition.section")
+            {
+                ElementId = "Composition.section:vital-signs",
+                SliceName = "vital-signs"
+            }.Required());
+            cons.Add(new ElementDefinition("Composition.section.code")
+            {
+                ElementId = "Composition.section.code:vital-signs",
+                Min = 1
+            }.Value(fix: new CodeableConcept("http://loinc.org", "8716-3", "Vital signs", null)));
+
+            return result;
+        }
+
+        private static StructureDefinition buildTelecomSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/PatientTelecomSlicing", "Patient Telecom",
+                     "Test of slicing of telecom", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
+
+            var slicingIntro = new ElementDefinition("Patient.telecom")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, ordered: false,
+                   (ElementDefinition.DiscriminatorType.Value, "system"),
+                   (ElementDefinition.DiscriminatorType.Value, "use")
+               ).Required(1, "3");
+            cons.Add(slicingIntro);
+
+            // first slice: home phone 
+            cons.Add(new ElementDefinition("Patient.telecom")
+            {
+                ElementId = "Patient.telecom:homePhone",
+                SliceName = "homePhone"
+            }.Required());
+            cons.Add(new ElementDefinition("Patient.telecom.system")
+            {
+                ElementId = "Patient.telecom.system:homePhone",
+                Min = 1
+            }.Value(fix: new Code("phone")));
+            cons.Add(new ElementDefinition("Patient.telecom.value")
+            {
+                ElementId = "Patient.telecom.value:homePhone",
+                Min = 1
+            });
+            cons.Add(new ElementDefinition("Patient.telecom.use")
+            {
+                ElementId = "Patient.telecom.use:homePhone",
+                Min = 1
+            }.Value(fix: new Code("home")));
+
+            // second slice: work phone
+            cons.Add(new ElementDefinition("Patient.telecom")
+            {
+                ElementId = "Patient.telecom:workPhone",
+                SliceName = "workPhone",
+                Min = 0,
+                Max = "*"
+            });
+            cons.Add(new ElementDefinition("Patient.telecom.system")
+            {
+                ElementId = "Patient.telecom.system:workPhone",
+                Min = 1
+            }.Value(fix: new Code("phone")));
+            cons.Add(new ElementDefinition("Patient.telecom.value")
+            {
+                ElementId = "Patient.telecom.value:workPhone",
+                Min = 1
+            });
+            cons.Add(new ElementDefinition("Patient.telecom.use")
+            {
+                ElementId = "Patient.telecom.use:workPhone",
+                Min = 1
+            }.Value(fix: new Code("work")));
+
+            // second slice: email
+            cons.Add(new ElementDefinition("Patient.telecom")
+            {
+                ElementId = "Patient.telecom:email",
+                SliceName = "email",
+                Min = 0,
+                Max = "1"
+            });
+            cons.Add(new ElementDefinition("Patient.telecom.system")
+            {
+                ElementId = "Patient.telecom.system:email",
+                Min = 1
+            }.Value(fix: new Code("email")));
+            cons.Add(new ElementDefinition("Patient.telecom.value")
+            {
+                ElementId = "Patient.telecom.value:email",
+                Min = 1
+            });
+            cons.Add(new ElementDefinition("Patient.telecom.use")
+            {
+                ElementId = "Patient.telecom.use:email",
+            }.Prohibited());
+
+            return result;
+        }
 
         private static StructureDefinition buildBloodPressureSlicing()
         {
@@ -45,7 +222,7 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Observation").OfType(FHIRAllTypes.Observation));
 
             var slicingIntro = new ElementDefinition("Observation.component")
-               .WithSlicingIntro(ElementDefinition.SlicingRules.Open,
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Open, ordered: false,
                (ElementDefinition.DiscriminatorType.Value, "code")).Required(2, "*");
             cons.Add(slicingIntro);
 
@@ -328,7 +505,7 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Practitioner").OfType(FHIRAllTypes.Practitioner));
 
             var slicingIntro = new ElementDefinition("Practitioner.identifier")
-                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, ordered: false,
                 (ElementDefinition.DiscriminatorType.Pattern, "type"));
 
             cons.Add(slicingIntro);

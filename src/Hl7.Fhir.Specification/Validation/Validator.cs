@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Validation
 
                 var node = instance as ScopedNode ?? new ScopedNode(instance);
 
-                SchemaResolver = new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
+                SchemaResolver ??= new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
 
                 var symbolTable = new SymbolTable();
                 symbolTable.AddStandardFP();

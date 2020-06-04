@@ -12,7 +12,6 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
-using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -69,9 +68,12 @@ namespace Hl7.Fhir.Specification.Schema
                 schema = schema.With(_assertionFactory, childAssertion);
             }
 
-            var result = SkipSlicingComponents(nav);
-            if (result != null)
-                schema = schema.With(_assertionFactory, result);
+            if (nav.IsSlicing)
+            {
+                var sliceAssertion = harvestSlicing(nav);
+                schema = schema.With(_assertionFactory, sliceAssertion);
+            }
+
             return schema;
         }
 
@@ -93,7 +95,6 @@ namespace Hl7.Fhir.Specification.Schema
             var bm = root.Bookmark();
 
             var slicing = root.Current.Slicing;
-            var discriminatorPath = slicing.Discriminator.Select(d => d.Path).FirstOrDefault();
 
             var sliceList = new List<SliceAssertion.Slice>();
 
@@ -101,26 +102,35 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 root.ReturnToBookmark(slice);
 
-                var conditionNav = walkToCondition(root, discriminatorPath, Source as IResourceResolver);
-
-                var condition = new PathSelectorAssertion(discriminatorPath, conditionNav.Current.ValueSlicingConditions(Source, _assertionFactory));
-
-                sliceList.Add(new SliceAssertion.Slice(root.Current.SliceName, condition, harvest(root)));
+                IAssertion condition = new AllAssertion(slicing.Discriminator.Select(d => createCondition(root, d.Path)));
+                sliceList.Add(_assertionFactory.CreateSlice(root.Current.SliceName ?? root.Current.ElementId, condition, harvest(root)));
             }
-            var sliceAssertion = new SliceAssertion(slicing.Ordered ?? false, sliceList);
 
+            var defaultSlice = createDefaultSlice(slicing);
+            var sliceAssertion = _assertionFactory.CreateSliceAssertion(slicing.Ordered ?? false, defaultSlice, sliceList);
 
             root.ReturnToBookmark(bm);
             return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { sliceAssertion });
-
         }
 
-        private IAssertion SkipSlicingComponents(ElementDefinitionNavigator root)
+        private IAssertion createDefaultSlice(ElementDefinition.SlicingComponent slicing)
+            => slicing.Rules == ElementDefinition.SlicingRules.Closed ?
+                ResultAssertion.CreateFailure(
+                            new IssueAssertion(1026, "Element does not match any slice and the group is closed.", IssueSeverity.Error))
+                : ResultAssertion.Success;
+
+        private IAssertion createCondition(ElementDefinitionNavigator root, string path)
+        {
+            var conditionNav = walkToCondition(root, path, Source as IResourceResolver);
+            return new PathSelectorAssertion(path, conditionNav.Current.ValueSlicingConditions(Source, _assertionFactory));
+        }
+
+
+        private IAssertion harvestSlicing(ElementDefinitionNavigator root)
         {
             IAssertion result = null;
             // 20200520: for now only value slicing
-            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true) //&&
-                                                                                                                           //  !root.Current.Path.Contains(".extension"))
+            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true)
             {
                 var slices = root.FindMemberSlices(true);
 
@@ -135,10 +145,7 @@ namespace Hl7.Fhir.Specification.Schema
         private static void skipSlicingElements(ElementDefinitionNavigator root)
         {
             var pathName = root.PathName;
-            while (root.MoveToNext(pathName))
-            {
-
-            }
+            while (root.MoveToNext(pathName)) { }
         }
 
         private IReadOnlyDictionary<string, IAssertion> harvestChildren(ElementDefinitionNavigator childNav)

@@ -7,7 +7,6 @@
  */
 
 using System;
-using System.Linq;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -146,7 +145,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return !string.IsNullOrEmpty(basePath)
                 && !string.IsNullOrEmpty(path)
                 && dot1 == -1 && dot2 == -1;
-                // && !ModelInfo.IsCoreModelType(baseElementPath);
+            // && !ModelInfo.IsCoreModelType(baseElementPath);
         }
 
 
@@ -259,5 +258,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             return false;
         }
+
+        public bool IsSlicing => this.Current.Slicing != null;
     }
 }

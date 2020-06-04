@@ -34,16 +34,7 @@ namespace Hl7.Fhir.Specification.Specification.Source
         public IElementSchema GetSchema(ElementDefinitionNavigator nav)
         {
             var schemaUri = new Uri(nav.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
-
-            if (_cache.TryGetValue(schemaUri, out IElementSchema schema))
-            {
-                return schema;
-            }
-
-            schema = new SchemaConverter(this, _assertionFactory).Convert(nav);
-
-            _cache.TryAdd(schemaUri, schema);
-            return schema;
+            return _cache.GetOrAdd(schemaUri, uri => new SchemaConverter(this, _assertionFactory).Convert(nav));
         }
 
         public async Task<IElementSchema> GetSchema(Uri schemaUri)
@@ -64,6 +55,12 @@ namespace Hl7.Fhir.Specification.Specification.Source
                 {
                     schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
                 }
+            }
+
+            if (schemaUri.OriginalString.StartsWith("http://hl7.org/fhir/StructureDefinition/patient-nationality"))
+            {
+                Debug.WriteLine($"==== {schemaUri} ====");
+                Debug.WriteLine(schema.ToJson());
             }
 
             _cache.TryAdd(schemaUri, schema);

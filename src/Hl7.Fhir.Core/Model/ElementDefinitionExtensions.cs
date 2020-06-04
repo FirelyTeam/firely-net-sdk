@@ -6,15 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using System;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -40,7 +34,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string[] profile=null)
+        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string[] profile = null)
         {
             ed.Type.Clear();
             ed.OrType(type, profile);
@@ -48,7 +42,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition OfReference(this ElementDefinition ed, string[] targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string[] profile=null)
+        public static ElementDefinition OfReference(this ElementDefinition ed, string[] targetProfile, IEnumerable<ElementDefinition.AggregationMode> aggregation = null, string[] profile = null)
         {
             ed.Type.Clear();
             ed.OrReference(targetProfile, aggregation, profile);
@@ -101,7 +95,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition Value(this ElementDefinition ed, DataType fix=null, DataType pattern=null )
+        public static ElementDefinition Value(this ElementDefinition ed, DataType fix = null, DataType pattern = null)
         {
             ed.Fixed = fix;
             ed.Pattern = pattern;
@@ -122,15 +116,20 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        public static ElementDefinition WithSlicingIntro(this ElementDefinition ed, ElementDefinition.SlicingRules rules, 
-            params (ElementDefinition.DiscriminatorType type,string path)[] discriminators)
+        public static ElementDefinition WithSlicingIntro(this ElementDefinition ed, ElementDefinition.SlicingRules rules, bool? ordered = false,
+            params (ElementDefinition.DiscriminatorType type, string path)[] discriminators)
 
         {
             ed.Slicing = new ElementDefinition.SlicingComponent
             {
+                Ordered = ordered,
                 Rules = rules,
-                Discriminator = discriminators.Select(t => 
-                    new ElementDefinition.DiscriminatorComponent { Path = t.path, Type = t.type })
+                Discriminator = discriminators.Select(t =>
+                    new ElementDefinition.DiscriminatorComponent
+                    {
+                        Path = t.path,
+                        Type = t.type
+                    })
                     .ToList()
             };
 

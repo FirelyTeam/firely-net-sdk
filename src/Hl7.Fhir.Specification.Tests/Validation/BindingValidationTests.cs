@@ -1,7 +1,7 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
@@ -15,12 +15,12 @@ namespace Hl7.Fhir.Specification.Tests
     public class BindingValidationTests : IClassFixture<ValidationFixture>
     {
         private readonly IResourceResolver _resolver;
-        private readonly ITerminologyService _termService;
+        private readonly ITerminologyServiceNEW _termService;
 
         public BindingValidationTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
-            _termService = new LocalTerminologyService(_resolver);
+            _termService = new TerminologyServiceAdapter(new LocalTerminologyService(_resolver));
         }
 
         [Fact]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var val = binding.ToValidatable();
-            var vc = new ValidationContext(); // TODO MV Validation { TerminologyService = _termService };
+            var vc = new ValidationContext() { TerminologyService = _termService };
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number"));

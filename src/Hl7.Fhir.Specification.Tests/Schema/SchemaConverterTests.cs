@@ -3,6 +3,8 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Terminology;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation.Schema;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
@@ -19,12 +21,15 @@ namespace Hl7.Fhir.Specification.Tests.Schema
     [TestClass]
     public class SchemaConverterTests
     {
-        readonly ISchemaResolver _resolver;
-        readonly FhirPathCompiler _fpCompiler;
+        private readonly ISchemaResolver _resolver;
+        private readonly FhirPathCompiler _fpCompiler;
+        private readonly ITerminologyServiceNEW _terminologyService;
 
         public SchemaConverterTests()
         {
-            _resolver = new ElementSchemaResolver(new CachedResolver(ZipSource.CreateValidationSource()));
+            var localResolver = new CachedResolver(ZipSource.CreateValidationSource());
+            _resolver = new ElementSchemaResolver(localResolver);
+            _terminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(localResolver));
 
             var symbolTable = new SymbolTable();
             symbolTable.AddStandardFP();
@@ -115,21 +120,35 @@ namespace Hl7.Fhir.Specification.Tests.Schema
         }
 
         [TestMethod]
-        public async T.Task TestHumanName()
+        public async T.Task HumanNameCorrect()
         {
-            var poco = new HumanName() { Family = BigString() };
-            poco.GivenElement.Add(new FhirString(BigString()));
-            poco.GivenElement.Add(new FhirString("Maria"));
+            var poco = HumanName.ForFamily("Visser")
+                .WithGiven("Marco")
+                .WithGiven("Lourentius");
             poco.Use = HumanName.NameUse.Usual;
             var element = poco.ToTypedElement();
 
             var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
 
-            //var json = schemaElement.ToJson().ToString();
-
-            var results = await schemaElement.Validate(new[] { element }, new ValidationContext());
+            var results = await schemaElement.Validate(new[] { element }, new ValidationContext() { TerminologyService = _terminologyService });
             Assert.IsNotNull(results);
             Assert.IsTrue(results.Result.IsSuccessful, "HumanName is valid");
+        }
+
+        [TestMethod]
+        public async T.Task HumanNameTooLong()
+        {
+            var poco = HumanName.ForFamily(BigString())
+                .WithGiven(BigString())
+                .WithGiven("Maria");
+            poco.Use = HumanName.NameUse.Usual;
+            var element = poco.ToTypedElement();
+
+            var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
+
+            var results = await schemaElement.Validate(new[] { element }, new ValidationContext() { TerminologyService = _terminologyService });
+            Assert.IsNotNull(results);
+            Assert.IsFalse(results.Result.IsSuccessful, "HumanName is invalid: name too long");
         }
 
         [TestMethod]
@@ -139,9 +158,9 @@ namespace Hl7.Fhir.Specification.Tests.Schema
             var element = poco.ToTypedElement();
 
             var schemaElement = await _resolver.GetSchema(new Uri("http://hl7.org/fhir/StructureDefinition/HumanName", UriKind.Absolute));
-            var results = await schemaElement.Validate(new[] { element }, new ValidationContext());
+            var results = await schemaElement.Validate(new[] { element }, new ValidationContext() { TerminologyService = _terminologyService });
             Assert.IsNotNull(results);
-            Assert.IsTrue(results.Result.IsSuccessful, "HumanName is valid"); // MV 20200529 is an empty element valid here?
+            Assert.IsFalse(results.Result.IsSuccessful, "HumanName is valid, cannot be empty");
         }
 
         [TestMethod]
