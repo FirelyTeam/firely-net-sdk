@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Rest
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
             UriBuilder builder = new UriBuilder(endpoint);
-            builder.Path.EnsureEndsWith(@"/");
+            builder.Path = builder.Path.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
             builder.Path = builder.Path + _components;
 
@@ -317,8 +317,7 @@ namespace Hl7.Fhir.Rest
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/"));
-                    baseUri.EnsureEndsWith("/");
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/"); ;
                     BaseUri = new Uri(baseUri,UriKind.Absolute);
                 }
 
@@ -471,7 +470,7 @@ namespace Hl7.Fhir.Rest
         {
             if (IsAbsoluteRestUrl || (IsRelativeRestUrl && isAbsoluteRestUrl(baseUri)))
             {
-                baseUri.EnsureEndsWith("/");
+                baseUri = baseUri.EnsureEndsWith("/");
                 return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.ResourceType, this.Id, this.VersionId);
             }
             else if (isUrn(baseUri))
