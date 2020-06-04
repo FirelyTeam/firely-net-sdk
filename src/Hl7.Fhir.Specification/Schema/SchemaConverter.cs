@@ -15,6 +15,7 @@ using Hl7.Fhir.Validation.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static Hl7.Fhir.Model.ElementDefinition;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -55,12 +56,12 @@ namespace Hl7.Fhir.Specification.Schema
         private IElementSchema harvest(ElementDefinitionNavigator nav)
         {
             var schema = nav.Current.Convert(Source, _assertionFactory);
-            bool isInlineChildren = !nav.Current.IsRootElement();
 
             if (nav.HasChildren)
             {
                 var childNav = nav.ShallowCopy();   // make sure closure is to a clone, not the original argument
 
+                bool isInlineChildren = !nav.Current.IsRootElement();
                 bool allowAdditionalChildren = (isInlineChildren && nav.Current.IsResourcePlaceholder()) ||
                                      (!isInlineChildren && nav.StructureDefinition.Abstract == true);
 
@@ -70,7 +71,7 @@ namespace Hl7.Fhir.Specification.Schema
 
             if (nav.IsSlicing)
             {
-                var sliceAssertion = harvestSlicing(nav);
+                var sliceAssertion = createSliceAssertion(nav);
                 schema = schema.With(_assertionFactory, sliceAssertion);
             }
 
@@ -89,32 +90,8 @@ namespace Hl7.Fhir.Specification.Schema
             return conditions.Single().Current;
         }
 
-
-        private IAssertion CreateSliceAssertion(ElementDefinitionNavigator root, IEnumerable<Bookmark> slices)
-        {
-            var bm = root.Bookmark();
-
-            var slicing = root.Current.Slicing;
-
-            var sliceList = new List<SliceAssertion.Slice>();
-
-            foreach (var slice in slices)
-            {
-                root.ReturnToBookmark(slice);
-
-                IAssertion condition = new AllAssertion(slicing.Discriminator.Select(d => createCondition(root, d.Path)));
-                sliceList.Add(_assertionFactory.CreateSlice(root.Current.SliceName ?? root.Current.ElementId, condition, harvest(root)));
-            }
-
-            var defaultSlice = createDefaultSlice(slicing);
-            var sliceAssertion = _assertionFactory.CreateSliceAssertion(slicing.Ordered ?? false, defaultSlice, sliceList);
-
-            root.ReturnToBookmark(bm);
-            return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { sliceAssertion });
-        }
-
-        private IAssertion createDefaultSlice(ElementDefinition.SlicingComponent slicing)
-            => slicing.Rules == ElementDefinition.SlicingRules.Closed ?
+        private IAssertion createDefaultSlice(SlicingComponent slicing)
+            => slicing.Rules == SlicingRules.Closed ?
                 ResultAssertion.CreateFailure(
                             new IssueAssertion(1026, "Element does not match any slice and the group is closed.", IssueSeverity.Error))
                 : ResultAssertion.Success;
@@ -125,27 +102,42 @@ namespace Hl7.Fhir.Specification.Schema
             return new PathSelectorAssertion(path, conditionNav.Current.ValueSlicingConditions(Source, _assertionFactory));
         }
 
-
-        private IAssertion harvestSlicing(ElementDefinitionNavigator root)
+        private IAssertion createSliceAssertion(ElementDefinitionNavigator root)
         {
-            IAssertion result = null;
+            var slicing = root.Current.Slicing;
+            var sliceList = new List<SliceAssertion.Slice>();
+            IAssertion defaultSlice = null;
+
             // 20200520: for now only value slicing
-            if (root.Current.Slicing?.Discriminator.All(d => d.Type == ElementDefinition.DiscriminatorType.Value) == true)
+            if (slicing?.Discriminator.All(d => d.Type == DiscriminatorType.Value) == true)
             {
-                var slices = root.FindMemberSlices(true);
+                while (root.MoveToNextSlice())
+                {
+                    var sliceName = root.Current.SliceName;
 
-                result = CreateSliceAssertion(root, slices);
+                    if (sliceName == "@default" && slicing.Rules == SlicingRules.Closed)
+                    {
+                        // special case: set of rules that apply to all of the remaining content that is not in one of the 
+                        // defined slices. 
+                        defaultSlice = harvest(root);
+                    }
+                    else
+                    {
+                        var condition = slicing.Discriminator.Any() ?
+                             new AllAssertion(slicing.Discriminator.Select(d => createCondition(root, d.Path)))
+                             : harvest(root) as IAssertion; // Discriminator-less matching;
 
-                skipSlicingElements(root);
+                        sliceList.Add(_assertionFactory.CreateSlice(sliceName ?? root.Current.ElementId, condition, harvest(root)));
+                    }
+                }
 
+                defaultSlice ??= createDefaultSlice(slicing);
+                var sliceAssertion = _assertionFactory.CreateSliceAssertion(slicing.Ordered ?? false, defaultSlice, sliceList);
+
+                return _assertionFactory.CreateElementSchemaAssertion(new Uri($"#{root.Path}", UriKind.Relative), new[] { sliceAssertion });
             }
-            return result;
-        }
 
-        private static void skipSlicingElements(ElementDefinitionNavigator root)
-        {
-            var pathName = root.PathName;
-            while (root.MoveToNext(pathName)) { }
+            return new Trace("Slicing is still work in progress");
         }
 
         private IReadOnlyDictionary<string, IAssertion> harvestChildren(ElementDefinitionNavigator childNav)
