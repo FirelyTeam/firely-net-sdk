@@ -248,15 +248,6 @@ namespace Hl7.Fhir.Specification.Schema
                             d.Path.EndsWith("[x]");
         }
 
-        private static IAssertion BuildSlicing(ElementDefinition def)
-        {
-            var condition1 = new AllAssertion(new[] { new FhirPathAssertion("TODO", "mykey1", "code", "I am working on it", IssueSeverity.Error, false) });
-
-            var slice1 = new SliceAssertion.Slice("Systolic", condition1, new ResultAssertion(ValidationResult.Success));
-            var slice2 = new SliceAssertion.Slice("Dystolic", new FhirPathAssertion("TODO", "mykey2", "code", "I am working on it", IssueSeverity.Error, false), new ResultAssertion(ValidationResult.Success));
-            return new SliceAssertion(false, slice1, slice2);
-        }
-
         private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, IAssertion element)
         {
             if (element != null)

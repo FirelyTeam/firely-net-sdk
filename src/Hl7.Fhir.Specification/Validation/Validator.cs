@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Issue = Hl7.Fhir.Support.Issue;
 
 namespace Hl7.Fhir.Validation
 {

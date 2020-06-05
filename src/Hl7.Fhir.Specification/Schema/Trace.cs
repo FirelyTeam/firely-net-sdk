@@ -6,11 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation.Schema;
 using Newtonsoft.Json.Linq;
 using System;
+using Issue = Hl7.Fhir.Support.Issue;
 
 namespace Hl7.Fhir.Specification.Schema
 {

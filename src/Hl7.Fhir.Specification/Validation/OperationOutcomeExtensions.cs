@@ -11,6 +11,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation.Schema;
 using System.Collections.Generic;
 using System.Linq;
+using Issue = Hl7.Fhir.Support.Issue;
 
 namespace Hl7.Fhir.Validation
 {

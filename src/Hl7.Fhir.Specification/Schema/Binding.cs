@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Issue = Hl7.Fhir.Support.Issue;
 
 namespace Hl7.Fhir.Specification.Schema
 {
