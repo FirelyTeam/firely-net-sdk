@@ -141,6 +141,11 @@ namespace Hl7.Fhir.Model
         }
     }
 
+    public partial class Questionnaire : IVersionableConformanceResource
+    {
+
+    }
+
     public partial class DataElement : IConformanceResource
     {
         // I think DataElement should have Description too
