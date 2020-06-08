@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var item in issues.Concat(evidenceIssues))
             {
-                var issue = Issue.Create(item.IssueNumber, ConvertToSeverity(item.Severity), OperationOutcome.IssueType.Invalid);
+                var issue = Issue.Create(item.IssueNumber, convertToSeverity(item.Severity), convertToType(item.Type));
                 outcome.AddIssue(item.Message, issue, item.Location);
             }
 
@@ -62,37 +62,41 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        private static OperationOutcome.IssueSeverity ConvertToSeverity(IssueSeverity? severity)
+        private static OperationOutcome.IssueSeverity convertToSeverity(IssueSeverity? severity)
         {
-            switch (severity)
+            return severity switch
             {
-                case IssueSeverity.Fatal:
-                    return OperationOutcome.IssueSeverity.Fatal;
-                case IssueSeverity.Error:
-                    return OperationOutcome.IssueSeverity.Error;
-                case IssueSeverity.Warning:
-                    return OperationOutcome.IssueSeverity.Warning;
-                case IssueSeverity.Information:
-                default:
-                    return OperationOutcome.IssueSeverity.Information;
-            }
+                IssueSeverity.Fatal => OperationOutcome.IssueSeverity.Fatal,
+                IssueSeverity.Error => OperationOutcome.IssueSeverity.Error,
+                IssueSeverity.Warning => OperationOutcome.IssueSeverity.Warning,
+                _ => OperationOutcome.IssueSeverity.Information,
+            };
         }
 
         private static IssueSeverity? ConvertToSeverity(OperationOutcome.IssueSeverity? severity)
         {
-            switch (severity)
+            return severity switch
             {
-                case OperationOutcome.IssueSeverity.Fatal:
-                    return IssueSeverity.Fatal;
-                case OperationOutcome.IssueSeverity.Error:
-                    return IssueSeverity.Error;
-                case OperationOutcome.IssueSeverity.Warning:
-                    return IssueSeverity.Warning;
-                case OperationOutcome.IssueSeverity.Information:
-                default:
-                    return IssueSeverity.Information;
-            }
+                OperationOutcome.IssueSeverity.Fatal => IssueSeverity.Fatal,
+                OperationOutcome.IssueSeverity.Error => IssueSeverity.Error,
+                OperationOutcome.IssueSeverity.Warning => IssueSeverity.Warning,
+                _ => IssueSeverity.Information,
+            };
         }
+
+        private static OperationOutcome.IssueType convertToType(IssueType? type) => type switch
+        {
+            IssueType.BusinessRule => OperationOutcome.IssueType.BusinessRule,
+            IssueType.Invalid => OperationOutcome.IssueType.Invalid,
+            IssueType.Invariant => OperationOutcome.IssueType.Invariant,
+            IssueType.Incomplete => OperationOutcome.IssueType.Incomplete,
+            IssueType.Structure => OperationOutcome.IssueType.Structure,
+            IssueType.NotSupported => OperationOutcome.IssueType.NotSupported,
+            IssueType.Informational => OperationOutcome.IssueType.Informational,
+            IssueType.Exception => OperationOutcome.IssueType.Exception,
+            IssueType.CodeInvalid => OperationOutcome.IssueType.CodeInvalid,
+            _ => OperationOutcome.IssueType.Invalid,
+        };
 
         public static Assertions ToAssertions(this OperationOutcome outcome)
         {

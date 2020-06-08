@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Specification.Tests
             report = _validator.Validate(levin);
             DebugDumpOutputXml(report);
             Assert.False(report.Success);
-            Assert.Contains("but the instance does not use of the allowed choice types ('Period')", report.ToString());
+            Assert.Contains("but the instance does not use one of the allowed choice types ('Period')", report.ToString());
         }
 
         [Fact]

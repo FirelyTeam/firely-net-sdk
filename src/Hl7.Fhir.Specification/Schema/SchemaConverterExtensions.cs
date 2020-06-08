@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Schema
             return assertionFactory.CreateElementSchemaAssertion(id: new Uri("#" + def.Path, UriKind.Relative), elements);
         }
 
-        public static IAssertion ValueSlicingConditions(this ElementDefinition def, ISchemaResolver resolver, IElementDefinitionAssertionFactory assertionFactory)
+        public static IAssertion ValueSlicingConditions(this ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory)
         {
             var elements = new List<IAssertion>()
                    .MaybeAdd(BuildFixed(def, assertionFactory))
@@ -52,7 +52,6 @@ namespace Hl7.Fhir.Specification.Schema
 
             return new AllAssertion(elements);
         }
-
 
         private static IAssertion BuildBinding(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
         def.Binding != null ? assertionFactory.CreateBindingAssertion(def.Path, def.Binding.ValueSet, ConvertStrength(def.Binding.Strength), false, def.Binding.Description) : null;
@@ -89,7 +88,7 @@ namespace Hl7.Fhir.Specification.Schema
         private static IAssertion BuildMaxValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.Path, def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
 
-        public static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
+        private static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.Fixed != null ? assertionFactory.CreateFixedValueAssertion(def.Path, def.Fixed.ToTypedElement()) : null;
 
         private static IAssertion BuildPattern(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>

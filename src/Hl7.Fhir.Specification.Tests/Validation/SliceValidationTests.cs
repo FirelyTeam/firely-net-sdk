@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private IBucket createSliceDefs(string url, string path)
         {
-// We don't want to rewrite the slice/bucket factories right now
+            // We don't want to rewrite the slice/bucket factories right now
 #pragma warning disable CS0618 // Type or member is obsolete
             var sd = _resolver.FindStructureDefinition(url);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(3, outcome.Errors);
             Assert.Equal(0, outcome.Warnings);  // 11 terminology warnings, reset when terminology is working again
             var repr = outcome.ToString();
-            Assert.Contains("matches slice 'Patient.telecom:phone', but this is out of order for group 'Patient.telecom'", repr);
+            Assert.Contains("matches slice 'phone', but this is out of order for this group", repr);
             Assert.Contains("Value is not exactly equal to fixed value 'work'", repr);
             Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
             test("c:10kg", new Quantity(10m, "kg"), true);
             test("c:cc", new CodeableConcept("http://nos.nl", "bla"), true);
             test("s:there", new FhirString("there"), false, "not exactly equal to fixed value");  // fixed to hi!
-            test("fdt:f", FhirDateTime.Now(), false, "not one of the allowed choices");
+            test("fdt:f", FhirDateTime.Now(), false, "but the instance does not use one of the allowed choice types");
 
             void test(string title, DataType v, bool success, string fragment = null)
             {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestProfileSliceCreation()
         {
-            _ = createSliceDefs("http://example.org/fhir/StructureDefinition/list-with-profile-slicing", 
+            _ = createSliceDefs("http://example.org/fhir/StructureDefinition/list-with-profile-slicing",
                     "List.entry") as SliceGroupBucket;
         }
 
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Specification.Tests
             test("DL", null, 2); // should match slice3
             test("DL", "ID-TYPE-OTHER", 2); // should match slice3
             test("XXX", "ID-TYPE-OTHER", -1); // should not match at all
-           
+
             void test(string fhirCode, string localCode, int slice)
             {
                 // STU3: http://hl7.org/fhir/v2/0203
