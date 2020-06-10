@@ -348,86 +348,66 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public async T.Task ValidatesFixedValue()
+        public void ValidatesFixedValue()
         {
-            var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
-            // change the url, because we changing the definition
-            patientSd.Url = "http://example.com/patient_fixed_maritalStatus_changed";
-
-            var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
-            {
-                Text = "This is fixed too"
-            };
-
-            var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
-            maritalStatusElement.Fixed = (CodeableConcept)instance1.DeepCopy();
+            var patientDefUri = "http://validationtest.org/fhir/StructureDefinition/patient_fixed_maritalStatus_changed";
 
             var patient = new Patient
             {
-                MaritalStatus = instance1
+                MaritalStatus = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
+                {
+                    Text = "This is fixed too"
+                }
             };
 
-            var report = _validator.Validate(patient, patientSd);
+            var report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
             patient.MaritalStatus.Text = "This is incorrect";
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(1, report.Errors);
 
             patient.MaritalStatus.Text = "This is fixed too";
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
             patient.MaritalStatus.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(1, report.Errors);
 
             patient.MaritalStatus.Coding.RemoveAt(1);
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
         }
 
         [Fact]
-        public async T.Task ValidatesPatternValue()
+        public void ValidatesPatternValue()
         {
-            // [WMR 20170727] Fixed
-            // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
-            // Instead, clone the core def and modify the clone
-            var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
-            // change the url, because we changing the definition
-            patientSd.Url = "http://example.com/patient_pattern_maritalStatus_changed";
-
-            var instance1 = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "U");
-
-            var maritalStatusElement = patientSd.Snapshot.Element.Single(e => e.Path == "Patient.maritalStatus");
-            maritalStatusElement.Pattern = (CodeableConcept)instance1.DeepCopy();
+            var patientDefUri = "http://validationtest.org/fhir/StructureDefinition/patient_pattern_maritalStatus_changed";
 
             var patient = new Patient
             {
-                MaritalStatus = instance1
+                MaritalStatus = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
             };
 
-            var report = _validator.Validate(patient, patientSd);
+            var report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
             patient.MaritalStatus.Text = "This is irrelevant";
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
-            ((CodeableConcept)maritalStatusElement.Pattern).Text = "Not anymore";
-            report = _validator.Validate(patient, patientSd);
-            Assert.Equal(1, report.Errors);
 
             patient.MaritalStatus.Text = "Not anymore";
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
             patient.MaritalStatus.Coding.Insert(0, new Coding("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "L"));
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(0, report.Errors);
 
             patient.MaritalStatus.Coding.RemoveAt(1);
-            report = _validator.Validate(patient, patientSd);
+            report = _validator.Validate(patient, patientDefUri);
             Assert.Equal(1, report.Errors);
         }
 

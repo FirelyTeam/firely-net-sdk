@@ -35,8 +35,50 @@ namespace Hl7.Fhir.Validation
             buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality(),
             buildBloodPressureSlicing(),
             buildTelecomSlicing(),
-            buildNestedSlicing()
+            buildNestedSlicing(),
+            buildPatientWithFixedMaritalStatus(),
+            buildPatientWithPatternMaritalStatus(),
+            // TODO
+            // buildExtensionWithLessTypes()
         };
+
+        private static StructureDefinition buildExtensionWithLessTypes()
+        {
+
+            // TODO for BasicValidationTests.ValidateChoiceElement
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ExtensionWithLessTypes", "Patient Fixed MaritalStatus",
+                      "Test of patient with a fixed marital status", FHIRAllTypes.Extension);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Extension.value[x]").Value(fix: new CodeableConcept("http://hl7.org/fhir/marital-status", "U") { Text = "This is fixed too" }));
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithFixedMaritalStatus()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/patient_fixed_maritalStatus_changed", "Patient Fixed MaritalStatus",
+                      "Test of patient with a fixed marital status", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient.maritalStatus").Value(fix: new CodeableConcept("http://hl7.org/fhir/marital-status", "U") { Text = "This is fixed too" }));
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithPatternMaritalStatus()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/patient_pattern_maritalStatus_changed", "Patient Fixed MaritalStatus",
+                      "Test of patient with a pattern marital status", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient.maritalStatus").Value(pattern: new CodeableConcept("http://hl7.org/fhir/marital-status", "U")));
+
+            return result;
+        }
 
         private static StructureDefinition buildNestedSlicing()
         {
