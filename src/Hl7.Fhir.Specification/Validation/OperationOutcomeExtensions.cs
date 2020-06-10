@@ -48,11 +48,7 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            var evidenceIssues = assertions.Result.Evidence.OfType<IssueAssertion>();
-
-            var issues = assertions.OfType<IssueAssertion>();
-
-            foreach (var item in issues.Concat(evidenceIssues))
+            foreach (var item in assertions.GetIssueAssertions())
             {
                 var issue = Issue.Create(item.IssueNumber, convertToSeverity(item.Severity), convertToType(item.Type));
                 outcome.AddIssue(item.Message, issue, item.Location);

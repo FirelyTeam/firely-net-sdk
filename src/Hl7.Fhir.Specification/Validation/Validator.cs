@@ -194,18 +194,30 @@ namespace Hl7.Fhir.Validation
 
                 var validationContext = new ValidationContext()
                 {
+                    ResourceResolver = Settings.ResourceResolver,
+                    ResolveExternalReferences = Settings.ResolveExternalReferences,
                     FhirPathCompiler = new FhirPathCompiler(symbolTable),
                     ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
                     TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
-                    IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null
+                    IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null,
+                    // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
+                    // should be removed from STU3/R4 once we get the new normative version
+                    // of FP up, which could do comparisons between quantities.
+                    ExcludeFilter = a => (a is FhirPathAssertion fhirPathAssertion && fhirPathAssertion.Key == "rng-2"),
+                    ToTypedElement = (reference, resourceResolver) => resourceResolver.ResolveByUri(reference).ToTypedElement()
                 };
+
+                if (OnExternalResolutionNeeded != null)
+                    validationContext.OnExternalResolutionNeeded += ValidationContext_OnExternalResolutionNeeded;
 
                 var result = Assertions.Empty;
                 foreach (var profile in processor.Result)
                 {
-                    var schema = SchemaResolver.GetSchema(profile);
-                    schema.LogSchema();
-                    result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
+                    var schemaUri = new Uri(profile.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
+                    result += TaskHelper.Await(() => ValidationExtensions.Validate((p) => SchemaResolver.GetSchema(p), schemaUri, node, validationContext));
+                    //var schema = SchemaResolver.GetSchema(profile);
+                    // schema.LogSchema();
+                    //result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
                 }
                 outcome.Add(result.ToOperationOutcome());
             }
@@ -217,6 +229,13 @@ namespace Hl7.Fhir.Validation
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        private void ValidationContext_OnExternalResolutionNeeded(object sender, Schema.OnResolveResourceReferenceEventArgs e)
+        {
+            var args = new OnResolveResourceReferenceEventArgs(e.Reference);
+            this.OnExternalResolutionNeeded(sender, args);
+            e.Result = args.Result;
         }
         #endregion NewValidation stuff
 

@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2019, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -55,12 +55,6 @@ namespace Hl7.Fhir.Specification.Specification.Source
                 {
                     schema = new SchemaConverter(this, _assertionFactory).Convert(sd);
                 }
-            }
-
-            if (schemaUri.OriginalString.StartsWith("http://hl7.org/fhir/StructureDefinition/patient-nationality"))
-            {
-                Debug.WriteLine($"==== {schemaUri} ====");
-                Debug.WriteLine(schema.ToJson());
             }
 
             _cache.TryAdd(schemaUri, schema);

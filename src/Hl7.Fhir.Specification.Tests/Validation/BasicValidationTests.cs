@@ -351,6 +351,8 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task ValidatesFixedValue()
         {
             var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            // change the url, because we changing the definition
+            patientSd.Url = "http://example.com/patient_fixed_maritalStatus_changed";
 
             var instance1 = new CodeableConcept("http://hl7.org/fhir/marital-status", "U")
             {
@@ -392,6 +394,8 @@ namespace Hl7.Fhir.Specification.Tests
             // Do NOT modify common core Patient definition, as this would affect all subsequent tests.
             // Instead, clone the core def and modify the clone
             var patientSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            // change the url, because we changing the definition
+            patientSd.Url = "http://example.com/patient_pattern_maritalStatus_changed";
 
             var instance1 = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "U");
 
@@ -589,7 +593,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors); // timezone in 'date' is missing and mandatory element 'content' is missing
             Assert.Equal(0, report.Warnings);
-            Assert.Contains("does not match regex", report.Issue[0].Details.Text);
+            Assert.Contains(report.Issue, i => i.Details.Text.Contains("does not match regex"));
         }
 
         [Fact]
@@ -1110,6 +1114,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
         /// </summary>
         [Fact]
+        [Trait("Category", "Longrunner")]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
         {
             var cr = new CachedResolver(
@@ -1171,6 +1176,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(instance, def);
             Assert.False(report.Success, report.ToString());
+            Assert.DoesNotContain(report.Issue, i => i.Details.Text.Contains("rng-2"));
             Assert.Equal(2, report.Errors);  // Obs.status missing, Obs.code missing
             Assert.Equal(0, report.Warnings);
         }

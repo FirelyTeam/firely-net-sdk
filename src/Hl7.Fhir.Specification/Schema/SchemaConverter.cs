@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification.Schema
                 // Don't add empty schemas (i.e. empty ElementDefs in a differential)
                 if (!childSchema.IsEmpty())
                 {
-                    var schemaWithOrder = childSchema.With(_assertionFactory, new XmlOrder(xmlOrder, childNav.PathName));
+                    var schemaWithOrder = childSchema.With(_assertionFactory, new XmlOrder(xmlOrder));
                     children.Add(childNav.PathName, schemaWithOrder);
                 }
             }
