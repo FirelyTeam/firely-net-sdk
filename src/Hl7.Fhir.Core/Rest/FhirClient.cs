@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Rest
 
         public FhirClient(Uri endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
-            Requester = new Requester(Endpoint, base.Settings)
+            Requester = new WebClientRequester(Endpoint, base.Settings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Rest
 
         public FhirClient(string endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(new Uri(endpoint), settings, provider)
         {
-            Requester = new Requester(Endpoint, base.Settings)
+            Requester = new WebClientRequester(Endpoint, base.Settings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse

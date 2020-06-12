@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
             _provider = provider ?? new PocoStructureDefinitionSummaryProvider();
         }
 
-        protected IRequester Requester { get; set; }
+        protected IClientRequester Requester { get; set; }
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters

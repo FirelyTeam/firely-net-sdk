@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
 
-            var requester = new HttpRequester(Endpoint, Settings, handler);
+            var requester = new HttpClientRequester(Endpoint, Settings, handler);
             Requester = requester;
 
             // Expose default request headers to user.
@@ -70,14 +70,14 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Returns the HttpRequestMessage as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpRequester)?.LastRequest; } }
+        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpClientRequester)?.LastRequest; } }
 
         /// <summary>
         /// Returns the HttpResponseMessage as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpResponseMessage, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpRequester)?.LastResponse; } }
+        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpClientRequester)?.LastResponse; } }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
