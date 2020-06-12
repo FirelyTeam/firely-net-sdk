@@ -109,19 +109,12 @@ namespace Hl7.Fhir.Specification.Schema
 
             return list.Any() ? assertionFactory.CreateElementSchemaAssertion(id: new Uri("#constraints", UriKind.Relative), list) : null;
 
-            IssueSeverity? Convert(ElementDefinition.ConstraintSeverity? constraintSeverity)
+            IssueSeverity? Convert(ElementDefinition.ConstraintSeverity? constraintSeverity) => constraintSeverity switch
             {
-                switch (constraintSeverity)
-                {
-                    case ElementDefinition.ConstraintSeverity.Error:
-                        return IssueSeverity.Error;
-                    case ElementDefinition.ConstraintSeverity.Warning:
-                        return IssueSeverity.Warning;
-                    case null:
-                    default:
-                        return null;
-                }
-            }
+                ElementDefinition.ConstraintSeverity.Error => IssueSeverity.Error,
+                ElementDefinition.ConstraintSeverity.Warning => IssueSeverity.Warning,
+                _ => null,
+            };
         }
 
         private static IAssertion BuildCardinality(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
@@ -134,12 +127,12 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         // TODO this should be somewhere else
-        private static AggregationMode? convert(Hl7.Fhir.Model.ElementDefinition.AggregationMode? aggregationMode) => aggregationMode switch
+        private static AggregationMode? convertAggregationMode(ElementDefinition.AggregationMode? aggregationMode) => aggregationMode switch
         {
             ElementDefinition.AggregationMode.Bundled => AggregationMode.Bundled,
             ElementDefinition.AggregationMode.Contained => AggregationMode.Contained,
             ElementDefinition.AggregationMode.Referenced => AggregationMode.Referenced,
-            _ => null,
+            _ => null
         };
 
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver, IElementDefinitionAssertionFactory assertionFactory)
@@ -149,7 +142,7 @@ namespace Hl7.Fhir.Specification.Schema
             var typeRefs = from tr in def.Type
                            let profile = tr.GetDeclaredProfiles()
                            where profile != null
-                           select (code: tr.Code, profile, tr.Aggregation.Select(a => convert(a)));
+                           select (code: tr.Code, profile, tr.Aggregation.Select(a => convertAggregationMode(a)));
 
             //Distinguish between:
             // * elem with a single TypeRef - does not need any slicing
@@ -249,7 +242,7 @@ namespace Hl7.Fhir.Specification.Schema
             else
                 return builder.BuildSliceForProfiles(typeRefs.Select(tr => tr.profile));
 
-            
+
 
             */
             //return null;
