@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Impl;
 using Hl7.Fhir.Validation.Schema;
+using Hl7.Fhir.Validation.Support;
 using Hl7.FhirPath.Sprache;
 using System;
 using System.Collections.Generic;
@@ -132,6 +133,15 @@ namespace Hl7.Fhir.Specification.Schema
             return pattern != null ? assertionFactory.CreateRegexAssertion(pattern) : null;
         }
 
+        // TODO this should be somewhere else
+        private static AggregationMode? convert(Hl7.Fhir.Model.ElementDefinition.AggregationMode? aggregationMode) => aggregationMode switch
+        {
+            ElementDefinition.AggregationMode.Bundled => AggregationMode.Bundled,
+            ElementDefinition.AggregationMode.Contained => AggregationMode.Contained,
+            ElementDefinition.AggregationMode.Referenced => AggregationMode.Referenced,
+            _ => null,
+        };
+
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver, IElementDefinitionAssertionFactory assertionFactory)
         {
             var builder = new TypeCaseBuilder(resolver, assertionFactory);
@@ -139,7 +149,7 @@ namespace Hl7.Fhir.Specification.Schema
             var typeRefs = from tr in def.Type
                            let profile = tr.GetDeclaredProfiles()
                            where profile != null
-                           select (code: tr.Code, profile);
+                           select (code: tr.Code, profile, tr.Aggregation.Select(a => convert(a)));
 
             //Distinguish between:
             // * elem with a single TypeRef - does not need any slicing
@@ -180,9 +190,9 @@ namespace Hl7.Fhir.Specification.Schema
             else
             {
                 var result = Assertions.Empty;
-                foreach (var (code, profile) in typeRefs)
+                foreach (var (code, profile, aggregations) in typeRefs)
                 {
-                    result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p)));
+                    result += new AnyAssertion(profile.Select(p => builder.BuildProfileRef(code, p, aggregations)));
                 }
                 return result.Count > 0 ? new AnyAssertion(result) : null;
             }

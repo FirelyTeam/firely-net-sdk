@@ -1,3 +1,5 @@
+using FluentAssertions;
+using FluentAssertions.Execution;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
@@ -6,6 +8,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using Hl7.FhirPath;
 using System;
@@ -17,6 +20,7 @@ using System.Linq;
 using System.Threading.Tasks.Dataflow;
 using System.Xml.Linq;
 using Xunit;
+using static Hl7.Fhir.Model.OperationOutcome;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -734,6 +738,28 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
+        // TODO: refactor this
+        private void shouldBeEqualIssues(OperationOutcome outcome, IEnumerable<(Issue, string)> expected)
+        {
+            using (new AssertionScope())
+            {
+                outcome.Should().NotBeNull();
+                outcome.Issue.Should().Equal(expected, (i, e) => match(i, e));
+            }
+        }
+
+        private bool match(IssueComponent i, (Issue, string) e)
+            => (i.Details.Coding.FirstOrDefault().Code == e.Item1.Code.ToString()) && (i.Location.FirstOrDefault() == e.Item2);
+
+        private void shouldContainIssues(OperationOutcome outcome, IEnumerable<(Issue, string)> expected)
+        {
+            using (new AssertionScope())
+            {
+                outcome.Should().NotBeNull();
+                expected.Select(e => outcome.Issue.Exists(i => match(i, e)));
+            }
+        }
+
         [Fact]
         public void ValidateBundle()
         {
@@ -751,27 +777,52 @@ namespace Hl7.Fhir.Specification.Tests
             var report = _validator.Validate(bundle);
             Assert.True(report.Success);
             Assert.Equal(1, report.Warnings);            // 1 unresolvable reference
+            shouldBeEqualIssues(report, new[] { (Issue.UNAVAILABLE_REFERENCED_RESOURCE, "Bundle.entry[5].resource[0].managingOrganization[0]") });
             Assert.True(hitResolution);
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedEntries");
             Assert.False(report.Success);
             Assert.Equal(1, report.Warnings);            // 1 unresolvable reference
-            Assert.Equal(4, report.Errors);            // 4 non-contained references
+            shouldContainIssues(report, new[] {
+                (Issue.UNAVAILABLE_REFERENCED_RESOURCE, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[2].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[3].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[4].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+            });
+            //Assert.Equal(4, report.Errors);            // 4 non-contained references
+
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithContainedBundledEntries");
             Assert.False(report.Success);
             Assert.Equal(1, report.Warnings);            // 1 unresolvable reference
-            Assert.Equal(1, report.Errors);            // 1 external reference
+            shouldContainIssues(report, new[] {
+                (Issue.UNAVAILABLE_REFERENCED_RESOURCE, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+            });
+            //Assert.Equal(1, report.Errors);            // 1 external reference
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithBundledEntries");
             Assert.False(report.Success);
             Assert.Equal(1, report.Warnings);            // 1 unresolvable reference
-            Assert.Equal(2, report.Errors);            // 1 external reference, 1 contained reference
+            shouldContainIssues(report, new[] {
+                (Issue.UNAVAILABLE_REFERENCED_RESOURCE, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[6].resource[0].managingOrganization[0]"),
+            });
+            //Assert.Equal(2, report.Errors);            // 1 external reference, 1 contained reference
 
             report = _validator.Validate(bundle, "http://validationtest.org/fhir/StructureDefinition/BundleWithReferencedEntries");
             Assert.False(report.Success);
             Assert.Equal(1, report.Warnings);            // 1 unresolvable reference
-            Assert.Equal(4, report.Errors);            // 3 bundled reference, 1 contained reference
+            shouldContainIssues(report, new[] {
+                (Issue.UNAVAILABLE_REFERENCED_RESOURCE, "Bundle.entry[5].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[2].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[3].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[4].resource[0].managingOrganization[0]"),
+                (Issue.CONTENT_REFERENCE_OF_INVALID_KIND, "Bundle.entry[6].resource[0].managingOrganization[0]"),
+            });
+            //Assert.Equal(4, report.Errors);            // 3 bundled reference, 1 contained reference
         }
 
         /// <summary>
