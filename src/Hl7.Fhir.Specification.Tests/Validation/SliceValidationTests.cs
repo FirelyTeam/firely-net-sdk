@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("Instance count for 'Patient.telecom.use' is 1", repr);
         }
 
-        [Fact]
+        [Fact(Skip = "This is now done by the new Validator")]
         public void TestBucketAssignment()
         {
             var s = createPatientReslices() as SliceGroupBucket;
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("+31-20-6707070", s.Members.Last().Children("value").Single().Value); // in the open-at-end slice
         }
 
-        [Fact]
+        [Fact(Skip = "This is now done by the new Validator")]
         public void TestTelecomReslicing()
         {
             var p = new Patient();
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Specification.Tests
                     "List.entry") as SliceGroupBucket;
         }
 
-        [Fact]
+        [Fact(Skip = "This is now done by the new Validator")]
         public void TestValueSlicingWithPattern()
         {
             var s = createSliceDefs("http://validationtest.org/fhir/StructureDefinition/ValueDiscriminatorWithPattern",

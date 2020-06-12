@@ -289,27 +289,15 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public async T.Task ValidateChoiceElement()
+        public void ValidateChoiceElement()
         {
-            var extensionSd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Extension)).DeepCopy();
+            var extensionProfile = "http://validationtest.org/fhir/StructureDefinition/ExtensionWithLessTypes";
+            var extensionInstance = new Extension("http://validationtest.org/fhir/StructureDefinition/ExtensionWithLessTypes", new Oid("urn:oid:1.2.3.4.5"));
 
-            var extensionInstance = new Extension("http://some.org/testExtension", new Oid("urn:oid:1.2.3.4.5"));
-
-            // Now remove the choice available for OID
-            var extValueDef = extensionSd.Snapshot.Element.Single(e => e.Path == "Extension.value[x]");
-
-            // [WMR 20190415] Fixed after #944
-            // R4: Oid is derived from, and therefore compatible with, Uri
-            // => Must also remove type option "Uri" to force a validation error
-            //extValueDef.Type.RemoveAll(t => ModelInfo.FhirTypeNameToFhirType(t.Code) == FHIRAllTypes.Oid);
-            extValueDef.Type.RemoveAll(t => t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Oid)
-                                         || t.Code == ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.Uri));
-
-
-            var report = _validator.Validate(extensionInstance, extensionSd);
+            var report = _validator.Validate(extensionInstance, extensionProfile);
 
             Assert.False(report.Success, report.ToString());
-            Assert.Equal(1, report.Errors);
+            Assert.Equal(1, report.Errors); // Type Oid is not allowed
             Assert.Equal(0, report.Warnings);
         }
 

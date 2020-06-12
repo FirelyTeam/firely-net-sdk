@@ -107,7 +107,7 @@ namespace Hl7.Fhir.ElementModel
             Element parseExtension(ITypedElement nav)
             {
                 var valueChild = instance.Children("value").FirstOrDefault();
-                return PocoBuilderExtensions.ParseBindable(valueChild);
+                return valueChild == null ? null : ParseBindable(valueChild);
             }
         }
 

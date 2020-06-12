@@ -38,21 +38,28 @@ namespace Hl7.Fhir.Validation
             buildNestedSlicing(),
             buildPatientWithFixedMaritalStatus(),
             buildPatientWithPatternMaritalStatus(),
-            // TODO
-            // buildExtensionWithLessTypes()
+            buildExtensionWithLessTypes()
         };
 
         private static StructureDefinition buildExtensionWithLessTypes()
         {
-
-            // TODO for BasicValidationTests.ValidateChoiceElement
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ExtensionWithLessTypes", "Patient Fixed MaritalStatus",
-                      "Test of patient with a fixed marital status", FHIRAllTypes.Extension);
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ExtensionWithLessTypes", "Extension with less possible types",
+                      "Test of Extension without Uid or Oid types", FHIRAllTypes.Extension);
 
             var cons = result.Differential.Element;
+            var valueElement = new ElementDefinition("Extension.value[x]");
 
-            cons.Add(new ElementDefinition("Extension.value[x]").Value(fix: new CodeableConcept("http://hl7.org/fhir/marital-status", "U") { Text = "This is fixed too" }));
-
+            foreach (var item in ModelInfo.OpenTypes)
+            {
+                var type = ModelInfo.FhirTypeNameToFhirType(ModelInfo.GetFhirTypeNameForType(item));
+                if (!type.HasValue || type == FHIRAllTypes.Oid || type == FHIRAllTypes.Uri)
+                    continue;
+                if (type == FHIRAllTypes.Reference)
+                    valueElement.OrReference(new string[] { });
+                else
+                    valueElement.OrType(type.Value);
+            }
+            cons.Add(valueElement);
             return result;
         }
 

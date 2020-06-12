@@ -14,7 +14,6 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Specification.Source;
@@ -427,15 +426,7 @@ namespace Hl7.Fhir.Validation
 
             ValidationContext vc = new ValidationContext() { TerminologyService = new TerminologyServiceAdapter(ts) };
 
-            try
-            {
-                Binding b = binding.ToValidatable();
-                outcome.Add(b.Validate(instance, vc));
-            }
-            catch (IncorrectElementDefinitionException iede)
-            {
-                Trace(outcome, "Incorrect binding spec: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, defPath);
-            }
+            // Binding removed
 
             return outcome;
         }
