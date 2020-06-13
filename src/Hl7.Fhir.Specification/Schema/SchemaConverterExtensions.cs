@@ -104,16 +104,16 @@ namespace Hl7.Fhir.Specification.Schema
             foreach (var constraint in def.Constraint)
             {
                 var bestPractice = constraint.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") ?? false;
-                list.Add(assertionFactory.CreateFhirPathAssertion(constraint.Key, constraint.Expression, constraint.Human, Convert(constraint.Severity), bestPractice));
+                list.Add(assertionFactory.CreateFhirPathAssertion(constraint.Key, constraint.Expression, constraint.Human, ConvertConstraintSeverity(constraint.Severity), bestPractice));
             }
 
             return list.Any() ? assertionFactory.CreateElementSchemaAssertion(id: new Uri("#constraints", UriKind.Relative), list) : null;
 
-            IssueSeverity? Convert(ElementDefinition.ConstraintSeverity? constraintSeverity) => constraintSeverity switch
+            static Hl7.Fhir.Validation.Schema.IssueSeverity? ConvertConstraintSeverity(ElementDefinition.ConstraintSeverity? constraintSeverity) => constraintSeverity switch
             {
                 ElementDefinition.ConstraintSeverity.Error => IssueSeverity.Error,
                 ElementDefinition.ConstraintSeverity.Warning => IssueSeverity.Warning,
-                _ => null,
+                _ => (IssueSeverity?)null,
             };
         }
 
@@ -127,13 +127,14 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         // TODO this should be somewhere else
-        private static AggregationMode? convertAggregationMode(ElementDefinition.AggregationMode? aggregationMode) => aggregationMode switch
-        {
-            ElementDefinition.AggregationMode.Bundled => AggregationMode.Bundled,
-            ElementDefinition.AggregationMode.Contained => AggregationMode.Contained,
-            ElementDefinition.AggregationMode.Referenced => AggregationMode.Referenced,
-            _ => null
-        };
+        private static Hl7.Fhir.Validation.Support.AggregationMode? convertAggregationMode(ElementDefinition.AggregationMode? aggregationMode)
+            => aggregationMode switch
+            {
+                ElementDefinition.AggregationMode.Bundled => AggregationMode.Bundled,
+                ElementDefinition.AggregationMode.Contained => AggregationMode.Contained,
+                ElementDefinition.AggregationMode.Referenced => AggregationMode.Referenced,
+                _ => (AggregationMode?)null
+            };
 
         public static IAssertion BuildTypeRefValidation(this ElementDefinition def, ISchemaResolver resolver, IElementDefinitionAssertionFactory assertionFactory)
         {
