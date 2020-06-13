@@ -5,6 +5,7 @@
 
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\platforms.props" />
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
@@ -17,12 +18,6 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Rest\Search\**" />
-    <EmbeddedResource Remove="Rest\Search\**" />
-    <None Remove="Rest\Search\**" />
-  </ItemGroup>
- 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>

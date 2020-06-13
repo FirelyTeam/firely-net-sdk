@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient
+    public abstract partial class BaseFhirClient
     {
         #region Search Execution
 
