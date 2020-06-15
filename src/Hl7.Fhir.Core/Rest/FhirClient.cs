@@ -8,13 +8,14 @@
 
 
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using System;
 using System.Net;
 
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : BaseFhirClient, IFhirClient
+    public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -29,13 +30,14 @@ namespace Hl7.Fhir.Rest
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirClient(Uri endpoint, bool verifyFhirVersion = false) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion })
+        /// <param name="provider"></param>
+        public FhirClient(Uri endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
         {
         }
 
-        public FhirClient(Uri endpoint, FhirClientSettings settings) : base(endpoint, settings)
+        public FhirClient(Uri endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
-            Requester = new Requester(Endpoint, base.Settings)
+            Requester = new WebClientRequester(Endpoint, base.Settings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse
@@ -55,13 +57,14 @@ namespace Hl7.Fhir.Rest
         /// conformance check will be made to check that the FHIR versions are compatible.
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
-        public FhirClient(string endpoint, bool verifyFhirVersion = false) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion })
+        /// <param name="provider"></param>
+        public FhirClient(string endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
         {
         }
 
-        public FhirClient(string endpoint, FhirClientSettings settings) : base(new Uri(endpoint), settings)
+        public FhirClient(string endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(new Uri(endpoint), settings, provider)
         {
-            Requester = new Requester(Endpoint, base.Settings)
+            Requester = new WebClientRequester(Endpoint, base.Settings)
             {
                 BeforeRequest = this.BeforeRequest,
                 AfterResponse = this.AfterResponse

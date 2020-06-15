@@ -23,13 +23,15 @@ namespace Hl7.Fhir.Rest
 
         public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ParserSettings parserSettings)
         {
-            var result = new Bundle.EntryComponent();
-            result.Response = new Bundle.ResponseComponent
+            var result = new Bundle.EntryComponent
             {
-                Status = entry.Status,
-                LastModified = entry.LastModified,
-                Etag = entry.Etag,
-                Location = entry.Location
+                Response = new Bundle.ResponseComponent
+                {
+                    Status = entry.Status,
+                    LastModified = entry.LastModified,
+                    Etag = entry.Etag,
+                    Location = entry.Location
+                }
             };
 
             result.Response.SetHeaders(entry.Headers);
@@ -123,7 +125,7 @@ namespace Hl7.Fhir.Rest
             interaction.AddAnnotation(new Body { Data = data });
         }
 
-        internal static void SetHeaders(this Bundle.ResponseComponent interaction, Dictionary<string, string> headers)
+        internal static void SetHeaders(this Bundle.ResponseComponent interaction, IDictionary<string, string> headers)
         {
             foreach (var header in headers)
             {

@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Test
             {
                 Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, false);
             }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.Headers.UserAgent.ToString());
         }
 
-        #endregion
+        #endregion       
 
         #region Bundle.EntryComponent To EntryRequest
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse(new Fhir.Serialization.ParserSettings(), new PocoStructureDefinitionSummaryProvider());
+            var result = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
 
             var typedElementXml = result.TypedElement.ToXml();
             Assert.AreEqual(xml, typedElementXml);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = response.ToTypedEntryResponse(new Fhir.Serialization.ParserSettings(), new PocoStructureDefinitionSummaryProvider());
+            var typedresponse = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
 
             var settings = new ParserSettings
             {

@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             }           
         }
 
-        private static async Task searchUsingParam(IFhirClient client)
+        private static async Task searchUsingParam(BaseFhirClient client)
         {
             var srch = new SearchParams()
                 .Where("name=Donald")
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             }            
         }
 
-        private static void searchSync(IFhirClient client)
+        private static void searchSync(BaseFhirClient client)
         {
             var srch = new SearchParams()
                 .Where("name=Donald")
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             }            
         }
 
-        private static async Task searchMultiple(IFhirClient client)
+        private static async Task searchMultiple(BaseFhirClient client)
         {
             var srchParams = new SearchParams()
                 .Where("name=Donald")
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
-            await searchWithCriteria((IFhirClient)client);
+            await searchWithCriteria(client);
         }
 
         [TestMethod]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             }            
         }
 
-        private static async Task searchWithCriteria(IFhirClient client)
+        private static async Task searchWithCriteria(BaseFhirClient client)
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
 
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             
         }
 
-        private static async Task searchWithCriteriaAsynContinue(IFhirClient client)
+        private static async Task searchWithCriteriaAsynContinue(BaseFhirClient client)
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         }
 
 
-        private static async Task searchUsingPostAsyncContinue(IFhirClient client)
+        private static async Task searchUsingPostAsyncContinue(BaseFhirClient client)
         {
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 

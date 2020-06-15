@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";
 
-        private Bundle _result;
+        private readonly Bundle _result;
         private readonly Uri _baseUrl;
 
         public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)

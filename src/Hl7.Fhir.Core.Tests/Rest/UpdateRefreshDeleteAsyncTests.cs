@@ -9,6 +9,8 @@ namespace Hl7.Fhir.Core.AsyncTests
 {
     public partial class FhirClientAsyncTests
     {
+#pragma warning disable CS0618
+
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedWebClient()
@@ -35,7 +37,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         }
 
 
-        private static async System.Threading.Tasks.Task updateDelete(IFhirClient client)
+        private static async System.Threading.Tasks.Task updateDelete(BaseFhirClient client)
         {
             var pat = new Patient()
             {
@@ -63,10 +65,10 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            Func<System.Threading.Tasks.Task> act = async () =>
+            async System.Threading.Tasks.Task act()
             {
                 await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            };
+            }
 
             // VERIFY //
             await ExceptionAssert.Throws<FhirOperationException>(act);

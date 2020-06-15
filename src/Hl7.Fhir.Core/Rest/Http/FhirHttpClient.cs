@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -16,7 +17,7 @@ using System.Net.Http.Headers;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirHttpClient : BaseFhirClient, IFhirClient
+    public partial class FhirHttpClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -26,13 +27,10 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="settings">
+        /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
-        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) : base(endpoint, settings)
+        /// <param name="provider"></param>
+        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
             // If user does not supply message handler, add decompression strategy in default handler.
             var handler = messageHandler ?? new HttpClientHandler()
@@ -40,7 +38,7 @@ namespace Hl7.Fhir.Rest
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
 
-            var requester = new HttpRequester(Endpoint, Settings, handler);
+            var requester = new HttpClientRequester(Endpoint, Settings, handler);
             Requester = requester;
 
             // Expose default request headers to user.
@@ -56,14 +54,11 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="settings">
+        /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
-        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
-            : this(new Uri(endpoint), settings, messageHandler)
+        /// <param name="provider"></param>
+        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
+            : this(new Uri(endpoint), settings, messageHandler, provider)
         {
         }
 
@@ -75,14 +70,14 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Returns the HttpRequestMessage as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpRequester)?.LastRequest; } }
+        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpClientRequester)?.LastRequest; } }
 
         /// <summary>
         /// Returns the HttpResponseMessage as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpResponseMessage, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpRequester)?.LastResponse; } }
+        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpClientRequester)?.LastResponse; } }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
@@ -201,18 +196,6 @@ namespace Hl7.Fhir.Rest
         public HttpWebResponse LastResponse { get { return LastClientResponse as HttpWebResponse; } }
 
         #endregion
-
-
-        /// <summary>
-        /// Called just before the Http call is done
-        /// </summary>
-        public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
-
-        /// <summary>
-        /// Called just after the response was received
-        /// </summary>
-        public event EventHandler<AfterHttpResponseEventArgs> OnAfterResponse;
-
 
         /// <summary>
         /// Override dispose in order to clean up request headers tied to disposed requester.

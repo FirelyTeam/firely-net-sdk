@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private void patientGetEverything(IFhirClient client)
+        private void patientGetEverything(BaseFhirClient client)
         {
             var start = new FhirDateTime(2014, 11, 1);
             var end = new FhirDateTime(2015, 1, 1);
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Tests.Rest
             };            
         }
 
-        private static void expandExistingValueset(IFhirClient client)
+        private static void expandExistingValueset(BaseFhirClient client)
         {
             var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet", "administrative-gender"));
             Assert.IsTrue(vs.Expansion.Contains.Any());
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Tests.Rest
             }            
         }
 
-        private static void expandParameterValueSet(IFhirClient client)
+        private static void expandParameterValueSet(BaseFhirClient client)
         {
             var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
             var vsX = client.ExpandValueSet(vs);
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private static void lookupCoding(IFhirClient client)
+        private static void lookupCoding(BaseFhirClient client)
         {
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Tests.Rest
             };            
         }
 
-        private static void lookUpCode(IFhirClient client)
+        private static void lookUpCode(BaseFhirClient client)
         {
             var expansion = client.ConceptLookup(code: new Code("male"), system: new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-        private static void validateCodeById(IFhirClient client)
+        private static void validateCodeById(BaseFhirClient client)
         {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
-        private static void validateCodeByCanonical(IFhirClient client)
+        private static void validateCodeByCanonical(BaseFhirClient client)
         {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Tests.Rest
             };           
         }
 
-        private static void validateCodeWithVS(IFhirClient client)
+        private static void validateCodeWithVS(BaseFhirClient client)
         {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
@@ -256,16 +256,16 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsTrue(result.Result?.Value == true);
         }
 
-        [TestMethod]//returns 500: validation of slices is not done yet.
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeResourceValidationWebClient()
         {
             var client = new FhirClient(testEndpoint);
             validateResource(client);
         }
 
-        [TestMethod]//returns 500: validation of slices is not done yet.
-        [TestCategory("IntegrationTest"), Ignore]
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void InvokeResourceValidationHttpClient()
         {
             using (var client = new FhirHttpClient(testEndpoint))
@@ -274,21 +274,12 @@ namespace Hl7.Fhir.Tests.Rest
             }            
         }
 
-        private static void validateResource(IFhirClient client)
+        private static void validateResource(BaseFhirClient client)
         {
-            var pat = client.Read<Patient>("Patient/patient-uslab-example1");
-
-            try
-            {
-                var vresult = client.ValidateResource(pat, null,
-                    new FhirUri("http://hl7.org/fhir/StructureDefinition/uslab-patient"));
-                Assert.Fail("Should have resulted in 400");
-            }
-            catch (FhirOperationException fe)
-            {
-                Assert.AreEqual(System.Net.HttpStatusCode.BadRequest, fe.Status);
-                Assert.IsTrue(fe.Outcome.Issue.Where(i => i.Severity == OperationOutcome.IssueSeverity.Error).Any());
-            }
+            var pat = client.Read<Patient>("Patient/pat1");
+            var vresult = client.ValidateResource(pat, null,
+                new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
+            Assert.IsTrue(vresult.Success);          
         }
 
         [TestMethod]
@@ -297,7 +288,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
             var client = new FhirClient(_endpoint);
-            await patientEverythingAsync(client);
+            await patientEverythingAsync(client).ConfigureAwait(false);
         }
 
         [TestMethod]
@@ -307,11 +298,11 @@ namespace Hl7.Fhir.Tests.Rest
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
             using (var client = new FhirHttpClient(_endpoint))
             {
-                await patientEverythingAsync(client);
+                await patientEverythingAsync(client).ConfigureAwait(false);
             }           
         }
 
-        private static async System.Threading.Tasks.Task patientEverythingAsync(IFhirClient client)
+        private static async System.Threading.Tasks.Task patientEverythingAsync(BaseFhirClient client)
         {
             var start = new FhirDateTime(2014, 11, 1);
             var end = new FhirDateTime(2020, 1, 1);
@@ -320,8 +311,8 @@ namespace Hl7.Fhir.Tests.Rest
             var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
             var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
 
-            await bundleTask;
-            await bundle2Task;
+            await bundleTask.ConfigureAwait(false);
+            await bundle2Task.ConfigureAwait(false);
 
             var bundle = (Bundle)bundleTask.Result;
             Assert.IsTrue(bundle.Entry.Any());
