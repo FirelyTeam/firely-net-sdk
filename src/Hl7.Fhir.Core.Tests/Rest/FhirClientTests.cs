@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Tests.Rest
             Patient p = client.Update(pat);
             Location l = client.Update(loc);
             Assert.IsNotNull(p);
+            Assert.IsNotNull(l);
         }
 
 
