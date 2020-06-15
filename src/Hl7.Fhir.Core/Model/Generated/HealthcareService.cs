@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "HealthcareService"; } }
         
-        [FhirType("HealthcareService#HealthcareService.eligibility", IsNestedType=true)]
+        [FhirType("HealthcareService#Eligibility", IsNestedType=true)]
         [DataContract]
         public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EligibilityComponent"; } }
+            public override string TypeName { get { return "HealthcareService#Eligibility"; } }
             
             /// <summary>
             /// Coded value for the eligibility
@@ -153,11 +153,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HealthcareService#HealthcareService.availableTime", IsNestedType=true)]
+        [FhirType("HealthcareService#AvailableTime", IsNestedType=true)]
         [DataContract]
         public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AvailableTimeComponent"; } }
+            public override string TypeName { get { return "HealthcareService#AvailableTime"; } }
             
             /// <summary>
             /// mon | tue | wed | thu | fri | sat | sun
@@ -363,11 +363,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("HealthcareService#HealthcareService.notAvailable", IsNestedType=true)]
+        [FhirType("HealthcareService#NotAvailable", IsNestedType=true)]
         [DataContract]
         public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "NotAvailableComponent"; } }
+            public override string TypeName { get { return "HealthcareService#NotAvailable"; } }
             
             /// <summary>
             /// Reason presented to the user explaining why time not available

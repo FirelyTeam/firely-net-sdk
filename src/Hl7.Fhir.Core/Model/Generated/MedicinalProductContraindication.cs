@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductContraindication"; } }
         
-        [FhirType("MedicinalProductContraindication#MedicinalProductContraindication.otherTherapy", IsNestedType=true)]
+        [FhirType("MedicinalProductContraindication#OtherTherapy", IsNestedType=true)]
         [DataContract]
         public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OtherTherapyComponent"; } }
+            public override string TypeName { get { return "MedicinalProductContraindication#OtherTherapy"; } }
             
             /// <summary>
             /// The type of relationship between the medicinal product indication or contraindication and another therapy

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "ChargeItemDefinition"; } }
         
-        [FhirType("ChargeItemDefinition#ChargeItemDefinition.applicability", IsNestedType=true)]
+        [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
         [DataContract]
         public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ApplicabilityComponent"; } }
+            public override string TypeName { get { return "ChargeItemDefinition#Applicability"; } }
             
             /// <summary>
             /// Natural language description of the condition
@@ -225,11 +225,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ChargeItemDefinition#ChargeItemDefinition.propertyGroup", IsNestedType=true)]
+        [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
         [DataContract]
         public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PropertyGroupComponent"; } }
+            public override string TypeName { get { return "ChargeItemDefinition#PropertyGroup"; } }
             
             /// <summary>
             /// Conditions under which the priceComponent is applicable
@@ -328,11 +328,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ChargeItemDefinition#ChargeItemDefinition.propertyGroup.priceComponent", IsNestedType=true)]
+        [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
         [DataContract]
         public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PriceComponentComponent"; } }
+            public override string TypeName { get { return "ChargeItemDefinition#PriceComponent"; } }
             
             /// <summary>
             /// base | surcharge | deduction | discount | tax | informational

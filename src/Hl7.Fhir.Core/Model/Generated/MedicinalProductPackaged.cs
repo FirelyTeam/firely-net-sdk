@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductPackaged"; } }
         
-        [FhirType("MedicinalProductPackaged#MedicinalProductPackaged.batchIdentifier", IsNestedType=true)]
+        [FhirType("MedicinalProductPackaged#BatchIdentifier", IsNestedType=true)]
         [DataContract]
         public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "BatchIdentifierComponent"; } }
+            public override string TypeName { get { return "MedicinalProductPackaged#BatchIdentifier"; } }
             
             /// <summary>
             /// A number appearing on the outer packaging of a specific batch
@@ -154,11 +154,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProductPackaged#MedicinalProductPackaged.packageItem", IsNestedType=true)]
+        [FhirType("MedicinalProductPackaged#PackageItem", IsNestedType=true)]
         [DataContract]
         public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PackageItemComponent"; } }
+            public override string TypeName { get { return "MedicinalProductPackaged#PackageItem"; } }
             
             /// <summary>
             /// Including possibly Data Carrier Identifier

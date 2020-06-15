@@ -166,11 +166,11 @@ namespace Hl7.Fhir.Model
             Option,
         }
 
-        [FhirType("MedicationRequest#MedicationRequest.dispenseRequest", IsNestedType=true)]
+        [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
         [DataContract]
         public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DispenseRequestComponent"; } }
+            public override string TypeName { get { return "MedicationRequest#DispenseRequest"; } }
             
             /// <summary>
             /// First fill details
@@ -377,11 +377,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationRequest#MedicationRequest.dispenseRequest.initialFill", IsNestedType=true)]
+        [FhirType("MedicationRequest#InitialFill", IsNestedType=true)]
         [DataContract]
         public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InitialFillComponent"; } }
+            public override string TypeName { get { return "MedicationRequest#InitialFill"; } }
             
             /// <summary>
             /// First fill quantity
@@ -478,11 +478,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicationRequest#MedicationRequest.substitution", IsNestedType=true)]
+        [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
         [DataContract]
         public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SubstitutionComponent"; } }
+            public override string TypeName { get { return "MedicationRequest#Substitution"; } }
             
             /// <summary>
             /// Whether substitution is allowed or not

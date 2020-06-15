@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             ExposureAlternative,
         }
 
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.sampleSize", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
         [DataContract]
         public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SampleSizeComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#SampleSize"; } }
             
             /// <summary>
             /// Description of sample size
@@ -246,11 +246,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.resultsByExposure", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
         [DataContract]
         public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ResultsByExposureComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#ResultsByExposure"; } }
             
             /// <summary>
             /// Description of results by exposure
@@ -422,11 +422,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.effectEstimate", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
         [DataContract]
         public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EffectEstimateComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#EffectEstimate"; } }
             
             /// <summary>
             /// Description of effect estimate
@@ -632,11 +632,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.effectEstimate.precisionEstimate", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
         [DataContract]
         public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PrecisionEstimateComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#PrecisionEstimate"; } }
             
             /// <summary>
             /// Type of precision estimate
@@ -823,11 +823,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.certainty", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
         [DataContract]
         public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CertaintyComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#Certainty"; } }
             
             /// <summary>
             /// Certainty rating
@@ -945,11 +945,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("EffectEvidenceSynthesis#EffectEvidenceSynthesis.certainty.certaintySubcomponent", IsNestedType=true)]
+        [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
         [DataContract]
         public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CertaintySubcomponentComponent"; } }
+            public override string TypeName { get { return "EffectEvidenceSynthesis#CertaintySubcomponent"; } }
             
             /// <summary>
             /// Type of subcomponent of certainty rating

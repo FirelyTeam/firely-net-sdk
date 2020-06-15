@@ -85,11 +85,11 @@ namespace Hl7.Fhir.Model
             Seealso,
         }
 
-        [FhirType("Patient#Patient.contact", IsNestedType=true)]
+        [FhirType("Patient#Contact", IsNestedType=true)]
         [DataContract]
         public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContactComponent"; } }
+            public override string TypeName { get { return "Patient#Contact"; } }
             
             /// <summary>
             /// The kind of relationship
@@ -298,11 +298,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Patient#Patient.communication", IsNestedType=true)]
+        [FhirType("Patient#Communication", IsNestedType=true)]
         [DataContract]
         public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "CommunicationComponent"; } }
+            public override string TypeName { get { return "Patient#Communication"; } }
             
             /// <summary>
             /// The language which can be used to communicate with the patient about his or her health
@@ -418,11 +418,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Patient#Patient.link", IsNestedType=true)]
+        [FhirType("Patient#Link", IsNestedType=true)]
         [DataContract]
         public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "LinkComponent"; } }
+            public override string TypeName { get { return "Patient#Link"; } }
             
             /// <summary>
             /// The other patient or related person resource that the link refers to

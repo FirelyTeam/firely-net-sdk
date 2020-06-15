@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             NotDone,
         }
 
-        [FhirType("Immunization#Immunization.performer", IsNestedType=true)]
+        [FhirType("Immunization#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "Immunization#Performer"; } }
             
             /// <summary>
             /// What type of performance was done
@@ -183,11 +183,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.education", IsNestedType=true)]
+        [FhirType("Immunization#Education", IsNestedType=true)]
         [DataContract]
         public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "EducationComponent"; } }
+            public override string TypeName { get { return "Immunization#Education"; } }
             
             /// <summary>
             /// Educational material document identifier
@@ -392,11 +392,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.reaction", IsNestedType=true)]
+        [FhirType("Immunization#Reaction", IsNestedType=true)]
         [DataContract]
         public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReactionComponent"; } }
+            public override string TypeName { get { return "Immunization#Reaction"; } }
             
             /// <summary>
             /// When reaction started
@@ -549,11 +549,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Immunization#Immunization.protocolApplied", IsNestedType=true)]
+        [FhirType("Immunization#ProtocolApplied", IsNestedType=true)]
         [DataContract]
         public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProtocolAppliedComponent"; } }
+            public override string TypeName { get { return "Immunization#ProtocolApplied"; } }
             
             /// <summary>
             /// Name of vaccine series

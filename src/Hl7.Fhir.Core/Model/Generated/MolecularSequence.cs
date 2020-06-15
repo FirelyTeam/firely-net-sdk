@@ -187,11 +187,11 @@ namespace Hl7.Fhir.Model
             Other,
         }
 
-        [FhirType("MolecularSequence#MolecularSequence.referenceSeq", IsNestedType=true)]
+        [FhirType("MolecularSequence#ReferenceSeq", IsNestedType=true)]
         [DataContract]
         public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ReferenceSeqComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#ReferenceSeq"; } }
             
             /// <summary>
             /// Chromosome containing genetic finding
@@ -524,11 +524,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.variant", IsNestedType=true)]
+        [FhirType("MolecularSequence#Variant", IsNestedType=true)]
         [DataContract]
         public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VariantComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Variant"; } }
             
             /// <summary>
             /// Start position of the variant on the  reference sequence
@@ -789,11 +789,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.quality", IsNestedType=true)]
+        [FhirType("MolecularSequence#Quality", IsNestedType=true)]
         [DataContract]
         public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "QualityComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Quality"; } }
             
             /// <summary>
             /// indel | snp | unknown
@@ -1323,11 +1323,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.quality.roc", IsNestedType=true)]
+        [FhirType("MolecularSequence#Roc", IsNestedType=true)]
         [DataContract]
         public partial class RocComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RocComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Roc"; } }
             
             /// <summary>
             /// Genotype quality score
@@ -1647,11 +1647,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.repository", IsNestedType=true)]
+        [FhirType("MolecularSequence#Repository", IsNestedType=true)]
         [DataContract]
         public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RepositoryComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Repository"; } }
             
             /// <summary>
             /// directlink | openapi | login | oauth | other
@@ -1929,11 +1929,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.structureVariant", IsNestedType=true)]
+        [FhirType("MolecularSequence#StructureVariant", IsNestedType=true)]
         [DataContract]
         public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StructureVariantComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#StructureVariant"; } }
             
             /// <summary>
             /// Structural variant change type
@@ -2120,11 +2120,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.structureVariant.outer", IsNestedType=true)]
+        [FhirType("MolecularSequence#Outer", IsNestedType=true)]
         [DataContract]
         public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OuterComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Outer"; } }
             
             /// <summary>
             /// Structural variant outer start
@@ -2257,11 +2257,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MolecularSequence#MolecularSequence.structureVariant.inner", IsNestedType=true)]
+        [FhirType("MolecularSequence#Inner", IsNestedType=true)]
         [DataContract]
         public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InnerComponent"; } }
+            public override string TypeName { get { return "MolecularSequence#Inner"; } }
             
             /// <summary>
             /// Structural variant inner start

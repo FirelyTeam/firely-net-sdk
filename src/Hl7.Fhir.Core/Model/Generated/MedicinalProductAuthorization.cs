@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "MedicinalProductAuthorization"; } }
         
-        [FhirType("MedicinalProductAuthorization#MedicinalProductAuthorization.jurisdictionalAuthorization", IsNestedType=true)]
+        [FhirType("MedicinalProductAuthorization#JurisdictionalAuthorization", IsNestedType=true)]
         [DataContract]
         public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "JurisdictionalAuthorizationComponent"; } }
+            public override string TypeName { get { return "MedicinalProductAuthorization#JurisdictionalAuthorization"; } }
             
             /// <summary>
             /// The assigned number for the marketing authorization
@@ -209,11 +209,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("MedicinalProductAuthorization#MedicinalProductAuthorization.procedure", IsNestedType=true)]
+        [FhirType("MedicinalProductAuthorization#Procedure", IsNestedType=true)]
         [DataContract]
         public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProcedureComponent"; } }
+            public override string TypeName { get { return "MedicinalProductAuthorization#Procedure"; } }
             
             /// <summary>
             /// Identifier for this procedure

@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "Measure"; } }
         
-        [FhirType("Measure#Measure.group", IsNestedType=true)]
+        [FhirType("Measure#Group", IsNestedType=true)]
         [DataContract]
         public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "GroupComponent"; } }
+            public override string TypeName { get { return "Measure#Group"; } }
             
             /// <summary>
             /// Meaning of the group
@@ -209,11 +209,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Measure#Measure.group.population", IsNestedType=true)]
+        [FhirType("Measure#Population", IsNestedType=true)]
         [DataContract]
         public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PopulationComponent"; } }
+            public override string TypeName { get { return "Measure#Population"; } }
             
             /// <summary>
             /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
@@ -347,11 +347,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Measure#Measure.group.stratifier", IsNestedType=true)]
+        [FhirType("Measure#Stratifier", IsNestedType=true)]
         [DataContract]
         public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StratifierComponent"; } }
+            public override string TypeName { get { return "Measure#Stratifier"; } }
             
             /// <summary>
             /// Meaning of the stratifier
@@ -503,11 +503,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Measure#Measure.group.stratifier.component", IsNestedType=true)]
+        [FhirType("Measure#Component", IsNestedType=true)]
         [DataContract]
         public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ComponentComponent"; } }
+            public override string TypeName { get { return "Measure#Component"; } }
             
             /// <summary>
             /// Meaning of the stratifier component
@@ -641,11 +641,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("Measure#Measure.supplementalData", IsNestedType=true)]
+        [FhirType("Measure#SupplementalData", IsNestedType=true)]
         [DataContract]
         public partial class SupplementalDataComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SupplementalDataComponent"; } }
+            public override string TypeName { get { return "Measure#SupplementalData"; } }
             
             /// <summary>
             /// Meaning of the supplemental data

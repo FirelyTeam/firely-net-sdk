@@ -52,11 +52,11 @@ namespace Hl7.Fhir.Model
     {
         public override string TypeName { get { return "RequestGroup"; } }
         
-        [FhirType("RequestGroup#RequestGroup.action", IsNestedType=true)]
+        [FhirType("RequestGroup#Action", IsNestedType=true)]
         [DataContract]
         public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActionComponent"; } }
+            public override string TypeName { get { return "RequestGroup#Action"; } }
             
             /// <summary>
             /// User-visible prefix for the action (e.g. 1. or A.)
@@ -651,11 +651,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestGroup#RequestGroup.action.condition", IsNestedType=true)]
+        [FhirType("RequestGroup#Condition", IsNestedType=true)]
         [DataContract]
         public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ConditionComponent"; } }
+            public override string TypeName { get { return "RequestGroup#Condition"; } }
             
             /// <summary>
             /// applicability | start | stop
@@ -771,11 +771,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("RequestGroup#RequestGroup.action.relatedAction", IsNestedType=true)]
+        [FhirType("RequestGroup#RelatedAction", IsNestedType=true)]
         [DataContract]
         public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "RelatedActionComponent"; } }
+            public override string TypeName { get { return "RequestGroup#RelatedAction"; } }
             
             /// <summary>
             /// What action this is related to

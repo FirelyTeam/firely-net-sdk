@@ -91,11 +91,11 @@ namespace Hl7.Fhir.Model
             Unknown,
         }
 
-        [FhirType("ImagingStudy#ImagingStudy.series", IsNestedType=true)]
+        [FhirType("ImagingStudy#Series", IsNestedType=true)]
         [DataContract]
         public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "SeriesComponent"; } }
+            public override string TypeName { get { return "ImagingStudy#Series"; } }
             
             /// <summary>
             /// DICOM Series Instance UID for the series
@@ -472,11 +472,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImagingStudy#ImagingStudy.series.performer", IsNestedType=true)]
+        [FhirType("ImagingStudy#Performer", IsNestedType=true)]
         [DataContract]
         public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "PerformerComponent"; } }
+            public override string TypeName { get { return "ImagingStudy#Performer"; } }
             
             /// <summary>
             /// Type of performance
@@ -576,11 +576,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ImagingStudy#ImagingStudy.series.instance", IsNestedType=true)]
+        [FhirType("ImagingStudy#Instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InstanceComponent"; } }
+            public override string TypeName { get { return "ImagingStudy#Instance"; } }
             
             /// <summary>
             /// DICOM SOP Instance UID

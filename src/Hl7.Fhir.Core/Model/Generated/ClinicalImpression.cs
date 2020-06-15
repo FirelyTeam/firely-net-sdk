@@ -79,11 +79,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("ClinicalImpression#ClinicalImpression.investigation", IsNestedType=true)]
+        [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
         [DataContract]
         public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InvestigationComponent"; } }
+            public override string TypeName { get { return "ClinicalImpression#Investigation"; } }
             
             /// <summary>
             /// A name/code for the set
@@ -184,11 +184,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ClinicalImpression#ClinicalImpression.finding", IsNestedType=true)]
+        [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
         [DataContract]
         public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "FindingComponent"; } }
+            public override string TypeName { get { return "ClinicalImpression#Finding"; } }
             
             /// <summary>
             /// What was found

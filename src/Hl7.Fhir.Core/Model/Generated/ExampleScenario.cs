@@ -73,11 +73,11 @@ namespace Hl7.Fhir.Model
             Entity,
         }
 
-        [FhirType("ExampleScenario#ExampleScenario.actor", IsNestedType=true)]
+        [FhirType("ExampleScenario#Actor", IsNestedType=true)]
         [DataContract]
         public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActorComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Actor"; } }
             
             /// <summary>
             /// ID or acronym of the actor
@@ -266,11 +266,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.instance", IsNestedType=true)]
+        [FhirType("ExampleScenario#Instance", IsNestedType=true)]
         [DataContract]
         public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "InstanceComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Instance"; } }
             
             /// <summary>
             /// The id of the resource for referencing
@@ -497,11 +497,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.instance.version", IsNestedType=true)]
+        [FhirType("ExampleScenario#Version", IsNestedType=true)]
         [DataContract]
         public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "VersionComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Version"; } }
             
             /// <summary>
             /// The identifier of a specific version of a resource
@@ -618,11 +618,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.instance.containedInstance", IsNestedType=true)]
+        [FhirType("ExampleScenario#ContainedInstance", IsNestedType=true)]
         [DataContract]
         public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ContainedInstanceComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#ContainedInstance"; } }
             
             /// <summary>
             /// Each resource contained in the instance
@@ -756,11 +756,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.process", IsNestedType=true)]
+        [FhirType("ExampleScenario#Process", IsNestedType=true)]
         [DataContract]
         public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ProcessComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Process"; } }
             
             /// <summary>
             /// The diagram title of the group of operations
@@ -931,11 +931,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.process.step", IsNestedType=true)]
+        [FhirType("ExampleScenario#Step", IsNestedType=true)]
         [DataContract]
         public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "StepComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Step"; } }
             
             /// <summary>
             /// Nested process
@@ -1088,11 +1088,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.process.step.operation", IsNestedType=true)]
+        [FhirType("ExampleScenario#Operation", IsNestedType=true)]
         [DataContract]
         public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "OperationComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Operation"; } }
             
             /// <summary>
             /// The sequential number of the interaction
@@ -1460,11 +1460,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("ExampleScenario#ExampleScenario.process.step.alternative", IsNestedType=true)]
+        [FhirType("ExampleScenario#Alternative", IsNestedType=true)]
         [DataContract]
         public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "AlternativeComponent"; } }
+            public override string TypeName { get { return "ExampleScenario#Alternative"; } }
             
             /// <summary>
             /// Label for alternative

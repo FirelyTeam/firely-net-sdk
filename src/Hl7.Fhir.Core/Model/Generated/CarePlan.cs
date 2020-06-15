@@ -205,11 +205,11 @@ namespace Hl7.Fhir.Model
             EnteredInError,
         }
 
-        [FhirType("CarePlan#CarePlan.activity", IsNestedType=true)]
+        [FhirType("CarePlan#Activity", IsNestedType=true)]
         [DataContract]
         public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "ActivityComponent"; } }
+            public override string TypeName { get { return "CarePlan#Activity"; } }
             
             /// <summary>
             /// Results of the activity
@@ -367,11 +367,11 @@ namespace Hl7.Fhir.Model
         }
         
         
-        [FhirType("CarePlan#CarePlan.activity.detail", IsNestedType=true)]
+        [FhirType("CarePlan#Detail", IsNestedType=true)]
         [DataContract]
         public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
         {
-            public override string TypeName { get { return "DetailComponent"; } }
+            public override string TypeName { get { return "CarePlan#Detail"; } }
             
             /// <summary>
             /// Appointment | CommunicationRequest | DeviceRequest | MedicationRequest | NutritionOrder | Task | ServiceRequest | VisionPrescription
