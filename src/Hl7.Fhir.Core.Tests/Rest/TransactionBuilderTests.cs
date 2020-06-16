@@ -6,51 +6,15 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Model;
-using System.Collections.Generic;
-using System.Text;
-using System.Net;
-
+using Hl7.Fhir.Utility;
 namespace Hl7.Fhir.Test
 {
     [TestClass]
     public class TransactionBuilderTests
     {
-        [TestMethod]
-        public void TestBundleEntryComponentUrlIsEncoded()
-        {
-            var relativeEscapedUrl = "Medication/DILUANT%20-%20MMR%20II";
-            var m = new Medication
-            {
-                Id = "DILUANT - MMR II"
-            };
-            var b = new TransactionBuilder("http://myserver.org/fhir")
-                .Update("DILUANT - MMR II", m)
-                .ToBundle();
-            var e = b.Entry[0];
-
-            Assert.AreEqual(relativeEscapedUrl, e.Request.Url);
-
-
-            var relativeEscapedUrl2 = "Location?name=Enc%C3%B6ding%20T%C3%A9st";
-            var location = new Location
-            {
-                Name = "Encöding Tést",
-            };
-
-            var trxBuilder = new TransactionBuilder("http://example.org/test/fhir", Bundle.BundleType.Transaction);
-            var cond = new SearchParams()
-                .Add("name", location.Name);
-
-            var b2 = trxBuilder.Update(cond, location).ToBundle();
-            var e2 = b2.Entry[0];
-
-            Assert.AreEqual(relativeEscapedUrl2, e2.Request.Url);            
-        }
-
         [TestMethod]
         public void TestBuild()
         {
@@ -79,130 +43,23 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        public void TestFormBody()
+        public void TestInteractionType()
         {
-            string expected = "given=test&Key=Value&Active=true";
+            // just try a few
+            var tx = new TransactionBuilder("http://myserver.org/fhir").ServerHistory();
+            Assert.AreEqual(InteractionType.History, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
+            tx = new TransactionBuilder("http://myserver.org/fhir").ServerOperation("$everything", null);
+            Assert.AreEqual(InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("given", "test"));
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            parameters.Add(new Tuple<string, string>("Active", "true"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
+            var p = new Patient();
+            tx = new TransactionBuilder("http://myserver.org/fhir").Create(p);
+            Assert.AreEqual(InteractionType.Create, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
-
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Strict, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            var bodyText = HttpToEntryExtensions.DecodeBody(body, Encoding.UTF8);
-
-            Assert.AreEqual(bodyText, expected);
+            tx = new TransactionBuilder("http://myserver.org/fhir").Search(new SearchParams().Where("name=ewout"), resourceType: "Patient");
+            Assert.AreEqual(InteractionType.Search, tx.ToBundle().Entry[0].Annotation<InteractionType>());
         }
 
-        [TestMethod]
-        public void TestUrlEncoding()
-        {
-            var endpoint  = new Uri("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f");
-            var tx = new TransactionBuilder(endpoint);
-            tx.Get("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=<=2014-09-08T18:42:02.000Z&context=14187710&_format=json");
-            var b = tx.ToBundle();
-
-            byte[] body;
-
-            var req = b.Entry[0].ToHttpRequest(endpoint, null, null, ResourceFormat.Json, useFormatParameter: true, CompressRequestBody: false, body: out body);
-
-            Assert.AreEqual("https://fhir.sandboxcernerpowerchart.com/may2015/open/d075cf8b-3261-481d-97e5-ba6c48d3b41f/MedicationPrescription?patient=1316024&status=completed%2Cstopped&_count=25&scheduledtiming-bounds-end=%3C%3D2014-09-08T18%3A42%3A02.000Z&context=14187710&_format=json&_format=json", req.RequestUri.AbsoluteUri);
-        }
-
-        [TestMethod]
-        public void TestFormUrlEncoding()
-        {
-            // The URL encoding logic in Microsoft.Net.Http doesn't encode single quotes or parentheses, unlike System.Net.Http
-#if NET40
-            string expected = "Key=%3C%26%3E%22'%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40!%23%C2%A4%25%2F()%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
-#else
-            string expected = "Key=%3C%26%3E%22%27%C3%A4%C3%AB%C3%AFo%C3%A6%C3%B8%C3%A5%E2%82%AC%24%C2%A3%40%21%23%C2%A4%25%2F%28%29%3D%3F%7C%C2%A7%C2%A8%5E%5C%5B%5D%7B%7D";
-#endif
-
-            string specialCharacters = "<&>\"'äëïoæøå€$£@!#¤%/()=?|§¨^\\[]{}";
-            var  endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", specialCharacters));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
-
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
-
-            bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            string actual = Encoding.UTF8.GetString(body);
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void TestSearchUsingPost_MethodIsPost()
-        {
-            string expected = "POST";
-
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
-
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
-
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
-
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            Assert.AreEqual(expected, request.Method);
-        }
-
-        [TestMethod]
-        public void TestSearchUsingPost_ContentTypeIsFormUrlEncoded()
-        {
-            string expected = "application/x-www-form-urlencoded";
-
-            var  endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
-
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "Value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
-
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
-
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            Assert.AreEqual(expected, request.ContentType);
-        }
-
-        [TestMethod]
-        public void TestSearchUsingPost_UrlIsSuffixedWith_search()
-        {
-            string expected = "http://myserver.org/fhir/Patient/_search?_format=json";
-
-            var endpoint = new Uri("http://myserver.org/fhir");
-            string resourceType = "Patient";
-
-            var parameters = new List<Tuple<string, string>>();
-            parameters.Add(new Tuple<string, string>("Key", "value"));
-            SearchParams searchParams = SearchParams.FromUriParamList(parameters);
-
-            Bundle bundle = new TransactionBuilder(endpoint).SearchUsingPost(searchParams, resourceType).ToBundle();
-            byte[] body;
-
-            HttpWebRequest request = bundle.Entry[0].ToHttpRequest(endpoint, SearchParameterHandling.Lenient, Prefer.ReturnRepresentation, ResourceFormat.Json, true, false, out body);
-
-            string actual = request.RequestUri.AbsoluteUri;
-            Assert.AreEqual(expected, actual);
-        }
 
         [TestMethod]
         public void TestConditionalCreate()
@@ -256,11 +113,9 @@ namespace Hl7.Fhir.Test
 
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
 
-            var client = new FhirClient(endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json
-            };
-
+            var client = new FhirClient(endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            
             var transaction = new TransactionBuilder(client.Endpoint)
                 .Create(observation)
                 .Get("Patient/1");

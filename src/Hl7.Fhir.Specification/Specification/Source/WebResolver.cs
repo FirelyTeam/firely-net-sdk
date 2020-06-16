@@ -62,9 +62,9 @@ namespace Hl7.Fhir.Specification.Source
 
             var id = new ResourceIdentity(uri);
             var client = _clientFactory?.Invoke(id.BaseUri)
-                         ?? new FhirClient(id.BaseUri) { Timeout = this.TimeOut };
-
-            client.ParserSettings = this.ParserSettings;
+                         ?? new FhirClient(id.BaseUri);
+            client.Settings.Timeout = this.TimeOut;
+            client.Settings.ParserSettings = this.ParserSettings;
 
             try
             {
