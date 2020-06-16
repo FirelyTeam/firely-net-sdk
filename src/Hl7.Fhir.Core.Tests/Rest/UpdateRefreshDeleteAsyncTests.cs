@@ -7,10 +7,9 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestClass]
-    public class UpdateRefreshDeleteAsyncTests
+    public partial class FhirClientAsyncTests
     {
-        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+#pragma warning disable CS0618
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -22,6 +21,24 @@ namespace Hl7.Fhir.Core.AsyncTests
                 PreferredReturn = Prefer.ReturnRepresentation
             };
 
+            await updateDelete(client);
+        }
+        
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
+        {
+            using (var client = new FhirHttpClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await updateDelete(client);
+            }           
+        }
+
+
+        private static async System.Threading.Tasks.Task updateDelete(BaseFhirClient client)
+        {
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
@@ -48,14 +65,13 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            Func<System.Threading.Tasks.Task> act = async () =>
+            async System.Threading.Tasks.Task act()
             {
                 await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            };
+            }
 
             // VERIFY //
-            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
-
+            await ExceptionAssert.Throws<FhirOperationException>(act);
 
             Console.WriteLine("Test Completed");
         }
