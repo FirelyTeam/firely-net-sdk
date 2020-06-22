@@ -41,7 +41,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-     <DebugType>full</DebugType>
+     <DebugType>portable</DebugType>
      <DebugSymbols>True</DebugSymbols>
      <NoWarn>1591</NoWarn>
   </PropertyGroup>
