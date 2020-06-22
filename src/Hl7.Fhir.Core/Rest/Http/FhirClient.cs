@@ -17,7 +17,7 @@ using System.Net.Http.Headers;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirHttpClient : BaseFhirClient
+    public partial class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
         /// <param name="provider"></param>
-        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
+        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
             // If user does not supply message handler, add decompression strategy in default handler.
             var handler = messageHandler ?? new HttpClientHandler()
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
         /// <param name="provider"></param>
-        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
+        public FhirClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
             : this(new Uri(endpoint), settings, messageHandler, provider)
         {
         }

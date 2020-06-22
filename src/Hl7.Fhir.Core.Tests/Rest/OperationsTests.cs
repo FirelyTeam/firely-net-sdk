@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverythingHttpClient()
         {
-            using (var client = new FhirHttpClient(testEndpoint))
+            using (var client = new FhirClient(testEndpoint))
             {
                 patientGetEverything(client);
             }
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandExistingValueSetHttpClient()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 expandExistingValueset(client);
             };            
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandParameterValueSetHttpClient ()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 expandParameterValueSet(client);
             }            
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCodingHttpClient()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 lookupCoding(client);
             }
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCodeHttpClient()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 lookUpCode(client);
             };            
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeByIdHttpClient()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 validateCodeById(client);
             }
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeByCanonicalHttpClient ()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 validateCodeByCanonical(client);
             }            
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeWithVSHttpClient()
         {
-            using (var client = new FhirHttpClient(FhirClientTests.TerminologyEndpoint))
+            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 validateCodeWithVS(client);
             };           
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeResourceValidationHttpClient()
         {
-            using (var client = new FhirHttpClient(testEndpoint))
+            using (var client = new FhirClient(testEndpoint))
             {
                 validateResource(client);
             }            
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsyncHttpClient()
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-            using (var client = new FhirHttpClient(_endpoint))
+            using (var client = new FhirClient(_endpoint))
             {
                 await patientEverythingAsync(client).ConfigureAwait(false);
             }           
