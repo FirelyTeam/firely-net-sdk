@@ -5,6 +5,7 @@ using Hl7.Fhir.Rest;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using Hl7.Fhir.Rest.Legacy;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {

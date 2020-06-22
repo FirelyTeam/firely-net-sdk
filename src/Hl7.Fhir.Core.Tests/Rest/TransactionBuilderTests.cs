@@ -10,6 +10,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+
 namespace Hl7.Fhir.Test
 {
     [TestClass]
@@ -113,7 +114,7 @@ namespace Hl7.Fhir.Test
 
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
 
-            var client = new LegacyFhirClient(endpoint);
+            var client = new FhirClient(endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
             
             var transaction = new TransactionBuilder(client.Endpoint)

@@ -13,7 +13,7 @@ using System;
 using System.Net;
 
 
-namespace Hl7.Fhir.Rest
+namespace Hl7.Fhir.Rest.Legacy
 {
     public partial class LegacyFhirClient : BaseFhirClient
     {

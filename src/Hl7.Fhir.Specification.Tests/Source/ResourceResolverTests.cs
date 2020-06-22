@@ -17,6 +17,7 @@ using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
 using T = System.Threading.Tasks;
+using Hl7.Fhir.Rest.Legacy;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.fhir.org/r3/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
-        private class TestFhirClient : Rest.LegacyFhirClient
+        private class TestFhirClient : LegacyFhirClient
         {
             private int _status = 0;
 

@@ -21,6 +21,7 @@ using Hl7.Fhir.Utility;
 using static Hl7.Fhir.Model.Bundle;
 using System.Drawing;
 using System.Net.Http;
+using Hl7.Fhir.Rest.Legacy;
 
 namespace Hl7.Fhir.Tests.Rest
 {
