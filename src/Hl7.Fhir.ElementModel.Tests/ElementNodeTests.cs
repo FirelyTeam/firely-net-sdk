@@ -291,28 +291,6 @@ namespace Hl7.FhirPath.Tests
             catch (ArgumentException)
             {
             }
-        }
-
-        [TestMethod]
-        public void CreateFromPrimitive()
-        {
-            var node = ElementNode.ForPrimitive("hi!");
-            Assert.AreEqual("hi!", node.Value);
-            Assert.AreEqual("System.String", node.InstanceType);   // should really be System.String I think.
-
-            node = ElementNode.ForPrimitive(AdministrativeGender.Female);
-            Assert.AreEqual("female", node.Value);
-            Assert.AreEqual("System.Code", node.InstanceType);
-
-            node = ElementNode.ForPrimitive(AdHoc.Now);
-            Assert.AreEqual("Now", node.Value);
-            Assert.AreEqual("System.Code", node.InstanceType);
-        }
-
-        private enum AdHoc
-        {
-            Now,
-            Spontaneous,
-        }
+        }        
     }
 }

@@ -1,21 +1,23 @@
 ﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
- * See the file CONTRIBUTORS for details.
- * 
- * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
- */
+* Copyright (c) 2014, Firely (info@fire.ly) and contributors
+* See the file CONTRIBUTORS for details.
+* 
+* This file is licensed under the BSD 3-Clause license
+* available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+*/
 
-
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using System;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : BaseFhirClient
+    public partial class FhirHttpClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -25,24 +27,24 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="verifyFhirVersion">
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
+        /// <param name="settings"></param>
+        /// <param name="messageHandler"></param>
         /// <param name="provider"></param>
-        public FhirClient(Uri endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
+        public FhirHttpClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
+            // If user does not supply message handler, add decompression strategy in default handler.
+            var handler = messageHandler ?? new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+
+            var requester = new HttpClientRequester(Endpoint, Settings, handler);
+            Requester = requester;
+
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
-        public FhirClient(Uri endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
-        {
-            Requester = new WebClientRequester(Endpoint, base.Settings)
-            {
-                BeforeRequest = this.BeforeRequest,
-                AfterResponse = this.AfterResponse
-            };
-        }
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -52,24 +54,30 @@ namespace Hl7.Fhir.Rest
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
         /// </param>
-        /// <param name="verifyFhirVersion">
-        /// If parameter is set to true the first time a request is made to the server a 
-        /// conformance check will be made to check that the FHIR versions are compatible.
-        /// When they are not compatible, a FhirException will be thrown.
-        /// </param>
+        /// <param name="settings"></param>
+        /// <param name="messageHandler"></param>
         /// <param name="provider"></param>
-        public FhirClient(string endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
+        public FhirHttpClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
+            : this(new Uri(endpoint), settings, messageHandler, provider)
         {
         }
 
-        public FhirClient(string endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(new Uri(endpoint), settings, provider)
-        {
-            Requester = new WebClientRequester(Endpoint, base.Settings)
-            {
-                BeforeRequest = this.BeforeRequest,
-                AfterResponse = this.AfterResponse
-            };
-        }
+        /// <summary>
+        /// Default request headers that can be modified to persist default headers to internal client.
+        /// </summary>
+        public HttpRequestHeaders RequestHeaders { get; protected set; }
+
+        /// <summary>
+        /// Returns the HttpRequestMessage as it was last constructed to execute a call on the FhirClient
+        /// </summary>
+        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpClientRequester)?.LastRequest; } }
+
+        /// <summary>
+        /// Returns the HttpResponseMessage as it was last received during a call on the FhirClient
+        /// </summary>
+        /// <remarks>Note that the FhirClient will have read the body data from the HttpResponseMessage, so this is
+        /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
+        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpClientRequester)?.LastResponse; } }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
@@ -145,7 +153,7 @@ namespace Hl7.Fhir.Rest
             set => Settings.PreferredParameterHandling = value;
         }
 
-        
+
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -174,7 +182,7 @@ namespace Hl7.Fhir.Rest
             get => Settings.ParserSettings;
             set => Settings.ParserSettings = value;
         }
-        
+
         /// <summary>
         /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
         /// </summary>
@@ -186,64 +194,28 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
         public HttpWebResponse LastResponse { get { return LastClientResponse as HttpWebResponse; } }
-        
+
         #endregion
-        
 
         /// <summary>
-        /// Called just before the Http call is done
+        /// Override dispose in order to clean up request headers tied to disposed requester.
         /// </summary>
-        public event EventHandler<BeforeRequestEventArgs> OnBeforeRequest;
-
-        /// <summary>
-        /// Called just after the response was received
-        /// </summary>
-        public event EventHandler<AfterResponseEventArgs> OnAfterResponse;
-
-        /// <summary>
-        /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
-        /// </summary>
-        /// <param name="rawRequest">The request as it is about to be sent to the server</param>
-        /// <param name="body">The data in the body of the request as it is about to be sent to the server</param>
-        protected virtual void BeforeRequest(HttpWebRequest rawRequest, byte[] body)
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
         {
-            // Default implementation: call event
-            OnBeforeRequest?.Invoke(this, new BeforeRequestEventArgs(rawRequest, body));
-        }
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.RequestHeaders = null;
+                    base.Dispose(disposing);
+                }
 
-        /// <summary>
-        /// Inspect the HttpWebResponse as it came back from the server
-        /// </summary>
-        /// <remarks>You cannot read the body from the HttpWebResponse, since it has
-        /// already been read by the framework. Use the body parameter instead.</remarks>
-        protected virtual void AfterResponse(HttpWebResponse webResponse, byte[] body)
-        {
-            // Default implementation: call event
-            OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
+                disposedValue = true;
+            }
         }
     }
-    
-    public class BeforeRequestEventArgs : EventArgs
-    {
-        public BeforeRequestEventArgs(HttpWebRequest rawRequest, byte[] body)
-        {
-            this.RawRequest = rawRequest;
-            this.Body = body;
-        }
 
-        public HttpWebRequest RawRequest { get; internal set; }
-        public byte[] Body { get; internal set; }
-    }
-
-    public class AfterResponseEventArgs : EventArgs
-    {
-        public AfterResponseEventArgs(HttpWebResponse webResponse, byte[] body)
-        {
-            this.RawResponse = webResponse;
-            this.Body = body;
-        }
-
-        public HttpWebResponse RawResponse { get; internal set; }
-        public byte[] Body { get; internal set; }
-    }
+   
 }
+

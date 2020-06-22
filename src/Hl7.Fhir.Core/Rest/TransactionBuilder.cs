@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";
 
-        private Bundle _result;
+        private readonly Bundle _result;
         private readonly Uri _baseUrl;
 
         public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
@@ -36,24 +36,7 @@ namespace Hl7.Fhir.Rest
             : this(baseUri.OriginalString, type)
         {
         }
-
-
-        internal enum InteractionType
-        {
-            Search,
-            Unspecified,
-            Read,
-            VRead,
-            Update,
-            Delete,
-            Create,
-            Capabilities,
-            History,
-            Operation,
-            Transaction,
-            Patch
-        }
-
+        
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
             var newEntry = new Bundle.EntryComponent();
