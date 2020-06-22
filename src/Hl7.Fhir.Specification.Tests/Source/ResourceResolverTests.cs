@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.fhir.org/r3/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
-        private class TestFhirClient : Rest.FhirClient
+        private class TestFhirClient : Rest.LegacyFhirClient
         {
             private int _status = 0;
 

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeTestPatientGetEverything()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             patientGetEverything(client);            
         }
 
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandExistingValueSet()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             expandExistingValueset(client);
         }
 
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeExpandParameterValueSet()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             expandParameterValueSet(client);
         }
 
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCoding()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             lookupCoding(client);
         }
 
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeLookupCode()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             lookUpCode(client);
         }
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeById()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeById(client);
         }
 
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeByCanonical()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeByCanonical(client);
         }
 
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeValidateCodeWithVS()
         {
-            var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeWithVS(client);
         }
 
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("IntegrationTest")]
         public void InvokeResourceValidation()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             validateResource(client);
         }
 
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsync()
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-            var client = new FhirClient(_endpoint);
+            var client = new LegacyFhirClient(_endpoint);
             await patientEverythingAsync(client).ConfigureAwait(false);
         }
 

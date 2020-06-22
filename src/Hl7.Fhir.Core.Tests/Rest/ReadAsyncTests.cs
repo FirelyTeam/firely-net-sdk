@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new FhirClient(_endpoint)
+            var client = new LegacyFhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new LegacyFhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
         {
-            var client = new FhirClient(_endpoint)
+            var client = new LegacyFhirClient(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation

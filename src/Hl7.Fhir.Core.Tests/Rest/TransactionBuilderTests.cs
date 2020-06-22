@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Test
 
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
 
-            var client = new FhirClient(endpoint);
+            var client = new LegacyFhirClient(endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
             
             var transaction = new TransactionBuilder(client.Endpoint)

@@ -15,7 +15,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
-    public partial class FhirClient : BaseFhirClient
+    public partial class LegacyFhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -31,11 +31,11 @@ namespace Hl7.Fhir.Rest
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
         /// <param name="provider"></param>
-        public FhirClient(Uri endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
+        public LegacyFhirClient(Uri endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
         {
         }
 
-        public FhirClient(Uri endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
+        public LegacyFhirClient(Uri endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
             Requester = new WebClientRequester(Endpoint, base.Settings)
             {
@@ -58,11 +58,11 @@ namespace Hl7.Fhir.Rest
         /// When they are not compatible, a FhirException will be thrown.
         /// </param>
         /// <param name="provider"></param>
-        public FhirClient(string endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
+        public LegacyFhirClient(string endpoint, bool verifyFhirVersion = false, IStructureDefinitionSummaryProvider provider = null) : this(endpoint, new FhirClientSettings() { VerifyFhirVersion = verifyFhirVersion }, provider)
         {
         }
 
-        public FhirClient(string endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(new Uri(endpoint), settings, provider)
+        public LegacyFhirClient(string endpoint, FhirClientSettings settings, IStructureDefinitionSummaryProvider provider = null) : base(new Uri(endpoint), settings, provider)
         {
             Requester = new WebClientRequester(Endpoint, base.Settings)
             {
