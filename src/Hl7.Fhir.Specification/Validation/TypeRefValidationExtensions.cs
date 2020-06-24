@@ -35,11 +35,11 @@ namespace Hl7.Fhir.Validation
 
             if (choices.Count() > 1)
             {
-                if (instance.InstanceType != null)
+                if (instance.InstanceTypeD != null)
                 {
                     // This is a choice type, find out what type is present in the instance data
                     // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
+                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceTypeD.Name);
                     if (instanceType != null)
                     {
                         // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
@@ -57,12 +57,12 @@ namespace Hl7.Fhir.Validation
                         else
                         {
                             var choiceList = String.Join(",", choices.Select(t => "'" + t + "'"));
-                            validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not one of the allowed choices ({choiceList})",
+                            validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceTypeD.Name}') is not one of the allowed choices ({choiceList})",
                                      Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
                         }
                     }
                     else
-                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.InstanceType}', which is not a known FHIR core type.",
+                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.InstanceTypeD.Name}', which is not a known FHIR core type.",
                                 Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
                 }
                 else

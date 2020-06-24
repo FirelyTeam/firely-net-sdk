@@ -27,23 +27,16 @@ namespace Hl7.Fhir.Validation
 
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
                 ITypedElement instance, string declaredTypeProfile,
-                IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals,
-                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
+                IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
-            _typeNameMapper = typeNameMapper;
             _path = instance.Location;
 
-            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper);
+            _profiles = new ProfileAssertion(_path, _profileResolver);
 
-            if (instance.InstanceType != null)
-            {
-                if (_typeNameMapper != null && _typeNameMapper(instance.InstanceType, out string canonicalUri))
-                    _profiles.SetInstanceType(canonicalUri);
-                else
-                    _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));
-            }
+            if (instance.InstanceTypeD != null)
+                _profiles.SetInstanceType(instance.InstanceTypeD.Identifier);
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
             // This is only for resources, but I don't bother checking, since this will return empty anyway

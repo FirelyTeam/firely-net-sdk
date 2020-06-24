@@ -32,8 +32,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         public void KeepScopes()
         {
             Assert.IsNull(_bundleNode.ParentResource);
-            Assert.AreEqual("Bundle", _bundleNode.InstanceType);
-            Assert.AreEqual("Bundle", _bundleNode.NearestResourceType);
+            Assert.AreEqual(ModelInfo.Types.Bundle, _bundleNode.InstanceTypeD);
+            Assert.AreEqual(ModelInfo.Types.Bundle, _bundleNode.NearestResourceType);
 
             var entry = (ScopedNode)_bundleNode.Children("entry").First();
             Assert.IsNotNull(entry);
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Bundle.entry[0]", entry.LocalLocation);
             Assert.AreEqual("Bundle", entry.ParentResource.Location);
             Assert.AreEqual("Bundle", entry.ParentResource.LocalLocation);
-            Assert.AreNotEqual("Bundle", entry.InstanceType);
+            Assert.AreNotEqual(ModelInfo.Types.Bundle, entry.InstanceTypeD);
             Assert.IsFalse(entry.AtResource);
 
             var resource = (ScopedNode)entry.Children("resource").First();
@@ -49,7 +49,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Bundle.entry[0].resource[0]", resource.Location);
             Assert.AreEqual("Bundle.entry[0].resource[0]", resource.LocalLocation);
             Assert.AreEqual("Bundle", resource.ParentResource.Location);
-            Assert.AreNotEqual("Bundle", resource.InstanceType);
+            Assert.AreNotEqual(ModelInfo.Types.Bundle, resource.InstanceTypeD);
             Assert.IsTrue(resource.AtResource);
 
             var active = (ScopedNode)resource.Children("active").First();
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual("Organization.active[0]", active.LocalLocation);
             Assert.AreEqual("Bundle.entry[0].resource[0]", active.ParentResource.Location);
             Assert.AreEqual("Bundle", active.ParentResource.ParentResource.Location);
-            Assert.AreNotEqual("Bundle", active.InstanceType);
+            Assert.AreNotEqual(ModelInfo.Types.Bundle, active.InstanceTypeD);
             Assert.IsFalse(active.AtResource);
         }
 
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNotNull(entry);
             entry = (ScopedNode)entry.Children("contained").FirstOrDefault();
             Assert.IsNotNull(entry);
-            Assert.AreNotEqual("Bundle", entry.InstanceType);
+            Assert.AreNotEqual(ModelInfo.Types.Bundle, entry.InstanceTypeD);
 
             Assert.IsTrue(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0]", entry.Location);
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             entry = (ScopedNode)entry.Children("id").FirstOrDefault();
             Assert.IsNotNull(entry);
-            Assert.AreNotEqual("Bundle", entry.InstanceType);
+            Assert.AreNotEqual(ModelInfo.Types.Bundle, entry.InstanceTypeD);
 
             Assert.IsFalse(entry.AtResource);
             Assert.AreEqual("Bundle.entry[6].resource[0].contained[0].id[0]", entry.Location);
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNotNull(assertXHtml);
             Assert.AreEqual(1, assertXHtml.Count());
             Assert.AreEqual("text", assertXHtml.First().Name);
-            Assert.AreEqual("xhtml", assertXHtml.First().InstanceType);
+            Assert.AreEqual(ModelInfo.Types.XHtml, assertXHtml.First().InstanceTypeD);
             Assert.AreEqual("text", assertXHtml.First().Location);
             Assert.IsNotNull(assertXHtml.First().Value);
 

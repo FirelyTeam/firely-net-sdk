@@ -22,16 +22,14 @@ namespace Hl7.Fhir.Validation
     {
         private readonly string _path;
         private readonly Func<string, StructureDefinition> _resolver;
-        private readonly StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
 
         private readonly List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
-        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
-            StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
+        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver)
+            
         {
             _path = path;
             _resolver = resolver;
-            _typeNameMapper = typeNameMapper;
         }
 
         private ProfileEntry _instanceType;
@@ -296,8 +294,7 @@ namespace Hl7.Fhir.Validation
 
             if (ModelInfo.IsInstanceTypeFor(superclass, subclass))
                 return true;
-            else if (superclass == typeof(Resource).Name &&
-                _typeNameMapper != null && _typeNameMapper(subclass, out string dummy) &&
+            else if (superclass == "Resource" &&                
                 !(ModelInfo.IsDataType(subclass) || ModelInfo.IsPrimitive(subclass)))
                 return true;
             return false;

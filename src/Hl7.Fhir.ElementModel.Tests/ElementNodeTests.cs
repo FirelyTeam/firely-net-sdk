@@ -63,7 +63,7 @@ namespace Hl7.FhirPath.Tests
             // Explicit types will be passed through on polymorphic elements
             var obs = ElementNode.Root(_provider, "Observation");
             var value = obs.Add(_provider, "value", true, "boolean");
-            Assert.AreEqual("boolean", value.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Boolean, value.InstanceTypeD);
 
             // But if you leave the type out, Add() will try to determine the type
             obs = ElementNode.Root(_provider, "Observation");
@@ -71,24 +71,24 @@ namespace Hl7.FhirPath.Tests
             Assert.ThrowsException<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
 #endif
             value = obs.Add(_provider, "value", true, "boolean");  // with an explicit type
-            Assert.AreEqual("boolean", value.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Boolean, value.InstanceTypeD);
 
             // complex types are untouched
             var id = obs.Add(_provider, "identifier");
-            Assert.AreEqual("Identifier", id.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Identifier, id.InstanceTypeD);
 
             // so are unvalued primitive non-polymorphic elements
             var act = obs.Add(_provider, "status");
-            Assert.AreEqual("code", act.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Code, act.InstanceTypeD);
 
             // and valued non-polymorhpic primitives
             act = obs.Add(_provider, "status", "registered");
-            Assert.AreEqual("code", act.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Code, act.InstanceTypeD);
 
             // actual type from definition will always win
             var data = ElementNode.Root(_provider, "SampledData");
             var dims = data.Add(_provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
-            Assert.AreEqual("positiveInt", dims.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.PositiveInt, dims.InstanceTypeD);
         }
 
         [TestMethod]
@@ -99,12 +99,12 @@ namespace Hl7.FhirPath.Tests
             var data = patient[0];
             Assert.AreEqual("contained", data.Name);
             Assert.IsNull(data.Value);
-            Assert.AreEqual("Observation", data.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Observation, data.InstanceTypeD);
 
             data = patient[1];
             Assert.AreEqual("active", data.Name);
             Assert.AreEqual(true, data.Value);
-            Assert.AreEqual("boolean", data.InstanceType);
+            Assert.AreEqual(ModelInfo.Types.Boolean, data.InstanceTypeD);
         }
 
         [TestMethod]
@@ -273,24 +273,26 @@ namespace Hl7.FhirPath.Tests
         [TestMethod]
         public void CannotUseAbstractType()
         {
-            var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
-            var bundle = FhirJsonNode.Parse(bundleJson);
-            var typedBundle = bundle.ToTypedElement(_provider, "Bundle");
+            throw new NotImplementedException("Has to be re-implemented now BackboneElement is gone as a type for InstanceType");
 
-            //Type of entry is BackboneElement, but you can't set that, see below.
-            Assert.AreEqual("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
+            //var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
+            //var bundle = FhirJsonNode.Parse(bundleJson);
+            //var typedBundle = bundle.ToTypedElement(_provider, "Bundle");
 
-            var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
+            ////Type of entry is BackboneElement, but you can't set that, see below.
+            //Assert.AreEqual("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
 
-            try
-            {
-                var typedEntry =
-                    entry.ToTypedElement(_provider, "Element");
-                Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
-            }
-            catch (ArgumentException)
-            {
-            }
+            //var entry = SourceNode.Node("entry", SourceNode.Valued("fullUrl", "http://example.org/Patient/1"));
+
+            //try
+            //{
+            //    var typedEntry =
+            //        entry.ToTypedElement(_provider, "Element");
+            //    Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
+            //}
+            //catch (ArgumentException)
+            //{
+            //}
         }        
     }
 }

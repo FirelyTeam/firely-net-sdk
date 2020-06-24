@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
@@ -109,23 +110,17 @@ namespace Hl7.Fhir.Serialization.Tests
             // will allow whitespace and comments to come through      
             var nav = navCreator(tp);
 
-            var outputBuilder = new StringBuilder();
-            IElementDefinitionSummary serInfo = null;
-
             switch (nav)
             {
-                case ISourceNode isn:
-                    serInfo = null;
+                case ISourceNode _:
                     break;
-                case ITypedElement ien:
-                    serInfo = ien.Definition;
+                case ITypedElement _:
                     break;
                 default:
                     throw Error.InvalidOperation("Fix unit test");
             }
 
-            string output = null;
-
+            string output;
             if (nav is ISourceNode isn2) output = isn2.ToXml();
             else if (nav is ITypedElement ien2) output = ien2.ToXml();
             else
@@ -181,31 +176,31 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             Assert.AreEqual("Patient", n.Name);
             Assert.AreEqual("Patient", n.Annotation<IResourceTypeSupplier>()?.ResourceType);
-            if (typed) Assert.AreEqual("Patient", n.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Patient, n.InstanceTypeD);
 
             var nav = n.Children().GetEnumerator();
 
             Assert.IsTrue(nav.MoveNext());
             Assert.AreEqual("id", nav.Current.Name);
             Assert.AreEqual("pat1", nav.Current.Value);
-            if (typed) Assert.AreEqual("id", nav.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Id, nav.Current.InstanceTypeD);
 
             Assert.IsFalse(nav.Current.Children().Any());
 
             Assert.IsTrue(nav.MoveNext());
             Assert.AreEqual("text", nav.Current.Name);
-            if (typed) Assert.AreEqual("Narrative", nav.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Narrative, nav.Current.InstanceTypeD);
 
             var text = n.Children("text").Children().GetEnumerator();
 
             Assert.IsTrue(text.MoveNext()); // status
-            if (typed) Assert.AreEqual("code", text.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Code, text.Current.InstanceTypeD);
             Assert.AreEqual("generated", text.Current.Value);
 
             Assert.IsTrue(text.MoveNext());
             Assert.AreEqual("div", text.Current.Name);
             Assert.IsTrue(((string)text.Current.Value).StartsWith("<div xmlns="));       // special handling of xhtml
-            if (typed) Assert.AreEqual("xhtml", text.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.XHtml, text.Current.InstanceTypeD);
 
             Assert.IsFalse(text.Current.Children().Any()); // cannot move into xhtml
             Assert.AreEqual("div", text.Current.Name); // still on xhtml <div>
@@ -215,14 +210,14 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(nav.MoveNext()); // contained
             Assert.AreEqual("contained", nav.Current.Name);
             Assert.AreEqual("Patient", nav.Current.Annotation<IResourceTypeSupplier>().ResourceType);
-            if (typed) Assert.AreEqual("Patient", nav.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Patient, nav.Current.InstanceTypeD);
 
             var contained = nav.Current.Children().GetEnumerator();
             Assert.IsTrue(contained.MoveNext()); // id
-            if (typed) Assert.AreEqual("id", contained.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Id, contained.Current.InstanceTypeD);
             Assert.IsTrue(contained.MoveNext()); // identifier
             Assert.AreEqual("identifier", contained.Current.Name);
-            if (typed) Assert.AreEqual("Identifier", contained.Current.InstanceType);
+            if (typed) Assert.AreEqual(ModelInfo.Types.Identifier, contained.Current.InstanceTypeD);
 
             var identifier = contained.Current.Children().GetEnumerator();
 
@@ -247,7 +242,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             if (typed)
             {
-                Assert.AreEqual("date", bd.InstanceType);
+                Assert.AreEqual(ModelInfo.Types.Date, bd.InstanceTypeD);
                 Assert.AreEqual(PartialDate.Parse("1974-12-25"), bd.Value);
             }
             else
@@ -258,7 +253,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (typed)
             {
                 var dec = n.Children("deceased").Single();
-                Assert.AreEqual("boolean", dec.InstanceType);
+                Assert.AreEqual(ModelInfo.Types.Boolean, dec.InstanceTypeD);
                 Assert.AreEqual(false, dec.Value);
             }
             else

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.ElementModel
 
                 foreach (var parent in scopedNode.ParentResources())
                 {
-                    if (parent.InstanceType == "Bundle")
+                    if (parent.InstanceTypeD?.Name == "Bundle")
                     {
                         var result = parent.BundledResources().FirstOrDefault(br => br.FullUrl == url)?.Resource;
                         if (result != null) return result;
@@ -104,9 +104,9 @@ namespace Hl7.Fhir.ElementModel
             // First, get the url to fetch from the focus
             string url = null;
 
-            if (element.InstanceType == FHIRAllTypes.String.GetLiteral() && element.Value is string s)
+            if (element.InstanceTypeD == ModelInfo.Types.String && element.Value is string s)
                 url = s;
-            else if (element.InstanceType == FHIRAllTypes.Reference.GetLiteral())
+            else if (element.InstanceTypeD == ModelInfo.Types.Reference)
                 url = element.ParseResourceReference()?.Reference;
 
             if (url == null) return default;   // nothing found to resolve

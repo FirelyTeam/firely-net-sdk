@@ -41,6 +41,30 @@ namespace Hl7.Fhir.Model
 {
     public partial class ModelInfo
     {
+        // These should be generated at some point for all POCOs
+        public class Types
+        {
+            public static TypeDefinition Code => throw new NotImplementedException();
+            public static TypeDefinition Coding => throw new NotImplementedException();
+            public static TypeDefinition CodeableConcept => throw new NotImplementedException();
+            public static TypeDefinition Quantity => throw new NotImplementedException();
+            public static TypeDefinition String => throw new NotImplementedException();
+            public static TypeDefinition Uri => throw new NotImplementedException();
+            public static TypeDefinition Extension => throw new NotImplementedException();
+            public static TypeDefinition Reference => throw new NotImplementedException();
+            public static TypeDefinition Boolean => throw new NotImplementedException();
+            public static TypeDefinition Identifier => throw new NotImplementedException();
+            public static TypeDefinition PositiveInt => throw new NotImplementedException();
+            public static TypeDefinition Observation => throw new NotImplementedException();
+            public static TypeDefinition Patient => throw new NotImplementedException();
+            public static TypeDefinition XHtml => throw new NotImplementedException();
+            public static TypeDefinition Id => throw new NotImplementedException();
+            public static TypeDefinition Narrative => throw new NotImplementedException();
+            public static TypeDefinition Date => throw new NotImplementedException();
+            public static TypeDefinition Bundle => throw new NotImplementedException();
+        }
+
+
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public class SearchParamDefinition
         {
@@ -50,7 +74,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    return String.Format("{0} {1} {2} ({3})", Resource, Name, Type, Expression);
+                    return string.Format("{0} {1} {2} ({3})", Resource, Name, Type, Expression);
                 }
             }
 
@@ -184,7 +208,7 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
         public static bool IsPrimitive(string name)
         {
-            if (String.IsNullOrEmpty(name)) return false;
+            if (string.IsNullOrEmpty(name)) return false;
 
             return FhirTypeToCsType.ContainsKey(name) && Char.IsLower(name[0]);
         }
@@ -194,7 +218,7 @@ namespace Hl7.Fhir.Model
         {
             var name = GetFhirTypeNameForType(type);
 
-            return name != null && Char.IsLower(name[0]);
+            return name != null && char.IsLower(name[0]);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR primitive data type.</summary>
@@ -206,7 +230,7 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified value represents the name of a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(string name)
         {
-            if (String.IsNullOrEmpty(name)) return false;
+            if (string.IsNullOrEmpty(name)) return false;
 
             return FhirTypeToCsType.ContainsKey(name) && !IsKnownResource(name) && !IsPrimitive(name);
         }
@@ -520,6 +544,8 @@ namespace Hl7.Fhir.Model
         public static VersionAwarePocoStructureDefinitionSummaryProvider GetStructureDefinitionSummaryProvider() =>
             _versionedProvider.Value;
 
+
+        public static ModelSpace ModelSpace => throw new NotImplementedException();
 
         public static readonly Type[] OpenTypes =
         {

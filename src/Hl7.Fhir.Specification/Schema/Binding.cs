@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
             if (input == null) throw Error.ArgumentNull(nameof(input));
             if (vc?.TerminologyService == null) throw new InvalidValidationContextException($"ValidationContext should have its {nameof(ValidationContext.TerminologyService)} property set.");
-            if (input.InstanceType == null) throw Error.Argument(nameof(input), "Binding validation requires input to have an instance type.");
+            if (input.InstanceTypeD == null) throw Error.Argument(nameof(input), "Binding validation requires input to have an instance type.");
 
             // This would give informational messages even if the validation was run on a choice type with a binding, which is then
             // only applicable to an instance which is bindable. So instead of a warning, we should just return as validation is
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Specification.Schema
             //    return Issue.CONTENT_TYPE_NOT_BINDEABLE 
             //        .NewOutcomeWithIssue($"Validation of binding with non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             //}
-            if (!ModelInfo.IsBindable(input.InstanceType))
+            if (!ModelInfo.IsBindable(input.InstanceTypeD?.Name))
                 return new OperationOutcome();  // success
 
             var bindable = parseBindable(input);
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
             var bindable = input.ParseBindable();
             if (bindable == null)    // should never happen, since we already checked IsBindable
-                throw Error.NotSupported($"Type '{input.InstanceType}' is bindable, but could not be parsed by ParseBindable().");
+                throw Error.NotSupported($"Type '{input.InstanceTypeD.Name}' is bindable, but could not be parsed by ParseBindable().");
 
             return bindable;
         }
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Specification.Schema
                 case Coding cd when String.IsNullOrEmpty(cd.Code) && Strength == BindingStrength.Required:
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
-                        .NewOutcomeWithIssue($"No code found in {source.InstanceType} with a required binding.", source);
+                        .NewOutcomeWithIssue($"No code found in {source.InstanceTypeD.Name} with a required binding.", source);
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && 
                                 Strength == BindingStrength.Extensible:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE

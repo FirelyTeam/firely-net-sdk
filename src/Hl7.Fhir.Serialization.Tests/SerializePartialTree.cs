@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
             pat.Text.Div = "whatever";
 
             var patNav = pat.ToTypedElement();
-            Assert.AreEqual("xhtml", patNav.Children("text").Children("div").Single().InstanceType);
+            Assert.AreEqual(ModelInfo.Types.XHtml, patNav.Children("text").Children("div").Single().InstanceTypeD);
         }
 
         [TestMethod]
@@ -75,10 +75,10 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             assertAreNavsEqual(navXml, navJson, navPoco);
 
-            var navRtXml = JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceType,
+            var navRtXml = JsonParsingHelpers.ParseToTypedElement(navXml.ToJson(), navXml.InstanceTypeD?.Name,
                 new PocoStructureDefinitionSummaryProvider(), navXml.Name);
             var navRtJson = navJson.ToPoco().ToTypedElement(navJson.Name);
-            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceType,
+            var navRtPoco = XmlParsingHelpers.ParseToTypedElement(navPoco.ToXml(), navPoco.InstanceTypeD?.Name,
                 new PocoStructureDefinitionSummaryProvider());
             assertAreNavsEqual(navRtXml, navRtJson, navRtPoco);
         }

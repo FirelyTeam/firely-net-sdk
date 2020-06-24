@@ -26,6 +26,6 @@ namespace Hl7.Fhir.Validation
         // This discriminator matches if the type in the instance is *compatible* with ANY of the 
         // possible multiple types in the ElementDefinition.Type.Code (since Type repeats).
         protected override bool MatchInternal(ITypedElement instance) =>
-            Types.Any(type => ModelInfo.IsInstanceTypeFor(type, instance.InstanceType));
+            Types.Any(type => ModelInfo.IsInstanceTypeFor(type, instance.InstanceTypeD.Name));
     }
 }

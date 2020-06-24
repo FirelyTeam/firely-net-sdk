@@ -51,27 +51,16 @@ namespace Hl7.Fhir.ElementModel
         /// </remarks>
         public static Element ParseBindable(this ITypedElement instance)
         {
-            var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
+            var t = instance.InstanceTypeD;
 
-            switch (instanceType)
-            {
-                case FHIRAllTypes.Code:
-                    return instance.ParsePrimitive<Code>();
-                case FHIRAllTypes.Coding:
-                    return instance.ParseCoding();
-                case FHIRAllTypes.CodeableConcept:
-                    return instance.ParseCodeableConcept();
-                case FHIRAllTypes.Quantity:
-                    return parseQuantity();
-                case FHIRAllTypes.String:
-                    return new Code(instance.ParsePrimitive<FhirString>()?.Value);
-                case FHIRAllTypes.Uri:
-                    return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
-                case FHIRAllTypes.Extension:
-                    return parseExtension();
-                default:
-                    return null;
-            }
+            if (t == ModelInfo.Types.Code) return instance.ParsePrimitive<Code>();
+            if (t == ModelInfo.Types.Coding) return instance.ParseCoding();
+            if (t == ModelInfo.Types.CodeableConcept) return instance.ParseCodeableConcept();
+            if (t == ModelInfo.Types.Quantity) return parseQuantity();
+            if (t == ModelInfo.Types.String) return new Code(instance.ParsePrimitive<FhirString>()?.Value);
+            if (t == ModelInfo.Types.Uri) return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
+            if (t == ModelInfo.Types.Extension) return parseExtension();
+            return null;
 
             Coding parseQuantity()
             {
