@@ -25,6 +25,7 @@ namespace Hl7.Fhir.Specification.Schema
         {
 
             var elements = new List<IAssertion>()
+                .MaybeAdd(def, assertionFactory, BuildMaxLength)
                 .MaybeAdd(BuildMaxLength(def, assertionFactory))
                 .MaybeAdd(BuildFixed(def, assertionFactory))
                 .MaybeAdd(BuildPattern(def, assertionFactory))
@@ -35,9 +36,6 @@ namespace Hl7.Fhir.Specification.Schema
                 .MaybeAdd(BuildCardinality(def, assertionFactory))
                 .MaybeAdd(BuildElementRegEx(def, assertionFactory))
                 .MaybeAdd(BuildTypeRefRegEx(def, assertionFactory))
-
-                //.MaybeAdd(BuildMinItems(def))
-                //.MaybeAdd(BuildMaxItems(def))
                 .MaybeAdd(BuildTypeRefValidation(def, resolver, assertionFactory))
                ;
 
@@ -70,24 +68,19 @@ namespace Hl7.Fhir.Specification.Schema
 
             foreach (var type in def.Type)
             {
-                var assertion = BuildRegex(type, assertionFactory);
-                if (assertion != null)
-                {
-                    list.Add(assertion);
-                }
-
+                list.MaybeAdd(BuildRegex(type, assertionFactory));
             }
             return list.Count > 0 ? assertionFactory.CreateElementSchemaAssertion(id: new Uri("#" + def.Path, UriKind.Relative), list) : null;
         }
 
-        private static IAssertion BuildElementRegEx(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) => BuildRegex(def, assertionFactory);
-
+        private static IAssertion BuildElementRegEx(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
+            BuildRegex(def, assertionFactory);
 
         private static IAssertion BuildMinValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
-            def.MinValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.MinValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MinValue) : null;
+            def.MinValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.MinValue.ToTypedElement(), MinMax.MinValue) : null;
 
         private static IAssertion BuildMaxValue(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
-            def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.MaxValue.ToTypedElement(), Fhir.Validation.Impl.MinMax.MaxValue) : null;
+            def.MaxValue != null ? assertionFactory.CreateMinMaxValueAssertion(def.MaxValue.ToTypedElement(), MinMax.MaxValue) : null;
 
         private static IAssertion BuildFixed(ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory) =>
             def.Fixed != null ? assertionFactory.CreateFixedValueAssertion(def.Fixed.ToTypedElement()) : null;
@@ -257,6 +250,28 @@ namespace Hl7.Fhir.Specification.Schema
                 assertions.Add(element);
 
             return assertions;
+        }
+
+        private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory, Func<ElementDefinition, IElementDefinitionAssertionFactory, IAssertion> builder)
+        {
+            IAssertion element = null;
+            try
+            {
+                element = builder(def, assertionFactory);
+            }
+            catch (ArgumentNullException ane)
+            {
+            }
+            catch (IncorrectElementDefinitionException iede)
+            {
+                element = new CompileAssertion();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return assertions.MaybeAdd(element);
         }
     }
 }

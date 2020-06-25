@@ -66,6 +66,9 @@ namespace Hl7.Fhir.Specification.Schema
             var walker = new StructureDefinitionWalker(root, resolver);
             var conditions = walker.Walk(discriminator);
 
+            if (!conditions.Any())
+                throw new IncorrectElementDefinitionException("$The discriminator path '{discriminator}' at { root.CanonicalPath() } leads to no ElementDefinitions, which is not allowed.");
+
             // Well, we could check whether the conditions are Equal, since that's what really matters - they should not differ.
             if (conditions.Count > 1)
                 throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.");
