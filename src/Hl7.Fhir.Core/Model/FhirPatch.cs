@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Model
             get 
             {
                 if(_patchDocument == null)
-                    _patchDocument = FhirPatchReader.Read(this);
+                    _patchDocument = PatchDocumentReader.Read(this);
                 return _patchDocument;
             }
         }

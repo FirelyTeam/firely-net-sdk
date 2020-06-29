@@ -11,6 +11,7 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Patch.Adapters;
 using Hl7.Fhir.Patch.Internal;
+using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Patch.Tests
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Patch.Tests
             AdapterFactory factory = new AdapterFactory();
 
             //Act:
-            IAdapter adapter = factory.Create(ElementNode.FromElement(new Patient().ToTypedElement()).Children());
+            IAdapter adapter = factory.Create(ElementNode.FromElement(new Patient().ToTypedElement()).Children(), new PocoStructureDefinitionSummaryProvider());
 
             // Assert
             Assert.IsInstanceOfType(adapter, typeof(CollectionAdapter));
@@ -38,7 +39,7 @@ namespace Hl7.Fhir.Patch.Tests
             AdapterFactory factory = new AdapterFactory();
 
             //Act & Assert:
-            Assert.ThrowsException<NotSupportedException>(() => factory.Create(ElementNode.ForPrimitive(3)));
+            Assert.ThrowsException<NotSupportedException>(() => factory.Create(ElementNode.ForPrimitive(3), new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Patch.Tests
             AdapterFactory factory = new AdapterFactory();
 
             //Act:
-            IAdapter adapter = factory.Create(ElementNode.FromElement(new Patient().ToTypedElement()));
+            IAdapter adapter = factory.Create(ElementNode.FromElement(new Patient().ToTypedElement()), new PocoStructureDefinitionSummaryProvider());
 
             // Assert
             Assert.IsInstanceOfType(adapter, typeof(ElementNodeAdapter));

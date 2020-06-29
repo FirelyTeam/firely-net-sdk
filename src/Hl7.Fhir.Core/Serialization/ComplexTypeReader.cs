@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization
             if ( existing != null )
             {
                 mapping = _inspector.FindClassMappingByType(existing.GetType());
-                if ( mapping.Name.ToUpperInvariant() != _current.InstanceType.ToUpperInvariant() )
+                if ( !mapping.Name.Equals(_current.InstanceType, StringComparison.OrdinalIgnoreCase) )
                 {
                     mapping = null;
                 }

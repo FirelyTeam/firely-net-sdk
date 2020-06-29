@@ -81,7 +81,6 @@ namespace Hl7.Fhir.Serialization
 
             var typedSource = source.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), dataType, typedSettings);
 
-            // TODO: should pass an optional requested .NET type
             return BuildFrom(typedSource, requestedType);
         }
 

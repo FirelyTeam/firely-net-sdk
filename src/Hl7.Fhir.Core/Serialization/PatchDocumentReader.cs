@@ -20,8 +20,10 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization
 {
-    public static class FhirPatchReader
+    public static class PatchDocumentReader
     {
+        private static readonly FhirPathCompiler _fhirPathCompiler = new FhirPathCompiler();
+
         enum ParameterName
         {
             Type,
@@ -48,9 +50,17 @@ namespace Hl7.Fhir.Serialization
                 var operationParams = new Dictionary<ParameterName, Parameters.ParameterComponent>();
                 foreach ( var part in parameter.Part )
                 {
-                    if ( !Enum.TryParse(part.Name, ignoreCase: true, result: out ParameterName paramName) )
-                        throw Error.Argument("parameter.part.Name", $"Operation parameter name '${part.Name}' is not a valid parameter name");
-
+                    var paramName = (part.Name.ToUpperInvariant()) switch
+                    {
+                        "TYPE" => ParameterName.Type,
+                        "PATH" => ParameterName.Path,
+                        "NAME" => ParameterName.Name,
+                        "VALUE" => ParameterName.Value,
+                        "INDEX" => ParameterName.Index,
+                        "SOURCE" => ParameterName.Source,
+                        "DESTINATION" => ParameterName.Destination,
+                        _ => throw Error.Argument("parameter.part.Name", $"Operation parameter name '${part.Name}' is not a valid parameter name")
+                    };
                     operationParams.Add(paramName, part);
                 }
 
@@ -59,8 +69,15 @@ namespace Hl7.Fhir.Serialization
                     throw Error.Argument($"parameter.part['type']", "Operation type must be specified");
 
                 var operationTypeStr = (operationTypeComponent.Value as Code)?.Value;
-                if ( !Enum.TryParse(operationTypeStr, ignoreCase: true, result: out OperationType operationType) )
-                    throw Error.Argument("parameter.part['type']", $"Operation type '{operationTypeStr}' is not a valid operation type");
+                OperationType operationType = (operationTypeStr.ToUpperInvariant()) switch
+                {
+                    "ADD" => OperationType.Add,
+                    "INSERT" => OperationType.Insert,
+                    "DELETE" => OperationType.Delete,
+                    "REPLACE" => OperationType.Replace,
+                    "MOVE" => OperationType.Move,
+                    _ => throw Error.Argument("parameter.part['type']", $"Operation type '{operationTypeStr}' is not a valid operation type")
+                };
 
                 // Verify path is present and parse it
                 if ( !operationParams.TryGetValue(ParameterName.Path, out var pathComponent) )
@@ -73,8 +90,7 @@ namespace Hl7.Fhir.Serialization
                 CompiledExpression fhirPath = null;
                 try
                 {
-                    var fhirPathCompiler = new FhirPathCompiler();
-                    fhirPath = fhirPathCompiler.Compile(path);
+                    fhirPath = _fhirPathCompiler.Compile(path);
                 }
                 catch (Exception ex)
                 {
@@ -102,7 +118,6 @@ namespace Hl7.Fhir.Serialization
                     // Value is not required
                     case OperationType.Delete:
                     case OperationType.Move:
-                    case OperationType.Invalid:
                     default:
                         break;
                 }
@@ -119,7 +134,7 @@ namespace Hl7.Fhir.Serialization
                         if ( string.IsNullOrEmpty(name) )
                             throw Error.ArgumentNullOrEmpty("parameter.part['name']");
 
-                        patchDocument.Add(fhirPath, name, value);
+                        patchDocument.Add(new AddOperation(fhirPath, name, value));
                         break;
                     case OperationType.Insert:
                         // Verify index is present and parse it
@@ -130,13 +145,13 @@ namespace Hl7.Fhir.Serialization
                         if ( index == null )
                             throw Error.ArgumentNull("parameter.part['index']");
 
-                        patchDocument.Insert(fhirPath, index.Value, value);
+                        patchDocument.Add(new InsertOperation(fhirPath, index.Value, value));
                         break;
                     case OperationType.Delete:
-                        patchDocument.Delete(fhirPath);
+                        patchDocument.Add(new DeleteOperation(fhirPath));
                         break;
                     case OperationType.Replace:
-                        patchDocument.Replace(fhirPath, value);
+                        patchDocument.Add(new ReplaceOperation(fhirPath, value));
                         break;
                     case OperationType.Move:
                         // Verify source index is present and parse it
@@ -155,9 +170,8 @@ namespace Hl7.Fhir.Serialization
                         if ( destination == null )
                             throw Error.ArgumentNull("parameter.part['destination']");
 
-                        patchDocument.Move(fhirPath, source.Value, destination.Value);
+                        patchDocument.Add(new MoveOperation(fhirPath, source.Value, destination.Value));
                         break;
-                    case OperationType.Invalid:
                     default:
                         throw Error.InvalidOperation($"Operation type '{operationTypeStr}' is not a valid operation type");
                 }

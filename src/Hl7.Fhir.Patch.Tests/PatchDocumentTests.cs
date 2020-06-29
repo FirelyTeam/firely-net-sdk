@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Patch.Exceptions;
+using Hl7.Fhir.Patch.Operations;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Hl7.FhirPath;
@@ -60,10 +61,11 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyAddPatchOperation_AtRoot_ShouldAddSimpleElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient");
 
-            patch.Add(fhirPath, "active", new FhirBoolean(true).ToTypedElement());
+            var operation = new AddOperation(fhirPath, "active", new FhirBoolean(true).ToTypedElement());
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(new Patient(), patch);
@@ -76,11 +78,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyAddPatchOperation_AtRoot_ShouldAddComplexElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient");
 
             CodeableConcept value = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "M", "Married", null);
-            patch.Add(fhirPath, "maritalStatus", value.ToTypedElement());
+            var operation = new AddOperation(fhirPath, "maritalStatus", value.ToTypedElement());
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(new Patient(), patch);
@@ -93,11 +96,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyAddPatchOperation_AtRoot_ShouldAppendToCollection ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient");
 
             var value = new Identifier("http://test.sys", "test123");
-            patch.Add(fhirPath, "identifier", value.ToTypedElement());
+            var operation = new AddOperation(fhirPath, "identifier", value.ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -113,10 +117,11 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyAddPatchOperation_ToNestedProperty_ShouldAddSimpleElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.maritalStatus");
 
-            patch.Add(fhirPath, "text", new FhirString("test123").ToTypedElement());
+            var operation = new AddOperation(fhirPath, "text", new FhirString("test123").ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -131,11 +136,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyInsertPatchOperation_ShouldInsertElementAtSpecifiedIndex ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.identifier");
 
             var value = new Identifier("http://test.sys", "test123");
-            patch.Insert(fhirPath, 1, value.ToTypedElement());
+            var operation = new InsertOperation(fhirPath, 1, value.ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -151,11 +157,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyInsertPatchOperation_ShouldAppendElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.identifier");
 
             var value = new Identifier("http://test.sys", "test123");
-            patch.Insert(fhirPath, 2, value.ToTypedElement());
+            var operation = new InsertOperation(fhirPath, 2, value.ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -171,11 +178,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyInsertPatchOperation_ToCollectionWithSingleElement_ShouldInsertElementAtSpecifiedIndex ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.name");
 
             var value = new HumanName().WithGiven("Sandy").AndFamily("Wilson");
-            patch.Insert(fhirPath, 0, value.ToTypedElement());
+            var operation = new InsertOperation(fhirPath, 0, value.ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -191,11 +199,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyInsertPatchOperation_ToEmptyCollection_Throws ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.name");
 
             var value = new HumanName().WithGiven("Sandy").AndFamily("Wilson");
-            patch.Insert(fhirPath, 0, value.ToTypedElement());
+            var operation = new InsertOperation(fhirPath, 0, value.ToTypedElement());
+            patch.Add(operation);
 
             // Act & Assert
             Assert.ThrowsException<PatchException>(() => ApplyPatch(new Patient(), patch));
@@ -205,9 +214,10 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyDeletePatchOperation_ShouldDeleteSimpleElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.active");
-            patch.Delete(fhirPath);
+            var operation = new DeleteOperation(fhirPath);
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(createPatient(), patch);
@@ -220,9 +230,10 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyDeletePatchOperation_ShouldDeleteComplexElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.maritalStatus");
-            patch.Delete(fhirPath);
+            var operation = new DeleteOperation(fhirPath);
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(createPatient(), patch);
@@ -235,9 +246,10 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyDeletePatchOperation_ShouldDeleteSingleElementFromCollection ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.identifier[1]");
-            patch.Delete(fhirPath);
+            var operation = new DeleteOperation(fhirPath);
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -253,9 +265,10 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyReplacePatchOperation_ShouldReplaceSimpleElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.active");
-            patch.Replace(fhirPath, new FhirBoolean(false).ToTypedElement());
+            var operation = new ReplaceOperation(fhirPath, new FhirBoolean(false).ToTypedElement());
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(createPatient(), patch);
@@ -268,11 +281,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyReplacePatchOperation_ShouldReplaceComplexElement ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.maritalStatus");
 
             CodeableConcept value = new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", "D", "Divorced", null);
-            patch.Replace(fhirPath, value.ToTypedElement());
+            var operation = new ReplaceOperation(fhirPath, value.ToTypedElement());
+            patch.Add(operation);
 
             // Act
             var patchedPatient = ApplyPatch(createPatient(), patch);
@@ -285,11 +299,12 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyReplacePatchOperation_ShouldReplaceSingleElementFromCollection ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.identifier[1]");
 
             var value = new Identifier("http://test.sys", "test123");
-            patch.Replace(fhirPath, value.ToTypedElement());
+            var operation = new ReplaceOperation(fhirPath, value.ToTypedElement());
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -305,10 +320,11 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyMovePatchOperation_ShouldMoveElementAtSourceIndexToDestinationIndex ()
         {
             // Arange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             var fhirPath = compiler.Compile("Patient.identifier");
 
-            patch.Move(fhirPath, 1, 0);
+            var operation = new MoveOperation(fhirPath, 1, 0);
+            patch.Add(operation);
 
             var patient = createPatient();
 
@@ -324,14 +340,16 @@ namespace Hl7.Fhir.Patch.Tests
         public void ApplyMultiplePatchOperations_ShouldAllBeAppliedSequentially ()
         {
             // Arrange
-            var patch = new PatchDocument() { ContractResolver = provider };
+            var patch = new PatchDocument() { Provider = provider };
             
             var maritalStatusPath = compiler.Compile("Patient.maritalStatus");
-            patch.Delete(maritalStatusPath);
+            var deleteOperation = new DeleteOperation(maritalStatusPath);
+            patch.Add(deleteOperation);
 
             var rootPath = compiler.Compile("Patient");
             var value = new Identifier("http://test.sys", "test123");
-            patch.Add(rootPath, "identifier", value.ToTypedElement());
+            var addOperation = new AddOperation(rootPath, "identifier", value.ToTypedElement());
+            patch.Add(addOperation);
 
             var patient = createPatient();
 

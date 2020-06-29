@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Patch.Operations;
 using Hl7.Fhir.Serialization;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -101,13 +102,16 @@ namespace Hl7.Fhir.Patch.Tests
             // Assert
             var operations = patchDocument.Operations;
             Assert.AreEqual(1, operations.Count);
-            Assert.AreEqual(Operations.OperationType.Add, operations[0].OperationType);
-            Assert.AreEqual("identifier", operations[0].name);
-            Assert.IsInstanceOfType(operations[0].value, typeof(ITypedElement));
-            Assert.AreEqual(value.ToJson(), (operations[0].value as ITypedElement).ToJson());
+
+            var operation = operations[0] as AddOperation;
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(OperationType.Add, operation.OperationType);
+            Assert.AreEqual("identifier", operation.Name);
+            Assert.IsInstanceOfType(operation.Value, typeof(ITypedElement));
+            Assert.AreEqual(value.ToJson(), (operation.Value as ITypedElement).ToJson());
 
             var sampleObject = createPatient();
-            Assert.AreEqual(sampleObject.Select("Patient").First().ToJson(), operations[0].path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
+            Assert.AreEqual(sampleObject.Select("Patient").First().ToJson(), operation.Path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
         }
 
 
@@ -138,13 +142,16 @@ namespace Hl7.Fhir.Patch.Tests
             // Assert
             var operations = patchDocument.Operations;
             Assert.AreEqual(1, operations.Count);
-            Assert.AreEqual(Operations.OperationType.Insert, operations[0].OperationType);
-            Assert.AreEqual(1, operations[0].index);
-            Assert.IsInstanceOfType(operations[0].value, typeof(ITypedElement));
-            Assert.AreEqual(value.ToJson(), (operations[0].value as ITypedElement).ToJson());
+
+            var operation = operations[0] as InsertOperation;
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(OperationType.Insert, operation.OperationType);
+            Assert.AreEqual(1, operation.Index);
+            Assert.IsInstanceOfType(operation.Value, typeof(ITypedElement));
+            Assert.AreEqual(value.ToJson(), (operation.Value as ITypedElement).ToJson());
 
             var sampleObject = createPatient();
-            Assert.AreEqual(sampleObject.Select("Patient.identifier").First().ToJson(), operations[0].path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
+            Assert.AreEqual(sampleObject.Select("Patient.identifier").First().ToJson(), operation.Path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
         }
 
         [TestMethod]
@@ -159,10 +166,13 @@ namespace Hl7.Fhir.Patch.Tests
             // Assert
             var operations = patchDocument.Operations;
             Assert.AreEqual(1, operations.Count);
-            Assert.AreEqual(Operations.OperationType.Delete, operations[0].OperationType);
+
+            var operation = operations[0] as DeleteOperation;
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(OperationType.Delete, operation.OperationType);
 
             var sampleObject = createPatient();
-            Assert.AreEqual(sampleObject.Select("Patient.identifier[1]").First().ToJson(), operations[0].path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
+            Assert.AreEqual(sampleObject.Select("Patient.identifier[1]").First().ToJson(), operation.Path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
         }
 
         [TestMethod]
@@ -187,12 +197,15 @@ namespace Hl7.Fhir.Patch.Tests
             // Assert
             var operations = patchDocument.Operations;
             Assert.AreEqual(1, operations.Count);
-            Assert.AreEqual(Operations.OperationType.Replace, operations[0].OperationType);
-            Assert.IsInstanceOfType(operations[0].value, typeof(ITypedElement));
-            Assert.AreEqual(value.ToJson(), (operations[0].value as ITypedElement).ToJson());
+
+            var operation = operations[0] as ReplaceOperation;
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(OperationType.Replace, operations[0].OperationType);
+            Assert.IsInstanceOfType(operation.Value, typeof(ITypedElement));
+            Assert.AreEqual(value.ToJson(), (operation.Value as ITypedElement).ToJson());
 
             var sampleObject = createPatient();
-            Assert.AreEqual(sampleObject.Select("Patient.identifier[1]").First().ToJson(), operations[0].path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
+            Assert.AreEqual(sampleObject.Select("Patient.identifier[1]").First().ToJson(), operation.Path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
         }
 
         [TestMethod]
@@ -220,12 +233,15 @@ namespace Hl7.Fhir.Patch.Tests
             // Assert
             var operations = patchDocument.Operations;
             Assert.AreEqual(1, operations.Count);
-            Assert.AreEqual(Operations.OperationType.Move, operations[0].OperationType);
-            Assert.AreEqual(1, operations[0].source);
-            Assert.AreEqual(0, operations[0].destination);
+
+            var operation = operations[0] as MoveOperation;
+            Assert.IsNotNull(operation);
+            Assert.AreEqual(OperationType.Move, operation.OperationType);
+            Assert.AreEqual(1, operation.Source);
+            Assert.AreEqual(0, operation.Destination);
 
             var sampleObject = createPatient();
-            Assert.AreEqual(sampleObject.Select("Patient.identifier").First().ToJson(), operations[0].path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
+            Assert.AreEqual(sampleObject.Select("Patient.identifier").First().ToJson(), operation.Path(sampleObject, EvaluationContext.CreateDefault()).First().ToJson());
         }
 
 
@@ -250,7 +266,7 @@ namespace Hl7.Fhir.Patch.Tests
             PatchDocument patchDocument = fhirPatch;
 
             // Assert
-            CollectionAssert.AreEqual(new List<Operations.OperationType> { Operations.OperationType.Replace, Operations.OperationType.Delete }, patchDocument.Operations.Select(x => x.OperationType).ToList());
+            CollectionAssert.AreEqual(new List<OperationType> { OperationType.Replace, OperationType.Delete }, patchDocument.Operations.Select(x => x.OperationType).ToList());
         }
     }
 }
