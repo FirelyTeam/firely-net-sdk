@@ -6,12 +6,14 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Patch.Operations;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -20,7 +22,7 @@ namespace Hl7.Fhir.Patch.Tests
     [TestClass]
     public class FhirPatchReaderTests
     {
-        readonly FhirPathCompiler compiler = new FhirPathCompiler();
+        readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
 
         private ITypedElement createPatient ()
         {
@@ -267,6 +269,322 @@ namespace Hl7.Fhir.Patch.Tests
 
             // Assert
             CollectionAssert.AreEqual(new List<OperationType> { OperationType.Replace, OperationType.Delete }, patchDocument.Operations.Select(x => x.OperationType).ToList());
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_InvalidUsingDefaultReporter_ShouldThrowException ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Name = "FakeTestParameter";
+
+            //Act & Assert
+            Assert.ThrowsException<ArgumentException>(() => PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider));
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_NonOperaion_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Name = "FakeTestParameter";
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.Name", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_NoParts_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Part.Clear();
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_InvalidParameterName_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Part.Clear();
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "FakeParameterName"
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part.Name", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_MissingTypeParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Part.Clear();
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "path",
+                    Value = new FhirString("Patient")
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['type']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_InvalidOperationType_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("FakeOperation", "Patient");
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['type']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_MissingPathParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Part.Clear();
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "type",
+                    Value = new Code("add")
+                }
+            });
+
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['path']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_InvalidPathParameter_ShouldReportInvalidOperationError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "FakeTestPath#invalid");
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(InvalidOperationException));
+        }
+
+        [DataTestMethod]
+        [DataRow("add")]
+        [DataRow("insert")]
+        [DataRow("replace")]
+        public void ConvertFhirParameters_ValueOperationWithMissingValue_ShouldReportArgumentError (string operation)
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase(operation, "Patient");
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['value']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_AddOperationWithMissingNameParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("add", "Patient");
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "value",
+                    Value = value
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['name']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_InsertOperationWithMissingIndexParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("insert", "Patient");
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "value",
+                    Value = value
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['index']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_MoveOperationWithMissingSourceParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("move", "Patient");
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "destination",
+                    Value = new Integer(0)
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['source']", (errorList[0] as ArgumentException).ParamName);
+        }
+
+        [TestMethod]
+        public void ConvertFhirParameters_MoveOperationWithMissingDestinationParameter_ShouldReportArgumentError ()
+        {
+            // Arrange
+            var value = new Identifier("http://test.sys", "test123");
+
+            var fhirPatch = createFhirPatchBase("move", "Patient");
+            fhirPatch.Parameter[0].Part.AddRange(new List<Parameters.ParameterComponent>
+            {
+                new Parameters.ParameterComponent
+                {
+                    Name = "source",
+                    Value = new Integer(1)
+                }
+            });
+
+            var errorList = new List<Exception>();
+            Action<Exception> errorReporter = ex => errorList.Add(ex);
+
+            //Act
+            PatchDocument patchDocument = PatchDocumentReader.Read(fhirPatch.ToTypedElement(), provider, errorReporter);
+
+            // Assert
+            Assert.AreEqual(1, errorList.Count);
+            Assert.IsInstanceOfType(errorList[0], typeof(ArgumentException));
+            Assert.AreEqual("parameter.part['destination']", (errorList[0] as ArgumentException).ParamName);
         }
     }
 }
