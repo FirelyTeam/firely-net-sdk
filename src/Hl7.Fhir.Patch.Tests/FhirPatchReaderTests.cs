@@ -47,9 +47,9 @@ namespace Hl7.Fhir.Patch.Tests
             }.ToTypedElement();
         }
 
-        private FhirPatch createFhirPatchBase (string type, string path)
+        private FhirPatchParameters createFhirPatchBase (string type, string path)
         {
-            return new FhirPatch()
+            return new FhirPatchParameters()
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {

@@ -23,6 +23,7 @@ namespace Hl7.Fhir.Serialization
     public static class PatchDocumentReader
     {
         private static readonly FhirPathCompiler _fhirPathCompiler = new FhirPathCompiler();
+        private static readonly Action<Exception> _defaultErrorReporter = (ex) => throw ex;
 
         enum ParameterName
         {
@@ -35,17 +36,24 @@ namespace Hl7.Fhir.Serialization
             Destination
         }
 
-        public static PatchDocument Read (Parameters fhirPatch)
+        public static PatchDocument Read (Parameters fhirPatch, Action<Exception> errorReporter = null)
         {
+            errorReporter ??= _defaultErrorReporter;
             var patchDocument = new PatchDocument(new List<Operation>(), new PocoStructureDefinitionSummaryProvider());
 
             foreach ( var parameter in fhirPatch.Parameter )
             {
-                if ( parameter.Name != "operation" ) 
-                    throw Error.Argument(nameof(parameter.Name), "Parameter Name must be 'operation'");
-                
-                if( parameter.Part.IsNullOrEmpty()) 
-                    throw Error.ArgumentNullOrEmpty(nameof(parameter.Part));
+                if ( parameter.Name != "operation" )
+                {
+                    errorReporter(Error.Argument(nameof(parameter.Name), "Parameter Name must be 'operation'"));
+                    return null;
+                }
+
+                if ( parameter.Part.IsNullOrEmpty() )
+                {
+                    errorReporter(Error.ArgumentNullOrEmpty(nameof(parameter.Part)));
+                    return null;
+                }
 
                 var operationParams = new Dictionary<ParameterName, Parameters.ParameterComponent>();
                 foreach ( var part in parameter.Part )
@@ -59,33 +67,55 @@ namespace Hl7.Fhir.Serialization
                         "INDEX" => ParameterName.Index,
                         "SOURCE" => ParameterName.Source,
                         "DESTINATION" => ParameterName.Destination,
-                        _ => throw Error.Argument("parameter.part.Name", $"Operation parameter name '${part.Name}' is not a valid parameter name")
+                        _ => (ParameterName?)null
                     };
-                    operationParams.Add(paramName, part);
+
+                    if ( parameter == null )
+                    {
+                        errorReporter(Error.Argument("parameter.part.Name", $"Operation parameter name '${part.Name}' is not a valid parameter name"));
+                        return null;
+                    }
+
+                    operationParams.Add(paramName.Value, part);
                 }
 
                 // Verify Operation type is present and valid
-                if ( !operationParams.TryGetValue(ParameterName.Type, out var operationTypeComponent))
-                    throw Error.Argument($"parameter.part['type']", "Operation type must be specified");
+                if ( !operationParams.TryGetValue(ParameterName.Type, out var operationTypeComponent) )
+                {
+                    errorReporter(Error.Argument($"parameter.part['type']", "Operation type must be specified"));
+                    return null;
+                }
 
                 var operationTypeStr = (operationTypeComponent.Value as Code)?.Value;
-                OperationType operationType = (operationTypeStr.ToUpperInvariant()) switch
+                OperationType? operationType = (operationTypeStr.ToUpperInvariant()) switch
                 {
                     "ADD" => OperationType.Add,
                     "INSERT" => OperationType.Insert,
                     "DELETE" => OperationType.Delete,
                     "REPLACE" => OperationType.Replace,
                     "MOVE" => OperationType.Move,
-                    _ => throw Error.Argument("parameter.part['type']", $"Operation type '{operationTypeStr}' is not a valid operation type")
+                    _ => null
                 };
+
+                if ( operationType == null )
+                {
+                    errorReporter(Error.Argument("parameter.part['type']", $"Operation type '{operationTypeStr}' is not a valid operation type"));
+                    return null;
+                }
 
                 // Verify path is present and parse it
                 if ( !operationParams.TryGetValue(ParameterName.Path, out var pathComponent) )
-                    throw Error.Argument($"parameter.part['path']", "Path must be specified");
+                {
+                    errorReporter(Error.Argument($"parameter.part['path']", "Path must be specified"));
+                    return null;
+                }
 
                 var path = (pathComponent.Value as FhirString)?.Value;
                 if ( string.IsNullOrEmpty(path) )
-                    throw Error.ArgumentNullOrEmpty("parameter.part['path']");
+                {
+                    errorReporter(Error.ArgumentNullOrEmpty("parameter.part['path']"));
+                    return null;
+                }
 
                 CompiledExpression fhirPath = null;
                 try
@@ -94,7 +124,8 @@ namespace Hl7.Fhir.Serialization
                 }
                 catch (Exception ex)
                 {
-                    throw Error.InvalidOperation(ex, $"Specified path '{path}' is not valid");
+                    errorReporter(Error.InvalidOperation(ex, $"Specified path '{path}' is not valid"));
+                    return null;
                 }
 
                 // Parse value parameter if it is required
@@ -107,10 +138,16 @@ namespace Hl7.Fhir.Serialization
                     case OperationType.Replace:
                         // Verify value is present and parse it
                         if ( !operationParams.TryGetValue(ParameterName.Value, out var valueComponent) )
-                            throw Error.Argument($"parameter.part['value']", "Value must be specified");
+                        {
+                            errorReporter(Error.Argument($"parameter.part['value']", "Value must be specified"));
+                            return null;
+                        }
 
                         if ( valueComponent.Value == null )
-                            throw Error.ArgumentNull("parameter.part['value']");
+                        {
+                            errorReporter(Error.ArgumentNull("parameter.part['value']"));
+                            return null;
+                        }
 
                         value = valueComponent.Value.ToTypedElement();
                         
@@ -128,22 +165,34 @@ namespace Hl7.Fhir.Serialization
                     case OperationType.Add:
                         // Verify name is present and parse it
                         if ( !operationParams.TryGetValue(ParameterName.Name, out var nameComponent) )
-                            throw Error.Argument($"parameter.part['name']", "Name must be specified");
+                        {
+                            errorReporter(Error.Argument($"parameter.part['name']", "Name must be specified"));
+                            return null;
+                        }
 
                         var name = (nameComponent.Value as FhirString)?.Value;
                         if ( string.IsNullOrEmpty(name) )
-                            throw Error.ArgumentNullOrEmpty("parameter.part['name']");
+                        {
+                            errorReporter(Error.ArgumentNullOrEmpty("parameter.part['name']"));
+                            return null;
+                        }
 
                         patchDocument.Add(new AddOperation(fhirPath, name, value));
                         break;
                     case OperationType.Insert:
                         // Verify index is present and parse it
                         if ( !operationParams.TryGetValue(ParameterName.Index, out var indexComponent) )
-                            throw Error.Argument($"parameter.part['index']", "Index must be specified");
+                        {
+                            errorReporter(Error.Argument($"parameter.part['index']", "Index must be specified"));
+                            return null;
+                        }
 
                         var index = (indexComponent.Value as Integer)?.Value;
                         if ( index == null )
-                            throw Error.ArgumentNull("parameter.part['index']");
+                        {
+                            errorReporter(Error.ArgumentNull("parameter.part['index']"));
+                            return null;
+                        }
 
                         patchDocument.Add(new InsertOperation(fhirPath, index.Value, value));
                         break;
@@ -156,24 +205,37 @@ namespace Hl7.Fhir.Serialization
                     case OperationType.Move:
                         // Verify source index is present and parse it
                         if ( !operationParams.TryGetValue(ParameterName.Source, out var sourceComponent) )
-                            throw Error.Argument($"parameter.part['source']", "Source index must be specified");
+                        {
+                            errorReporter(Error.Argument($"parameter.part['source']", "Source index must be specified"));
+                            return null;
+                        }
 
                         var source = (sourceComponent.Value as Integer)?.Value;
                         if ( source == null )
-                            throw Error.ArgumentNull("parameter.part['source']");
+                        {
+                            errorReporter(Error.ArgumentNull("parameter.part['source']"));
+                            return null;
+                        }
 
                         // Verify destination index is present and parse it
                         if ( !operationParams.TryGetValue(ParameterName.Destination, out var destinationComponent) )
-                            throw Error.Argument($"parameter.part['destination']", "Destination index must be specified");
+                        {
+                            errorReporter(Error.Argument($"parameter.part['destination']", "Destination index must be specified"));
+                            return null;
+                        }
 
                         var destination = (destinationComponent.Value as Integer)?.Value;
                         if ( destination == null )
-                            throw Error.ArgumentNull("parameter.part['destination']");
+                        {
+                            errorReporter(Error.ArgumentNull("parameter.part['destination']"));
+                            return null;
+                        }
 
                         patchDocument.Add(new MoveOperation(fhirPath, source.Value, destination.Value));
                         break;
                     default:
-                        throw Error.InvalidOperation($"Operation type '{operationTypeStr}' is not a valid operation type");
+                        errorReporter(Error.InvalidOperation($"Operation type '{operationTypeStr}' is not a valid operation type"));
+                        return null;
                 }
             }
 

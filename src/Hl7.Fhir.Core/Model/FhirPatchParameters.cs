@@ -13,6 +13,7 @@ using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
@@ -20,7 +21,7 @@ namespace Hl7.Fhir.Model
     [FhirType("Parameters")]
     [InvokeIValidatableObject]
     [DataContract]
-    public class FhirPatch : Parameters
+    public class FhirPatchParameters : Parameters
     {
         private PatchDocument _patchDocument;
 
@@ -34,29 +35,23 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        public FhirPatch ()
+        public FhirPatchParameters ()
             : base()
         {
             PropertyChanged += (_, __) => _patchDocument = null;
         }
 
-        public static implicit operator PatchDocument(FhirPatch @this) => @this.Document;
+        public static implicit operator PatchDocument(FhirPatchParameters @this) => @this.Document;
 
         public override IEnumerable<ValidationResult> Validate (ValidationContext validationContext)
         {
+            var baseResult = base.Validate(validationContext);
             var result = new List<ValidationResult>();
 
-            try
-            {
-                var _ = Document;
-            }
-            catch(Exception ex)
-            {
-                var validationError = new ValidationResult(ex.Message);
-                result.Add(validationError);
-            }
+            Action<Exception> errorReporter = (ex) => result.Add(new ValidationResult(ex.Message));
+            _patchDocument = PatchDocumentReader.Read(this, errorReporter);
 
-            return result;
+            return baseResult.Concat(result);
         }
     }
 }

@@ -18,9 +18,9 @@ namespace Hl7.Fhir.Patch.Tests
     [TestClass]
     public class FhirPatchParserTests
     {
-        private FhirPatch createFhirPatch ()
+        private FhirPatchParameters createFhirPatch ()
         {
-            return new FhirPatch()
+            return new FhirPatchParameters()
             {
                 Parameter = new List<Parameters.ParameterComponent>
                 {
@@ -155,10 +155,10 @@ namespace Hl7.Fhir.Patch.Tests
             var fhirPatch = createFhirPatch().ToTypedElement();
 
             // Act
-            var result = fhirPatch.ToPoco<FhirPatch>();
+            var result = fhirPatch.ToPoco<FhirPatchParameters>();
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(FhirPatch));
+            Assert.IsInstanceOfType(result, typeof(FhirPatchParameters));
         }
 
         [TestMethod]
@@ -181,10 +181,10 @@ namespace Hl7.Fhir.Patch.Tests
             var fhirPatch = createFhirPatch().ToTypedElement().ToSourceNode();
 
             // Act
-            var result = fhirPatch.ToPoco<FhirPatch>();
+            var result = fhirPatch.ToPoco<FhirPatchParameters>();
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(FhirPatch));
+            Assert.IsInstanceOfType(result, typeof(FhirPatchParameters));
         }
 
         [TestMethod]
@@ -221,10 +221,10 @@ namespace Hl7.Fhir.Patch.Tests
             var fhirPatch = createFhirPatch().ToJson();
 
             // Act
-            var result = new FhirJsonParser().Parse<FhirPatch>(fhirPatch);
+            var result = new FhirJsonParser().Parse<FhirPatchParameters>(fhirPatch);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(FhirPatch));
+            Assert.IsInstanceOfType(result, typeof(FhirPatchParameters));
         }
 
         [TestMethod]
@@ -247,10 +247,10 @@ namespace Hl7.Fhir.Patch.Tests
             var fhirPatch = createFhirPatch().ToXml();
 
             // Act
-            var result = new FhirXmlParser().Parse<FhirPatch>(fhirPatch);
+            var result = new FhirXmlParser().Parse<FhirPatchParameters>(fhirPatch);
 
             // Assert
-            Assert.IsInstanceOfType(result, typeof(FhirPatch));
+            Assert.IsInstanceOfType(result, typeof(FhirPatchParameters));
         }
 
         [TestMethod]
