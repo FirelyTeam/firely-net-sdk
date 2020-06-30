@@ -6,9 +6,11 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Patch;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,8 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public class FhirPatchParameters : Parameters
     {
+        private static readonly IStructureDefinitionSummaryProvider _provider = new PocoStructureDefinitionSummaryProvider();
+
         private PatchDocument _patchDocument;
 
         private PatchDocument Document
@@ -30,7 +34,7 @@ namespace Hl7.Fhir.Model
             get 
             {
                 if(_patchDocument == null)
-                    _patchDocument = PatchDocumentReader.Read(this);
+                    _patchDocument = PatchDocumentReader.Read(this.ToTypedElement(), _provider);
                 return _patchDocument;
             }
         }
@@ -49,7 +53,7 @@ namespace Hl7.Fhir.Model
             var result = new List<ValidationResult>();
 
             Action<Exception> errorReporter = (ex) => result.Add(new ValidationResult(ex.Message));
-            _patchDocument = PatchDocumentReader.Read(this, errorReporter);
+            _patchDocument = PatchDocumentReader.Read(this.ToTypedElement(), _provider, errorReporter);
 
             return baseResult.Concat(result);
         }
