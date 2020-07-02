@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Patient.identifier.system")
             {
                 ElementId = "Patient.identifier:BSN.system",
-                Definition = "BSN naming system",
+                Definition = new Markdown("BSN naming system"),
                 MustSupport = true
             });
 
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Validation
             cons.Add(new ElementDefinition("Patient.identifier.system")
             {
                 ElementId = "Patient.identifier:newSlice.system",
-                Definition = "Test_1295"
+                Definition = new Markdown("Test_1295")
             });
 
             return result;
