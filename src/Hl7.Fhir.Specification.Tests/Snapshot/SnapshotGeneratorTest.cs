@@ -8842,7 +8842,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(tgtElem.Base.Path, refElem.Base.Path);
             }
         }
-    
+
         // #1108/#1303 - incorrectly copies the 0..* root cardinality of a referenced datatype profile
         // over unto an element that has base cardinality 0..1
         [TestMethod]
@@ -8858,6 +8858,24 @@ namespace Hl7.Fhir.Specification.Tests
             var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
             Assert.AreEqual(1, lowElement.Min);
             Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
+        }
+
+        [TestMethod]
+        public void NewSlicetoDerivedProfile()
+        {
+            var resolver = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(
+                            new TestProfileArtifactSource()),
+                            ZipSource.CreateValidationSource())));
+
+            var patient = resolver.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/mi-patient");
+            patient.Should().NotBeNull("A snapshot must be created");
+
+            var newSliceSystem = patient.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Patient.identifier:newSlice.system");
+            newSliceSystem.Should().NotBeNull("The new slice 'newSlice' should be present in the snapshot");
+            newSliceSystem.Fixed.Should().BeNull("No constraint elements from the base slice (BSN) should be present");
         }
     }
 }
