@@ -29,7 +29,6 @@
 */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -273,7 +272,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>Subset of <see cref="FHIRAllTypes"/> enumeration values for conformance resources.</summary>
-        public static readonly FHIRAllTypes[] ConformanceResources = 
+        public static readonly FHIRAllTypes[] ConformanceResources =
         {
             FHIRAllTypes.StructureDefinition,
             FHIRAllTypes.StructureMap,
@@ -290,6 +289,7 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.NamingSystem,
             FHIRAllTypes.TestScript,
             //FHIRAllTypes.TestReport,
+            FHIRAllTypes.Questionnaire,
             FHIRAllTypes.TerminologyCapabilities
         };
 
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
             return uri != null
                 // [WMR 20181025] Issue #746
                 // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
-                && uri.IsAbsoluteUri 
+                && uri.IsAbsoluteUri
                 && FhirCoreProfileBaseUri.IsBaseOf(uri)
                 && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }
