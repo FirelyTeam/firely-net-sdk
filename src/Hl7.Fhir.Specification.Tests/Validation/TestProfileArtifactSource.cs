@@ -1,10 +1,8 @@
-﻿using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification.Source;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
-using System.Diagnostics;
 
 namespace Hl7.Fhir.Validation
 {
@@ -27,14 +25,79 @@ namespace Hl7.Fhir.Validation
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Bundled }, "Bundled"),
             bundleWithSpecificEntries("Referenced"),
             patientWithSpecificOrganization(new[] { ElementDefinition.AggregationMode.Referenced }, "Referenced"),
-            buildParametersWithBoundParams(),   
+            buildParametersWithBoundParams(),
             bundleWithConstrainedContained(),
             buildOrganizationWithRegexConstraintOnName(),
             buildOrganizationWithRegexConstraintOnType(),
             buildValueDescriminatorWithPattern(),
             buildQuantityWithUnlimitedRootCardinality(),
-            buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
+            buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality(),
+            buildPatientWithIdentifierSlicing(),
+            buildMiPatient()
         };
+
+        private static StructureDefinition buildPatientWithIdentifierSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/PatientIdentifierSlicing", "PatientIdentifierSlicing",
+                       "Test Patient with slicing on Identifier, first slice BSN", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+            var slicingIntro = new ElementDefinition("Patient.identifier")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+               (ElementDefinition.DiscriminatorType.Value, "system"));
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:BSN",
+                SliceName = "BSN"
+            });
+
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:BSN.system",
+            }.Value(fix: new FhirUri("http://example.com/someuri")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildMiPatient()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/mi-patient", "mi-Patient",
+                      "Test a derived Patient introducing a new slice to the base introduction Slicing",
+                      FHIRAllTypes.Patient, "http://validationtest.org/fhir/StructureDefinition/PatientIdentifierSlicing");
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:BSN",
+                SliceName = "BSN"
+            });
+
+            // adding extra constraint on existing slice in base
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:BSN.system",
+                Definition = "BSN naming system",
+                MustSupport = true
+            });
+
+            // adding a new slice
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:newSlice",
+                SliceName = "newSlice"
+            });
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:newSlice.system",
+                Definition = "Test_1295"
+            });
+
+            return result;
+        }
 
         private static StructureDefinition buildOrganizationWithRegexConstraintOnName()
         {
@@ -195,7 +258,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition bundleWithConstrainedContained()
         {
-            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained", 
+            var result = createTestSD($"http://validationtest.org/fhir/StructureDefinition/BundleWithConstrainedContained",
                             $"Bundle with a constraint on the Bundle.entry.resource",
                     $"Bundle with a constraint on the Bundle.entry.resource", FHIRAllTypes.Bundle);
 
@@ -254,7 +317,7 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality", 
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RangeWithLowAsAQuantityWithUnlimitedRootCardinality",
                 "Range referring to a profiled quantity",
                 "Range that refers to a profiled quantity on its Range.low - this profiled Quantity has a 0..* root.",
                    FHIRAllTypes.Range);
@@ -291,7 +354,7 @@ namespace Hl7.Fhir.Validation
             });
             cons.Add(new ElementDefinition("Practitioner.identifier.type")
             {
-                ElementId = "Practitioner.identifier:slice1.type", 
+                ElementId = "Practitioner.identifier:slice1.type",
                 Pattern = new CodeableConcept("http://local-codes.nl/identifier-types", "ID-TYPE-1")
             }.WithBinding("http://hl7.org/fhir/ValueSet/identifier-type", BindingStrength.Required));
 
@@ -324,7 +387,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri=null)
+        private static StructureDefinition createTestSD(string url, string name, string description, FHIRAllTypes constrainedType, string baseUri = null)
         {
             var result = new StructureDefinition();
 
@@ -347,7 +410,7 @@ namespace Hl7.Fhir.Validation
             result.Type = constrainedType.ToString();
             result.Abstract = false;
 
-            if(baseUri == null)
+            if (baseUri == null)
                 baseUri = ResourceIdentity.Core(constrainedType).ToString();
 
             result.BaseDefinition = baseUri;
