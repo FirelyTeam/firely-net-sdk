@@ -197,6 +197,13 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
+        [Obsolete ("OnBeforeRequest is deprecated, please add a HttpClientEventHandler to the constructor to use this functionality", true)]
+        public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
+
+        [Obsolete("OnAfterResponse is deprecated, please add a HttpClientEventHandler to the constructor to use this functionality", true)]
+        public event EventHandler<BeforeHttpRequestEventArgs> OnAfterResponseRequest;
+
+
         /// <summary>
         /// Override dispose in order to clean up request headers tied to disposed requester.
         /// </summary>
