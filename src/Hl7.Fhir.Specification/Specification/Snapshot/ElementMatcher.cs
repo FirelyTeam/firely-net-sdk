@@ -444,7 +444,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                         //
                     }
 
-                    if (snapNav.Current.SliceName != diffNav.Current.SliceName)
+                    if (snapNav.Current.SliceName != null &&
+                        snapNav.Current.SliceName != diffNav.Current.SliceName &&
+                        !ElementDefinitionNavigator.IsDirectResliceOf(diffNav.Current.SliceName, snapNav.Current.SliceName))
                     {
                         // [MV 20200702] This a new slice which did not occur in the snap (base)
                         snapSliceBase = originalSnapshotBase;
