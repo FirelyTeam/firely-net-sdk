@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Rest
 
             return OperationResult<OperationOutcome>(await client.TypeOperationAsync(RestOperation.VALIDATE_RESOURCE, resource.TypeName, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateCreate(this FhirClient client, DomainResource resource,
+        public static OperationOutcome ValidateCreate(this BaseFhirClient client, DomainResource resource,
             FhirUri profile = null)
         {
             return ValidateCreateAsync(client, resource, profile).WaitResult();
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Rest
             var loc = ResourceIdentity.Build(resource.TypeName, id);
             return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(loc, RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateUpdate(this FhirClient client, DomainResource resource, string id,
+        public static OperationOutcome ValidateUpdate(this BaseFhirClient client, DomainResource resource, string id,
             FhirUri profile = null)
         {
             return ValidateUpdateAsync(client, resource, id, profile).WaitResult();
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Rest
 
             return OperationResult<OperationOutcome>(await client.InstanceOperationAsync(location.WithoutVersion().MakeRelative(), RestOperation.VALIDATE_RESOURCE, par).ConfigureAwait(false));
         }
-        public static OperationOutcome ValidateDelete(this FhirClient client, ResourceIdentity location)
+        public static OperationOutcome ValidateDelete(this BaseFhirClient client, ResourceIdentity location)
         {
             return ValidateDeleteAsync(client,location).WaitResult();
         }
