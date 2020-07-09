@@ -19,6 +19,9 @@ namespace Hl7.Fhir.Rest
 {
     public partial class FhirClient : BaseFhirClient
     {
+//disables warning that OnBeforeRequest and OnAfterResponse are never used.
+#pragma warning disable CS0067
+        
         /// <summary>
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
@@ -67,17 +70,6 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public HttpRequestHeaders RequestHeaders { get; protected set; }
 
-        /// <summary>
-        /// Returns the HttpRequestMessage as it was last constructed to execute a call on the FhirClient
-        /// </summary>
-        public HttpRequestMessage LastRequestMessage { get { return (Requester as HttpClientRequester)?.LastRequest; } }
-
-        /// <summary>
-        /// Returns the HttpResponseMessage as it was last received during a call on the FhirClient
-        /// </summary>
-        /// <remarks>Note that the FhirClient will have read the body data from the HttpResponseMessage, so this is
-        /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpResponseMessage LastResponseMessage { get { return (Requester as HttpClientRequester)?.LastResponse; } }
 
         #region << Client Communication Defaults (PreferredFormat, UseFormatParam, Timeout, ReturnFullResource) >>
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
@@ -153,7 +145,6 @@ namespace Hl7.Fhir.Rest
             set => Settings.PreferredParameterHandling = value;
         }
 
-
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -182,25 +173,12 @@ namespace Hl7.Fhir.Rest
             get => Settings.ParserSettings;
             set => Settings.ParserSettings = value;
         }
-
-        /// <summary>
-        /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
-        /// </summary>
-        public HttpWebRequest LastRequest { get { return LastClientRequest as HttpWebRequest; } }
-
-        /// <summary>
-        /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
-        /// </summary>
-        /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
-        /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpWebResponse LastResponse { get { return LastClientResponse as HttpWebResponse; } }
-
         #endregion
 
-        [Obsolete ("OnBeforeRequest is deprecated, please add a HttpClientEventHandler to the constructor to use this functionality", true)]
+        [Obsolete ("OnBeforeRequest is deprecated, please add a HttpClientEventHandler or another HttpMessageHandler to the constructor to use this functionality", true)]
         public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
 
-        [Obsolete("OnAfterResponse is deprecated, please add a HttpClientEventHandler to the constructor to use this functionality", true)]
+        [Obsolete("OnAfterResponse is deprecated, please add a HttpClientEventHandler or another HttpMessageHandler to the constructor to use this functionality", true)]
         public event EventHandler<BeforeHttpRequestEventArgs> OnAfterResponseRequest;
 
 
