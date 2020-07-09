@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
+#pragma warning disable CS0618 // Type or member is obsolete
     public partial class FhirClientAsyncTests
     {       
         private readonly string _endpointSupportingSearchUsingPost = "http://sqlonfhir-r4.azurewebsites.net/fhir"; // http://nde-fhir-ehelse.azurewebsites.net/fhir";
@@ -18,6 +19,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             var client = new FhirClient(_endpoint)
             {
+
                 PreferredFormat = ResourceFormat.Json,
                 PreferredReturn = Prefer.ReturnRepresentation
             };
@@ -495,4 +497,5 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }

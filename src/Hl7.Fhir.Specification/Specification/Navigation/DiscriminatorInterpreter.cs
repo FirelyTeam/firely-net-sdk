@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
 using System.Linq;
+using P = Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 {
                     if (ce.ExpressionType == TypeSpecifier.String)
                     {
-                        return (string)ce.Value;
+                        return ((P.String)ce.Value).Value;
                     }
                 }
             }

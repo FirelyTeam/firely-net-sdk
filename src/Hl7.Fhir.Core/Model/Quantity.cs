@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
 {
     public partial class Quantity
     {
-        public Primitives.Quantity? ToQuantity()
+        public Primitives.Quantity ToQuantity()
         {
             if (Value != null)
             {
