@@ -3194,12 +3194,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
-            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
-            //Assert.AreEqual(1, outcome.Issue.Count);
-            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            Assert.AreEqual(2, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
-            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -5688,10 +5685,11 @@ namespace Hl7.Fhir.Specification.Tests
             dumpElements(elems);
             // dumpBaseElems(elems);
 
+            var issues = _generator.Outcome?.Issue.Where(i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString());
+
             // Verify there is NO warning about invalid element type constraint
-            Assert.IsFalse(_generator.Outcome.Issue.Any(
-                i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString())
-            );
+            Assert.IsTrue(issues == null || !issues.Any());
+            
         }
 
         // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
@@ -6863,11 +6861,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            // Expecting single issue about invalid slice name on SimpleQuantity root element
             var outcome = generator.Outcome;
-            //Assert.IsNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.IsNull(outcome);       
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsNotNull(nav);
