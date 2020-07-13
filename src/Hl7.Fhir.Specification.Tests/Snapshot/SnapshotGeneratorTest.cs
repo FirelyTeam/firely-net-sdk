@@ -4477,7 +4477,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSimpleQuantity()
         {
-            var resource = _testResolver.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+            var resource = _testResolver.FindStructureDefinition(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
             _generator = new SnapshotGenerator(_testResolver);
             var snapshot = _generator.Generate(resource);
             Assert.IsNotNull(snapshot);
