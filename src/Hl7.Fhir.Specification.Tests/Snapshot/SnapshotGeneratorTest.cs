@@ -4449,6 +4449,16 @@ namespace Hl7.Fhir.Specification.Tests
             expanded.Snapshot.Element.Where(e => e.Path.StartsWith("Observation.value")).Dump();
             dumpOutcome(_generator.Outcome);
 
+            var issues = _generator.Outcome?.Issue;
+            Assert.IsNull(issues);
+
+            // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
+            issues = new List<OperationOutcome.IssueComponent>();
+            var elems = expanded.Snapshot.Element;
+            elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
+            // Generator should report same issue as during regular snapshot expansion
+            Assert.AreEqual(0, issues.Count);
+
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             // Snapshot should not contain elements with original name
