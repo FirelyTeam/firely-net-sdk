@@ -118,10 +118,7 @@ namespace Hl7.FhirPath.R4.Tests
 
         [TestMethod]
         public void TestExistence()
-        {
-            fixture.IsTrue(@"{}.empty()");
-            fixture.IsTrue(@"1.empty().not()");
-            fixture.IsTrue(@"1.exists()");
+        {          
             fixture.IsTrue(@"Patient.identifier.exists()");
             fixture.IsTrue(@"Patient.dientifeir.exists().not()");
             fixture.IsTrue(@"Patient.telecom.rank.exists()");
@@ -131,25 +128,6 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.AreEqual(1, fixture.TestInput.Scalar(@"Patient.telecom.rank"));
             fixture.IsTrue(@"Patient.telecom.rank = 1");
         }
-
-        [TestMethod]
-        public void TestNullPropagation()
-        {
-            fixture.IsTrue(@"({}.substring(0)).empty()");
-            fixture.IsTrue(@"('hello'.substring({})).empty()");
-        }
-
-        [TestMethod]
-        public void TestDynaBinding()
-        {
-#pragma warning disable CS0618 // Type or member is internal
-            var input = SourceNode.Node("root",
-                    SourceNode.Valued("child", "Hello world!"),
-                    SourceNode.Valued("child", "4")).ToTypedElement();
-#pragma warning restore CS0618 // Type or member is internal
-            Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
-        }
-
 
         [TestMethod]
         public void TestSDF11Bug()
@@ -182,112 +160,8 @@ namespace Hl7.FhirPath.R4.Tests
             }
         }
 
-        [TestMethod]
-        public void TestGreaterThan()
-        {
-            fixture.IsTrue(@"4.5 > 0");
-            fixture.IsTrue(@"'ewout' > 'alfred'");
-            fixture.IsTrue(@"2016-04-01 > 2015-04-01");
-            fixture.IsTrue(@"5 > 6 = false");
-            fixture.IsTrue(@"(5 > {}).empty()");
-        }
-
-        [TestMethod]
-        public void TestMath()
-        {
-            fixture.IsTrue(@"-4.5 + 4.5 = 0");
-            fixture.IsTrue(@"4/2 = 2");
-            fixture.IsTrue(@"2/4 = 0.5");
-            fixture.IsTrue(@"10/4 = 2.5");
-            fixture.IsTrue(@"10.0/4 = 2.5");
-            fixture.IsTrue(@"4.0/2.0 = 2");
-            fixture.IsTrue(@"2.0/4 = 0.5");
-            fixture.IsTrue(@"2.0 * 4 = 8");
-            fixture.IsTrue(@"2 * 4.1 = 8.2");
-            fixture.IsTrue(@"-0.5 * 0.5 = -0.25");
-            fixture.IsTrue(@"5 - 4.5 = 0.5");
-            fixture.IsTrue(@"9.5 - 4.5 = 5");
-            fixture.IsTrue(@"5 + 4.5 = 9.5");
-            fixture.IsTrue(@"9.5 + 0.5 = 10");
-
-            fixture.IsTrue(@"103 mod 5 = 3");
-            fixture.IsTrue(@"101.4 mod 5.2 = 2.6");
-            fixture.IsTrue(@"103 div 5 = 20");
-            fixture.IsTrue(@"20.0 div 5.5 = 3");
-
-            fixture.IsTrue(@"'offic'+'ial' = 'official'");
-
-            fixture.IsTrue(@"12/(2+2) - (3 div 2) = 2");
-            fixture.IsTrue(@"-4.5 + 4.5 * 2 * 4 / 4 - 1.5 = 3");
-        }
 
 
-        [TestMethod]
-        public void Test3VLBoolean()
-        {
-            fixture.IsTrue(@"true and true");
-            fixture.IsTrue(@"(true and false) = false");
-            fixture.IsTrue(@"(true and {}).empty()");
-            fixture.IsTrue(@"(false and true) = false");
-            fixture.IsTrue(@"(false and false) = false");
-            fixture.IsTrue(@"(false and {}) = false");
-            fixture.IsTrue(@"({} and true).empty()");
-            fixture.IsTrue(@"({} and false) = false");
-            fixture.IsTrue(@"({} and {}).empty()");
-
-            fixture.IsTrue(@"true or true");
-            fixture.IsTrue(@"true or false");
-            fixture.IsTrue(@"true or {}");
-            fixture.IsTrue(@"false or true");
-            fixture.IsTrue(@"(false or false) = false");
-            fixture.IsTrue(@"(false or {}).empty()");
-            fixture.IsTrue(@"{} or true");
-            fixture.IsTrue(@"({} or false).empty()");
-            fixture.IsTrue(@"({} or {}).empty()");
-
-            fixture.IsTrue(@"(true xor true)=false");
-            fixture.IsTrue(@"true xor false");
-            fixture.IsTrue(@"(true xor {}).empty()");
-            fixture.IsTrue(@"false xor true");
-            fixture.IsTrue(@"(false xor false) = false");
-            fixture.IsTrue(@"(false xor {}).empty()");
-            fixture.IsTrue(@"({} xor true).empty()");
-            fixture.IsTrue(@"({} xor false).empty()");
-            fixture.IsTrue(@"({} xor {}).empty()");
-
-            fixture.IsTrue(@"true implies true");
-            fixture.IsTrue(@"(true implies false) = false");
-            fixture.IsTrue(@"(true implies {}).empty()");
-            fixture.IsTrue(@"false implies true");
-            fixture.IsTrue(@"false implies false");
-            fixture.IsTrue(@"false implies {}");
-            fixture.IsTrue(@"{} implies true");
-            fixture.IsTrue(@"({} implies false).empty()");
-            fixture.IsTrue(@"({} implies {}).empty()");
-        }
-
-        [TestMethod]
-        public void TestLogicalShortcut()
-        {
-            fixture.IsTrue(@"true or (1/0 = 0)");
-            fixture.IsTrue(@"(false and (1/0 = 0)) = false");
-        }
-
-
-        [TestMethod]
-        public void TestConversions()
-        {
-            fixture.IsTrue(@"(4.1).toString() = '4.1'");
-            fixture.IsTrue(@"true.toString() = 'true'");
-            fixture.IsTrue(@"true.toDecimal() = 1");
-            fixture.IsTrue(@"Patient.identifier.value.first().toDecimal() = 654321");
-            fixture.IsTrue(@"@2014-12-14T.toString() = '2014-12-14'");
-            fixture.IsTrue(@"@2014-12-14.toString() = '2014-12-14'");
-
-            fixture.IsTrue(@"1.convertsToInteger()");
-            fixture.IsTrue(@"'14:34:28'.convertsToTime()");
-            fixture.IsTrue(@"1.convertsToQuantity()");
-        }
 
         [TestMethod]
         public void TestIIf()
@@ -314,13 +188,14 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void TestEquality()
         {
+    
+            fixture.IsTrue(@"Patient.identifier = Patient.identifier");
+            fixture.IsTrue(@"Patient.identifier.first() != Patient.identifier.skip(1)");
             fixture.IsTrue(@"4 = 4");
             fixture.IsTrue(@"4 = 4.0");
             fixture.IsTrue(@"true = true");
             fixture.IsTrue(@"true != false");
 
-            fixture.IsTrue(@"Patient.identifier = Patient.identifier");
-            fixture.IsTrue(@"Patient.identifier.first() != Patient.identifier.skip(1)");
             fixture.IsTrue(@"(1|2|3) = (1|2|3)");
             fixture.IsTrue(@"(1|2|3) = (1.0|2.0|3)");
             fixture.IsTrue(@"(1|Patient.identifier|3) = (1|Patient.identifier|3)");
@@ -331,21 +206,6 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.communication.first() = Patient.communication.skip(1)");       // different extensions, same values
         }
 
-        [TestMethod]
-        public void TestDateTimeEquality()
-        {
-            fixture.IsTrue(@"@2015-01-01 = @2015-01-01");
-            fixture.IsTrue(@"@2015-01-01T = @2015-01-01T");
-            fixture.IsTrue(@"(@2015-01-01 != @2015-01).empty()");
-            fixture.IsTrue(@"(@2015-01-01T != @2015-01T).empty()");
-
-            fixture.IsTrue(@"@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z");
-
-            fixture.IsTrue(@"@T13:45:02 = @T13:45:02");
-            fixture.IsTrue(@"@T13:45:02 != @T14:45:02");
-
-            fixture.IsFalse("@2012-04-15T15:00:00Z = @2012-04-15T10:00:00");
-        }
 
         [TestMethod]
         public void TestCollectionFunctions()
@@ -377,45 +237,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"(Patient.identifier | Patient.name).count() = Patient.identifier.count() + Patient.name.count()");
             fixture.IsTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
         }
-
-
-        [TestMethod]
-        public void TestDateTimeEquivalence()
-        {
-            fixture.IsTrue("@2012-04-15T !~ @2012-04-15T10:00:00");
-            fixture.IsTrue("@T10:01:02 !~ @T10:01:55");
-        }
-
-        public static string ToString(ITypedElement nav)
-        {
-            var result = nav.Name;
-
-            if (nav.InstanceType != null)
-            {
-                result += ": " + nav.InstanceType;
-            }
-
-            if (nav.Value != null) result += " = " + nav.Value;
-
-            return result;
-        }
-
-        //public static void Render(IElementNavigator navigator, int nest = 0)
-        //{
-        //    do
-        //    {
-        //        string indent = new string(' ', nest * 4);
-        //        Debug.WriteLine($"{indent}" + ToString(navigator));
-
-        //        var child = navigator.Clone();
-        //        if (child.MoveToFirstChild())
-        //        {
-        //            Render(child, nest + 1);
-        //        }
-        //    }
-        //    while (navigator.MoveToNext());
-        //}
-
+      
 
         [TestMethod]
         public void TestWhere()
@@ -494,59 +316,7 @@ namespace Hl7.FhirPath.R4.Tests
                     .select('m' + $this.substring(1,4) + $this.substring(5)) = 'metrosexual'");
 
         }
-
-        [TestMethod]
-        public void TestExpressionTodayFunction()
-        {
-            // Check that date comes in
-            Assert.AreEqual(PartialDate.Today(), fixture.TestInput.Scalar("today()"));
-
-            // Check greater than
-            fixture.IsTrue("today() < @" + PartialDate.FromDateTimeOffset(DateTimeOffset.UtcNow.AddDays(1), includeOffset: false));
-
-            // Check less than
-            fixture.IsTrue("today() > @" + PartialDate.FromDateTimeOffset(DateTimeOffset.UtcNow.AddDays(-1), includeOffset: false));
-
-            // Check ==
-            fixture.IsTrue("today() = @" + PartialDate.Today());
-
-            // This unit-test will fail if you are working between midnight
-            // and start-of-day in GMT:
-            // e.g. 2018-08-10T01:00T+02:00 > 2018-08-10 will fail, which is then
-            // test on the next line
-            //fixture.IsTrue("now() > @" + PartialDateTime.Today());
-            fixture.IsTrue("now() >= @" + PartialDateTime.Now());
-        }
-
-        [TestMethod]
-        public void TestSubstring()
-        {
-            fixture.IsTrue("Patient.name.family");
-
-            fixture.IsTrue("Patient.name.family.substring(0,6) = 'Donald'");
-            fixture.IsTrue("Patient.name.family.substring(2,6) = 'nald'");
-            fixture.IsTrue("Patient.name.family.substring(2,4) = 'nald'");
-
-            fixture.IsTrue("Patient.name.family.substring(2,length()-3) = 'nal'");
-
-            fixture.IsTrue("Patient.name.family.substring(-1,8).empty()");
-            fixture.IsTrue("Patient.name.family.substring(999,1).empty()");
-            fixture.IsTrue("''.substring(0,1).empty()");
-            fixture.IsTrue("{}.substring(0,10).empty()");
-            fixture.IsTrue("{}.substring(0,10).empty()");
-
-            try
-            {
-                // TODO: Improve exception on this one
-                fixture.IsTrue("Patient.identifier.use.substring(0,10)");
-                // todo: mh: Assert.Fail();
-                throw new Exception();
-            }
-            catch (InvalidOperationException)
-            {
-            }
-        }
-
+   
         [TestMethod]
         public void TestStringOps()
         {
