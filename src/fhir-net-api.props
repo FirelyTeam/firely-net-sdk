@@ -38,12 +38,16 @@
   <!-- Compiler settings -->
   <PropertyGroup>
     <LangVersion>8.0</LangVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Configurations>Debug;Release;FullDebug</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
      <DebugType>portable</DebugType>
      <DebugSymbols>True</DebugSymbols>
      <NoWarn>1591</NoWarn>
+     <Optimize>false</Optimize>
+     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -51,10 +55,6 @@
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
     <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-  </PropertyGroup>
-
-  <PropertyGroup>
-      <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 </Project>
 
