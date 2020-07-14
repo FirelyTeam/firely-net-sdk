@@ -345,7 +345,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"'abc'.replace('a', 'qq') = 'qqbc'");
             fixture.IsTrue(@"'abc'.replace('q', 'x') = 'abc'");
             fixture.IsTrue(@"'abc'.replace('ab', '') = 'c'");
-            fixture.IsTrue(@"'abc'.replace('', 'xh') = 'xhaxhbxhc'");
+            fixture.IsTrue(@"'abc'.replace('', 'xh') = 'xhaxhbxhcxh'");
 
             fixture.IsTrue("Patient.contained.name[0].family.length() = " + "Everywoman".Length);
             fixture.IsTrue("''.length() = 0");
