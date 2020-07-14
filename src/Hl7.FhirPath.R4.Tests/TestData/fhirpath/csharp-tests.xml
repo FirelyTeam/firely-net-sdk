@@ -312,7 +312,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0084" inputfile="fp-test-patient.xml">
-    <expression>@2015-01-01 != @2015-01</expression>
+    <expression>(@2015-01-01 != @2015-01).empty()</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0085" inputfile="fp-test-patient.xml">

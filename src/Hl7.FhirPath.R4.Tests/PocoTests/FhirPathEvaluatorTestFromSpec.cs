@@ -10,32 +10,24 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Serialization;
 using Hl7.FhirPath.Functions;
 using Hl7.FhirPath.Tests;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
-using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 using boolean = System.Boolean;
 using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
 using Model = Hl7.Fhir.Model;
 
 namespace Hl7.FhirPath.R4.Tests
 {
+    [TestClass]
     public class FhirPathTests
     {
-        private readonly ITestOutputHelper output;
-
-        public FhirPathTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
         private void test(Model.Resource resource, String expression, IEnumerable<XElement> expected, bool asPredicate)
         {
-            var tpXml = new FhirXmlSerializer().SerializeToString(resource);
+            //var tpXml = new FhirXmlSerializer().SerializeToString(resource);
             var npoco = resource.ToTypedElement();
             //       FhirPathEvaluatorTest.Render(npoco);
             IEnumerable<ITypedElement> actual;
@@ -45,8 +37,12 @@ namespace Hl7.FhirPath.R4.Tests
             else
                 actual = ElementNode.CreateList(npoco.Predicate(expression));
 
-            Assert.Equal(expected.Count(), actual.Count());
+            if (!expected.Any() && actual.Any())
+                Assert.Fail("Expected an empty result");
+            if (expected.Any() && !actual.Any())
+                Assert.Fail("Expected a non-empty result");
 
+            Assert.AreEqual(expected.Count(), actual.Count(), "The number of items in the result differ from the expected number");
             expected.Zip(actual, compare).Count();
         }
 
@@ -57,11 +53,11 @@ namespace Hl7.FhirPath.R4.Tests
 
             if (type.Contains(".")) type = type.Substring(type.IndexOf(".") + 1);
             if (tp.Contains(".")) tp = tp.Substring(tp.IndexOf(".") + 1);
-            Assert.Equal(type, tp);
+            Assert.AreEqual(type, tp);
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 
-            Assert.Equal(expected.Value, actual.ToStringRepresentation());
+            Assert.AreEqual(expected.Value, actual.ToStringRepresentation());
 
             return true;
         }
@@ -72,7 +68,7 @@ namespace Hl7.FhirPath.R4.Tests
             var input = focus.ToTypedElement();
             var container = resource?.ToTypedElement();
 
-            Assert.True(input.IsBoolean(expression, value, new EvaluationContext(container)));
+            Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
 
         enum ErrorType
@@ -87,19 +83,19 @@ namespace Hl7.FhirPath.R4.Tests
             {
                 var resourceNav = resource.ToTypedElement();
                 resourceNav.Select(expression);
-                Assert.True(false, "Should have been invalid");
+                Assert.IsTrue(false, "Should have been invalid");
             }
             catch (FormatException)
             {
-                if (type != ErrorType.Syntax) Assert.True(false, "Invalid should have been of type syntax");
+                if (type != ErrorType.Syntax) Assert.IsTrue(false, "Invalid should have been of type syntax");
             }
             catch (InvalidCastException)
             {
-                if (type != ErrorType.Semantics) Assert.True(false, "Invalid should have been of type semantics");
+                if (type != ErrorType.Semantics) Assert.IsTrue(false, "Invalid should have been of type semantics");
             }
             catch (InvalidOperationException)
             {
-                if (type != ErrorType.Semantics) Assert.True(false, "Invalid should have been of type semantics2");
+                if (type != ErrorType.Semantics) Assert.IsTrue(false, "Invalid should have been of type semantics2");
             }
         }
 
@@ -108,7 +104,7 @@ namespace Hl7.FhirPath.R4.Tests
         int numFailed = 0;
         int totalTests = 0;
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod, TestCategory("FhirPathFromSpec")]
         public void TestPublishedTests()
         {
             var path = Path.Combine(TestData.GetTestDataBasePath(), "fhirpath");
@@ -116,18 +112,14 @@ namespace Hl7.FhirPath.R4.Tests
 
             foreach (var file in files)
             {
-                output.WriteLine($"==== Running tests from file '{file}' ====");
+                Console.WriteLine($"==== Running tests from file '{file}' ====");
                 runTests(file);
-                output.WriteLine(Environment.NewLine);
+                Console.WriteLine(Environment.NewLine);
             }
 
-            output.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
+            Console.WriteLine($"Ran {totalTests} tests in total, {totalTests - numFailed} succeeded, {numFailed} failed.");
 
-            // TODO 20190709: we know that 103 tests are still failing. In the next release we make sure that these test will succeed again.
-            // MV 20191210: For version 4.0.1 we added some extra functions in FhirPath (intersect and ` is allowed), so now 97 tests (instead of 103) are failing
-            // MV 20200302: After merging 1.x into develop we have 131 failing tests
-            // EK 20200528: Managed it down to 108, by changing the type of integer constants back to long.
-            Assert.True(108 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
+            Assert.IsTrue(-1 == numFailed, $"There were {numFailed} unsuccessful tests (out of a total of {totalTests})");
         }
 
         private void runTests(string pathToTest)
@@ -141,20 +133,20 @@ namespace Hl7.FhirPath.R4.Tests
                 string name = item.Attribute("name")?.Value ?? "(no name)";
                 string inputfile = item.Attribute("inputfile").Value;
                 var mode = item.Attribute("mode");
-                string expression = item.Element("expression").Value;
+                var expressionNode = item.Element("expression");
+                string expression = expressionNode.Value;
+                bool invalid = expressionNode.Attribute("invalid")?.Value == "true";
 
-                if (mode != null && mode.Value == "strict") continue; // don't do 'strict' tests yet
-
-                // Now perform this unit test
-                Model.DomainResource resource = null;
+                if (mode?.Value == "strict" || invalid) continue; // don't do 'strict' or invlaid tests yet
                 string basepath = Path.Combine(TestData.GetTestDataBasePath(), @"fhirpath\input");
 
                 if (!_cache.ContainsKey(inputfile))
                 {
-                    _cache.Add(inputfile, (Model.DomainResource)(new FhirXmlParser().Parse<Model.DomainResource>(
-                        File.ReadAllText(Path.Combine(basepath, inputfile)))));
+                    _cache.Add(inputfile, new FhirXmlParser().Parse<Model.DomainResource>(
+                        File.ReadAllText(Path.Combine(basepath, inputfile))));
                 }
-                resource = _cache[inputfile];
+                // Now perform this unit test
+                Model.DomainResource resource = _cache[inputfile];
 
                 try
                 {
@@ -163,11 +155,8 @@ namespace Hl7.FhirPath.R4.Tests
                 }
                 catch (Exception e)
                 {
-                    output.WriteLine($"FAIL: {groupName} - {name}: {expression}");
-                    if (!(e is XunitException))
-                        output.WriteLine($"   ({e.GetType().Name}) {e.Message}");
-                    else
-                        output.WriteLine($"   {e.Message}");
+                    Console.WriteLine($"FAIL: {groupName} - {name}: {expression}");
+                    Console.WriteLine($"   ({e.GetType().Name}) {e.Message}");
                     numFailed += 1;
                 }
             }
@@ -201,7 +190,7 @@ namespace Hl7.FhirPath.R4.Tests
             }
         }
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod, TestCategory("FhirPathFromSpec")]
         public void testTyping()
         {
             Model.ElementDefinition ed = new Model.ElementDefinition();
@@ -210,7 +199,7 @@ namespace Hl7.FhirPath.R4.Tests
             testBoolean(null, ed.Binding.getValueSet(), "ElementDefinition.binding.valueSet", "startsWith('http:') or startsWith('https') or startsWith('urn:')", true);
         }
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod, TestCategory("FhirPathFromSpec")]
         public void testDecimalRA()
         {
             var r = new Model.RiskAssessment();
@@ -232,7 +221,7 @@ namespace Hl7.FhirPath.R4.Tests
             testBoolean(r, r.getPrediction()[0], "RiskAssessment.prediction", "probability.as(decimal) <= 100", true);
         }
 
-        /*  [Fact, Trait("Area", "FhirPathFromSpec")]
+        /*  [TestMethod, TestCategory("Area", "FhirPathFromSpec")]
           public void testQuestionnaire()  {
             Questionnaire q = (Questionnaire)FhirParser.ParseResourceFromJson(File.ReadAllText("C:/work/org.hl7.fhir/build - DSTU2.0/publish/questionnaire-example-gcs.json"));
             for (QuestionnaireItemComponent qi : q.getItem()) {
@@ -245,7 +234,7 @@ namespace Hl7.FhirPath.R4.Tests
           }
         */
 
-        [Fact, Trait("Area", "FhirPathFromSpec")]
+        [TestMethod, TestCategory("FhirPathFromSpec")]
         public void testExtensionDefinitions()
         {
             // obsolete:

@@ -68,7 +68,11 @@ namespace Hl7.FhirPath.R4.Tests
             Save(Xdoc, @"c:\temp\csharp-tests.xml");
         }
 
-        public void IsTrue(string expr)
+        public void IsTrue(string expr) => IsBoolean(expr, true);
+
+        public void IsFalse(string expr) => IsBoolean(expr, false);
+
+        public void IsBoolean(string expr, bool result)
         {
             Counter += 1;
             var testName = "CSharpTest" + Counter.ToString("D4");
@@ -77,11 +81,13 @@ namespace Hl7.FhirPath.R4.Tests
             var testXml = new XElement("test",
                         new XAttribute("name", testName), new XAttribute("inputfile", fileName),
                         new XElement("expression", new XText(expr)),
-                        new XElement("output", new XAttribute("type", "boolean"), new XText("true")));
+                        new XElement("output", new XAttribute("type", "boolean"), new XText(result ? "true" :  "false")));
             Xdoc.Elements().First().Add(testXml);
 
-            Assert.IsTrue(TestInput.IsBoolean(expr, true));
+            Assert.IsTrue(TestInput.IsBoolean(expr, result));
         }
+
+
 
         public void IsTrue(string expr, ITypedElement input)
         {
@@ -141,7 +147,6 @@ namespace Hl7.FhirPath.R4.Tests
                     SourceNode.Valued("child", "Hello world!"),
                     SourceNode.Valued("child", "4")).ToTypedElement();
 #pragma warning restore CS0618 // Type or member is internal
-
             Assert.AreEqual("ello", input.Scalar(@"$this.child[0].substring(1,%context.child[1].toInteger())"));
         }
 
@@ -326,18 +331,20 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"Patient.communication.first() = Patient.communication.skip(1)");       // different extensions, same values
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestDateTimeEquality()
         {
             fixture.IsTrue(@"@2015-01-01 = @2015-01-01");
             fixture.IsTrue(@"@2015-01-01T = @2015-01-01T");
-            fixture.IsTrue(@"@2015-01-01 != @2015-01");
-            fixture.IsTrue(@"@2015-01-01T != @2015-01T");
+            fixture.IsTrue(@"(@2015-01-01 != @2015-01).empty()");
+            fixture.IsTrue(@"(@2015-01-01T != @2015-01T).empty()");
 
             fixture.IsTrue(@"@2015-01-01T13:40:50+00:00 = @2015-01-01T13:40:50Z");
 
             fixture.IsTrue(@"@T13:45:02 = @T13:45:02");
             fixture.IsTrue(@"@T13:45:02 != @T14:45:02");
+
+            fixture.IsFalse("@2012-04-15T15:00:00Z = @2012-04-15T10:00:00");
         }
 
         [TestMethod]
@@ -372,11 +379,11 @@ namespace Hl7.FhirPath.R4.Tests
         }
 
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestDateTimeEquivalence()
         {
-            fixture.IsTrue("@2012-04-15T ~ @2012-04-15T10:00:00");
-            fixture.IsTrue("@T10:01:02 !~ @T10:01:55+01:00");
+            fixture.IsTrue("@2012-04-15T !~ @2012-04-15T10:00:00");
+            fixture.IsTrue("@T10:01:02 !~ @T10:01:55");
         }
 
         public static string ToString(ITypedElement nav)
