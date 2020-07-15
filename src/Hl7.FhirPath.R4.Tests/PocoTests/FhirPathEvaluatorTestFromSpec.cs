@@ -119,7 +119,10 @@ namespace Hl7.FhirPath.R4.Tests
                 "testEquality7", "testNEquality24", "testNotEquivalent22",
                 "testType1", "testType2", "testType3", "testType4", "testType9", "testType10", "testType15", "testType16",
                 "testType20", "testType21", "testType23",
-                "testConformsTo"
+                "testConformsTo",
+                "testDateNotEqualTimezoneOffsetBefore", "testDateNotEqualTimezoneOffsetAfter", "testDateNotEqualUTC",
+                "testNotEquivalent19", 
+                "testRound2"
             };
 
             foreach (var file in files)
