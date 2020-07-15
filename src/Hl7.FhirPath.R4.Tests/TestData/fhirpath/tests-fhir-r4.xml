@@ -393,7 +393,7 @@
     <test name="testDateNotEqual" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @1974-12-25T12:34:00</expression>
     </test>
-   <!-- EK20200714 Commented these out, I think they should all return {} instead of true
+   <!-- EK20200714 I think these tests are incorrect. they should all return {} instead of true -->
    <test name="testDateNotEqualTimezoneOffsetBefore" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @1974-12-25T12:34:00-10:00</expression>
       <output type="boolean">true</output>
@@ -405,7 +405,7 @@
     <test name="testDateNotEqualUTC" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @1974-12-25T12:34:00Z</expression>
       <output type="boolean">true</output>
-    </test> -->
+    </test>
     <test name="testDateNotEqualTimeSecond" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @T12:14:15</expression>
       <output type="boolean">true</output>
@@ -1882,10 +1882,11 @@
       <expression>@2012-04-15T15:30:31 !~ @2012-04-15T15:30:31.1</expression>
       <output type="boolean">true</output>
     </test>
-    <!-- EK20200714  surely this test must be wrong?   <test name="testNotEquivalent19" inputfile="patient-example.xml">
+    <!-- EK20200714  surely this test must be wrong?  -->
+    <test name="testNotEquivalent19" inputfile="patient-example.xml">
       <expression>name !~ name</expression>
       <output type="boolean">true</output>
-    </test>-->
+    </test>
     <test name="testNotEquivalent20" inputfile="patient-example.xml">
       <expression>name.take(2).given !~ name.take(2).first().given | name.take(2).last().given</expression>
       <output type="boolean">false</output>
