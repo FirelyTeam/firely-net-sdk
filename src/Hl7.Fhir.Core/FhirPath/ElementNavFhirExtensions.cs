@@ -14,7 +14,7 @@ using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using P = Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.FhirPath
                 {
                     return new FhirString((string)result);
                 }
-                if (result is Model.Primitives.PartialDateTime dt)
+                if (result is P.PartialDateTime dt)
                 {
                     return new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime());
                 }

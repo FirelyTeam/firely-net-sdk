@@ -112,16 +112,27 @@ namespace Hl7.FhirPath.R4.Tests
 
             var ignoreTestcases = new string[]
             {
+                // this one is incorrect - has been reported and agreed on.
                 "testIntegerBooleanNotTrue",
+
+                // this works with quantities with different UCUM units, which we don't support
                 "testQuantity1", "testQuantity2", "testQuantity3", "testQuantity4", "testQuantity5", "testQuantity6",
                 "testQuantity7", "testQuantity8", "testQuantity9", "testQuantity10", "testQuantity11",
                 "testAggregate1", "testAggregate2", "testAggregate3", "testAggregate4",
                 "testEquality7", "testNEquality24", "testNotEquivalent22",
+
+                // this tests the reflection capabilities, that we do not have yet
                 "testType1", "testType2", "testType3", "testType4", "testType9", "testType10", "testType15", "testType16",
                 "testType20", "testType21", "testType23",
                 "testConformsTo",
+
+                // these date tests are incorrect - reported on Zulip
                 "testDateNotEqualTimezoneOffsetBefore", "testDateNotEqualTimezoneOffsetAfter", "testDateNotEqualUTC",
+
+                // how come x !~ x?.
                 "testNotEquivalent19", 
+
+                // rounding pi to 3 decimals will not become 2
                 "testRound2"
             };
 

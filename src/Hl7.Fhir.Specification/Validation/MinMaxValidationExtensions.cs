@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using P = Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.Fhir.Validation
 {
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Validation
             if (!(definition is PrimitiveType || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
             if (definition is PrimitiveType pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
-            if (instance is Model.Primitives.PartialDateTime)
+            if (instance is P.PartialDateTime)
             {
                 if (definition is FhirDateTime fdt)
                     return instance.CompareTo(fdt.ToPartialDateTime());
@@ -33,9 +34,9 @@ namespace Hl7.Fhir.Validation
                     return instance.CompareTo(ins.ToPartialDateTime());
             }
 
-            else if (instance is Model.Primitives.PartialTime && definition is Time t)
+            else if (instance is P.PartialTime && definition is Time t)
                 return instance.CompareTo(t.ToTime());
-            else if (instance is Model.Primitives.PartialDate && definition is Date dt)
+            else if (instance is P.PartialDate && definition is Date dt)
                 return instance.CompareTo(dt.ToPartialDate());
 
             else if (instance is decimal && definition is FhirDecimal d)
