@@ -6,17 +6,15 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System.Diagnostics;
-using Hl7.Fhir.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.ElementModel;
-using System.IO;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.FhirPath;
-using Hl7.FhirPath;
-using System.Linq;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
+using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
@@ -81,16 +79,9 @@ namespace Hl7.Fhir.Tests.Introspection
             CollectionAssert.AreEqual(ElementNode.CreateList(0).ToList(), result.ToList());
 
             // Call $index on child
-            result = patient.Children("identifier").ElementAt(2).Select("$index");
+            result = patient.Children("identifier.skip(2).$index");
             Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count());
-            CollectionAssert.AreEqual(ElementNode.CreateList(2).ToList(), result.ToList());
-
-            // Call $index on nested child
-            result = patient.Select("contained[0].name[1]").FirstOrDefault().Select("$index");
-            Assert.IsNotNull(result);
-            Assert.AreEqual(1, result.Count());
-            CollectionAssert.AreEqual(ElementNode.CreateList(1).ToList(), result.ToList());
+            Assert.AreEqual(0, result.Count());
 
             // Call $index on primitive
             result = patient.Select("name[0].use.select($index)");
@@ -119,7 +110,7 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsNotNull(result);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual("Patient.identifier[1]", result.FirstOrDefault().Location);
-            
+
             result = patient.Select("$this.children().where($index <= 10)");
             Assert.IsNotNull(result);
             Assert.AreEqual(11, result.Count());
