@@ -1,5 +1,4 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
@@ -11,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using P = Hl7.Fhir.Model.Primitives;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (typed)
             {
                 Assert.AreEqual("date", bd.InstanceType);
-                Assert.AreEqual(PartialDate.Parse("1974-12-25"), bd.Value);
+                Assert.AreEqual(P.PartialDate.Parse("1974-12-25"), bd.Value);
             }
             else
                 Assert.AreEqual("1974-12-25", bd.Value);

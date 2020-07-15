@@ -17,7 +17,6 @@ using System.Xml.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath.Expressions;

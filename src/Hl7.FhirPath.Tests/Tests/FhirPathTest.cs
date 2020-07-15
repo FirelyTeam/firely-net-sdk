@@ -114,7 +114,7 @@ namespace Hl7.FhirPath.Tests
 
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
         }
 
         [TestMethod]
@@ -127,7 +127,7 @@ namespace Hl7.FhirPath.Tests
             EvaluationContext ctx = new FhirEvaluationContext();
             var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
             ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
@@ -144,7 +144,7 @@ namespace Hl7.FhirPath.Tests
             };
             result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
 
             traced = false;
@@ -161,7 +161,7 @@ namespace Hl7.FhirPath.Tests
             };
             result = nav.Select("Resource.trace('id', id).meta.trace('log', lastUpdated).lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
         }
 
