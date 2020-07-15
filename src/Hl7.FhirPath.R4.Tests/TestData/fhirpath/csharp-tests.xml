@@ -105,7 +105,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0027" inputfile="fp-test-patient.xml">
-    <expression>'abc'.replace('', 'xh') = 'xhaxhbxhc'</expression>
+    <expression>'abc'.replace('', 'xh') = 'xhaxhbxhcxh'</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0028" inputfile="fp-test-patient.xml">
