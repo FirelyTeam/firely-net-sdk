@@ -1,5 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
+    <TargetFrameworkForDebug>netstandard2.0</TargetFrameworkForDebug>
     <TargetFrameworks Condition=" '$(Configuration)' == 'Debug' ">$(TargetFrameworkForDebug)</TargetFrameworks>
     <TargetFrameworks Condition=" '$(Configuration)' != 'Debug' ">$(TargetFrameworkForDebug);net45;netstandard1.1</TargetFrameworks>
   </PropertyGroup>
