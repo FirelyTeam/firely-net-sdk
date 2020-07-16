@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
             Assert.IsFalse(elem.IsNullOrEmpty());
             Assert.IsFalse((elem as Base).IsNullOrEmpty());
 
-            elem.Value = default(V);
+            elem.Value = default;
             Assert.IsTrue(elem.IsNullOrEmpty());
             Assert.IsTrue((elem as Base).IsNullOrEmpty());
 
