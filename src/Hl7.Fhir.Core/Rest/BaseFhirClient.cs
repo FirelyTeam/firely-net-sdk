@@ -42,14 +42,6 @@ namespace Hl7.Fhir.Rest
         public string LastBodyAsText => LastResult?.GetBodyAsText();
         public Resource LastBodyAsResource { get; private set; }
 
-        //This is an object because of the different libraries we use for the client.
-        //This can either be a HttpWebRequest (FhirClient) or a HttpRequestMessage(FhirHttpClient)
-        protected object LastClientRequest { get; set; }
-
-        //This is an object because of the different libraries we use for the client.
-        //This can either be a HttpWebResponse (FhirClient) or a HttpResponseMessage(FhirHttpClient)
-        protected object LastClientResponse { get; set; }
-
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
             if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
@@ -918,8 +910,6 @@ namespace Hl7.Fhir.Rest
             try
             {
                 response = typedEntryResponse.ToBundleEntry(Settings.ParserSettings);
-                LastClientRequest = typedEntryResponse.LastRequest;
-                LastClientResponse = typedEntryResponse.LastResponse;
                 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;

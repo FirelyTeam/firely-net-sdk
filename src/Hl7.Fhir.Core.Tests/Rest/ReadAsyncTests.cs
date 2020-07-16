@@ -3,26 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Rest.Legacy;
 using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
     [TestClass]
-    public partial class FhirClientAsyncTests
+    public class FhirClientReadAsyncTests
     {
-    #pragma warning disable CS0618
-
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+            
+
 
             var pat = new Patient()
             {
@@ -66,11 +65,9 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;          
 
             await readUsingResourceId(client);
         }
@@ -79,7 +76,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
         {
-            using (var client = new FhirHttpClient(_endpoint))
+            using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
@@ -102,11 +99,10 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+            
 
             await readUsingLocationString(client);
         }
@@ -115,7 +111,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedHttpClient()
         {
-            using (var client = new FhirHttpClient(_endpoint))
+            using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.PreferredReturn = Prefer.ReturnRepresentation;

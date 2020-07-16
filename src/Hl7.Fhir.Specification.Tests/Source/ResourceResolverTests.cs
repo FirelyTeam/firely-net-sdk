@@ -11,12 +11,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using Hl7.Fhir.Specification.Source;
-using System.Net;
 using Hl7.Fhir.Support;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Linq;
 using T = System.Threading.Tasks;
+using Hl7.Fhir.Rest;
+using System.Net.Http;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -88,48 +89,50 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("http://test.fhir.org/r4/StructureDefinition/Observation", artifact.GetOrigin());
         }
 
-        private class TestFhirClient : Rest.FhirClient
+        private class TestFhirClient : FhirClient
         {
             private int _status = 0;
 
             public int Status
             {
                 get { return _status; }
-                private set { _status = value; }
+                set { _status = value; }
             }
 
-            public TestFhirClient(Uri endpoint) : base(endpoint) { Status = 1; }
-
-            protected override void BeforeRequest(HttpWebRequest rawRequest, byte[] body)
-            {
-                Status = 2;
-                base.BeforeRequest(rawRequest, body);
-            }
-
-            protected override void AfterResponse(HttpWebResponse webResponse, byte[] body)
-            {
-                Status = 3;
-                base.AfterResponse(webResponse, body);
-            }
+            public TestFhirClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler handler = null) : base(endpoint, settings, handler) { Status = 1; }
         }
 
         [TestMethod, TestCategory("IntegrationTest")]
         public void RetrieveWebArtifactCustomFhirClient()
         {
-            TestFhirClient client = null;
+            using (var handler = new HttpClientEventHandler())
+            {
+                using (var client = new TestFhirClient("http://test.fhir.org", handler: handler))
+                {
+                    client.Settings.Timeout = 10;
 
-            var wa = new WebResolver(id => client = new TestFhirClient(id)) { TimeOut = DefaultTimeOut };
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        client.Status = 2;
+                    };
 
-            Assert.IsNull(client);
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        client.Status = 3;
+                    };
 
-            var artifact = wa.ResolveByUri("http://test.fhir.org/r4/StructureDefinition/Patient");
+                    var wa = new WebResolver(id => client);                   
 
-            Assert.IsNotNull(client);
-            Assert.AreEqual(client.Status, 3);
+                    var artifact = wa.ResolveByUri("http://vonk.fire.ly/StructureDefinition/Patient");
 
-            Assert.IsNotNull(artifact);
-            Assert.IsTrue(artifact is StructureDefinition);
-            Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
+                    Assert.IsNotNull(client);
+                    Assert.AreEqual(client.Status, 3);
+
+                    Assert.IsNotNull(artifact);
+                    Assert.IsTrue(artifact is StructureDefinition);
+                    Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
+                }
+            }          
         }
 
         [TestMethod,TestCategory("IntegrationTest")]
