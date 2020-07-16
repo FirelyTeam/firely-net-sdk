@@ -140,6 +140,11 @@ namespace Hl7.Fhir.Model
     //    }
     //}
 
+    public partial class Questionnaire : IVersionableConformanceResource
+    {
+
+    }
+
     public partial class TerminologyCapabilities : IVersionableConformanceResource
     {
 
