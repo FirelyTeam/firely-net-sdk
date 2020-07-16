@@ -487,7 +487,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(elem.IsRootElement());
                 if (!string.IsNullOrEmpty(elem.SliceName))
                 {
-                    addIssueInvalidSliceNameOnRootElement(elem, sd);
+                    if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity))
+                    {
+                        addIssueInvalidSliceNameOnRootElement(elem, sd);
+                    }                        
                     elem.SliceName = null;
                 }
             }
