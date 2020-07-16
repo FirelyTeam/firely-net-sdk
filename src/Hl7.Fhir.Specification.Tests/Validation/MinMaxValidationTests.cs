@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Validation
         public void TestGetComparable()
         {
             var nodeQ = new FhirDateTime(1972, 11, 30).ToTypedElement();
-            Assert.Equal(0,nodeQ.GetComparableValue(typeof(FhirDateTime)).CompareTo(P.PartialDateTime.Parse("1972-11-30")));
+            Assert.Equal(0,nodeQ.GetComparableValue(typeof(FhirDateTime)).CompareTo(P.DateTime.Parse("1972-11-30")));
 
             nodeQ = new Quantity(3.14m, "kg").ToTypedElement();
             Assert.Equal(-1, nodeQ.GetComparableValue(typeof(Quantity)).CompareTo(new P.Quantity(5.0m, "kg")));
@@ -32,19 +32,19 @@ namespace Hl7.Fhir.Validation
         [Fact]
         public void TestCompare()
         {
-            Assert.Equal(0, MinMaxValidationExtensions.Compare(P.PartialDateTime.Parse("1972-11-30"), new Model.FhirDateTime(1972, 11, 30)));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(P.PartialDateTime.Parse("1972-12-01"), new Model.Date(1972, 11, 30)));
+            Assert.Equal(0, MinMaxValidationExtensions.Compare(P.DateTime.Parse("1972-11-30"), new Model.FhirDateTime(1972, 11, 30)));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(P.DateTime.Parse("1972-12-01"), new Model.Date(1972, 11, 30)));
             Assert.Equal(-1,
-                MinMaxValidationExtensions.Compare(P.PartialDateTime.Parse("1972-12-01T13:00:00Z"),
+                MinMaxValidationExtensions.Compare(P.DateTime.Parse("1972-12-01T13:00:00Z"),
                     new Model.Instant(new DateTimeOffset(1972, 12, 01, 14, 00, 00, TimeSpan.Zero))));
-            Assert.Equal(0, MinMaxValidationExtensions.Compare(P.PartialTime.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(P.PartialDate.Parse("2016-02-01"), new Model.Date("2016-01-01")));
+            Assert.Equal(0, MinMaxValidationExtensions.Compare(P.Time.Parse("12:00:00Z"), new Model.Time("12:00:00Z")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(P.Date.Parse("2016-02-01"), new Model.Date("2016-01-01")));
             Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Model.FhirDecimal(2.14m)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Model.Integer(3)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Model.FhirString("bbb")));
             Assert.Equal(1, MinMaxValidationExtensions.Compare(new P.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
 
-            Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(P.PartialDateTime.Parse("1972-11-30"), new Model.Quantity(4.0m, "kg")));
+            Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(P.DateTime.Parse("1972-11-30"), new Model.Quantity(4.0m, "kg")));
         }
 
         [Fact]

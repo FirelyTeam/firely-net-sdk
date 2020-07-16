@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
             if (!(definition is PrimitiveType || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
             if (definition is PrimitiveType pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
-            if (instance is P.PartialDateTime)
+            if (instance is P.DateTime)
             {
                 if (definition is FhirDateTime fdt)
                     return instance.CompareTo(fdt.ToPartialDateTime());
@@ -34,9 +34,9 @@ namespace Hl7.Fhir.Validation
                     return instance.CompareTo(ins.ToPartialDateTime());
             }
 
-            else if (instance is P.PartialTime && definition is Time t)
+            else if (instance is P.Time && definition is Time t)
                 return instance.CompareTo(t.ToTime());
-            else if (instance is P.PartialDate && definition is Date dt)
+            else if (instance is P.Date && definition is Date dt)
                 return instance.CompareTo(dt.ToPartialDate());
 
             else if (instance is decimal && definition is FhirDecimal d)
@@ -81,8 +81,8 @@ namespace Hl7.Fhir.Validation
 
                 return new P.Quantity(q.Value.Value, q.Unit);
             }
-            else if (instance.Value is IComparable)
-                return (IComparable)instance.Value;
+            else if (instance.Value is IComparable ic)
+                return ic;
             else
                 return null;
         }

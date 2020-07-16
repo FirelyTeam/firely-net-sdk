@@ -25,7 +25,7 @@ namespace Hl7.Fhir
 
             var trace = Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Filter("trace", 2);
             SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "dateadd",
-                (P.PartialDate f, string field, long amount) =>
+                (P.Date f, string field, long amount) =>
                 {
                     DateTimeOffset dto = f.ToDateTimeOffset(0,0,0,TimeSpan.Zero).ToUniversalTime();
                     int value = (int)amount;
@@ -42,7 +42,7 @@ namespace Hl7.Fhir
                         //case "mi": dto = dto.AddMinutes(value); break;
                         //case "ss": dto = dto.AddSeconds(value); break;
                     }
-                    P.PartialDate changedDate = P.PartialDate.Parse(P.PartialDate.FromDateTimeOffset(dto).ToString().Substring(0, f.ToString().Length));
+                    P.Date changedDate = P.Date.Parse(P.Date.FromDateTimeOffset(dto).ToString().Substring(0, f.ToString().Length));
                     return changedDate;
                 });
 
