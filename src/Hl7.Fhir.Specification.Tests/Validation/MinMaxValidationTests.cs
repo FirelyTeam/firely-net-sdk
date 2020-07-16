@@ -2,7 +2,7 @@
 using Hl7.Fhir.Model;
 using System;
 using Xunit;
-using P = Hl7.Fhir.Model.Primitives;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Validation
 {
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Validation
             Assert.Equal(1, MinMaxValidationExtensions.Compare(3.14m, new Model.FhirDecimal(2.14m)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare(-3L, new Model.Integer(3)));
             Assert.Equal(-1, MinMaxValidationExtensions.Compare("aaa", new Model.FhirString("bbb")));
-            Assert.Equal(1, MinMaxValidationExtensions.Compare(new Model.Primitives.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
+            Assert.Equal(1, MinMaxValidationExtensions.Compare(new P.Quantity(5.0m, "kg"), new Model.Quantity(4.0m, "kg")));
 
             Assert.Throws<NotSupportedException>(() => MinMaxValidationExtensions.Compare(P.PartialDateTime.Parse("1972-11-30"), new Model.Quantity(4.0m, "kg")));
         }
