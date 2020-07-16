@@ -10246,7 +10246,7 @@
         <xpath value="f:DocumentReference/f:context/f:encounter | f:RiskAssessment/f:context | f:DeviceRequest/f:context | f:Procedure/f:context | f:List/f:encounter | f:VisionPrescription/f:encounter | f:ProcedureRequest/f:context | f:Flag/f:encounter | f:Observation/f:context | f:DiagnosticReport/f:context | f:NutritionOrder/f:encounter | f:Composition/f:encounter" />
         <xpathUsage value="normal" />
         <target value="Encounter" />
-        <target value="EpisodeOfCare" />
+         <!-- removed, see: https://github.com/FirelyTeam/fhir-net-api/issues/1298 -->
       </SearchParameter>
     </resource>
   </entry>
