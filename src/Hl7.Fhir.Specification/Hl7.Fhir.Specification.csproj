@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(Configuration)' != 'Debug' ">$(TargetFrameworks);net45</TargetFrameworks>
+    <TargetFrameworkForDebug>netstandard2.0</TargetFrameworkForDebug>
+    <TargetFrameworks Condition=" '$(Configuration)' == 'Debug' ">$(TargetFrameworkForDebug)</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(Configuration)' != 'Debug' ">$(TargetFrameworkForDebug);net45</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
