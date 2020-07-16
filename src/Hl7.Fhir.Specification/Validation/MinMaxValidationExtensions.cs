@@ -27,17 +27,17 @@ namespace Hl7.Fhir.Validation
             if (instance is P.DateTime)
             {
                 if (definition is FhirDateTime fdt)
-                    return instance.CompareTo(fdt.ToPartialDateTime());
+                    return instance.CompareTo(fdt.Value is { } ? P.DateTime.Parse(fdt.Value) : null);
                 else if (definition is Date d)
-                    return instance.CompareTo(d.ToPartialDateTime());
+                    return instance.CompareTo(d.Value is { } ? P.Date.Parse(d.Value) : null);
                 else if (definition is Instant ins)
-                    return instance.CompareTo(ins.ToPartialDateTime());
+                    return instance.CompareTo(ins.Value is { } ? P.DateTime.FromDateTimeOffset(ins.Value.Value) : null);
             }
 
             else if (instance is P.Time && definition is Time t)
-                return instance.CompareTo(t.ToTime());
+                return instance.CompareTo(t.Value is { } ? P.Time.Parse(t.Value) : null);
             else if (instance is P.Date && definition is Date dt)
-                return instance.CompareTo(dt.ToPartialDate());
+                return instance.CompareTo(dt.Value is { } ? P.Date.Parse(dt.Value) : null);
 
             else if (instance is decimal && definition is FhirDecimal d)
                 return instance.CompareTo(d.Value.Value);
