@@ -40,6 +40,7 @@
     <LangVersion>8.0</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Configurations>Debug;Release;FullDebug</Configurations>
+    <TargetFrameworkForDebug>netstandard2.0</TargetFrameworkForDebug>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
