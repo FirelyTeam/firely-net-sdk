@@ -1,9 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
-using T=System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -61,11 +61,11 @@ namespace Hl7.Fhir.Specification.Tests
             var walker = new StructureDefinitionWalker(sd, _source);
 
             // If you filter on the type of a non-choice member, you'll arrive at that type.
-            var elem = walker.Walk("value.ofType('Quantity').system").Single();
+            var elem = walker.Walk("value.ofType(Quantity).system").Single();
             Assert.AreEqual("Quantity.system", elem.Current.Path);
 
             // Try walking into an 'any' choice
-            elem = walker.Walk("method.extension.value.ofType('HumanName').family").Single();
+            elem = walker.Walk("method.extension.value.ofType(HumanName).family").Single();
             Assert.AreEqual("HumanName.family", elem.Current.Path);
         }
 
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
 
-            var elem = walker.Walk("performer.resolve().ofType('Practitioner').name").Single();
+            var elem = walker.Walk("performer.resolve().ofType(Practitioner).name").Single();
             Assert.AreEqual("Practitioner.name", elem.Current.Path);
         }
 
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
             var sd = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
             var walker = new StructureDefinitionWalker(sd, _source);
 
-            var elem = walker.Walk("status.extension('http://hl7.org/fhir/StructureDefinition/data-absent-reason').value.ofType('code')").Single();
+            var elem = walker.Walk("status.extension('http://hl7.org/fhir/StructureDefinition/data-absent-reason').value.ofType(code)").Single();
             Assert.AreEqual("code", elem.Current.Path);   // 'code' in STU3+
         }
 

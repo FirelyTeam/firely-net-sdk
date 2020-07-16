@@ -12,12 +12,9 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.FhirPath.Functions;
-using Hl7.FhirPath.Tests;
+using P = Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -42,7 +39,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
         }
 
         [TestMethod]
@@ -55,7 +52,7 @@ namespace Hl7.FhirPath.R4.Tests
             EvaluationContext ctx = new FhirEvaluationContext();
             var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
             ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
@@ -72,7 +69,7 @@ namespace Hl7.FhirPath.R4.Tests
             };
             result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
 
             traced = false;
@@ -89,7 +86,7 @@ namespace Hl7.FhirPath.R4.Tests
             };
             result = nav.Select("Resource.trace('id', id).meta.trace('log', lastUpdated).lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
         }
 

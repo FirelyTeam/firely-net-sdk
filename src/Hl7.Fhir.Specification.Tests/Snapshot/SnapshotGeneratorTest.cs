@@ -8875,7 +8875,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void NewSlicetoDerivedProfile()
+        public async T.Task NewSlicetoDerivedProfile()
         {
             var resolver = new CachedResolver(
                 new SnapshotSource(
@@ -8884,7 +8884,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new TestProfileArtifactSource()),
                             ZipSource.CreateValidationSource())));
 
-            var patient = resolver.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/mi-patient");
+            var patient = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/mi-patient");
             patient.Should().NotBeNull("A snapshot must be created");
 
             var newSliceSystem = patient.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Patient.identifier:newSlice.system");

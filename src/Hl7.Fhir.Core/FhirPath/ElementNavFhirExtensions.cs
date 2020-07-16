@@ -14,7 +14,7 @@ using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.FhirPath
 {
@@ -53,12 +53,9 @@ namespace Hl7.Fhir.FhirPath
 
             return t;
 
-            ITypedElement resolver(ITypedElement f, EvaluationContext ctx)
+            static ITypedElement resolver(ITypedElement f, EvaluationContext ctx)
             {
-                if (ctx is FhirEvaluationContext fctx)
-                    return f.Resolve(fctx.ElementResolver);
-                else
-                    return f.Resolve();
+                return ctx is FhirEvaluationContext fctx ? f.Resolve(fctx.ElementResolver) : f.Resolve();
             }
         }
 
@@ -88,7 +85,7 @@ namespace Hl7.Fhir.FhirPath
             if (focus.Value == null)
                 return false;
             // Perform the checking of the content for valid html content
-            var html = focus.Value.ToString();
+            _ = focus.Value.ToString();
             // TODO: Perform the checking
             return true;
         }
@@ -109,31 +106,15 @@ namespace Hl7.Fhir.FhirPath
 
                 object result = r.Value;
 
-                if (result is bool)
+                return result switch
                 {
-                    return new FhirBoolean((bool)result);
-                }
-                if (result is long)
-                {
-                    return new Integer((int)(long)result);
-                }
-                if (result is decimal)
-                {
-                    return new FhirDecimal((decimal)result);
-                }
-                if (result is string)
-                {
-                    return new FhirString((string)result);
-                }
-                if (result is Model.Primitives.PartialDateTime dt)
-                {
-                    return new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime());
-                }
-                else
-                {
-                    // This will throw an exception if the type isn't one of the FHIR types!
-                    return (Base)result;
-                }
+                    bool _ => new FhirBoolean((bool)result),
+                    long _ => new Integer((int)(long)result),
+                    decimal _ => new FhirDecimal((decimal)result),
+                    string _ => new FhirString((string)result),
+                    P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
+                    _ => (Base)result
+                };
             });
         }
 
