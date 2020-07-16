@@ -331,12 +331,12 @@ namespace Hl7.Fhir.Rest
             if (result == null) return null;
 
             //If this is immediately what we are expecting, that's fine
-            if (result is T) return (T)result;
+            if (result is T t) return t;
 
             // If return value is a Parameters object with a single result of the expected type,
             // return it (it should be called "return", but I don't care).
-            if (result is Parameters pars && pars.Parameter.Count == 1 && pars.Parameter[0].Resource is T)
-                return (T)pars.Parameter[0].Resource;
+            if (result is Parameters pars && pars.Parameter.Count == 1 && pars.Parameter[0].Resource is T t1)
+                return t1;
 
             // Else, throw. The return type is unexpected
             throw Error.InvalidOperation($"Operation did not return a {typeof(T).Name} but a {result.GetType().Name}");

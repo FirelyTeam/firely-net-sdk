@@ -8,10 +8,9 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Utility;
 using System;
-using System.Diagnostics;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -19,12 +18,10 @@ namespace Hl7.Fhir.Serialization
     internal class PrimitiveValueReader
     {
         private readonly ITypedElement _current;
-        private readonly ModelInspector _inspector;
 
         public PrimitiveValueReader(ITypedElement data)
         {
             _current = data;
-            _inspector = BaseFhirParser.Inspector;
         }
 
 
@@ -40,7 +37,7 @@ namespace Hl7.Fhir.Serialization
             {
                 // The POCO's know nothing about the special partial date/time classes used by ITypedElement, 
                 // instead FhirDateTime, Time and FhirDate all represent these values as simple strings.
-                if (primitiveValue is PartialDateTime || primitiveValue is PartialTime || primitiveValue is PartialDate)
+                if (primitiveValue is P.DateTime || primitiveValue is P.Time || primitiveValue is P.Date)
                     return PrimitiveTypeConverter.ConvertTo(primitiveValue.ToString(), nativeType);                    
                 else
                     return PrimitiveTypeConverter.ConvertTo(primitiveValue, nativeType);

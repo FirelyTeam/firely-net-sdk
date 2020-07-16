@@ -475,4 +475,5 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }

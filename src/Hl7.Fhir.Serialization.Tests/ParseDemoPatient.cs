@@ -1,5 +1,4 @@
 ﻿using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model.Primitives;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
@@ -11,10 +10,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
-    [TestClass]
     public class ParseDemoPatient
     {
         public static void ElementNavPerformance(ISourceNode nav)
@@ -64,11 +63,10 @@ namespace Hl7.Fhir.Serialization.Tests
 
         public static void ProducedCorrectTypedLocations(ITypedElement patient)
         {
-            string getPretty(ITypedElement n) => n.Annotation<IShortPathGenerator>().ShortPath;
+            static string getPretty(ITypedElement n) => n.Annotation<IShortPathGenerator>().ShortPath;
 
             Assert.AreEqual("Patient", getPretty(patient));
 
-            var patientC = patient.Children().ToList();
             Assert.AreEqual("Patient.id", getPretty(patient.Children("id").First()));
             var ids = patient.Children("identifier").ToList();
             Assert.AreEqual("Patient.identifier[0]", getPretty(ids[0]));
@@ -80,7 +78,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 getPretty(patient.Children("contained").First().Children("name").Skip(1)
                 .First().Children("use").Single()));
         }
-
 
         public static void HasLineNumbers<T>(ISourceNode nav) where T : class, IPositionInfo
         {
@@ -108,24 +105,17 @@ namespace Hl7.Fhir.Serialization.Tests
 
             // will allow whitespace and comments to come through      
             var nav = navCreator(tp);
-
-            var outputBuilder = new StringBuilder();
-            IElementDefinitionSummary serInfo = null;
-
             switch (nav)
             {
-                case ISourceNode isn:
-                    serInfo = null;
+                case ISourceNode _:
                     break;
-                case ITypedElement ien:
-                    serInfo = ien.Definition;
+                case ITypedElement _:
                     break;
                 default:
                     throw Error.InvalidOperation("Fix unit test");
             }
 
-            string output = null;
-
+            string output;
             if (nav is ISourceNode isn2) output = isn2.ToXml();
             else if (nav is ITypedElement ien2) output = ien2.ToXml();
             else
@@ -133,7 +123,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, output);
         }
-
 
         public static void RoundtripJson(Func<string, object> navCreator)
         {
@@ -147,25 +136,17 @@ namespace Hl7.Fhir.Serialization.Tests
         private static void compareJson(string filename, Func<string, object> navCreator, string expected)
         {
             var nav = navCreator(expected);
-
-            var outputBuilder = new StringBuilder();
-            IElementDefinitionSummary serInfo = null;
-
             switch (nav)
             {
-                case ISourceNode isn:
-                    serInfo = null;
+                case ISourceNode _:
                     break;
-                case ITypedElement ien:
-                    serInfo = ien.Definition;
+                case ITypedElement _:
                     break;
                 default:
                     throw Error.InvalidOperation("Fix unit test");
             }
 
-            var serializer = new FhirJsonBuilder(new FhirJsonSerializationSettings {  });
-            string output = null;
-
+            string output;
             if (nav is ISourceNode isn2) output = isn2.ToJson();
             else if (nav is ITypedElement ien2) output = ien2.ToJson();
             else
@@ -248,7 +229,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (typed)
             {
                 Assert.AreEqual("date", bd.InstanceType);
-                Assert.AreEqual(PartialDate.Parse("1974-12-25"), bd.Value);
+                Assert.AreEqual(P.Date.Parse("1974-12-25"), bd.Value);
             }
             else
                 Assert.AreEqual("1974-12-25", bd.Value);

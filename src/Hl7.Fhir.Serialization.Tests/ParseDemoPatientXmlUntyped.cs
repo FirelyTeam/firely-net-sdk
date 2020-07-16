@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization.Tests
     {
         public ISourceNode getXmlUntyped(string xml, FhirXmlParsingSettings settings = null)
         {
-            settings = settings ?? FhirXmlParsingSettings.CreateDefault();
+            settings ??= FhirXmlParsingSettings.CreateDefault();
             settings.PermissiveParsing = false;
             return FhirXmlNode.Parse(xml, settings);
         }
@@ -108,8 +108,8 @@ namespace Hl7.Fhir.Serialization.Tests
             assertAnElement(children[0]);
             assertAnElementWithValueAndChildren(children[1]);
             assertDiv(children[2]);
-   
-            void assertAnElement(ISourceNode cn)
+
+            static void assertAnElement(ISourceNode cn)
             {
                 Assert.AreEqual("anElement", cn.Name);
                 Assert.AreEqual("true", cn.Text);
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsFalse(cn.Children().Any());
             }
 
-            void assertAnElementWithValueAndChildren(ISourceNode cn)
+            static void assertAnElementWithValueAndChildren(ISourceNode cn)
             {
                 Assert.AreEqual("anElementWithValueAndChildren", cn.Name);
                 Assert.AreEqual("4", cn.Text);
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 secondChild(cnc[1]);
                 thirdChild(cnc[2]);
 
-                void firstChild(ISourceNode ccn)
+                static void firstChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("firstChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.AreEqual("morning", ccnc[0].Text);
                 }
 
-                void secondChild(ISourceNode ccn)
+                static void secondChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("secondChild", ccn.Name);
                     Assert.AreEqual("afternoon", ccn.Text);
@@ -164,20 +164,18 @@ namespace Hl7.Fhir.Serialization.Tests
                     Assert.AreEqual("I have text content too", xd.NodeText);
                 }
 
-                void thirdChild(ISourceNode ccn)
+                static void thirdChild(ISourceNode ccn)
                 {
                     Assert.AreEqual("ThirdChild", ccn.Name);
                     Assert.IsNull(ccn.Text);
-                    Assert.IsTrue(ccn.Children().Any());
-
-                    var xd = (ccn as IAnnotated).Annotation<XmlSerializationDetails>();
+                    Assert.IsTrue(ccn.Children().Any());                    
                     var cd = (ccn as IAnnotated).Annotation<SourceComments>();
                     Assert.AreEqual(" this should be possible ", cd.ClosingComments.Single());
                     Assert.IsFalse(cd.CommentsBefore.Any());
                 }
             }
 
-            void assertDiv(ISourceNode cnn)
+            static void assertDiv(ISourceNode cnn)
             {
                 var val = cnn.Text;
                 Assert.IsTrue(val.StartsWith("<div") && val.Contains("Some html"));
