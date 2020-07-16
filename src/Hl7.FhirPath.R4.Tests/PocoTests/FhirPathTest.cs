@@ -12,7 +12,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using P=Hl7.Fhir.Model.Primitives;
+using P = Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;

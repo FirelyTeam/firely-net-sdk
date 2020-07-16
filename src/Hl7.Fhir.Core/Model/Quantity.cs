@@ -28,27 +28,21 @@
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Model
 {
     public partial class Quantity
     {
-        public Primitives.Quantity ToQuantity()
+        public P.Quantity ToQuantity()
         {
             if (Value != null)
             {
                 if (Comparator != null)
                     throw Error.NotSupported("Cannot convert a Quantity with a comparator to a FhirPath Quantity");
 
-                return new Primitives.Quantity(Value.Value, Code);
+                return new P.Quantity(Value.Value, Code);
             }
             else
                 return null;

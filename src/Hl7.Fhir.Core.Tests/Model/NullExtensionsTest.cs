@@ -3,6 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using System.Collections.Generic;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {

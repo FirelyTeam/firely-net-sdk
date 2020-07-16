@@ -11,7 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using P = Hl7.Fhir.Model.Primitives;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Validation
 {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Validation
             else if (instance is string && definition is FhirString fs)
                 return instance.CompareTo(fs.Value);
 
-            else if (instance is Model.Primitives.Quantity && definition is Quantity q)
+            else if (instance is P.Quantity && definition is Quantity q)
                 return instance.CompareTo(q.ToQuantity());
 
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
@@ -76,10 +76,10 @@ namespace Hl7.Fhir.Validation
                     throw Error.NotSupported("Cannot interpret quantities with a comparison");
                 if (q.Value == null)
                     throw Error.NotSupported("Cannot interpret quantities without a value");
-                if (q.System != Model.Primitives.Quantity.UCUM)
+                if (q.System != P.Quantity.UCUM)
                     throw Error.NotSupported("Cannot compare quantities other than those from UCUM");
 
-                return new Model.Primitives.Quantity(q.Value.Value, q.Unit);
+                return new P.Quantity(q.Value.Value, q.Unit);
             }
             else if (instance.Value is IComparable)
                 return (IComparable)instance.Value;

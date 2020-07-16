@@ -9,7 +9,7 @@ using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.Fhir.ElementModel;
 using System.IO;
-using P = Hl7.Fhir.Model.Primitives;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir
 {
