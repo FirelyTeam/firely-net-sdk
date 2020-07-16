@@ -4478,11 +4478,11 @@ namespace Hl7.Fhir.Specification.Tests
 
         //Ignore invalid slice name error on the root of SimpleQuantity.
         [TestMethod]
-        public void TestSimpleQuantity()
+        public async T.Task TestSimpleQuantity()
         {
-            var resource = _testResolver.FindStructureDefinition(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
+            var resource = await _testResolver.FindStructureDefinitionAsync(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
             _generator = new SnapshotGenerator(_testResolver);
-            var snapshot = _generator.Generate(resource);
+            var snapshot = await _generator.GenerateAsync(resource);
             Assert.IsNotNull(snapshot);
             Assert.IsNull(snapshot.GetRootElement().SliceName);
             Assert.IsNull(_generator.Outcome);
@@ -7223,7 +7223,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void NewSlicetoDerivedProfile()
+        public async T.Task NewSlicetoDerivedProfile()
         {
             var resolver = new CachedResolver(
                 new SnapshotSource(
@@ -7232,7 +7232,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new TestProfileArtifactSource()),
                             ZipSource.CreateValidationSource())));
 
-            var patient = resolver.FindStructureDefinition("http://validationtest.org/fhir/StructureDefinition/mi-patient");
+            var patient = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/mi-patient");
             patient.Should().NotBeNull("A snapshot must be created");
 
             var newSliceSystem = patient.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Patient.identifier:newSlice.system");
