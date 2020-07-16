@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Validation
                 if (definition is FhirDateTime fdt)
                     return instance.CompareTo(fdt.Value is { } ? P.DateTime.Parse(fdt.Value) : null);
                 else if (definition is Date d)
-                    return instance.CompareTo(d.Value is { } ? P.Date.Parse(d.Value) : null);
+                    return instance.CompareTo(d.Value is { } ? P.DateTime.Parse(d.Value) : null);
                 else if (definition is Instant ins)
                     return instance.CompareTo(ins.Value is { } ? P.DateTime.FromDateTimeOffset(ins.Value.Value) : null);
             }
