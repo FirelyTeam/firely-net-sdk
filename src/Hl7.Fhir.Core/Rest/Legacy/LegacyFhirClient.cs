@@ -144,7 +144,6 @@ namespace Hl7.Fhir.Rest.Legacy
             get => Settings.PreferredParameterHandling;
             set => Settings.PreferredParameterHandling = value;
         }
-
         
         /// <summary>
         /// This will do 2 things:
@@ -174,18 +173,21 @@ namespace Hl7.Fhir.Rest.Legacy
             get => Settings.ParserSettings;
             set => Settings.ParserSettings = value;
         }
-        
+
         /// <summary>
         /// Returns the HttpWebRequest as it was last constructed to execute a call on the FhirClient
         /// </summary>
-        public HttpWebRequest LastRequest { get { return LastClientRequest as HttpWebRequest; } }
+        /// 
+        [Obsolete("LastRequest was already disposed, so no point in having them around", true)]
+        public HttpWebRequest LastRequest;
 
         /// <summary>
         /// Returns the HttpWebResponse as it was last received during a call on the FhirClient
         /// </summary>
         /// <remarks>Note that the FhirClient will have read the body data from the HttpWebResponse, so this is
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
-        public HttpWebResponse LastResponse { get { return LastClientResponse as HttpWebResponse; } }
+        [Obsolete("LastResponse was already disposed, so no point in having them around", true)]
+        public HttpWebResponse LastResponse;
         
         #endregion
         
