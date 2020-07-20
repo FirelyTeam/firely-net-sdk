@@ -1161,11 +1161,10 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var sp = new SearchParams();
             sp.Parameters.Add(new Tuple<string, string>("_id", "8465,8479"));
-            sp.Include.Add("subject");
+            sp.Include.Add(("subject", IncludeModifier.Iterate));
 
             // Add a further include
-            sp.Include.Add("encounter");
-
+            sp.Include.Add(("encounter", null));
             client.SearchUsingPost<Procedure>(sp);
         }
 
@@ -1214,7 +1213,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void searchByPersonaCodeUsingPost(BaseFhirClient client)
         {
-            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") });
+            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner"}, null, null, null);
             var pat = (Patient)pats.Entry.First().Resource;
         }
 

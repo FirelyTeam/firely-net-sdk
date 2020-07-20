@@ -9,6 +9,8 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -118,13 +120,18 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        public Task<Bundle> SearchAsync<TResource>(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+            where TResource : Resource, new()
+        {
+            return SearchAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
+        }
+
         public Task<Bundle> SearchAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null,
             SummaryType? summary = null, string[] revIncludes = null)
             where TResource : Resource, new()
         {
-            // [WMR 20160421] GetResourceNameForType is obsolete
-            // return Search(ModelInfo.GetResourceNameForType(typeof(TResource)), criteria, includes, pageSize, summary);
-            return SearchAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
+            return SearchAsync<TResource>(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -159,11 +166,19 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Task<Bundle> SearchUsingPostAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null,
-            SummaryType? summary = null, string[] revIncludes = null)
+        public Task<Bundle> SearchUsingPostAsync<TResource>(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
             where TResource : Resource, new()
         {
             return SearchUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
+        }
+
+        ///<inheritdoc cref="SearchUsingPostAsync{TResource}(string[], (string path, IncludeModifier? modifier)[], int?, SummaryType?, (string path, IncludeModifier? modifier)[])"/>
+        public Task<Bundle> SearchUsingPostAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null,
+          SummaryType? summary = null, string[] revIncludes = null)
+          where TResource : Resource, new()
+        {
+            return SearchUsingPostAsync<TResource>(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -180,6 +195,14 @@ namespace Hl7.Fhir.Rest
         /// of all resources of the given Resource type</remarks>
         public Bundle SearchUsingPost<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null,
             SummaryType? summary = null, string[] revIncludes = null)
+            where TResource : Resource, new()
+        {
+            return SearchUsingPostAsync<TResource>(criteria, includes, pageSize, summary, revIncludes).WaitResult();
+        }
+
+        ///<inheritdoc cref="SearchUsingPost{TResource}(string[], string[], int?, SummaryType?, string[])"/>
+        public Bundle SearchUsingPost<TResource>(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
             where TResource : Resource, new()
         {
             return SearchUsingPostAsync<TResource>(criteria, includes, pageSize, summary, revIncludes).WaitResult();
@@ -202,12 +225,19 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Task<Bundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null,
-                SummaryType? summary = null, string[] revIncludes = null)
+        public Task<Bundle> SearchAsync(string resource, string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+                SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource);
+        }
+
+        ///<inheritdoc cref="SearchAsync(string, string[], (string path, IncludeModifier? modifier)[], int?, SummaryType?, (string path, IncludeModifier? modifier)[])"/>
+        public Task<Bundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null,
+                SummaryType? summary = null, string[] revIncludes = null)
+        {
+            return SearchAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -228,6 +258,13 @@ namespace Hl7.Fhir.Rest
             return SearchAsync(resource, criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
 
+        ///<inheritdoc cref="Search(string, string[], string[], int?, SummaryType?, string[])"/>
+        public Bundle Search(string resource, string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+         SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return SearchAsync(resource, criteria, includes, pageSize, summary, revIncludes).WaitResult();
+        }
+
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
         /// </summary>
@@ -241,12 +278,19 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Task<Bundle> SearchUsingPostAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null,
-                SummaryType? summary = null, string[] revIncludes = null)
+        public Task<Bundle> SearchUsingPostAsync(string resource, string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+                SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
             return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource);
+        }
+
+        ///<inheritdoc cref="SearchUsingPostAsync(string, string, (string path, IncludeModifier? modifier)[], int?, (string path, IncludeModifier? modifier)[])"/>
+        public Task<Bundle> SearchUsingPostAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null,
+               SummaryType? summary = null, string[] revIncludes = null)
+        {
+            return SearchUsingPostAsync(resource, criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -267,6 +311,15 @@ namespace Hl7.Fhir.Rest
             return SearchUsingPostAsync(resource, criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
 
+        ///<inheritdoc cref="SearchUsingPost(string, string[], string[], int?, SummaryType?, string[])"/>
+        public Bundle SearchUsingPost(string resource, string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return SearchUsingPostAsync(resource, criteria, includes, pageSize, summary, revIncludes).WaitResult();
+        }
+
+
+
         #endregion
 
         #region Whole system search
@@ -283,10 +336,17 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        public Task<Bundle> WholeSystemSearchAsync(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+        }
+
+        ///<inheritdoc cref="WholeSystemSearchAsync(string[], (string path, IncludeModifier? modifier)[], int?, SummaryType?, (string path, IncludeModifier? modifier)[])"/>
         public Task<Bundle> WholeSystemSearchAsync(string[] criteria = null, string[] includes = null, int? pageSize = null,
             SummaryType? summary = null, string[] revIncludes = null)
         {
-            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+            return WholeSystemSearchAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
 
         /// <summary>
@@ -307,6 +367,13 @@ namespace Hl7.Fhir.Rest
             return WholeSystemSearchAsync(criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
 
+        ///<inheritdoc cref="WholeSystemSearch(string[], string[], int?, SummaryType?, string[])"/>
+        public Bundle WholeSystemSearch(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return WholeSystemSearchAsync(criteria, includes, pageSize, summary, revIncludes).WaitResult();
+        }
+
         /// <summary>
         /// Search for Resources across the whole server that match the given criteria
         /// </summary>
@@ -319,10 +386,17 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        public Task<Bundle> WholeSystemSearchUsingPostAsync(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+            SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+        }
+
+        ///<inheritdoc cref="WholeSystemSearchUsingPostAsync(string[], (string path, IncludeModifier? modifier)[], int?, SummaryType?, (string path, IncludeModifier? modifier)[])"/>
         public Task<Bundle> WholeSystemSearchUsingPostAsync(string[] criteria = null, string[] includes = null, int? pageSize = null,
             SummaryType? summary = null, string[] revIncludes = null)
         {
-            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+            return WholeSystemSearchUsingPostAsync(criteria, stringToIncludeTuple(includes), pageSize, summary, stringToIncludeTuple(revIncludes));
         }
 
         /// <summary>
@@ -339,6 +413,13 @@ namespace Hl7.Fhir.Rest
         /// of all resources of the given Resource type</remarks>
         public Bundle WholeSystemSearchUsingPost(string[] criteria = null, string[] includes = null, int? pageSize = null,
             SummaryType? summary = null, string[] revIncludes = null)
+        {
+            return WholeSystemSearchUsingPostAsync(criteria, includes, pageSize, summary, revIncludes).WaitResult();
+        }
+
+        ///<inheritdoc cref="WholeSystemSearchUsingPost(string[], string[], int?, SummaryType?, string[])"/>
+        public Bundle WholeSystemSearchUsingPost(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+           SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             return WholeSystemSearchUsingPostAsync(criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
@@ -360,12 +441,19 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<Bundle> SearchByIdAsync<TResource>(string id, string[] includes = null, int? pageSize = null,
-                string[] revIncludes = null) where TResource : Resource, new()
+        public Task<Bundle> SearchByIdAsync<TResource>(string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+                (string path, IncludeModifier? modifier)[] revIncludes) where TResource : Resource, new()
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return SearchByIdAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
+        }
+
+        ///<inheritdoc cref="SearchByIdAsync{TResource}(string, (string path, IncludeModifier? modifier)[], int?, (string path, IncludeModifier? modifier)[])"/>
+        public Task<Bundle> SearchByIdAsync<TResource>(string id, string[] includes = null, int? pageSize = null,
+                string[] revIncludes = null) where TResource : Resource, new()
+        {
+            return SearchByIdAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes));
         }
 
         /// <summary>
@@ -386,6 +474,13 @@ namespace Hl7.Fhir.Rest
             return SearchByIdAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
         }
 
+
+        ///<inheritdoc cref="SearchById(string, string, string[], int?, string[])"/>
+        public Bundle SearchById<TResource>(string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes) where TResource : Resource, new()
+        {
+            return SearchByIdAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
+        }
+
         /// <summary>
         /// Search for resources based on a resource's id.
         /// </summary>
@@ -399,12 +494,19 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<Bundle> SearchByIdUsingPostAsync<TResource>(string id, string[] includes = null, int? pageSize = null,
-                string[] revIncludes = null) where TResource : Resource, new()
+        public Task<Bundle> SearchByIdUsingPostAsync<TResource>(string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize,
+                (string path, IncludeModifier? modifier)[] revIncludes) where TResource : Resource, new()
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
             return SearchByIdUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
+        }
+
+       
+        public Task<Bundle> SearchByIdUsingPostAsync<TResource>(string id, string[] includes = null, int? pageSize = null,
+             string[] revIncludes = null) where TResource : Resource, new()
+        {
+            return SearchByIdUsingPostAsync<TResource>(id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes));
         }
 
         /// <summary>
@@ -421,6 +523,12 @@ namespace Hl7.Fhir.Rest
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
         public Bundle SearchByIdUsingPost<TResource>(string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null) where TResource : Resource, new()
+        {
+            return SearchByIdUsingPostAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
+        }
+
+        ///<inheritdoc cref="SearchByIdUsingPost{TResource}(string, string[], int?, string[])"/>
+        public Bundle SearchByIdUsingPost<TResource>(string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes) where TResource : Resource, new()
         {
             return SearchByIdUsingPostAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
         }
@@ -442,7 +550,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<Bundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        public Task<Bundle> SearchByIdAsync(string resource, string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (id == null) throw Error.ArgumentNull(nameof(id));
@@ -450,6 +558,13 @@ namespace Hl7.Fhir.Rest
             string criterium = "_id=" + id;
             return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource);
         }
+
+        ///<inheritdoc cref="SearchById(string, string, string[], int?, string[])"/>
+        public Task<Bundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        {
+            return SearchByIdAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes));
+        }
+
         /// <summary>
         /// Search for resources based on a resource's id.
         /// </summary>
@@ -468,6 +583,12 @@ namespace Hl7.Fhir.Rest
             return SearchByIdAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
         }
 
+        ///<inheritdoc cref="SearchByIdAsync(string, string, (string path, IncludeModifier? modifier)[], int?, (string path, IncludeModifier? modifier)[])"/>
+        public Bundle SearchById(string resource, string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes)
+        {
+            return SearchByIdAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
+        }
+
         /// <summary>
         /// Search for resources based on a resource's id.
         /// </summary>
@@ -481,7 +602,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<Bundle> SearchByIdUsingPostAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        public Task<Bundle> SearchByIdUsingPostAsync(string resource, string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (id == null) throw Error.ArgumentNull(nameof(id));
@@ -489,6 +610,14 @@ namespace Hl7.Fhir.Rest
             string criterium = "_id=" + id;
             return SearchUsingPostAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource);
         }
+
+
+        ///<inheritdoc cref="SearchByIdUsingPostAsync(string, string, (string path, IncludeModifier? modifier)[], int?, (string path, IncludeModifier? modifier)[])"/>
+        public Task<Bundle> SearchByIdUsingPostAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        {
+            return SearchByIdUsingPostAsync(resource, id, stringToIncludeTuple(includes), pageSize, stringToIncludeTuple(revIncludes));
+        }
+
         /// <summary>
         /// Search for resources based on a resource's id.
         /// </summary>
@@ -503,6 +632,12 @@ namespace Hl7.Fhir.Rest
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
         public Bundle SearchByIdUsingPost(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        {
+            return SearchByIdUsingPostAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
+        }
+
+        ///<inheritdoc cref="SearchByIdUsingPost(string, string, string[], int?, string[])"/>
+        public Bundle SearchByIdUsingPost(string resource, string id, (string path, IncludeModifier? modifier)[] includes, int? pageSize, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             return SearchByIdUsingPostAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
         }
@@ -572,7 +707,7 @@ namespace Hl7.Fhir.Rest
 
         #region Private Methods
 
-        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary, string[] revIncludes)
+        private SearchParams toQuery(string[] criteria, (string path, IncludeModifier? modifier)[] includes, int? pageSize, SummaryType? summary, (string path, IncludeModifier? modifier)[] revIncludes)
         {
             var q = new SearchParams()
             {
@@ -604,9 +739,25 @@ namespace Hl7.Fhir.Rest
             return q;
         }
 
-        #endregion
+        private (string path, IncludeModifier? modifier)[] stringToIncludeTuple(string[] includes)
+        {
+            if(includes != null && includes.Any())
+            {
+                var modifierIncludes = new List<(string, IncludeModifier?)>();
+                foreach (var i in includes)
+                {
+                    modifierIncludes.Add((i, null));
+                }
+                return modifierIncludes.ToArray();
+            }
+            else
+            {
+                return null;
+            }
+            
+        }
     }
-
+        #endregion
     public enum PageDirection
     {
         First,
@@ -614,4 +765,5 @@ namespace Hl7.Fhir.Rest
         Next,
         Last
     }
+   
 }
