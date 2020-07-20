@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Terminology
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
             source.Expansion = ValueSet.ExpansionComponent.Create();
-            setExpansionParameters(source, Settings);
+            setExpansionParameters(source);
 
             try
             {
@@ -52,10 +52,10 @@ namespace Hl7.Fhir.Specification.Terminology
             
         }
 
-        private void setExpansionParameters(ValueSet vs, ValueSetExpanderSettings settings)
+        private void setExpansionParameters(ValueSet vs)
         {
             vs.Expansion.Parameter = new List<ValueSet.ParameterComponent>();
-            if(settings.IncludeDesignations)
+            if(Settings.IncludeDesignations)
             {
                 vs.Expansion.Parameter.Add(new ValueSet.ParameterComponent
                 {
@@ -297,17 +297,17 @@ namespace Hl7.Fhir.Specification.Terminology
         private static List<ValueSet.DesignationComponent> ToValueSetDesignations(this List<CodeSystem.DesignationComponent> csDesignations)
         {
             var vsDesignations = new List<ValueSet.DesignationComponent>();
-            csDesignations.ForEach(d => vsDesignations.Add(d.ToVsDesignation()));           
+            csDesignations.ForEach(d => vsDesignations.Add(d.ToValueSetDesignation()));           
             return vsDesignations;
         }
 
-        private static ValueSet.DesignationComponent ToVsDesignation(this CodeSystem.DesignationComponent dsDesignation)
+        private static ValueSet.DesignationComponent ToValueSetDesignation(this CodeSystem.DesignationComponent csDesignation)
         {
             return new ValueSet.DesignationComponent
             {
-                Language = dsDesignation.Language,
-                Use = dsDesignation.Use,
-                Value = dsDesignation.Value
+                Language = csDesignation.Language,
+                Use = csDesignation.Use,
+                Value = csDesignation.Value
             };
         }
 
