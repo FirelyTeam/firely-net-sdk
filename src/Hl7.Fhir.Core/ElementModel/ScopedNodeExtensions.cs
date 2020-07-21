@@ -52,7 +52,7 @@ namespace Hl7.Fhir.ElementModel
         public static T Resolve<T>(this T element, string reference, Func<string, T> externalResolver = null) where T : class, ITypedElement
         {
             // Then, resolve the url within the instance data first - this is only
-            // possibly if we have a ScopedNavigator at hand
+            // possibly if we have a ScopedNode at hand
             if (element is ScopedNode scopedNode)
             {
                 var identity = scopedNode.MakeAbsolute(new ResourceIdentity(reference));

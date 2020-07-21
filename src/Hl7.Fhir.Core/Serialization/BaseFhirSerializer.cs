@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         // This is a hack to retain the capability to automatically add a SUBSETTED metatag to an 
-        // instance, even if the current IElementNavigator based serializer won't let you have that.
+        // instance, even if the current ITypedElement based serializer won't let you have that.
         // I am not convinced it's the responsibility of the serializer (it's an outside policy), so
         // it's just here to not break existing logic of the POCO serializers.
         private class MetaSubsettedAdder
