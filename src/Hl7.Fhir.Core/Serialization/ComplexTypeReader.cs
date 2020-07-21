@@ -93,15 +93,7 @@ namespace Hl7.Fhir.Serialization
             var members = _current.Value != null ?
                 new[] { new ValuePropertyTypedElement(_current) }.Union(_current.Children()) : _current.Children();
 
-            try
-            {
-                read(mapping, members, existing);
-            }
-            catch (StructuralTypeException ste)
-            {
-                throw Error.Format(ste.Message);
-            }
-
+            read(mapping, members, existing);
             return existing;
 
         }

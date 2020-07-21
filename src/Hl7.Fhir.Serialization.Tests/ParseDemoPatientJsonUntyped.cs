@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNodeU(tp);
 #pragma warning disable 612, 618
-            ParseDemoPatient.CanReadThroughNavigator(nav.ToTypedElement(), typed: false);
+            ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
 #pragma warning restore 612, 618
         }
 

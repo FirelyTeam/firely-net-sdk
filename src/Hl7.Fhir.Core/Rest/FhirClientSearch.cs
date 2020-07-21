@@ -20,6 +20,7 @@ namespace Hl7.Fhir.Rest
     {
         #pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
         #pragma warning disable CS1658 // Warning is overriding an error
+
         #region Search Execution
 
         /// <summary>
