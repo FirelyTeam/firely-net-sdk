@@ -144,20 +144,6 @@ namespace Hl7.Fhir.FhirPath
         }
 
         #region Obsolete members
-        [Obsolete("Use HasValue(this ITypedElement focus) instead. Obsolete since 2018-10-17")]
-        public static bool HasValue(this IElementNavigator focus)
-            => focus.ToTypedElement().HasValue();
-
-        [Obsolete("Use HtmlChecks(this ITypedElement focus) instead. Obsolete since 2018-10-17")]
-        public static bool HtmlChecks(this IElementNavigator focus) 
-            => focus.ToTypedElement().HtmlChecks();
-
-        [Obsolete("Use ToFhirValues(this IEnumerable<ITypedElement> results) instead. Obsolete since 2018-10-17")]
-        public static IEnumerable<Base> ToFhirValues(this IEnumerable<IElementNavigator> results)
-        {
-            return ToFhirValues(results.Select(r => r.ToTypedElement()));
-        }
-
         [Obsolete("Replace with the overload taking an FhirEvaluationContext, initialized with the resource parameter. Obsolete since 2018-10-17")]
         public static IEnumerable<Base> Select(this Base input, string expression, Resource resource)
         {
