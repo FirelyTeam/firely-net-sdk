@@ -15,13 +15,13 @@ namespace Hl7.Fhir.Rest
 {
     public static class SearchParamsExtensions
     {
-        public static SearchParams Include(this SearchParams qry, string path, IncludeModifier? modifier = null)
+        public static SearchParams Include(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
         {
             qry.Include.Add((path, modifier));
             return qry;
         }
 
-        public static SearchParams ReverseInclude(this SearchParams qry, string path, IncludeModifier? modifier = null)
+        public static SearchParams ReverseInclude(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
         {
             qry.RevInclude.Add((path, modifier));
             return qry;

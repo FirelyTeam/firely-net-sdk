@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Test.Rest
             q.Count = 31;
             q.Summary = SummaryType.Data;
             q.Sort.Add(("sorted", SortOrder.Descending));
-            q.Include.Add(("Patient.name", null));
+            q.Include.Add(("Patient.name", IncludeModifier.None));
             q.Include.Add(("Observation.subject", IncludeModifier.Recurse));
             q.Elements.Add("field1");
 
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(SummaryType.Data, q.Summary);
             Assert.AreEqual(("sorted", SortOrder.Descending), q.Sort.Single());
             Assert.AreEqual(2, q.Include.Count);
-            Assert.AreEqual(("Patient.name",null), q.Include.First());
+            Assert.AreEqual(("Patient.name", IncludeModifier.None), q.Include.First());
             Assert.AreEqual(("Observation.subject", IncludeModifier.Recurse), q.Include.Skip(1).First());
             Assert.AreEqual(1, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
@@ -113,8 +113,8 @@ namespace Hl7.Fhir.Test.Rest
             q.Count = 32;
             q.Summary = SummaryType.True;
             q.Sort.Add(("sorted2", SortOrder.Ascending));
-            q.Include.Add(("Patient.name2", null));
-            q.Include.Remove(("Patient.name", null));
+            q.Include.Add(("Patient.name2", IncludeModifier.None));
+            q.Include.Remove(("Patient.name", IncludeModifier.None));
             q.Include.Add(("Observation.subject2", IncludeModifier.Iterate));
             q.Elements.Add("field2");
 
@@ -124,8 +124,8 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2,q.Sort.Count);
             Assert.AreEqual(("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
             Assert.AreEqual(3, q.Include.Count);
-            Assert.IsTrue(q.Include.Contains(("Patient.name2", null)));
-            Assert.IsFalse(q.Include.Contains(("Patient.name", null)));
+            Assert.IsTrue(q.Include.Contains(("Patient.name2", IncludeModifier.None)));
+            Assert.IsFalse(q.Include.Contains(("Patient.name", IncludeModifier.None)));
             Assert.IsTrue(q.Include.Contains(("Observation.subject", IncludeModifier.Recurse)));
             Assert.IsTrue(q.Include.Contains(("Observation.subject2", IncludeModifier.Iterate)));
             Assert.AreEqual(2, q.Elements.Count);
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2, q.Elements.Count);
 
             Assert.AreEqual(q.Summary, SummaryType.True);
-            Assert.IsTrue(q.Include.Contains(("Patient.managingOrganization", null)));
+            Assert.IsTrue(q.Include.Contains(("Patient.managingOrganization", IncludeModifier.None)));
             Assert.AreEqual(20, q.Count);
         }
 
@@ -201,8 +201,8 @@ namespace Hl7.Fhir.Test.Rest
             q.Summary = SummaryType.Text;
             q.Sort.Add(("sorted", SortOrder.Descending));
             q.Sort.Add(("sorted2", SortOrder.Ascending));
-            q.Include.Add(("Patient.name", null));
-            q.Include.Add(("Observation.subject", null));
+            q.Include.Add(("Patient.name", IncludeModifier.None));
+            q.Include.Add(("Observation.subject", IncludeModifier.None));
             q.Elements.Add("field1");
             q.Elements.Add("field2");
 

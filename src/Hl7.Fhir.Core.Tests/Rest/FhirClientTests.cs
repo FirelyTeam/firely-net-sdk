@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Tests.Rest
             sp.Include.Add(("subject", IncludeModifier.Iterate));
 
             // Add a further include
-            sp.Include.Add(("encounter", null));
+            sp.Include.Add(("encounter", IncludeModifier.None));
             client.SearchUsingPost<Procedure>(sp);
         }
 

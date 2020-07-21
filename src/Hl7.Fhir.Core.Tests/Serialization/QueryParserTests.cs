@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Test.Serialization
         {
             var uriParams = parseParams("_include=Subject");
             var test = SearchParams.FromUriParamList(uriParams);
-            Assert.IsTrue(test.Include.Contains(("Subject", null)));
+            Assert.IsTrue(test.Include.Contains(("Subject", IncludeModifier.None)));
 
             var uriParamsRecurse = parseParams("_include:recurse=Subject");
             var testRecurse = SearchParams.FromUriParamList(uriParamsRecurse);
