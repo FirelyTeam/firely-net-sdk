@@ -355,13 +355,6 @@ namespace Hl7.Fhir.Rest
             get; private set;
         }
 
-
-        [Obsolete("Use the ResourceType instead")]
-        public string Collection
-        {
-            get { return ResourceType; }
-        }
-
         /// <summary>
         /// The name of the resource as it occurs in the Resource url
         /// </summary>

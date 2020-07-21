@@ -60,14 +60,7 @@ namespace Hl7.Fhir.Model
                     return String.Format("FullUrl = \"{0}\"", this.FullUrl);
                 }
             }
-
-            [Obsolete("Base no longer exists in BundleEntryComponent. You need to replace any code using this element."), NotMapped]
-            public string Base { get; set; }
         }
-
-
-        [Obsolete("Base no longer exists in Bundle. You need to replace any code using this element."), NotMapped]
-        public string Base { get; set; }
 
         public const string ATOM_LINKREL_SELF = "self";
         public const string ATOM_LINKREL_PREVIOUS = "previous";
