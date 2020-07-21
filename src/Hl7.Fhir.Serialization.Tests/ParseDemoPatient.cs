@@ -158,24 +158,24 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
-        public static void CanReadThroughNavigator(ITypedElement n, bool typed)
+        public static void CanReadThroughTypedElement(ITypedElement n, bool typed)
         {
             Assert.AreEqual("Patient", n.Name);
             Assert.AreEqual("Patient", n.Annotation<IResourceTypeSupplier>()?.ResourceType);
             if (typed) Assert.AreEqual("Patient", n.InstanceType);
 
-            var nav = n.Children().GetEnumerator();
+            var tes = n.Children().GetEnumerator();
 
-            Assert.IsTrue(nav.MoveNext());
-            Assert.AreEqual("id", nav.Current.Name);
-            Assert.AreEqual("pat1", nav.Current.Value);
-            if (typed) Assert.AreEqual("id", nav.Current.InstanceType);
+            Assert.IsTrue(tes.MoveNext());
+            Assert.AreEqual("id", tes.Current.Name);
+            Assert.AreEqual("pat1", tes.Current.Value);
+            if (typed) Assert.AreEqual("id", tes.Current.InstanceType);
 
-            Assert.IsFalse(nav.Current.Children().Any());
+            Assert.IsFalse(tes.Current.Children().Any());
 
-            Assert.IsTrue(nav.MoveNext());
-            Assert.AreEqual("text", nav.Current.Name);
-            if (typed) Assert.AreEqual("Narrative", nav.Current.InstanceType);
+            Assert.IsTrue(tes.MoveNext());
+            Assert.AreEqual("text", tes.Current.Name);
+            if (typed) Assert.AreEqual("Narrative", tes.Current.InstanceType);
 
             var text = n.Children("text").Children().GetEnumerator();
 
@@ -193,12 +193,12 @@ namespace Hl7.Fhir.Serialization.Tests
             var b = text.MoveNext();
             Assert.IsFalse(b);  // nothing more in <text>
 
-            Assert.IsTrue(nav.MoveNext()); // contained
-            Assert.AreEqual("contained", nav.Current.Name);
-            Assert.AreEqual("Patient", nav.Current.Annotation<IResourceTypeSupplier>().ResourceType);
-            if (typed) Assert.AreEqual("Patient", nav.Current.InstanceType);
+            Assert.IsTrue(tes.MoveNext()); // contained
+            Assert.AreEqual("contained", tes.Current.Name);
+            Assert.AreEqual("Patient", tes.Current.Annotation<IResourceTypeSupplier>().ResourceType);
+            if (typed) Assert.AreEqual("Patient", tes.Current.InstanceType);
 
-            var contained = nav.Current.Children().GetEnumerator();
+            var contained = tes.Current.Children().GetEnumerator();
             Assert.IsTrue(contained.MoveNext()); // id
             if (typed) Assert.AreEqual("id", contained.Current.InstanceType);
             Assert.IsTrue(contained.MoveNext()); // identifier
