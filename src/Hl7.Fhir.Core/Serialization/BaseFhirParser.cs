@@ -60,14 +60,6 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(ISourceNode node, Type type=null) => node.ToPoco(type, buildPocoBuilderSettings(Settings));
 
         public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(buildPocoBuilderSettings(Settings));
-
-#pragma warning disable 612, 618
-        public Base Parse(IElementNavigator nav, Type type = null) => nav.ToPoco(type, buildPocoBuilderSettings(Settings));
-
-        public T Parse<T>(IElementNavigator nav) where T : Base => (T)nav.ToPoco<T>(buildPocoBuilderSettings(Settings));
-#pragma warning restore 612, 618
-
-
     }
 
 }
