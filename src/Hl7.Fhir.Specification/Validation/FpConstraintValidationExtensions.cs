@@ -32,7 +32,15 @@ namespace Hl7.Fhir.Validation
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            var context = instance.ResourceContext;
+            // Determine %resource: if the current instance is a resource, %resource is simply
+            // a pointer to the current data. If the data is a datatype, %resource is the parent resource
+            // the datatype is part of.
+            var resource = instance.AtResource ? instance : instance.ResourceContext;
+
+            // Determine %rootResource: this is the parent of the current %resource, not being the
+            // container bundle. So, this only differs from %resource, when %resource is a contained resource
+            // within a DomainResource
+            var rootResource = resource is ScopedNode sn ? sn.ResourceContext : resource;
 
             foreach (var constraintElement in definition.Constraint)
             {
@@ -54,7 +62,9 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance, new FhirEvaluationContext(context) { ElementResolver = callExternalResolver } );
+                    success = compiled.Predicate(instance, 
+                        new FhirEvaluationContext(resource: resource, rootResource: rootResource)
+                        { ElementResolver = callExternalResolver } );
                 }
                 catch (Exception e)
                 {
