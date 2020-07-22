@@ -23,11 +23,18 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
-        public FhirEvaluationContext(Resource context) : base(context?.ToTypedElement())
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement)"/>
+        public FhirEvaluationContext(Resource resource) : base(resource?.ToTypedElement())
         {
         }
 
-        public FhirEvaluationContext(ITypedElement context) : base(context, context?.GetRootResource())
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement)"/>
+        public FhirEvaluationContext(ITypedElement resource) : base(resource, resource?.GetRootResource())
+        {
+        }
+
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement, ITypedElement)"/>
+        public FhirEvaluationContext(ITypedElement resource, ITypedElement rootResource) : base(resource, rootResource)
         {
         }
 

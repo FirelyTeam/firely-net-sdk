@@ -313,7 +313,9 @@ namespace Hl7.Fhir.Model
         public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
 
-        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
 
         /// <summary>Determines if the specified value represents the type of a core Resource, Datatype or primitive.</summary>
@@ -321,7 +323,9 @@ namespace Hl7.Fhir.Model
 
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
-        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelTypeUri(Uri uri)
         {
             return uri != null
