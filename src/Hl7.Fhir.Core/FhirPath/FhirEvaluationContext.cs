@@ -29,7 +29,7 @@ namespace Hl7.Fhir.FhirPath
         }
 
         /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement)"/>
-        public FhirEvaluationContext(ITypedElement resource) : base(resource)
+        public FhirEvaluationContext(ITypedElement resource) : base(resource, resource?.GetRootResource())
         {
         }
 
