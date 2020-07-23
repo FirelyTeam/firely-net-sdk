@@ -19,6 +19,7 @@ using System.Xml.Linq;
 using boolean = System.Boolean;
 using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
 using Model = Hl7.Fhir.Model;
+using P = Hl7.Fhir.ElementModel.Types; 
 
 namespace Hl7.FhirPath.R4.Tests
 {
@@ -57,7 +58,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             if (expected.IsEmpty) return true;      // we are not checking the value
 
-            Assert.AreEqual(expected.Value, actual.ToStringRepresentation());
+            Assert.AreEqual(expected.Value, P.Any.Convert(actual.Value).ToString());
 
             return true;
         }
