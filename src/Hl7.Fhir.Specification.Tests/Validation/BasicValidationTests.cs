@@ -1122,7 +1122,22 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(nrOfParrallelTasks, successes);
         }
 
-     
+        [Fact]
+        public void testSimpleQuantityForInvalidSliceOnRoot()
+        {
+            var sq = new SimpleQuantity
+            {
+                Code = "m",
+                Value = 1,
+                System = "http://unitsofmeasure.org"
+            };
+
+            var sqSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.SimpleQuantity);
+            sqSd.Snapshot = null;
+            var result = _validator.Validate(sq, sqSd);
+            Assert.True(result.Success);
+        }
+
         /// <summary>
         /// This test should show that the rng-2 constraint is totally ignored (it's
         /// incorrect in DSTU2 and STU3), but others are not.

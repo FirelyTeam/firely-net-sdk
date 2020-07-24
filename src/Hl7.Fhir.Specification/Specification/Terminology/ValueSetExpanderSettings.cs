@@ -34,6 +34,11 @@ namespace Hl7.Fhir.Specification.Terminology
         /// </summary>
         public int MaxExpansionSize { get; set; } = DefaultMaxExpansionSize;
 
+        /// <summary>
+        /// Controls whether concept designations are to be included or excluded in value set expansions
+        /// </summary>
+        public bool IncludeDesignations { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="ValueSetExpanderSettings"/> instance with default property values.</summary>
         public ValueSetExpanderSettings() { }
 
@@ -54,6 +59,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             other.MaxExpansionSize = MaxExpansionSize;
             other.ValueSetSource = ValueSetSource;
+            other.IncludeDesignations = IncludeDesignations;
         }
 
         /// <summary>Creates a new <see cref="ValueSetExpanderSettings"/> object that is a copy of the current instance.</summary>
