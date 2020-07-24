@@ -295,6 +295,36 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        public void TestPatchBundleToEntryRequest()
+        {
+            var bundleComponent = new Bundle.EntryComponent
+            {
+                Request = new Bundle.RequestComponent
+                {
+                    Method = Bundle.HTTPVerb.PUT,
+                    Url = "test/Url",
+                    IfMatch = "test-ifMatch",
+                    IfNoneExist = "test-ifNoneExists",
+                    IfNoneMatch = "test-ifNoneMatch",
+                    IfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan())
+                }
+            };
+            bundleComponent.AddAnnotation(InteractionType.Patch);
+
+            var entryRequest = bundleComponent.ToEntryRequest(_Settings);
+
+            Assert.IsNotNull(entryRequest);
+            Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
+            Assert.AreEqual(HTTPVerb.PATCH, entryRequest.Method);
+            Assert.AreEqual(bundleComponent.Request.IfMatch, entryRequest.Headers.IfMatch);
+            Assert.AreEqual(bundleComponent.Request.IfModifiedSince, entryRequest.Headers.IfModifiedSince);
+            Assert.AreEqual(bundleComponent.Request.IfNoneExist, entryRequest.Headers.IfNoneExist);
+            Assert.AreEqual(bundleComponent.Request.IfNoneMatch, entryRequest.Headers.IfNoneMatch);
+            Assert.AreEqual(InteractionType.Patch, entryRequest.Type);
+            Assert.IsNull(entryRequest.RequestBodyContent);
+        }
+
+        [TestMethod]
         public void TestBundleToEntryRequestBody()
         {
             var bundleComponent = new Bundle.EntryComponent
