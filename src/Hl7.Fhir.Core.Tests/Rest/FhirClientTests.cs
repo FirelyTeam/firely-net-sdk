@@ -187,6 +187,53 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void PatchHttpClient()
+        {
+            using (var client = new FhirClient(testEndpoint))
+            {
+                Patch(client);
+            }
+        }
+
+        private void Patch(FhirClient client)
+        {
+            var patchparams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "operation",
+                        Part = new List<Parameters.ParameterComponent>
+                        {
+                            new Parameters.ParameterComponent
+                            {
+                                Name = "type",
+                                Value = new Code("add")
+                            },
+                            new Parameters.ParameterComponent
+                            {
+                                Name = "path",
+                                Value = new FhirString("Patient")
+                            },
+                            new Parameters.ParameterComponent
+                            {
+                                Name = "name",
+                                Value = new FhirString("birthdate")
+                            },
+                            new Parameters.ParameterComponent
+                            {
+                                Name = "value",
+                                Value = new Date("1930-01-01")
+                            }
+                        }
+                    }
+                }
+            };
+           client.Patch<Patient>("example", patchparams);
+           
+        }
 
         [TestMethod, TestCategory("FhirClient")]
         public void VerifyFormatParamProcessing()

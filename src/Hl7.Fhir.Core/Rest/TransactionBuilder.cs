@@ -116,6 +116,18 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
+        {
+            //No PATCH in Bundle.HttpVerb in STU3
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
+            entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
+            var path = newRestUrl().AddPath(resourceType, id);
+            addEntry(entry, path);
+
+            return this;
+        }
+
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);

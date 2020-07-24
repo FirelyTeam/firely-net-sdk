@@ -422,6 +422,52 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
+        #region Patch
+
+        public Task<Resource> PatchAsync(Uri location, Parameters patchParameters) 
+        {
+            if (location == null) throw Error.ArgumentNull(nameof(location));
+
+            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+
+            var tx = new TransactionBuilder(Endpoint);
+
+            if (id.HasVersion)
+                tx.Patch(id.ResourceType, id.Id, patchParameters, id.VersionId);
+            else
+                tx.Patch(id.ResourceType, id.Id, patchParameters);
+
+            return executeAsync<Resource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+       
+        public Resource Patch(Uri location, Parameters patchParameters)
+        {
+            return PatchAsync(location, patchParameters).WaitResult();
+        }
+
+        public Task<TResource> PatchAsync<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource : Resource
+        {
+            if (id == null) throw Error.ArgumentNull(nameof(id));
+
+
+            var tx = new TransactionBuilder(Endpoint);
+            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+
+            if (!string.IsNullOrEmpty(versionId))
+                tx.Patch(resourceType, id, patchParameters, versionId);
+            else
+                tx.Patch(resourceType, id, patchParameters);
+
+            return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+
+        public TResource Patch<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource: Resource
+        {
+            return PatchAsync<TResource>(id, patchParameters, versionId).WaitResult();
+        }
+
+        #endregion
+
         #region Conformance
 
         /// <summary>
