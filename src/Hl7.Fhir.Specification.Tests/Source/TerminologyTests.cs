@@ -91,18 +91,18 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void TestIncludeDesignation()
+        public async T.Task TestIncludeDesignation()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/animal-genderstatus").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
             //Import codes from codesystem
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
 
             expander.Settings.IncludeDesignations = true;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
 
             Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
             Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "gesteriliseerd"));
@@ -140,10 +140,10 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             expander.Settings.IncludeDesignations = false;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
             expander.Settings.IncludeDesignations = true;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
 
             Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
             Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "onbekend"));
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_syncResolver);
 
             // Do common tests for service
-            testService(svc); 
+            testService(svc);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");

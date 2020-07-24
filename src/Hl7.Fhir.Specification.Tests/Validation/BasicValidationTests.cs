@@ -980,7 +980,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = _validator.Validate(sd);
             Assert.True(result.Success);
         }
-     
+
         // [WMR 20161220] Example by Christiaan Knaap
         // Causes stack overflow exception in validator when processing the related Organization profile
         // TypeRefValidationExtensions.ValidateTypeReferences needs to detect and handle recursion
@@ -1123,16 +1123,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void testSimpleQuantityForInvalidSliceOnRoot()
+        public async T.Task TestSimpleQuantityForInvalidSliceOnRoot()
         {
-            var sq = new SimpleQuantity
+            var sq = new Quantity
             {
                 Code = "m",
                 Value = 1,
                 System = "http://unitsofmeasure.org"
             };
 
-            var sqSd = _source.FindStructureDefinitionForCoreType(FHIRAllTypes.SimpleQuantity);
+            var sqSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.SimpleQuantity);
             sqSd.Snapshot = null;
             var result = _validator.Validate(sq, sqSd);
             Assert.True(result.Success);
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// </summary>
         [Fact]
         public async T.Task IgnoreRng2FPConstraint()
-        {           
+        {
             var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Observation);
 
             var instance = new Observation
@@ -1259,7 +1259,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-      
+
 
         private class ClearSnapshotResolver : IResourceResolver
         {
