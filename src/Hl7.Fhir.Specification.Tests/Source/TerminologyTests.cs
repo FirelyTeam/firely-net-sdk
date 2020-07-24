@@ -3,6 +3,7 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using T = System.Threading.Tasks;
@@ -87,6 +88,65 @@ namespace Hl7.Fhir.Specification.Tests
             expander.Settings.MaxExpansionSize = 500;
             await expander.ExpandAsync(testVs);
             Assert.Equal(304, testVs.Expansion.Total);
+        }
+
+        [Fact]
+        public async T.Task TestIncludeDesignation()
+        {
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
+            Assert.False(testVs.HasExpansion);
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+
+            //Import codes from codesystem
+            await expander.ExpandAsync(testVs);
+            Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
+
+            expander.Settings.IncludeDesignations = true;
+            await expander.ExpandAsync(testVs);
+
+            Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
+            Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "gesteriliseerd"));
+
+            //compose codes
+            testVs = new ValueSet
+            {
+                Compose = new ValueSet.ComposeComponent
+                {
+                    Include = new List<ValueSet.ConceptSetComponent>
+                    {
+                        new ValueSet.ConceptSetComponent
+                        {
+                            System = "http://hl7.org/fhir/v3/NullFlavor",
+                            Concept = new List<ValueSet.ConceptReferenceComponent>
+                            {
+
+                                new ValueSet.ConceptReferenceComponent
+                                {
+                                    Code = "UNK",
+                                    Display = "unknown",
+                                    Designation = new List<ValueSet.DesignationComponent>
+                                    {
+                                        new ValueSet.DesignationComponent
+                                        {
+                                            Language = "nl",
+                                            Value = "onbekend"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            expander.Settings.IncludeDesignations = false;
+            await expander.ExpandAsync(testVs);
+            Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
+            expander.Settings.IncludeDesignations = true;
+            await expander.ExpandAsync(testVs);
+
+            Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
+            Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "onbekend"));
         }
 
         [Fact]
