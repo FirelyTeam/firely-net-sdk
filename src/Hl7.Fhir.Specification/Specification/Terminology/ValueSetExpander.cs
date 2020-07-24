@@ -36,8 +36,8 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             // Note we are expanding the valueset in-place, so it's up to the caller to decide whether
             // to clone the valueset, depending on store and performance requirements.
-
             source.Expansion = ValueSet.ExpansionComponent.Create();
+            setExpansionParameters(source);
 
             try
             {
@@ -49,6 +49,21 @@ namespace Hl7.Fhir.Specification.Terminology
                 source.Expansion = null;
                 throw e;
             }
+            
+        }
+
+        private void setExpansionParameters(ValueSet vs)
+        {
+            vs.Expansion.Parameter = new List<ValueSet.ParameterComponent>();
+            if(Settings.IncludeDesignations)
+            {
+                vs.Expansion.Parameter.Add(new ValueSet.ParameterComponent
+                {
+                    Name = "includeDesignations",
+                    Value = new FhirBoolean(true)
+                }); 
+            }
+            //TODO add more parameters to the valuset here when we implement them.
         }
 
 
@@ -79,9 +94,8 @@ namespace Hl7.Fhir.Specification.Terminology
 
             // handleImport(source);
             handleInclude(source);
-            handleExclude(source);
+            handleExclude(source);            
         }
-
 
         private List<ValueSet.ContainsComponent> collectConcepts(ValueSet.ConceptSetComponent conceptSet)
         {
@@ -101,7 +115,15 @@ namespace Hl7.Fhir.Specification.Terminology
                     {
                         // We'd probably really have to look this code up in the original ValueSet (by system) to know something about 'abstract'
                         // and what would we do with a hierarchy if we encountered that in the include?
-                        result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display);
+                        if(Settings.IncludeDesignations)
+                        {
+                            result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display, concept.Designation);
+                        }
+                        else
+                        {
+                            result.Add(conceptSet.System, conceptSet.Version, concept.Code, concept.Display);
+                        }
+                       
                     }
                 }
                 else
@@ -200,7 +222,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (importedCs == null) throw new ValueSetUnknownException($"Cannot resolve canonical reference '{uri}' to CodeSystem");
 
             var result = new List<ValueSet.ContainsComponent>();
-            result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs)));
+            result.AddRange(importedCs.Concept.Select(c => c.ToContainsComponent(importedCs, Settings)));
 
             return result;
         }
@@ -209,7 +231,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
     public static class ContainsSetExtensions
     {
-        public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, IEnumerable<ValueSet.ContainsComponent> children = null)
+        public static ValueSet.ContainsComponent Add(this List<ValueSet.ContainsComponent> dest, string system, string version, string code, string display, List<ValueSet.DesignationComponent> designations = null, IEnumerable<ValueSet.ContainsComponent> children = null)
         {
             var newContains = new ValueSet.ContainsComponent();
 
@@ -217,6 +239,7 @@ namespace Hl7.Fhir.Specification.Terminology
             newContains.Code = code;
             newContains.Display = display;
             newContains.Version = version;
+            newContains.Designation = designations;
 
             if (children != null)
                 newContains.Contains = new List<ValueSet.ContainsComponent>(children);
@@ -245,14 +268,16 @@ namespace Hl7.Fhir.Specification.Terminology
                 dest.Remove(sourceConcept.System, sourceConcept.Code);
         }
 
-        internal static ValueSet.ContainsComponent ToContainsComponent(this CodeSystem.ConceptDefinitionComponent source, CodeSystem system)
+        internal static ValueSet.ContainsComponent ToContainsComponent(this CodeSystem.ConceptDefinitionComponent source, CodeSystem system, ValueSetExpanderSettings settings)
         {
             var newContains = new ValueSet.ContainsComponent();
 
             newContains.System = system.Url;
             newContains.Version = system.Version;
             newContains.Code = source.Code;
-            newContains.Display = source.Display;
+            newContains.Display = source.Display;            
+            if(settings.IncludeDesignations)            
+                newContains.Designation = source.Designation.ToValueSetDesignations();                    
 
             var abstractProperty = source.ListConceptProperties(system, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).SingleOrDefault();
             if (abstractProperty?.Value is FhirBoolean isAbstract)
@@ -264,9 +289,27 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (source.Concept.Any())
                 newContains.Contains.AddRange(
-                    source.Concept.Select(c => c.ToContainsComponent(system)));
+                    source.Concept.Select(c => c.ToContainsComponent(system, settings)));
 
             return newContains;
         }
+
+        private static List<ValueSet.DesignationComponent> ToValueSetDesignations(this List<CodeSystem.DesignationComponent> csDesignations)
+        {
+            var vsDesignations = new List<ValueSet.DesignationComponent>();
+            csDesignations.ForEach(d => vsDesignations.Add(d.ToValueSetDesignation()));           
+            return vsDesignations;
+        }
+
+        private static ValueSet.DesignationComponent ToValueSetDesignation(this CodeSystem.DesignationComponent csDesignation)
+        {
+            return new ValueSet.DesignationComponent
+            {
+                Language = csDesignation.Language,
+                Use = csDesignation.Use,
+                Value = csDesignation.Value
+            };
+        }
+
     }
 }

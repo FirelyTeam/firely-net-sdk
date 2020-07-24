@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -3194,12 +3194,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(nav.Current.Type.FirstOrDefault().Code, FHIRAllTypes.Integer.GetLiteral());
 
             Assert.IsNotNull(outcome);
-            // [WMR 20170810] Fixed, now also expecting issue about invalid slice name on SimpleQuantity root element
-            //Assert.AreEqual(1, outcome.Issue.Count);
-            // assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
-            Assert.AreEqual(2, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
-            assertIssue(outcome.Issue[1], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
+
+            Assert.AreEqual(1, outcome.Issue.Count);
+            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
         static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
@@ -4438,7 +4435,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170321] NEW
         [TestMethod]
-        public void TestSimpleQuantityProfile()
+        public void TestSimpleQuantityObservationProfile()
         {
             var profile = ObservationSimpleQuantityProfile;
 
@@ -4453,16 +4450,14 @@ namespace Hl7.Fhir.Specification.Tests
             dumpOutcome(_generator.Outcome);
 
             var issues = _generator.Outcome?.Issue;
-            Assert.AreEqual(1, issues.Count);
-            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.IsNull(issues);
 
             // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
             issues = new List<OperationOutcome.IssueComponent>();
             var elems = expanded.Snapshot.Element;
             elems = expanded.Snapshot.Element = fullyExpand(elems, issues).ToList();
             // Generator should report same issue as during regular snapshot expansion
-            Assert.AreEqual(1, issues.Count);
-            assertIssue(issues[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.AreEqual(0, issues.Count);
 
             // Ensure that renamed diff elements override base elements with original names
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
@@ -4478,13 +4473,25 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile}'");
         }
 
-        // [WMR 20170406] NEW
-        // Issue reported by Vadim
-        // Complex extension:   structure.cdstools-typedstage
-        // Referencing Profile: structure.cdstools-basecancer
-        // Profile defines constraints on child elements of the complex extension
-        // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
-        [TestMethod]   // test data needs to be converted from dstu2 -> stu3
+        //Ignore invalid slice name error on the root of SimpleQuantity.
+        [TestMethod]
+        public void TestSimpleQuantity()
+        {
+            var resource = _testResolver.FindStructureDefinition(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
+            _generator = new SnapshotGenerator(_testResolver);
+            var snapshot = _generator.Generate(resource);
+            Assert.IsNotNull(snapshot);
+            Assert.IsNull(snapshot.GetRootElement().SliceName);
+            Assert.IsNull(_generator.Outcome);
+        }
+
+            // [WMR 20170406] NEW
+            // Issue reported by Vadim
+            // Complex extension:   structure.cdstools-typedstage
+            // Referencing Profile: structure.cdstools-basecancer
+            // Profile defines constraints on child elements of the complex extension
+            // Snapshot generator adds slicing component to Condition.extension.extension.extension:type - WRONG!
+            [TestMethod]   // test data needs to be converted from dstu2 -> stu3
         public void TestProfileConstraintsOnComplexExtensionChildren()
         {
             var profile = _testResolver.FindStructureDefinition("https://example.org/fhir/StructureDefinition/cds-basecancer");
@@ -5688,10 +5695,11 @@ namespace Hl7.Fhir.Specification.Tests
             dumpElements(elems);
             // dumpBaseElems(elems);
 
+            var issues = _generator.Outcome?.Issue.Where(i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString());
+
             // Verify there is NO warning about invalid element type constraint
-            Assert.IsFalse(_generator.Outcome.Issue.Any(
-                i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString())
-            );
+            Assert.IsTrue(issues == null || !issues.Any());
+            
         }
 
         // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
@@ -6863,11 +6871,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
 
-            // Expecting single issue about invalid slice name on SimpleQuantity root element
             var outcome = generator.Outcome;
-            //Assert.IsNull(outcome);
-            Assert.AreEqual(1, outcome.Issue.Count);
-            assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_SLICENAME_ON_ROOT);
+            Assert.IsNull(outcome);       
 
             var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
             Assert.IsNotNull(nav);
