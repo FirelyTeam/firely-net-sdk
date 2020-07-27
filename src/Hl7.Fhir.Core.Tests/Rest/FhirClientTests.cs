@@ -188,51 +188,27 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void PatchHttpClient()
+        public void PatchClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                Patch(client);
-            }
+            using (var client = new LegacyFhirClient(testEndpoint))            
+            Patch(client);
+            
         }
 
-        private void Patch(FhirClient client)
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void PatchHttpClient()
         {
-            var patchparams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "operation",
-                        Part = new List<Parameters.ParameterComponent>
-                        {
-                            new Parameters.ParameterComponent
-                            {
-                                Name = "type",
-                                Value = new Code("add")
-                            },
-                            new Parameters.ParameterComponent
-                            {
-                                Name = "path",
-                                Value = new FhirString("Patient")
-                            },
-                            new Parameters.ParameterComponent
-                            {
-                                Name = "name",
-                                Value = new FhirString("birthdate")
-                            },
-                            new Parameters.ParameterComponent
-                            {
-                                Name = "value",
-                                Value = new Date("1930-01-01")
-                            }
-                        }
-                    }
-                }
-            };
-           client.Patch<Patient>("example", patchparams);
-           
+            using (var client = new FhirClient(testEndpoint))            
+            Patch(client);
+            
+        }
+
+        private void Patch(BaseFhirClient client)
+        {
+           var patchparams = new Parameters();            
+           patchparams.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
+           client.Patch<Patient>("example", patchparams);           
         }
 
         [TestMethod, TestCategory("FhirClient")]
