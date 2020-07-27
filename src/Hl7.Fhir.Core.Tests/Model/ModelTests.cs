@@ -696,5 +696,37 @@ namespace Hl7.Fhir.Tests.Model
         {
             ModelInfo.CheckMinorVersionCompatibility(null);
         }
+
+        [TestMethod]
+        public void TestAddPatchParameter()
+        {
+            var parameters = new Parameters();
+
+            parameters.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
+            Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "add"));
+            Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "path" && ((FhirString)p.Value).Value == "Patient"));
+            Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "name" && ((FhirString)p.Value).Value == "birthdate"));
+            Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "value" && ((Date)p.Value).Value == "1930-01-01"));
+
+            parameters.AddPatchParameter(PatchType.Insert, "Patient.name[0].given", null, new FhirString("Donald"), 1);
+            Assert.IsTrue(parameters.Parameter[1].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "insert"));
+            Assert.IsTrue(parameters.Parameter[1].Part.Any(p => p.Name == "path" && ((FhirString)p.Value).Value == "Patient.name[0].given"));
+            Assert.IsTrue(parameters.Parameter[1].Part.Any(p => p.Name == "value" && ((FhirString)p.Value).Value == "Donald"));
+            Assert.IsTrue(parameters.Parameter[1].Part.Any(p => p.Name == "index" && ((Integer)p.Value).Value == 1));
+
+            parameters.AddPatchParameter(PatchType.Delete, "Patient.maritalStatus");
+            Assert.IsTrue(parameters.Parameter[2].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "delete"));
+            Assert.IsTrue(parameters.Parameter[2].Part.Any(p => p.Name == "path" && ((FhirString)p.Value).Value == "Patient.maritalStatus"));
+
+            parameters.AddPatchParameter(PatchType.Replace, "Patient.deceasedBoolean", null, new FhirBoolean(true));
+            Assert.IsTrue(parameters.Parameter[3].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "replace"));
+            Assert.IsTrue(parameters.Parameter[3].Part.Any(p => p.Name == "path" && ((FhirString)p.Value).Value == "Patient.deceasedBoolean"));
+            Assert.IsTrue(parameters.Parameter[3].Part.Any(p => p.Name == "value" && ((FhirBoolean)p.Value).Value == true));
+
+            parameters.AddPatchParameter(PatchType.Move, "Patient.name[0].given", null, null, null, 2, 1);
+            Assert.IsTrue(parameters.Parameter[4].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "move"));
+            Assert.IsTrue(parameters.Parameter[4].Part.Any(p => p.Name == "source" && ((Integer)p.Value).Value == 2));
+            Assert.IsTrue(parameters.Parameter[4].Part.Any(p => p.Name == "destination" && ((Integer)p.Value).Value == 1));
+        }
     }
 }
