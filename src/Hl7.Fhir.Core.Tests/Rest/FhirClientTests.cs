@@ -190,18 +190,18 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PatchClient()
         {
-            using (var client = new LegacyFhirClient(testEndpoint))            
+            using var client = new LegacyFhirClient(testEndpoint);
             Patch(client);
-            
+
         }
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PatchHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))            
+            using var client = new FhirClient(testEndpoint);
             Patch(client);
-            
+
         }
 
         private void Patch(BaseFhirClient client)
@@ -209,6 +209,31 @@ namespace Hl7.Fhir.Tests.Rest
            var patchparams = new Parameters();            
            patchparams.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
            client.Patch<Patient>("example", patchparams);           
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CondionalPatchClient()
+        {
+            using var client = new LegacyFhirClient(testEndpoint);
+            ConditionalPatch(client);
+
+        }
+
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CondionalPatchHttpClient()
+        {
+            using var client = new FhirClient(testEndpoint);
+            ConditionalPatch(client);
+
+        }
+
+        private void ConditionalPatch(BaseFhirClient client)
+        {
+            var patchparams = new Parameters();
+            patchparams.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
+            var condition = new SearchParams().Where("name=Donald");
+            client.Patch<Patient>(condition, patchparams);
         }
 
         [TestMethod, TestCategory("FhirClient")]
