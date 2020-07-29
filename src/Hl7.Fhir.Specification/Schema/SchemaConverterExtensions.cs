@@ -26,7 +26,6 @@ namespace Hl7.Fhir.Specification.Schema
 
             var elements = new List<IAssertion>()
                 .MaybeAdd(def, assertionFactory, BuildMaxLength)
-                .MaybeAdd(BuildMaxLength(def, assertionFactory))
                 .MaybeAdd(BuildFixed(def, assertionFactory))
                 .MaybeAdd(BuildPattern(def, assertionFactory))
                 .MaybeAdd(BuildBinding(def, assertionFactory))
@@ -254,6 +253,7 @@ namespace Hl7.Fhir.Specification.Schema
 
         private static List<IAssertion> MaybeAdd(this List<IAssertion> assertions, ElementDefinition def, IElementDefinitionAssertionFactory assertionFactory, Func<ElementDefinition, IElementDefinitionAssertionFactory, IAssertion> builder)
         {
+            // TODOL handle "compile" exceptions
             IAssertion element = null;
             try
             {

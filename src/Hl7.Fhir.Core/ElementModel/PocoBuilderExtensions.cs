@@ -135,7 +135,5 @@ namespace Hl7.Fhir.ElementModel
                 Text = instance.Children("text").GetString()
             };
         }
-
-        //public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
     }
 }

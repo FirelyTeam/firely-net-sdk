@@ -14,6 +14,7 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Specification.Source;
@@ -113,23 +114,6 @@ namespace Hl7.Fhir.Validation
             return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); ;
         }
 
-        internal OperationOutcome Validate(IValidatable validatable, ITypedElement input)
-        {
-            var outcome = new OperationOutcome();
-
-            return outcome;
-        }
-
-        internal OperationOutcome Validate(StructureDefinition sd, ITypedElement input)
-        {
-            var outcome = new OperationOutcome();
-            //IValidatable validatable = sd.ToValidatable();
-            IValidatable validatable = null;
-
-            outcome.Add(Validate(validatable, input));
-
-            return outcome;
-        }
         #region NewValidation stuff
 
         public ElementSchemaResolver SchemaResolver { get; private set; }
@@ -159,7 +143,7 @@ namespace Hl7.Fhir.Validation
                 symbolTable.AddFhirExtensions();
 
 
-                var validationContext = new ValidationContext()
+                var validationContext = new Schema.ValidationContext()
                 {
                     ResourceResolver = Settings.ResourceResolver,
                     ResolveExternalReferences = Settings.ResolveExternalReferences,
@@ -316,13 +300,13 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
-            //outcome.Add(this.ValidateFixed(elementConstraints, instance));
-            //outcome.Add(this.ValidatePattern(elementConstraints, instance));
-            //outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
-            //outcome.Add(ValidateMaxLength(elementConstraints, instance));
-            //outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
-            //outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
-            //outcome.Add(this.ValidateBinding(elementConstraints, instance));
+            outcome.Add(this.ValidateFixed(elementConstraints, instance));
+            outcome.Add(this.ValidatePattern(elementConstraints, instance));
+            outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
+            outcome.Add(ValidateMaxLength(elementConstraints, instance));
+            outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
+            outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+            outcome.Add(this.ValidateBinding(elementConstraints, instance));
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
@@ -373,6 +357,9 @@ namespace Hl7.Fhir.Validation
             }
         }
 
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance) =>
+            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path) : new OperationOutcome();
+
         internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath)
         {
             var outcome = new OperationOutcome();
@@ -392,9 +379,17 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver);
             }
 
-            ValidationContext vc = new ValidationContext() { TerminologyService = new TerminologyServiceAdapter(ts) };
+            Specification.Schema.ValidationContext vc = new Specification.Schema.ValidationContext() { TerminologyService = ts };
 
-            // Binding removed
+            try
+            {
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
+            }
+            catch (IncorrectElementDefinitionException iede)
+            {
+                Trace(outcome, "Incorrect binding spec: " + iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, defPath);
+            }
 
             return outcome;
         }
