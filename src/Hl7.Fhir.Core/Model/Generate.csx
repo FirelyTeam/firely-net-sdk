@@ -3515,11 +3515,13 @@ public class SearchParameter
     private string _xpath;
     private List<string> _targets;
     private string _expression;
+    private string _url;
 
     public SearchParameter(string resourceName, XmlElement sp, XmlNamespaceManager ns)
     {
         _resourceName = resourceName;
         _name = sp.SelectSingleNode("fhir:name/@value", ns).Value;
+        _url = sp.SelectSingleNode("fhir:url/@value", ns).Value;
         var appliesToMultipleResources = sp.SelectNodes("fhir:base", ns).Count > 1;
         var description = sp.SelectSingleNode("fhir:description/@value", ns)?.Value;
         if (!appliesToMultipleResources)
@@ -3631,7 +3633,7 @@ public class SearchParameter
         var target = _targets.Count > 0 ?
             $", Target = new ResourceType[] {{ { string.Join(", ", _targets) } }}" :
             string.Empty;
-        yield return $"new SearchParamDefinition() {{ Resource = \"{ _resourceName }\", Name = \"{ _name }\", Description = { StringUtils.Quote(_description) }, Type = SearchParamType.{ _outputType }, Path = new string[] {{ { _path } }}{ target }{ xpath }{ expression } }},";
+        yield return $"new SearchParamDefinition() {{ Resource = \"{ _resourceName }\", Name = \"{ _name }\", Description = { StringUtils.Quote(_description) }, Type = SearchParamType.{ _outputType }, Path = new string[] {{ { _path } }}{ target }{ xpath }{ expression }, Url = \"{ _url }\" }},";
     }
 }
 
