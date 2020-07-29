@@ -259,14 +259,14 @@ namespace Hl7.Fhir.Specification.Schema
             {
                 element = builder(def, assertionFactory);
             }
-            catch (ArgumentNullException ane)
+            catch (ArgumentNullException)
             {
             }
-            catch (IncorrectElementDefinitionException iede)
+            catch (IncorrectElementDefinitionException)
             {
                 element = new CompileAssertion();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

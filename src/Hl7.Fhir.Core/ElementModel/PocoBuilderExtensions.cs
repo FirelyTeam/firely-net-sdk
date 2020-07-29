@@ -10,7 +10,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.ElementModel
@@ -137,6 +136,6 @@ namespace Hl7.Fhir.ElementModel
             };
         }
 
-        public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
+        //public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
     }
 }

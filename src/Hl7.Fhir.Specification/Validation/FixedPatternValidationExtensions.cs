@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
@@ -46,7 +45,7 @@ namespace Hl7.Fhir.Validation
 
             ITypedElement patternValueNav = pattern.ToTypedElement();
 
-            if (!instance.Matches(patternValueNav))
+            if (!Matches(instance, patternValueNav))
             {
                 v.Trace(outcome, $"Value does not match pattern '{toReadable(pattern)}'",
                         Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
@@ -80,7 +79,7 @@ namespace Hl7.Fhir.Validation
 
             if (childrenL.Count() != childrenR.Count()) return false;
 
-            return childrenL.Zip(childrenR, 
+            return childrenL.Zip(childrenR,
                             (childL, childR) => childL.Name == childR.Name && childL.IsExactlyEqualTo(childR)).All(t => t);
         }
 
@@ -111,7 +110,7 @@ namespace Hl7.Fhir.Validation
         {
             if (value == null && pattern == null) return true;
             if (value == null || pattern == null) return false;
-            
+
             if (!ValueEquality(value.Value, pattern.Value)) return false;
 
             // Compare the children.
@@ -119,7 +118,7 @@ namespace Hl7.Fhir.Validation
             var patternChildren = pattern.Children();
 
             return patternChildren.All(patternChild => valueChildren.Any(valueChild =>
-                  patternChild.Name == valueChild.Name && valueChild.Matches(patternChild)));
+                  patternChild.Name == valueChild.Name && Matches(valueChild, patternChild)));
 
         }
     }

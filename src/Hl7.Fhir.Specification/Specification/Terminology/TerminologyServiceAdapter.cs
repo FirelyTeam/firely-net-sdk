@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Model.Primitives;
+﻿using Hl7.Fhir.ElementModel.Types;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Validation.Schema;
@@ -17,15 +16,15 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
             _service = service;
         }
 
-        private Model.Coding ToFhirPrimitive(ICoding coding) =>
-            coding is null ? null : new Model.Coding() { Code = coding?.Code, System = coding?.System, Display = coding?.Display };
+        private Model.Coding ToFhirPrimitive(Code coding) =>
+            coding is null ? null : new Model.Coding() { Code = coding?.Value, System = coding?.System, Display = coding?.Display };
 
-        private Model.CodeableConcept ToFhirPrimitive(IConcept concept) =>
+        private Model.CodeableConcept ToFhirPrimitive(Concept concept) =>
             concept is null ? null :
             new Model.CodeableConcept() { Coding = concept?.Codes.Select(cd => ToFhirPrimitive(cd)).ToList(), Text = concept?.Display };
 
 
-        public T.Task<Assertions> ValidateCode(string canonical = null, string context = null, string code = null, string system = null, string version = null, string display = null, ICoding coding = null, IConcept codeableConcept = null, PartialDateTime? date = null, bool? @abstract = null, string displayLanguage = null)
+        public T.Task<Assertions> ValidateCode(string canonical = null, string context = null, string code = null, string system = null, string version = null, string display = null, Code coding = null, Concept codeableConcept = null, DateTime date = null, bool? @abstract = null, string displayLanguage = null)
         {
             var outcome = _service.ValidateCode(canonical: canonical, context: context, code: code, system: system, version: version, display: display,
 

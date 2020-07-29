@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Validation
             buildNestedSlicing(),
             buildPatientWithFixedMaritalStatus(),
             buildPatientWithPatternMaritalStatus(),
-            buildExtensionWithLessTypes()
+            buildExtensionWithLessTypes(),
             buildPatientWithIdentifierSlicing(),
             buildMiPatient()
         };
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Validation
 
             var cons = result.Differential.Element;
             var slicingIntro = new ElementDefinition("Patient.identifier")
-               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, false,
                (ElementDefinition.DiscriminatorType.Value, "system"));
 
             cons.Add(slicingIntro);
