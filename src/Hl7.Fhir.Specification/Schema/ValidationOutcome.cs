@@ -15,7 +15,13 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Schema
 {
-   
+   internal enum ValidationResult
+    {
+        Valid,
+        Invalid,
+        Undecided
+    }
+
     internal enum Weight
     {
         Information,
