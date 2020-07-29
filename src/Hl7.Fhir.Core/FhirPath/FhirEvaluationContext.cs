@@ -23,40 +23,24 @@ namespace Hl7.Fhir.FhirPath
         {
         }
 
-        public FhirEvaluationContext(Resource context) : base(context?.ToTypedElement())
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement)"/>
+        public FhirEvaluationContext(Resource resource) : base(resource?.ToTypedElement())
         {
         }
 
-        public FhirEvaluationContext(ITypedElement context) : base(context, context?.GetRootResource())
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement)"/>
+        public FhirEvaluationContext(ITypedElement resource) : base(resource, resource?.GetRootResource())
+        {
+        }
+
+        /// <inheritdoc cref="EvaluationContext.EvaluationContext(ITypedElement, ITypedElement)"/>
+        public FhirEvaluationContext(ITypedElement resource, ITypedElement rootResource) : base(resource, rootResource)
         {
         }
 
         #region Obsolote members
         [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions. Obsolete since 2018-10-17")]
         new public static readonly FhirEvaluationContext Default = new FhirEvaluationContext();
-
-        [Obsolete("Use FhirEvaluationContext(ITypedElement context) instead. Obsolete since 2018-10-17")]
-        public FhirEvaluationContext(IElementNavigator context) : base(context.ToTypedElement())
-        {
-        }
-
-#pragma warning disable CS0618 // Type or member is obsolete
-        private Func<string, IElementNavigator> _resolver;
-#pragma warning restore CS0618 // Type or member is obsolete
-
-        [Obsolete("Use property ElementResolver instead")]
-        public Func<string, IElementNavigator> Resolver
-        {
-            get { return _resolver; }
-            set
-            {
-                _resolver = value;
-                if (value == null)
-                    _elementResolver = null;
-                else
-                    _elementResolver = (s) => value(s).ToTypedElement();
-            }
-        }
         #endregion
 
         private Func<string, ITypedElement> _elementResolver;
@@ -64,16 +48,7 @@ namespace Hl7.Fhir.FhirPath
         public Func<string, ITypedElement> ElementResolver
         {
             get { return _elementResolver; }
-            set
-            {
-                _elementResolver = value;
-                if (value == null)
-                    _resolver = null;
-                else
-#pragma warning disable CS0618 // Type or member is obsolete
-                    _resolver = (s) => value(s).ToElementNavigator();
-#pragma warning restore CS0618 // Type or member is obsolete
-            }
+            set { _elementResolver = value; }
         }
     }
 }

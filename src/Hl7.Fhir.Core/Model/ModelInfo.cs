@@ -132,12 +132,6 @@ namespace Hl7.Fhir.Model
             return FhirCsTypeToString.TryGetValue(type, out var result) ? result : null;
         }
 
-        [Obsolete("Use GetFhirTypeNameForType() instead")]
-        public static string GetFhirTypeForType(Type type)
-        {
-            return GetFhirTypeNameForType(type);
-        }
-
         /// <summary>Determines if the specified value represents the name of a known FHIR resource.</summary>
         public static bool IsKnownResource(string name)
         {
@@ -157,25 +151,6 @@ namespace Hl7.Fhir.Model
         {
             var name = FhirTypeToFhirTypeName(type);
             return name != null && IsKnownResource(name);
-        }
-
-        [Obsolete("Use GetTypeForFhirType() which covers all types, not just resources")]
-        public static Type GetTypeForResourceName(string name)
-        {
-            if (!IsKnownResource(name)) return null;
-
-            return GetTypeForFhirType(name);
-        }
-
-        [Obsolete("Use GetFhirTypeNameForType() which covers all types, not just resources")]
-        public static string GetResourceNameForType(Type type)
-        {
-            var name = GetFhirTypeForType(type);
-
-            if (name != null && IsKnownResource(name))
-                return name;
-            else
-                return null;
         }
 
         /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
@@ -271,7 +246,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>Subset of <see cref="FHIRAllTypes"/> enumeration values for conformance resources.</summary>
-        public static readonly FHIRAllTypes[] ConformanceResources = 
+        public static readonly FHIRAllTypes[] ConformanceResources =
         {
             FHIRAllTypes.StructureDefinition,
             FHIRAllTypes.StructureMap,
@@ -288,6 +263,7 @@ namespace Hl7.Fhir.Model
             FHIRAllTypes.NamingSystem,
             FHIRAllTypes.TestScript,
             //FHIRAllTypes.TestReport,
+            FHIRAllTypes.Questionnaire,
             FHIRAllTypes.TerminologyCapabilities
         };
 
@@ -337,7 +313,9 @@ namespace Hl7.Fhir.Model
         public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
 
-        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
 
         /// <summary>Determines if the specified value represents the type of a core Resource, Datatype or primitive.</summary>
@@ -345,13 +323,15 @@ namespace Hl7.Fhir.Model
 
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
-        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelTypeUri(Uri uri)
         {
             return uri != null
                 // [WMR 20181025] Issue #746
                 // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
-                && uri.IsAbsoluteUri 
+                && uri.IsAbsoluteUri
                 && FhirCoreProfileBaseUri.IsBaseOf(uri)
                 && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }

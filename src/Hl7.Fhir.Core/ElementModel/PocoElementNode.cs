@@ -13,6 +13,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
@@ -134,14 +135,14 @@ namespace Hl7.Fhir.ElementModel
                 {
                     switch (Current)
                     {
-                        case Hl7.Fhir.Model.Instant ins:
-                            return ins.ToPartialDateTime();
-                        case Hl7.Fhir.Model.Time time:
-                            return time.ToTime();
-                        case Hl7.Fhir.Model.Date dt:
-                            return dt.ToPartialDate();
-                        case FhirDateTime fdt:
-                            return fdt.ToPartialDateTime();
+                        case Hl7.Fhir.Model.Instant ins when ins.Value.HasValue:
+                            return P.DateTime.FromDateTimeOffset(ins.Value.Value);
+                        case Hl7.Fhir.Model.Time time when time.Value is { }:
+                            return P.Time.Parse(time.Value);
+                        case Hl7.Fhir.Model.Date dt when dt.Value is { }:
+                            return P.Date.Parse(dt.Value);
+                        case FhirDateTime fdt when fdt.Value is { }:
+                            return P.DateTime.Parse(fdt.Value);
                         case Hl7.Fhir.Model.Integer fint:
                             if (!fint.Value.HasValue)
                                 return null;

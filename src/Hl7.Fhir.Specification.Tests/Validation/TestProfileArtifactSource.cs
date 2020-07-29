@@ -39,6 +39,8 @@ namespace Hl7.Fhir.Validation
             buildPatientWithFixedMaritalStatus(),
             buildPatientWithPatternMaritalStatus(),
             buildExtensionWithLessTypes()
+            buildPatientWithIdentifierSlicing(),
+            buildMiPatient()
         };
 
         private static StructureDefinition buildExtensionWithLessTypes()
@@ -308,6 +310,69 @@ namespace Hl7.Fhir.Validation
                 ElementId = "Observation.component.valueQuantity:diastolic",
                 Min = 1
             }.OrType(FHIRAllTypes.Quantity));
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithIdentifierSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/PatientIdentifierSlicing", "PatientIdentifierSlicing",
+                       "Test Patient with slicing on Identifier, first slice BSN", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+            var slicingIntro = new ElementDefinition("Patient.identifier")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+               (ElementDefinition.DiscriminatorType.Value, "system"));
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:BSN",
+                SliceName = "BSN"
+            });
+
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:BSN.system",
+            }.Value(fix: new FhirUri("http://example.com/someuri")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildMiPatient()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/mi-patient", "mi-Patient",
+                      "Test a derived Patient introducing a new slice to the base introduction Slicing",
+                      FHIRAllTypes.Patient, "http://validationtest.org/fhir/StructureDefinition/PatientIdentifierSlicing");
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:BSN",
+                SliceName = "BSN"
+            });
+
+            // adding extra constraint on existing slice in base
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:BSN.system",
+                Definition = new Markdown("BSN naming system"),
+                MustSupport = true
+            });
+
+            // adding a new slice
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:newSlice",
+                SliceName = "newSlice"
+            });
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:newSlice.system",
+                Definition = new Markdown("Test_1295")
+            });
 
             return result;
         }

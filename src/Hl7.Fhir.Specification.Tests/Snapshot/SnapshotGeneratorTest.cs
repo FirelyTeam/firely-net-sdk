@@ -4956,7 +4956,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170321] NEW
         [TestMethod]
-        public async T.Task TestSimpleQuantityProfile()
+        public async T.Task TestSimpleQuantityObservationProfile()
         {
             var profile = ObservationSimpleQuantityProfile;
 
@@ -5011,6 +5011,18 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile}'");
         }
 
+        //Ignore invalid slice name error on the root of SimpleQuantity.
+        [TestMethod]
+        public async T.Task TestSimpleQuantity()
+        {
+            var resource = await _testResolver.FindStructureDefinitionAsync(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
+            _generator = new SnapshotGenerator(_testResolver);
+            var snapshot = await _generator.GenerateAsync(resource);
+            Assert.IsNotNull(snapshot);
+            Assert.IsNull(snapshot.GetRootElement().SliceName);
+            Assert.IsNull(_generator.Outcome);
+        }
+         
         // [WMR 20170406] NEW
         // Issue reported by Vadim
         // Complex extension:   structure.cdstools-typedstage
@@ -6242,10 +6254,11 @@ namespace Hl7.Fhir.Specification.Tests
             dumpElements(elems);
             // dumpBaseElems(elems);
 
+            var issues = _generator.Outcome?.Issue.Where(i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString());
+
             // Verify there is NO warning about invalid element type constraint
-            Assert.IsFalse(_generator.Outcome.Issue.Any(
-                i => i.Details.Coding.FirstOrDefault().Code == SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.Code.ToString())
-            );
+            Assert.IsTrue(issues == null || !issues.Any());
+            
         }
 
         // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
@@ -8872,6 +8885,24 @@ namespace Hl7.Fhir.Specification.Tests
             var lowElement = range.Snapshot.Element.Single(e => e.Path == "Range.low");
             Assert.AreEqual(1, lowElement.Min);
             Assert.AreEqual("1", lowElement.Max);   // the referred profile has "*", but the base has "1". It should become "1"
+        }
+
+        [TestMethod]
+        public async T.Task NewSlicetoDerivedProfile()
+        {
+            var resolver = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(
+                            new TestProfileArtifactSource()),
+                            ZipSource.CreateValidationSource())));
+
+            var patient = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/mi-patient");
+            patient.Should().NotBeNull("A snapshot must be created");
+
+            var newSliceSystem = patient.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Patient.identifier:newSlice.system");
+            newSliceSystem.Should().NotBeNull("The new slice 'newSlice' should be present in the snapshot");
+            newSliceSystem.Fixed.Should().BeNull("No constraint elements from the base slice (BSN) should be present");
         }
     }
 }

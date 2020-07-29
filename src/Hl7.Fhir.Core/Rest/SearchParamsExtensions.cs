@@ -15,14 +15,19 @@ namespace Hl7.Fhir.Rest
 {
     public static class SearchParamsExtensions
     {
-        public static SearchParams Include(this SearchParams qry, string path)
+        public static SearchParams Include(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
         {
-            qry.Include.Add(path);
-
+            qry.Include.Add((path, modifier));
             return qry;
         }
 
-	    public static SearchParams Where(this SearchParams qry, string criterium)
+        public static SearchParams ReverseInclude(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
+        {
+            qry.RevInclude.Add((path, modifier));
+            return qry;
+        }
+
+        public static SearchParams Where(this SearchParams qry, string criterium)
         {
             var keyVal = criterium.SplitLeft('=');
             qry.Add(keyVal.Item1, keyVal.Item2);
@@ -42,7 +47,7 @@ namespace Hl7.Fhir.Rest
         {
             if (paramName == null) throw Error.ArgumentNull(nameof(paramName));
 
-            qry.Sort.Add(Tuple.Create(paramName, order));
+            qry.Sort.Add((paramName, order));
             return qry;
         }
 

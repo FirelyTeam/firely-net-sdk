@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>(Re-)generate the <see cref="ElementDefinition.Base"/> components.</summary>
         /// <param name="elements">A list of <see cref="ElementDefinition"/> instances.</param>
-        /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.Base"/> property.</param>
+        /// <param name="baseProfileUrl">The canonical url of the base profile, as defined by the <see cref="StructureDefinition.BaseDefinition"/> property.</param>
         /// <param name="force">If <c>true</c>, then always (re-)generate the Base component, even if it exists.</param>
         private async T.Task ensureBaseComponents(IList<ElementDefinition> elements, string baseProfileUrl, bool force = false)
         {

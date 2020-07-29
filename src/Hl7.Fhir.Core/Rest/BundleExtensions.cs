@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
 {
     public static class BundleExtensions
     {
-        public static async Task<Bundle> RefreshBundleAsync(this FhirClient client, Bundle bundle)
+        public static async Task<Bundle> RefreshBundleAsync(this BaseFhirClient client, Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+        public static Bundle RefreshBundle(this BaseFhirClient client, Bundle bundle)
         {
             return RefreshBundleAsync(client, bundle).WaitResult();
         }
