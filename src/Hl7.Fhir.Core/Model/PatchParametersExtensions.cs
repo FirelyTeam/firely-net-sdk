@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Rest
         public static Parameters AddMovePatchParameter(this Parameters parameters, string path, int source, int destination)
         {
             var parts = new List<Parameters.ParameterComponent>()
-                .addTypePart(PatchType.Replace)
+                .addTypePart(PatchType.Move)
                 .addPathPart(path)
                 .addSourcePart(source)
                 .addDestinationPart(destination);
