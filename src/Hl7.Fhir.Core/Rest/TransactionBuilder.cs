@@ -114,6 +114,18 @@ namespace Hl7.Fhir.Rest
             addEntry(entry, path);
 
             return this;
+        }        
+
+        public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
+        {
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
+            entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
+            var path = newRestUrl().AddPath(body.TypeName);
+            path.AddParams(condition.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
         }
 
         public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
@@ -128,12 +140,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
+        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string versionId = null)
         {
-            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
+            //No PATCH in Bundle.HttpVerb in STU3
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
-            var path = newRestUrl().AddPath(body.TypeName);
+            var path = newRestUrl().AddPath(resourceType);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
 
