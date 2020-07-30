@@ -64,6 +64,7 @@ namespace Hl7.Fhir.Rest
                 }
                 case Bundle.HTTPVerb.PUT:
                 {
+                        //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
                         return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
                 }
                 default:

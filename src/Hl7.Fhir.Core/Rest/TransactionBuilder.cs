@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
         {
-            //No PATCH in Bundle.HttpVerb in STU3
+            //No PATCH in Bundle.HttpVerb in STU3, but this will be corrected in BundleToEntryRequest
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Rest
 
         public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string versionId = null)
         {
-            //No PATCH in Bundle.HttpVerb in STU3
+            //No PATCH in Bundle.HttpVerb in STU3, but this will be corrected in BundleToEntryRequest
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
