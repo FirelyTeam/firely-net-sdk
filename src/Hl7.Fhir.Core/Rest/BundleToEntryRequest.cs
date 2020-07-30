@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryRequest
             {
                 Agent = ModelInfo.Version,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
                 Headers = new EntryRequestHeaders
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp, InteractionType type)
+        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp)
         {
             switch(bundleHttp)
             {
@@ -64,7 +64,11 @@ namespace Hl7.Fhir.Rest
                 }
                 case Bundle.HTTPVerb.PUT:
                 {
-                        return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
+                    return HTTPVerb.PUT;
+                }
+                case Bundle.HTTPVerb.PATCH:
+                {
+                    return HTTPVerb.PATCH;
                 }
                 default:
                 {
