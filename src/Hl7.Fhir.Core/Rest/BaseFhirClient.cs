@@ -482,58 +482,6 @@ namespace Hl7.Fhir.Rest
             return PatchAsync<TResource>(id, patchParameters, versionId).WaitResult();
         }
 
-        /// <summary>
-        /// Patch a resource on a FHIR Endpoint
-        /// </summary>
-        /// <typeparam name="TResource">Type of resource to patch</typeparam>
-        /// <param name="id">Id of the resource to patch</param>
-        /// <param name="type">Type of patch to be perforned</param>
-        /// <param name="path">Path of the content to patch</param>
-        /// <param name="name">Name of the property to add</param>
-        /// <param name="value">New value of the property</param>
-        /// <param name="index">Index at which to insert</param>
-        /// <param name="source">List index to move from</param>
-        /// <param name="destination">List index to move to</param>
-        /// <param name="versionId">version id of the resource to patch</param>
-        /// <returns>The patched resource</returns>
-        public Task<TResource> PatchAsync<TResource>(string id, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null, string versionId = null) where TResource : Resource
-        {
-            var parameters = new Parameters();
-            parameters.AddPatchParameter(type, path, name, value, index, source, destination);
-            return PatchAsync<TResource>(id, parameters, versionId);            
-        }
-
-        ///<inheritdoc cref="PatchAsync{TResource}(string, PatchType, string, string, DataType, int?, int?, int?, string)"/>
-        public TResource Patch<TResource>(string id, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null, string versionId = null) where TResource : Resource
-        {
-            return PatchAsync<TResource>(id, type, path, name, value, index, source, destination, versionId).WaitResult();
-        }
-
-
-        /// <summary>
-        /// Patch a resource on a FHIR Endpoint
-        /// </summary>
-        /// <param name="location">Location of the resource</param>
-        /// <param name="type">Type of patch to be perforned</param>
-        /// <param name="path">Path of the content to patch</param>
-        /// <param name="name">Name of the property to add</param>
-        /// <param name="value">New value of the property</param>
-        /// <param name="index">Index at which to insert</param>
-        /// <param name="source">List index to move from</param>
-        /// <param name="destination">List index to move to</param>
-        /// <returns>The patched resource</returns>
-        public Task<Resource> PatchAsync(Uri location, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null)
-        {
-            var parameters = new Parameters();
-            parameters.AddPatchParameter(type, path, name, value, index, source, destination);
-            return PatchAsync(location, parameters);
-        }
-
-        ///<inheritdoc cref="PatchAsync(Uri, PatchType, string, string, DataType, int?, int?, int?)"/>
-        public Resource Patch(Uri location, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null)
-        {
-            return PatchAsync(location, type, path, name, value, index, source, destination).WaitResult();
-        }
 
         /// <summary>
         /// Conditionally patch a resource on a FHIR Endpoint
@@ -555,32 +503,6 @@ namespace Hl7.Fhir.Rest
         public TResource Patch<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             return PatchAsync<TResource>(condition, patchParameters).WaitResult();
-        }
-
-        /// <summary>
-        /// Conditionally patch a resource on a FHIR Endpoint
-        /// </summary>
-        /// <typeparam name="TResource">Type of resource to patch</typeparam>
-        /// <param name="condition">Criteria used to locate the resource to update</param>
-        /// <param name="type">Type of patch to be perforned</param>
-        /// <param name="path">Path of the content to patch</param>
-        /// <param name="name">Name of the property to add</param>
-        /// <param name="value">New value of the property</param>
-        /// <param name="index">Index at which to insert</param>
-        /// <param name="source">List index to move from</param>
-        /// <param name="destination">List index to move to</param>
-        /// <returns>The patched resource</returns>
-        public Task<TResource> PatchAsync<TResource>(SearchParams condition, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null) where TResource : Resource
-        {
-            var parameters = new Parameters();
-            parameters.AddPatchParameter(type, path, name, value, index, source, destination);
-            return PatchAsync<TResource>(condition, parameters);
-        }
-
-        ///<inheritdoc cref="PatchAsync{TResource}(SearchParams, PatchType, string, string, DataType, int?, int?, int?)"/>
-        public TResource Patch<TResource>(SearchParams condition, PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null) where TResource : Resource
-        {
-            return PatchAsync<TResource>(condition, type, path, name, value, index, source, destination).WaitResult();
         }
 
 

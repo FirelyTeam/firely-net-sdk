@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Tests.Rest
         private void Patch(BaseFhirClient client)
         {
            var patchparams = new Parameters();            
-           patchparams.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
+           patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
            client.Patch<Patient>("example", patchparams);           
         }
 
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Tests.Rest
         private void ConditionalPatch(BaseFhirClient client)
         {
             var patchparams = new Parameters();
-            patchparams.AddPatchParameter(PatchType.Add, "Patient", "birthdate", new Date("1930-01-01"));
+            patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
             var condition = new SearchParams().Where("name=Donald");
             client.Patch<Patient>(condition, patchparams);
         }
