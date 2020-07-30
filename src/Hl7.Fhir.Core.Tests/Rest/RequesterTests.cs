@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Test
             {
                 Request = new Bundle.RequestComponent
                 {
-                    Method = Bundle.HTTPVerb.PUT,
+                    Method = Bundle.HTTPVerb.PATCH,
                     Url = "test/Url",
                     IfMatch = "test-ifMatch",
                     IfNoneExist = "test-ifNoneExists",
