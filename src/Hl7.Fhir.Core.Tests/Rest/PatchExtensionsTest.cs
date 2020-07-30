@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var parameters = new Parameters();
 
-            parameters.AddAddPatchParameter("Patient", "birtdate", new Date("1930-01-01"));
+            parameters.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
             Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "type" && ((Code)p.Value).Value == "add"));
             Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "path" && ((FhirString)p.Value).Value == "Patient"));
             Assert.IsTrue(parameters.Parameter[0].Part.Any(p => p.Name == "name" && ((FhirString)p.Value).Value == "birthdate"));
