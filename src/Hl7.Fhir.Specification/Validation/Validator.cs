@@ -8,6 +8,8 @@
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
 #define REUSE_SNAPSHOT_GENERATOR
+// [MV 20203007] Switch to use the old validator (< 2.0)
+//#define USE_OLD_VALIDATOR
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
@@ -114,65 +116,19 @@ namespace Hl7.Fhir.Validation
             return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); ;
         }
 
-        #region NewValidation stuff
-
-        public ElementSchemaResolver SchemaResolver { get; private set; }
-
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
-            /*
-           // Note: only start validating if the profiles are complete and consistent
-           if (outcome.Success)
-               outcome.Add(Validate(instance, processor.Result));
-               */
-
-
+            // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
-            {
-
-                var node = instance as ScopedNode ?? new ScopedNode(instance);
-
-                SchemaResolver ??= new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
-
-                var symbolTable = new SymbolTable();
-                symbolTable.AddStandardFP();
-                symbolTable.AddFhirExtensions();
-
-
-                var validationContext = new Schema.ValidationContext()
-                {
-                    ResourceResolver = Settings.ResourceResolver,
-                    ResolveExternalReferences = Settings.ResolveExternalReferences,
-                    FhirPathCompiler = new FhirPathCompiler(symbolTable),
-                    ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
-                    TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
-                    IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null,
-                    // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
-                    // should be removed from STU3/R4 once we get the new normative version
-                    // of FP up, which could do comparisons between quantities.
-                    ExcludeFilter = a => (a is FhirPathAssertion fhirPathAssertion && fhirPathAssertion.Key == "rng-2"),
-                    ToTypedElement = (reference, resourceResolver) => resourceResolver.ResolveByUri(reference).ToTypedElement()
-                };
-
-                if (OnExternalResolutionNeeded != null)
-                    validationContext.OnExternalResolutionNeeded += ValidationContext_OnExternalResolutionNeeded;
-
-                var result = Assertions.Empty;
-                foreach (var profile in processor.Result)
-                {
-                    var schemaUri = new Uri(profile.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
-                    result += TaskHelper.Await(() => ValidationExtensions.Validate((p) => SchemaResolver.GetSchema(p), schemaUri, node, validationContext));
-                    //var schema = SchemaResolver.GetSchema(profile);
-                    // schema.LogSchema();
-                    //result += TaskHelper.Await(() => schema.Validate(new[] { node }, validationContext));
-                }
-                outcome.Add(result.ToOperationOutcome());
-            }
-
+#if USE_OLD_VALIDATOR
+                outcome.Add(Validate(instance, processor.Result));
+#else
+                outcome.Add(ValidateNEW(instance, processor.Result));
+#endif
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
@@ -180,6 +136,51 @@ namespace Hl7.Fhir.Validation
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        #region NewValidation stuff
+
+        public ElementSchemaResolver SchemaResolver { get; private set; }
+
+        private OperationOutcome ValidateNEW(ITypedElement instance, IEnumerable<ElementDefinitionNavigator> definitions)
+        {
+            var outcome = new OperationOutcome();
+            var node = instance as ScopedNode ?? new ScopedNode(instance);
+
+            SchemaResolver ??= new ElementSchemaResolver(Settings?.ResourceResolver.AsAsync());
+
+            var symbolTable = new SymbolTable();
+            symbolTable.AddStandardFP();
+            symbolTable.AddFhirExtensions();
+
+
+            var validationContext = new Schema.ValidationContext()
+            {
+                ResourceResolver = Settings.ResourceResolver,
+                ResolveExternalReferences = Settings.ResolveExternalReferences,
+                FhirPathCompiler = new FhirPathCompiler(symbolTable),
+                ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
+                TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
+                IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null,
+                // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
+                // should be removed from STU3/R4 once we get the new normative version
+                // of FP up, which could do comparisons between quantities.
+                ExcludeFilter = a => (a is FhirPathAssertion fhirPathAssertion && fhirPathAssertion.Key == "rng-2"),
+                ToTypedElement = (reference, resourceResolver) => resourceResolver.ResolveByUri(reference).ToTypedElement()
+            };
+
+            if (OnExternalResolutionNeeded != null)
+                validationContext.OnExternalResolutionNeeded += ValidationContext_OnExternalResolutionNeeded;
+
+            var result = Assertions.Empty;
+            foreach (var profile in definitions)
+            {
+                var schemaUri = new Uri(profile.StructureDefinition.Url, UriKind.RelativeOrAbsolute);
+                result += TaskHelper.Await(() => ValidationExtensions.Validate((p) => SchemaResolver.GetSchema(p), schemaUri, node, validationContext));
+            }
+            outcome.Add(result.ToOperationOutcome());
+
+            return outcome;
         }
 
         private void ValidationContext_OnExternalResolutionNeeded(object sender, Schema.OnResolveResourceReferenceEventArgs e)
