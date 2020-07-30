@@ -422,6 +422,94 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
+        #region Patch
+
+        /// <summary>
+        /// Patch a resource on a FHIR Endpoint
+        /// </summary>
+        /// <param name="location">Location of the resource</param>
+        /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
+        /// <returns>The patched resource</returns>
+        public Task<Resource> PatchAsync(Uri location, Parameters patchParameters) 
+        {
+            if (location == null) throw Error.ArgumentNull(nameof(location));
+
+            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+
+            var tx = new TransactionBuilder(Endpoint);
+
+            if (id.HasVersion)
+                tx.Patch(id.ResourceType, id.Id, patchParameters, id.VersionId);
+            else
+                tx.Patch(id.ResourceType, id.Id, patchParameters);
+
+            return executeAsync<Resource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+       
+        ///<inheritdoc cref="PatchAsync(Uri, Parameters)"/>
+        public Resource Patch(Uri location, Parameters patchParameters)
+        {
+            return PatchAsync(location, patchParameters).WaitResult();
+        }
+
+        /// <summary>
+        /// Patch a resource on a FHIR Endpoint
+        /// </summary>
+        /// <typeparam name="TResource">Type of resource to patch</typeparam>
+        /// <param name="id">Id of the resource to patch</param>
+        /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
+        /// <param name="versionId">version id of the resource to patch</param>
+        /// <returns>The patched resource</returns>
+        public Task<TResource> PatchAsync<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource : Resource
+        {
+            if (id == null) throw Error.ArgumentNull(nameof(id));
+
+
+            var tx = new TransactionBuilder(Endpoint);
+            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+
+            if (!string.IsNullOrEmpty(versionId))
+                tx.Patch(resourceType, id, patchParameters, versionId);
+            else
+                tx.Patch(resourceType, id, patchParameters);
+
+            return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+
+        ///<inheritdoc cref="PatchAsync{TResource}(string, Parameters, string)"/>
+        public TResource Patch<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource: Resource
+        {
+            return PatchAsync<TResource>(id, patchParameters, versionId).WaitResult();
+        }
+
+
+        /// <summary>
+        /// Conditionally patch a resource on a FHIR Endpoint
+        /// </summary>
+        /// <typeparam name="TResource">Type of resource to patch</typeparam>
+        /// <param name="condition">Criteria used to locate the resource to update</param>
+        /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
+        /// <returns>The patched resource</returns>
+        public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
+        {
+            var tx = new TransactionBuilder(Endpoint);
+            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            tx.Patch(resourceType, condition, patchParameters);       
+
+            return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
+        }
+
+        ///<inheritdoc cref="PatchAsync{TResource}(SearchParams, Parameters)"/>
+        public TResource Patch<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
+        {
+            return PatchAsync<TResource>(condition, patchParameters).WaitResult();
+        }
+
+
+
+
+        #endregion
+
         #region Conformance
 
         /// <summary>

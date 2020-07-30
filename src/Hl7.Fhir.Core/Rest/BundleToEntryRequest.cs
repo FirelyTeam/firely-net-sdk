@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryRequest
             {
                 Agent = ModelInfo.Version,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
                 Headers = new EntryRequestHeaders
@@ -45,7 +46,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp)
+        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp, InteractionType type)
         {
             switch(bundleHttp)
             {
@@ -63,7 +64,8 @@ namespace Hl7.Fhir.Rest
                 }
                 case Bundle.HTTPVerb.PUT:
                 {
-                    return HTTPVerb.PUT;
+                        //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
+                        return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
                 }
                 default:
                 {
