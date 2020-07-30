@@ -169,85 +169,6 @@ namespace Hl7.Fhir.Model
             return p.Value as T;
         }
 
-        /// <summary>
-        /// Add a single patch operation as a parameter
-        /// </summary>
-        /// <param name="type">Type of patch to be perforned</param>
-        /// <param name="path">Path of the content to patch</param>
-        /// <param name="name">Name of the property to add</param>
-        /// <param name="value">New value of the property</param>
-        /// <param name="index">Index at which to insert</param>
-        /// <param name="source">List index to move from</param>
-        /// <param name="destination">List index to move to</param>
-        public void AddPatchParameter(PatchType type, string path, string name = null, DataType value = null, int? index = null, int? source = null, int? destination = null)
-        {         
-            var parts = new List<ParameterComponent>()
-            {
-                new ParameterComponent
-                {
-                    Name = "type",
-                    Value = new Code(type.GetLiteral())
-                },
-                new ParameterComponent
-                {
-                    Name = "path",
-                    Value = new FhirString(path)
-                }
-             };
-
-            if (!string.IsNullOrEmpty(name))
-            {
-                parts.Add(new ParameterComponent
-                {
-                    Name = "name",
-                    Value = new FhirString(name)
-                });
-            }
-
-            if (value != null)
-            {
-                parts.Add(new ParameterComponent
-                {
-                    Name = "value",
-                    Value = value
-                });
-            }
-
-            if (index != null)
-            {
-                parts.Add(new ParameterComponent
-                {
-                    Name = "index",
-                    Value = new Integer(index)
-                });
-            }
-
-            if (source != null)
-            {
-                parts.Add(new ParameterComponent
-                {
-                    Name = "source",
-                    Value = new Integer(source)
-                });
-            }
-
-            if (destination != null)
-            {
-                parts.Add(new ParameterComponent
-                {
-                    Name = "destination",
-                    Value = new Integer(destination)
-                });
-            }
-            Parameter.Add(
-                    new ParameterComponent()
-                    {
-                        Name = "operation",
-                        Part = parts
-                    }
-                );
-        }
-
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class ParameterComponent
         {
@@ -261,19 +182,5 @@ namespace Hl7.Fhir.Model
             }
         }   
 
-    }
-
-    public enum PatchType
-    {
-        [EnumLiteral("add")]
-        Add,
-        [EnumLiteral("insert")]
-        Insert,
-        [EnumLiteral("delete")]
-        Delete,
-        [EnumLiteral("replace")]
-        Replace,
-        [EnumLiteral("move")]
-        Move
     }
 }
