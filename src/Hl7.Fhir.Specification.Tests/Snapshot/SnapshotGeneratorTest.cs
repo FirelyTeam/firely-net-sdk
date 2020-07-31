@@ -7110,9 +7110,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.Path.ToLowerInvariant().EndsWith("extension.url"));
             var fixedValue = nav.Current.Fixed;
             Assert.IsNotNull(fixedValue);
-            Assert.IsInstanceOfType(fixedValue, typeof(IStringValue));
+            Assert.IsInstanceOfType(fixedValue, typeof(IValue<string>));
             Assert.IsInstanceOfType(fixedValue, typeof(FhirUri));
-            var fixedUrl = (IStringValue)fixedValue;
+            var fixedUrl = (IValue<string>)fixedValue;
             Assert.AreEqual(url, fixedUrl.Value);
         }
 
