@@ -2507,20 +2507,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Code ResourceElement
+      public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
         get { return _ResourceElement; }
         set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
       }
 
-      private Hl7.Fhir.Model.Code _ResourceElement;
+      private Code<Hl7.Fhir.Model.FHIRDefinedType> _ResourceElement;
 
       /// <summary>
       /// Resource type
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Resource
+      public Hl7.Fhir.Model.FHIRDefinedType? Resource
       {
         get { return ResourceElement != null ? ResourceElement.Value : null; }
         set
@@ -2528,7 +2528,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ResourceElement = null;
           else
-            ResourceElement = new Hl7.Fhir.Model.Code(value);
+            ResourceElement = new Code<Hl7.Fhir.Model.FHIRDefinedType>(value);
           OnPropertyChanged("Resource");
         }
       }
@@ -2961,7 +2961,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Type != null) dest.Type = (Hl7.Fhir.Model.Coding)Type.DeepCopy();
-        if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Code)ResourceElement.DeepCopy();
+        if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)ResourceElement.DeepCopy();
         if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
         if(AcceptElement != null) dest.AcceptElement = (Code<Hl7.Fhir.Model.TestScript.ContentType>)AcceptElement.DeepCopy();
@@ -3714,20 +3714,20 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=190)]
       [DataMember]
-      public Hl7.Fhir.Model.Code ResourceElement
+      public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
         get { return _ResourceElement; }
         set { _ResourceElement = value; OnPropertyChanged("ResourceElement"); }
       }
 
-      private Hl7.Fhir.Model.Code _ResourceElement;
+      private Code<Hl7.Fhir.Model.FHIRDefinedType> _ResourceElement;
 
       /// <summary>
       /// Resource type
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public string Resource
+      public Hl7.Fhir.Model.FHIRDefinedType? Resource
       {
         get { return ResourceElement != null ? ResourceElement.Value : null; }
         set
@@ -3735,7 +3735,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ResourceElement = null;
           else
-            ResourceElement = new Hl7.Fhir.Model.Code(value);
+            ResourceElement = new Code<Hl7.Fhir.Model.FHIRDefinedType>(value);
           OnPropertyChanged("Resource");
         }
       }
@@ -3977,7 +3977,7 @@ namespace Hl7.Fhir.Model
         if(PathElement != null) dest.PathElement = (Hl7.Fhir.Model.FhirString)PathElement.DeepCopy();
         if(RequestMethodElement != null) dest.RequestMethodElement = (Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode>)RequestMethodElement.DeepCopy();
         if(RequestURLElement != null) dest.RequestURLElement = (Hl7.Fhir.Model.FhirString)RequestURLElement.DeepCopy();
-        if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Code)ResourceElement.DeepCopy();
+        if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)ResourceElement.DeepCopy();
         if(ResponseElement != null) dest.ResponseElement = (Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes>)ResponseElement.DeepCopy();
         if(ResponseCodeElement != null) dest.ResponseCodeElement = (Hl7.Fhir.Model.FhirString)ResponseCodeElement.DeepCopy();
         if(Rule != null) dest.Rule = (Hl7.Fhir.Model.TestScript.ActionAssertRuleComponent)Rule.DeepCopy();

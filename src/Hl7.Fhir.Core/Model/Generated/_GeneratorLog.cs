@@ -71,6 +71,12 @@
   // Used in model class (resource): HealthcareService.availableTime.daysOfWeek
   // Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
 
+// Generated Shared Enumeration: FHIRDefinedType (http://hl7.org/fhir/ValueSet/defined-types)
+  // Used in model class (type): ElementDefinition.type.code
+  // Used in model class (resource): StructureDefinition.type
+  // Used in model class (resource): TestScript.setup.action.operation.resource
+  // Used in model class (resource): TestScript.setup.action.assert.resource
+
 // Generated Shared Enumeration: DesignationUse (http://hl7.org/fhir/ValueSet/designation-use)
   // Used in model class (resource): CodeSystem.concept.designation.use
   // Used in model class (resource): ExpansionProfile.designation.include.designation.use
