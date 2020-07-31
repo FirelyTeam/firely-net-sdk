@@ -37,23 +37,6 @@
   // Used in model class (resource): PlanDefinition.action.type
   // Used in model class (resource): RequestGroup.action.type
 
-// Generated Shared Enumeration: AdjudicationErrorCodes (http://hl7.org/fhir/ValueSet/adjudication-error)
-  // Used in model class (resource): ClaimResponse.error.code
-  // Used in model class (resource): EligibilityResponse.error.code
-  // Used in model class (resource): ProcessResponse.error
-
-// Generated Shared Enumeration: AdjudicationReasonCodes (http://hl7.org/fhir/ValueSet/adjudication-reason)
-  // Used in model class (resource): ClaimResponse.item.adjudication.reason
-  // Used in model class (resource): ExplanationOfBenefit.item.adjudication.reason
-
-// Generated Shared Enumeration: AdjudicationValueCodes (http://hl7.org/fhir/ValueSet/adjudication)
-  // Used in model class (resource): ClaimResponse.item.adjudication.category
-  // Used in model class (resource): ExplanationOfBenefit.item.adjudication.category
-
-// Generated Shared Enumeration: SNOMEDCTAdministrationMethodCodes (http://hl7.org/fhir/ValueSet/administration-method-codes)
-  // Used in model class (type): Dosage.method
-  // Used in model class (resource): MedicationAdministration.dosage.method
-
 // Generated Shared Enumeration: AdministrativeGender (http://hl7.org/fhir/ValueSet/administrative-gender)
   // Used in model class (resource): FamilyMemberHistory.gender
   // Used in model class (resource): Patient.gender
@@ -67,122 +50,13 @@
   // Used in model class (type): ParameterDefinition.type
   // Used in model class (resource): OperationDefinition.parameter.type
 
-// Generated Shared Enumeration: SNOMEDCTAnatomicalStructureforAdministrationSiteCodes (http://hl7.org/fhir/ValueSet/approach-site-codes)
-  // Used in model class (type): Dosage.site
-  // Used in model class (resource): MedicationAdministration.dosage.site
-
-// Generated Shared Enumeration: BenefitCategoryCodes (http://hl7.org/fhir/ValueSet/benefit-category)
-  // Used in model class (resource): EligibilityRequest.benefitCategory
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.category
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.category
-
-// Generated Shared Enumeration: NetworkTypeCodes (http://hl7.org/fhir/ValueSet/benefit-network)
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.network
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.network
-
-// Generated Shared Enumeration: BenefitSubCategoryCodes (http://hl7.org/fhir/ValueSet/benefit-subcategory)
-  // Used in model class (resource): Claim.item.category
-  // Used in model class (resource): Claim.item.detail.category
-  // Used in model class (resource): Claim.item.detail.subDetail.category
-  // Used in model class (resource): ClaimResponse.addItem.category
-  // Used in model class (resource): ClaimResponse.addItem.detail.category
-  // Used in model class (resource): EligibilityRequest.benefitSubCategory
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.subCategory
-  // Used in model class (resource): ExplanationOfBenefit.item.category
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.category
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.subDetail.category
-  // Used in model class (resource): ExplanationOfBenefit.addItem.category
-  // Used in model class (resource): ExplanationOfBenefit.addItem.detail.category
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.subCategory
-
-// Generated Shared Enumeration: BenefitTermCodes (http://hl7.org/fhir/ValueSet/benefit-term)
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.term
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.term
-
-// Generated Shared Enumeration: BenefitTypeCodes (http://hl7.org/fhir/ValueSet/benefit-type)
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.financial.type
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.financial.type
-
-// Generated Shared Enumeration: UnitTypeCodes (http://hl7.org/fhir/ValueSet/benefit-unit)
-  // Used in model class (resource): EligibilityResponse.insurance.benefitBalance.unit
-  // Used in model class (resource): ExplanationOfBenefit.benefitBalance.unit
-
 // Generated Shared Enumeration: BindingStrength (http://hl7.org/fhir/ValueSet/binding-strength)
   // Used in model class (type): ElementDefinition.binding.strength
   // Used in model class (resource): OperationDefinition.parameter.binding.strength
 
-// Generated Shared Enumeration: SNOMEDCTBodyStructures (http://hl7.org/fhir/ValueSet/body-site)
-  // Used in model class (resource): ActivityDefinition.bodySite
-  // Used in model class (resource): BodySite.code
-  // Used in model class (resource): ChargeItem.bodysite
-  // Used in model class (resource): Condition.bodySite
-  // Used in model class (resource): DeviceUseStatement.bodySite
-  // Used in model class (resource): ImagingStudy.series.bodySite
-  // Used in model class (resource): Media.bodySite
-  // Used in model class (resource): Observation.bodySite
-  // Used in model class (resource): Procedure.bodySite
-  // Used in model class (resource): ProcedureRequest.bodySite
-  // Used in model class (resource): Specimen.collection.bodySite
-
-// Generated Shared Enumeration: DocumentTypeValueSet (http://hl7.org/fhir/ValueSet/c80-doc-typecodes)
-  // Used in model class (resource): DocumentManifest.type
-  // Used in model class (resource): DocumentReference.type
-
-// Generated Shared Enumeration: PracticeSettingCodeValueSet (http://hl7.org/fhir/ValueSet/c80-practice-codes)
-  // Used in model class (resource): Appointment.specialty
-  // Used in model class (resource): DocumentReference.context.practiceSetting
-  // Used in model class (resource): HealthcareService.specialty
-  // Used in model class (resource): PractitionerRole.specialty
-  // Used in model class (resource): ReferralRequest.serviceRequested
-  // Used in model class (resource): Schedule.specialty
-  // Used in model class (resource): Slot.specialty
-
-// Generated Shared Enumeration: ClaimCareTeamRoleCodes (http://hl7.org/fhir/ValueSet/claim-careteamrole)
-  // Used in model class (resource): Claim.careTeam.role
-  // Used in model class (resource): ExplanationOfBenefit.careTeam.role
-
-// Generated Shared Enumeration: ExceptionCodes (http://hl7.org/fhir/ValueSet/claim-exception)
-  // Used in model class (resource): Claim.information.code
-  // Used in model class (resource): ExplanationOfBenefit.information.code
-
-// Generated Shared Enumeration: ClaimInformationCategoryCodes (http://hl7.org/fhir/ValueSet/claim-informationcategory)
-  // Used in model class (resource): Claim.information.category
-  // Used in model class (resource): ExplanationOfBenefit.information.category
-
-// Generated Shared Enumeration: ModifiertypeCodes (http://hl7.org/fhir/ValueSet/claim-modifiers)
-  // Used in model class (resource): Claim.item.modifier
-  // Used in model class (resource): Claim.item.detail.modifier
-  // Used in model class (resource): Claim.item.detail.subDetail.modifier
-  // Used in model class (resource): ClaimResponse.addItem.modifier
-  // Used in model class (resource): ClaimResponse.addItem.detail.modifier
-  // Used in model class (resource): ExplanationOfBenefit.item.modifier
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.modifier
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.subDetail.modifier
-  // Used in model class (resource): ExplanationOfBenefit.addItem.modifier
-  // Used in model class (resource): ExplanationOfBenefit.addItem.detail.modifier
-
-// Generated Shared Enumeration: ExampleClaimSubTypeCodes (http://hl7.org/fhir/ValueSet/claim-subtype)
-  // Used in model class (resource): Claim.subType
-  // Used in model class (resource): ExplanationOfBenefit.subType
-
 // Generated Shared Enumeration: ExampleClaimTypeCodes (http://hl7.org/fhir/ValueSet/claim-type)
   // Used in model class (resource): Claim.type
   // Used in model class (resource): ExplanationOfBenefit.type
-
-// Generated Shared Enumeration: SNOMEDCTClinicalFindings (http://hl7.org/fhir/ValueSet/clinical-findings)
-  // Used in model class (resource): AllergyIntolerance.reaction.manifestation
-  // Used in model class (resource): CareTeam.reasonCode
-  // Used in model class (resource): Communication.reasonCode
-  // Used in model class (resource): DiagnosticReport.codedDiagnosis
-  // Used in model class (resource): FamilyMemberHistory.reasonCode
-  // Used in model class (resource): Goal.description
-  // Used in model class (resource): Goal.outcomeCode
-  // Used in model class (resource): PlanDefinition.goal.description
-  // Used in model class (resource): ReferralRequest.reasonCode
-
-// Generated Shared Enumeration: CommunicationCategory (http://hl7.org/fhir/ValueSet/communication-category)
-  // Used in model class (resource): Communication.category
-  // Used in model class (resource): CommunicationRequest.category
 
 // Generated Shared Enumeration: CompartmentType (http://hl7.org/fhir/ValueSet/compartment-type)
   // Used in model class (resource): CompartmentDefinition.code
@@ -192,43 +66,16 @@
   // Used in model class (resource): Composition.status
   // Used in model class (resource): DocumentReference.docStatus
 
-// Generated Shared Enumeration: Condition_Problem_DiagnosisCodes (http://hl7.org/fhir/ValueSet/condition-code)
-  // Used in model class (resource): ClinicalImpression.finding.item[x]
-  // Used in model class (resource): Condition.code
-  // Used in model class (resource): DeviceRequest.reasonCode
-  // Used in model class (resource): FamilyMemberHistory.condition.code
-  // Used in model class (resource): MedicationRequest.reasonCode
-  // Used in model class (resource): MedicationStatement.reasonCode
-  // Used in model class (resource): PlanDefinition.goal.addresses
-  // Used in model class (resource): Procedure.complication
-
 // Generated Shared Enumeration: DaysOfWeek (http://hl7.org/fhir/ValueSet/days-of-week)
   // Used in model class (type): Timing.repeat.dayOfWeek
   // Used in model class (resource): HealthcareService.availableTime.daysOfWeek
   // Used in model class (resource): PractitionerRole.availableTime.daysOfWeek
-
-// Generated Shared Enumeration: DefinitionTopic (http://hl7.org/fhir/ValueSet/definition-topic)
-  // Used in model class (resource): ActivityDefinition.topic
-  // Used in model class (resource): Library.topic
-  // Used in model class (resource): Measure.topic
-  // Used in model class (resource): PlanDefinition.topic
-  // Used in model class (resource): ServiceDefinition.topic
 
 // Generated Shared Enumeration: DesignationUse (http://hl7.org/fhir/ValueSet/designation-use)
   // Used in model class (resource): CodeSystem.concept.designation.use
   // Used in model class (resource): ExpansionProfile.designation.include.designation.use
   // Used in model class (resource): ExpansionProfile.designation.exclude.designation.use
   // Used in model class (resource): ValueSet.compose.include.concept.designation.use
-
-// Generated Shared Enumeration: FHIRDeviceTypes (http://hl7.org/fhir/ValueSet/device-kind)
-  // Used in model class (resource): Device.type
-  // Used in model class (resource): DeviceComponent.type
-  // Used in model class (resource): DeviceRequest.code[x]
-  // Used in model class (resource): Procedure.usedCode
-
-// Generated Shared Enumeration: DiagnosisRole (http://hl7.org/fhir/ValueSet/diagnosis-role)
-  // Used in model class (resource): Encounter.diagnosis.role
-  // Used in model class (resource): EpisodeOfCare.diagnosis.role
 
 // Generated Shared Enumeration: DocumentReferenceStatus (http://hl7.org/fhir/ValueSet/document-reference-status)
   // Used in model class (resource): DocumentManifest.status
@@ -238,54 +85,9 @@
   // Used in model class (resource): Composition.relatesTo.code
   // Used in model class (resource): DocumentReference.relatesTo.code
 
-// Generated Shared Enumeration: Diet (http://hl7.org/fhir/ValueSet/encounter-diet)
-  // Used in model class (resource): Encounter.hospitalization.dietPreference
-  // Used in model class (resource): NutritionOrder.foodPreferenceModifier
-
-// Generated Shared Enumeration: ParticipantType (http://hl7.org/fhir/ValueSet/encounter-participant-type)
-  // Used in model class (resource): Appointment.participant.type
-  // Used in model class (resource): AppointmentResponse.participantType
-  // Used in model class (resource): Encounter.participant.type
-
-// Generated Shared Enumeration: EncounterReasonCodes (http://hl7.org/fhir/ValueSet/encounter-reason)
-  // Used in model class (resource): Appointment.reason
-  // Used in model class (resource): Encounter.reason
-
 // Generated Shared Enumeration: EventStatus (http://hl7.org/fhir/ValueSet/event-status)
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Procedure.status
-
-// Generated Shared Enumeration: ExampleDiagnosisRelatedGroupCodes (http://hl7.org/fhir/ValueSet/ex-diagnosisrelatedgroup)
-  // Used in model class (resource): Claim.diagnosis.packageCode
-  // Used in model class (resource): ExplanationOfBenefit.diagnosis.packageCode
-
-// Generated Shared Enumeration: ExampleDiagnosisTypeCodes (http://hl7.org/fhir/ValueSet/ex-diagnosistype)
-  // Used in model class (resource): Claim.diagnosis.type
-  // Used in model class (resource): ExplanationOfBenefit.diagnosis.type
-
-// Generated Shared Enumeration: ExamplePaymentTypeCodes (http://hl7.org/fhir/ValueSet/ex-paymenttype)
-  // Used in model class (resource): ClaimResponse.payment.type
-  // Used in model class (resource): ExplanationOfBenefit.payment.type
-
-// Generated Shared Enumeration: ExampleProgramReasonCodes (http://hl7.org/fhir/ValueSet/ex-program-code)
-  // Used in model class (resource): Claim.item.programCode
-  // Used in model class (resource): Claim.item.detail.programCode
-  // Used in model class (resource): Claim.item.detail.subDetail.programCode
-  // Used in model class (resource): ExplanationOfBenefit.item.programCode
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.programCode
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.subDetail.programCode
-
-// Generated Shared Enumeration: ExampleRevenueCenterCodes (http://hl7.org/fhir/ValueSet/ex-revenue-center)
-  // Used in model class (resource): Claim.item.revenue
-  // Used in model class (resource): Claim.item.detail.revenue
-  // Used in model class (resource): Claim.item.detail.subDetail.revenue
-  // Used in model class (resource): ClaimResponse.addItem.revenue
-  // Used in model class (resource): ClaimResponse.addItem.detail.revenue
-  // Used in model class (resource): ExplanationOfBenefit.item.revenue
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.revenue
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.subDetail.revenue
-  // Used in model class (resource): ExplanationOfBenefit.addItem.revenue
-  // Used in model class (resource): ExplanationOfBenefit.addItem.detail.revenue
 
 // Generated Shared Enumeration: FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
@@ -305,131 +107,19 @@
   // Used in model class (resource): ProcessResponse.status
   // Used in model class (resource): VisionPrescription.status
 
-// Generated Shared Enumeration: FormCodes (http://hl7.org/fhir/ValueSet/forms)
-  // Used in model class (resource): ClaimResponse.form
-  // Used in model class (resource): EligibilityResponse.form
-  // Used in model class (resource): ExplanationOfBenefit.form
-  // Used in model class (resource): PaymentReconciliation.form
-  // Used in model class (resource): ProcessResponse.form
-
-// Generated Shared Enumeration: FundsReservationCodes (http://hl7.org/fhir/ValueSet/fundsreserve)
-  // Used in model class (resource): Claim.fundsReserve
-  // Used in model class (resource): ClaimResponse.reserved
-
-// Generated Shared Enumeration: GoalCategory (http://hl7.org/fhir/ValueSet/goal-category)
-  // Used in model class (resource): Goal.category
-  // Used in model class (resource): PlanDefinition.goal.category
-
-// Generated Shared Enumeration: GoalPriority (http://hl7.org/fhir/ValueSet/goal-priority)
-  // Used in model class (resource): Goal.priority
-  // Used in model class (resource): PlanDefinition.goal.priority
-
-// Generated Shared Enumeration: GoalStartEvent (http://hl7.org/fhir/ValueSet/goal-start-event)
-  // Used in model class (resource): Goal.start[x]
-  // Used in model class (resource): PlanDefinition.goal.start
-
-// Generated Shared Enumeration: ICD_10ProcedureCodes (http://hl7.org/fhir/ValueSet/icd-10-procedures)
-  // Used in model class (resource): Claim.procedure.procedure[x]
-  // Used in model class (resource): ExplanationOfBenefit.procedure.procedure[x]
-
-// Generated Shared Enumeration: IdentifierTypeCodes (http://hl7.org/fhir/ValueSet/identifier-type)
-  // Used in model class (type): Identifier.type
-  // Used in model class (resource): NamingSystem.type
-
-// Generated Shared Enumeration: JurisdictionValueSet (http://hl7.org/fhir/ValueSet/jurisdiction)
-  // Used in model class (resource): ActivityDefinition.jurisdiction
-  // Used in model class (resource): CapabilityStatement.jurisdiction
-  // Used in model class (resource): CodeSystem.jurisdiction
-  // Used in model class (resource): CompartmentDefinition.jurisdiction
-  // Used in model class (resource): ConceptMap.jurisdiction
-  // Used in model class (resource): DataElement.jurisdiction
-  // Used in model class (resource): ExpansionProfile.jurisdiction
-  // Used in model class (resource): GraphDefinition.jurisdiction
-  // Used in model class (resource): ImplementationGuide.jurisdiction
-  // Used in model class (resource): Library.jurisdiction
-  // Used in model class (resource): Measure.jurisdiction
-  // Used in model class (resource): MessageDefinition.jurisdiction
-  // Used in model class (resource): NamingSystem.jurisdiction
-  // Used in model class (resource): OperationDefinition.jurisdiction
-  // Used in model class (resource): PlanDefinition.jurisdiction
-  // Used in model class (resource): Questionnaire.jurisdiction
-  // Used in model class (resource): ResearchStudy.jurisdiction
-  // Used in model class (resource): SearchParameter.jurisdiction
-  // Used in model class (resource): ServiceDefinition.jurisdiction
-  // Used in model class (resource): StructureDefinition.jurisdiction
-  // Used in model class (resource): StructureMap.jurisdiction
-  // Used in model class (resource): TestScript.jurisdiction
-  // Used in model class (resource): ValueSet.jurisdiction
-
-// Generated Shared Enumeration: CommonLanguages (http://hl7.org/fhir/ValueSet/languages)
-  // Used in model class (type): Attachment.language
-  // Used in model class (resource): ClaimResponse.processNote.language
-  // Used in model class (resource): CodeSystem.concept.designation.language
-  // Used in model class (resource): DeviceComponent.languageCode
-  // Used in model class (resource): ExpansionProfile.displayLanguage
-  // Used in model class (resource): ExpansionProfile.designation.include.designation.language
-  // Used in model class (resource): ExpansionProfile.designation.exclude.designation.language
-  // Used in model class (resource): ExplanationOfBenefit.processNote.language
-  // Used in model class (resource): Patient.communication.language
-  // Used in model class (resource): Practitioner.communication
-  // Used in model class (resource): Resource.language
-  // Used in model class (resource): ValueSet.compose.include.concept.designation.language
-
-// Generated Shared Enumeration: ListEmptyReasons (http://hl7.org/fhir/ValueSet/list-empty-reason)
-  // Used in model class (resource): Composition.section.emptyReason
-  // Used in model class (resource): List.emptyReason
-
 // Generated Shared Enumeration: ListMode (http://hl7.org/fhir/ValueSet/list-mode)
   // Used in model class (resource): Composition.section.mode
   // Used in model class (resource): List.mode
 
-// Generated Shared Enumeration: ListOrderCodes (http://hl7.org/fhir/ValueSet/list-order)
-  // Used in model class (resource): Composition.section.orderedBy
-  // Used in model class (resource): List.orderedBy
-
-// Generated Shared Enumeration: MeasurePopulationType (http://hl7.org/fhir/ValueSet/measure-population)
-  // Used in model class (resource): Measure.group.population.code
-  // Used in model class (resource): MeasureReport.group.population.code
-  // Used in model class (resource): MeasureReport.group.stratifier.stratum.population.code
-
-// Generated Shared Enumeration: SNOMEDCTMedicationAsNeededReasonCodes (http://hl7.org/fhir/ValueSet/medication-as-needed-reason)
-  // Used in model class (type): Dosage.asNeeded[x]
-  // Used in model class (resource): ProcedureRequest.asNeeded[x]
-
-// Generated Shared Enumeration: SNOMEDCTMedicationCodes (http://hl7.org/fhir/ValueSet/medication-codes)
-  // Used in model class (resource): ActivityDefinition.product[x]
-  // Used in model class (resource): CarePlan.activity.detail.product[x]
-  // Used in model class (resource): Medication.code
-  // Used in model class (resource): MedicationAdministration.medication[x]
-  // Used in model class (resource): MedicationDispense.medication[x]
-  // Used in model class (resource): MedicationRequest.medication[x]
-  // Used in model class (resource): MedicationStatement.medication[x]
-
-// Generated Shared Enumeration: MessageEvent (http://hl7.org/fhir/ValueSet/message-events)
-  // Used in model class (resource): CapabilityStatement.messaging.event.code
-  // Used in model class (resource): MessageDefinition.event
-  // Used in model class (resource): MessageHeader.event
-
 // Generated Shared Enumeration: MessageSignificanceCategory (http://hl7.org/fhir/ValueSet/message-significance-category)
   // Used in model class (resource): CapabilityStatement.messaging.event.category
   // Used in model class (resource): MessageDefinition.category
-
-// Generated Shared Enumeration: MissingToothReasonCodes (http://hl7.org/fhir/ValueSet/missing-tooth-reason)
-  // Used in model class (resource): Claim.information.reason
-  // Used in model class (resource): ExplanationOfBenefit.information.reason
 
 // Generated Shared Enumeration: NoteType (http://hl7.org/fhir/ValueSet/note-type)
   // Used in model class (resource): ClaimResponse.processNote.type
   // Used in model class (resource): ExplanationOfBenefit.processNote.type
   // Used in model class (resource): PaymentReconciliation.processNote.type
   // Used in model class (resource): ProcessResponse.processNote.type
-
-// Generated Shared Enumeration: LOINCCodes (http://hl7.org/fhir/ValueSet/observation-codes)
-  // Used in model class (type): ElementDefinition.code
-  // Used in model class (resource): Goal.target.measure
-  // Used in model class (resource): Observation.code
-  // Used in model class (resource): Observation.component.code
-  // Used in model class (resource): PlanDefinition.goal.target.measure
 
 // Generated Shared Enumeration: ObservationStatus (http://hl7.org/fhir/ValueSet/observation-status)
   // Used in model class (resource): DetectedIssue.status
@@ -440,52 +130,9 @@
   // Used in model class (type): ParameterDefinition.use
   // Used in model class (resource): OperationDefinition.parameter.use
 
-// Generated Shared Enumeration: ParticipantRoles (http://hl7.org/fhir/ValueSet/participant-role)
-  // Used in model class (resource): CareTeam.participant.role
-  // Used in model class (resource): DeviceRequest.performerType
-  // Used in model class (resource): ProcedureRequest.performerType
-
 // Generated Shared Enumeration: ParticipationStatus (http://hl7.org/fhir/ValueSet/participationstatus)
   // Used in model class (resource): Appointment.participant.status
   // Used in model class (resource): AppointmentResponse.participantStatus
-
-// Generated Shared Enumeration: ClaimPayeeTypeCodes (http://hl7.org/fhir/ValueSet/payeetype)
-  // Used in model class (resource): Claim.payee.type
-  // Used in model class (resource): ClaimResponse.payeeType
-  // Used in model class (resource): ExplanationOfBenefit.payee.type
-
-// Generated Shared Enumeration: PaymentAdjustmentReasonCodes (http://hl7.org/fhir/ValueSet/payment-adjustment-reason)
-  // Used in model class (resource): ClaimResponse.payment.adjustmentReason
-  // Used in model class (resource): ExplanationOfBenefit.payment.adjustmentReason
-
-// Generated Shared Enumeration: ProcedurePerformerRoleCodes (http://hl7.org/fhir/ValueSet/performer-role)
-  // Used in model class (resource): ChargeItem.participant.role
-  // Used in model class (resource): DiagnosticReport.performer.role
-  // Used in model class (resource): Procedure.performer.role
-
-// Generated Shared Enumeration: ProcedureCategoryCodes_SNOMEDCT (http://hl7.org/fhir/ValueSet/procedure-category)
-  // Used in model class (resource): Procedure.category
-  // Used in model class (resource): ProcedureRequest.category
-
-// Generated Shared Enumeration: ProcedureCodes_SNOMEDCT (http://hl7.org/fhir/ValueSet/procedure-code)
-  // Used in model class (resource): ActivityDefinition.code
-  // Used in model class (resource): ImagingStudy.procedureCode
-  // Used in model class (resource): Procedure.code
-  // Used in model class (resource): ProcedureRequest.code
-
-// Generated Shared Enumeration: ProcedureReasonCodes (http://hl7.org/fhir/ValueSet/procedure-reason)
-  // Used in model class (resource): ImagingStudy.reason
-  // Used in model class (resource): Media.reasonCode
-  // Used in model class (resource): Procedure.reasonCode
-  // Used in model class (resource): ProcedureRequest.reasonCode
-
-// Generated Shared Enumeration: ProcessPriorityCodes (http://hl7.org/fhir/ValueSet/process-priority)
-  // Used in model class (resource): Claim.priority
-  // Used in model class (resource): EligibilityRequest.priority
-
-// Generated Shared Enumeration: ExampleProviderQualificationCodes (http://hl7.org/fhir/ValueSet/provider-qualification)
-  // Used in model class (resource): Claim.careTeam.qualification
-  // Used in model class (resource): ExplanationOfBenefit.careTeam.qualification
 
 // Generated Shared Enumeration: PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
   // Used in model class (resource): ActivityDefinition.status
@@ -510,10 +157,6 @@
   // Used in model class (resource): StructureMap.status
   // Used in model class (resource): TestScript.status
   // Used in model class (resource): ValueSet.status
-
-// Generated Shared Enumeration: ExampleRelatedClaimRelationshipCodes (http://hl7.org/fhir/ValueSet/related-claim-relationship)
-  // Used in model class (resource): Claim.related.relationship
-  // Used in model class (resource): ExplanationOfBenefit.related.relationship
 
 // Generated Shared Enumeration: ClaimProcessingCodes (http://hl7.org/fhir/ValueSet/remittance-outcome)
   // Used in model class (resource): ClaimResponse.outcome
@@ -560,106 +203,14 @@
   // Used in model class (resource): SearchParameter.base
   // Used in model class (resource): SearchParameter.target
 
-// Generated Shared Enumeration: SNOMEDCTRouteCodes (http://hl7.org/fhir/ValueSet/route-codes)
-  // Used in model class (type): Dosage.route
-  // Used in model class (resource): AllergyIntolerance.reaction.exposureRoute
-  // Used in model class (resource): MedicationAdministration.dosage.route
-
 // Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
 
-// Generated Shared Enumeration: AllSecurityLabels (http://hl7.org/fhir/ValueSet/security-labels)
-  // Used in model class (type): Meta.security
-  // Used in model class (resource): AuditEvent.entity.securityLabel
-  // Used in model class (resource): Consent.securityLabel
-  // Used in model class (resource): Consent.except.securityLabel
-  // Used in model class (resource): Contract.securityLabel
-  // Used in model class (resource): Contract.term.securityLabel
-  // Used in model class (resource): DocumentReference.securityLabel
-
-// Generated Shared Enumeration: ServiceCategory (http://hl7.org/fhir/ValueSet/service-category)
-  // Used in model class (resource): Appointment.serviceCategory
-  // Used in model class (resource): HealthcareService.category
-  // Used in model class (resource): Schedule.serviceCategory
-  // Used in model class (resource): Slot.serviceCategory
-
-// Generated Shared Enumeration: ExampleServicePlaceCodes (http://hl7.org/fhir/ValueSet/service-place)
-  // Used in model class (resource): Claim.item.location[x]
-  // Used in model class (resource): ExplanationOfBenefit.item.location[x]
-
-// Generated Shared Enumeration: ServiceType (http://hl7.org/fhir/ValueSet/service-type)
-  // Used in model class (resource): Appointment.serviceType
-  // Used in model class (resource): HealthcareService.type
-  // Used in model class (resource): Schedule.serviceType
-  // Used in model class (resource): Slot.serviceType
-
-// Generated Shared Enumeration: USCLSCodes (http://hl7.org/fhir/ValueSet/service-uscls)
-  // Used in model class (resource): Claim.item.service
-  // Used in model class (resource): Claim.item.detail.service
-  // Used in model class (resource): Claim.item.detail.subDetail.service
-  // Used in model class (resource): ClaimResponse.addItem.service
-  // Used in model class (resource): ClaimResponse.addItem.detail.service
-  // Used in model class (resource): ExplanationOfBenefit.item.service
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.service
-  // Used in model class (resource): ExplanationOfBenefit.item.detail.subDetail.service
-  // Used in model class (resource): ExplanationOfBenefit.addItem.service
-  // Used in model class (resource): ExplanationOfBenefit.addItem.detail.service
-
-// Generated Shared Enumeration: SubstanceCode (http://hl7.org/fhir/ValueSet/substance-code)
-  // Used in model class (resource): AllergyIntolerance.reaction.substance
-  // Used in model class (resource): Substance.code
-  // Used in model class (resource): Substance.ingredient.substance[x]
-
-// Generated Shared Enumeration: SNOMEDCTSupplyItem (http://hl7.org/fhir/ValueSet/supply-item)
-  // Used in model class (resource): SupplyDelivery.suppliedItem.item[x]
-  // Used in model class (resource): SupplyRequest.orderedItem.item[x]
-
-// Generated Shared Enumeration: SurfaceCodes (http://hl7.org/fhir/ValueSet/surface)
-  // Used in model class (resource): Claim.item.subSite
-  // Used in model class (resource): ExplanationOfBenefit.item.subSite
-
-// Generated Shared Enumeration: OralSiteCodes (http://hl7.org/fhir/ValueSet/tooth)
-  // Used in model class (resource): Claim.item.bodySite
-  // Used in model class (resource): ExplanationOfBenefit.item.bodySite
-
-// Generated Shared Enumeration: ContextofUseValueSet (http://hl7.org/fhir/ValueSet/use-context)
-  // Used in model class (type): UsageContext.value[x]
-  // Used in model class (type): Extension.value[x]
-
-// Generated Shared Enumeration: v2Appointmentreasoncodes (http://hl7.org/fhir/ValueSet/v2-0276)
-  // Used in model class (resource): Appointment.appointmentType
-  // Used in model class (resource): Slot.appointmentType
-
-// Generated Shared Enumeration: v3CodeSystemActCode (http://hl7.org/fhir/ValueSet/v3-ActCode)
-  // Used in model class (resource): Composition.event.code
-  // Used in model class (resource): DocumentReference.context.event
-
 // Generated Shared Enumeration: ActIncidentCode (http://hl7.org/fhir/ValueSet/v3-ActIncidentCode)
   // Used in model class (resource): Claim.accident.type
   // Used in model class (resource): ExplanationOfBenefit.accident.type
-
-// Generated Shared Enumeration: v3CodeSystemParticipationMode (http://hl7.org/fhir/ValueSet/v3-ParticipationMode)
-  // Used in model class (resource): Communication.medium
-  // Used in model class (resource): CommunicationRequest.medium
-
-// Generated Shared Enumeration: PurposeOfUse (http://hl7.org/fhir/ValueSet/v3-PurposeOfUse)
-  // Used in model class (resource): AuditEvent.purposeOfEvent
-  // Used in model class (resource): AuditEvent.agent.purposeOfUse
-  // Used in model class (resource): Consent.purpose
-  // Used in model class (resource): Consent.except.purpose
-  // Used in model class (resource): Contract.actionReason
-  // Used in model class (resource): Contract.term.actionReason
-  // Used in model class (resource): Provenance.reason
-
-// Generated Shared Enumeration: SubstanceAdminSubstitutionReason (http://hl7.org/fhir/ValueSet/v3-SubstanceAdminSubstitutionReason)
-  // Used in model class (resource): MedicationDispense.substitution.reason
-  // Used in model class (resource): MedicationRequest.substitution.reason
-
-// Generated Shared Enumeration: VaccineAdministeredValueSet (http://hl7.org/fhir/ValueSet/vaccine-code)
-  // Used in model class (resource): Immunization.vaccineCode
-  // Used in model class (resource): ImmunizationRecommendation.recommendation.vaccineCode
 
 // Generated items
 // Address.cs
