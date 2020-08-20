@@ -165,8 +165,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
             var entry = client.CapabilityStatement();
-
-            Assert.IsNotNull(entry.Text);
+            
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
@@ -1734,14 +1733,6 @@ namespace Hl7.Fhir.Tests.Rest
             var result = client.Create(binary);
 
             Assert.IsNotNull(result);
-
-            void Client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
-            {
-                // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
-                e.RawRequest.Accept = null;
-            }
-
-            client.OnBeforeRequest += Client_OnBeforeRequest;
 
             var result2 = client.Get($"Binary/{result.Id}");
             Assert.IsNotNull(result2);
