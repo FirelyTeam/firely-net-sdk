@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Test.Rest
             CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
-        }
+        }        
 
         [TestMethod]
         public void ParseAndSerializeSortParams()
@@ -261,6 +261,13 @@ namespace Hl7.Fhir.Test.Rest
                 new[] { Tuple.Create("parameter", String.Empty) }, 
                 q.Parameters.ToList()
             );
+        }
+
+        [TestMethod]
+        public void AddConstructorSearchParams()
+        {
+            var q =  new SearchParams("_id", "123");
+            Assert.AreEqual(new Tuple<string, string>("_id", "123"), q.Parameters.FirstOrDefault()); 
         }
 
         [TestMethod]
