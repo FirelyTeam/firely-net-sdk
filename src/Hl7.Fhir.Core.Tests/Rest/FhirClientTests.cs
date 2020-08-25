@@ -6,21 +6,21 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Net;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
-using System.IO;
-using System.Threading.Tasks;
-using Hl7.Fhir.Utility;
-using System.Net.Http;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Rest.Legacy;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 
 namespace Hl7.Fhir.Tests.Rest
@@ -1866,10 +1866,10 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestMultipleMessageHandlersInFhirClient()
-        {           
-           
+        {
+
             var testMessageHandler = new TestMessageHandler();
             var testDegatingHandler = new TestDeligatingHandler()
             {
@@ -1885,12 +1885,12 @@ namespace Hl7.Fhir.Tests.Rest
 
     internal class TestDeligatingHandler : DelegatingHandler
     {
-        public HttpRequestMessage LastRequest{get;set;}
+        public HttpRequestMessage LastRequest { get; set; }
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             LastRequest = request;
-            var response = await base.SendAsync(request, cancellationToken);            
+            var response = await base.SendAsync(request, cancellationToken);
             return response;
         }
     }
@@ -1898,7 +1898,7 @@ namespace Hl7.Fhir.Tests.Rest
     {
         public HttpResponseMessage LastResponse { get; set; }
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {          
+        {
             var response = await base.SendAsync(request, cancellationToken);
             LastResponse = response;
             return response;

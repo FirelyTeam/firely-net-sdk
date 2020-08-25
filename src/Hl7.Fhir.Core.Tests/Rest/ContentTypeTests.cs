@@ -1,10 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -25,7 +21,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestBuildingContentType()
         {
             var type = ContentType.BuildContentType(ResourceFormat.Json, ModelInfo.Version);
-            Assert.AreEqual("application/fhir+json; charset=utf-8; fhirVersion=3.0", type);
+            Assert.AreEqual("application/fhir+json; charset=utf-8; fhirVersion=4.0", type);
         }
     }
 }
