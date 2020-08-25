@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestStringValueInterface()
         {
-            IStringValue sv = new FhirString("test");
+            IValue<string> sv = new FhirString("test");
             Assert.IsNotNull(sv);
             sv.Value = "string";
             Assert.AreEqual(sv.Value, "string");
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestIntegerValueInterface()
         {
-            INullableIntegerValue iv = new Integer(null);
+            INullableValue<int> iv = new Integer(null);
             Assert.IsNotNull(iv);
             iv.Value = 12345;
             Assert.AreEqual(iv.Value, 12345);
