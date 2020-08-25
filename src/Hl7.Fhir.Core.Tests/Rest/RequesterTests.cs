@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Test
             settings.PreferredReturn = Prefer.RespondAsync;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("respond-async", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = null;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsNull(request.Headers["Prefer"]);
@@ -74,11 +74,11 @@ namespace Hl7.Fhir.Test
             settings.PreferredReturn = Prefer.OperationOutcome;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = Prefer.RespondAsync;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient, respond-async", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = Prefer.ReturnRepresentation;
             settings.PreferredParameterHandling = null;
             request = entry.ToHttpWebRequest(_endpoint, settings);
@@ -91,9 +91,9 @@ namespace Hl7.Fhir.Test
             var entry = _Entry;
             entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
             var settings = _Settings;
-            
+
             ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpWebRequest(_endpoint, settings));
-            
+
             entry.Method = HTTPVerb.POST;
             var request = entry.ToHttpWebRequest(_endpoint, settings);
         }
@@ -102,14 +102,10 @@ namespace Hl7.Fhir.Test
         public void TestFormatParameters()
         {
             var entry = _Entry;
-
             var settings = _Settings;
 
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("application/fhir+json;charset=utf-8", request.Accept);
-
             settings.UseFormatParameter = true;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
         }
 
@@ -150,7 +146,7 @@ namespace Hl7.Fhir.Test
             {
                 Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, false);
             }
@@ -211,14 +207,10 @@ namespace Hl7.Fhir.Test
         public void TestFormatParametersHttpClient()
         {
             var entry = _Entry;
-
             var settings = _Settings;
 
-            var request = entry.ToHttpRequestMessage(_endpoint, settings);
-            Assert.AreEqual("application/fhir+json; charset=utf-8", request.Headers.Accept.ToString());
-
             settings.UseFormatParameter = true;
-            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
         }
 
@@ -409,7 +401,7 @@ namespace Hl7.Fhir.Test
                 AllowUnrecognizedEnums = false,
                 DisallowXsiAttributesOnRoot = true,
                 PermissiveParsing = false
-            };  
+            };
 
             var bundleresponse = typedresponse.ToBundleEntry(settings);
 
@@ -423,4 +415,3 @@ namespace Hl7.Fhir.Test
         #endregion
     }
 }
- 

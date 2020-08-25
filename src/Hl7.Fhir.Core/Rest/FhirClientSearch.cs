@@ -748,7 +748,10 @@ namespace Hl7.Fhir.Rest
 
         private (string path, IncludeModifier modifier)[] stringToIncludeTuple(string[] includes)
         {
-            return includes.Select(i => (i, IncludeModifier.None)).ToArray();
+            if(includes != null && includes.Any())
+                return includes.Select(i => (i, IncludeModifier.None)).ToArray();
+            else
+                return new (string path, IncludeModifier modifier)[] { };
         }
     }
         #endregion

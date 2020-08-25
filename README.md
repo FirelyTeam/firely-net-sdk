@@ -6,7 +6,7 @@
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
 
 ## Release notes ##
-Read the releases notes on [fhir-net-api/releases](https://github.com/FirelyTeam/fhir-net-api/releases). You can find documentation about this API on [simplifier][netapi-docu].
+Read the releases notes on [fhir-net-api/releases](https://github.com/FirelyTeam/fhir-net-api/releases). You can find documentation about this API in [the Firely docs site][netapi-docu].
 
 ## What's in the box?
 This library provides:
@@ -55,7 +55,7 @@ We are welcoming contributors!
 If you want to participate in this project, we're using [Git Flow][nvie] for our branch management, so please submit your commits using pull requests on the correct `develop`/`develop-stu3`/`develop-r4` branches as mentioned above! 
 
 [common-repo]: https://github.com/FirelyTeam/fhir-net-common
-[netapi-docu]: http://docs.simplifier.net/fhirnetapi/index.html
+[netapi-docu]: http://docs.fire.ly/fhirnetapi/index.html
 [netapi-zulip]: https://chat.fhir.org/#narrow/stream/dotnet
 [nvie]: http://nvie.com/posts/a-successful-git-branching-model/
 [fhir-spec]: http://www.hl7.org/fhir
