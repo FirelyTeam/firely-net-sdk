@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryRequest
             {
                 Agent = ModelInfo.Version,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
                 Headers = new EntryRequestHeaders
@@ -31,8 +31,13 @@ namespace Hl7.Fhir.Rest
                     IfModifiedSince = entry.Request.IfModifiedSince,
                     IfNoneExist = entry.Request.IfNoneExist,
                     IfNoneMatch = entry.Request.IfNoneMatch
-                }
+                }                
             };
+
+            if (!settings.UseFormatParameter)
+            {
+                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+            }
 
             if (entry.Resource != null)
             {
@@ -46,7 +51,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp)
+        private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp, InteractionType type)
         {
             switch(bundleHttp)
             {
@@ -64,7 +69,8 @@ namespace Hl7.Fhir.Rest
                 }
                 case Bundle.HTTPVerb.PUT:
                 {
-                    return HTTPVerb.PUT;
+                        //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
+                        return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
                 }
                 case Bundle.HTTPVerb.PATCH:
                 {
@@ -120,7 +126,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(format, forBundle: false);
+                request.ContentType = ContentType.BuildContentType(format, ModelInfo.Version);
             }
         }
     }

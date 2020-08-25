@@ -102,14 +102,10 @@ namespace Hl7.Fhir.Test
         public void TestFormatParameters()
         {
             var entry = _Entry;
-
-            var settings = _Settings;
-
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("application/fhir+json;charset=utf-8", request.Accept);
+            var settings = _Settings;           
 
             settings.UseFormatParameter = true;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
+            var request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
         }
 
@@ -211,14 +207,10 @@ namespace Hl7.Fhir.Test
         public void TestFormatParametersHttpClient()
         {
             var entry = _Entry;
-
             var settings = _Settings;
 
-            var request = entry.ToHttpRequestMessage(_endpoint, settings);
-            Assert.AreEqual("application/fhir+json; charset=utf-8", request.Headers.Accept.ToString());
-
             settings.UseFormatParameter = true;
-            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
         }
 
@@ -301,7 +293,7 @@ namespace Hl7.Fhir.Test
             {
                 Request = new Bundle.RequestComponent
                 {
-                    Method = Bundle.HTTPVerb.PATCH,
+                    Method = Bundle.HTTPVerb.PUT,
                     Url = "test/Url",
                     IfMatch = "test-ifMatch",
                     IfNoneExist = "test-ifNoneExists",
