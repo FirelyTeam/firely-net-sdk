@@ -31,8 +31,13 @@ namespace Hl7.Fhir.Rest
                     IfModifiedSince = entry.Request.IfModifiedSince,
                     IfNoneExist = entry.Request.IfNoneExist,
                     IfNoneMatch = entry.Request.IfNoneMatch
-                }
+                }                
             };
+
+            if (!settings.UseFormatParameter)
+            {
+                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+            }
 
             if (entry.Resource != null)
             {
@@ -117,7 +122,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(format, forBundle: false);
+                request.ContentType = ContentType.BuildContentType(format, ModelInfo.Version);
             }
         }
     }

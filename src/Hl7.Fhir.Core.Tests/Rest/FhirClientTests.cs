@@ -18,10 +18,10 @@ using Hl7.Fhir.Model;
 using System.IO;
 using System.Threading.Tasks;
 using Hl7.Fhir.Utility;
-using static Hl7.Fhir.Model.Bundle;
-using System.Drawing;
 using System.Net.Http;
 using Hl7.Fhir.Rest.Legacy;
+using System.Threading;
+
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -166,7 +166,6 @@ namespace Hl7.Fhir.Tests.Rest
             client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
             var entry = client.CapabilityStatement();
 
-            Assert.IsNotNull(entry.Text);
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
             // Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
@@ -206,9 +205,9 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void Patch(BaseFhirClient client)
         {
-           var patchparams = new Parameters();            
-           patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
-           client.Patch<Patient>("example", patchparams);           
+            var patchparams = new Parameters();
+            patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
+            client.Patch<Patient>("example", patchparams);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -442,7 +441,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-   
+
 
         [TestMethod, Ignore]   // Something does not work with the gzip
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -509,8 +508,8 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
-                handler.AutomaticDecompression =  DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                
+                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
 
                 result = client.Search<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);
@@ -1261,7 +1260,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void searchByPersonaCodeUsingPost(BaseFhirClient client)
         {
-            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner"}, null, null, null);
+            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner" }, null, null, null);
             var pat = (Patient)pats.Entry.First().Resource;
         }
 
@@ -1702,7 +1701,6 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 client.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "bad-bearer");
                 testAuthentication(client);
-
             }
         }
 
@@ -1734,14 +1732,6 @@ namespace Hl7.Fhir.Tests.Rest
             var result = client.Create(binary);
 
             Assert.IsNotNull(result);
-
-            void Client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
-            {
-                // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
-                e.RawRequest.Accept = null;
-            }
-
-            client.OnBeforeRequest += Client_OnBeforeRequest;
 
             var result2 = client.Get($"Binary/{result.Id}");
             Assert.IsNotNull(result2);
@@ -1840,7 +1830,44 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
-       
+        [TestMethod]
+        public void TestMultipleMessageHandlersInFhirClient()
+        {           
+           
+            var testMessageHandler = new TestMessageHandler();
+            var testDegatingHandler = new TestDeligatingHandler()
+            {
+                InnerHandler = testMessageHandler
+            };
+
+            using var client = new FhirClient(testEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
+            var loc = client.Read<Location>("Location/1");
+            Assert.IsNotNull(testDegatingHandler.LastRequest);
+            Assert.IsNotNull(testMessageHandler.LastResponse);
+        }
     }
+
+    internal class TestDeligatingHandler : DelegatingHandler
+    {
+        public HttpRequestMessage LastRequest{get;set;}
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            LastRequest = request;
+            var response = await base.SendAsync(request, cancellationToken);            
+            return response;
+        }
+    }
+    internal class TestMessageHandler : HttpClientHandler
+    {
+        public HttpResponseMessage LastResponse { get; set; }
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {          
+            var response = await base.SendAsync(request, cancellationToken);
+            LastResponse = response;
+            return response;
+        }
+    }
+
 
 }
