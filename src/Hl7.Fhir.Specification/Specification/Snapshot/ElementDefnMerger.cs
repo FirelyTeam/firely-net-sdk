@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             static bool matchCanonicals(Canonical x, Canonical y) => matchStringValues(x, y);
 
-            static bool matchStringValues<T>(T x, T y) where T : PrimitiveType, IStringValue
+            static bool matchStringValues<T>(T x, T y) where T : PrimitiveType, IValue<string>
                 => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
 
             static bool IsEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);
