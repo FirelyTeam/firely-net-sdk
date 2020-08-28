@@ -6,18 +6,18 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Diagnostics;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
 using System.IO;
-using Hl7.Fhir.Serialization;
 using System.Linq;
-using T = System.Threading.Tasks;
-using Hl7.Fhir.Rest;
 using System.Net.Http;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         static IResourceResolver source = null;
-        
+
         [TestMethod]
         public void ResolveByCanonicalFromZip()
         {
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Specification.Tests
                         client.Status = 3;
                     };
 
-                    var wa = new WebResolver(id => client);                   
+                    var wa = new WebResolver(id => client);
 
                     var artifact = wa.ResolveByUri("http://vonk.fire.ly/StructureDefinition/Patient");
 
@@ -132,10 +132,10 @@ namespace Hl7.Fhir.Specification.Tests
                     Assert.IsTrue(artifact is StructureDefinition);
                     Assert.AreEqual("Patient", ((StructureDefinition)artifact).Name);
                 }
-            }          
+            }
         }
 
-        [TestMethod,TestCategory("IntegrationTest")]
+        [TestMethod, TestCategory("IntegrationTest")]
         public async T.Task RetrieveArtifactMulti()
         {
             var resolver = new MultiResolver(source, new WebResolver() { TimeOut = DefaultTimeOut });
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Specification.Tests
             src.Load += (sender, args) => { eventArgs = args; };
 
             // Verify that the Load event is fired on the initial load
-            const string resourceUri = "http://hl7.org/fhir/ValueSet/v2-0292";
+            const string resourceUri = "http://hl7.org/fhir/StructureDefinition/Patient";
             var resource = await src.ResolveByUriAsync(resourceUri);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
             Assert.AreEqual(resource2, eventArgs.Resource);
-            
+
             // Verify that the cache returned a new instance with exact same value
             Assert.AreNotEqual(resource2.GetHashCode(), resource.GetHashCode());
             Assert.IsTrue(resource.IsExactly(resource2));
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Create empty in-memory resolver
             var mem = new InMemoryProfileResolver();
             var cache = new CachedResolver(mem);
-            
+
             // Load on demand should return null
             var resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNull(resource);

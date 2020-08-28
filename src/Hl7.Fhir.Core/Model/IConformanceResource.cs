@@ -29,21 +29,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
     public interface IConformanceResource
-    {       
+    {
         string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }        
+        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
         string Name { get; set; }
         FhirString NameElement { get; set; }
         PublicationStatus? Status { get; set; }
         string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }        
+        FhirString PublisherElement { get; set; }
         List<ContactDetail> Contact { get; set; }
         Markdown Description { get; set; }
         List<UsageContext> UseContext { get; set; }
@@ -52,7 +49,7 @@ namespace Hl7.Fhir.Model
         bool? Experimental { get; set; }
         Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
         string Date { get; set; }
-        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }              
+        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
     }
 
     public interface IVersionableConformanceResource : IConformanceResource
@@ -66,18 +63,18 @@ namespace Hl7.Fhir.Model
     {
 
     }
-    
+
     public partial class ValueSet : IVersionableConformanceResource
     {
 
     }
 
-    public partial class SearchParameter :IVersionableConformanceResource
+    public partial class SearchParameter : IVersionableConformanceResource
     {
 
     }
 
-    public partial class OperationDefinition :IVersionableConformanceResource
+    public partial class OperationDefinition : IVersionableConformanceResource
     {
 
     }
@@ -160,40 +157,17 @@ namespace Hl7.Fhir.Model
             set { throw new NotImplementedException(); }
         }
 
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
         public bool? Experimental
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
         public FhirBoolean ExperimentalElement
         {
             get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-
-        /// <summary>
-        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
-        /// </summary>
-        public string Url
-        {
-            get
-            {
-                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
-                return preferred ?? UniqueId.FirstOrDefault()?.Value;
-            }
-            set { throw new NotImplementedException(); }
-        }
-
-        public FhirUri UrlElement
-        {
-            get
-            {
-                if (Url != null)
-                    return new FhirUri(Url);
-                else
-                    return null;
-            }
             set { throw new NotImplementedException(); }
         }
     }

@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(isReference, ModelInfo.IsReference(typeName));
             }
         }
-    
+
         [TestMethod]
         public void TestTypeHierarchy()
         {
@@ -682,9 +682,11 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestCheckMinorVersionCompatibiliy()
         {
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.0.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.5.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.5"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.0"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0"));

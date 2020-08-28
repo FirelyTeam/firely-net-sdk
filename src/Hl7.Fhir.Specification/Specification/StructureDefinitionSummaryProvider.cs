@@ -53,9 +53,9 @@ namespace Hl7.Fhir.Specification
             }
 
             var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical).ConfigureAwait(false);
-            
-            return sd is null ? 
-                null 
+
+            return sd is null ?
+                null
                 : (IStructureDefinitionSummary)new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
         }
 
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
             else
-            {                
+            {
                 var basePath = nav.Current?.Base?.Path;
                 if (basePath == "Resource.id" || nav?.Current?.Path == "Resource.id")
                 {
@@ -207,14 +207,14 @@ namespace Hl7.Fhir.Specification
 
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
                 }
-                else if(basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
+                else if (basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
                 {
                     // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
                 }
-                else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
+                else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUri uri)
                 {
-                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(uri?.Value) };
                 }
                 else
                     return nav.Current.Type.Select(t => (ITypeSerializationInfo)new TypeReferenceInfo(t.Code)).Distinct().ToArray();

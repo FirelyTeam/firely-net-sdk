@@ -11,7 +11,6 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,6 +66,11 @@ namespace Hl7.Fhir.Test.Validation
                         if (entry.Name.Contains("v2-tables"))
                             continue; // this file is known to have a single dud valueset - have reported on Zulip
                                       // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+                        if (entry.Name == "observation-decimal(decimal).xml")
+                            continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
+                        if (entry.Name == "citation-example(example).xml")
+                            continue; // resource Citation is not generated because of generator errors
+
 
                         testFileCount++;
 

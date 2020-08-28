@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual("special2", q.Query);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(SummaryType.True, q.Summary);
-            Assert.AreEqual(2,q.Sort.Count);
+            Assert.AreEqual(2, q.Sort.Count);
             Assert.AreEqual(("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
             Assert.AreEqual(3, q.Include.Count);
             Assert.IsTrue(q.Include.Contains(("Patient.name2", IncludeModifier.None)));
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Test.Rest
             CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
-        }        
+        }
 
         [TestMethod]
         public void ParseAndSerializeSortParams()
@@ -263,8 +263,8 @@ namespace Hl7.Fhir.Test.Rest
         [TestMethod]
         public void AddConstructorSearchParams()
         {
-            var q =  new SearchParams("_id", "123");
-            Assert.AreEqual(new Tuple<string, string>("_id", "123"), q.Parameters.FirstOrDefault()); 
+            var q = new SearchParams("_id", "123");
+            Assert.AreEqual(new Tuple<string, string>("_id", "123"), q.Parameters.FirstOrDefault());
         }
 
         [TestMethod]
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Test.Rest
 
             //Manualy removed this target from more occurances of the same searchparameter
             //Commit: 3b071d478ff3cb744cb6668ac8512dc7362e6737
-         
+
 
             var sp3 = ModelInfo.SearchParameters.Where(s => s.Resource == "RiskAssessment" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp3);
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Test.Rest
             var sp5 = ModelInfo.SearchParameters.Where(s => s.Resource == "VisionPrescription" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp5);
             Assert.IsFalse(sp5.Target.Contains(ResourceType.EpisodeOfCare));
-            
+
             var sp6 = ModelInfo.SearchParameters.Where(s => s.Resource == "ServiceRequest" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp6);
             Assert.IsFalse(sp6.Target.Contains(ResourceType.EpisodeOfCare));
@@ -473,10 +473,6 @@ namespace Hl7.Fhir.Test.Rest
             var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp12);
             Assert.IsFalse(sp12.Target.Contains(ResourceType.EpisodeOfCare));
-
-            var sp13 = ModelInfo.SearchParameters.Where(s => s.Resource == "DocumentReference" && s.Name == "encounter").FirstOrDefault();
-            Assert.IsNotNull(sp13);
-            Assert.IsTrue(sp13.Target.Contains(ResourceType.EpisodeOfCare));
-        }    
+        }
     }
 }

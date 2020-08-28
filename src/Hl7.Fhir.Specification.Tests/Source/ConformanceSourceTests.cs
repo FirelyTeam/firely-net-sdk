@@ -6,9 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,8 +18,6 @@ using System.IO;
 using System.Linq;
 // Use alias to avoid conflict with Hl7.Fhir.Model.Task
 using T = System.Threading.Tasks;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs);
 
             // One from v3-codesystems
-            vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActCode");
+            vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActStatus");
             Assert.IsNotNull(vs);
 
             // Something non-existent
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ns);
             Assert.AreEqual("United States Social Security Number", ns.Name);
         }
-    
+
         // Need to fix this for new conformance stuff in STU3
         [TestMethod]
         public void ListCanonicalUris()
@@ -156,10 +156,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var fa = ZipSource.CreateValidationSource();
 
-            var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
+            var vs = fa.ResolveByUri("http://terminology.hl7.org/ValueSet/v2-0292");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
-            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
 
             vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
@@ -414,7 +413,7 @@ namespace Hl7.Fhir.Specification.Tests
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var tasks = new T.Task[threadCount];
-            var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
+            var results = new (Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
             sw.Start();

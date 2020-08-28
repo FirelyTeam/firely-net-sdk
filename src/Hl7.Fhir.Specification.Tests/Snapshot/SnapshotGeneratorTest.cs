@@ -42,7 +42,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -226,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
         }
 
-          [TestMethod]
+        [TestMethod]
         public async T.Task TestConstraintSources()
         {
             var dom = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/DomainResource");
@@ -246,7 +245,7 @@ namespace Hl7.Fhir.Specification.Tests
             await generateSnapshotAndCompare(pat);
             Assert.IsTrue(pat.Snapshot?.Element
                           .Where(e => e.Path == "Patient").FirstOrDefault()
-                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);       
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);
 
         }
 
@@ -4840,12 +4839,14 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestElementMappings()
         {
-            var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
+            var profile = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(profile);
 
-            var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(diffElem);
             dumpMappings(diffElem);
+
+            profile.Snapshot = null; // remove snapshot, so it can generated again below
 
             StructureDefinition expanded = null;
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -4866,7 +4867,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = expanded.Snapshot.Element;
             elems.Dump();
 
-            var elem = elems.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            var elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
             dumpMappings(elem);
 
@@ -5030,7 +5031,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(snapshot.GetRootElement().SliceName);
             Assert.IsNull(_generator.Outcome);
         }
-         
+
         // [WMR 20170406] NEW
         // Issue reported by Vadim
         // Complex extension:   structure.cdstools-typedstage
@@ -6199,26 +6200,26 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        static StructureDefinition MedicationStatementWithSimpleQuantitySlice => new StructureDefinition()
+        static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
         {
-            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
-            Name = "MedicationStatementWithSimpleQuantitySlice",
-            Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
+            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
+            Name = "MedicationUsageWithSimpleQuantitySlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         SliceName = "doseSimpleQuantity",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -6230,7 +6231,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     },
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         SliceName = "dosePeriod",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -6249,7 +6250,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestSimpleQuantitySlice()
         {
-            var sd = MedicationStatementWithSimpleQuantitySlice;
+            var sd = MedicationUsageWithSimpleQuantitySlice;
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
@@ -6266,7 +6267,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify there is NO warning about invalid element type constraint
             Assert.IsTrue(issues == null || !issues.Any());
-            
+
         }
 
         // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
@@ -7621,7 +7622,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Verify fhir-type extension
             var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
             Assert.IsNotNull(fhirTypeExpr);
-            var typeValue = fhirTypeExpr.Value as FhirUrl;
+            var typeValue = fhirTypeExpr.Value as FhirUri;
             Assert.IsNotNull(typeValue);
             Assert.AreEqual("string", typeValue.Value);
 
