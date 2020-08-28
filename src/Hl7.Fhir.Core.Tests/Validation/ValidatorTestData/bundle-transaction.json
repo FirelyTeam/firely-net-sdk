@@ -1,0 +1,66 @@
+{
+  "entry": [
+    {
+      "request": {
+        "ifNoneExist": "url=http://ehealth.sundhed.dk/fhir/SearchParameter/StructureDefinition/url",
+        "url": "SearchParameter",
+        "method": "POST"
+      },
+      "resource": {
+        "id": "ehealth-structuredefinition-search-url",
+        "xpathUsage": "normal",
+        "description": "Search parameter for finding a structureDefinition by URL",
+        "resourceType": "SearchParameter",
+        "code": "url",
+        "status": "active",
+        "xpath": "f:StructureDefinition/f:url",
+        "type": "uri",
+        "expression": "StructureDefinition.url",
+        "name": "url",
+        "base": [
+          "StructureDefinition"
+        ],
+        "url": "http://ehealth.sundhed.dk/fhir/SearchParameter/StructureDefinition/url"
+      },
+      "fullUrl": "urn:uuid:58441a26-dd41-4e0b-9cd0-6537ecdf69af"
+    },
+    {
+      "request": {
+        "ifNoneExist": "url=http://ehealth.sundhed.dk/fhir/SearchParameter/StructureDefinition/url-unique",
+        "url": "SearchParameter",
+        "method": "POST"
+      },
+      "resource": {
+        "id": "ehealth-structuredefinition-search-url-unique",
+        "extension": [
+          {
+            "valueBoolean": true,
+            "url": "http://hapifhir.io/fhir/StructureDefinition/sp-unique"
+          }
+        ],
+        "description": "Search parameter for making a structureDefinition unique by URL",
+        "resourceType": "SearchParameter",
+        "name": "unique url",
+        "status": "active",
+        "component": [
+          {
+            "expression": "StructureDefinition",
+            "definition": {
+              "reference": "SearchParameter?url=http://ehealth.sundhed.dk/fhir/SearchParameter/StructureDefinition/url"
+            }
+          }
+        ],
+        "type": "composite",
+        "expression": "StructureDefinition.url",
+        "base": [
+          "StructureDefinition"
+        ],
+        "code": "sd-unique-url",
+        "url": "http://ehealth.sundhed.dk/fhir/SearchParameter/StructureDefinition/url-unique"
+      },
+      "fullUrl": "urn:uuid:f0a77d9a-fd10-48ed-85f9-51906cf46d29"
+    }
+  ],
+  "type": "transaction",
+  "resourceType": "Bundle"
+}

@@ -1,0 +1,50 @@
+<Patient xmlns="http://hl7.org/fhir">
+    <id value="nl-core-patient-01"/>
+    <meta>
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-patient"/>
+    </meta>
+    <address>
+        <country value="NLD">
+            <!-- Defined extension slice, code from GBA -->
+            <extension url="http://nictiz.nl/fhir/StructureDefinition/code-specification">
+                <valueCodeableConcept>
+                    <coding>
+                        <system value="urn:oid:2.16.840.1.113883.2.4.4.16.34"/>
+                        <code value="6030"/>
+                        <display value="Nederland"/>
+                    </coding>
+                </valueCodeableConcept>
+            </extension>
+            <!-- Defined extension slice, code from ISO -->
+            <extension url="http://nictiz.nl/fhir/StructureDefinition/code-specification">
+                <valueCodeableConcept>
+                    <coding>
+                        <system value="urn:iso:std:iso:3166"/>
+                        <code value="NL"/>
+                        <display value="Netherlands"/>
+                    </coding>
+                </valueCodeableConcept>
+            </extension>
+            <!-- Undefined extension slice, the url matches, but the system does not match the defined value sets -->
+            <extension url="http://nictiz.nl/fhir/StructureDefinition/code-specification">
+                <valueCodeableConcept>
+                    <coding>
+                        <system value="urn:oid:2.16.840.1.113883.2.4.4.16.35"/>
+                        <code value="6030"/>
+                        <display value="Nederland"/>
+                    </coding>
+                </valueCodeableConcept>
+            </extension>
+            <!-- Undefined extension slice, but still correct based on open slicing -->
+            <extension url="http://nictiz.nl/fhir/StructureDefinition/some-other-extension">
+                <valueCodeableConcept>
+                    <coding>
+                        <system value="urn:oid:2.16.840.1.113883.2.4.4.16.34"/>
+                        <code value="6030"/>
+                        <display value="Nederland"/>
+                    </coding>
+                </valueCodeableConcept>
+            </extension>
+        </country>
+    </address>
+</Patient>

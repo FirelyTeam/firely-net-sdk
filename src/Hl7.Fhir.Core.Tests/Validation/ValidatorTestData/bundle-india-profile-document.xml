@@ -1,0 +1,2521 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    <id value="c3474873-4ee9-4d8e-801d-59891d68ef5a" />
+    <meta>
+        <lastUpdated value="2020-07-30T08:24:17.272+00:00" />
+    </meta>
+    <url value="http://nrces.in/ndhm/fhir/r4/StructureDefinition/DocumentBundle" />
+    <name value="DocumentBundle" />
+    <status value="draft" />
+    <date value="2020-07-24T06:34:06.6266787Z" />
+    <fhirVersion value="4.0.1" />
+    <mapping>
+        <identity value="v2" />
+        <uri value="http://hl7.org/v2" />
+        <name value="HL7 v2 Mapping" />
+    </mapping>
+    <mapping>
+        <identity value="rim" />
+        <uri value="http://hl7.org/v3" />
+        <name value="RIM Mapping" />
+    </mapping>
+    <mapping>
+        <identity value="cda" />
+        <uri value="http://hl7.org/v3/cda" />
+        <name value="CDA (R2)" />
+    </mapping>
+    <mapping>
+        <identity value="w5" />
+        <uri value="http://hl7.org/fhir/fivews" />
+        <name value="FiveWs Pattern Mapping" />
+    </mapping>
+    <kind value="resource" />
+    <abstract value="false" />
+    <type value="Bundle" />
+    <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+    <derivation value="constraint" />
+    <snapshot>
+        <element id="Bundle">
+            <path value="Bundle" />
+            <short value="Contains a collection of resources" />
+            <definition value="A container for a collection of resources." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Bundle" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <constraint>
+                <key value="bdl-7" />
+                <severity value="error" />
+                <human value="FullUrl must be unique in a bundle, or else entries with the same fullUrl must have different meta.versionId (except in history bundles)" />
+                <expression value="(type = &#39;history&#39;) or entry.where(fullUrl.exists()).select(fullUrl&amp;resource.meta.versionId).isDistinct()" />
+                <xpath value="(f:type/@value = &#39;history&#39;) or (count(for $entry in f:entry[f:resource] return $entry[count(parent::f:Bundle/f:entry[f:fullUrl/@value=$entry/f:fullUrl/@value and ((not(f:resource/*/f:meta/f:versionId/@value) and not($entry/f:resource/*/f:meta/f:versionId/@value)) or f:resource/*/f:meta/f:versionId/@value=$entry/f:resource/*/f:meta/f:versionId/@value)])!=1])=0)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-9" />
+                <severity value="error" />
+                <human value="A document must have an identifier with a system and a value" />
+                <expression value="type = &#39;document&#39; implies (identifier.system.exists() and identifier.value.exists())" />
+                <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:identifier/f:system) or exists(f:identifier/f:value)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-3" />
+                <severity value="error" />
+                <human value="entry.request mandatory for batch/transaction/history, otherwise prohibited" />
+                <expression value="entry.all(request.exists() = (%resource.type = &#39;batch&#39; or %resource.type = &#39;transaction&#39; or %resource.type = &#39;history&#39;))" />
+                <xpath value="not(f:entry/f:request) or (f:type/@value = &#39;batch&#39;) or (f:type/@value = &#39;transaction&#39;) or (f:type/@value = &#39;history&#39;)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-4" />
+                <severity value="error" />
+                <human value="entry.response mandatory for batch-response/transaction-response/history, otherwise prohibited" />
+                <expression value="entry.all(response.exists() = (%resource.type = &#39;batch-response&#39; or %resource.type = &#39;transaction-response&#39; or %resource.type = &#39;history&#39;))" />
+                <xpath value="not(f:entry/f:response) or (f:type/@value = &#39;batch-response&#39;) or (f:type/@value = &#39;transaction-response&#39;) or (f:type/@value = &#39;history&#39;)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-12" />
+                <severity value="error" />
+                <human value="A message must have a MessageHeader as the first resource" />
+                <expression value="type = &#39;message&#39; implies entry.first().resource.is(MessageHeader)" />
+                <xpath value="not(f:type/@value=&#39;message&#39;) or f:entry[1]/f:resource/f:MessageHeader" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-1" />
+                <severity value="error" />
+                <human value="total only when a search or history" />
+                <expression value="total.empty() or (type = &#39;searchset&#39;) or (type = &#39;history&#39;)" />
+                <xpath value="not(f:total) or (f:type/@value = &#39;searchset&#39;) or (f:type/@value = &#39;history&#39;)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-2" />
+                <severity value="error" />
+                <human value="entry.search only when a search" />
+                <expression value="entry.search.empty() or (type = &#39;searchset&#39;)" />
+                <xpath value="not(f:entry/f:search) or (f:type/@value = &#39;searchset&#39;)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-11" />
+                <severity value="error" />
+                <human value="A document must have a Composition as the first resource" />
+                <expression value="type = &#39;document&#39; implies entry.first().resource.is(Composition)" />
+                <xpath value="not(f:type/@value=&#39;document&#39;) or f:entry[1]/f:resource/f:Composition" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-10" />
+                <severity value="error" />
+                <human value="A document must have a date" />
+                <expression value="type = &#39;document&#39; implies (timestamp.hasValue())" />
+                <xpath value="not(f:type/@value = &#39;document&#39;) or exists(f:timestamp/@value)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="Entity. Role, or Act" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="N/A" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+            <mapping>
+                <identity value="cda" />
+                <map value="ClinicalDocument, if bundle.type = document" />
+            </mapping>
+        </element>
+        <element id="Bundle.id">
+            <path value="Bundle.id" />
+            <short value="Logical id of this artifact" />
+            <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
+            <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Resource.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <isSummary value="true" />
+        </element>
+        <element id="Bundle.meta">
+            <path value="Bundle.meta" />
+            <short value="Metadata about the resource" />
+            <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Resource.meta" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Meta" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.id">
+            <path value="Bundle.meta.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.extension">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.meta.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.versionId">
+            <path value="Bundle.meta.versionId" />
+            <short value="Version specific identifier" />
+            <definition value="The version specific identifier, as it appears in the version portion of the URL. This value changes when the resource is created, updated, or deleted." />
+            <comment value="The server assigns this value, and ignores what the client specifies, except in the case that the server is imposing version integrity on updates/deletes." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Meta.versionId" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="id" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.lastUpdated">
+            <path value="Bundle.meta.lastUpdated" />
+            <short value="When the resource version last changed" />
+            <definition value="When the resource last changed - e.g. when the version changed." />
+            <comment value="This value is always populated except when the resource is first being created. The server / resource manager sets this value; what a client provides is irrelevant. This is equivalent to the HTTP Last-Modified and SHOULD have the same value on a [read](http.html#read) interaction." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Meta.lastUpdated" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="instant" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.source">
+            <path value="Bundle.meta.source" />
+            <short value="Identifies where the resource comes from" />
+            <definition value="A uri that identifies the source system of the resource. This provides a minimal amount of [Provenance](provenance.html#) information that can be used to track or differentiate the source of information in the resource. The source may identify another FHIR server, document, message, database, etc." />
+            <comment value="In the provenance resource, this corresponds to Provenance.entity.what[x]. The exact use of the source (and the implied Provenance.entity.role) is left to implementer discretion. Only one nominated source is allowed; for additional provenance details, a full Provenance resource should be used. \n\nThis element can be used to indicate where the current master source of a resource that has a canonical URL if the resource is no longer hosted at the canonical URL." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Meta.source" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.profile">
+            <path value="Bundle.meta.profile" />
+            <short value="Profiles this resource claims to conform to" />
+            <definition value="A list of profiles (references to [StructureDefinition](structuredefinition.html#) resources) that this resource claims to conform to. The URL is a reference to [StructureDefinition.url](structuredefinition-definitions.html#StructureDefinition.url)." />
+            <comment value="It is up to the server and/or other infrastructure of policy to determine whether/how these claims are verified and/or updated over time.  The list of profile URLs is a set." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Meta.profile" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="canonical" />
+                <targetProfile value="http://hl7.org/fhir/StructureDefinition/StructureDefinition" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.security">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.meta.security" />
+            <short value="Security Labels applied to this resource" />
+            <definition value="Security labels applied to this resource. These tags connect specific resources to the overall security policy and infrastructure." />
+            <comment value="The security labels can be updated without changing the stated version of the resource. The list of security labels is a set. Uniqueness is based the system/code, and version and display are ignored." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Meta.security" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Coding" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <mustSupport value="true" />
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="SecurityLabels" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+                    <valueBoolean value="true" />
+                </extension>
+                <strength value="extensible" />
+                <description value="Security Labels from the Healthcare Privacy and Security Classification System." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/security-labels" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CE/CNE/CWE subset one of the sets of component 1-3 or 4-6" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="CV" />
+            </mapping>
+            <mapping>
+                <identity value="orim" />
+                <map value="fhir:Coding rdfs:subClassOf dt:CDCoding" />
+            </mapping>
+        </element>
+        <element id="Bundle.meta.tag">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.meta.tag" />
+            <short value="Tags applied to this resource" />
+            <definition value="Tags applied to this resource. Tags are intended to be used to identify and relate resources to process and workflow, and applications are not required to consider the tags when interpreting the meaning of a resource." />
+            <comment value="The tags can be updated without changing the stated version of the resource. The list of tags is a set. Uniqueness is based the system/code, and version and display are ignored." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Meta.tag" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Coding" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="Tags" />
+                </extension>
+                <strength value="example" />
+                <description value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/common-tags" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CE/CNE/CWE subset one of the sets of component 1-3 or 4-6" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="CV" />
+            </mapping>
+            <mapping>
+                <identity value="orim" />
+                <map value="fhir:Coding rdfs:subClassOf dt:CDCoding" />
+            </mapping>
+        </element>
+        <element id="Bundle.implicitRules">
+            <path value="Bundle.implicitRules" />
+            <short value="A set of rules under which this content was created" />
+            <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content. Often, this is a reference to an implementation guide that defines the special rules along with other profiles etc." />
+            <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element. Often, when used, the URL is a reference to an implementation guide that defines these special rules as part of it&#39;s narrative along with other profiles, value sets, etc." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Resource.implicitRules" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="This element is labeled as a modifier because the implicit rules may provide additional knowledge about the resource that modifies it&#39;s meaning or interpretation" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.language">
+            <path value="Bundle.language" />
+            <short value="Language of the resource content" />
+            <definition value="The base language in which the resource is written." />
+            <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource. Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Resource.language" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="code" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+                    <valueCanonical value="http://hl7.org/fhir/ValueSet/all-languages" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="Language" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+                    <valueBoolean value="true" />
+                </extension>
+                <strength value="preferred" />
+                <description value="A human language." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/languages" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier">
+            <path value="Bundle.identifier" />
+            <short value="Persistent identifier for the bundle" />
+            <definition value="A persistent identifier for the bundle that won&#39;t change as a bundle is copied from server to server." />
+            <comment value="Persistent identity generally only matters for batches of type Document, Message, and Collection. It would not normally be populated for search and history results and servers ignore Bundle.identifier when processing batches and transactions. For Documents  the .identifier SHALL be populated such that the .identifier is globally unique." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.identifier" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Identifier" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX / EI (occasionally, more often EI maps to a resource id or a URL)" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="II - The Identifier class is a little looser than the v3 type II because it allows URIs as well as registered OIDs or GUIDs.  Also maps to Role[classCode=IDENT]" />
+            </mapping>
+            <mapping>
+                <identity value="servd" />
+                <map value="Identifier" />
+            </mapping>
+            <mapping>
+                <identity value="w5" />
+                <map value="FiveWs.identifier" />
+            </mapping>
+            <mapping>
+                <identity value="cda" />
+                <map value="ClinicalDocument.id" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.id">
+            <path value="Bundle.identifier.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.extension">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.identifier.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.use">
+            <path value="Bundle.identifier.use" />
+            <short value="usual | official | temp | secondary | old (If known)" />
+            <definition value="The purpose of this identifier." />
+            <comment value="Applications can assume that an identifier is permanent unless it explicitly says that it is temporary." />
+            <requirements value="Allows the appropriate identifier for a particular context of use to be selected from among a set of identifiers." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.use" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="code" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one." />
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="IdentifierUse" />
+                </extension>
+                <strength value="required" />
+                <description value="Identifies the purpose for this identifier, if known ." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/identifier-use|4.0.1" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="N/A" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="Role.code or implied by context" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.type">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.identifier.type" />
+            <short value="Description of identifier" />
+            <definition value="A coded type for the identifier that can be used to determine which identifier to use for a specific purpose." />
+            <comment value="This element deals only with general categories of identifiers.  It SHOULD not be used for codes that correspond 1..1 with the Identifier.system. Some identifiers may fall into multiple categories due to common usage.   Where the system is known, a type is unnecessary because the type is always part of the system definition. However systems often need to handle identifiers where the system is not known. There is not a 1:1 relationship between type and system, since many different systems have the same type." />
+            <requirements value="Allows users to make use of identifiers when the identifier system is not known." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.type" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="CodeableConcept" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="IdentifierType" />
+                </extension>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding">
+                    <valueBoolean value="true" />
+                </extension>
+                <strength value="extensible" />
+                <description value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/identifier-type" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CE/CNE/CWE" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="CD" />
+            </mapping>
+            <mapping>
+                <identity value="orim" />
+                <map value="fhir:CodeableConcept rdfs:subClassOf dt:CD" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX.5" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="Role.code or implied by context" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.system">
+            <path value="Bundle.identifier.system" />
+            <short value="The namespace for the identifier value" />
+            <definition value="Establishes the namespace for the value - that is, a URL that describes a set values that are unique." />
+            <comment value="Identifier.system is always case sensitive." />
+            <requirements value="There are many sets  of identifiers.  To perform matching of two identifiers, we need to know what set we&#39;re dealing with. The system identifies a particular set of unique identifiers." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.system" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <example>
+                <label value="General" />
+                <valueUri value="http://www.acme.com/identifiers/patient" />
+            </example>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX.4 / EI-2-4" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="II.root or Role.id.root" />
+            </mapping>
+            <mapping>
+                <identity value="servd" />
+                <map value="./IdentifierType" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.value">
+            <path value="Bundle.identifier.value" />
+            <short value="The value that is unique" />
+            <definition value="The portion of the identifier typically relevant to the user and which is unique within the context of the system." />
+            <comment value="If the value is a full URI, then the system SHALL be urn:ietf:rfc:3986.  The value&#39;s primary purpose is computational mapping.  As a result, it may be normalized for comparison purposes (e.g. removing non-significant whitespace, dashes, etc.)  A value formatted for human display can be conveyed using the [Rendered Value extension](extension-rendered-value.html). Identifier.value is to be treated as case sensitive unless knowledge of the Identifier.system allows the processer to be confident that non-case-sensitive processing is safe." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.value" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <example>
+                <label value="General" />
+                <valueString value="123456" />
+            </example>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX.1 / EI.1" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="II.extension or II.root if system indicates OID or GUID (Or Role.id.extension or root)" />
+            </mapping>
+            <mapping>
+                <identity value="servd" />
+                <map value="./Value" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.period">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.identifier.period" />
+            <short value="Time period when id is/was valid for use" />
+            <definition value="Time period during which identifier is/was valid for use." />
+            <comment value="A Period specifies a range of time; the context of use will specify whether the entire range applies (e.g. &quot;the patient was an inpatient of the hospital for this time range&quot;) or one value from the range applies (e.g. &quot;give to the patient between these two times&quot;).\n\nPeriod is not used for a duration (a measure of elapsed time). See [Duration](datatypes.html#Duration)." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.period" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Period" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="per-1" />
+                <severity value="error" />
+                <human value="If present, start SHALL have a lower value than end" />
+                <expression value="start.hasValue().not() or end.hasValue().not() or (start &lt;= end)" />
+                <xpath value="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Identifier" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="DR" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="IVL&lt;TS&gt;[lowClosed=&quot;true&quot; and highClosed=&quot;true&quot;] or URG&lt;TS&gt;[lowClosed=&quot;true&quot; and highClosed=&quot;true&quot;]" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX.7 + CX.8" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="Role.effectiveTime or implied by context" />
+            </mapping>
+            <mapping>
+                <identity value="servd" />
+                <map value="./StartDate and ./EndDate" />
+            </mapping>
+        </element>
+        <element id="Bundle.identifier.assigner">
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+                <valueCode value="normative" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+                <valueCode value="4.0.0" />
+            </extension>
+            <path value="Bundle.identifier.assigner" />
+            <short value="Organization that issued id (may be just text)" />
+            <definition value="Organization that issued/manages the identifier." />
+            <comment value="The Identifier.assigner may omit the .reference element and only contain a .display element reflecting the name or other textual information about the assigning organization." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Identifier.assigner" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Reference" />
+                <targetProfile value="http://hl7.org/fhir/StructureDefinition/Organization" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ref-1" />
+                <severity value="error" />
+                <human value="SHALL have a contained resource if a local reference is provided" />
+                <expression value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %rootResource.contained.id.trace(&#39;ids&#39;))" />
+                <xpath value="not(starts-with(f:reference/@value, &#39;#&#39;)) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, &#39;#&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/AllergyIntolerance" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="The target of a resource reference is a RIM entry point (Act, Role, or Entity)" />
+            </mapping>
+            <mapping>
+                <identity value="v2" />
+                <map value="CX.4 / (CX.4,CX.9,CX.10)" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="II.assigningAuthorityName but note that this is an improper use by the definition of the field.  Also Role.scoper" />
+            </mapping>
+            <mapping>
+                <identity value="servd" />
+                <map value="./IdentifierIssuingAuthority" />
+            </mapping>
+        </element>
+        <element id="Bundle.type">
+            <path value="Bundle.type" />
+            <short value="document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection" />
+            <definition value="Indicates the purpose of this bundle - how it is intended to be used." />
+            <comment value="It&#39;s possible to use a bundle for other purposes (e.g. a document can be accepted as a transaction). This is primarily defined so that there can be specific rules for some of the bundle types." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.type" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="code" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="BundleType" />
+                </extension>
+                <strength value="required" />
+                <description value="Indicates the purpose of a bundle - how it is intended to be used." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/bundle-type|4.0.1" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="w5" />
+                <map value="FiveWs.class" />
+            </mapping>
+        </element>
+        <element id="Bundle.timestamp">
+            <path value="Bundle.timestamp" />
+            <short value="When the bundle was assembled" />
+            <definition value="The date/time that the bundle was assembled - i.e. when the resources were placed in the bundle." />
+            <comment value="For many bundles, the timestamp is equal to .meta.lastUpdated, because they are not stored (e.g. search results). When a bundle is placed in a persistent store, .meta.lastUpdated will be usually be changed by the server. When the bundle is a message, a middleware agent altering the message (even if not stored) SHOULD update .meta.lastUpdated. .timestamp is used to track the original time of the Bundle, and SHOULD be populated.  \n\nUsage:\n\n* document : the date the document was created. Note: the composition may predate the document, or be associated with multiple documents. The date of the composition - the authoring time - may be earlier than the document assembly time\n* message : the date that the content of the message was assembled. This date is not changed by middleware engines unless they add additional data that changes the meaning of the time of the message\n* history : the date that the history was assembled. This time would be used as the _since time to ask for subsequent updates\n* searchset : the time that the search set was assembled. Note that different pages MAY have different timestamps but need not. Having different timestamps does not imply that subsequent pages will represent or include changes made since the initial query\n* transaction | transaction-response | batch | batch-response | collection : no particular assigned meaning\n\nThe timestamp value should be greater than the lastUpdated and other timestamps in the resources in the bundle, and it should be equal or earlier than the .meta.lastUpdated on the Bundle itself." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.timestamp" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="instant" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="w5" />
+                <map value="FiveWs.init" />
+            </mapping>
+            <mapping>
+                <identity value="cda" />
+                <map value="ClinicalDocument.effectiveTime" />
+            </mapping>
+        </element>
+        <element id="Bundle.total">
+            <path value="Bundle.total" />
+            <short value="If search, the total number of matches" />
+            <definition value="If a set of search matches, this is the total number of entries of type &#39;match&#39; across all pages in the search.  It does not include search.mode = &#39;include&#39; or &#39;outcome&#39; entries and it does not provide a count of the number of entries in the Bundle." />
+            <comment value="Only used if the bundle is a search result set. The total does not include resources such as OperationOutcome and included resources, only the total number of matching resources." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.total" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="unsignedInt" />
+            </type>
+            <condition value="ele-1" />
+            <condition value="bdl-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.link">
+            <path value="Bundle.link" />
+            <short value="Links related to this Bundle" />
+            <definition value="A series of links that provide context to this bundle." />
+            <comment value="Both Bundle.link and Bundle.entry.link are defined to support providing additional context when Bundles are used (e.g. [HATEOAS](http://en.wikipedia.org/wiki/HATEOAS)). \n\nBundle.entry.link corresponds to links found in the HTTP header if the resource in the entry was [read](http.html#read) directly.\n\nThis specification defines some specific uses of Bundle.link for [searching](search.html#conformance) and [paging](http.html#paging), but no specific uses for Bundle.entry.link, and no defined function in a transaction - the meaning is implementation specific." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Bundle.link" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="BackboneElement" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.link.id">
+            <path value="Bundle.link.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.link.extension">
+            <path value="Bundle.link.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.link.modifierExtension">
+            <path value="Bundle.link.modifierExtension" />
+            <short value="Extensions that cannot be ignored even if unrecognized" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](extensibility.html#modifierExtension)." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <alias value="modifiers" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="BackboneElement.modifierExtension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.link.relation">
+            <path value="Bundle.link.relation" />
+            <short value="See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1" />
+            <definition value="A name which details the functional use for this link - see [http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1](http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1)." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.link.relation" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.link.url">
+            <path value="Bundle.link.url" />
+            <short value="Reference details for the link" />
+            <definition value="The reference details for the link." />
+            <comment value="see http://en.wikipedia.org/wiki/Uniform_resource_identifier" />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.link.url" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry">
+            <path value="Bundle.entry" />
+            <short value="Entry in the bundle - will have a resource or information" />
+            <definition value="An entry in a bundle resource - will either contain a resource or information about a resource (transactions and history only)." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Bundle.entry" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="BackboneElement" />
+            </type>
+            <orderMeaning value="For bundles of type &#39;document&#39; and &#39;message&#39;, the first resource is special (must be Composition or MessageHeader respectively). For all bundles, the meaning of the order of entries depends on the bundle type" />
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="bdl-8" />
+                <severity value="error" />
+                <human value="fullUrl cannot be a version specific reference" />
+                <expression value="fullUrl.contains(&#39;/_history/&#39;).not()" />
+                <xpath value="not(exists(f:fullUrl[contains(string(@value), &#39;/_history/&#39;)]))" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <constraint>
+                <key value="bdl-5" />
+                <severity value="error" />
+                <human value="must be a resource unless there&#39;s a request or response" />
+                <expression value="resource.exists() or request.exists() or response.exists()" />
+                <xpath value="exists(f:resource) or exists(f:request) or exists(f:response)" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.id">
+            <path value="Bundle.entry.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.extension">
+            <path value="Bundle.entry.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.modifierExtension">
+            <path value="Bundle.entry.modifierExtension" />
+            <short value="Extensions that cannot be ignored even if unrecognized" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](extensibility.html#modifierExtension)." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <alias value="modifiers" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="BackboneElement.modifierExtension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.link">
+            <path value="Bundle.entry.link" />
+            <short value="Links related to this entry" />
+            <definition value="A series of links that provide context to this entry." />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Bundle.entry.link" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <contentReference value="#Bundle.link" />
+            <isSummary value="true" />
+        </element>
+        <element id="Bundle.entry.fullUrl">
+            <path value="Bundle.entry.fullUrl" />
+            <short value="URI for resource (Absolute URL server address or URI for UUID/OID)" />
+            <definition value="The Absolute URL for the resource.  The fullUrl SHALL NOT disagree with the id in the resource - i.e. if the fullUrl is not a urn:uuid, the URL shall be version-independent URL consistent with the Resource.id. The fullUrl is a version independent reference to the resource. The fullUrl element SHALL have a value except that: \n* fullUrl can be empty on a POST (although it does not need to when specifying a temporary id for reference in the bundle)\n* Results from operations might involve resources that are not identified." />
+            <comment value="fullUrl might not be [unique in the context of a resource](bundle.html#bundle-unique). Note that since [FHIR resources do not need to be served through the FHIR API](references.html), the fullURL might be a URN or an absolute URL that does not end with the logical id of the resource (Resource.id). However, but if the fullUrl does look like a RESTful server URL (e.g. meets the [regex](references.html#regex), then the &#39;id&#39; portion of the fullUrl SHALL end with the Resource.id.\n\nNote that the fullUrl is not the same as the canonical URL - it&#39;s an absolute url for an endpoint serving the resource (these will happen to have the same value on the canonical server for the resource with the canonical URL)." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.fullUrl" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.resource">
+            <path value="Bundle.entry.resource" />
+            <short value="A resource in the bundle" />
+            <definition value="The Resource for the entry. The purpose/meaning of the resource is determined by the Bundle.type." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.resource" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Resource" />
+            </type>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="Entity. Role, or Act" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search">
+            <path value="Bundle.entry.search" />
+            <short value="Search related information" />
+            <definition value="Information about the search process that lead to the creation of this entry." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.search" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="BackboneElement" />
+            </type>
+            <condition value="ele-1" />
+            <condition value="bdl-2" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search.id">
+            <path value="Bundle.entry.search.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search.extension">
+            <path value="Bundle.entry.search.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search.modifierExtension">
+            <path value="Bundle.entry.search.modifierExtension" />
+            <short value="Extensions that cannot be ignored even if unrecognized" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](extensibility.html#modifierExtension)." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <alias value="modifiers" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="BackboneElement.modifierExtension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search.mode">
+            <path value="Bundle.entry.search.mode" />
+            <short value="match | include | outcome - why this is in the result set" />
+            <definition value="Why this entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process." />
+            <comment value="There is only one mode. In some corner cases, a resource may be included because it is both a match and an include. In these circumstances, &#39;match&#39; takes precedence." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.search.mode" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="code" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="SearchEntryMode" />
+                </extension>
+                <strength value="required" />
+                <description value="Why an entry is in the result set - whether it&#39;s included as a match or because of an _include requirement, or to convey information or warning information about the search process." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/search-entry-mode|4.0.1" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.search.score">
+            <path value="Bundle.entry.search.score" />
+            <short value="Search ranking (between 0 and 1)" />
+            <definition value="When searching, the server&#39;s search ranking score for the entry." />
+            <comment value="Servers are not required to return a ranking score. 1 is most relevant, and 0 is least relevant. Often, search results are sorted by score, but the client may specify a different sort order.\n\nSee [Patient Match](patient-operation-match.html) for the EMPI search which relates to this element." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.search.score" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="decimal" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request">
+            <path value="Bundle.entry.request" />
+            <short value="Additional execution information (transaction/batch/history)" />
+            <definition value="Additional information about how this entry should be processed as part of a transaction or batch.  For history, it shows how the entry was processed to create the version contained in the entry." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="BackboneElement" />
+            </type>
+            <condition value="ele-1" />
+            <condition value="bdl-3" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.id">
+            <path value="Bundle.entry.request.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.extension">
+            <path value="Bundle.entry.request.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.modifierExtension">
+            <path value="Bundle.entry.request.modifierExtension" />
+            <short value="Extensions that cannot be ignored even if unrecognized" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](extensibility.html#modifierExtension)." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <alias value="modifiers" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="BackboneElement.modifierExtension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.method">
+            <path value="Bundle.entry.request.method" />
+            <short value="GET | HEAD | POST | PUT | DELETE | PATCH" />
+            <definition value="In a transaction or batch, this is the HTTP action to be executed for this entry. In a history bundle, this indicates the HTTP action that occurred." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.method" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="code" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <binding>
+                <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
+                    <valueString value="HTTPVerb" />
+                </extension>
+                <strength value="required" />
+                <description value="HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details." />
+                <valueSet value="http://hl7.org/fhir/ValueSet/http-verb|4.0.1" />
+            </binding>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.url">
+            <path value="Bundle.entry.request.url" />
+            <short value="URL for HTTP equivalent of this entry" />
+            <definition value="The URL for this entry, relative to the root (the address to which the request is posted)." />
+            <comment value="E.g. for a Patient Create, the method would be &quot;POST&quot; and the URL would be &quot;Patient&quot;. For a Patient Update, the method would be PUT and the URL would be &quot;Patient/[id]&quot;." />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.url" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.ifNoneMatch">
+            <path value="Bundle.entry.request.ifNoneMatch" />
+            <short value="For managing cache currency" />
+            <definition value="If the ETag values match, return a 304 Not Modified status. See the API documentation for [&quot;Conditional Read&quot;](http.html#cread)." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.ifNoneMatch" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.ifModifiedSince">
+            <path value="Bundle.entry.request.ifModifiedSince" />
+            <short value="For managing cache currency" />
+            <definition value="Only perform the operation if the last updated date matches. See the API documentation for [&quot;Conditional Read&quot;](http.html#cread)." />
+            <comment value="Note: This is intended for where precisely observed times are required, typically system logs etc., and not human-reported times - for them, see date and dateTime (which can be as precise as instant, but is not required to be) below. Time zone is always required" />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.ifModifiedSince" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="instant" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.ifMatch">
+            <path value="Bundle.entry.request.ifMatch" />
+            <short value="For managing update contention" />
+            <definition value="Only perform the operation if the Etag value matches. For more information, see the API section [&quot;Managing Resource Contention&quot;](http.html#concurrency)." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.ifMatch" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.request.ifNoneExist">
+            <path value="Bundle.entry.request.ifNoneExist" />
+            <short value="For conditional creates" />
+            <definition value="Instruct the server not to perform the create if a specified resource already exists. For further information, see the API documentation for [&quot;Conditional Create&quot;](http.html#ccreate). This is just the query portion of the URL - what follows the &quot;?&quot; (not including the &quot;?&quot;)." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.request.ifNoneExist" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response">
+            <path value="Bundle.entry.response" />
+            <short value="Results of execution (transaction/batch/history)" />
+            <definition value="Indicates the results of processing the corresponding &#39;request&#39; entry in the batch or transaction being responded to or what the results of an operation where when returning history." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="BackboneElement" />
+            </type>
+            <condition value="ele-1" />
+            <condition value="bdl-4" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.id">
+            <path value="Bundle.entry.response.id" />
+            <representation value="xmlAttr" />
+            <short value="Unique id for inter-element referencing" />
+            <definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Element.id" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+                    <valueUrl value="string" />
+                </extension>
+                <code value="http://hl7.org/fhirpath/System.String" />
+            </type>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.extension">
+            <path value="Bundle.entry.response.extension" />
+            <slicing>
+                <discriminator>
+                    <type value="value" />
+                    <path value="url" />
+                </discriminator>
+                <description value="Extensions are always sliced by (at least) url" />
+                <rules value="open" />
+            </slicing>
+            <short value="Additional content defined by implementations" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="Element.extension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.modifierExtension">
+            <path value="Bundle.entry.response.modifierExtension" />
+            <short value="Extensions that cannot be ignored even if unrecognized" />
+            <definition value="May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element&#39;s descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.\n\nModifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself)." />
+            <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+            <requirements value="Modifier extensions allow for extensions that *cannot* be safely ignored to be clearly distinguished from the vast majority of extensions which can be safely ignored.  This promotes interoperability by eliminating the need for implementers to prohibit the presence of extensions. For further information, see the [definition of modifier extensions](extensibility.html#modifierExtension)." />
+            <alias value="extensions" />
+            <alias value="user content" />
+            <alias value="modifiers" />
+            <min value="0" />
+            <max value="*" />
+            <base>
+                <path value="BackboneElement.modifierExtension" />
+                <min value="0" />
+                <max value="*" />
+            </base>
+            <type>
+                <code value="Extension" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <constraint>
+                <key value="ext-1" />
+                <severity value="error" />
+                <human value="Must have either extensions or value[x], not both" />
+                <expression value="extension.exists() != value.exists()" />
+                <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])" />
+                <source value="http://hl7.org/fhir/StructureDefinition/DomainResource" />
+            </constraint>
+            <isModifier value="true" />
+            <isModifierReason value="Modifier extensions are expected to modify the meaning or interpretation of the element that contains them" />
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.status">
+            <path value="Bundle.entry.response.status" />
+            <short value="Status response code (text optional)" />
+            <definition value="The status code returned by processing this entry. The status SHALL start with a 3 digit HTTP code (e.g. 404) and may contain the standard HTTP description associated with the status code." />
+            <comment value="Note that FHIR strings SHALL NOT exceed 1MB in size" />
+            <min value="1" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response.status" />
+                <min value="1" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.location">
+            <path value="Bundle.entry.response.location" />
+            <short value="The location (if the operation returns a location)" />
+            <definition value="The location header created by processing this operation, populated if the operation returns a location." />
+            <comment value="see http://en.wikipedia.org/wiki/Uniform_resource_identifier" />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response.location" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="uri" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.etag">
+            <path value="Bundle.entry.response.etag" />
+            <short value="The Etag for the resource (if relevant)" />
+            <definition value="The Etag for the resource, if the operation for the entry produced a versioned resource (see [Resource Metadata and Versioning](http.html#versioning) and [Managing Resource Contention](http.html#concurrency))." />
+            <comment value="Etags match the Resource.meta.versionId. The ETag has to match the version id in the header if a resource is included." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response.etag" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="string" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.lastModified">
+            <path value="Bundle.entry.response.lastModified" />
+            <short value="Server&#39;s date time modified" />
+            <definition value="The date/time that the resource was modified on the server." />
+            <comment value="This has to match the same time in the meta header (meta.lastUpdated) if a resource is included." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response.lastModified" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="instant" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+        </element>
+        <element id="Bundle.entry.response.outcome">
+            <path value="Bundle.entry.response.outcome" />
+            <short value="OperationOutcome with hints and warnings (for batch/transaction)" />
+            <definition value="An OperationOutcome containing hints and warnings produced as part of processing this entry in a batch or transaction." />
+            <comment value="For a POST/PUT operation, this is the equivalent outcome that would be returned for prefer = operationoutcome - except that the resource is always returned whether or not the outcome is returned.\n\nThis outcome is not used for error responses in batch/transaction, only for hints and warnings. In a batch operation, the error will be in Bundle.entry.response, and for transaction, there will be a single OperationOutcome instead of a bundle in the case of an error." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.entry.response.outcome" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Resource" />
+            </type>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="Entity. Role, or Act" />
+            </mapping>
+        </element>
+        <element id="Bundle.signature">
+            <path value="Bundle.signature" />
+            <short value="Digital Signature" />
+            <definition value="Digital Signature - base64 encoded. XML-DSig or a JWT." />
+            <comment value="The signature could be created by the &quot;author&quot; of the bundle or by the originating device.   Requirements around inclusion of a signature, verification of signatures and treatment of signed/non-signed bundles is implementation-environment specific." />
+            <requirements value="A Signature holds an electronic representation of a signature and its supporting context in a FHIR accessible form. The signature may either be a cryptographic type (XML DigSig or a JWS), which is able to provide non-repudiation proof, or it may be a graphical image that represents a signature or a signature process. This element allows capturing signatures on documents, messages, transactions or even search responses, to support content-authentication, non-repudiation or other business cases. This is primarily relevant where the bundle may travel through multiple hops or via other mechanisms where HTTPS non-repudiation is insufficient." />
+            <min value="0" />
+            <max value="1" />
+            <base>
+                <path value="Bundle.signature" />
+                <min value="0" />
+                <max value="1" />
+            </base>
+            <type>
+                <code value="Signature" />
+            </type>
+            <condition value="ele-1" />
+            <constraint>
+                <key value="ele-1" />
+                <severity value="error" />
+                <human value="All FHIR elements must have a @value or children" />
+                <expression value="hasValue() or (children().count() &gt; id.count())" />
+                <xpath value="@value|f:*|h:div" />
+                <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+            </constraint>
+            <isSummary value="true" />
+            <mapping>
+                <identity value="rim" />
+                <map value="n/a" />
+            </mapping>
+            <mapping>
+                <identity value="rim" />
+                <map value="N/A" />
+            </mapping>
+        </element>
+    </snapshot>
+    <differential>
+        <element id="Bundle.meta">
+            <path value="Bundle.meta" />
+            <min value="1" />
+        </element>
+        <element id="Bundle.meta.versionId">
+            <path value="Bundle.meta.versionId" />
+            <min value="1" />
+        </element>
+        <element id="Bundle.meta.security">
+            <path value="Bundle.meta.security" />
+            <mustSupport value="true" />
+        </element>
+        <element id="Bundle.identifier">
+            <path value="Bundle.identifier" />
+            <min value="1" />
+        </element>
+        <element id="Bundle.identifier.system">
+            <path value="Bundle.identifier.system" />
+            <min value="1" />
+        </element>
+        <element id="Bundle.identifier.value">
+            <path value="Bundle.identifier.value" />
+            <min value="1" />
+        </element>
+        <element id="Bundle.timestamp">
+            <path value="Bundle.timestamp" />
+            <min value="1" />
+        </element>
+    </differential>
+</StructureDefinition>

@@ -1,0 +1,96 @@
+{
+  "resourceType" : "Measure",
+  "id" : "numTotBeds",
+  "url" : "http://cdcmeasures.example.org/modules/covid19/20200331/numTotBeds",
+  "version" : "20200401.06",
+  "name" : "numTotBeds",
+  "title" : "All Hospital Beds",
+  "status" : "draft",
+  "subjectCodeableConcept" : {
+    "coding" : [
+      {
+        "system" : "Location",
+        "code" : "Location"
+      }
+    ]
+  },
+  "date" : "2020-03-31T00:00:00Z",
+  "publisher" : "SANER-IG",
+  "description" : "Total number of all Inpatient and outpatient beds, including all staffed, ICU, licensed, and overflow(surge) beds used for inpatients or outpatients.",
+  "useContext" : [
+    {
+      "code" : {
+        "system" : "http://terminology.hl7.org/CodeSystem/usage-context-type",
+        "code" : "focus"
+      },
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "http://snomed.info/sct",
+            "code" : "840535000",
+            "display" : "COVID-19"
+          }
+        ]
+      }
+    }
+  ],
+  "jurisdiction" : [
+    {
+      "coding" : [
+        {
+          "system" : "urn:iso:std:iso:3166",
+          "code" : "US",
+          "display" : "United States of America"
+        }
+      ]
+    }
+  ],
+  "relatedArtifact" : [
+    {
+      "type" : "documentation",
+      "url" : "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+    }
+  ],
+  "scoring" : {
+    "coding" : [
+      {
+        "system" : "http://terminology.hl7.org/CodeSystem/measure-scoring",
+        "code" : "cohort",
+        "display" : "Cohort"
+      }
+    ]
+  },
+  "type" : [
+    {
+      "coding" : [
+        {
+          "system" : "http://hl7.org/fhir/ValueSet/measure-type",
+          "code" : "structure",
+          "display" : "Structure"
+        }
+      ]
+    }
+  ],
+  "group" : [
+    {
+      "population" : [
+        {
+          "code" : {
+            "coding" : [
+              {
+                "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+                "code" : "measure-population",
+                "display" : "Measure Population"
+              }
+            ]
+          },
+          "criteria" : {
+            "description" : "CDC defined field: numTotBeds",
+            "language" : "text/plain",
+            "expression" : "Total number of all Inpatient and outpatient beds, including all staffed, ICU, licensed, and overflow(surge) beds used for inpatients or outpatients."
+          }
+        }
+      ]
+    }
+  ]
+}

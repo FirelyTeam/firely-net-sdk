@@ -1,0 +1,29 @@
+{
+    "resourceType": "Questionnaire",
+    "url": "http://example.com/fhir/enableWhenQuestionnaire",
+    "status": "draft",
+    "item": [{
+            "linkId": "S0",
+            "type": "boolean"
+        },
+        {
+            "linkId": "S1",
+            "type": "boolean"
+        },
+        {
+            "linkId": "S2",
+            "type": "boolean",
+            "required": true,
+
+            "enableWhen": [{
+                    "question": "S0",
+                    "answerBoolean": true
+                },
+                {
+                    "question": "S1",
+                    "answerBoolean": true
+                }
+            ]
+        }
+    ]
+}
