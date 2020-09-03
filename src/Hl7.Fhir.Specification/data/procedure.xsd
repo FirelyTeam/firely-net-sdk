@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -84,7 +104,7 @@
               <xs:documentation xml:lang="en">Captures the reason for the current state of the procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A code that classifies the procedure for searching, sorting and display purposes (e.g. &quot;Surgical Procedure&quot;).</xs:documentation>
            </xs:annotation>
@@ -106,24 +126,32 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Estimated or actual date, date-time, period, or age when the procedure was performed.  Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured.</xs:documentation>
+              <xs:documentation xml:lang="en">Estimated or actual date, date-time, period, or age when the procedure did occur or is occurring.  Allows a period to support complex procedures that span more than one date, and also allows for the length of the procedure to be captured.</xs:documentation>
             </xs:annotation>
-            <xs:element name="performedDateTime" type="dateTime"/>
-            <xs:element name="performedPeriod" type="Period"/>
-            <xs:element name="performedString" type="string"/>
-            <xs:element name="performedAge" type="Age"/>
-            <xs:element name="performedRange" type="Range"/>
+            <xs:element name="occurrenceDateTime" type="dateTime"/>
+            <xs:element name="occurrencePeriod" type="Period"/>
+            <xs:element name="occurrenceString" type="string"/>
+            <xs:element name="occurrenceAge" type="Age"/>
+            <xs:element name="occurrenceRange" type="Range"/>
+            <xs:element name="occurrenceTiming" type="Timing"/>
           </xs:choice>
+          <xs:element name="recorded" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date the occurrence of the procedure was first captured in the record regardless of Procedure.status (potentially after the occurrence of the event).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="recorder" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Individual who recorded the record and takes responsibility for its content.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="asserter" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Individual who is making the procedure statement.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">Indicates if this record was captured as a secondary 'reported' record rather than as an original primary source-of-truth record.  It may also indicate the source of the report.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="reportedBoolean" type="boolean"/>
+            <xs:element name="reportedReference" type="Reference"/>
+          </xs:choice>
           <xs:element name="performer" type="Procedure.Performer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Limited to &quot;real&quot; people rather than equipment.</xs:documentation>
@@ -134,14 +162,9 @@
               <xs:documentation xml:lang="en">The location where the procedure actually happened.  E.g. a newborn at home, a tracheostomy at a restaurant.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The coded reason why the procedure was performed. This may be a coded entity of some type, or may simply be present as text.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The justification of why the procedure was performed.</xs:documentation>
+              <xs:documentation xml:lang="en">The coded reason or reference why the procedure was performed. This may be a coded entity of some type, or may simply be present as text, or may be a reference to one of several resources that justify the procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="bodySite" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -184,14 +207,9 @@
               <xs:documentation xml:lang="en">A device that is implanted, removed or otherwise manipulated (calibration, battery replacement, fitting a prosthesis, attaching a wound-vac, etc.) as a focal portion of the Procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="usedReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="used" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies medications, devices and any other substance used as part of the procedure.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="usedCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies coded items that were used as part of the procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -212,7 +230,7 @@
           </xs:element>
           <xs:element name="actor" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The practitioner who was involved in the procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who or what performed the procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">

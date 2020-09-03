@@ -64,13 +64,15 @@ namespace Hl7.Fhir.Specification.Tests
             vs = await source.FindCodeSystemAsync("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
             Assert.IsNotNull(vs);
 
+            //MV: No longer part of the spec
             // One from v2-tables
-            vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v2-0145");
-            Assert.IsNotNull(vs);
+            //vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v2-0145");
+            //Assert.IsNotNull(vs);
 
+            //MV: No longer part of the spec
             // One from v3-codesystems
-            vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v3-ActCode");
-            Assert.IsNotNull(vs);
+            //vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v3-ActCode");
+            //Assert.IsNotNull(vs);
 
             // Something non-existent
             vs = await source.FindCodeSystemAsync("http://nema.org/dicom/dicmQQQQ");
@@ -91,13 +93,15 @@ namespace Hl7.Fhir.Specification.Tests
             //vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/dicom-dcim");
             //Assert.IsNotNull(vs);
 
+            //MV: No longer part of the spec
             // One from v2-tables
-            vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v2-0190");
-            Assert.IsNotNull(vs);
+            //vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v2-0190");
+            //Assert.IsNotNull(vs);
 
+            //MV: No longer part of the spec
             // One from v3-codesystems
-            vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActStatus");
-            Assert.IsNotNull(vs);
+            //vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActStatus");
+            //Assert.IsNotNull(vs);
 
             // Something non-existent
             vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/crapQQQQ");
@@ -156,11 +160,12 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var fa = ZipSource.CreateValidationSource();
 
-            var vs = fa.ResolveByUri("http://terminology.hl7.org/ValueSet/v2-0292");
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
+            //MV: No longer part of the spec
+            //var vs = fa.ResolveByUri("http://terminology.hl7.org/ValueSet/v2-0292");
+            //Assert.IsNotNull(vs);
+            //Assert.IsTrue(vs is ValueSet);
 
-            vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
+            var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 

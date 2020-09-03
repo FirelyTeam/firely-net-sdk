@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -71,7 +91,7 @@
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the type of medication request (for example, where the medication is expected to be consumed or administered (i.e. inpatient or outpatient)).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the grouping or category of medication request (for example, drug classification like ATC, where meds would be administered, legal category of the medication.).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="priority" minOccurs="0" maxOccurs="1" type="RequestPriority">
@@ -81,23 +101,24 @@
           </xs:element>
           <xs:element name="doNotPerform" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">If true indicates that the provider is asking for the medication request not to occur.</xs:documentation>
+              <xs:documentation xml:lang="en">If true, indicates that the provider is asking for the patient to either stop taking or to not start taking the specified medication. For example, the patient is taking an existing medication and the provider is changing their medication. They want to create two seperate requests: one to stop using the current medication and another to start the new medication.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="reported" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates if this record was captured as a secondary 'reported' record rather than as an original primary source-of-truth record.  It may also indicate the source of the report.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="reportedBoolean" type="boolean"/>
-            <xs:element name="reportedReference" type="Reference"/>
-          </xs:choice>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="informationSource" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The person or organization who provided the information about this request, if the source is someone other than the requestor.  This is often used when the MedicationRequest is reported by another person.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="medication" minOccurs="1" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the medication being requested. This is a link to a resource that represents the medication which may be the details of the medication or simply an attribute carrying a code that identifies the medication from a known list of medications.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="medicationCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="medicationReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">A link to a resource representing the person or set of individuals to whom the medication will be given.</xs:documentation>
@@ -110,7 +131,7 @@
           </xs:element>
           <xs:element name="supportingInformation" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Include additional information (for example, patient height and weight) that supports the ordering of the medication.</xs:documentation>
+              <xs:documentation xml:lang="en">Include additional information (for example, patient height and weight, a MedicationUsage for the patient) that supports the ordering of the medication.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="authoredOn" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -138,14 +159,9 @@
               <xs:documentation xml:lang="en">The person who entered the order on behalf of another individual for example in the case of a verbal or a telephone order.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reason or the indication for ordering or not ordering the medication.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Condition or observation that supports why the medication was ordered.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="instantiatesCanonical" minOccurs="0" maxOccurs="unbounded" type="canonical">
@@ -170,7 +186,7 @@
           </xs:element>
           <xs:element name="courseOfTherapyType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The description of the overall patte3rn of the administration of the medication to the patient.</xs:documentation>
+              <xs:documentation xml:lang="en">The description of the overall pattern of the administration of the medication to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="insurance" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -181,6 +197,11 @@
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">Extra information about the prescription that could not be conveyed by the other attributes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="renderedDosageInstruction" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The full representation of the dose of the medication included in all dosage instructions.  To be used when multiple dosage instructions are included to represent complex dosing such as increasing or tapering doses.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="dosageInstruction" minOccurs="0" maxOccurs="unbounded" type="Dosage">
@@ -254,9 +275,9 @@
               <xs:documentation xml:lang="en">Identifies the period time over which the supplied product is expected to be used, or the length of time the dispense is expected to last.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="performer" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="dispenser" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the intended dispensing Organization specified by the prescriber.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the intended performing Organization that will dispense the medication as specified by the prescriber.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -56,7 +76,7 @@
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="EncounterStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</xs:documentation>
+              <xs:documentation xml:lang="en">planned | in-progress | onhold | completed | cancelled | entered-in-error | unknown.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="statusHistory" type="Encounter.StatusHistory" minOccurs="0" maxOccurs="unbounded">
@@ -94,6 +114,11 @@
               <xs:documentation xml:lang="en">The patient or group present at the encounter.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="subjectStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The subjectStatus value can be used to track the patient's status within the encounter. It details whether the patient has arrived or departed, has been triaged or is currently in a waiting status.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="episodeOfCare" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Where a specific encounter should be classified as a part of a specific episode(s) of care this field should be used. This association can facilitate grouping of related encounters together for a specific purpose, such as government reporting, issue tracking, association via a common problem.  The association is recorded on the encounter as these are typically created after the episode of care and grouped on entry rather than editing the episode of care to append another encounter to it (the episode of care could span years).</xs:documentation>
@@ -124,14 +149,9 @@
               <xs:documentation xml:lang="en">Quantity of time the encounter lasted. This excludes the time during leaves of absence.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Reason the encounter takes place, expressed as a code. For admissions, this can be used for a coded admission diagnosis.</xs:documentation>
+              <xs:documentation xml:lang="en">Reason the encounter takes place, expressed as a code or a reference to another resource. For admissions, this can be used for a coded admission diagnosis.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="diagnosis" type="Encounter.Diagnosis" minOccurs="0" maxOccurs="unbounded">
@@ -177,7 +197,7 @@
         <xs:sequence>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="EncounterStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">planned | arrived | triaged | in-progress | onleave | finished | cancelled +.</xs:documentation>
+              <xs:documentation xml:lang="en">planned | in-progress | onhold | completed | cancelled | entered-in-error | unknown.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
@@ -391,29 +411,19 @@
           <xs:documentation xml:lang="en">Planned</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="arrived">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Arrived</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="triaged">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Triaged</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="in-progress">
         <xs:annotation>
           <xs:documentation xml:lang="en">In Progress</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="onleave">
+      <xs:enumeration value="onhold">
         <xs:annotation>
-          <xs:documentation xml:lang="en">On Leave</xs:documentation>
+          <xs:documentation xml:lang="en">On Hold</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="finished">
+      <xs:enumeration value="completed">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Finished</xs:documentation>
+          <xs:documentation xml:lang="en">Completed</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="cancelled">

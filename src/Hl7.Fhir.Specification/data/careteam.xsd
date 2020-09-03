@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="CareTeam" type="CareTeam">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care for a patient.</xs:documentation>
+      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="CareTeam">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care for a patient.</xs:documentation>
+      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -74,11 +94,6 @@
               <xs:documentation xml:lang="en">Identifies the patient or group whose intended care is handled by the team.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The Encounter during which this CareTeam was created or to which the creation of this record is tightly associated.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates when the team did (or is intended to) come into effect and end.</xs:documentation>
@@ -89,14 +104,9 @@
               <xs:documentation xml:lang="en">Identifies all people and organizations who are expected to be involved in the care team.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Describes why the care team exists.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Condition(s) that this care team addresses.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="managingOrganization" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -120,12 +130,12 @@
   </xs:complexType>
   <xs:complexType name="CareTeam.Participant">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care for a patient.</xs:documentation>
+      <xs:documentation xml:lang="en">The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates specific responsibility of an individual within the care team, such as &quot;Primary care physician&quot;, &quot;Trained social worker counselor&quot;, &quot;Caregiver&quot;, etc.</xs:documentation>
            </xs:annotation>
@@ -140,11 +150,13 @@
               <xs:documentation xml:lang="en">The organization of the practitioner.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates when the specific member or organization did (or is intended to) come into effect and end.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">When the member is generally available within this care team.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="coveragePeriod" type="Period"/>
+            <xs:element name="coverageTiming" type="Timing"/>
+          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

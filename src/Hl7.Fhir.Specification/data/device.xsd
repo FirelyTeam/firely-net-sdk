@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -54,6 +74,11 @@
               <xs:documentation xml:lang="en">Unique instance identifiers assigned to a device by manufacturers other organizations or owners.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="displayName" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The name used to display by default when the device is referenced. Based on intent of use by the resource creator, this may reflect one of the names in Device.deviceName, or may be another simple name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="definition" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reference to the definition for the device.</xs:documentation>
@@ -66,12 +91,12 @@
           </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="FHIRDeviceStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Status of the Device availability.</xs:documentation>
+              <xs:documentation xml:lang="en">Status of the Device record. This is not the status of the device like availability.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="statusReason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reason for the dtatus of the Device availability.</xs:documentation>
+              <xs:documentation xml:lang="en">Reason for the status of the Device record. For example, why is the record not active.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="distinctIdentifier" minOccurs="0" maxOccurs="1" type="string">
@@ -81,7 +106,7 @@
           </xs:element>
           <xs:element name="manufacturer" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A name of the manufacturer.</xs:documentation>
+              <xs:documentation xml:lang="en">A name of the manufacturer or entity legally responsible for the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="manufactureDate" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -111,22 +136,23 @@
           </xs:element>
           <xs:element name="modelNumber" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The model number for the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The manufacturer's model number for the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="partNumber" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The part number of the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The part number or catalog number of the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The kind or type of device.</xs:documentation>
+              <xs:documentation xml:lang="en">The kind or type of device. A device instance may have more than one type - in which case those are the types that apply to the specific instance of the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="specialization" type="Device.Specialization" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication.</xs:documentation>
+              <xs:documentation xml:lang="en">The device function, including in some cases whether or not the functionality conforms to some standard. For example, a PHD blood pressure specialization indicates that the device conforms to the IEEE 11073-10407 Blood Pressure Specialization. This is NOT an alternate name or an additional descriptive name given by the manufacturer. That would be found in the deviceName element.
+In the PHD case, there are 11073 10101 nomenclature codes that define the specialization standards and that will be used, for example, in the PHD case for the specialization.systemType element. The specialization.version would be the version of the standard if the systemType referred to a standard.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" type="Device.Version" minOccurs="0" maxOccurs="unbounded">
@@ -141,7 +167,17 @@
           </xs:element>
           <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Patient information, If the device is affixed to a person.</xs:documentation>
+              <xs:documentation xml:lang="en">Patient information, if the device is affixed to, or associated to a patient for their specific use, irrespective of the procedure, use, observation, or other activity that the device is involved in.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="operationalStatus" type="Device.OperationalStatus" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of the device itself - whether it is switched on, or activated, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="associationStatus" type="Device.AssociationStatus" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The state of the usage or application of the device - whether the device is implanted, or explanted, or attached to the patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="owner" minOccurs="0" maxOccurs="1" type="Reference">
@@ -176,7 +212,7 @@
           </xs:element>
           <xs:element name="parent" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The parent device.</xs:documentation>
+              <xs:documentation xml:lang="en">The device that this device is attached to or is part of.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -241,12 +277,12 @@ http://hl7.org/fhir/NamingSystem/iccbba-other-di.</xs:documentation>
         <xs:sequence>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The name that identifies the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DeviceNameType">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of deviceName.
+              <xs:documentation xml:lang="en">The type of deviceName. Note that ManufactureDeviceName means that the name is the name as given by the manufacturer, not the name of the manufacturer.
 UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | ModelName.</xs:documentation>
            </xs:annotation>
           </xs:element>
@@ -284,12 +320,12 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
         <xs:sequence>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of the device version.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of the device version, e.g. manufacturer, approved, internal.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="component" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A single component of the device version.</xs:documentation>
+              <xs:documentation xml:lang="en">The hardware or software module of the device to which the version applies.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="value" minOccurs="1" maxOccurs="1" type="string">
@@ -310,7 +346,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
         <xs:sequence>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Code that specifies the property DeviceDefinitionPropetyCode (Extensible).</xs:documentation>
+              <xs:documentation xml:lang="en">Code that specifies the property being represented. No codes are specified but the MDC codes are an example: https://build.fhir.org/mdc.html.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="valueQuantity" minOccurs="0" maxOccurs="unbounded" type="Quantity">
@@ -321,6 +357,48 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
           <xs:element name="valueCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Property value as a code, e.g., NTP4 (synced to NTP).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Device.OperationalStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="value" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">on |off | standby.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The reasons given for the current operational status - i.e. why is the device switched on etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Device.AssociationStatus">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="value" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">implanted|explanted|attached.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The reasons given for the current association status - i.e. why is the device explanted, or attached to the patient, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -432,6 +510,11 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
       <xs:enumeration value="self-reported">
         <xs:annotation>
           <xs:documentation xml:lang="en">Self Reported</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="electronic-transmission">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Electronic Transmission</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="unknown">

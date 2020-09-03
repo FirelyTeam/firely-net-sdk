@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,16 +58,16 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="EvidenceVariable" type="EvidenceVariable">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceVariable resource describes a &quot;PICO&quot; element that knowledge (evidence, assertion, recommendation) is about.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="EvidenceVariable">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceVariable resource describes a &quot;PICO&quot; element that knowledge (evidence, assertion, recommendation) is about.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="MetadataResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -94,16 +114,6 @@
               <xs:documentation xml:lang="en">The date  (and optionally time) when the evidence variable was published. The date must change when the business version changes and it must change if the status code changes. In addition, it should change when the substantive content of the evidence variable changes.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the organization or individual that published the evidence variable.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">A free text natural language description of the evidence variable from a consumer's perspective.</xs:documentation>
@@ -119,34 +129,14 @@
               <xs:documentation xml:lang="en">The content was developed with a focus and intent of supporting the contexts that are listed. These contexts may be general categories (gender, age, ...) or may be references to specific programs (insurance plans, studies, ...) and may be used to assist with indexing and searching for appropriate evidence variable instances.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A legal or geographic region in which the evidence variable is intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">The name of the organization or individual that published the evidence variable.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="contact" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the evidence variable and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the evidence variable.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="approvalDate" minOccurs="0" maxOccurs="1" type="date">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the resource content was approved by the publisher. Approval happens once when the content is officially approved for usage.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="lastReviewDate" minOccurs="0" maxOccurs="1" type="date">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The date on which the resource content was last reviewed. Review happens periodically after approval but does not change the original approval date.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The period during which the evidence variable content was or is planned to be in active use.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="topic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Descriptive topics related to the content of the EvidenceVariable. Topics provide a high-level categorization grouping types of EvidenceVariables that can be useful for filtering and searching.</xs:documentation>
+              <xs:documentation xml:lang="en">Contact details to assist a user in finding and communicating with the publisher.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="author" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
@@ -174,14 +164,29 @@
               <xs:documentation xml:lang="en">Related artifacts such as additional documentation, justification, or bibliographic references.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="EvidenceVariableType">
+          <xs:element name="actual" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of evidence element, a population, an exposure, or an outcome.</xs:documentation>
+              <xs:documentation xml:lang="en">True if the actual variable measured, false if a conceptual representation of the intended variable.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="characteristic" type="EvidenceVariable.Characteristic" minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="characteristicCombination" minOccurs="0" maxOccurs="1" type="CharacteristicCombination">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to specify if two or more characteristics are combined with OR or AND.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="characteristic" type="EvidenceVariable.Characteristic" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A characteristic that defines the members of the evidence element. Multiple characteristics are applied with &quot;and&quot; semantics.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="handling" minOccurs="0" maxOccurs="1" type="EvidenceVariableHandling">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used for an outcome to classify.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="category" type="EvidenceVariable.Category" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A grouping (or set of values) described along with other groupings to specify the set of groupings allowed for the variable.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -190,7 +195,7 @@
   </xs:complexType>
   <xs:complexType name="EvidenceVariable.Characteristic">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceVariable resource describes a &quot;PICO&quot; element that knowledge (evidence, assertion, recommendation) is about.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -208,12 +213,15 @@
             <xs:element name="definitionCanonical" type="canonical"/>
             <xs:element name="definitionCodeableConcept" type="CodeableConcept"/>
             <xs:element name="definitionExpression" type="Expression"/>
-            <xs:element name="definitionDataRequirement" type="DataRequirement"/>
-            <xs:element name="definitionTriggerDefinition" type="TriggerDefinition"/>
           </xs:choice>
-          <xs:element name="usageContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+          <xs:element name="method" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Use UsageContext to define the members of the population, such as Age Ranges, Genders, Settings.</xs:documentation>
+              <xs:documentation xml:lang="en">Method used for describing characteristic.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="device" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Device used for determining characteristic.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="exclude" minOccurs="0" maxOccurs="1" type="boolean">
@@ -221,18 +229,9 @@
               <xs:documentation xml:lang="en">When true, members with this characteristic are excluded from the element.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="timeFromStart" type="EvidenceVariable.TimeFromStart" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates what effective period the study covers.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="participantEffectiveDateTime" type="dateTime"/>
-            <xs:element name="participantEffectivePeriod" type="Period"/>
-            <xs:element name="participantEffectiveDuration" type="Duration"/>
-            <xs:element name="participantEffectiveTiming" type="Timing"/>
-          </xs:choice>
-          <xs:element name="timeFromStart" minOccurs="0" maxOccurs="1" type="Duration">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates duration from the participant's study entry.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates duration, period, or point of observation from the participant's study entry.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="groupMeasure" minOccurs="0" maxOccurs="1" type="GroupMeasure">
@@ -244,33 +243,58 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="EvidenceVariableType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="dichotomous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Dichotomous</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="continuous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Continuous</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="descriptive">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Descriptive</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="EvidenceVariableType">
+  <xs:complexType name="EvidenceVariable.TimeFromStart">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive).</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="EvidenceVariableType-list" use="optional"/>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A short, natural language description.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to express the observation at a defined amount of time after the study start.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="range" minOccurs="0" maxOccurs="1" type="Range">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to express the observation within a period after the study start.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A human-readable string to clarify or explain concepts about the resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EvidenceVariable.Category">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A human-readable title or representation of the grouping.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Value or set of values that define the grouping.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueRange" type="Range"/>
+          </xs:choice>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -316,6 +340,66 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="GroupMeasure-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="CharacteristicCombination-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="intersection">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">intersection</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="union">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">union</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="CharacteristicCombination">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Logical grouping of characteristics.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="CharacteristicCombination-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EvidenceVariableHandling-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="continuous">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">continuous variable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="dichotomous">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">dichotomous variable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ordinal">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ordinal variable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="polychotomous">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">polychotomous variable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="EvidenceVariableHandling">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The handling of the variable in statistical analysis for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive).</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="EvidenceVariableHandling-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

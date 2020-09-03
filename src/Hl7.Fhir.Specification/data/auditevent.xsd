@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="AuditEvent" type="AuditEvent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="AuditEvent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -64,6 +84,11 @@
               <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the audit.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="severity" minOccurs="0" maxOccurs="1" type="AuditEventSeverity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates and enables segmentation of various severity including debugging from critical.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
               <xs:documentation xml:lang="en">The period during which the activity occurred.</xs:documentation>
@@ -74,14 +99,9 @@
               <xs:documentation xml:lang="en">The time when the event was recorded.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="AuditEventOutcome">
+          <xs:element name="outcome" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="outcomeDesc" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A free text description of the outcome of the event.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed. A free text descripiton can be given in outcome.text.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="purposeOfEvent" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -110,7 +130,7 @@
   </xs:complexType>
   <xs:complexType name="AuditEvent.Agent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -176,7 +196,7 @@
   </xs:complexType>
   <xs:complexType name="AuditEvent.Network">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -197,7 +217,7 @@
   </xs:complexType>
   <xs:complexType name="AuditEvent.Source">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -223,7 +243,7 @@
   </xs:complexType>
   <xs:complexType name="AuditEvent.Entity">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -258,11 +278,6 @@
               <xs:documentation xml:lang="en">A name of the entity in the audit event.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Text that describes the entity in more detail.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="query" minOccurs="0" maxOccurs="1" type="base64Binary">
             <xs:annotation>
               <xs:documentation xml:lang="en">The query parameters for a query-type entities.</xs:documentation>
@@ -279,7 +294,7 @@
   </xs:complexType>
   <xs:complexType name="AuditEvent.Detail">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of an event made for purposes of maintaining a security log. Typical uses include detection of intrusion attempts and monitoring for inappropriate usage.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -297,41 +312,6 @@
             <xs:element name="valueBase64Binary" type="base64Binary"/>
           </xs:choice>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="AuditEventOutcome-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="0">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Success</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="4">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Minor failure</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="8">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Serious failure</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="12">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Major failure</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="AuditEventOutcome">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="AuditEventOutcome-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -372,6 +352,61 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="AuditEventAction-list" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="AuditEventSeverity-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="emergency">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Emergency</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="alert">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Alert</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="critical">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Critical</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="error">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="warning">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Warning</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="notice">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Notice</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="informational">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Informational</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="debug">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Debug</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AuditEventSeverity">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The severity of the audit entry.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="AuditEventSeverity-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

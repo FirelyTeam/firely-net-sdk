@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -47,7 +67,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -104,14 +124,14 @@
               <xs:documentation xml:lang="en">A legal or geographic region in which the example scenario is intended to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A copyright statement relating to the example scenario and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the example scenario.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="purpose" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">What the example scenario resource is created for. This should not be used to show the business purpose of the scenario itself, but the purpose of documenting a scenario.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A copyright statement relating to the example scenario and/or its contents. Copyright statements are generally legal restrictions on the use and publishing of the example scenario.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="actor" type="ExampleScenario.Actor" minOccurs="0" maxOccurs="unbounded">
@@ -450,6 +470,12 @@
           <xs:documentation xml:lang="zh">活动定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="AdministrableProductDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="AdverseEvent">
         <xs:annotation>
           <xs:documentation xml:lang="en">AdverseEvent</xs:documentation>
@@ -550,6 +576,12 @@
           <xs:documentation xml:lang="zh">能力声明</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="CapabilityStatement2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="CarePlan">
         <xs:annotation>
           <xs:documentation xml:lang="en">CarePlan</xs:documentation>
@@ -590,6 +622,12 @@
           <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Citation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Claim">
         <xs:annotation>
           <xs:documentation xml:lang="en">Claim</xs:documentation>
@@ -615,6 +653,12 @@
           <xs:documentation xml:lang="fr">ImpressionClinique</xs:documentation>
           <xs:documentation xml:lang="es">HallazgoClinico</xs:documentation>
           <xs:documentation xml:lang="zh">临床印象</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClinicalUseIssue">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CodeSystem">
@@ -682,6 +726,12 @@
           <xs:documentation xml:lang="fr">Condition</xs:documentation>
           <xs:documentation xml:lang="es">Condición</xs:documentation>
           <xs:documentation xml:lang="zh">情况</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConditionDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Consent">
@@ -823,12 +873,6 @@
           <xs:documentation xml:lang="zh">领域资源</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="EffectEvidenceSynthesis">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EffectEvidenceSynthesis</xs:documentation>
-          <xs:documentation xml:lang="en">EffectEvidenceSynthesis</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Encounter">
         <xs:annotation>
           <xs:documentation xml:lang="en">Encounter</xs:documentation>
@@ -889,6 +933,12 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">Evidence</xs:documentation>
           <xs:documentation xml:lang="en">Evidence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="EvidenceVariable">
@@ -1019,6 +1069,12 @@
           <xs:documentation xml:lang="zh">实施指南</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Ingredient">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Ingredient</xs:documentation>
+          <xs:documentation xml:lang="en">Ingredient</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="InsurancePlan">
         <xs:annotation>
           <xs:documentation xml:lang="en">InsurancePlan</xs:documentation>
@@ -1066,6 +1122,12 @@
           <xs:documentation xml:lang="es">Locacion</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="ManufacturedItemDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Measure">
         <xs:annotation>
           <xs:documentation xml:lang="en">Measure</xs:documentation>
@@ -1081,16 +1143,6 @@
           <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
           <xs:documentation xml:lang="es">ReporteMedida</xs:documentation>
           <xs:documentation xml:lang="zh">指标报告</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Media">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="it">Media</xs:documentation>
-          <xs:documentation xml:lang="fr">Média</xs:documentation>
-          <xs:documentation xml:lang="es">Medio</xs:documentation>
-          <xs:documentation xml:lang="zh">媒体</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Medication">
@@ -1135,76 +1187,16 @@
           <xs:documentation xml:lang="es">PrescripciónMedicaciónTODO  /PrescripcionMedicamento</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicationStatement">
+      <xs:enumeration value="MedicationUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="fr">ÉtatMédication</xs:documentation>
-          <xs:documentation xml:lang="zh">药物声明</xs:documentation>
-          <xs:documentation xml:lang="es">ResumenMedicación /ResumenMedicamento</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicinalProduct">
+      <xs:enumeration value="MedicinalProductDefinition">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProduct</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProduct</xs:documentation>
-          <xs:documentation xml:lang="it">ProdottoMedicinale</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductAuthorization">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductAuthorization</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductAuthorization</xs:documentation>
-          <xs:documentation xml:lang="it">AutorizzazioneProdottoMedicinale</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductContraindication">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductContraindication</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductContraindication</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductIndication">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductIndication</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductInteraction</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductIngredient">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductIngredient</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductIngredient</xs:documentation>
-          <xs:documentation xml:lang="it">IngredienteProdottoMedicinale</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductInteraction">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductInteraction</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductInteraction</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductManufactured">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductManufactured</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductManufactured</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductPackaged">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductPackaged</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductPackaged</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductPharmaceutical">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductPharmaceutical</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductPharmaceutical</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MedicinalProductUndesirableEffect">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MedicinalProductUndesirableEffect</xs:documentation>
-          <xs:documentation xml:lang="en">MedicinalProductUndesirableEffect</xs:documentation>
+          <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MessageDefinition">
@@ -1242,6 +1234,12 @@
           <xs:documentation xml:lang="zh">命名系统</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="NutritionIntake">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="NutritionOrder">
         <xs:annotation>
           <xs:documentation xml:lang="en">NutritionOrder</xs:documentation>
@@ -1249,6 +1247,14 @@
           <xs:documentation xml:lang="fr">OrdreNutrition</xs:documentation>
           <xs:documentation xml:lang="es">OrdenNutrición</xs:documentation>
           <xs:documentation xml:lang="zh">营养医嘱</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NutritionProduct">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NutritionProduct</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionProduct</xs:documentation>
+          <xs:documentation xml:lang="fr">ProduitNutritionnel</xs:documentation>
+          <xs:documentation xml:lang="es">ProductoNutricional</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Observation">
@@ -1306,6 +1312,12 @@
           <xs:documentation xml:lang="en">OrganizationAffiliation</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="PackagedProductDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PackagedProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">PackagedProductDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Parameters">
         <xs:annotation>
           <xs:documentation xml:lang="en">Parameters</xs:documentation>
@@ -1342,6 +1354,14 @@
           <xs:documentation xml:lang="fr">RéconciliationPaiement</xs:documentation>
           <xs:documentation xml:lang="es">ConciliacionDePago</xs:documentation>
           <xs:documentation xml:lang="zh">付款对账</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Permission">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="fr">Permission</xs:documentation>
+          <xs:documentation xml:lang="es">Permiso</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Person">
@@ -1419,6 +1439,12 @@
           <xs:documentation xml:lang="zh">调查问卷答复</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="RegulatedAuthorization">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RegulatedAuthorization</xs:documentation>
+          <xs:documentation xml:lang="en">RegulatedAuthorization</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="RelatedPerson">
         <xs:annotation>
           <xs:documentation xml:lang="en">RelatedPerson</xs:documentation>
@@ -1436,18 +1462,6 @@
           <xs:documentation xml:lang="it">GruppoDiRichieste</xs:documentation>
           <xs:documentation xml:lang="es">GrupoDeSolicitudes</xs:documentation>
           <xs:documentation xml:lang="zh">请求分组</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ResearchDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ResearchElementDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ResearchStudy">
@@ -1481,12 +1495,6 @@
           <xs:documentation xml:lang="fr">ÉvaluationRisques</xs:documentation>
           <xs:documentation xml:lang="es">EvaluacionDeRiesgo</xs:documentation>
           <xs:documentation xml:lang="zh">风险评估</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="RiskEvidenceSynthesis">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">RiskEvidenceSynthesis</xs:documentation>
-          <xs:documentation xml:lang="en">RiskEvidenceSynthesis</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Schedule">
@@ -1573,6 +1581,21 @@
           <xs:documentation xml:lang="es">Suscripción</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="SubscriptionStatus">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubscriptionTopic">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="fr">Souscription Sujet</xs:documentation>
+          <xs:documentation xml:lang="es">Tema de Suscripción</xs:documentation>
+          <xs:documentation xml:lang="zh">话题</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Substance">
         <xs:annotation>
           <xs:documentation xml:lang="en">Substance</xs:documentation>
@@ -1581,6 +1604,12 @@
           <xs:documentation xml:lang="fr">Substance</xs:documentation>
           <xs:documentation xml:lang="zh">物质</xs:documentation>
           <xs:documentation xml:lang="es">Sustancia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="SubstanceNucleicAcid">
@@ -1611,12 +1640,6 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
           <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="SubstanceSpecification">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">SubstanceSpecification</xs:documentation>
-          <xs:documentation xml:lang="en">SubstanceSpecification</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="SupplyDelivery">

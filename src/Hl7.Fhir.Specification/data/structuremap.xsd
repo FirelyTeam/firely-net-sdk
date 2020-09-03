@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -47,7 +67,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -191,7 +211,7 @@
               <xs:documentation xml:lang="en">Another group that this group adds rules to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="typeMode" minOccurs="1" maxOccurs="1" type="StructureMapGroupTypeMode">
+          <xs:element name="typeMode" minOccurs="0" maxOccurs="1" type="StructureMapGroupTypeMode">
             <xs:annotation>
               <xs:documentation xml:lang="en">If this is the default rule set to apply for the source type or this combination of types.</xs:documentation>
            </xs:annotation>
@@ -206,7 +226,7 @@
               <xs:documentation xml:lang="en">A name assigned to an instance of data. The instance must be provided when the mapping is invoked.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="rule" type="StructureMap.Rule" minOccurs="1" maxOccurs="unbounded">
+          <xs:element name="rule" type="StructureMap.Rule" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Transform Rule from source to target.</xs:documentation>
            </xs:annotation>
@@ -253,7 +273,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="name" minOccurs="1" maxOccurs="1" type="id">
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="id">
             <xs:annotation>
               <xs:documentation xml:lang="en">Name of the rule for internal references.</xs:documentation>
            </xs:annotation>
@@ -328,6 +348,7 @@
             <xs:element name="defaultValueId" type="id"/>
             <xs:element name="defaultValueInstant" type="instant"/>
             <xs:element name="defaultValueInteger" type="integer"/>
+            <xs:element name="defaultValueInteger64" type="integer64"/>
             <xs:element name="defaultValueMarkdown" type="markdown"/>
             <xs:element name="defaultValueOid" type="oid"/>
             <xs:element name="defaultValuePositiveInt" type="positiveInt"/>
@@ -367,6 +388,7 @@
             <xs:element name="defaultValueTriggerDefinition" type="TriggerDefinition"/>
             <xs:element name="defaultValueUsageContext" type="UsageContext"/>
             <xs:element name="defaultValueDosage" type="Dosage"/>
+            <xs:element name="defaultValueMeta" type="Meta"/>
           </xs:choice>
           <xs:element name="element" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
@@ -722,11 +744,6 @@
   </xs:complexType>
   <xs:simpleType name="StructureMapGroupTypeMode-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="none">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Not a Default</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="types">
         <xs:annotation>
           <xs:documentation xml:lang="en">Default for Type Combination</xs:documentation>

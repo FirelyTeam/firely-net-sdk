@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,35 +58,40 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="SubstancePolymer" type="SubstancePolymer">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="SubstancePolymer">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A business idenfier for this polymer, but typically this is handled by a SubstanceDefinition identifier.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="class" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Overall type of the polymer.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="geometry" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Polymer geometry, e.g. linear, branched, cross-linked, network or dendritic.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="copolymerConnectivity" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Descrtibes the copolymer sequence type (polymer connectivity).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="modification" minOccurs="0" maxOccurs="unbounded" type="string">
+          <xs:element name="modification" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Todo - this is intended to connect to a repeating full modification structure, also used by Protein and Nucleic Acid . String is just a placeholder.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="monomerSet" type="SubstancePolymer.MonomerSet" minOccurs="0" maxOccurs="unbounded">
@@ -76,7 +101,7 @@
           </xs:element>
           <xs:element name="repeat" type="SubstancePolymer.Repeat" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Specifies and quantifies the repeated units and their configuration.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -85,19 +110,19 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.MonomerSet">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="ratioType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Captures the type of ratio to the entire polymer, e.g. Monomer/Polymer ratio, SRU/Polymer Ratio.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="startingMaterial" type="SubstancePolymer.StartingMaterial" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The starting materials - monomer(s) used in the synthesis of the polymer.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -106,29 +131,29 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.StartingMaterial">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="material" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of substance for this starting material.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Substance high level category, e.g. chemical substance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="isDefining" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Used to specify whether the attribute described is a defining element for the unique identification of the polymer.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="SubstanceAmount">
+          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">A percentage.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -137,29 +162,24 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.Repeat">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="numberOfUnits" minOccurs="0" maxOccurs="1" type="integer">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="averageMolecularFormula" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">A representation of an (average) molecular formula from a polymer.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="repeatUnitAmountType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">How the quantitative amount of Structural Repeat Units is captured (e.g. Exact, Numeric, Average).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="repeatUnit" type="SubstancePolymer.RepeatUnit" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">An SRU - Structural Repeat Unit.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -168,34 +188,34 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.RepeatUnit">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="orientationOfPolymerisation" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="unit" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Structural repeat units are essential elements for defining polymers.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="repeatUnit" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="orientation" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The orientation of the polymerisation, e.g. head-tail, head-head, random.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="SubstanceAmount">
+          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="integer">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Number of repeats of this unit.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="degreeOfPolymerisation" type="SubstancePolymer.DegreeOfPolymerisation" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">Applies to homopolymer and block co-polymers where the degree of polymerisation within a block can be described.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="structuralRepresentation" type="SubstancePolymer.StructuralRepresentation" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">A graphical structure for this SRU.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -204,19 +224,29 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.DegreeOfPolymerisation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="degree" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of the degree of polymerisation shall be described, e.g. SRU/Polymer Ratio.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="SubstanceAmount">
+          <xs:element name="average" minOccurs="0" maxOccurs="1" type="integer">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">An average amount of polymerisation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="low" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A low expected limit of the amount.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="high" minOccurs="0" maxOccurs="1" type="integer">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A high expected limit of the amount.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -225,24 +255,29 @@
   </xs:complexType>
   <xs:complexType name="SubstancePolymer.StructuralRepresentation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Todo.</xs:documentation>
+      <xs:documentation xml:lang="en">Properties of a substance specific to it being a polymer.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of structure (e.g. Full, Partial, Representative).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="representation" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">The structural representation as text string in a standard format e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="format" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="attachment" minOccurs="0" maxOccurs="1" type="Attachment">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Todo.</xs:documentation>
+              <xs:documentation xml:lang="en">An attached file with the structural representation.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
