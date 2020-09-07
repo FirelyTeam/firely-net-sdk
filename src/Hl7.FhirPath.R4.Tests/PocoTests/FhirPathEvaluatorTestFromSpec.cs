@@ -130,8 +130,8 @@ namespace Hl7.FhirPath.R4.Tests
                 // these date tests are incorrect - reported on Zulip
                 "testDateNotEqualTimezoneOffsetBefore", "testDateNotEqualTimezoneOffsetAfter", "testDateNotEqualUTC",
 
-                // how come x !~ x?.
-                "testNotEquivalent19", 
+                // we don't support these FhirPath extensions for validation yet
+                 "testConformsTo1", "testConformsTo2",
 
                 // rounding pi to 3 decimals will not become 2
                 "testRound2"
@@ -156,7 +156,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             foreach (var item in doc.Descendants("test"))
             {
-                string groupName = item.Parent.Attribute("name").Value;
+                string groupName = item.Parent.Attribute("name")?.Value ?? "(no group name)";
                 string name = item.Attribute("name")?.Value ?? "(no name)";
 
                 if (ignoreTestcases.Contains(name)) continue; // skip the ignore testcases
