@@ -12,6 +12,7 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Specification.Terminology;
 
 namespace Hl7.Fhir.Specification.Terminology
 {

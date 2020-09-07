@@ -1,8 +1,10 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Specification.Terminology;
 using Hl7.Fhir.Specification.Terminology;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using T = System.Threading.Tasks;
@@ -205,10 +207,12 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("system", new FhirUri("http://hl7.org/fhir/v2/0487"));
-            parameters.Add("code", new Code("ACNE"));
-            parameters.Add("target", new FhirUri("http:/snomed.info/sct"));
+            var parameters = ParametersFactory.CreateTranslateParameters(new TranslateParameters
+            {
+                System = "http://hl7.org/fhir/v2/0487",
+                Code = "ACNE",
+                Target = "http:/snomed.info/sct",
+            });
 
             var result = svc.Translate(parameters, "102", useGet: true);
             Assert.NotNull(result);
@@ -253,11 +257,13 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("source", new FhirUri("http://snomed.info/sct?fhir_vs"));
-            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
-            parameters.Add("code", new Code("90260006"));
-            parameters.Add("target", new FhirUri("http://hl7.org/fhir/ValueSet/substance-category"));
+            var parameters = ParametersFactory.CreateTranslateParameters(new TranslateParameters
+            {
+                Source = "http://snomed.info/sct?fhir_vs",
+                System = "http://snomed.info/sct",
+                Code = "90260006",
+                Target = "http://hl7.org/fhir/ValueSet/substance-category",
+            });
 
             var result = svc.Translate(parameters, useGet: true);
             Assert.NotNull(result);
@@ -271,12 +277,13 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
-            parameters.Add("code", new Code("45313011000036107"));
-            parameters.Add("property", new FhirString("inactive"));
-            parameters.Add("version", new FhirString("http://snomed.info/sct/32506021000036107/version/20160630"));
-            parameters.Add("property", new FhirString("display"));
+            var parameters = ParametersFactory.CreateLookupParameters(new LookupParameters
+            {
+                System = "http://snomed.info/sct",
+                Code = "45313011000036107",
+                Property = new List<string> { "inactive", "display" },
+                Version = "http://snomed.info/sct/32506021000036107/version/20160630",
+            });
 
             var result = svc.Lookup(parameters);
             Assert.NotNull(result);
@@ -309,11 +316,13 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
-            parameters.Add("code", new Code("45313011000036107"));
-            parameters.Add("property", new FhirString("inactive"));
-            parameters.Add("version", new FhirString("http://snomed.info/sct/32506021000036107/version/20160630"));
+            var parameters = ParametersFactory.CreateLookupParameters(new LookupParameters
+            {
+                System = "http://snomed.info/sct",
+                Code = "45313011000036107",
+                Property = new List<string> { "inactive" },
+                Version = "http://snomed.info/sct/32506021000036107/version/20160630",
+            });
 
             var result = svc.Lookup(parameters, true);
             
@@ -343,9 +352,11 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
-            parameters.Add("code", new Code("263495000"));
+            var parameters = ParametersFactory.CreateLookupParameters(new LookupParameters
+            {
+                System = "http://snomed.info/sct",
+                Code = "263495000",
+            });
 
             var result = svc.Lookup(parameters);
             Assert.NotNull(result);
@@ -369,10 +380,12 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("url", new FhirUri("http://snomed.info/sct?fhir_vs=refset/142321000036106"));
-            parameters.Add("count", new Integer(10));
-            parameters.Add("filter", new FhirString("met"));
+            var parameters = ParametersFactory.CreateExpandParameters(new ExpandParameters
+            {
+                Url = "http://snomed.info/sct?fhir_vs=refset/142321000036106",
+                Count = 10,
+                Filter = "met",
+            });
 
             var result = svc.Expand(parameters) as ValueSet;
             Assert.NotNull(result);
@@ -427,10 +440,13 @@ namespace Hl7.Fhir.Specification.Tests
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            Parameters parameters = new Parameters();
-            parameters.Add("url", new FhirUri("http://hl7.org/fhir/ValueSet/substance-code"));
-            parameters.Add("code", new Code("1166006"));
-            parameters.Add("system", new FhirUri("http://snomed.info/sct"));
+            var parameters = ParametersFactory.CreateValidateCodeParameters(new ValidateCodeParameters
+            {
+                Url = "http://hl7.org/fhir/ValueSet/substance-code",
+                Code = "1166006",
+                System = "http://snomed.info/sct",
+            });
+
             var result = svc.ValidateCode(parameters, "ValueSet");
             Parameters.ParameterComponent parameter = result.Get("result").SingleOrDefault();
             Assert.NotNull(parameter);
