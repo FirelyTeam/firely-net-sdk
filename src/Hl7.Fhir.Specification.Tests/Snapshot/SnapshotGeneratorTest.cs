@@ -532,7 +532,9 @@ namespace Hl7.Fhir.Specification.Tests
             // -3 inline children, of type CodeableConcept
             // -3*12 full expansion of CodeableConcept
             // -3 inherited children (id, extension, modifierExtension)
-            Assert.AreEqual(277, fullElems.Count);
+            // MV 20200908 R5 fixed
+            // +5 photo (Attachment): extra attributes (TU): heigth, width, frames, duration, pages 
+            Assert.AreEqual(282, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -7733,7 +7735,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("value[x]"));
             var elem = nav.Current;
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(11, elem.Type.Count); // Unconstrained
+            // 20200908: R5 +1 because of Attachment is also allowed now.
+            Assert.AreEqual(12, elem.Type.Count); // Unconstrained
 
             // Verify implicit type constraint
 #if NORMALIZE_RENAMED_TYPESLICE

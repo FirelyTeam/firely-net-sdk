@@ -2241,8 +2241,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             var baseProfileUri = sd.BaseDefinition;
-
-            if (sd.Url == "http://hl7.org/fhir/StructureDefinition/PrimitiveType")
+            if (sd.Url == "http://hl7.org/fhir/StructureDefinition/PrimitiveType" ||
+                sd.Url == "http://hl7.org/fhir/StructureDefinition/DataType")
             {
                 if (diffRoot == null)
                 {
@@ -2281,6 +2281,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // profile that is currently being fully expanded, i.e. the url is already on the main stack.
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
+
             var sdBase = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUri).ConfigureAwait(false);
             // [WMR 20180108] diffRoot may be null (sparse differential w/o root)
             var baseRoot = await getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.Path).ConfigureAwait(false); // Recursion!
