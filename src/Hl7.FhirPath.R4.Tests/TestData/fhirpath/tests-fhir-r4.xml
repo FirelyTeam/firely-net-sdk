@@ -785,7 +785,7 @@ https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
       <output type="boolean">true</output>
     </test>
     <test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml">
-      <expression>'1 day'.toQuantity() = 1 '{day}'</expression>
+      <expression>'1 day'.toQuantity() = 1 'd'</expression>
       <output type="boolean">true</output>
     </test>
     <test name="testStringQuantityWeekLiteralToQuantity" inputfile="patient-example.xml">
@@ -914,9 +914,8 @@ https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
     </test>
     <test name="testQuantityLiteralWeekToString" inputfile="patient-example.xml">
       <expression>1 week.toString()</expression>
-      <output type="string">1 'week'</output>
+      <output type="string">1 'wk'</output>
     </test>
-
   </group>
 
   <group name="testExists">
