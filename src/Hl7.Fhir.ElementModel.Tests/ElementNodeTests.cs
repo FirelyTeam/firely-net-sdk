@@ -297,7 +297,7 @@ namespace Hl7.FhirPath.Tests
         public void TestImportChild()
         {
             var humanname = ElementNode.Root(_provider, "HumanName", "name");
-            humanname.Add(provider, "given", "given");
+            humanname.Add(_provider, "given", "given");
 
             var patient = ElementNode.Root(_provider, "Patient", "Patient");
             var practitioner = ElementNode.Root(_provider, "Practitioner", "Practitioner");
