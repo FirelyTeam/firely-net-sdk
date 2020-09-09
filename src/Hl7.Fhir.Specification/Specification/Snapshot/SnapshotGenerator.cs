@@ -783,6 +783,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var newElement = (ElementDefinition)targetElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
 
+                if (typeStructure.Kind == StructureDefinition.StructureDefinitionKind.PrimitiveType)
+                {
+                    // [MV 20200909] in case of primitive types remove the extensions
+                    newElement.Extension.Clear();
+                }
+
                 // [WMR 20190130] STU3: Base component of new elements is empty
                 // [WMR 20190130] R4: Base components of new elements refers to self (.Base.Path = .Path)
                 // [WMR 20190723] FIX: Initialize base cardinality from current diff element
@@ -2257,8 +2263,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             var baseProfileUri = sd.BaseDefinition;
-            if (sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.PrimitiveType) ||
-                sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DataType))
+            if (baseProfileUri is null)
             {
                 if (diffRoot == null)
                 {
@@ -2269,7 +2274,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Structure is a core type definition => differential introduces & defines the root element
                 // No need to rebase, nothing to merge
                 var snapRoot = (ElementDefinition)diffRoot.DeepCopy();
-                snapRoot.Extension.Clear();
 
 #if CACHE_ROOT_ELEMDEF
                 Debug.Assert(!snapRoot.HasSnapshotElementAnnotation());

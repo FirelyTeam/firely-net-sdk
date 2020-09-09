@@ -392,7 +392,6 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
 
-            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Organization");
             var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Organization);
             Assert.IsNotNull(sd);
             await generateSnapshot(sd);

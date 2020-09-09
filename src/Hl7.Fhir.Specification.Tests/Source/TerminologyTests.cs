@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-        [Fact]
+        [Fact, Trait("TestCategory", "IntegrationTest")]
         public async T.Task ExpansionOfComposeInclude()
         {
             var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(22, testVs.Expansion.Total);
+            Assert.Equal(27, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(1, result.Warnings);
         }
 
-        [Fact]
+        [Fact, Trait("TestCategory", "IntegrationTest")]
         public void LocalTermServiceValidateCodeTest()
         {
             var svc = new LocalTerminologyService(_syncResolver);

@@ -150,7 +150,10 @@ function ExtractXsdZipFile($destPath)
 foreach($file in $allFiles)			
 {
 	GetSpecFile $file
-	RemoveNarrative $file
+	if ($file.EndsWith('.xml'))
+	{
+		RemoveNarrative $file
+	}
 }
 
 
@@ -175,6 +178,8 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/exam
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
+PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
+
 
 # extract schemas and xsd from fhir-all.zip -> data
 ExtractXsdZipFile "$srcdir\Hl7.Fhir.Specification\data"

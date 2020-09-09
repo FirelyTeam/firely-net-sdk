@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Specification.Tests
                 output.WriteLine(report.ToString());
             }
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);            // 3x invariant
+            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
 
         }
 
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = _validator.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
-            Assert.Equal(0, report.Warnings);            // 3x missing invariant
+            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var cr = new CachedResolver(
                     new MultiResolver(
-                    new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
+                    new BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
                     new ZipSource("specification.zip")));

@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class ArtifactSummaryTests
     {
         // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
-        static readonly string ApiFhirVersion = "4.0.0"; // ModelInfo.Version;
+        static readonly string ApiFhirVersion = "4.5.0"; // ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
@@ -162,9 +162,6 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 var expectedStatus =
                     isNormative
-                    // [WMR 20181213] R4 HACK - These 2 datatypes still define status="draft" ?
-                    && name != "MoneyQuantity"
-                    && name != "SimpleQuantity"
                     ? PublicationStatus.Active : PublicationStatus.Draft;
                 Assert.AreEqual(expectedStatus.GetLiteral(), summary.GetPublicationStatus());
 
@@ -200,7 +197,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-resources.xml"));
+            string path = Path.GetFullPath(Path.Combine("TestData", "snapshot-test", "profiles-resources.xml"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
