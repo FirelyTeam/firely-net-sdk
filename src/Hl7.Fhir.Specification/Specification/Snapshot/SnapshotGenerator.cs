@@ -291,6 +291,20 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
+        /// <summary>
+        /// Return the canonical of the BaseDefinition of the StructureDefinition. The 'classes'
+        /// "MetadataResource" and "CanonicalResource" are skipped here in the hierarchy. Those 'classes' are actually interfaces.
+        /// These interfaces are introduced in the preview of R5 and maybe removed in the hierarchy in the final R5 release. 
+        /// In this case the BaseDefinition is "DomainResource"
+        /// </summary>
+        /// <param name="structure">the StructureDefinition to get the base definition from</param>
+        /// <returns></returns>
+        internal static string getBaseDefinition(StructureDefinition structure) =>
+            (structure.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType("MetadataResource") ||
+             structure.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType("CanonicalResource"))
+                    ? ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource).Value
+                    : structure.BaseDefinition;
+
         ///// <inheritdoc cref="MergeElementDefinitionAsync(ElementDefinition, ElementDefinition, bool)" />
         //[Obsolete("SnapshotGenerator now works best with asynchronous resolvers. Use MergeElementDefinition() instead.")]
         //public ElementDefinition MergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
@@ -327,19 +341,21 @@ namespace Hl7.Fhir.Specification.Snapshot
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
             {
-                var baseStructure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition).ConfigureAwait(false);
+                var baseDefinitionUrl = getBaseDefinition(structure);
+
+                var baseStructure = await AsyncResolver.FindStructureDefinitionAsync(baseDefinitionUrl).ConfigureAwait(false);
 
                 // [WMR 20161208] Handle unresolved base profile
                 if (baseStructure == null)
                 {
-                    addIssueProfileNotFound(structure.BaseDefinition);
+                    addIssueProfileNotFound(baseDefinitionUrl);
                     // Fatal error...
                     return null;
                 }
 
                 // [WMR 20161208] Handle missing differential
                 var location = differential.Element.Count > 0 ? differential.Element[0].Path : null;
-                if (!await ensureSnapshot(baseStructure, structure.BaseDefinition, location).ConfigureAwait(false))
+                if (!await ensureSnapshot(baseStructure, baseDefinitionUrl, location).ConfigureAwait(false))
                 {
                     // Fatal error...
                     return null;
@@ -2241,8 +2257,8 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             var baseProfileUri = sd.BaseDefinition;
-            if (sd.Url == "http://hl7.org/fhir/StructureDefinition/PrimitiveType" ||
-                sd.Url == "http://hl7.org/fhir/StructureDefinition/DataType")
+            if (sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.PrimitiveType) ||
+                sd.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DataType))
             {
                 if (diffRoot == null)
                 {
