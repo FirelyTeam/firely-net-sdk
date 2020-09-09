@@ -292,5 +292,22 @@ namespace Hl7.FhirPath.Tests
             {
             }
         }        
+
+        [TestMethod]
+        public void TestImportChild()
+        {
+            var humanname = ElementNode.Root(provider, "HumanName", "name");
+            humanname.Add(provider, "given", "given");
+
+            var patient = ElementNode.Root(provider, "Patient", "Patient");
+            var practitioner = ElementNode.Root(provider, "Practitioner", "Practitioner");
+
+            patient.Add(provider, humanname);
+            practitioner.Add(provider, humanname); // Parent of humanname needs to be switched from Patient to Practitioner
+
+            var location = humanname.Location;
+            Assert.AreEqual("Practitioner.name[0]", location);
+        }
+
     }
 }
