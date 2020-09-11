@@ -149,6 +149,25 @@ function ExtractXsdZipFile($destPath)
 	Write-Host -ForegroundColor White "Copy extracted files to $destPath ..."
 	Copy-Item -Path $extractPath\* -Destination $destPath
 }
+function CorrectSTU3Elements($name, $xpath, $newValue)
+{
+	$file = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $file
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+	$ns.AddNamespace("xh", "http://www.w3.org/1999/xhtml")
+	
+	$nodes = $xml.SelectNodes($xpath, $ns);
+	foreach($node in $nodes) {
+		Write-Output "Correcting node in $file"
+		$node.SetAttribute("value", $newValue);
+	}
+	
+	Write-Output "Corrected elements in $file"
+	# Store it again
+	$xml.Save($file)
+}
 
 foreach($file in $allFiles)			
 {
@@ -158,6 +177,11 @@ foreach($file in $allFiles)
 		RemoveNarrative $file
 	}
 }
+
+CorrectSTU3Elements "profiles-types.xml" "//ns:element[@id='oid.value']/ns:type/ns:extension[@url='http://hl7.org/fhir/StructureDefinition/structuredefinition-regex']/ns:valueString[@value='urn:oid:(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))*']" "urn:oid:[0-2](\.(0|[1-9]\d*))+"
+CorrectSTU3Elements "profiles-types.xml" "//ns:element[@id='ElementDefinition']/ns:constraint[ns:key[@value='eld-16']]/ns:expression" "sliceName.empty() or sliceName.matches('^[a-zA-Z0-9\\/\\-_]+$')"
+CorrectSTU3Elements "profiles-resources.xml" "//ns:element[@id='StructureDefinition.snapshot']/ns:constraint[ns:key[@value='sdf-8']]/ns:expression" "(%resource.kind = 'logical' or element.first().path = %resource.type) and element.tail().all(path.startsWith(%resource.snapshot.element.first().path&'.'))"
+
 
 Write-Host -ForegroundColor White "Copy files to project..."
 
