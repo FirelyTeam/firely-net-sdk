@@ -1,7 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
-  <!-- Removed Meta/LastModified -->
+  <meta>
+    <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+  </meta>
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
@@ -972,7 +974,9 @@
     <resource>
       <ConceptMap>
         <id value="101" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1072,7 +1076,9 @@
     <resource>
       <ConceptMap>
         <id value="103" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1138,7 +1144,9 @@
     <resource>
       <ConceptMap>
         <id value="102" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3751,7 +3759,9 @@
     <resource>
       <ConceptMap>
         <id value="example2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3808,7 +3818,9 @@
     <resource>
       <ConceptMap>
         <id value="cdshooks-indicator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">

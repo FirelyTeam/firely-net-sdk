@@ -1,14 +1,18 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="types" />
-  <!-- Removed Meta/LastModified -->
+  <meta>
+    <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+  </meta>
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/StructureDefinition/Element" />
     <resource>
       <StructureDefinition>
         <id value="Element" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25,7 +29,7 @@
         <version value="4.0.1" />
         <name value="Element" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -229,7 +233,9 @@
     <resource>
       <StructureDefinition>
         <id value="BackboneElement" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -246,7 +252,7 @@
         <version value="4.0.1" />
         <name value="BackboneElement" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -466,12 +472,12 @@
     <resource>
       <StructureDefinition>
         <id value="base64Binary" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -483,7 +489,7 @@
         <version value="4.0.1" />
         <name value="base64Binary" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -642,12 +648,12 @@
     <resource>
       <StructureDefinition>
         <id value="boolean" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -659,7 +665,7 @@
         <version value="4.0.1" />
         <name value="boolean" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -816,12 +822,12 @@
     <resource>
       <StructureDefinition>
         <id value="canonical" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -833,7 +839,7 @@
         <version value="4.0.1" />
         <name value="canonical" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -992,12 +998,12 @@
     <resource>
       <StructureDefinition>
         <id value="code" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1009,7 +1015,7 @@
         <version value="4.0.1" />
         <name value="code" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -1166,12 +1172,12 @@
     <resource>
       <StructureDefinition>
         <id value="date" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1183,7 +1189,7 @@
         <version value="4.0.1" />
         <name value="date" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -1340,12 +1346,12 @@
     <resource>
       <StructureDefinition>
         <id value="dateTime" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1357,7 +1363,7 @@
         <version value="4.0.1" />
         <name value="dateTime" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -1514,12 +1520,12 @@
     <resource>
       <StructureDefinition>
         <id value="decimal" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1531,7 +1537,7 @@
         <version value="4.0.1" />
         <name value="decimal" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -1690,12 +1696,12 @@
     <resource>
       <StructureDefinition>
         <id value="id" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1707,7 +1713,7 @@
         <version value="4.0.1" />
         <name value="id" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -1866,12 +1872,12 @@
     <resource>
       <StructureDefinition>
         <id value="instant" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -1883,7 +1889,7 @@
         <version value="4.0.1" />
         <name value="instant" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2042,12 +2048,12 @@
     <resource>
       <StructureDefinition>
         <id value="integer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2059,7 +2065,7 @@
         <version value="4.0.1" />
         <name value="integer" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2222,12 +2228,12 @@
     <resource>
       <StructureDefinition>
         <id value="markdown" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2239,7 +2245,7 @@
         <version value="4.0.1" />
         <name value="markdown" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2398,12 +2404,12 @@
     <resource>
       <StructureDefinition>
         <id value="oid" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2415,7 +2421,7 @@
         <version value="4.0.1" />
         <name value="oid" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2574,12 +2580,12 @@
     <resource>
       <StructureDefinition>
         <id value="positiveInt" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2591,7 +2597,7 @@
         <version value="4.0.1" />
         <name value="positiveInt" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2748,12 +2754,12 @@
     <resource>
       <StructureDefinition>
         <id value="string" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2765,7 +2771,7 @@
         <version value="4.0.1" />
         <name value="string" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -2926,12 +2932,12 @@
     <resource>
       <StructureDefinition>
         <id value="time" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -2943,7 +2949,7 @@
         <version value="4.0.1" />
         <name value="time" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3100,12 +3106,12 @@
     <resource>
       <StructureDefinition>
         <id value="unsignedInt" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -3117,7 +3123,7 @@
         <version value="4.0.1" />
         <name value="unsignedInt" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3274,12 +3280,12 @@
     <resource>
       <StructureDefinition>
         <id value="uri" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -3291,7 +3297,7 @@
         <version value="4.0.1" />
         <name value="uri" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3450,12 +3456,12 @@
     <resource>
       <StructureDefinition>
         <id value="url" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -3467,7 +3473,7 @@
         <version value="4.0.1" />
         <name value="url" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3624,12 +3630,12 @@
     <resource>
       <StructureDefinition>
         <id value="uuid" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -3641,7 +3647,7 @@
         <version value="4.0.1" />
         <name value="uuid" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3800,12 +3806,12 @@
     <resource>
       <StructureDefinition>
         <id value="xhtml" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
           <valueCode value="normative" />
@@ -3817,7 +3823,7 @@
         <version value="4.0.1" />
         <name value="xhtml" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -3969,7 +3975,9 @@
     <resource>
       <StructureDefinition>
         <id value="Address" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3986,7 +3994,7 @@
         <version value="4.0.1" />
         <name value="Address" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -4944,7 +4952,9 @@
     <resource>
       <StructureDefinition>
         <id value="Age" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4958,7 +4968,7 @@
         <version value="4.0.1" />
         <name value="Age" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -5350,7 +5360,9 @@
     <resource>
       <StructureDefinition>
         <id value="Annotation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5367,7 +5379,7 @@
         <version value="4.0.1" />
         <name value="Annotation" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -5713,7 +5725,9 @@
     <resource>
       <StructureDefinition>
         <id value="Attachment" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5730,7 +5744,7 @@
         <version value="4.0.1" />
         <name value="Attachment" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -6406,7 +6420,9 @@
     <resource>
       <StructureDefinition>
         <id value="CodeableConcept" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6423,7 +6439,7 @@
         <version value="4.0.1" />
         <name value="CodeableConcept" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -6745,7 +6761,9 @@
     <resource>
       <StructureDefinition>
         <id value="Coding" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6762,7 +6780,7 @@
         <version value="4.0.1" />
         <name value="Coding" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -7270,7 +7288,9 @@
     <resource>
       <StructureDefinition>
         <id value="ContactDetail" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7287,7 +7307,7 @@
         <version value="4.0.1" />
         <name value="ContactDetail" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -7513,7 +7533,9 @@
     <resource>
       <StructureDefinition>
         <id value="ContactPoint" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7530,7 +7552,7 @@
         <version value="4.0.1" />
         <name value="ContactPoint" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -8069,7 +8091,9 @@
     <resource>
       <StructureDefinition>
         <id value="Contributor" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8083,7 +8107,7 @@
         <version value="4.0.1" />
         <name value="Contributor" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -8353,7 +8377,9 @@
     <resource>
       <StructureDefinition>
         <id value="Count" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8367,7 +8393,7 @@
         <version value="4.0.1" />
         <name value="Count" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -8739,7 +8765,9 @@
     <resource>
       <StructureDefinition>
         <id value="DataRequirement" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8753,7 +8781,7 @@
         <version value="4.0.1" />
         <name value="DataRequirement" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -9854,7 +9882,9 @@
     <resource>
       <StructureDefinition>
         <id value="Distance" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9868,7 +9898,7 @@
         <version value="4.0.1" />
         <name value="Distance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -10260,7 +10290,9 @@
     <resource>
       <StructureDefinition>
         <id value="Dosage" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -10274,7 +10306,7 @@
         <version value="4.0.1" />
         <name value="Dosage" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -11512,7 +11544,9 @@
     <resource>
       <StructureDefinition>
         <id value="Duration" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -11529,7 +11563,7 @@
         <version value="4.0.1" />
         <name value="Duration" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -11927,7 +11961,9 @@
     <resource>
       <StructureDefinition>
         <id value="ElementDefinition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -11944,7 +11980,7 @@
         <version value="4.0.1" />
         <name value="ElementDefinition" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -18125,7 +18161,9 @@
     <resource>
       <StructureDefinition>
         <id value="Expression" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -18139,7 +18177,7 @@
         <version value="4.0.1" />
         <name value="Expression" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -18502,7 +18540,9 @@
     <resource>
       <StructureDefinition>
         <id value="Extension" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -18519,7 +18559,7 @@
         <version value="4.0.1" />
         <name value="Extension" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -19077,7 +19117,9 @@
     <resource>
       <StructureDefinition>
         <id value="HumanName" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -19094,7 +19136,7 @@
         <version value="4.0.1" />
         <name value="HumanName" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -19731,7 +19773,9 @@
     <resource>
       <StructureDefinition>
         <id value="Identifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -19748,7 +19792,7 @@
         <version value="4.0.1" />
         <name value="Identifier" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -20353,7 +20397,9 @@
     <resource>
       <StructureDefinition>
         <id value="MarketingStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -20367,7 +20413,7 @@
         <version value="4.0.1" />
         <name value="MarketingStatus" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -20734,7 +20780,9 @@
     <resource>
       <StructureDefinition>
         <id value="Meta" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -20751,7 +20799,7 @@
         <version value="4.0.1" />
         <name value="Meta" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -21178,7 +21226,9 @@
     <resource>
       <StructureDefinition>
         <id value="Money" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -21195,7 +21245,7 @@
         <version value="4.0.1" />
         <name value="Money" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -21475,7 +21525,9 @@
     <resource>
       <StructureDefinition>
         <id value="Narrative" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -21492,7 +21544,7 @@
         <version value="4.0.1" />
         <name value="Narrative" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -21783,7 +21835,9 @@
     <resource>
       <StructureDefinition>
         <id value="ParameterDefinition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -21797,7 +21851,7 @@
         <version value="4.0.1" />
         <name value="ParameterDefinition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -22234,7 +22288,9 @@
     <resource>
       <StructureDefinition>
         <id value="Period" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -22251,7 +22307,7 @@
         <version value="4.0.1" />
         <name value="Period" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -22553,7 +22609,9 @@
     <resource>
       <StructureDefinition>
         <id value="Population" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -22567,7 +22625,7 @@
         <version value="4.0.1" />
         <name value="Population" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -22904,7 +22962,9 @@
     <resource>
       <StructureDefinition>
         <id value="ProdCharacteristic" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -22918,7 +22978,7 @@
         <version value="4.0.1" />
         <name value="ProdCharacteristic" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -23501,7 +23561,9 @@
     <resource>
       <StructureDefinition>
         <id value="ProductShelfLife" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -23515,7 +23577,7 @@
         <version value="4.0.1" />
         <name value="ProductShelfLife" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -23846,7 +23908,9 @@
     <resource>
       <StructureDefinition>
         <id value="Quantity" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -23863,7 +23927,7 @@
         <version value="4.0.1" />
         <name value="Quantity" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -24355,7 +24419,9 @@
     <resource>
       <StructureDefinition>
         <id value="Range" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -24372,7 +24438,7 @@
         <version value="4.0.1" />
         <name value="Range" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -24673,7 +24739,9 @@
     <resource>
       <StructureDefinition>
         <id value="Ratio" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -24690,7 +24758,7 @@
         <version value="4.0.1" />
         <name value="Ratio" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -24967,7 +25035,9 @@
     <resource>
       <StructureDefinition>
         <id value="Reference" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -24984,7 +25054,7 @@
         <version value="4.0.1" />
         <name value="Reference" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -25367,7 +25437,9 @@
     <resource>
       <StructureDefinition>
         <id value="RelatedArtifact" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25381,7 +25453,7 @@
         <version value="4.0.1" />
         <name value="RelatedArtifact" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -25805,7 +25877,9 @@
     <resource>
       <StructureDefinition>
         <id value="SampledData" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25819,7 +25893,7 @@
         <version value="4.0.1" />
         <name value="SampledData" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -26305,7 +26379,9 @@
     <resource>
       <StructureDefinition>
         <id value="Signature" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26319,7 +26395,7 @@
         <version value="4.0.1" />
         <name value="Signature" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -26822,7 +26898,9 @@
     <resource>
       <StructureDefinition>
         <id value="SubstanceAmount" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26836,7 +26914,7 @@
         <version value="4.0.1" />
         <name value="SubstanceAmount" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -27325,7 +27403,9 @@
     <resource>
       <StructureDefinition>
         <id value="Timing" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -27342,7 +27422,7 @@
         <version value="4.0.1" />
         <name value="Timing" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -28669,7 +28749,9 @@
     <resource>
       <StructureDefinition>
         <id value="TriggerDefinition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -28683,7 +28765,7 @@
         <version value="4.0.1" />
         <name value="TriggerDefinition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -29096,7 +29178,9 @@
     <resource>
       <StructureDefinition>
         <id value="UsageContext" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29110,7 +29194,7 @@
         <version value="4.0.1" />
         <name value="UsageContext" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -29392,7 +29476,9 @@
     <resource>
       <StructureDefinition>
         <id value="MoneyQuantity" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29409,7 +29495,7 @@
         <version value="4.0.1" />
         <name value="MoneyQuantity" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
@@ -29770,7 +29856,9 @@
     <resource>
       <StructureDefinition>
         <id value="SimpleQuantity" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29787,7 +29875,7 @@
         <version value="4.0.1" />
         <name value="SimpleQuantity" />
         <status value="active" />
-        <!-- Removed date -->
+        <date value="2019-11-01T09:29:23+11:00" />
         <publisher value="HL7 FHIR Standard" />
         <contact>
           <telecom>
