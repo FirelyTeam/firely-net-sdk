@@ -162,7 +162,7 @@ foreach($file in $allFiles)
 Write-Host -ForegroundColor White "Copy files to project..."
 
 # Copy the files necessary for the specification library (specification.zip / data)
-Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*"
+Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*" -Force
 CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "dataelements.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
