@@ -6,11 +6,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-    public class TypeExtensionTests
+    public class FhirClassMappingTests
     {
         [TestMethod]
         public void VerifyNestedTypeDeterminiation()
@@ -32,6 +33,35 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 _ = ClassMapping.TryCreate(testee, out var cm);
                 return cm.IsNestedType;
+            }
+        }
+
+        [TestMethod]
+        public void TestPerformanceOfMappingAllClasses()
+        {
+            // just a random list of POCO types available in common
+            var typesToTest = ModelInfo.FhirCsTypeToString.Keys;
+            Console.WriteLine($"Creating a mapping for all {typesToTest.Count} pocos.");
+
+            var sw = new Stopwatch();
+            sw.Start();
+            for (int i = 0; i < 10; i++)
+                foreach (var testee in typesToTest)
+                    createMapping(testee);
+            sw.Stop();
+            Console.WriteLine($"No props: {sw.ElapsedMilliseconds/10.0}ms");
+
+            sw.Restart();
+            for (int i = 0; i < 10; i++)
+                foreach (var testee in typesToTest)
+                    createMapping(testee, touchProps: true);
+            sw.Stop();
+            Console.WriteLine($"With props: {sw.ElapsedMilliseconds/10.0}ms");
+
+            int createMapping(Type t, bool touchProps = false)
+            {
+                ClassMapping.TryCreate(t, out var mapping);
+                return touchProps ? mapping.PropertyMappings.Count : -1;
             }
         }
     }
