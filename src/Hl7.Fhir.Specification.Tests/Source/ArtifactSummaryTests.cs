@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-resources.xml"));
+            string path = Path.GetFullPath(Path.Combine("TestData", "snapshot-test", "profiles-resources.xml"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
