@@ -63,10 +63,10 @@ namespace Hl7.Fhir.ElementModel
             foreach (var child in children)
             {
                 if (name == null || child.ElementName == name)
-                {        
+                {
                     // Poll the actual implementation, which results in a more efficient loopkup when the underlying
                     // implementation of _mySD is ClassMapping.
-                    var childElementDef = (_mySD is ClassMapping cm) ? cm.FindMappedElementByName(name) : 
+                    var childElementDef = (_mySD is ClassMapping cm) ? cm.FindMappedElementByName(child.ElementName) :
                         _mySD.GetElements().FirstOrDefault(c => c.ElementName == child.ElementName);
 
                     if (oldElementName != child.ElementName)
