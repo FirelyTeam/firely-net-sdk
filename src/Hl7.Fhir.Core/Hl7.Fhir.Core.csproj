@@ -46,12 +46,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
@@ -59,18 +53,5 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Model\Template-Model.cs">
-      <DependentUpon>Template-Model.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Model\Template-Model.tt">
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
   </ItemGroup>
 </Project>
