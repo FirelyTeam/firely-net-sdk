@@ -17,8 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSummaryTests
     {
-        // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
-        static readonly string ApiFhirVersion = "4.0.0"; // ModelInfo.Version;
+        static readonly string ApiFhirVersion = ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
@@ -162,9 +161,6 @@ namespace Hl7.Fhir.Specification.Tests
                 }
                 var expectedStatus =
                     isNormative
-                    // [WMR 20181213] R4 HACK - These 2 datatypes still define status="draft" ?
-                    && name != "MoneyQuantity"
-                    && name != "SimpleQuantity"
                     ? PublicationStatus.Active : PublicationStatus.Draft;
                 Assert.AreEqual(expectedStatus.GetLiteral(), summary.GetPublicationStatus());
 
@@ -200,7 +196,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestProfilesResourcesXml()
         {
-            string path = Path.GetFullPath(Path.Combine("TestData", "profiles-resources.xml"));
+            string path = Path.GetFullPath(Path.Combine("TestData", "snapshot-test", "profiles-resources.xml"));
 
             var summaries = ArtifactSummaryGenerator.Default.Generate(path);
             Assert.IsNotNull(summaries);
@@ -308,8 +304,9 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20181213] R4 NEW
             // [MV 20191212] R4.0.1 NEW
             // [MV 20200203] R4.0.1 (after reducing dataelements.xml)
-            Assert.AreEqual(5148, summaries.Count); // STU3: 7941
-            Assert.AreEqual(967, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            // [MV 20200911] use complete dataelements.xml again
+            Assert.AreEqual(11611, summaries.Count); // STU3: 7941
+            Assert.AreEqual(7430, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 

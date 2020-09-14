@@ -5,19 +5,25 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://build.fhir.org/";
+$server = "http://hl7.org/fhir/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
-# Apply this transform to remove all the Meta sections from the profiles (to remove the LastUpdated tags) 
-# this makes it easier to see the actual changes between versions
-$xslt = New-Object System.Xml.Xsl.XslCompiledTransform;
-$xslt.Load("$baseDir\Build\StripLastModified.xslt");
 
-# These are all files from the spec that we need. Last modified dates are stripped after download
-$allFiles = @("conceptmaps.xml", "dataelements.xml", "expansions.xml", "extension-definitions.xml", "namingsystem-registry.xml",
-				"profiles-others.xml", "profiles-resources.xml", "profiles-types.xml", "search-parameters.xml", "v2-tables.xml",
-				"v3-codesystems.xml", "valuesets.xml");
+# These are all files from the spec that we need. Narratives are stripped after download
+$allFiles = @("conceptmaps.xml", 
+				"dataelements.xml", 
+				"extension-definitions.xml", 
+				"namingsystem-registry.xml",
+				"profiles-others.xml", 
+				"profiles-resources.xml", 
+				"profiles-types.xml" 
+				"search-parameters.xml",
+				"v2-tables.xml",
+				"v3-codesystems.xml",
+				"valuesets.xml"
+				"fhir-all-xsd.zip"
+				);
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
@@ -71,25 +77,94 @@ function CopySpecFile($name, $destDir)
 	Copy-Item $sourcePath $destPath
 }
 
+function RemoveXmlNode($xml, $nsmgr, $xpath)
+{
+	$node = $xml.SelectSingleNode($xpath, $nsmgr )
+	
+	if ($node -ne $null) {
+		$node.ParentNode.RemoveChild($node)
+	}
+	else {
+	    Write-Host "not found"
+	}
+}
+
+function RemoveIncorrectXsdElements($file)
+{
+	[xml]$xml = Get-Content $file
+
+	$nametable = new-object System.Xml.NameTable;
+	$nsmgr = new-object System.Xml.XmlNamespaceManager($nametable);
+	$nsmgr.AddNamespace("xs", "http://www.w3.org/2001/XMLSchema");
+		
+	RemoveXmlNode  $xml $nsmgr "//xs:simpleType[@name='Event Or Request Resource Types-list']"
+	RemoveXmlNode  $xml $nsmgr "//xs:complexType[@name='Event Or Request Resource Types']"
+
+	$xml.save($file)
+}
+
+function RemoveNarrative($name)
+{
+	$file = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $file
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+	$ns.AddNamespace("xh", "http://www.w3.org/1999/xhtml")
+
+	$childNodes = $xml.SelectNodes("//ns:resource//ns:text/xh:div/child::*", $ns)
+	
+	foreach ($child in $childNodes)
+	{
+		[void]$child.ParentNode.RemoveChild($child)
+	}
+
+	$divs = $xml.SelectNodes("//ns:resource//ns:text/xh:div", $ns)
+	ForEach ($div in $divs) 
+	{
+		$newNode = $xml.CreateElement("p", $ns.LookupNamespace("xh"))
+		$xmlText = $xml.CreateTextNode("The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library")
+		$newNode.AppendChild($xmlText) | Out-null
+		$div.AppendChild($newNode) | Out-null
+	}
+	Write-Output "Removed narratives from $file"
+	# Store it again
+	$xml.Save($file)
+}
+
+function ExtractXsdZipFile($destPath)
+{
+	Write-Host -ForegroundColor White "Extract xsd zip file..."
+	$zipPath = Join-Path $tempDir "fhir-all-xsd.zip"
+	$extractPath = Join-Path $tempDir "extracted"
+	expand-archive -path $zipPath -destinationpath $extractPath
+	
+	if ($server.EndsWith('2020Sep/') )
+	{
+		# In release 2020Sep is an error in the fhir-single.xsd.  
+		Write-Host -ForegroundColor White ".. correct errors in fhir-single.xsd"
+		$xsdFile = Join-Path $extractPath "fhir-single.xsd"
+		RemoveIncorrectXsdElements $xsdFile
+	}
+	Write-Host -ForegroundColor White "Copy extracted files to $destPath ..."
+	Copy-Item -Path $extractPath\* -Destination $destPath
+}
+
 foreach($file in $allFiles)			
 {
 	GetSpecFile $file
-	TransformSpecfile $file
+	if ($file.EndsWith('.xml'))
+	{
+		RemoveNarrative $file
+	}
 }
 
 Write-Host -ForegroundColor White "Copy files to project..."
 
-# Copy the files necessary for code generation
-CopySpecFile "expansions.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
-CopySpecFile "profiles-resources.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
-CopySpecFile "profiles-types.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
-CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
-CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Core\Model\Source"
-
 # Copy the files necessary for the specification library (specification.zip / data)
+Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*" -Force
 CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "dataelements.xml" "$srcdir\Hl7.Fhir.Specification\data"
-#CopySpecFile "expansions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "namingsystem-registry.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
@@ -109,10 +184,7 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/exam
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
+PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
 
-# Still need to add:
 # extract schemas and xsd from fhir-all.zip -> data
-
-# Run the text transformation tools to update the Models from the templates
-# pushd ..\src\Hl7.Fhir.Core\Model\Generated
-# "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\TestTransform.exe" 
+ExtractXsdZipFile "$srcdir\Hl7.Fhir.Specification\data"
