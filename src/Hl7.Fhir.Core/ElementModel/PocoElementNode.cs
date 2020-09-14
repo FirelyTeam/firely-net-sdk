@@ -21,31 +21,41 @@ namespace Hl7.Fhir.ElementModel
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly IStructureDefinitionSummary _mySD;
+        private readonly ClassMapping _myClassMapping;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = root.TypeName;
-            Definition = ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
+            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(root.GetType());
+            InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
+            Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
         }
 
-        private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
+        private PocoElementNode(Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = instance.TypeName;
+
+            var instanceType = determineInstanceType(instance.GetType(), definition);
+            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(instanceType);
+            InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
             Location = location;
             ShortPath = shortPath;
+        }
+
+        private Type determineInstanceType(Type type, PropertyMapping definition)
+        {
+            if (definition.Choice != ChoiceType.None)
+                return type;
+            else
+                return definition.FhirType[0];
         }
 
         public IElementDefinitionSummary Definition { get; private set; }
@@ -66,8 +76,7 @@ namespace Hl7.Fhir.ElementModel
                 {
                     // Poll the actual implementation, which results in a more efficient loopkup when the underlying
                     // implementation of _mySD is ClassMapping.
-                    var childElementDef = (_mySD is ClassMapping cm) ? cm.FindMappedElementByName(child.ElementName) :
-                        _mySD.GetElements().FirstOrDefault(c => c.ElementName == child.ElementName);
+                    var childElementDef = _myClassMapping.FindMappedElementByName(child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;
