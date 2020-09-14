@@ -58,6 +58,41 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
+        public void TestFpNavigate()
+        {
+            var patient = ElementNode.Root(_provider, "Patient");
+            patient.Add(_provider, "active", true);
+
+            var obs = ElementNode.Root(_provider, "Observation");
+            obs.Add(_provider, "id", "test");
+
+            patient.Add(_provider, obs, "contained");
+
+            // Select on the root of the resource, path should match with resource name included
+            var active = patient.Select("Patient.active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, resource type does not match
+            var id = obs.Select("Patient.id");
+            Assert.IsNull(id.FirstOrDefault());
+
+            // Select on root of the resource, path does not include the resourceType
+            active = patient.Select("active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, path is for a generic Resource / DomainResource element
+            id = obs.Select("Resource.id");
+            Assert.IsNotNull(id);
+            Assert.AreEqual("test", id.FirstOrDefault().Value);
+
+            var contained = patient.Select("DomainResource.contained");
+            Assert.IsNotNull(contained);
+            Assert.AreEqual("Observation", contained.FirstOrDefault().InstanceType);
+        }
+
+        [TestMethod]
         public void TestAutoDeriveTypeForPolymorphicElement()
         {
             // Explicit types will be passed through on polymorphic elements
