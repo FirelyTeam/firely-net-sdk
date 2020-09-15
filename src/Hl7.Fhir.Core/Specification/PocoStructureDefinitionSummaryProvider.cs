@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Specification
 
             if (elementType.IsNestedType)
             {
-                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ElementType);
+                var info = PocoStructureDefinitionSummaryProvider.Provide(pm.ImplementingType);
                 return new ITypeSerializationInfo[] { info };
             }
             else

@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization
                 ComplexTypeReader.RaiseFormatError(
                     "Underlying data source was not able to provide the actual instance type of the resource.", _reader.Location);
 
-            var mapping = _inspector.FindClassMappingByName(_reader.InstanceType);
+            var mapping = _inspector.FindClassMapping(_reader.InstanceType);
 
             if (mapping == null)
                 ComplexTypeReader.RaiseFormatError($"Asked to deserialize unknown resource '{_reader.InstanceType}'", _reader.Location);
