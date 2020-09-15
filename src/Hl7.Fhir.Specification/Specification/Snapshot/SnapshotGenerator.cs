@@ -292,18 +292,22 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>
-        /// Return the canonical of the BaseDefinition of the StructureDefinition. The 'classes'
+        /// Return the Parent of the StructureDefinition. The 'classes'
         /// "MetadataResource" and "CanonicalResource" are skipped here in the hierarchy. Those 'classes' are actually interfaces.
         /// These interfaces are introduced in the preview of R5 and maybe removed in the hierarchy in the final R5 release. 
-        /// In this case the BaseDefinition is "DomainResource"
+        /// These class are denoted by the extension 'structuredefinition-interface'
         /// </summary>
-        /// <param name="structure">the StructureDefinition to get the base definition from</param>
-        /// <returns></returns>
-        internal static string getBaseDefinition(StructureDefinition structure) =>
-            (structure.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType("MetadataResource") ||
-             structure.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType("CanonicalResource"))
-                    ? ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource).Value
-                    : structure.BaseDefinition;
+        /// <param name="structure">the StructureDefinition to get the base from</param>
+        /// <returns>The parent of <paramref name="structure"/>, skipping the interface classes</returns>
+        internal async T.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
+        {
+            while (structure?.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
+            {
+                structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
+            }
+
+            return structure;
+        }
 
         ///// <inheritdoc cref="MergeElementDefinitionAsync(ElementDefinition, ElementDefinition, bool)" />
         //[Obsolete("SnapshotGenerator now works best with asynchronous resolvers. Use MergeElementDefinition() instead.")]
@@ -341,18 +345,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
             {
-                var baseDefinitionUrl = getBaseDefinition(structure);
-
-                var baseStructure = await AsyncResolver.FindStructureDefinitionAsync(baseDefinitionUrl).ConfigureAwait(false);
+                var baseStructure = await getBaseDefinition(structure);
 
                 // [WMR 20161208] Handle unresolved base profile
                 if (baseStructure == null)
                 {
-                    addIssueProfileNotFound(baseDefinitionUrl);
+                    addIssueProfileNotFound(structure.BaseDefinition);
                     // Fatal error...
                     return null;
                 }
 
+                var baseDefinitionUrl = baseStructure.BaseDefinitionElement;
                 // [WMR 20161208] Handle missing differential
                 var location = differential.Element.Count > 0 ? differential.Element[0].Path : null;
                 if (!await ensureSnapshot(baseStructure, baseDefinitionUrl, location).ConfigureAwait(false))

@@ -2651,7 +2651,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!result)
             {
                 Debug.Print("Expanded is not exactly equal to original... verifying...");
-                result = verifyElementBase(sd, expanded);
+                result = await verifyElementBase(sd, expanded);
             }
 
             // Core artifact snapshots are incorrect, e.g. url snapshot is missing extension element
@@ -2739,7 +2739,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Verify ElementDefinition.Base components
-        bool verifyElementBase(StructureDefinition original, StructureDefinition expanded)
+        async T.Task<bool> verifyElementBase(StructureDefinition original, StructureDefinition expanded)
         {
             var originalElems = original.HasSnapshot ? original.Snapshot.Element : new List<ElementDefinition>();
             var expandedElems = expanded.HasSnapshot ? expanded.Snapshot.Element : new List<ElementDefinition>();
@@ -2800,9 +2800,9 @@ namespace Hl7.Fhir.Specification.Tests
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
                 {
                     // [WMR 20190131] Fixed
-                    var baseDef = SnapshotGenerator.getBaseDefinition(expanded);
-                    bool isDerivedFromResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
-                    bool isDerivedFromDomainResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
+                    var baseDef = await _generator.getBaseDefinition(expanded);
+                    bool isDerivedFromResource = baseDef?.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
+                    bool isDerivedFromDomainResource = baseDef?.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
                     bool isDomainResource = expanded.Name == "DomainResource";
 
                     // [WMR 20190130] STU3
