@@ -2801,8 +2801,8 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     // [WMR 20190131] Fixed
                     var baseDef = await _generator.getBaseDefinition(expanded);
-                    bool isDerivedFromResource = baseDef?.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
-                    bool isDerivedFromDomainResource = baseDef?.BaseDefinition == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
+                    bool isDerivedFromResource = baseDef?.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
+                    bool isDerivedFromDomainResource = baseDef?.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
                     bool isDomainResource = expanded.Name == "DomainResource";
 
                     // [WMR 20190130] STU3
