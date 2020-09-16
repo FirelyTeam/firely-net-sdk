@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An interaction during which services are provided to the patient
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Encounter", IsResource=true)]
   [DataContract]
   public partial class Encounter : Hl7.Fhir.Model.DomainResource

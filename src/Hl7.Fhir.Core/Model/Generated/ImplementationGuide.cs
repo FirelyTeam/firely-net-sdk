@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A set of rules about how FHIR is used
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ImplementationGuide", IsResource=true)]
   [DataContract]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource

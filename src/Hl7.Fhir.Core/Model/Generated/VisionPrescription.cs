@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Prescription for vision correction products for a patient
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("VisionPrescription", IsResource=true)]
   [DataContract]
   public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource

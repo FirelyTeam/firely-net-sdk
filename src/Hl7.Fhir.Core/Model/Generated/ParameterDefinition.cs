@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Definition of a parameter to a module
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ParameterDefinition")]
   [DataContract]
   public partial class ParameterDefinition : Hl7.Fhir.Model.DataType
