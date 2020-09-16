@@ -43,6 +43,7 @@ function PowerCurl($targetPath, $sourceUrl)
 	{
 		Write-Host -ForegroundColor White "downloading $sourceUrl to $targetPath ..."
         $webclient = New-Object System.Net.WebClient
+		$webclient.Encoding = [System.Text.Encoding]::UTF8
         $webclient.DownloadFile($sourceUrl,$targetPath)
 	} Catch
 	{
