@@ -43,20 +43,22 @@ namespace Hl7.Fhir.Tests.Rest
             var typesToTest = ModelInfo.FhirCsTypeToString.Keys;
             Console.WriteLine($"Creating a mapping for all {typesToTest.Count} pocos.");
 
+            int numRepeats = 10;
+
             var sw = new Stopwatch();
             sw.Start();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numRepeats; i++)
                 foreach (var testee in typesToTest)
                     createMapping(testee);
             sw.Stop();
-            Console.WriteLine($"No props: {sw.ElapsedMilliseconds/10.0}ms");
+            Console.WriteLine($"No props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
 
             sw.Restart();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < numRepeats; i++)
                 foreach (var testee in typesToTest)
                     createMapping(testee, touchProps: true);
             sw.Stop();
-            Console.WriteLine($"With props: {sw.ElapsedMilliseconds/10.0}ms");
+            Console.WriteLine($"With props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
 
             int createMapping(Type t, bool touchProps = false)
             {
