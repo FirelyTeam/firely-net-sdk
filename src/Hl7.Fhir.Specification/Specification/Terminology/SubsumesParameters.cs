@@ -37,5 +37,37 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
         /// The "B" Coding that is to be tested.
         /// </summary>
         public Coding CodingB { get; set; }
+
+        public Parameters ToParameters()
+        {
+            var result = new Parameters();
+
+            if (!string.IsNullOrWhiteSpace(CodeA))
+            {
+                result.AddParameterComponent("codeA", new Code(CodeA));
+            }
+
+            if (!string.IsNullOrWhiteSpace(CodeB))
+            {
+                result.AddParameterComponent("codeB", new Code(CodeB));
+            }
+
+            if (!string.IsNullOrWhiteSpace(System))
+            {
+                result.AddParameterComponent("system", new FhirUri(System));
+            }
+
+            if (CodingA != null)
+            {
+                result.AddParameterComponent("codingA", CodingA);
+            }
+
+            if (CodingB != null)
+            {
+                result.AddParameterComponent("codingB", CodingB);
+            }
+
+            return result;
+        }
     }
 }

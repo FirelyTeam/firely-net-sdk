@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Model;
-using System.Collections.Generic;
 
 namespace Hl7.Fhir.Specification.Specification.Terminology
 {
@@ -65,5 +64,72 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
         /// If this is true, then the operation should return all the codes that might be mapped to this code. This parameter reverses the meaning of the source and target parameters
         /// </summary>
         public bool? Reverse { get; set; }
+
+        public Parameters ToParameters()
+        {
+            var result = new Parameters();
+
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                result.AddParameterComponent("url", new FhirUri(Url));
+            }
+
+            if (ConceptMap != null)
+            {
+                result.AddParameterComponent("conceptMap", ConceptMap);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ConceptMapVersion))
+            {
+                result.AddParameterComponent("conceptMapVersion", new FhirString(ConceptMapVersion));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Code))
+            {
+                result.AddParameterComponent("code", new Code(Code));
+            }
+
+            if (!string.IsNullOrWhiteSpace(System))
+            {
+                result.AddParameterComponent("system", new FhirUri(System));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Version))
+            {
+                result.AddParameterComponent("version", new FhirString(Version));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Source))
+            {
+                result.AddParameterComponent("source", new FhirUri(Source));
+            }
+
+            if (Coding != null)
+            {
+                result.AddParameterComponent("coding", Coding);
+            }
+
+            if (CodeableConcept != null)
+            {
+                result.AddParameterComponent("codeableConcept", CodeableConcept);
+            }
+
+            if (!string.IsNullOrWhiteSpace(Target))
+            {
+                result.AddParameterComponent("target", new FhirUri(Target));
+            }
+
+            if (!string.IsNullOrWhiteSpace(TargetSystem))
+            {
+                result.AddParameterComponent("targetSystem", new FhirUri(TargetSystem));
+            }
+
+            if (Reverse.HasValue)
+            {
+                result.AddParameterComponent("reverse", new FhirBoolean(Reverse.Value));
+            }
+
+            return result;
+        }
     }
 }

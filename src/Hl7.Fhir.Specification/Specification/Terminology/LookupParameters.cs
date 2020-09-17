@@ -43,5 +43,51 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
         /// </summary>
         /// <remarks>If no properties are specified, the server chooses what to return.</remarks>
         public List<string> Property { get; set; }
+
+        public Parameters ToParameters()
+        {
+            var result = new Parameters();
+
+            if (!string.IsNullOrWhiteSpace(Code))
+            {
+                result.AddParameterComponent("code", new Code(Code));
+            }
+
+            if (!string.IsNullOrWhiteSpace(System))
+            {
+                result.AddParameterComponent("system", new FhirUri(System));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Version))
+            {
+                result.AddParameterComponent("version", new FhirString(Version));
+            }
+
+            if (Coding != null)
+            {
+                result.AddParameterComponent("coding", Coding);
+            }
+
+            if (Date.HasValue)
+            {
+                result.AddParameterComponent("date", new FhirDateTime(Date.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(DisplayLanguage))
+            {
+                result.AddParameterComponent("displayLanguage", new Code(DisplayLanguage));
+            }
+
+            if (Property?.Count > 0)
+            {
+                foreach (var prop in Property)
+                {
+                    if (string.IsNullOrWhiteSpace(prop)) continue;
+                    result.AddParameterComponent("property", new Code(prop));
+                }
+            }
+
+            return result;
+        }
     }
 }

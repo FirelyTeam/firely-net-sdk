@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -102,5 +103,136 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
         /// </summary>
         /// <remarks>The format is the same as a canonical URL: [system]|[version] - e.g. http://loinc.org|2.56.</remarks>
         public List<string> ForceSystemVersion { get; set; }
+
+        public Parameters ToParameters()
+        {
+            var result = new Parameters();
+
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                result.AddParameterComponent("url", new FhirUri(Url));
+            }
+
+            if (ValueSet != null)
+            {
+                result.AddParameterComponent("valueSet", ValueSet);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ValueSetVersion))
+            {
+                result.AddParameterComponent("valueSetVersion", new FhirString(ValueSetVersion));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Context))
+            {
+                result.AddParameterComponent("context", new FhirUri(Context));
+            }
+
+            if (ContextDirection.HasValue)
+            {
+                result.AddParameterComponent("contextDirection", new Code(ContextDirection.GetLiteral()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Filter))
+            {
+                result.AddParameterComponent("filter", new FhirString(Filter));
+            }
+
+            if (Date.HasValue)
+            {
+                result.AddParameterComponent("date", new FhirDateTime(Date.Value));
+            }
+
+            if (Offset.HasValue)
+            {
+                result.AddParameterComponent("offset", new Integer(Offset));
+            }
+
+            if (Count.HasValue)
+            {
+                result.AddParameterComponent("count", new Integer(Count));
+            }
+
+            if (IncludeDesignations.HasValue)
+            {
+                result.AddParameterComponent("includeDesignations", new FhirBoolean(IncludeDesignations));
+            }
+
+            if (Designation?.Count > 0)
+            {
+                foreach (var designation in Designation)
+                {
+                    if (string.IsNullOrWhiteSpace(designation)) continue;
+                    result.AddParameterComponent("designation", new FhirString(designation));
+                }
+            }
+
+            if (IncludeDefinition.HasValue)
+            {
+                result.AddParameterComponent("includeDefinition", new FhirBoolean(IncludeDefinition));
+            }
+
+            if (ActiveOnly.HasValue)
+            {
+                result.AddParameterComponent("activeOnly", new FhirBoolean(ActiveOnly));
+            }
+
+            if (ExcludeNested.HasValue)
+            {
+                result.AddParameterComponent("excludeNested", new FhirBoolean(ExcludeNested));
+            }
+
+            if (ExcludeNotForUI.HasValue)
+            {
+                result.AddParameterComponent("excludeNotForUI", new FhirBoolean(ExcludeNotForUI));
+            }
+
+            if (ExcludePostCoordinated.HasValue)
+            {
+                result.AddParameterComponent("excludePostCoordinated", new FhirBoolean(ExcludePostCoordinated));
+            }
+
+            if (!string.IsNullOrWhiteSpace(DisplayLanguage))
+            {
+                result.AddParameterComponent("displayLanguage", new Code(DisplayLanguage));
+            }
+
+            if (ExcludeSystem?.Count > 0)
+            {
+                foreach (var excludeSystem in ExcludeSystem)
+                {
+                    if (string.IsNullOrWhiteSpace(excludeSystem)) continue;
+                    result.AddParameterComponent("excludeSystem", new Canonical(excludeSystem));
+                }
+            }
+
+            if (SystemVersion?.Count > 0)
+            {
+                foreach (var systemVersion in SystemVersion)
+                {
+                    if (string.IsNullOrWhiteSpace(systemVersion)) continue;
+                    result.AddParameterComponent("systemVersion", new Canonical(systemVersion));
+                }
+            }
+
+            if (CheckSystemVersion?.Count > 0)
+            {
+                foreach (var checkSystemVersion in CheckSystemVersion)
+                {
+                    if (string.IsNullOrWhiteSpace(checkSystemVersion)) continue;
+                    result.AddParameterComponent("checkSystemVersion", new Canonical(checkSystemVersion));
+                }
+            }
+
+            if (ForceSystemVersion?.Count > 0)
+            {
+                foreach (var forceSystemVersion in ForceSystemVersion)
+                {
+                    if (string.IsNullOrWhiteSpace(forceSystemVersion)) continue;
+                    result.AddParameterComponent("forceSystemVersion", new Canonical(forceSystemVersion));
+                }
+            }
+            return result;
+        }
     }
 }

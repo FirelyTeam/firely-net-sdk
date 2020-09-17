@@ -69,5 +69,77 @@ namespace Hl7.Fhir.Specification.Specification.Terminology
         /// Specifies the language to be used for description when validating the display property.
         /// </summary>
         public string DisplayLanguage { get; set; }
+
+        public Parameters ToParameters()
+        {
+            var result = new Parameters();
+
+            if (!string.IsNullOrWhiteSpace(Url))
+            {
+                result.AddParameterComponent("url", new FhirUri(Url));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Context))
+            {
+                result.AddParameterComponent("context", new FhirUri(Context));
+            }
+
+            if (ValueSet != null)
+            {
+                result.AddParameterComponent("valueSet", ValueSet);
+            }
+
+            if (!string.IsNullOrWhiteSpace(ValueSetVersion))
+            {
+                result.AddParameterComponent("valueSetVersion", new FhirString(ValueSetVersion));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Code))
+            {
+                result.AddParameterComponent("code", new Code(Code));
+            }
+
+            if (!string.IsNullOrWhiteSpace(System))
+            {
+                result.AddParameterComponent("system", new FhirUri(System));
+            }
+
+            if (!string.IsNullOrWhiteSpace(SystemVersion))
+            {
+                result.AddParameterComponent("systemVersion", new FhirString(SystemVersion));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Display))
+            {
+                result.AddParameterComponent("display", new FhirString(Display));
+            }
+
+            if (Coding != null)
+            {
+                result.AddParameterComponent("coding", Coding);
+            }
+
+            if (CodeableConcept != null)
+            {
+                result.AddParameterComponent("codeableConcept", CodeableConcept);
+            }
+
+            if (Date.HasValue)
+            {
+                result.AddParameterComponent("date", new FhirDateTime(Date.Value));
+            }
+
+            if (Abstract.HasValue)
+            {
+                result.AddParameterComponent("abstract", new FhirBoolean(Abstract));
+            }
+
+            if (!string.IsNullOrWhiteSpace(DisplayLanguage))
+            {
+                result.AddParameterComponent("displayLanguage", new Code(DisplayLanguage));
+            }
+
+            return result;
+        }
     }
 }

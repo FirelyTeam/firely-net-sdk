@@ -6,13 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification.Specification.Terminology;
+using System;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -28,21 +27,26 @@ namespace Hl7.Fhir.Specification.Terminology
         public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(typeName)) throw Error.ArgumentNullOrEmpty(nameof(typeName));
-            if (typeName != FHIRAllTypes.CodeSystem.GetLiteral() && typeName != FHIRAllTypes.ValueSet.GetLiteral())
+            var fhirType = ModelInfo.FhirTypeNameToFhirType(typeName);
+
+            if (fhirType != FHIRAllTypes.CodeSystem && fhirType != FHIRAllTypes.ValueSet)
                 throw Error.Argument(nameof(Type), "Valid values for argument typeName is 'CodeSystem' and 'ValueSet'");
 
             if (string.IsNullOrEmpty(id))
                 return Endpoint.TypeOperation(RestOperation.VALIDATE_CODE, typeName, parameters, useGet) as Parameters;
             else
-                return Endpoint.InstanceOperation(new Uri($"{typeName}/{id}", UriKind.Relative), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+
+                return Endpoint.InstanceOperation(ResourceIdentity.Build(typeName, id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
         }
+        private Uri constructUri(FHIRAllTypes fhirType, string id) =>
+            ResourceIdentity.Build(ModelInfo.FhirTypeToFhirTypeName(fhirType), id);
 
         public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
                 return Endpoint.TypeOperation(RestOperation.EXPAND_VALUESET, FHIRAllTypes.ValueSet.GetLiteral(), parameters, useGet);
             else
-                return Endpoint.InstanceOperation(new Uri($"{FHIRAllTypes.ValueSet.GetLiteral()}/{id}", UriKind.Relative), RestOperation.EXPAND_VALUESET, parameters, useGet);
+                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.ValueSet, id), RestOperation.EXPAND_VALUESET, parameters, useGet);
         }
 
         public Parameters Lookup(Parameters parameters, bool useGet = false)
@@ -55,7 +59,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (string.IsNullOrEmpty(id))
                 return Endpoint.TypeOperation<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet) as Parameters;
             else
-                return Endpoint.InstanceOperation(new Uri($"{FHIRAllTypes.ConceptMap.GetLiteral()}/{id}", UriKind.Relative), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
+                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.ConceptMap, id), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
         }
 
         public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
@@ -63,7 +67,7 @@ namespace Hl7.Fhir.Specification.Terminology
             if (string.IsNullOrEmpty(id))
                 return Endpoint.TypeOperation(RestOperation.SUBSUMES, FHIRAllTypes.CodeSystem.GetLiteral(), parameters, useGet);
             else
-                return Endpoint.InstanceOperation(new Uri($"{FHIRAllTypes.CodeSystem.GetLiteral()}/{id}", UriKind.Relative), RestOperation.SUBSUMES, parameters, useGet);
+                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.CodeSystem, id), RestOperation.SUBSUMES, parameters, useGet);
         }
 
         public Resource Closure(Parameters parameters, bool useGet = false)
@@ -72,9 +76,9 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         [Obsolete("This method is obsolete, use method with signature 'ValidateCode(Parameters, string, string, bool)'")]
-        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
-            string code = null, string system = null, string version = null, string display = null, 
-            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
+        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
+            string code = null, string system = null, string version = null, string display = null,
+            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
             bool? @abstract = null, string displayLanguage = null)
         {
             try
@@ -83,12 +87,12 @@ namespace Hl7.Fhir.Specification.Terminology
                     Endpoint.ValidateCode(
                                 url: canonical != null ? new FhirUri(canonical) : null,
                                 context: context != null ? new FhirUri(context) : null,
-                                valueSet: valueSet, 
+                                valueSet: valueSet,
                                 code: code != null ? new Code(code) : null,
                                 system: system != null ? new FhirUri(system) : null,
                                 version: version != null ? new FhirString(version) : null,
                                 display: display != null ? new FhirString(display) : null,
-                                coding: coding, codeableConcept: codeableConcept, date: date, 
+                                coding: coding, codeableConcept: codeableConcept, date: date,
                                 @abstract: @abstract != null ? new FhirBoolean(@abstract) : null,
                                 displayLanguage: displayLanguage != null ? new Code(displayLanguage) : null);
 
