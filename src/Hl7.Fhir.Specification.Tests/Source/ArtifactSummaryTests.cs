@@ -17,8 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class ArtifactSummaryTests
     {
-        // [WMR 20181213] ModelInfo.Version returns 3.6 ...?
-        static readonly string ApiFhirVersion = "4.5.0"; // ModelInfo.Version;
+        static readonly string ApiFhirVersion = ModelInfo.Version;
 
         [TestMethod]
         public void TestPatientXmlSummary() => TestPatientSummary(Path.Combine("TestData", "TestPatient.xml"));
