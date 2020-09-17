@@ -456,49 +456,8 @@ namespace Hl7.Fhir.Model
         {
             if (superclass == subclass) return true;
 
-            var maybeSubclassParent = toParent(subclass);
-
-            return superclass.IsAssignableFrom(maybeSubclassParent);
-
-            static Type toParent(Type t)
-            {
-                if (STRING_SUBCLASSES.Contains(t))
-                    return typeof(FhirString);
-                else if (INTEGER_SUBCLASSES.Contains(t)) 
-                    return typeof(Integer);
-                else if (URI_SUBCLASSES.Contains(t)) 
-                    return typeof(FhirUri);
-                else
-                    return t;
-            }
+            return superclass.IsAssignableFrom(subclass);
         }
-
-        /*
-         * These are type hierarchy relationships *not* represented in the
-         * equivalent POCO hierarchy.
-         * 
-         * Note that, in any case, in FHIR instances and profiles, these
-         * types do not have a polymorphic relationship and thus cannot
-         * be substituted for one another.
-         */
-        private static readonly Type[] STRING_SUBCLASSES = new[]
-        { 
-            typeof(Code), 
-            typeof(Id),
-            typeof(Markdown),
-        };
-
-        private static readonly Type[] INTEGER_SUBCLASSES = new[] 
-        { 
-            typeof(UnsignedInt),
-            typeof(PositiveInt) 
-        };
-
-        private static readonly Type[] URI_SUBCLASSES = new[]
-        {
-            typeof(Oid),
-            typeof(Uuid)
-        };
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
