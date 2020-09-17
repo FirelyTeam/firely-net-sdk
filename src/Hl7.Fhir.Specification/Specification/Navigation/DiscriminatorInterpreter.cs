@@ -50,10 +50,11 @@ namespace Hl7.Fhir.Specification.Navigation
                 case "extension":
                     var url = getSingleStringParameter(call);
                     return parentSet.Extension(url);
+                case "as": // 'as()' for backwards compatibility only
                 case "ofType":
                     var type = getSingleStringParameter(call);
                     if (!ModelInfo.IsCoreModelType(type))
-                        throw new DiscriminatorFormatException($"Type '{type}' passed to ofType() is not a known FHIR type.");
+                        throw new DiscriminatorFormatException($"Type '{type}' passed to {call.FunctionName}() is not a known FHIR type.");
                     return parentSet.OfType(type);
                 default:
                     throw new DiscriminatorFormatException($"Invocation of function '{call.FunctionName}' is not supported in discriminators.");
