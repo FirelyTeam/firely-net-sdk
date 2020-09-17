@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Explanation of Benefit resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ExplanationOfBenefit", IsResource=true)]
   [DataContract]
   public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An amount of economic utility in some recognized currency
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Money")]
   [DataContract]
   public partial class Money : Hl7.Fhir.Model.DataType

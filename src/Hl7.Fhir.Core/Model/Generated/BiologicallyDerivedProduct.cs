@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A material substance originating from a biological entity
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("BiologicallyDerivedProduct", IsResource=true)]
   [DataContract]
   public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource

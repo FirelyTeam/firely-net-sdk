@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Definition of properties and rules about how the price and the applicability of a ChargeItem can be determined
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ChargeItemDefinition", IsResource=true)]
   [DataContract]
   public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource

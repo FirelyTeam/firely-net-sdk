@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A person with a  formal responsibility in the provisioning of healthcare or related services
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Practitioner", IsResource=true)]
   [DataContract]
   public partial class Practitioner : Hl7.Fhir.Model.DomainResource

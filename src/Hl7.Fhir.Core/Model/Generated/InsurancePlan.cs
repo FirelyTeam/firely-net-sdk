@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Details of a Health Insurance product/plan provided by an organization
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("InsurancePlan", IsResource=true)]
   [DataContract]
   public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Concept - reference to a terminology or just  text
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CodeableConcept")]
   [DataContract]
   public partial class CodeableConcept : Hl7.Fhir.Model.DataType

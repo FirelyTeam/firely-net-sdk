@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An entry in a catalog
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CatalogEntry", IsResource=true)]
   [DataContract]
   public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource

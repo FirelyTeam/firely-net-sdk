@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A population, intervention, or exposure definition
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("EvidenceVariable", IsResource=true)]
   [DataContract]
   public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource

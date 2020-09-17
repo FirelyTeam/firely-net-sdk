@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A grouping of people or organizations with a common purpose
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Organization", IsResource=true)]
   [DataContract]
   public partial class Organization : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Measurement, calculation or setting capability of a medical device
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DeviceMetric", IsResource=true)]
   [DataContract]
   public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource

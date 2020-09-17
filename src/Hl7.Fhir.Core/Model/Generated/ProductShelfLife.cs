@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// The shelf-life and storage information for a medicinal product item or container can be described using this class
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ProductShelfLife")]
   [DataContract]
   public partial class ProductShelfLife : Hl7.Fhir.Model.BackboneType
