@@ -374,9 +374,6 @@ namespace Hl7.Fhir.Tests.Model
 
             // FHIR: Money derives from Element, not Quantity.
             Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Quantity, FHIRAllTypes.Money));
-
-            // MoneyQuantity is a profile on Quantity
-            Assert.IsTrue(ModelInfo.IsProfiledQuantity(FHIRAllTypes.MoneyQuantity));
         }
 
         [TestMethod]

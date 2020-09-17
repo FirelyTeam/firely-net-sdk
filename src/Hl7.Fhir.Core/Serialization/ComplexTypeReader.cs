@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization
             if (_current.InstanceType is null)
                 throw Error.Format("Underlying data source was not able to provide the actual instance type of the resource.");
 
-            var mapping = _inspector.FindClassMappingByName(_current.InstanceType);
+            var mapping = _inspector.FindClassMapping(_current.InstanceType);
 
             if (mapping == null)
                 RaiseFormatError($"Asked to deserialize unknown type '{_current.InstanceType}'", _current.Location);
@@ -133,12 +133,12 @@ namespace Hl7.Fhir.Serialization
                     // when this happens.
                     value = reader.Deserialize(mappedProperty, memberName, value);
 
-                    if (mappedProperty.RepresentsValueElement && mappedProperty.ElementType.IsEnum() && value is String)
+                    if (mappedProperty.RepresentsValueElement && mappedProperty.ImplementingType.IsEnum() && value is String)
                     {
                         if (!Settings.AllowUnrecognizedEnums)
                         {
-                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ElementType) == null)
-                                RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.ElementType.Name}'", _current.Location);
+                            if (EnumUtility.ParseLiteral((string)value, mappedProperty.ImplementingType) == null)
+                                RaiseFormatError($"Literal '{value}' is not a valid value for enumeration '{mappedProperty.ImplementingType.Name}'", _current.Location);
                         }
 
                         ((PrimitiveType)existing).ObjectValue = value;
