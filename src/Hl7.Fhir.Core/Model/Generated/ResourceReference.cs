@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type the reference refers to (e.g. "Patient")
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=40, Since="3.3.0")]
+    [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri TypeElement
     {
