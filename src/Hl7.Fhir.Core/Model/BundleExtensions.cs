@@ -147,26 +147,6 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>
-        /// Find all entries in a Bundle with the given type/id/version
-        /// </summary>
-        /// <param name="bundle">Bundle to search in</param>
-        /// <param name="type">Type of entry to find</param>
-        /// <param name="id">Id of the entry to find</param>
-        /// <param name="version">Version of the entry to find. Optional.</param>
-        /// <param name="includeDeleted">Whether to include deleted entries in the search. Optional.</param>
-        /// <returns>A list of Resources with the given identity, or an empty list if none were found.</returns>
-        [Obsolete("Bundle Entries are now identified by their fullUrl, so cannot be referenced anymore by just the type and id. Use the other overloads instead")]
-        public static IEnumerable<Bundle.EntryComponent> FindEntry(this Bundle bundle, string type, string id, string version = null, bool includeDeleted = false)
-        {
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            if (id == null) throw Error.ArgumentNull(nameof(id));
-            var identity = ResourceIdentity.Build(type,id,version);
-
-            return FindEntry(bundle, identity, includeDeleted);
-        }
-
-
-        /// <summary>
         /// Filter all BundleEntries that have a given tag.
         /// </summary>
         /// <param name="entries">List of bundle entries to filter on</param>

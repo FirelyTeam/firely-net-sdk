@@ -250,18 +250,13 @@ namespace Hl7.Fhir.Rest
             return url.StartsWith("#");
         }
 
-        // Encure path ends in a '/'
-        private static string delimit(string path)
-        {
-            return path.EndsWith(@"/") ? path : path + @"/";
-        }
-
+       
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
             UriBuilder builder = new UriBuilder(endpoint);
-            string _path = delimit(builder.Path);
+            builder.Path = builder.Path.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
-            builder.Path = _path + _components;
+            builder.Path = builder.Path + _components;
 
             return builder.Uri.ToString();
         }
@@ -322,8 +317,7 @@ namespace Hl7.Fhir.Rest
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/"));
-                    if (!baseUri.EndsWith("/")) baseUri += "/";
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/"); ;
                     BaseUri = new Uri(baseUri,UriKind.Absolute);
                 }
 
@@ -359,13 +353,6 @@ namespace Hl7.Fhir.Rest
         public Uri BaseUri
         {
             get; private set;
-        }
-
-
-        [Obsolete("Use the ResourceType instead")]
-        public string Collection
-        {
-            get { return ResourceType; }
         }
 
         /// <summary>
@@ -476,7 +463,7 @@ namespace Hl7.Fhir.Rest
         {
             if (IsAbsoluteRestUrl || (IsRelativeRestUrl && isAbsoluteRestUrl(baseUri)))
             {
-                if (!baseUri.EndsWith("/")) baseUri += "/";
+                baseUri = baseUri.EnsureEndsWith("/");
                 return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.ResourceType, this.Id, this.VersionId);
             }
             else if (isUrn(baseUri))

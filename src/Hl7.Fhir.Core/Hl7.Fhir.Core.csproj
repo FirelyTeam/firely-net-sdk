@@ -1,10 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;netstandard1.1</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
   <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\platforms.props" />
 
    <PropertyGroup>
     <Version>$(FhirApiVersion)</Version>
@@ -17,12 +18,6 @@
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Rest\Search\**" />
-    <EmbeddedResource Remove="Rest\Search\**" />
-    <None Remove="Rest\Search\**" />
-  </ItemGroup>
- 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
@@ -48,13 +43,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />

@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
                     return String.Format("Name=\"{0}\" Value=\"{1}\"", this.Name, this.Value);
                 }
             }
-        }
+        }   
 
     }
 }

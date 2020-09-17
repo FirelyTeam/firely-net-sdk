@@ -1082,6 +1082,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(nrOfParrallelTasks, successes);
         }
 
+     
         /// <summary>
         /// This test should show that the rng-2 constraint is totally ignored (it's
         /// incorrect in DSTU2 and STU3), but others are not.
@@ -1177,6 +1178,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             }
         }
+
+      
 
         private class ClearSnapshotResolver : IResourceResolver
         {

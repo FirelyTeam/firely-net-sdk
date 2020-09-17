@@ -10,12 +10,6 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
     public partial class OperationOutcome
     {
-        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
-        public static OperationOutcome ForMessage(string message, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
-        {
-            return ForMessage(message, IssueType.Processing, severity);
-        }
-
         public static OperationOutcome ForMessage(string message, OperationOutcome.IssueType code, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
             return new OperationOutcome() {
@@ -25,11 +19,6 @@ namespace Hl7.Fhir.Model
                             } };
         }
 
-        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
-        public static OperationOutcome ForException(Exception e, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
-        {
-            return ForException(e, IssueType.Processing, severity);
-        }
         public static OperationOutcome ForException(Exception e, OperationOutcome.IssueType type, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
             var result = OperationOutcome.ForMessage(e.Message, type, severity);

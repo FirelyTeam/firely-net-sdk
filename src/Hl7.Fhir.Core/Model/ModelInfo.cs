@@ -133,12 +133,6 @@ namespace Hl7.Fhir.Model
             return FhirCsTypeToString.TryGetValue(type, out var result) ? result : null;
         }
 
-        [Obsolete("Use GetFhirTypeNameForType() instead")]
-        public static string GetFhirTypeForType(Type type)
-        {
-            return GetFhirTypeNameForType(type);
-        }
-
         /// <summary>Determines if the specified value represents the name of a known FHIR resource.</summary>
         public static bool IsKnownResource(string name)
         {
@@ -158,25 +152,6 @@ namespace Hl7.Fhir.Model
         {
             var name = FhirTypeToFhirTypeName(type);
             return name != null && IsKnownResource(name);
-        }
-
-        [Obsolete("Use GetTypeForFhirType() which covers all types, not just resources")]
-        public static Type GetTypeForResourceName(string name)
-        {
-            if (!IsKnownResource(name)) return null;
-
-            return GetTypeForFhirType(name);
-        }
-
-        [Obsolete("Use GetFhirTypeNameForType() which covers all types, not just resources")]
-        public static string GetResourceNameForType(Type type)
-        {
-            var name = GetFhirTypeForType(type);
-
-            if (name != null && IsKnownResource(name))
-                return name;
-            else
-                return null;
         }
 
         /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
@@ -336,14 +311,18 @@ namespace Hl7.Fhir.Model
         public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
 
-        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
             // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
 
         
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
-        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelTypeUri(Uri uri)
         {
             return uri != null
@@ -380,6 +359,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity;
@@ -403,6 +383,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -446,18 +427,22 @@ namespace Hl7.Fhir.Model
 
         public static bool IsInstanceTypeFor(string superclass, string subclass)
         {
-            var superType = FhirTypeNameToFhirType(superclass);
-            var subType = FhirTypeNameToFhirType(subclass);
+            if (superclass == subclass) return true;
+
+            var superType = GetTypeForFhirType(superclass);
+            var subType = GetTypeForFhirType(subclass);
 
             if (subType == null || superType == null) return false;
 
-            return IsInstanceTypeFor(superType.Value, subType.Value);
+            return IsInstanceTypeFor(superType, subType);
         }
 
-        private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
-                            FHIRAllTypes.Count, FHIRAllTypes.Money };
-        private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
-        private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
+        {
+            if (superclass == subclass) return true;
+
+            return superclass.IsAssignableFrom(subclass);
+        }
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
@@ -474,16 +459,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                if (superclass == FHIRAllTypes.Element)
-                    return true;
-                else if (superclass == FHIRAllTypes.Quantity)
-                    return QUANTITY_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.String)
-                    return STRING_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.Integer)
-                    return INTEGER_SUBCLASSES.Contains(subclass);
-                else
-                    return false;
+                return superclass == FHIRAllTypes.Element;
             }
         }
 

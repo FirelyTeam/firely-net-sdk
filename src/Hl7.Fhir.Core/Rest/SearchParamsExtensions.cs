@@ -7,25 +7,27 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
     public static class SearchParamsExtensions
     {
-        public static SearchParams Include(this SearchParams qry, string path)
+        public static SearchParams Include(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
         {
-            qry.Include.Add(path);
-
+            qry.Include.Add((path, modifier));
             return qry;
         }
 
-	    public static SearchParams Where(this SearchParams qry, string criterium)
+        public static SearchParams ReverseInclude(this SearchParams qry, string path, IncludeModifier modifier = IncludeModifier.None)
+        {
+            qry.RevInclude.Add((path, modifier));
+            return qry;
+        }
+
+        public static SearchParams Where(this SearchParams qry, string criterium)
         {
             var keyVal = criterium.SplitLeft('=');
             qry.Add(keyVal.Item1, keyVal.Item2);
@@ -45,7 +47,7 @@ namespace Hl7.Fhir.Rest
         {
             if (paramName == null) throw Error.ArgumentNull(nameof(paramName));
 
-            qry.Sort.Add(Tuple.Create(paramName, order));
+            qry.Sort.Add((paramName, order));
             return qry;
         }
 
@@ -80,6 +82,37 @@ namespace Hl7.Fhir.Rest
             return qry;
         }
 
+        //it's not used in our code.
+        public static SearchParams ToSearchParameters(this Parameters parameters)
+        {
+            var result = new SearchParams();
 
+            foreach (var parameter in parameters.Parameter)
+            {
+                var name = parameter.Name;
+                var value = parameter.Value;
+
+                if (value != null && value is PrimitiveType )
+                {
+                    result.Add(parameter.Name, PrimitiveTypeConverter.ConvertTo<string>(value));
+                }
+                else
+                    if (value == null) throw Error.NotSupported("Can only convert primitive parameters to Uri parameters");
+            }
+
+            return result;
+        }
+
+        public static Parameters ToParameters(this SearchParams entry)
+        {
+            var result = new Parameters();
+
+            foreach (var parameter in entry.ToUriParamList())
+            {
+                result.Add(parameter.Item1, new FhirString(parameter.Item2));
+            }
+
+            return result;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Xml;
 using System.Collections.Generic;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
@@ -59,7 +60,7 @@ namespace Hl7.Fhir.Model
             Assert.IsFalse(elem.IsNullOrEmpty());
             Assert.IsFalse((elem as Base).IsNullOrEmpty());
 
-            elem.Value = default(V);
+            elem.Value = default;
             Assert.IsTrue(elem.IsNullOrEmpty());
             Assert.IsTrue((elem as Base).IsNullOrEmpty());
 
@@ -84,7 +85,7 @@ namespace Hl7.Fhir.Model
             Assert.IsTrue(elem.IsNullOrEmpty());
         }
 
-        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IStringValue, new()
+        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IValue<string>, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());

@@ -274,11 +274,16 @@ namespace Hl7.Fhir.Specification.Tests
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
+            // - 4 for abstract R5 base types not present as R3 structuredefs
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
             var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
                                                                             && kvp.Value != "Resource"
                                                                             && kvp.Value != "DomainResource"
+                                                                            && kvp.Value != "BackboneType"
+                                                                            && kvp.Value != "Base"
+                                                                            && kvp.Value != "DataType"
+                                                                            && kvp.Value != "PrimitiveType"
                                                                             )
                                                             .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();

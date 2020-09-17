@@ -94,40 +94,40 @@ namespace Hl7.Fhir.Test.Rest
             q.Query = "special";
             q.Count = 31;
             q.Summary = SummaryType.Data;
-            q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
-            q.Include.Add("Patient.name");
-            q.Include.Add("Observation.subject");
+            q.Sort.Add(("sorted", SortOrder.Descending));
+            q.Include.Add(("Patient.name", IncludeModifier.None));
+            q.Include.Add(("Observation.subject", IncludeModifier.Recurse));
             q.Elements.Add("field1");
 
             Assert.AreEqual("special", q.Query);
             Assert.AreEqual(31, q.Count);
             Assert.AreEqual(SummaryType.Data, q.Summary);
-            Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
+            Assert.AreEqual(("sorted", SortOrder.Descending), q.Sort.Single());
             Assert.AreEqual(2, q.Include.Count);
-            Assert.AreEqual("Patient.name", q.Include.First());
-            Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
+            Assert.AreEqual(("Patient.name", IncludeModifier.None), q.Include.First());
+            Assert.AreEqual(("Observation.subject", IncludeModifier.Recurse), q.Include.Skip(1).First());
             Assert.AreEqual(1, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
             
             q.Query = "special2";
             q.Count = 32;
             q.Summary = SummaryType.True;
-            q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
-            q.Include.Add("Patient.name2");
-            q.Include.Remove("Patient.name");
-            q.Include.Add("Observation.subject2");
+            q.Sort.Add(("sorted2", SortOrder.Ascending));
+            q.Include.Add(("Patient.name2", IncludeModifier.None));
+            q.Include.Remove(("Patient.name", IncludeModifier.None));
+            q.Include.Add(("Observation.subject2", IncludeModifier.Iterate));
             q.Elements.Add("field2");
 
             Assert.AreEqual("special2", q.Query);
             Assert.AreEqual(32, q.Count);
             Assert.AreEqual(SummaryType.True, q.Summary);
             Assert.AreEqual(2,q.Sort.Count);
-            Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
+            Assert.AreEqual(("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
             Assert.AreEqual(3, q.Include.Count);
-            Assert.IsTrue(q.Include.Contains("Patient.name2"));
-            Assert.IsFalse(q.Include.Contains("Patient.name"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject2"));
+            Assert.IsTrue(q.Include.Contains(("Patient.name2", IncludeModifier.None)));
+            Assert.IsFalse(q.Include.Contains(("Patient.name", IncludeModifier.None)));
+            Assert.IsTrue(q.Include.Contains(("Observation.subject", IncludeModifier.Recurse)));
+            Assert.IsTrue(q.Include.Contains(("Observation.subject2", IncludeModifier.Iterate)));
             Assert.AreEqual(2, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
             Assert.AreEqual("field2", q.Elements.Skip(1).First());
@@ -140,9 +140,9 @@ namespace Hl7.Fhir.Test.Rest
 
             q.Add("_sort","birthdate,name,-active");
             Assert.AreEqual(3, q.Sort.Count());
-            Assert.AreEqual(Tuple.Create("birthdate", SortOrder.Ascending), q.Sort.First());
-            Assert.AreEqual(Tuple.Create("name", SortOrder.Ascending), q.Sort.Skip(1).First());
-            Assert.AreEqual(Tuple.Create("active", SortOrder.Descending), q.Sort.Skip(2).First());
+            Assert.AreEqual(("birthdate", SortOrder.Ascending), q.Sort.First());
+            Assert.AreEqual(("name", SortOrder.Ascending), q.Sort.Skip(1).First());
+            Assert.AreEqual(("active", SortOrder.Descending), q.Sort.Skip(2).First());
         }
 
 
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2, q.Elements.Count);
 
             Assert.AreEqual(q.Summary, SummaryType.True);
-            Assert.IsTrue(q.Include.Contains("Patient.managingOrganization"));
+            Assert.IsTrue(q.Include.Contains(("Patient.managingOrganization", IncludeModifier.None)));
             Assert.AreEqual(20, q.Count);
         }
 
@@ -199,10 +199,10 @@ namespace Hl7.Fhir.Test.Rest
             q.Query = "special";
             q.Count = 31;
             q.Summary = SummaryType.Text;
-            q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
-            q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
-            q.Include.Add("Patient.name");
-            q.Include.Add("Observation.subject");
+            q.Sort.Add(("sorted", SortOrder.Descending));
+            q.Sort.Add(("sorted2", SortOrder.Ascending));
+            q.Include.Add(("Patient.name", IncludeModifier.None));
+            q.Include.Add(("Observation.subject", IncludeModifier.None));
             q.Elements.Add("field1");
             q.Elements.Add("field2");
 
@@ -219,11 +219,11 @@ namespace Hl7.Fhir.Test.Rest
             q.Add("_summary", "data");
             q.Add("_sort", "-sorted,sorted2");
             q.Add("_include", "Patient.name");
-            q.Add("_include", "Observation.subject");
+            q.Add("_include:iterate", "Observation.subject");
             q.Add("image:missing", "true");
             q.Add("_elements", "field1,field2");
             var output = q.ToUriParamList().ToQueryString();
-            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
+            Assert.AreEqual("_query=special&_count=31&_include=Patient.name&_include%3Aiterate=Observation.subject&_sort=-sorted%2Csorted2&_summary=data&_elements=field1%2Cfield2&image%3Amissing=true", output);
 
             var q2 = SearchParams.FromUriParamList(UriParamList.FromQueryString(output));
 
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Test.Rest
             CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
-        }
+        }        
 
         [TestMethod]
         public void ParseAndSerializeSortParams()
@@ -261,6 +261,13 @@ namespace Hl7.Fhir.Test.Rest
                 new[] { Tuple.Create("parameter", String.Empty) }, 
                 q.Parameters.ToList()
             );
+        }
+
+        [TestMethod]
+        public void AddConstructorSearchParams()
+        {
+            var q =  new SearchParams("_id", "123");
+            Assert.AreEqual(new Tuple<string, string>("_id", "123"), q.Parameters.FirstOrDefault()); 
         }
 
         [TestMethod]
@@ -324,7 +331,7 @@ namespace Hl7.Fhir.Test.Rest
 
             // Make sure we no longer accept DSTU2-style _sort
             var formatException = AssertThrows<FormatException>(() => q.Add("_sort:desc", "x"));
-            Assert.AreEqual("Invalid _sort: encountered DSTU2 (modifier) based sort, please change to STU3 format", formatException.Message);
+            Assert.AreEqual("Invalid _sort: encountered DSTU2 (modifier) based sort, please change to newer format", formatException.Message);
 
             formatException = AssertThrows<FormatException>(() => q.Add("_sort", ",x,"));
             Assert.AreEqual("Invalid _sort: must be a list of non-empty element names", formatException.Message);
@@ -425,6 +432,54 @@ namespace Hl7.Fhir.Test.Rest
             Assert.IsNotNull(sp);
             Assert.IsTrue(sp.Path.Contains("DiagnosticReport.context"));           
             Assert.IsFalse(sp.Target.Contains(ResourceType.EpisodeOfCare));
+
+            //Manualy removed this target from more occurances of the same searchparameter
+            //Commit: 3b071d478ff3cb744cb6668ac8512dc7362e6737
+            var sp2 = ModelInfo.SearchParameters.Where(s => s.Resource == "DocumentReference" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp2);
+            Assert.IsFalse(sp2.Target.Contains(ResourceType.EpisodeOfCare));
+           
+            var sp3 = ModelInfo.SearchParameters.Where(s => s.Resource == "RiskAssessment" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp3);
+            Assert.IsFalse(sp3.Target.Contains(ResourceType.EpisodeOfCare));
+        
+            var sp4 = ModelInfo.SearchParameters.Where(s => s.Resource == "List" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp4);
+            Assert.IsFalse(sp4.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp5 = ModelInfo.SearchParameters.Where(s => s.Resource == "VisionPrescription" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp5);
+            Assert.IsFalse(sp5.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp6 = ModelInfo.SearchParameters.Where(s => s.Resource == "ProcedureRequest" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp6);
+            Assert.IsFalse(sp6.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp7 = ModelInfo.SearchParameters.Where(s => s.Resource == "Flag" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp7);
+            Assert.IsFalse(sp7.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp8 = ModelInfo.SearchParameters.Where(s => s.Resource == "Observation" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp8);
+            Assert.IsFalse(sp8.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp9 = ModelInfo.SearchParameters.Where(s => s.Resource == "NutritionOrder" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp9);
+            Assert.IsFalse(sp9.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp10 = ModelInfo.SearchParameters.Where(s => s.Resource == "Composition" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp10);
+            Assert.IsFalse(sp10.Target.Contains(ResourceType.EpisodeOfCare));
+
+            //These occurances of the searchparameter do have the EpisodeOfCare as target
+            var sp11 = ModelInfo.SearchParameters.Where(s => s.Resource == "DeviceRequest" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp11);
+            Assert.IsTrue(sp11.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp12);
+            Assert.IsTrue(sp12.Target.Contains(ResourceType.EpisodeOfCare));
+
         }
     }
 }

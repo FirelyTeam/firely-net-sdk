@@ -18,12 +18,12 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class ExternalTerminologyService : ITerminologyService
     {
-        public ExternalTerminologyService(IFhirClient client)
+        public ExternalTerminologyService(BaseFhirClient client)
         {
             Endpoint = client;
         }
 
-        public IFhirClient Endpoint { get; set; }
+        public BaseFhirClient Endpoint { get; set; }
 
         public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
         {
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private OperationOutcome processResult(string code, string system, string display, Coding coding, CodeableConcept codeableConcept, ValidateCodeResult result)
         {
             if (result?.Result?.Value == null)
-                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
+                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint} did not return a result.");
 
             var outcome = new OperationOutcome();
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Terminology
                                             : jsonSer.SerializeToString(coding);
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
-                                $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
+                                $"the terminology service at {Endpoint.Endpoint} did not provide further details.",
                                 Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 }
             }

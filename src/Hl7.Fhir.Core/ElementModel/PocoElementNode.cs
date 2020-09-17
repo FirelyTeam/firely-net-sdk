@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
@@ -13,32 +14,35 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.ElementModel
 {
     internal class PocoElementNode : ITypedElement, IAnnotated, IExceptionSource, IShortPathGenerator, IFhirValueProvider, IResourceTypeSupplier
     {
         public readonly Base Current;
-        private readonly PocoComplexTypeSerializationInfo _mySD;
+        private readonly ClassMapping _myClassMapping;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
         internal PocoElementNode(Base root, string rootName = null)
         {
             Current = root;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = InstanceType = ModelInfo.IsProfiledQuantity(root.TypeName) ? "Quantity" : root.TypeName;
-            Definition = Specification.ElementDefinitionSummary.ForRoot(_mySD, rootName ?? root.TypeName);
+            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(root.GetType());
+            InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
+            Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
             Location = InstanceType;
             ShortPath = InstanceType;
         }
 
-        private PocoElementNode(Base instance, PocoElementNode parent, IElementDefinitionSummary definition, string location, string shortPath)
+        private PocoElementNode(Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
         {
             Current = instance;
-            _mySD = (PocoComplexTypeSerializationInfo)PocoStructureDefinitionSummaryProvider.Provide(Current.GetType());
-            InstanceType = determineInstanceType(Current, definition);
+
+            var instanceType = determineInstanceType(instance.GetType(), definition);
+            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(instanceType);
+            InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
             ExceptionHandler = parent.ExceptionHandler;
@@ -46,12 +50,12 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = shortPath;
         }
 
-        private static string determineInstanceType(object instance, IElementDefinitionSummary summary)
+        private Type determineInstanceType(Type type, PropertyMapping definition)
         {
-            var typeName = !summary.IsChoiceElement && !summary.IsResource ?
-                        summary.Type.Single().GetTypeName() : ((Base)instance).TypeName;
-
-            return ModelInfo.IsProfiledQuantity(typeName) ? "Quantity" : typeName;
+            if (definition.Choice != ChoiceType.None)
+                return type;
+            else
+                return definition.FhirType[0];
         }
 
         public IElementDefinitionSummary Definition { get; private set; }
@@ -70,7 +74,9 @@ namespace Hl7.Fhir.ElementModel
             {
                 if (name == null || child.ElementName == name)
                 {
-                    var childElementDef = _mySD.GetElement(child.ElementName);
+                    // Poll the actual implementation, which results in a more efficient loopkup when the underlying
+                    // implementation of _mySD is ClassMapping.
+                    var childElementDef = _myClassMapping.FindMappedElementByName(child.ElementName);
 
                     if (oldElementName != child.ElementName)
                         arrayIndex = 0;
@@ -134,14 +140,14 @@ namespace Hl7.Fhir.ElementModel
                 {
                     switch (Current)
                     {
-                        case Hl7.Fhir.Model.Instant ins:
-                            return ins.ToPartialDateTime();
-                        case Hl7.Fhir.Model.Time time:
-                            return time.ToTime();
-                        case Hl7.Fhir.Model.Date dt:
-                            return dt.ToPartialDate();
-                        case FhirDateTime fdt:
-                            return fdt.ToPartialDateTime();
+                        case Hl7.Fhir.Model.Instant ins when ins.Value.HasValue:
+                            return P.DateTime.FromDateTimeOffset(ins.Value.Value);
+                        case Hl7.Fhir.Model.Time time when time.Value is { }:
+                            return P.Time.Parse(time.Value);
+                        case Hl7.Fhir.Model.Date dt when dt.Value is { }:
+                            return P.Date.Parse(dt.Value);
+                        case FhirDateTime fdt when fdt.Value is { }:
+                            return P.DateTime.Parse(fdt.Value);
                         case Hl7.Fhir.Model.Integer fint:
                             if (!fint.Value.HasValue)
                                 return null;

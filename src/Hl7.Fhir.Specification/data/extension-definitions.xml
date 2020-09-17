@@ -1,7 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="extensions" />
-  <!-- Removed Meta/LastModified -->
+  <meta>
+    <lastUpdated value="2019-10-24T11:53:00+11:00" />
+  </meta>
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/StructureDefinition/valueset-history" />
@@ -17,7 +19,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-history" />
         <name value="history" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Information on changes made to the Value Set Definition over time and a contained audit trail of all such changes." />
         <fhirVersion value="3.0.2" />
@@ -1240,7 +1242,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/birthPlace" />
         <name value="Birth Place" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -1427,7 +1429,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-map" />
         <name value="map" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A reference to a concept map that is relevant for the interpretation of this value set." />
         <fhirVersion value="3.0.2" />
@@ -1615,7 +1617,7 @@
         <name value="time-offset" />
         <title value="Time-offset" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-02" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -1804,7 +1806,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsInterpretation" />
         <name value="Interpretation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -1993,7 +1995,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-administrative-status" />
         <name value="administrative-status" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -2208,7 +2210,7 @@
         <name value="cadavericDonor" />
         <title value="cadavericDonor" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Flag indicating whether the patient authorized the donation of body parts after death." />
         <fhirVersion value="3.0.2" />
@@ -2389,7 +2391,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-management" />
         <name value="management" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -2577,7 +2579,7 @@
         <name value="definition" />
         <title value="Definition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A display name that describes the meaning of this code when used as part of this value set." />
         <fhirVersion value="3.0.2" />
@@ -2764,7 +2766,7 @@
         <name value="reasonRejected" />
         <title value="reasonRejected" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -2951,7 +2953,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-exposureDate" />
         <name value="exposureDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -3141,7 +3143,7 @@
         <name value="duration" />
         <title value="duration" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -3328,7 +3330,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-SC-coding" />
         <name value="SC-coding" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -3538,7 +3540,7 @@
         <name value="definition" />
         <title value="definition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -3728,7 +3730,7 @@
         <name value="congregation" />
         <title value="congregation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A group or place of religious practice that may provide services to the patient." />
         <fhirVersion value="3.0.2" />
@@ -3909,7 +3911,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/rendering-styleSensitive" />
         <name value="styleSensitive" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-23" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -4098,7 +4100,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-document-reference" />
         <name value="document-reference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -4300,7 +4302,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumberNumeric" />
         <name value="ADXP-houseNumberNumeric" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -4495,7 +4497,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-conceptOrder" />
         <name value="conceptOrder" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Identifies the relative order in which concepts within the value set should be presented to a user." />
         <fhirVersion value="3.0.2" />
@@ -4679,7 +4681,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsGenomicSourceClass" />
         <name value="GenomicSourceClass" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -4887,7 +4889,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-results-method" />
         <name value="method" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -5074,7 +5076,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory" />
         <name value="displayCategory" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -5291,7 +5293,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-sibling" />
         <name value="sibling" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-10-02" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -5885,7 +5887,7 @@
         <name value="effective-period" />
         <title value="Effective time" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -6093,7 +6095,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-selector" />
         <name value="selector" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -6290,7 +6292,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden" />
         <name value="hidden" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -6480,7 +6482,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type" />
         <name value="xml-type" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -6669,7 +6671,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName" />
         <name value="ADXP-streetName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -6865,7 +6867,7 @@
         <name value="progressStatus" />
         <title value="progressStatus" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -7072,7 +7074,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicFrequency" />
         <name value="AllelicFrequency" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -7260,7 +7262,7 @@
         <name value="encounterType" />
         <title value="encounterType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -7447,7 +7449,7 @@
         <name value="is-data-element-concept" />
         <title value="Is Data Element Concept?" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -7669,7 +7671,7 @@
         <name value="preferredContact" />
         <title value="Preferred Contact" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -7856,7 +7858,7 @@
         <name value="receivingPerson" />
         <title value="receivingPerson" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -8069,7 +8071,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-sourceReference" />
         <name value="sourceReference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This text is intended to act as a citation to work done elsewhere that is not part of the current stewarding process where the referenced source is in some way a basis of the current value set definition." />
         <fhirVersion value="3.0.2" />
@@ -8255,7 +8257,7 @@
         <name value="objectClassProperty" />
         <title value="Object Class Property" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -8498,7 +8500,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-trusted-expansion" />
         <name value="trusted-expansion" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Indicates an authoritative source for performing value set expansions." />
         <fhirVersion value="3.0.2" />
@@ -8681,7 +8683,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-postBox" />
         <name value="ADXP-postBox" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -8877,7 +8879,7 @@
         <name value="rateGoal" />
         <title value="rateGoal" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -9066,7 +9068,7 @@
         <name value="definition" />
         <title value="definition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -9266,7 +9268,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAllelicState" />
         <name value="AllelicState" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -9454,7 +9456,7 @@
         <name value="systemUserType" />
         <title value="systemUserType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -9641,7 +9643,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/timing-exact" />
         <name value="exact" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - MnM WG" />
         <contact>
           <telecom>
@@ -9850,7 +9852,7 @@
         <name value="rateIncrementInterval" />
         <title value="rateIncrementInterval" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -10039,7 +10041,7 @@
         <name value="modeOfArrival" />
         <title value="modeOfArrival" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -10247,7 +10249,7 @@
         <name value="summaryOf" />
         <title value="Summary Of" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -10439,7 +10441,7 @@
         <name value="group" />
         <title value="Context Group" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Defines the group in which this usage context is a member. Multiple groups are &quot;OR'ed&quot;, contexts within a group are &quot;AND'ed&quot;." />
         <fhirVersion value="3.0.2" />
@@ -10620,7 +10622,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-supportLink" />
         <name value="supportLink" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -10819,7 +10821,7 @@
         <name value="recipientType" />
         <title value="recipientType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -11005,7 +11007,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber" />
         <name value="ADXP-houseNumber" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -11201,7 +11203,7 @@
         <name value="author" />
         <title value="Author" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -11426,7 +11428,7 @@
         <name value="reasonReference" />
         <title value="Reason Reference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -11647,7 +11649,7 @@
         <name value="locationPerformed" />
         <title value="locationPerformed" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -11838,7 +11840,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix" />
         <name value="ADXP-buildingNumberSuffix" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -12033,7 +12035,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-TEL-address" />
         <name value="TEL-address" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -12231,7 +12233,7 @@
         <name value="bodyPosition" />
         <title value="bodyPosition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-02" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -12419,7 +12421,7 @@
         <name value="deprecated" />
         <title value="Deprecated" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Set to true of the concept has been deprecated (still can be used, but soon to be withdrawn)." />
         <fhirVersion value="3.0.2" />
@@ -12603,7 +12605,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-template-status" />
         <name value="template-status" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -12812,7 +12814,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-equivalence" />
         <name value="equivalence" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -13034,7 +13036,7 @@
         <name value="permitted-value-conceptmap" />
         <title value="Permitted Values link" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -13263,7 +13265,7 @@
         <name value="reasonRejected" />
         <title value="reason rejected" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-12-07" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -13464,7 +13466,7 @@
         <name value="implant-status" />
         <title value="Status of Implantable Devices" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -13673,7 +13675,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-MPPS" />
         <name value="MPPS" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -13873,7 +13875,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-administration" />
         <name value="administration" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -14063,7 +14065,7 @@
         <name value="replaces" />
         <title value="replaces" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2017-02-16" />
         <publisher value="Health Level Seven, Inc. - FHIR I WG" />
         <contact>
           <telecom>
@@ -14276,7 +14278,7 @@
         <name value="interpreterRequired" />
         <title value="interpreterRequired" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This Patient requires an interpreter to communicate healthcare information to the practitioner." />
         <fhirVersion value="3.0.2" />
@@ -14460,7 +14462,7 @@
         <name value="reasonCancelled" />
         <title value="reasonCancelled" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -14647,7 +14649,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-exposureDuration" />
         <name value="exposureDuration" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -14834,7 +14836,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-ordinalValue" />
         <name value="ordinalValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A numeric value that allows the comparison (less than, greater than) or other numerical manipulation of a concept (e.g. adding up components of a score)." />
         <fhirVersion value="3.0.2" />
@@ -15017,7 +15019,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/rendering-markdown" />
         <name value="markdown" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-23" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -15213,7 +15215,7 @@
         <name value="optionCode" />
         <title value="optionCode" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -15401,7 +15403,7 @@
         <name value="lastReviewDate" />
         <title value="Last Review Date" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The date on which the asset content was last reviewed. Review happens periodically after that, but doesn't change the original approval date." />
         <fhirVersion value="3.0.2" />
@@ -15596,7 +15598,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-CO-value" />
         <name value="CO-value" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -15793,7 +15795,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding" />
         <name value="isCommonBinding" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -15982,7 +15984,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-uncertainty" />
         <name value="uncertainty" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -16179,7 +16181,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-partner-prefix" />
         <name value="partner-prefix" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -16390,7 +16392,7 @@
         <name value="extends" />
         <title value="Extends" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -16581,7 +16583,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-test" />
         <name value="test" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -16779,7 +16781,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl" />
         <name value="itemControl" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -16989,7 +16991,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
         <name value="choiceOrientation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -17201,7 +17203,7 @@
         <name value="maxDeliveryVolume" />
         <title value="maxDeliveryVolume" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -17390,7 +17392,7 @@
         <name value="encounterClass" />
         <title value="encounterClass" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -17576,7 +17578,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-warning" />
         <name value="warning" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="An extra warning about the correct use of the value set." />
         <fhirVersion value="3.0.2" />
@@ -17759,7 +17761,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-direction" />
         <name value="ADXP-direction" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -17955,7 +17957,7 @@
         <name value="reasonRejected" />
         <title value="reasonRejected" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -18142,7 +18144,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-careplan" />
         <name value="careplan" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -18331,7 +18333,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-studyprotocolIdentifier" />
         <name value="studyprotocolIdentifier" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -18528,7 +18530,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-delimiter" />
         <name value="ADXP-delimiter" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -18726,7 +18728,7 @@
         <name value="systemUserTaskContext" />
         <title value="systemUserTaskContext" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -18914,7 +18916,7 @@
         <name value="mothersMaidenName" />
         <title value="Mother's Maiden Name" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Mother's maiden (unmarried) name, commonly collected to help verify patient identity." />
         <fhirVersion value="3.0.2" />
@@ -19116,7 +19118,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation" />
         <name value="EN-representation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -19333,7 +19335,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-precinct" />
         <name value="ADXP-precinct" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -19529,7 +19531,7 @@
         <name value="questionnaireRequest" />
         <title value="Questionnaire Requested" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -19719,7 +19721,7 @@
         <name value="reasonCode" />
         <title value="Reason Code" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -19948,7 +19950,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/mimeType" />
         <name value="mimeType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -20181,7 +20183,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
         <name value="style" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-23" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -20378,7 +20380,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-fathers-family" />
         <name value="fathers-family" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -20586,7 +20588,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-usage" />
         <name value="usage" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Consumers of the value set and the implementations, projects or standards that the author has utilized the value set in." />
         <fhirVersion value="3.0.2" />
@@ -21151,7 +21153,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-uncertaintyType" />
         <name value="uncertaintyType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -21368,7 +21370,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-sourceStructureMap" />
         <name value="sourceStructureMap" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -21557,7 +21559,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-assembly-order" />
         <name value="assembly-order" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -21765,7 +21767,7 @@
         <name value="doseType" />
         <title value="doseType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -21954,7 +21956,7 @@
         <name value="Rendered Value" />
         <title value="Rendered Value" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -22152,7 +22154,7 @@
         <name value="type" />
         <title value="type" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -22341,7 +22343,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-referenceFilter" />
         <name value="referenceFilter" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -22540,7 +22542,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNAVariantId" />
         <name value="DNAVariantId" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -22727,7 +22729,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-label" />
         <name value="label" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The label to list in front of a code when presenting a list of possible values in a questionnaire-like fashion." />
         <fhirVersion value="3.0.2" />
@@ -22912,7 +22914,7 @@
         <name value="validityPeriod" />
         <title value="validityPeriod" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-17" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -23099,7 +23101,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-otherName" />
         <name value="otherName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Human readable names for the codesystem." />
         <fhirVersion value="3.0.2" />
@@ -23666,7 +23668,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet" />
         <name value="maxValueSet" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -23872,7 +23874,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNARegionName" />
         <name value="DNARegionName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -24080,7 +24082,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationType" />
         <name value="ADXP-deliveryInstallationType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -24276,7 +24278,7 @@
         <name value="targetBodySite" />
         <title value="targetBodySite" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -24466,7 +24468,7 @@
         <name value="alias" />
         <title value="Alias" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Other names that this location is known as. (for Example, &quot;Pembo HC&quot; and &quot;Pembo Health Clinic&quot;)." />
         <fhirVersion value="3.0.2" />
@@ -24647,7 +24649,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-question" />
         <name value="question" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -24844,7 +24846,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-fhirType" />
         <name value="fhirType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -25055,7 +25057,7 @@
         <name value="comments" />
         <title value="Comment" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A comment that explains how this code is used in this context (where the value set is expected to be used)." />
         <fhirVersion value="3.0.2" />
@@ -25240,7 +25242,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-targetStructureMap" />
         <name value="targetStructureMap" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -25429,7 +25431,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/composition-clindoc-otherConfidentiality" />
         <name value="otherConfidentiality" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-17" />
         <publisher value="Health Level Seven, Inc. - Structured Documents WG" />
         <contact>
           <telecom>
@@ -25618,7 +25620,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/regex" />
         <name value="regex" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -25828,7 +25830,7 @@
         <name value="library" />
         <title value="library" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -26017,7 +26019,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-optionExclusive" />
         <name value="optionExclusive" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -26207,7 +26209,7 @@
         <name value="patient-record" />
         <title value="Patient Record" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -26396,7 +26398,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-change-description" />
         <name value="change-description" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -26584,7 +26586,7 @@
         <name value="initiatingPerson" />
         <title value="initiatingPerson" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -26798,7 +26800,7 @@
         <name value="detectedIssue" />
         <title value="Clinical Issue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -26989,7 +26991,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-careOf" />
         <name value="ADXP-careOf" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -27184,7 +27186,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-workflowStatus" />
         <name value="workflowStatus" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Workflow Status is used to represent details of the value set development process while the value set has an Activity Status of Preliminary. The development of a value set often follows a formal workflow process from initiation to completion, and this element carries the state variable for this state machine. The assumption is that when first created a value set would have a workflow state of Draft. Additional workflow states may be used." />
         <fhirVersion value="3.0.2" />
@@ -27370,7 +27372,7 @@
         <name value="Prescriber" />
         <title value="prescriber" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -27559,7 +27561,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryModeIdentifier" />
         <name value="ADXP-deliveryModeIdentifier" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -27755,7 +27757,7 @@
         <name value="receivingOrganization" />
         <title value="receivingOrganization" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -27943,7 +27945,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-Anonymized" />
         <name value="Anonymized" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -28143,7 +28145,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-display-hint" />
         <name value="display-hint" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -28333,7 +28335,7 @@
         <name value="approachBodySite" />
         <title value="approachBodySite" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -28523,7 +28525,7 @@
         <name value="supported-system" />
         <title value="Supported Code System" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-12" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -28714,7 +28716,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-deMap" />
         <name value="deMap" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -28903,7 +28905,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsGene" />
         <name value="Gene" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -29109,7 +29111,7 @@
         <name value="rateIncrement" />
         <title value="rateIncrement" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -29298,7 +29300,7 @@
         <name value="collectionPriority" />
         <title value="Collection Priority" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -29505,7 +29507,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-submitter-org" />
         <name value="submitter-org" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -29708,7 +29710,7 @@
         <name value="toocostly" />
         <title value="Expansion Truncated" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Marks that the expansion is  incomplete, because the full value set is too large to represent, and the client asked for an incomplete fragment." />
         <fhirVersion value="3.0.2" />
@@ -29893,7 +29895,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsSequence" />
         <name value="Sequence" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -30104,7 +30106,7 @@
         <name value="messageheader-response-request" />
         <title value="MessageHeader response request" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2017-01-24" />
         <publisher value="Health Level Seven, Inc. - InM Work Group" />
         <contact>
           <telecom>
@@ -30336,7 +30338,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsCopyNumberEvent" />
         <name value="CopyNumberEvent" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -30526,7 +30528,7 @@
         <name value="definition" />
         <title value="Definition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -30748,7 +30750,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationArea" />
         <name value="ADXP-deliveryInstallationArea" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -30944,7 +30946,7 @@
         <name value="notDone" />
         <title value="Not Done" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -31144,7 +31146,7 @@
         <name value="patientInstruction" />
         <title value="Directions" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -31727,7 +31729,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice" />
         <name value="bestpractice" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -31958,7 +31960,7 @@
         <name value="resolutionAge" />
         <title value="resolutionAge" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -32147,7 +32149,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-usageMode" />
         <name value="usageMode" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -32366,7 +32368,7 @@
         <name value="din" />
         <title value="Donation Identification Number (DIN)" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -32553,7 +32555,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-map" />
         <name value="map" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A reference to a concept map that is relevant for the interpretation of this value set." />
         <fhirVersion value="3.0.2" />
@@ -32741,7 +32743,7 @@
         <name value="refillsRemaining" />
         <title value="refillsRemaining" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -32929,7 +32931,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAlleleName" />
         <name value="AlleleName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -33154,7 +33156,7 @@
         <name value="certainty" />
         <title value="certainty" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -33371,7 +33373,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-comment" />
         <name value="comment" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Each comment is a time-stamped entry of arbitrary length that is not editable except by anyone in the author group." />
         <fhirVersion value="3.0.2" />
@@ -33935,7 +33937,7 @@
         <name value="reasonNotPerformed" />
         <title value="reasonNotPerformed" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -34125,7 +34127,7 @@
         <name value="candidateList" />
         <title value="Candidate List" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2017-02-16" />
         <publisher value="Health Level Seven, Inc. - FHIR I WG" />
         <contact>
           <telecom>
@@ -34370,7 +34372,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryInstallationQualifier" />
         <name value="ADXP-deliveryInstallationQualifier" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -34565,7 +34567,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-reference" />
         <name value="reference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A logical reference (e.g. a reference to ValueSet.url) that identifies the value set/version that identifies the set of possible coded values this coding was chosen from or constrained by." />
         <fhirVersion value="3.0.2" />
@@ -34770,7 +34772,7 @@
         <name value="bidirectional" />
         <title value="Bi-directional" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Set to true of the concept map can be safely intepreted in reversse." />
         <fhirVersion value="3.0.2" />
@@ -34954,7 +34956,7 @@
         <name value="targetBodySite" />
         <title value="targetBodySite" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -35144,7 +35146,7 @@
         <name value="delta" />
         <title value="delta" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-02" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -35332,7 +35334,7 @@
         <name value="reviewer" />
         <title value="Reviewer" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -35530,7 +35532,7 @@
         <name value="Translation" />
         <title value="Translation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -36149,7 +36151,7 @@
         <name value="location" />
         <title value="Location of Access restriction" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - CBCC WG" />
         <contact>
           <telecom>
@@ -36339,7 +36341,7 @@
         <name value="method" />
         <title value="method" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -36529,7 +36531,7 @@
         <name value="minDosePerPeriod" />
         <title value="minDosePerPeriod" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -36717,7 +36719,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/minLength" />
         <name value="minLength" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -36928,7 +36930,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-mothers-family" />
         <name value="mothers-family" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -37137,7 +37139,7 @@
         <name value="sequenceNumber" />
         <title value="sequenceNumber" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -37325,7 +37327,7 @@
         <name value="reasonRefused" />
         <title value="reasonRefused" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -37513,7 +37515,7 @@
         <name value="reasonRejected" />
         <title value="reasonRejected" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -37702,7 +37704,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-Accession" />
         <name value="Accession" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -37902,7 +37904,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-author" />
         <name value="author" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="User or Org actually involved in creating the value set content." />
         <fhirVersion value="3.0.2" />
@@ -38085,7 +38087,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-workflowStatus" />
         <name value="workflowStatus" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Workflow Status is used to represent details of the value set development process while the value set has an Activity Status of Preliminary. The development of a value set often follows a formal workflow process from initiation to completion, and this element carries the state variable for this state machine. The assumption is that when first created a value set would have a workflow state of Draft. Additional workflow states may be used." />
         <fhirVersion value="3.0.2" />
@@ -38271,7 +38273,7 @@
         <name value="criticality" />
         <title value="criticality" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -38463,7 +38465,7 @@
         <name value="adoptionInfo" />
         <title value="adoptionInfo" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Code indication the adoption status of the patient." />
         <fhirVersion value="3.0.2" />
@@ -38644,7 +38646,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-minValueSet" />
         <name value="minValueSet" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -38851,7 +38853,7 @@
         <name value="reasonRefuted" />
         <title value="reasonRefuted" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -39039,7 +39041,7 @@
         <name value="birthTime" />
         <title value="birthTime" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The time of day that the Patient was born. This includes the date to ensure that the timezone information can be communicated effectively." />
         <fhirVersion value="3.0.2" />
@@ -39221,7 +39223,7 @@
         <name value="addendumOf" />
         <title value="Addendum Of" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -39413,7 +39415,7 @@
         <name value="summary" />
         <title value="summary" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -39600,7 +39602,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces" />
         <name value="maxDecimalPlaces" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -39809,7 +39811,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-warning" />
         <name value="warning" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="An extra warning about the correct use of the value set." />
         <fhirVersion value="3.0.2" />
@@ -39992,7 +39994,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-comment" />
         <name value="comment" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Each comment is a time-stamped entry of arbitrary length that is not editable except by anyone in the author group." />
         <fhirVersion value="3.0.2" />
@@ -40555,7 +40557,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-label" />
         <name value="label" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The label to list in front of a code when presenting a list of possible values in a questionnaire-like fashion." />
         <fhirVersion value="3.0.2" />
@@ -40738,7 +40740,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-regex" />
         <name value="regex" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -40925,7 +40927,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChangeName" />
         <name value="AminoAcidChangeName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -41149,7 +41151,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-expirationDate" />
         <name value="expirationDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The date when the value set version is no longer expected to be used to create new content. This is the first date-time when the value set version becomes Inactive, so this value SHALL present on all Inactive value set versions. The start Date_time is expected to be as of 0001 UTC of the Expiration Date." />
         <fhirVersion value="3.0.2" />
@@ -41335,7 +41337,7 @@
         <name value="supportingInfo" />
         <title value="supportingInfo" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -41526,7 +41528,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariantType" />
         <name value="DNASequenceVariantType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -41735,7 +41737,7 @@
         <name value="permitted-value-valueset" />
         <title value="Permitted Values" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -41964,7 +41966,7 @@
         <name value="comments" />
         <title value="Comment" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A comment that explains how this code is used in this context (where the value set is expected to be used)." />
         <fhirVersion value="3.0.2" />
@@ -42149,7 +42151,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedResource" />
         <name value="allowedResource" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -42374,7 +42376,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-observation" />
         <name value="observation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-10-02" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -42575,7 +42577,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-conceptOrder" />
         <name value="conceptOrder" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Identifies the relative order in which concepts within the value set should be presented to a user." />
         <fhirVersion value="3.0.2" />
@@ -42758,7 +42760,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-unclosed" />
         <name value="unclosed" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Marks that the expansion is  incomplete, and values other than those listed may be valid. This may be used because post-coordinated codes are allowed, and no practical expansion can be produced." />
         <fhirVersion value="3.0.2" />
@@ -42944,7 +42946,7 @@
         <name value="authority" />
         <title value="Rule Reference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -43131,7 +43133,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/minValue" />
         <name value="minValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -43372,7 +43374,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-contact-address" />
         <name value="contact-address" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -43572,7 +43574,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID" />
         <name value="ADXP-unitID" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -43768,7 +43770,7 @@
         <name value="causedBy" />
         <title value="causedBy" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -44047,7 +44049,7 @@
         <name value="fhirPathExpression" />
         <title value="fhirPathExpression" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -44234,7 +44236,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/family-member-history-genetics-parent" />
         <name value="parent" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-10-02" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -44851,7 +44853,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaireresponse-reason" />
         <name value="reason" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -45054,7 +45056,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-replacedby" />
         <name value="replacedby" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A code that replaces this - use this code instead." />
         <fhirVersion value="3.0.2" />
@@ -45239,7 +45241,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-system" />
         <name value="system" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Allows a direct reference to the code system for FHIR query." />
         <fhirVersion value="3.0.2" />
@@ -45424,7 +45426,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-otherName" />
         <name value="otherName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Human readable names for the valueset." />
         <fhirVersion value="3.0.2" />
@@ -45992,7 +45994,7 @@
         <name value="detail" />
         <title value="Flag details" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - Patient Care WG" />
         <contact>
           <telecom>
@@ -46182,7 +46184,7 @@
         <name value="period" />
         <title value="Period" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -46368,7 +46370,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-systemName" />
         <name value="systemName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The human-readable name for the code system." />
         <fhirVersion value="3.0.2" />
@@ -46551,7 +46553,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-effectiveDate" />
         <name value="effectiveDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This is the first date-time when the value set version becomes active, so this value is present on Inactive value set versions as well. The start Date_time is expected to be as of 0001 UTC of the Effective Date." />
         <fhirVersion value="3.0.2" />
@@ -46735,7 +46737,7 @@
         <name value="eventTiming" />
         <title value="Event Timing" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-02" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -47347,7 +47349,7 @@
         <name value="nationality" />
         <title value="nationality" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The nationality of the patient." />
         <fhirVersion value="3.0.2" />
@@ -47904,7 +47906,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-category" />
         <name value="category" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -48094,7 +48096,7 @@
         <name value="initiatingOrganization" />
         <title value="initiatingOrganization" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -48283,7 +48285,7 @@
         <name value="alias" />
         <title value="Alias" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -48472,7 +48474,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-unit" />
         <name value="unit" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -48671,7 +48673,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryAddressLine" />
         <name value="ADXP-deliveryAddressLine" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -48867,7 +48869,7 @@
         <name value="acceptance" />
         <title value="Goal acceptance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-12-07" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -49624,7 +49626,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-keyWord" />
         <name value="keyWord" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Word or words used in an information retrieval system to indicate the content of the value set." />
         <fhirVersion value="3.0.2" />
@@ -49808,7 +49810,7 @@
         <name value="expectation" />
         <title value="Conformance expectation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-12" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -50045,7 +50047,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-classification-or-context" />
         <name value="classification-or-context" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -50286,7 +50288,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-ParticipantObjectContainsStudy" />
         <name value="ParticipantObjectContainsStudy" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -50486,7 +50488,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor" />
         <name value="nullFlavor" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -50717,7 +50719,7 @@
         <name value="citizenship" />
         <title value="citizenship" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The patient's legal status as citizen of a country." />
         <fhirVersion value="3.0.2" />
@@ -51275,7 +51277,7 @@
         <name value="initialValue" />
         <title value="initialValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -51462,7 +51464,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-lookupQuestionnaire" />
         <name value="lookupQuestionnaire" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -51659,7 +51661,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsAminoAcidChangeType" />
         <name value="AminoAcidChangeType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -51867,7 +51869,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsPhaseSet" />
         <name value="PhaseSet" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -52054,7 +52056,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator" />
         <name value="ADXP-additionalLocator" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -52250,7 +52252,7 @@
         <name value="objectClass" />
         <title value="Object Class" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -52494,7 +52496,7 @@
         <name value="daysOfCycle" />
         <title value="Days of Cycle" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - MnM WG" />
         <contact>
           <telecom>
@@ -52925,7 +52927,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-results-haploid" />
         <name value="haploid" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -53623,7 +53625,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/11179-de-registry-org" />
         <name value="registry-org" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-21" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -53826,7 +53828,7 @@
         <name value="dueTo" />
         <title value="dueTo" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -54085,7 +54087,7 @@
         <name value="ballot-status" />
         <title value="Ballot Status" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -54272,7 +54274,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name" />
         <name value="explicit-type-name" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -54459,7 +54461,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/maxValue" />
         <name value="maxValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -54700,7 +54702,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-Encrypted" />
         <name value="Encrypted" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -54902,7 +54904,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-ordinalValue" />
         <name value="ordinalValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A numeric value that allows the comparison (less than, greater than) or other numerical manipulation of a concept (e.g. Adding up components of a score)." />
         <fhirVersion value="3.0.2" />
@@ -55086,7 +55088,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameBase" />
         <name value="ADXP-streetNameBase" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -55281,7 +55283,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix" />
         <name value="optionPrefix" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -55479,7 +55481,7 @@
         <name value="prohibited" />
         <title value="Conformance prohibition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-12" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -55694,7 +55696,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-reference" />
         <name value="reference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="A logical reference (e.g. a reference to CodeSystem.url) that identifies the value set/version that identifies the set of possible coded values this coding was chosen from or constrained by." />
         <fhirVersion value="3.0.2" />
@@ -55899,7 +55901,7 @@
         <name value="match-grade" />
         <title value="Matching Grade" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-11" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -56107,7 +56109,7 @@
         <name value="mapSourcePublisher" />
         <title value="Map source publisher" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -56294,7 +56296,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/identifier-validDate" />
         <name value="validDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -56505,7 +56507,7 @@
         <name value="animalSpecies" />
         <title value="animalSpecies" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This extension should be used to specifiy that a practioner or RelatedPerson resource is a service animal." />
         <fhirVersion value="3.0.2" />
@@ -56708,7 +56710,7 @@
         <name value="substanceExposureRisk" />
         <title value="substanceExposureRisk" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -57352,7 +57354,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-caseSensitive" />
         <name value="caseSensitive" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="If this a case sensitive code." />
         <fhirVersion value="3.0.2" />
@@ -57538,7 +57540,7 @@
         <name value="annotation" />
         <title value="note" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -57726,7 +57728,7 @@
         <name value="reasonRefused" />
         <title value="reasonRefused" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -57913,7 +57915,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-NumberOfInstances" />
         <name value="NumberOfInstances" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -58113,7 +58115,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-baseType" />
         <name value="baseType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -58329,7 +58331,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-partner-name" />
         <name value="partner-name" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -58539,7 +58541,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type" />
         <name value="rdf-type" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -58729,7 +58731,7 @@
         <name value="pertainsToGoal" />
         <title value="pertains to goal" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-12-07" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -58921,7 +58923,7 @@
         <name value="ancestor" />
         <title value="ancestor" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -59110,7 +59112,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/maxSize" />
         <name value="maxSize" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -59321,7 +59323,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm-no-warnings" />
         <name value="fmm-no-warnings" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -59510,7 +59512,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-results-glstring" />
         <name value="glstring" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -60073,7 +60075,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-verification" />
         <name value="verification" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -60274,7 +60276,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/entryFormat" />
         <name value="entryFormat" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-27" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -60484,7 +60486,7 @@
         <name value="focal-subject" />
         <title value="Focal Subject" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-02" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -60695,7 +60697,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-location" />
         <name value="location" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -60902,7 +60904,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/cqif-measureInfo" />
         <name value="measureInfo" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -61603,7 +61605,7 @@
         <name value="citation" />
         <title value="citation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -61793,7 +61795,7 @@
         <name value="Witness" />
         <title value="Witness" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - CBCC WG" />
         <contact>
           <telecom>
@@ -62008,7 +62010,7 @@
         <name value="OnBehalfOf" />
         <title value="On Behalf Of" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -62219,7 +62221,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace" />
         <name value="namespace" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -62418,7 +62420,7 @@
         <name value="severity" />
         <title value="severity" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -62626,7 +62628,7 @@
         <name value="classification" />
         <title value="classification" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The more specific service or occupation within the health care provider type of the practitioner at a specific organization unit, for example, counselor." />
         <fhirVersion value="3.0.2" />
@@ -62807,7 +62809,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/body-site-instance" />
         <name value="Body Site Instance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -62996,7 +62998,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/coding-sctdescid" />
         <name value="sctdescid" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -63205,7 +63207,7 @@
         <name value="effectivePeriod" />
         <title value="Effective Period" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The period during which the resource content was or is planned to be effective." />
         <fhirVersion value="3.0.2" />
@@ -63400,7 +63402,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/observation-geneticsDNASequenceVariantName" />
         <name value="DNASequenceVariantName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -63603,7 +63605,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitType" />
         <name value="ADXP-unitType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -63798,7 +63800,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-AD-use" />
         <name value="AD-use" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -64013,7 +64015,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/hla-genotyping-results-allele-database" />
         <name value="allele-database" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -64201,7 +64203,7 @@
         <name value="primaryInd" />
         <title value="primaryInd" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Flag indicating if the specialty is the primary specialty of the provider. Normally, a practitioner will have one primary specialty, but in some cases more than one can be primary." />
         <fhirVersion value="3.0.2" />
@@ -64385,7 +64387,7 @@
         <name value="Geolocation" />
         <title value="Geolocation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -64950,7 +64952,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsAnalysis" />
         <name value="Analysis" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -65513,7 +65515,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-preferred" />
         <name value="preferred" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -65701,7 +65703,7 @@
         <name value="approvalDate" />
         <title value="Approval Date" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The date on which the asset content was approved by the publisher. Approval happens once when the content is officially approved for usage." />
         <fhirVersion value="3.0.2" />
@@ -65897,7 +65899,7 @@
         <name value="ruledOut" />
         <title value="ruledOut" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -66087,7 +66089,7 @@
         <name value="maxDeliveryRate" />
         <title value="maxDeliveryRate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -66276,7 +66278,7 @@
         <name value="http-response-header" />
         <title value="HTTP Response header" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-11" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -66487,7 +66489,7 @@
         <name value="clinicalTrial" />
         <title value="clinicalTrial" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The clinical trials this patient has or is participating in." />
         <fhirVersion value="3.0.2" />
@@ -67179,7 +67181,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName" />
         <name value="bindingName" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -67368,7 +67370,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-keyWord" />
         <name value="keyWord" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Word or words used in an information retrieval system to indicate the content of the value set." />
         <fhirVersion value="3.0.2" />
@@ -67552,7 +67554,7 @@
         <name value="subsumes" />
         <title value="Subsumes" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Refers to another code defined within the code system that is also subsumed by this code. I.e. This concept subsumes the referenced concept.  Because meaning is inferred from hierarchy as well as definition, the presence of this extension modifies the meaning of the extended concept." />
         <fhirVersion value="3.0.2" />
@@ -67736,7 +67738,7 @@
         <name value="orderedBy" />
         <title value="orderedBy" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -67954,7 +67956,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetNameType" />
         <name value="ADXP-streetNameType" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -68149,7 +68151,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
         <name value="xhtml" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-23" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -68344,7 +68346,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetAddressLine" />
         <name value="ADXP-streetAddressLine" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -68540,7 +68542,7 @@
         <name value="relationship" />
         <title value="related goal" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-12-07" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -69125,7 +69127,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-censusTract" />
         <name value="ADXP-censusTract" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -69320,7 +69322,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-inheritedExtensibleValueSet" />
         <name value="inheritedExtensibleValueSet" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -69527,7 +69529,7 @@
         <name value="page" />
         <title value="Page for Resource" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-12-07" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -69714,7 +69716,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-expansionSource" />
         <name value="expansionSource" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The logical URL of the ValueSet definition that was used to generate this expansion." />
         <fhirVersion value="3.0.2" />
@@ -69897,7 +69899,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-identifier" />
         <name value="identifier" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -70106,7 +70108,7 @@
         <name value="search-parameter-combination" />
         <title value="Search Parameter Combination" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-12" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -70733,7 +70735,7 @@
         <name value="Data Absent Reason" />
         <title value="Why value is missing" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-12-05" />
         <publisher value="Health Level Seven International (FHIR Infrastructure)" />
         <contact>
           <telecom>
@@ -70955,7 +70957,7 @@
         <name value="outcome" />
         <title value="Outcome" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -71162,7 +71164,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-sourceReference" />
         <name value="sourceReference" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This text is intended to act as a citation to work done elsewhere that is not part of the current stewarding process where the referenced source is in some way a basis of the current value set definition." />
         <fhirVersion value="3.0.2" />
@@ -71348,7 +71350,7 @@
         <name value="recipientLanguage" />
         <title value="recipientLanguage" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -71571,7 +71573,7 @@
         <name value="systemUserLanguage" />
         <title value="systemUserLanguage" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -71794,7 +71796,7 @@
         <name value="websocket" />
         <title value="WebSocket" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-04-12" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -71985,7 +71987,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-Instance" />
         <name value="Instance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -72188,7 +72190,7 @@
         <name value="occurredFollowing" />
         <title value="occurredFollowing" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -72445,7 +72447,7 @@
         <name value="NotificationEndpoint" />
         <title value="Disclosure Notification Endpoint" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - CBCC WG" />
         <contact>
           <telecom>
@@ -72633,7 +72635,7 @@
         <name value="table-name" />
         <title value="table name" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -72821,7 +72823,7 @@
         <name value="strengthOfRecommendation" />
         <title value="strengthOfRecommendation" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -73029,7 +73031,7 @@
         <name value="calculatedValue" />
         <title value="calculatedValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -73216,7 +73218,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-deliveryMode" />
         <name value="ADXP-deliveryMode" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -73412,7 +73414,7 @@
         <name value="disability" />
         <title value="disability" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Value(s) identifying physical or mental condition(s) that limits a person's movements, senses, or activities." />
         <fhirVersion value="3.0.2" />
@@ -73594,7 +73596,7 @@
         <name value="approachBodySite" />
         <title value="approachBodySite" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -73783,7 +73785,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm" />
         <name value="fmm" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -73972,7 +73974,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-author" />
         <name value="author" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="User or Org actually involved in creating the value set content." />
         <fhirVersion value="3.0.2" />
@@ -74156,7 +74158,7 @@
         <name value="usualRoute" />
         <title value="usualRoute" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -74346,7 +74348,7 @@
         <name value="basedOn" />
         <title value="basedOn" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -74552,7 +74554,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-trusted-expansion" />
         <name value="trusted-expansion" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Indicates an authoritative source for performing value set expansions." />
         <fhirVersion value="3.0.2" />
@@ -74736,7 +74738,7 @@
         <name value="qualityOfEvidence" />
         <title value="qualityOfEvidence" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -74944,7 +74946,7 @@
         <name value="location-distance" />
         <title value="Distance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-11" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -75134,7 +75136,7 @@
         <name value="infuseOver" />
         <title value="infuseOver" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven International (Pharmacy)" />
         <contact>
           <telecom>
@@ -75322,7 +75324,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/procedurerequest-geneticsItem" />
         <name value="Item" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-20" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -76160,7 +76162,7 @@
         <name value="cqlExpression" />
         <title value="cqlExpression" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -76348,7 +76350,7 @@
         <name value="isDryWeight" />
         <title value="Is Dry Weight" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -76536,7 +76538,7 @@
         <name value="religion" />
         <title value="religion" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The patient's professed religious affiliations." />
         <fhirVersion value="3.0.2" />
@@ -76735,7 +76737,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedProfile" />
         <name value="allowedProfile" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -76928,7 +76930,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-own-prefix" />
         <name value="own-prefix" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -77138,7 +77140,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-minOccurs" />
         <name value="minOccurs" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -77338,7 +77340,7 @@
         <name value="datadictionary" />
         <title value="Data Dictionary" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -77527,7 +77529,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/valueset-systemRef" />
         <name value="systemRef" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The formal URI for the code system.  I.e. ValueSet.codeSystem.system (or its equivalent)." />
         <fhirVersion value="3.0.2" />
@@ -77711,7 +77713,7 @@
         <name value="schedule" />
         <title value="schedule" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -77899,7 +77901,7 @@
         <name value="targetBodySite" />
         <title value="targetBodySite" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -78085,7 +78087,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-usage" />
         <name value="usage" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Consumers of the value set and the implementations, projects or standards that the author has utilized the value set in." />
         <fhirVersion value="3.0.2" />
@@ -78650,7 +78652,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/openEHR-exposureDescription" />
         <name value="exposureDescription" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-10-09" />
         <publisher value="Health Level Seven, Inc / openEHR project" />
         <contact>
           <telecom>
@@ -78838,7 +78840,7 @@
         <name value="condition" />
         <title value="condition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -79026,7 +79028,7 @@
         <name value="authorizedBy" />
         <title value="authorizedBy" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -79215,7 +79217,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/auditevent-SOPClass" />
         <name value="SOPClass" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="Health Level Seven, Inc. - Security WG" />
         <contact>
           <telecom>
@@ -79417,7 +79419,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsAssessedCondition" />
         <name value="AssessedCondition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -79627,7 +79629,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-effectiveDate" />
         <name value="effectiveDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="This is the first date-time when the value set version becomes active, so this value is present on Inactive value set versions as well. The start Date_time is expected to be as of 0001 UTC of the Effective Date." />
         <fhirVersion value="3.0.2" />
@@ -79811,7 +79813,7 @@
         <name value="media" />
         <title value="media" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -79999,7 +80001,7 @@
         <name value="priority" />
         <title value="Flag Priority" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - Patient Care WG" />
         <contact>
           <telecom>
@@ -80207,7 +80209,7 @@
         <name value="relevantHistory" />
         <title value="relevantHistory" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -80401,7 +80403,7 @@
         <name value="specialHandling" />
         <title value="Special handling" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -80588,7 +80590,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/humanname-own-name" />
         <name value="own-name" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-11-22" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -80798,7 +80800,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/DiagnosticReport-geneticsFamilyMemberHistory" />
         <name value="FamilyMemberHistory" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -80988,7 +80990,7 @@
         <name value="importance" />
         <title value="importance" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The importance of the patient (e.g. VIP)." />
         <fhirVersion value="3.0.2" />
@@ -81170,7 +81172,7 @@
         <name value="activity-title" />
         <title value="Title" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-03-27" />
         <publisher value="Health Level Seven, Inc. - Patient Care WG" />
         <contact>
           <telecom>
@@ -81357,7 +81359,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-allowedUnits" />
         <name value="allowedUnits" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -81597,7 +81599,7 @@
         <name value="sourceValueSet" />
         <title value="sourceValueSet" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>
@@ -81785,7 +81787,7 @@
         <name value="partOf" />
         <title value="partOf" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -81991,7 +81993,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable" />
         <name value="translatable" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven, Inc. - FHIR Core WG" />
         <contact>
           <telecom>
@@ -82181,7 +82183,7 @@
         <name value="precondition" />
         <title value="precondition" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -82369,7 +82371,7 @@
         <name value="replaces" />
         <title value="Replaces" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -82561,7 +82563,7 @@
         <name value="processingTime" />
         <title value="Processing Time" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-19" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -82755,7 +82757,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg" />
         <name value="wg" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -82965,7 +82967,7 @@
         <name value="associatedEncounter" />
         <title value="associatedEncounter" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -83154,7 +83156,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-history" />
         <name value="history" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Information on changes made to the Value Set Definition over time, and also has a contained audit trail of all such changes." />
         <fhirVersion value="3.0.2" />
@@ -84378,7 +84380,7 @@
         <name value="abatement" />
         <title value="abatement" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -84578,7 +84580,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-maxOccurs" />
         <name value="maxOccurs" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -84778,7 +84780,7 @@
         <name value="incisionDateTime" />
         <title value="incisionDateTime" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-12" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -84965,7 +84967,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/iso21090-EN-qualifier" />
         <name value="EN-qualifier" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2012-06-24" />
         <publisher value="Health Level Seven International (Modeling and Methodology)" />
         <contact>
           <telecom>
@@ -85188,7 +85190,7 @@
         <name value="partOf" />
         <title value="Part Of" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -85402,7 +85404,7 @@
         <name value="issue-source" />
         <title value="Source of Issue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -85590,7 +85592,7 @@
         <name value="performerRole" />
         <title value="Performer Role" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -85817,7 +85819,7 @@
         <name value="primaryDiagnosis" />
         <title value="Primary Diagnosis" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2015-02-21" />
         <publisher value="Health Level Seven, Inc. - FHIR WG" />
         <contact>
           <telecom>
@@ -86004,7 +86006,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/codesystem-expirationDate" />
         <name value="expirationDate" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="The date when the value set version is no longer expected to be used to create new content. This is the first date-time when the value set version becomes Inactive, so this value MUST present on all Inactive value set versions. The start Date_time is expected to be as of 0001 UTC of the Expiration Date." />
         <fhirVersion value="3.0.2" />
@@ -86189,7 +86191,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type" />
         <name value="json-type" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven, Inc. - [WG Name] WG" />
         <contact>
           <telecom>
@@ -86378,7 +86380,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaireresponse-note" />
         <name value="note" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
@@ -86568,7 +86570,7 @@
         <url value="http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue" />
         <name value="ordinalValue" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2013-07-04" />
         <publisher value="HL7" />
         <contact>
           <telecom>
