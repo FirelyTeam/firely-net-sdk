@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     }
 
     // TODO: Add code to enforce these constraints:
-    /// A length of time.
+    // A length of time.
   }
 
 }

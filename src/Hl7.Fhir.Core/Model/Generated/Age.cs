@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     }
 
     // TODO: Add code to enforce these constraints:
-    /// A duration of time during which an organism (or a process) has existed.
+    // A duration of time during which an organism (or a process) has existed.
   }
 
 }

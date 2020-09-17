@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     }
 
     // TODO: Add code to enforce these constraints:
-    /// A length - a value with a unit that is a physical distance.
+    // A length - a value with a unit that is a physical distance.
   }
 
 }
