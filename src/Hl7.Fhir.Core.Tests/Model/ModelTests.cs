@@ -374,10 +374,32 @@ namespace Hl7.Fhir.Tests.Model
 
             // FHIR: Money derives from Element, not Quantity.
             Assert.IsFalse(ModelInfo.IsInstanceTypeFor(FHIRAllTypes.Quantity, FHIRAllTypes.Money));
-
-            // MoneyQuantity is a profile on Quantity
-            Assert.IsTrue(ModelInfo.IsProfiledQuantity(FHIRAllTypes.MoneyQuantity));
         }
+
+        [TestMethod]
+        public void TestSubclassInfoByType()
+        {
+            testTrue(typeof(Resource), typeof(Patient));
+            testTrue(typeof(DomainResource), typeof(Patient));
+            testTrue(typeof(Patient), typeof(Patient));
+            testFalse(typeof(Observation), typeof(Patient));
+            testFalse(typeof(Element), typeof(Patient));
+            testTrue(typeof(Resource), typeof(Bundle));
+            testFalse(typeof(DomainResource), typeof(Bundle));
+
+            testTrue(typeof(Element), typeof(HumanName));
+            testFalse(typeof(Element), typeof(Patient));
+            testTrue(typeof(Element), typeof(Oid));
+            testFalse(typeof(FhirString), typeof(Markdown));
+            testFalse(typeof(Integer), typeof(UnsignedInt));
+
+            static void testTrue(Type super, Type sub) =>
+                Assert.IsTrue(ModelInfo.IsInstanceTypeFor(super, sub));
+
+            static void testFalse(Type super, Type sub) =>
+                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(super, sub));
+        }
+
 
         [TestMethod]
         public void TestIntegerValueInterface()
@@ -566,11 +588,11 @@ namespace Hl7.Fhir.Tests.Model
         {
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(Quantity), typeof(Age)));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(DataType), typeof(Age)));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(Integer), typeof(UnsignedInt)));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(typeof(Integer), typeof(UnsignedInt)));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(PrimitiveType), typeof(UnsignedInt)));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(FhirString), typeof(Code)));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(typeof(FhirString), typeof(Code)));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(PrimitiveType), typeof(Code)));
-            Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(FhirUri), typeof(Uuid)));
+            Assert.IsFalse(ModelInfo.IsInstanceTypeFor(typeof(FhirUri), typeof(Uuid)));
             Assert.IsTrue(ModelInfo.IsInstanceTypeFor(typeof(PrimitiveType), typeof(Uuid)));
         }
 

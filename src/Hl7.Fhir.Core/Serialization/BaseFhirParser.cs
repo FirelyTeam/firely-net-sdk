@@ -11,7 +11,6 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Reflection;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Serialization
         {
             return new Lazy<ModelInspector>(() =>
             {
-                var result = new ModelInspector(ModelInspector.R4_VERSION);
+                var result = new ModelInspector(Specification.FhirRelease.R5);
 
                 result.Import(typeof(Resource).GetTypeInfo().Assembly);
                 result.Import(typeof(Patient).GetTypeInfo().Assembly);
@@ -57,7 +56,7 @@ namespace Hl7.Fhir.Serialization
 
         public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(buildPocoBuilderSettings(Settings));
 
-        public Base Parse(ISourceNode node, Type type=null) => node.ToPoco(type, buildPocoBuilderSettings(Settings));
+        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(type, buildPocoBuilderSettings(Settings));
 
         public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(buildPocoBuilderSettings(Settings));
     }
