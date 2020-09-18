@@ -132,25 +132,19 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 using (var entryStream = archive.GetInputStream(entry))
                 {
 #else
-            using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
-            {
-                var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
-                Assert.IsNotNull(entry);
+            using var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read);
+            var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
+            Assert.IsNotNull(entry);
 
-                using (var entryStream = entry.Open())
-                {
+            using var entryStream = entry.Open();
+            using var navStream = new XmlNavigatorStream(entryStream, false);
+            while (navStream.MoveNext())
+            {
+                //Debug.WriteLine($"{navStream.Position} : {navStream.ResourceType} {(navStream.IsBundle ? "(Bundle)" : "")}");
+                Assert.IsTrue(navStream.IsBundle);
+                Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
+            };
 #endif
-                    using (var navStream = new XmlNavigatorStream(entryStream, false))
-                    {
-                        while (navStream.MoveNext())
-                        {
-                            //Debug.WriteLine($"{navStream.Position} : {navStream.ResourceType} {(navStream.IsBundle ? "(Bundle)" : "")}");
-                            Assert.IsTrue(navStream.IsBundle);
-                            Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
-                        };
-                    }
-                }
-            }
         }
     }
 }
