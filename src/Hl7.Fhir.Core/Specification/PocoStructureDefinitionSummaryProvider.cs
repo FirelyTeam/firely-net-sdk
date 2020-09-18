@@ -20,13 +20,7 @@ namespace Hl7.Fhir.Specification
 {
     public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
-        public static IStructureDefinitionSummary Provide(Type type)
-        {
-            var classMapping = GetMappingForType(type);
-            if (classMapping == null) return null;
-
-            return new PocoComplexTypeSerializationInfo(classMapping);
-        }
+        public static IStructureDefinitionSummary Provide(Type type) => GetMappingForType(type);
 
         public IStructureDefinitionSummary Provide(string canonical)
         {
@@ -42,6 +36,7 @@ namespace Hl7.Fhir.Specification
                 return null;
             }
 
+
             Type csType = ModelInfo.GetTypeForFhirType(typeName);
             if (csType == null) return null;
 
@@ -55,7 +50,7 @@ namespace Hl7.Fhir.Specification
         }
     }
 
-
+    /*
     internal class PocoComplexTypeSerializationInfo : IStructureDefinitionSummary
     {
         private readonly ClassMapping _classMapping;
@@ -176,5 +171,5 @@ namespace Hl7.Fhir.Specification
         }
 
         public string NonDefaultNamespace => null;
-    }
+    }*/
 }
