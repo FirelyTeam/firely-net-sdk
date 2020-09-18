@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Defines behaviour and contraints on the ValueSet Expansion operation
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ExpansionProfile", IsResource=true)]
   [DataContract]
   public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource

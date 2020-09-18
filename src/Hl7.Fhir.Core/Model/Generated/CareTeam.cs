@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Planned participants in the coordination and delivery of care for a patient or group
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CareTeam", IsResource=true)]
   [DataContract]
   public partial class CareTeam : Hl7.Fhir.Model.DomainResource

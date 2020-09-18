@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Medical care, research study or other healthcare event causing physical injury
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("AdverseEvent", IsResource=true)]
   [DataContract]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource

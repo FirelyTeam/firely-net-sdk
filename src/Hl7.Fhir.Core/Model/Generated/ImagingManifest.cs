@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Key Object Selection
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ImagingManifest", IsResource=true)]
   [DataContract]
   public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
