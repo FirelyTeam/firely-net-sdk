@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A measured or measurable amount
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Quantity")]
   [DataContract]
   public partial class Quantity : Hl7.Fhir.Model.DataType

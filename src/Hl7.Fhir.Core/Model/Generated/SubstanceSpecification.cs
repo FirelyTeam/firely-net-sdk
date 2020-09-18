@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// The detailed description of a substance, typically at a level beyond what is used for prescribing
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("SubstanceSpecification", IsResource=true)]
   [DataContract]
   public partial class SubstanceSpecification : Hl7.Fhir.Model.DomainResource

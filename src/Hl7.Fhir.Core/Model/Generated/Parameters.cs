@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Operation Request or Response
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Parameters", IsResource=true)]
   [DataContract]
   public partial class Parameters : Hl7.Fhir.Model.Resource

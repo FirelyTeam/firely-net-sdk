@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Information about a biological sequence
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MolecularSequence", IsResource=true)]
   [DataContract]
   public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource

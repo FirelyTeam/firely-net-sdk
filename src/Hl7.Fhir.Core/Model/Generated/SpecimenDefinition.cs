@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Kind of specimen
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("SpecimenDefinition", IsResource=true)]
   [DataContract]
   public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A research context or question
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ResearchDefinition", IsResource=true)]
   [DataContract]
   public partial class ResearchDefinition : Hl7.Fhir.Model.DomainResource

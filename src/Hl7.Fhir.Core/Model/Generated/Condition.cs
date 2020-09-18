@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Detailed information about conditions, problems or diagnoses
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Condition", IsResource=true)]
   [DataContract]
   public partial class Condition : Hl7.Fhir.Model.DomainResource

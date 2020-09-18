@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// MedicinalProductIndication
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductIndication", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Insurance or medical plan or a payment agreement
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Coverage", IsResource=true)]
   [DataContract]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource

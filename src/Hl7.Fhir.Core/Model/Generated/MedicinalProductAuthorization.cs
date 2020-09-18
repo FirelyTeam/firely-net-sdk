@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// The regulatory authorization of a medicinal product
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductAuthorization", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource

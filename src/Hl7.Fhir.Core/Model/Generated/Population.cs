@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A definition of a set of people that apply to some clinically related context, for example people contraindicated for a certain medication
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Population")]
   [DataContract]
   public partial class Population : Hl7.Fhir.Model.BackboneType

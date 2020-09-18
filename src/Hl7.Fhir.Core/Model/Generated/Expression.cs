@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An expression that can be used to generate a value
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Expression")]
   [DataContract]
   public partial class Expression : Hl7.Fhir.Model.DataType

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Related artifacts for a knowledge resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("RelatedArtifact")]
   [DataContract]
   public partial class RelatedArtifact : Hl7.Fhir.Model.DataType

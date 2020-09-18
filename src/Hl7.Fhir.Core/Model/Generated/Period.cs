@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Time range defined by start and end date/time
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Period")]
   [DataContract]
   public partial class Period : Hl7.Fhir.Model.DataType

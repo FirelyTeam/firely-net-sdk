@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// MedicinalProductInteraction
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductInteraction", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An association of a Patient with an Organization and  Healthcare Provider(s) for a period of time that the Organization assumes some level of responsibility
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("EpisodeOfCare", IsResource=true)]
   [DataContract]
   public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource

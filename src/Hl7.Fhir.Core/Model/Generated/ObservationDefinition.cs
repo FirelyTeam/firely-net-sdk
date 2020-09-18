@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Definition of an observation
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ObservationDefinition", IsResource=true)]
   [DataContract]
   public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource

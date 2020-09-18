@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Tracks balance, charges, for patient or cost center
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Account", IsResource=true)]
   [DataContract]
   public partial class Account : Hl7.Fhir.Model.DomainResource

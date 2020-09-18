@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Defines an affiliation/assotiation/relationship between 2 distinct oganizations, that is not a part-of relationship/sub-division relationship
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("OrganizationAffiliation", IsResource=true)]
   [DataContract]
   public partial class OrganizationAffiliation : Hl7.Fhir.Model.DomainResource

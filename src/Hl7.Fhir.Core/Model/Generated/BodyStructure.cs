@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Specific and identified anatomical structure
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("BodyStructure", IsResource=true)]
   [DataContract]
   public partial class BodyStructure : Hl7.Fhir.Model.DomainResource

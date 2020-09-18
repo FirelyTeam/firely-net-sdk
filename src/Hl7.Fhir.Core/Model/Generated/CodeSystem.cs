@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Declares the existence of and describes a code system or code system supplement
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CodeSystem", IsResource=true)]
   [DataContract]
   public partial class CodeSystem : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Investigation to increase healthcare-related patient-independent knowledge
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ResearchStudy", IsResource=true)]
   [DataContract]
   public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource

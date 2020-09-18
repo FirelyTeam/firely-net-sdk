@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A pharmaceutical product described in terms of its composition and dose form
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductPharmaceutical", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductPharmaceutical : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Search parameter for a resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("SearchParameter", IsResource=true)]
   [DataContract]
   public partial class SearchParameter : Hl7.Fhir.Model.DomainResource

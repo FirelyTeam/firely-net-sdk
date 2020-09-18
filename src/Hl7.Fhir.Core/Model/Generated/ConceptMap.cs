@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A map from one set of concepts to one or more other concepts
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ConceptMap", IsResource=true)]
   [DataContract]
   public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
