@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A task to be performed
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Task", IsResource=true)]
   [DataContract]
   public partial class Task : Hl7.Fhir.Model.DomainResource

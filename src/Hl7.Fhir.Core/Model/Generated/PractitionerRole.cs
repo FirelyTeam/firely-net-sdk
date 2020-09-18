@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Roles/organizations the practitioner is associated with
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("PractitionerRole", IsResource=true)]
   [DataContract]
   public partial class PractitionerRole : Hl7.Fhir.Model.DomainResource

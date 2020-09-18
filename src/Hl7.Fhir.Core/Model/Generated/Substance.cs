@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A homogeneous material with a definite composition
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Substance", IsResource=true)]
   [DataContract]
   public partial class Substance : Hl7.Fhir.Model.DomainResource

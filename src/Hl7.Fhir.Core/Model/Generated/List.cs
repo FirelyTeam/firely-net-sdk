@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Information summarized from a list of other resources
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("List", IsResource=true)]
   [DataContract]
   public partial class List : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Event record kept for security purposes
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("AuditEvent", IsResource=true)]
   [DataContract]
   public partial class AuditEvent : Hl7.Fhir.Model.DomainResource

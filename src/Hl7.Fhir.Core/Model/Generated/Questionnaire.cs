@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A structured set of questions
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Questionnaire", IsResource=true)]
   [DataContract]
   public partial class Questionnaire : Hl7.Fhir.Model.DomainResource

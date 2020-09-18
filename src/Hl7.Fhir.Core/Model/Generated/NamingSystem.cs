@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// System of unique identification
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("NamingSystem", IsResource=true)]
   [DataContract]
   public partial class NamingSystem : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Content in a format defined elsewhere
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Attachment")]
   [DataContract]
   public partial class Attachment : Hl7.Fhir.Model.DataType

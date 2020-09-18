@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// PaymentReconciliation resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("PaymentReconciliation", IsResource=true)]
   [DataContract]
   public partial class PaymentReconciliation : Hl7.Fhir.Model.DomainResource

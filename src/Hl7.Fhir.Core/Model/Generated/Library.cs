@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Represents a library of quality improvement components
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Library", IsResource=true)]
   [DataContract]
   public partial class Library : Hl7.Fhir.Model.DomainResource

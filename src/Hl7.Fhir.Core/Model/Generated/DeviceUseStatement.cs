@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Record of use of a device
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DeviceUseStatement", IsResource=true)]
   [DataContract]
   public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource

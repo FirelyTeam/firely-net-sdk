@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A description of decision support service functionality
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ServiceDefinition", IsResource=true)]
   [DataContract]
   public partial class ServiceDefinition : Hl7.Fhir.Model.DomainResource

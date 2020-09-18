@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A Map of relationships between 2 structures that can be used to transform data
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("StructureMap", IsResource=true)]
   [DataContract]
   public partial class StructureMap : Hl7.Fhir.Model.DomainResource
