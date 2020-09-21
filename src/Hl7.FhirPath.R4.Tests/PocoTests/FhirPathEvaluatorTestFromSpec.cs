@@ -134,7 +134,10 @@ namespace Hl7.FhirPath.R4.Tests
                  "testConformsTo1", "testConformsTo2",
 
                 // rounding pi to 3 decimals will not become 2
-                "testRound2"
+                "testRound2",
+
+                // Still under discussion on Zulip (but this will probably align with outs in the end)
+                "testTrueAndFoo"
             };
 
             foreach (var file in files)

@@ -3174,7 +3174,7 @@ https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
 -->
   <group>
     name="from-Zulip">
-    <test inputfile="patient-example.xml">
+    <test name="testTrueAndFoo" inputfile="patient-example.xml">
       <expression>(true and 'foo').empty()</expression>
       <output type="boolean">true</output>
     </test>
