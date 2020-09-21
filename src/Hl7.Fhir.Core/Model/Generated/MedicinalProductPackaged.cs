@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A medicinal product in a container or package
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductPackaged", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource

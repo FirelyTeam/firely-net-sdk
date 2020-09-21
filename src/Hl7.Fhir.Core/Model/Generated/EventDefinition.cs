@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A description of when an event can occur
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("EventDefinition", IsResource=true)]
   [DataContract]
   public partial class EventDefinition : Hl7.Fhir.Model.DomainResource

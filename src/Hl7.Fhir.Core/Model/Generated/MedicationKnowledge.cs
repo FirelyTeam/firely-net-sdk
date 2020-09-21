@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Definition of Medication Knowledge
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicationKnowledge", IsResource=true)]
   [DataContract]
   public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource

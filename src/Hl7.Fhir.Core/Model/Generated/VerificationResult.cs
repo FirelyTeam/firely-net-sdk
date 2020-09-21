@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Describes validation requirements, source(s), status and dates for one or more elements
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("VerificationResult", IsResource=true)]
   [DataContract]
   public partial class VerificationResult : Hl7.Fhir.Model.DomainResource

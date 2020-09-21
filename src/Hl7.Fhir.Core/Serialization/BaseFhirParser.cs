@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Serialization
         {
             return new Lazy<ModelInspector>(() =>
             {
-                var result = new ModelInspector(ModelInspector.R4_VERSION);
+                var result = new ModelInspector(Specification.FhirRelease.R4);
 
                 result.Import(typeof(Resource).GetTypeInfo().Assembly);
                 result.Import(typeof(Patient).GetTypeInfo().Assembly);

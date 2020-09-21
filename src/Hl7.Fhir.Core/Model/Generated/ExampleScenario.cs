@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Example of workflow instance
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ExampleScenario", IsResource=true)]
   [DataContract]
   public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource

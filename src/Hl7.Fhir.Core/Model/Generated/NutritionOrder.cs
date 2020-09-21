@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Diet, formula or nutritional supplement request
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("NutritionOrder", IsResource=true)]
   [DataContract]
   public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource

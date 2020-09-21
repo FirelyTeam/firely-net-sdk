@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A quantified estimate of effect based on a body of evidence
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("EffectEvidenceSynthesis", IsResource=true)]
   [DataContract]
   public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource

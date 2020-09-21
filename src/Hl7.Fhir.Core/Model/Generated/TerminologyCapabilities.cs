@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A statement of system capabilities
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("TerminologyCapabilities", IsResource=true)]
   [DataContract]
   public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource

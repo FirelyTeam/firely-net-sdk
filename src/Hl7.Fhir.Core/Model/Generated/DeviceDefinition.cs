@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An instance of a medical-related component of a medical device
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DeviceDefinition", IsResource=true)]
   [DataContract]
   public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An identifier intended for computation
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Identifier")]
   [DataContract]
   public partial class Identifier : Hl7.Fhir.Model.DataType

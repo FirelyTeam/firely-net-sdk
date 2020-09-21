@@ -67,6 +67,10 @@ namespace Hl7.Fhir.Specification.Tests
             // Try walking into an 'any' choice
             elem = walker.Walk("method.extension.value.ofType(HumanName).family").Single();
             Assert.AreEqual("HumanName.family", elem.Current.Path);
+
+            // use the backwards compatible function 'as()'
+            elem = walker.Walk("value.as(Quantity).system").Single();
+            Assert.AreEqual("Quantity.system", elem.Current.Path);
         }
 
         [TestMethod]
@@ -139,6 +143,8 @@ namespace Hl7.Fhir.Specification.Tests
             eval("active.slice()");
             eval("active.ofType()");
             eval("active.OfType('something')");
+            eval("active.as()");
+            eval("active.As('something')");
             eval("active.where(true)");
 
             void eval(string expr)

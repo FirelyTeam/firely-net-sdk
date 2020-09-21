@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Describes the context of use for a conformance or knowledge resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("UsageContext")]
   [DataContract]
   public partial class UsageContext : Hl7.Fhir.Model.DataType

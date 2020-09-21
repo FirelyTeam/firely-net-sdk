@@ -27,20 +27,15 @@
   
 */
 
-using Hl7.Fhir.Validation;
-using System;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Model
 {
     [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}}")]
-    [FhirType("DomainResource")]
     public abstract partial class DomainResource : IModifierExtendable
     {
         [NotMapped]
@@ -89,8 +84,8 @@ namespace Hl7.Fhir.Model
 
             return FindContainedResource(new ResourceReference(reference));
         }
-            
-        
+
+
 
     }
 }

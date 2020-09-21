@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Details of a Technology mediated contact point (phone, fax, email, etc.)
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ContactPoint")]
   [DataContract]
   public partial class ContactPoint : Hl7.Fhir.Model.DataType

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Invoice containing ChargeItems from an Account
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Invoice", IsResource=true)]
   [DataContract]
   public partial class Invoice : Hl7.Fhir.Model.DomainResource

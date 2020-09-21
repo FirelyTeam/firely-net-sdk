@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Item used in healthcare
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Device", IsResource=true)]
   [DataContract]
   public partial class Device : Hl7.Fhir.Model.DomainResource

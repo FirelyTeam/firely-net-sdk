@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// CoverageEligibilityResponse resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CoverageEligibilityResponse", IsResource=true)]
   [DataContract]
   public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource

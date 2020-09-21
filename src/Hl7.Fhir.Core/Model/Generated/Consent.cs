@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A healthcare consumer's  choices to permit or deny recipients or roles to perform actions for specific purposes and periods of time
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Consent", IsResource=true)]
   [DataContract]
   public partial class Consent : Hl7.Fhir.Model.DomainResource

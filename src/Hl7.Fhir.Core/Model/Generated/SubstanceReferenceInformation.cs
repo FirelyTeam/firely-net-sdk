@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Todo
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("SubstanceReferenceInformation", IsResource=true)]
   [DataContract]
   public partial class SubstanceReferenceInformation : Hl7.Fhir.Model.DomainResource

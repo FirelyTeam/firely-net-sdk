@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A timing schedule that specifies an event that may occur multiple times
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Timing")]
   [DataContract]
   public partial class Timing : Hl7.Fhir.Model.BackboneType

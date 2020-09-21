@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A quality measure definition
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Measure", IsResource=true)]
   [DataContract]
   public partial class Measure : Hl7.Fhir.Model.DomainResource

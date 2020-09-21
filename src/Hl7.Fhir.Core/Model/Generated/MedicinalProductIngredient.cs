@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An ingredient of a manufactured item or pharmaceutical product
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProductIngredient", IsResource=true)]
   [DataContract]
   public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource

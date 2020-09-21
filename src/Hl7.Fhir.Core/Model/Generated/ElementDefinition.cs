@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Definition of an element in a resource or extension
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ElementDefinition")]
   [DataContract]
   public partial class ElementDefinition : Hl7.Fhir.Model.BackboneType

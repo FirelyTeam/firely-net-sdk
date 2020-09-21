@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A set of images produced in single study (one or more series of references images)
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ImagingStudy", IsResource=true)]
   [DataContract]
   public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource

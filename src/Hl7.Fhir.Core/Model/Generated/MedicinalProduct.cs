@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use)
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MedicinalProduct", IsResource=true)]
   [DataContract]
   public partial class MedicinalProduct : Hl7.Fhir.Model.DomainResource
