@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <tests name="FHIRPathTestSuite" description="FHIRPath Test Suite" reference="http://hl7.org/fhirpath|2.0.0">
+  <!--
+The source of truth for this test suite is the R5 tests in the fhir-test-cases repository:
+https://github.com/FHIR/fhir-test-cases/blob/master/r5/fhirpath/tests-fhir-r5.xml
+Copies of this test suite are maintained for reference and distribution only in the following locations:
+https://github.com/FHIR/fhir-test-cases/blob/master/r4/fhirpath/tests-fhir-r4.xml
+https://github.com/HL7/FHIRPath/blob/master/tests/r4/tests-fhir-r4.xml
+https://github.com/HL7/FHIRPath/blob/master/tests/r5/tests-fhir-r5.xml
+
+The example data for this test suite consists of:
+patient-example.xml
+observation-example.xml
+questionnaire-example.xml
+valueset-example-expansion.xml
+
+The test schema for this test suite is maintained in the FHIRPath specification repository:
+https://github.com/HL7/FHIRPath/blob/master/tests/testSchema.xsd
+-->
   <group name="testMiscellaneousAccessorTests" description="Miscellaneous accessor tests">
     <test name="testExtractBirthDate" description="Extract birthDate" inputfile="patient-example.xml" predicate="false">
       <expression>birthDate</expression>
@@ -87,14 +104,18 @@
     </test>
 
     <!-- testBoolean(observation(), "Observation.value.is(Quantity)", true); -->
-    <test name="testPolymorphismIsA" inputfile="observation-example.xml">
+    <test name="testPolymorphismIsA1" inputfile="observation-example.xml">
       <expression>Observation.value.is(Quantity)</expression>
       <output type="boolean">true</output>
     </test>
     <!-- testBoolean(observation(), "Observation.value is Quantity", true); -->
-    <test name="testPolymorphismIsA" inputfile="observation-example.xml">
+    <test name="testPolymorphismIsA2" inputfile="observation-example.xml">
       <expression>Observation.value is Quantity</expression>
       <output type="boolean">true</output>
+    </test>
+
+    <test name="testPolymorphismIsA3" inputfile="observation-example.xml">
+      <expression>Observation.issued is instant</expression>
     </test>
 
     <!-- testBoolean(observation(), "Observation.value.is(Period).not()", true); -->
@@ -393,8 +414,7 @@
     <test name="testDateNotEqual" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @1974-12-25T12:34:00</expression>
     </test>
-   <!-- EK20200714 I think these tests are incorrect. they should all return {} instead of true -->
-   <test name="testDateNotEqualTimezoneOffsetBefore" inputfile="patient-example.xml">
+    <test name="testDateNotEqualTimezoneOffsetBefore" inputfile="patient-example.xml">
       <expression>Patient.birthDate != @1974-12-25T12:34:00-10:00</expression>
       <output type="boolean">true</output>
     </test>
@@ -765,7 +785,7 @@
       <output type="boolean">true</output>
     </test>
     <test name="testStringQuantityDayLiteralToQuantity" inputfile="patient-example.xml">
-      <expression>'1 day'.toQuantity() = 1 '{day}'</expression>
+      <expression>'1 day'.toQuantity() = 1 'd'</expression>
       <output type="boolean">true</output>
     </test>
     <test name="testStringQuantityWeekLiteralToQuantity" inputfile="patient-example.xml">
@@ -894,9 +914,30 @@
     </test>
     <test name="testQuantityLiteralWeekToString" inputfile="patient-example.xml">
       <expression>1 week.toString()</expression>
-      <output type="string">1 '{week}'</output>
+      <output type="string">1 'wk'</output>
     </test>
+  </group>
 
+  <group name="testExists">
+    <test inputfile="patient-example.xml">
+      <expression>Patient.name.exists()</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>Patient.name.exists(use = 'nickname')</expression>
+      <output type="boolean">false</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>Patient.name.exists(use = 'official')</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>
+        Patient.maritalStatus.coding.exists(code = 'P' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')
+        or Patient.maritalStatus.coding.exists(code = 'A' and system = 'http://terminology.hl7.org/CodeSystem/v3-MaritalStatus')
+      </expression>
+      <output type="boolean">false</output>
+    </test>
   </group>
 
   <group name="testAll">
@@ -1479,6 +1520,94 @@
     </test>
   </group>
 
+  <group name="testEncodeDecode">
+    <test inputfile="patient-example.xml">
+      <expression>'test'.encode('base64')</expression>
+      <output type="string">dGVzdA==</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'test'.encode('hex')</expression>
+      <output type="string">74657374</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'subjects?_d'.encode('base64')</expression>
+      <output type="string">c3ViamVjdHM/X2Q=</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'subjects?_d'.encode('urlbase64')</expression>
+      <output type="string">c3ViamVjdHM_X2Q=</output>
+    </test>
+
+    <test inputfile="patient-example.xml">
+      <expression>'dGVzdA=='.decode('base64')</expression>
+      <output type="string">test</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'74657374'.decode('hex')</expression>
+      <output type="string">test</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'c3ViamVjdHM/X2Q='.decode('base64')</expression>
+      <output type="string">subjects?_d</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'c3ViamVjdHM_X2Q='.decode('urlbase64')</expression>
+      <output type="string">subjects?_d</output>
+    </test>
+  </group>
+
+  <group name="testExcapeUnescape">
+    <test inputfile="patient-example.xml">
+      <expression>'"1&lt;2"'.escape('html')</expression>
+      <output type="string">&amp;quot;1&amp;lt;2&amp;quot;</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'"1&lt;2"'.escape('json')</expression>
+      <output type="string">\"1&lt;2\"</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'&amp;quot;1&amp;lt;2&amp;quot;'.unescape('html')</expression>
+      <output type="string">"1&lt;2"</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'\"1&lt;2\"'.unescape('json')</expression>
+      <output type="string">"1&lt;2"</output>
+    </test>
+  </group>
+
+  <group name="testTrim">
+    <test inputfile="patient-example.xml">
+      <expression>'123456'.trim().length() = 6</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'123 456'.trim().length() = 7</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>' 123456 '.trim().length() = 6</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>'  '.trim().length() = 0</expression>
+      <output type="boolean">true</output>
+    </test>
+  </group>
+
+  <group name="testSplit">
+    <test inputfile="patient-example.xml">
+      <expression>'Peter,James,Jim,Peter,James'.split(',').count() = 5</expression>
+      <output type="boolean">true</output>
+    </test>
+  </group>
+
+  <group name="testJoin">
+    <test inputfile="patient-example.xml">
+      <expression>name.given.join(',')</expression>
+      <output type="string">Peter,James,Jim,Peter,James</output>
+    </test>
+  </group>
+
   <group name="testTrace">
     <test name="testTrace1" inputfile="patient-example.xml">
       <expression>name.given.trace('test').count() = 5</expression>
@@ -1598,7 +1727,7 @@
       <output type="boolean">false</output>
     </test>
     <test name="testEquality23" inputfile="patient-example.xml">
-      <expression>@2012-04-15T15:00:00Z = @2012-04-15T10:00:00</expression>      
+      <expression>@2012-04-15T15:00:00Z = @2012-04-15T10:00:00</expression>
     </test>
     <test name="testEquality24" inputfile="patient-example.xml">
       <expression>@2012-04-15T15:00:00+02:00 = @2012-04-15T16:00:00+03:00</expression>
@@ -1882,10 +2011,9 @@
       <expression>@2012-04-15T15:30:31 !~ @2012-04-15T15:30:31.1</expression>
       <output type="boolean">true</output>
     </test>
-    <!-- EK20200714  surely this test must be wrong?  -->
     <test name="testNotEquivalent19" inputfile="patient-example.xml">
       <expression>name !~ name</expression>
-      <output type="boolean">true</output>
+      <output type="boolean">false</output>
     </test>
     <test name="testNotEquivalent20" inputfile="patient-example.xml">
       <expression>name.take(2).given !~ name.take(2).first().given | name.take(2).last().given</expression>
@@ -2663,15 +2791,15 @@
 
   <group name="testMultiply">
     <test name="testMultiply1" inputfile="patient-example.xml">
-      <expression>1.2 * 1.8 = 2.16</expression>
-      <output type="boolean">true</output>
-    </test>
-    <test name="testMultiply2" inputfile="patient-example.xml">
       <expression>1 * 1 = 1</expression>
       <output type="boolean">true</output>
     </test>
-    <test name="testMultiply3" inputfile="patient-example.xml">
+    <test name="testMultiply2" inputfile="patient-example.xml">
       <expression>1 * 0 = 0</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test name="testMultiply3" inputfile="patient-example.xml">
+      <expression>1.2 * 1.8 = 2.16</expression>
       <output type="boolean">true</output>
     </test>
   </group>
@@ -3024,15 +3152,15 @@
   </group>
 
   <group name="testConformsTo">
-    <test name="testConformsTo" inputfile="patient-example.xml">
+    <test name="testConformsTo1" inputfile="patient-example.xml">
       <expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Patient')</expression>
       <output type="boolean">true</output>
     </test>
-    <test name="testConformsTo" inputfile="patient-example.xml">
+    <test name="testConformsTo2" inputfile="patient-example.xml">
       <expression>conformsTo('http://hl7.org/fhir/StructureDefinition/Person')</expression>
       <output type="boolean">false</output>
     </test>
-    <test name="testConformsTo" inputfile="patient-example.xml">
+    <test name="testConformsTo3" inputfile="patient-example.xml">
       <expression invalid="true">conformsTo('http://trash')</expression>
     </test>
   </group>
@@ -3044,4 +3172,15 @@
 		<test inputfile="patient-example.xml"><expression	invalid="true">contained.select(('#'+id in %resource.descendants().reference).not()).empty()");
 	</group>
 -->
+  <group>
+    name="from-Zulip">
+    <test name="testTrueAndFoo" inputfile="patient-example.xml">
+      <expression>(true and 'foo').empty()</expression>
+      <output type="boolean">true</output>
+    </test>
+    <test inputfile="patient-example.xml">
+      <expression>(true | 'foo').allTrue()</expression>
+      <output type="boolean">false</output>
+    </test>
+  </group>
 </tests>
