@@ -3,7 +3,7 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>2.0.0</VersionPrefix>
-    <VersionSuffix>alpha-beta2</VersionSuffix>
+    <VersionSuffix>beta2</VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2013-2020 Firely.  Contains materials (C) HL7 International</Copyright>
