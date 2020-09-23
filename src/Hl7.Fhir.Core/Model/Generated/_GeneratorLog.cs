@@ -286,7 +286,6 @@
 // DiagnosticReport.cs
 // DocumentManifest.cs
 // DocumentReference.cs
-// DomainResource.cs
 // EligibilityRequest.cs
 // EligibilityResponse.cs
 // Encounter.cs
