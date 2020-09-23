@@ -1830,7 +1830,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestMultipleMessageHandlersInFhirClient()
         {           
            

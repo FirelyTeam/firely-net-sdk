@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A measured or measurable amount
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Count")]
   public partial class Count : Quantity
   {
@@ -62,7 +60,7 @@ namespace Hl7.Fhir.Model
     }
 
     // TODO: Add code to enforce these constraints:
-    /// A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
+    // A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
   }
 
 }

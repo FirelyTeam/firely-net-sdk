@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Results of a measure evaluation
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("MeasureReport", IsResource=true)]
   [DataContract]
   public partial class MeasureReport : Hl7.Fhir.Model.DomainResource

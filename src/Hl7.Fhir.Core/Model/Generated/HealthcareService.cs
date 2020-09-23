@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// The details of a healthcare service available at a location
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("HealthcareService", IsResource=true)]
   [DataContract]
   public partial class HealthcareService : Hl7.Fhir.Model.DomainResource

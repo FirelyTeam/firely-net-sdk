@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Compartment Definition for a resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CompartmentDefinition", IsResource=true)]
   [DataContract]
   public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource

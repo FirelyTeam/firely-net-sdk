@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A resource with narrative, extensions, and contained resources
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DomainResource", IsResource=true)]
   [DataContract]
   public abstract partial class DomainResource : Hl7.Fhir.Model.Resource, Hl7.Fhir.Model.IModifierExtendable

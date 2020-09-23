@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Describes a set of tests
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("TestScript", IsResource=true)]
   [DataContract]
   public partial class TestScript : Hl7.Fhir.Model.DomainResource

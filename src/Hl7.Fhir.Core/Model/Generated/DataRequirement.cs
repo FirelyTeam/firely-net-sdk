@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Describes a required data item
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DataRequirement")]
   [DataContract]
   public partial class DataRequirement : Hl7.Fhir.Model.DataType

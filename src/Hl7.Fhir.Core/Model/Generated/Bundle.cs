@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Contains a collection of resources
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Bundle", IsResource=true)]
   [DataContract]
   public partial class Bundle : Hl7.Fhir.Model.Resource

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Name of a human - parts and usage
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("HumanName")]
   [DataContract]
   public partial class HumanName : Hl7.Fhir.Model.DataType

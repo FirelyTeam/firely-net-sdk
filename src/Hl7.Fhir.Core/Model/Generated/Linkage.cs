@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Links records for 'same' item
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Linkage", IsResource=true)]
   [DataContract]
   public partial class Linkage : Hl7.Fhir.Model.DomainResource
