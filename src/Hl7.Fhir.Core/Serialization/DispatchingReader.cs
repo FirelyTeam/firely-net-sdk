@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
-                var reader = new ResourceReader(_inspector, _current, Settings);
+                var reader = new ComplexTypeReader(_inspector, _current, Settings);
                 return reader.Deserialize(null);
             }
 

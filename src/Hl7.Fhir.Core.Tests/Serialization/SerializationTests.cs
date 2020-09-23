@@ -404,6 +404,8 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestDerivedPoCoSerialization()
         {
+            ModelInfo.GetStructureDefinitionSummaryProvider().ImportType(typeof(CustomBundle));
+
             var bundle = new CustomBundle()
             {
                 Type = Bundle.BundleType.Collection,

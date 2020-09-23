@@ -18,7 +18,7 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class DefaultModelFactory : IModelClassFactory
+    public class DefaultModelFactory
     {
         public DefaultModelFactory()
         {

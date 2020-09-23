@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
             return result;
         }
 
-        public static ModelInspector GetStructureDefinitionSummaryProvider() =>
+        internal static ModelInspector GetStructureDefinitionSummaryProvider() =>
             _versionedProvider.Value;
 
         public static readonly Type[] OpenTypes =
