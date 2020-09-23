@@ -13,6 +13,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
@@ -22,13 +23,16 @@ namespace Hl7.Fhir.ElementModel
     {
         public readonly Base Current;
         private readonly ClassMapping _myClassMapping;
+        private readonly ModelInspector _inspector;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
-        internal PocoElementNode(Base root, string rootName = null)
+        internal PocoElementNode(ModelInspector inspector, Base root, string rootName = null)
         {
             Current = root;
-            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(root.GetType());
+            _inspector = inspector;
+            _myClassMapping = _inspector.ImportType(root.GetType());
+
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = ElementDefinitionSummary.ForRoot(_myClassMapping, rootName ?? root.TypeName);
 
@@ -36,12 +40,13 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = InstanceType;
         }
 
-        private PocoElementNode(Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
+        private PocoElementNode(ModelInspector inspector, Base instance, PocoElementNode parent, PropertyMapping definition, string location, string shortPath)
         {
             Current = instance;
+            _inspector = inspector;
 
             var instanceType = determineInstanceType(instance.GetType(), definition);
-            _myClassMapping = (ClassMapping)PocoStructureDefinitionSummaryProvider.Provide(instanceType);
+            _myClassMapping = _inspector.ImportType(instanceType);
             InstanceType = ((IStructureDefinitionSummary)_myClassMapping).TypeName;
             Definition = definition ?? throw Error.ArgumentNull(nameof(definition));
 
@@ -50,13 +55,8 @@ namespace Hl7.Fhir.ElementModel
             ShortPath = shortPath;
         }
 
-        private Type determineInstanceType(Type type, PropertyMapping definition)
-        {
-            if (definition.Choice != ChoiceType.None)
-                return type;
-            else
-                return definition.FhirType[0];
-        }
+        private Type determineInstanceType(Type type, PropertyMapping definition) 
+            => definition.Choice != ChoiceType.None ? type : definition.FhirType[0];
 
         public IElementDefinitionSummary Definition { get; private set; }
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.ElementModel
                             $"{ShortPath}.{child.ElementName}[{arrayIndex}]" :
                             $"{ShortPath}.{child.ElementName}");
 
-                    yield return new PocoElementNode(child.Value, this, childElementDef,
+                    yield return new PocoElementNode(_inspector, child.Value, this, childElementDef,
                         location, shortPath);
                 }
 
@@ -197,5 +197,5 @@ namespace Hl7.Fhir.ElementModel
             else
                 return Enumerable.Empty<object>();
         }
-    }
+    }   
 }

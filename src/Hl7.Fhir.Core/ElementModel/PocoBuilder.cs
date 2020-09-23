@@ -12,17 +12,21 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Introspection;
 
 namespace Hl7.Fhir.Serialization
 {
     internal class PocoBuilder : IExceptionSource
     {
-        public PocoBuilder(PocoBuilderSettings settings = null)
+        public PocoBuilder(ModelInspector inspector, PocoBuilderSettings settings = null)
         {
             _settings = settings?.Clone() ?? new PocoBuilderSettings();
+            _inspector = inspector;
         }
 
         private readonly PocoBuilderSettings _settings;
+
+        private readonly ModelInspector _inspector;
 
         public ExceptionNotificationHandler ExceptionHandler { get; set; }
         
@@ -76,7 +80,7 @@ namespace Hl7.Fhir.Serialization
             if (dataType == FHIRAllTypes.Resource.GetLiteral() || dataType == FHIRAllTypes.DomainResource.GetLiteral())
                 dataType = null;
 
-            var typedSource = source.ToTypedElement(new PocoStructureDefinitionSummaryProvider(), dataType, typedSettings);
+            var typedSource = source.ToTypedElement(_inspector, dataType, typedSettings);
 
             return BuildFrom(typedSource);
         }
@@ -120,8 +124,8 @@ namespace Hl7.Fhir.Serialization
                 };
 
                 return typeToBuild.CanBeTreatedAsType(typeof(Resource))
-                    ? new ResourceReader(source, settings).Deserialize()
-                    : new ComplexTypeReader(source, settings).Deserialize();
+                    ? new ResourceReader(_inspector, source, settings).Deserialize()
+                    : new ComplexTypeReader(_inspector, source, settings).Deserialize();
             }
         }
     }

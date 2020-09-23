@@ -23,10 +23,10 @@ namespace Hl7.Fhir.Serialization
 
         public ParserSettings Settings { get; private set; }
 
-        internal DispatchingReader(ITypedElement data, ParserSettings settings, bool arrayMode)
+        internal DispatchingReader(ModelInspector inspector, ITypedElement data, ParserSettings settings, bool arrayMode)
         {
             _current = data;
-            _inspector = BaseFhirParser.Inspector;
+            _inspector = inspector;
             _arrayMode = arrayMode;
 
             Settings = settings;
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization
             if (!_arrayMode && prop.IsCollection)
             {
                 if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
-                var reader = new RepeatingElementReader(_current, Settings);
+                var reader = new RepeatingElementReader(_inspector, _current, Settings);
                 return reader.Deserialize(prop, memberName, (IList)existing);
             }
 
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
             // (as used in Resource.contained)
             if(prop.Choice == ChoiceType.ResourceChoice)
             {
-                var reader = new ResourceReader(_current, Settings);
+                var reader = new ResourceReader(_inspector, _current, Settings);
                 return reader.Deserialize(null);
             }
 
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Serialization
             // Handle other Choices having any datatype or a list of datatypes
 
             if (existing != null && !(existing is Resource) && !(existing is Element) ) throw Error.Argument(nameof(existing), "Can only read complex elements into types that are Element or Resource");
-            var cplxReader = new ComplexTypeReader(_current, Settings);
+            var cplxReader = new ComplexTypeReader(_inspector, _current, Settings);
             return cplxReader.Deserialize(mapping, (Base)existing);
         }
 
