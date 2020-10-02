@@ -7,84 +7,81 @@
  */
 
 using Hl7.Fhir.Model;
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Hl7.Fhir.Specification.Specification.Terminology
+namespace Hl7.Fhir.Specification.Terminology
 {
     public class LookupParameters
     {
         /// <summary>
         /// The code that is to be located. If a code is provided, a system must be provided.
         /// </summary>
-        public string Code { get; set; }
+        public Code Code { get; private set; }
         /// <summary>
         /// The system for the code that is to be located.
         /// </summary>
-        public string System { get; set; }
+        public FhirUri System { get; private set; }
         /// <summary>
         /// The version of the system, if one was provided in the source data.
         /// </summary>
-        public string Version { get; set; }
+        public FhirString Version { get; private set; }
         /// <summary>
         /// A coding to look up.
         /// </summary>
-        public Coding Coding { get; set; }
+        public Coding Coding { get; private set; }
         /// <summary>
         /// The date for which the information should be returned.
         /// </summary>
-        public DateTimeOffset? Date { get; set; }
+        public FhirDateTime Date { get; private set; }
         /// <summary>
         /// The requested language for display.
         /// </summary>
-        public string DisplayLanguage { get; set; }
+        public Code DisplayLanguage { get; private set; }
         /// <summary>
         /// A property that the client wishes to be returned in the output.
         /// </summary>
         /// <remarks>If no properties are specified, the server chooses what to return.</remarks>
-        public List<string> Property { get; set; }
+        public IEnumerable<Code> Property { get; private set; }
 
-        public Parameters ToParameters()
+        #region Builder methods
+        public LookupParameters WithCode(string code = null, string system = null, string version = null, string displayLanguage = null)
+        {
+            if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
+            if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
+            if (!string.IsNullOrWhiteSpace(version)) Version = new FhirString(version);
+            if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
+            return this;
+        }
+
+        public LookupParameters WithDate(FhirDateTime date)
+        {
+            Date = date;
+            return this;
+        }
+
+        public LookupParameters WithProperties(string[] properties)
+        {
+            Property = properties?.Select(p => new Code(p));
+            return this;
+        }
+        #endregion
+
+
+        public Parameters Build()
         {
             var result = new Parameters();
 
-            if (!string.IsNullOrWhiteSpace(Code))
-            {
-                result.AddParameterComponent("code", new Code(Code));
-            }
+            if (Code is { }) result.Add("code", Code);
+            if (System is { }) result.Add("system", System);
+            if (Version is { }) result.Add("version", Version);
+            if (Coding is { }) result.Add("coding", Coding);
+            if (Date is { }) result.Add("date", Date);
+            if (DisplayLanguage is { }) result.Add("displayLanguage", DisplayLanguage);
 
-            if (!string.IsNullOrWhiteSpace(System))
+            foreach (var prop in Property ?? Enumerable.Empty<Code>())
             {
-                result.AddParameterComponent("system", new FhirUri(System));
-            }
-
-            if (!string.IsNullOrWhiteSpace(Version))
-            {
-                result.AddParameterComponent("version", new FhirString(Version));
-            }
-
-            if (Coding != null)
-            {
-                result.AddParameterComponent("coding", Coding);
-            }
-
-            if (Date.HasValue)
-            {
-                result.AddParameterComponent("date", new FhirDateTime(Date.Value));
-            }
-
-            if (!string.IsNullOrWhiteSpace(DisplayLanguage))
-            {
-                result.AddParameterComponent("displayLanguage", new Code(DisplayLanguage));
-            }
-
-            if (Property?.Count > 0)
-            {
-                foreach (var prop in Property)
-                {
-                    if (string.IsNullOrWhiteSpace(prop)) continue;
-                    result.AddParameterComponent("property", new Code(prop));
-                }
+                result.Add("property", prop);
             }
 
             return result;

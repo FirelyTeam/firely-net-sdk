@@ -8,7 +8,7 @@
 
 using Hl7.Fhir.Utility;
 
-namespace Hl7.Fhir.Specification.Specification.Terminology
+namespace Hl7.Fhir.Specification.Terminology
 {
     public enum ContextDirection
     {

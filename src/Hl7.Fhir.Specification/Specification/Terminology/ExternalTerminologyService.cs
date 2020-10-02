@@ -24,29 +24,31 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public BaseFhirClient Endpoint { get; set; }
 
-        public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
+        public Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
-            if (string.IsNullOrEmpty(typeName)) throw Error.ArgumentNullOrEmpty(nameof(typeName));
-            var fhirType = ModelInfo.FhirTypeNameToFhirType(typeName);
-
-            if (fhirType != FHIRAllTypes.CodeSystem && fhirType != FHIRAllTypes.ValueSet)
-                throw Error.Argument(nameof(Type), "Valid values for argument typeName is 'CodeSystem' and 'ValueSet'");
-
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation(RestOperation.VALIDATE_CODE, typeName, parameters, useGet) as Parameters;
+                return Endpoint.TypeOperation<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
             else
-
-                return Endpoint.InstanceOperation(ResourceIdentity.Build(typeName, id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+                return Endpoint.InstanceOperation(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
         }
-        private Uri constructUri(FHIRAllTypes fhirType, string id) =>
-            ResourceIdentity.Build(ModelInfo.FhirTypeToFhirTypeName(fhirType), id);
+
+        public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return Endpoint.TypeOperation<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+            else
+                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+        }
+
+        private Uri constructUri<T>(string id) =>
+            ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
 
         public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation(RestOperation.EXPAND_VALUESET, FHIRAllTypes.ValueSet.GetLiteral(), parameters, useGet);
+                return Endpoint.TypeOperation<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet);
             else
-                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.ValueSet, id), RestOperation.EXPAND_VALUESET, parameters, useGet);
+                return Endpoint.InstanceOperation(constructUri<ValueSet>(id), RestOperation.EXPAND_VALUESET, parameters, useGet);
         }
 
         public Parameters Lookup(Parameters parameters, bool useGet = false)
@@ -59,15 +61,15 @@ namespace Hl7.Fhir.Specification.Terminology
             if (string.IsNullOrEmpty(id))
                 return Endpoint.TypeOperation<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.ConceptMap, id), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
+                return Endpoint.InstanceOperation(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
         }
 
         public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation(RestOperation.SUBSUMES, FHIRAllTypes.CodeSystem.GetLiteral(), parameters, useGet);
+                return Endpoint.TypeOperation<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet);
             else
-                return Endpoint.InstanceOperation(constructUri(FHIRAllTypes.CodeSystem, id), RestOperation.SUBSUMES, parameters, useGet);
+                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet);
         }
 
         public Resource Closure(Parameters parameters, bool useGet = false)
@@ -75,7 +77,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return Endpoint.WholeSystemOperation(RestOperation.CLOSURE, parameters, useGet);
         }
 
-        [Obsolete("This method is obsolete, use method with signature 'ValidateCode(Parameters, string, string, bool)'")]
+        [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]
         public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
             string code = null, string system = null, string version = null, string display = null,
             Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,

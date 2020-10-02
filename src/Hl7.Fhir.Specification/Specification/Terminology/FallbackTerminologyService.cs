@@ -6,8 +6,8 @@
  * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
  */
 
-using System;
 using Hl7.Fhir.Model;
+using System;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -22,7 +22,37 @@ namespace Hl7.Fhir.Specification.Terminology
             _fallbackService = fallback;
         }
 
-        public Parameters ValidateCode(Parameters parameters, string typeName, string id = null, bool useGet = false)
+        public Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        {
+            try
+            {
+                // First, try the local service
+                return _localService.ValueSetValidateCode(parameters, id, useGet);
+            }
+            catch (TerminologyServiceException)
+            {
+                // If that fails, call the fallback
+                try
+                {
+                    return _fallbackService.ValueSetValidateCode(parameters, id, useGet);
+                }
+                catch (ValueSetUnknownException vse)
+                {
+                    // The fall back service does not know the valueset. If our local service
+                    // does, try get the VS from there, and retry by sending the vs inline
+                    var url = parameters.GetSingleValue<FhirUri>("url")?.Value;
+                    var valueSet = _localService.FindValueset(url);
+                    if (valueSet == null) throw vse;
+
+                    parameters.Remove("valueSet");
+                    parameters.Add("valueSet", valueSet);
+
+                    return _fallbackService.ValueSetValidateCode(parameters, id, useGet);
+                }
+            }
+        }
+
+        public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
             // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
@@ -58,10 +88,10 @@ namespace Hl7.Fhir.Specification.Terminology
             throw new NotImplementedException();
         }
 
-        [Obsolete("This method is obsolete, use method with signature 'ValidateCode(Parameters, string, string, bool)'")]
-        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
-            string code = null, string system = null, string version = null, string display = null, 
-            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
+        [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]
+        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
+            string code = null, string system = null, string version = null, string display = null,
+            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
             bool? @abstract = default, string displayLanguage = null)
         {
 

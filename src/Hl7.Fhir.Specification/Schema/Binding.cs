@@ -135,8 +135,15 @@ namespace Hl7.Fhir.Specification.Schema
         {
             try
             {
-                var outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
-                                coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
+                var parameters = new ValidateCodeParameters()
+                    .WithValueSet(canonical)
+                    .WithCode(code: code, system: system, display: display)
+                    .WithCoding(coding)
+                    .WithCodeableConcept(cc)
+                    .WithAbstract(abstractAllowed)
+                    .Build();
+
+                var outcome = svc.ValueSetValidateCode(parameters).ToOperationOutcome();
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
                 return outcome;
             }
@@ -163,7 +170,7 @@ namespace Hl7.Fhir.Specification.Schema
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"No code found in {source.InstanceType} with a required binding.", source);
-                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && 
+                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) &&
                                 Strength == BindingStrength.Extensible:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"Extensible binding requires code or text.", source);
