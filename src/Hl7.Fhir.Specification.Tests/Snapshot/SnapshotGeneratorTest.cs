@@ -2595,10 +2595,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestExpandAllCoreTypes()
         {
+            // these are the types that are part of R5, but retrospectively introduced
+            // as POCOs already in R3. There are no StructDefs available for these,
+            // so we should not try to expand them.
+            var r5types = new string[] { "BackboneType", "Base", "DataType", "PrimitiveType" };
+
             // Generate snapshots for all core types, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. Element, Extension)
             var coreArtifactNames = ModelInfo.FhirCsTypeToString.Values;
-            var coreTypeUrls = coreArtifactNames.Where(t => !ModelInfo.IsKnownResource(t)).Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
+            var coreTypeUrls = coreArtifactNames
+                .Where(t => !ModelInfo.IsKnownResource(t))
+                .Where(t => !r5types.Contains(t))
+                .Select(t => "http://hl7.org/fhir/StructureDefinition/" + t).ToArray();
             await testExpandResources(coreTypeUrls.ToArray());
         }
 
@@ -8696,9 +8704,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.Path.ToLowerInvariant().EndsWith("extension.url"));
             var fixedValue = nav.Current.Fixed;
             Assert.IsNotNull(fixedValue);
-            Assert.IsInstanceOfType(fixedValue, typeof(IStringValue));
+            Assert.IsInstanceOfType(fixedValue, typeof(IValue<string>));
             Assert.IsInstanceOfType(fixedValue, typeof(FhirUri));
-            var fixedUrl = (IStringValue)fixedValue;
+            var fixedUrl = (IValue<string>)fixedValue;
             Assert.AreEqual(url, fixedUrl.Value);
         }
 

@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
             Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "onbekend"));
         }
-
+     
         [Fact]
         public async T.Task TestPropertyRetrieval()
         {

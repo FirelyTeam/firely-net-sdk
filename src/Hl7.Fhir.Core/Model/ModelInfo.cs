@@ -31,6 +31,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -86,9 +87,6 @@ namespace Hl7.Fhir.Model
             /// </summary>
             public ResourceType[] Target { get; set; }
         }
-
-        // [WMR 2017-10-25] Remove Lazy initialization
-        // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
         private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
             = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
@@ -157,16 +155,17 @@ namespace Hl7.Fhir.Model
         public static bool IsPrimitive(string name)
         {
             if (String.IsNullOrEmpty(name)) return false;
+            var type = GetTypeForFhirType(name);
+            if (type is null) return false;
 
-            return FhirTypeToCsType.ContainsKey(name) && Char.IsLower(name[0]);
+            return IsPrimitive(type);
+            
         }
 
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(Type type)
         {
-            var name = GetFhirTypeNameForType(type);
-
-            return name != null && Char.IsLower(name[0]);
+            return typeof(PrimitiveType).IsAssignableFrom(type);
         }
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR primitive data type.</summary>
@@ -356,10 +355,14 @@ namespace Hl7.Fhir.Model
         public static bool IsCoreSuperType(Type type)
         {
             return
+                type == typeof(Base) ||
                 type == typeof(Resource) ||
                 type == typeof(DomainResource) ||
                 type == typeof(Element) ||
-                type == typeof(BackboneElement);
+                type == typeof(BackboneElement) ||
+                type == typeof(DataType) ||
+                type == typeof(PrimitiveType) ||
+                type == typeof(BackboneType);            
         }
 
         public static bool IsCoreSuperType(string type)
@@ -371,6 +374,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
@@ -394,6 +398,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -437,55 +442,31 @@ namespace Hl7.Fhir.Model
 
         public static bool IsInstanceTypeFor(string superclass, string subclass)
         {
-            var superType = FhirTypeNameToFhirType(superclass);
-            var subType = FhirTypeNameToFhirType(subclass);
+            if (superclass == subclass) return true;
 
-            if (subType == null || superType == null) return false;
-
-            return IsInstanceTypeFor(superType.Value, subType.Value);
-        }
-
-        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
-        {
-            var superType = GetFhirTypeNameForType(superclass);
-            var subType = GetFhirTypeNameForType(subclass);
+            var superType = GetTypeForFhirType(superclass);
+            var subType = GetTypeForFhirType(subclass);
 
             if (subType == null || superType == null) return false;
 
             return IsInstanceTypeFor(superType, subType);
         }
 
-        private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
-                            FHIRAllTypes.Count, FHIRAllTypes.Money };
-        private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
-        private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
+        {
+            if (superclass == subclass) return true;
+
+            return superclass.IsAssignableFrom(subclass);
+        }
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
             if (superclass == subclass) return true;
 
-            if (IsKnownResource(subclass))
-            {
-                if (superclass == FHIRAllTypes.Resource)
-                    return true;
-                else if (superclass == FHIRAllTypes.DomainResource)
-                    return subclass != FHIRAllTypes.Parameters && subclass != FHIRAllTypes.Bundle && subclass != FHIRAllTypes.Binary;
-                else
-                    return false;
-            }
-            else
-            {
-                if (superclass == FHIRAllTypes.Element)
-                    return true;
-                else if (superclass == FHIRAllTypes.Quantity)
-                    return QUANTITY_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.String)
-                    return STRING_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.Integer)
-                    return INTEGER_SUBCLASSES.Contains(subclass);
-                else
-                    return false;
-            }
+            var superclassName = FhirTypeToFhirTypeName(superclass);
+            var subclassName = FhirTypeToFhirTypeName(subclass);
+
+            return IsInstanceTypeFor(superclassName, subclassName);
         }
 
         public static Canonical CanonicalUriForFhirCoreType(string typename)

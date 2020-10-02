@@ -6,22 +6,22 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Net;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Model;
-using System.IO;
-using System.Threading.Tasks;
-using Hl7.Fhir.Utility;
-using static Hl7.Fhir.Model.Bundle;
-using System.Drawing;
-using System.Net.Http;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Rest.Legacy;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -186,7 +186,54 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void PatchClient()
+        {
+            using var client = new LegacyFhirClient(testEndpoint);
+            Patch(client);
 
+        }
+
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void PatchHttpClient()
+        {
+            using var client = new FhirClient(testEndpoint);
+            Patch(client);
+
+        }
+
+        private void Patch(BaseFhirClient client)
+        {
+            var patchparams = new Parameters();
+            patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
+            client.Patch<Patient>("example", patchparams);
+        }
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CondionalPatchClient()
+        {
+            using var client = new LegacyFhirClient(testEndpoint);
+            ConditionalPatch(client);
+
+        }
+
+
+        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CondionalPatchHttpClient()
+        {
+            using var client = new FhirClient(testEndpoint);
+            ConditionalPatch(client);
+
+        }
+
+        private void ConditionalPatch(BaseFhirClient client)
+        {
+            var patchparams = new Parameters();
+            patchparams.AddAddPatchParameter("Patient", "birthdate", new Date("1930-01-01"));
+            var condition = new SearchParams().Where("name=Donald");
+            client.Patch<Patient>(condition, patchparams);
+        }
 
         [TestMethod, TestCategory("FhirClient")]
         public void VerifyFormatParamProcessing()
@@ -395,7 +442,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-   
+
 
         [TestMethod, Ignore]   // Something does not work with the gzip
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -464,8 +511,8 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
-                handler.AutomaticDecompression =  DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                
+                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
 
                 result = client.Search<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);
@@ -1252,7 +1299,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void searchByPersonaCodeUsingPost(BaseFhirClient client)
         {
-            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner"}, null, null, null);
+            var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner" }, null, null, null);
             var pat = (Patient)pats.Entry.First().Resource;
         }
 
@@ -1690,7 +1737,6 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 client.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "bad-bearer");
                 testAuthentication(client);
-
             }
         }
 
@@ -1722,14 +1768,6 @@ namespace Hl7.Fhir.Tests.Rest
             var result = client.Create(binary);
 
             Assert.IsNotNull(result);
-
-            void Client_OnBeforeRequest(object sender, BeforeRequestEventArgs e)
-            {
-                // Removing the Accept part of the request. The server should send the resource back in the original Content-Type (in this case image/png)
-                e.RawRequest.Accept = null;
-            }
-
-            client.OnBeforeRequest += Client_OnBeforeRequest;
 
             var result2 = client.Get($"Binary/{result.Id}");
             Assert.IsNotNull(result2);
@@ -1828,7 +1866,44 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
         }
 
-       
+        [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public void TestMultipleMessageHandlersInFhirClient()
+        {
+
+            var testMessageHandler = new TestMessageHandler();
+            var testDegatingHandler = new TestDeligatingHandler()
+            {
+                InnerHandler = testMessageHandler
+            };
+
+            using var client = new FhirClient(testEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
+            var loc = client.Read<Location>("Location/1");
+            Assert.IsNotNull(testDegatingHandler.LastRequest);
+            Assert.IsNotNull(testMessageHandler.LastResponse);
+        }
     }
+
+    internal class TestDeligatingHandler : DelegatingHandler
+    {
+        public HttpRequestMessage LastRequest { get; set; }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            LastRequest = request;
+            var response = await base.SendAsync(request, cancellationToken);
+            return response;
+        }
+    }
+    internal class TestMessageHandler : HttpClientHandler
+    {
+        public HttpResponseMessage LastResponse { get; set; }
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            var response = await base.SendAsync(request, cancellationToken);
+            LastResponse = response;
+            return response;
+        }
+    }
+
 
 }

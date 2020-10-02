@@ -27,7 +27,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Dec 27, 2018 22:37+1100 for FHIR v4.0.0 
+  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -578,6 +578,7 @@
            <xs:element name="valueTriggerDefinition" type="TriggerDefinition"/>
            <xs:element name="valueUsageContext" type="UsageContext"/>
            <xs:element name="valueDosage" type="Dosage"/>
+           <xs:element name="valueMeta" type="Meta"/>
          </xs:choice>
         </xs:sequence>
         <xs:attribute name="url" type="uri-primitive" use="required"/>
@@ -3026,6 +3027,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
            <xs:element name="defaultValueTriggerDefinition" type="TriggerDefinition"/>
            <xs:element name="defaultValueUsageContext" type="UsageContext"/>
            <xs:element name="defaultValueDosage" type="Dosage"/>
+           <xs:element name="defaultValueMeta" type="Meta"/>
          </xs:choice>
           <xs:element name="meaningWhenMissing" type="markdown" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3090,6 +3092,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
            <xs:element name="fixedTriggerDefinition" type="TriggerDefinition"/>
            <xs:element name="fixedUsageContext" type="UsageContext"/>
            <xs:element name="fixedDosage" type="Dosage"/>
+           <xs:element name="fixedMeta" type="Meta"/>
          </xs:choice>
         <xs:choice minOccurs="0" maxOccurs="1">
            <xs:annotation>
@@ -3154,6 +3157,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="patternTriggerDefinition" type="TriggerDefinition"/>
            <xs:element name="patternUsageContext" type="UsageContext"/>
            <xs:element name="patternDosage" type="Dosage"/>
+           <xs:element name="patternMeta" type="Meta"/>
          </xs:choice>
           <xs:element name="example" type="ElementDefinition.Example" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
@@ -3446,6 +3450,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="valueTriggerDefinition" type="TriggerDefinition"/>
            <xs:element name="valueUsageContext" type="UsageContext"/>
            <xs:element name="valueDosage" type="Dosage"/>
+           <xs:element name="valueMeta" type="Meta"/>
          </xs:choice>
         </xs:sequence>
       </xs:extension>
@@ -4063,6 +4068,11 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:enumeration value="4.0.0">
         <xs:annotation>
           <xs:documentation xml:lang="en">4.0.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4.0.1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.0.1</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

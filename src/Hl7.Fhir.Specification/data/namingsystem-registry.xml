@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="registry" />
   <type value="collection" />
@@ -16,7 +16,7 @@
         <name value="DICOM Unique Id" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-31" />
         <publisher value="NEMA" />
         <contact>
           <telecom>
@@ -53,7 +53,7 @@
         <name value="United States Social Security Number" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-31" />
         <publisher value="United States Social Security Administration" />
         <contact>
           <telecom>
@@ -100,7 +100,7 @@
         <name value="United States Medicare Number" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2016-07-12" />
         <publisher value="Centers for Medicare &amp; Medicaid Services" />
         <contact>
           <telecom>
@@ -147,7 +147,7 @@
         <name value="Medicare Beneficiary Identifier (United States)" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2016-07-12" />
         <publisher value="Centers for Medicare &amp; Medicaid Services" />
         <contact>
           <telecom>
@@ -194,7 +194,7 @@
         <name value="United States National Provider Identifier" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-31" />
         <publisher value="Centers for Medicare and Medicaid Services" />
         <contact>
           <telecom>
@@ -240,7 +240,7 @@
         <name value="Global Trade Item Number (GTIN)" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2017-12-18" />
         <publisher value="GS1" />
         <contact>
           <telecom>
@@ -280,7 +280,7 @@
         <name value="Alaska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -319,7 +319,7 @@
         <name value="Alabama Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -358,7 +358,7 @@
         <name value="Arkansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -397,7 +397,7 @@
         <name value="Arizona Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -436,7 +436,7 @@
         <name value="California Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -475,7 +475,7 @@
         <name value="Colorado Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -514,7 +514,7 @@
         <name value="Connecticut Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -553,7 +553,7 @@
         <name value="DC Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -592,7 +592,7 @@
         <name value="Delaware Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -631,7 +631,7 @@
         <name value="Florida Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -670,7 +670,7 @@
         <name value="Georgia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -709,7 +709,7 @@
         <name value="Hawaii Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -748,7 +748,7 @@
         <name value="Indiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -787,7 +787,7 @@
         <name value="Iowa Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -826,7 +826,7 @@
         <name value="Idaho Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -865,7 +865,7 @@
         <name value="Illinois Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -904,7 +904,7 @@
         <name value="Kansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -943,7 +943,7 @@
         <name value="Kentucky Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -982,7 +982,7 @@
         <name value="Louisiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1021,7 +1021,7 @@
         <name value="Massachusetts Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1060,7 +1060,7 @@
         <name value="Maryland Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1099,7 +1099,7 @@
         <name value="Maine Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1138,7 +1138,7 @@
         <name value="Michigan Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1177,7 +1177,7 @@
         <name value="Minnesota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1216,7 +1216,7 @@
         <name value="Missouri Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1255,7 +1255,7 @@
         <name value="Mississippi Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1294,7 +1294,7 @@
         <name value="Montana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1333,7 +1333,7 @@
         <name value="New York Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1372,7 +1372,7 @@
         <name value="North Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1411,7 +1411,7 @@
         <name value="North Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1450,7 +1450,7 @@
         <name value="Nebraska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1489,7 +1489,7 @@
         <name value="New Hampshire Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1528,7 +1528,7 @@
         <name value="New Jersey Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1567,7 +1567,7 @@
         <name value="New Mexico Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1606,7 +1606,7 @@
         <name value="Nevada Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1645,7 +1645,7 @@
         <name value="Ohio Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1684,7 +1684,7 @@
         <name value="Oklahoma Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1723,7 +1723,7 @@
         <name value="Oregon Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1762,7 +1762,7 @@
         <name value="Pennsylvania Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1801,7 +1801,7 @@
         <name value="Rhode Island Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1840,7 +1840,7 @@
         <name value="South Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1879,7 +1879,7 @@
         <name value="South Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1918,7 +1918,7 @@
         <name value="Tennessee Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1957,7 +1957,7 @@
         <name value="Texas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -1996,7 +1996,7 @@
         <name value="Utah Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2035,7 +2035,7 @@
         <name value="Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2074,7 +2074,7 @@
         <name value="Vermont Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2113,7 +2113,7 @@
         <name value="Washington Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2152,7 +2152,7 @@
         <name value="Wisconsin Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2191,7 +2191,7 @@
         <name value="West Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>
@@ -2230,7 +2230,7 @@
         <name value="Wyoming Driver's License" />
         <status value="active" />
         <kind value="identifier" />
-        <!-- Removed date -->
+        <date value="2015-07-03" />
         <publisher value="HL7 International" />
         <type>
           <coding>

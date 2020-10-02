@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
-
-using Hl7.Fhir.Support;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Support;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Diagnostics;
 using System.Xml;
 
@@ -86,9 +85,7 @@ namespace FHIR.Server.Tests
             ResourceIdentity ri = ResourceIdentity.Build(
                     new Uri("http://sqlonfhir.azurewebsites.net/fhir"),
                     "Patient", "45", "1");
-#if !NETSTANDARD1_1
             Trace.WriteLine(ri.WithoutVersion().OriginalString);
-#endif
         }
 
         [TestMethod, TestCategory("Training")]

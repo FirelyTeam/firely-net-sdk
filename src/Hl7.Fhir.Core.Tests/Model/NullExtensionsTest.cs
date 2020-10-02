@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
             Assert.IsTrue(elem.IsNullOrEmpty());
         }
 
-        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IStringValue, new()
+        void testIsNullOrEmpty_StringPrimitive<T>(string exampleValue = "test") where T : PrimitiveType, IValue<string>, new()
         {
             var elem = new T();
             Assert.IsTrue(elem.IsNullOrEmpty());

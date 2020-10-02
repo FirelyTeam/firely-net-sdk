@@ -33,6 +33,11 @@ namespace Hl7.Fhir.Rest
                 }
             };
 
+            if (!settings.UseFormatParameter)
+            {
+                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+            }
+
             if (entry.Resource != null)
             {
                 bool searchUsingPost =
@@ -47,28 +52,32 @@ namespace Hl7.Fhir.Rest
 
         private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp)
         {
-            switch(bundleHttp)
+            switch (bundleHttp)
             {
                 case Bundle.HTTPVerb.POST:
-                {
-                    return HTTPVerb.POST;
-                }
+                    {
+                        return HTTPVerb.POST;
+                    }
                 case Bundle.HTTPVerb.GET:
-                {
-                    return HTTPVerb.GET;
-                }
+                    {
+                        return HTTPVerb.GET;
+                    }
                 case Bundle.HTTPVerb.DELETE:
-                {
-                    return HTTPVerb.DELETE;
-                }
+                    {
+                        return HTTPVerb.DELETE;
+                    }
                 case Bundle.HTTPVerb.PUT:
-                {
-                    return HTTPVerb.PUT;
-                }
+                    {
+                        return HTTPVerb.PUT;
+                    }
+                case Bundle.HTTPVerb.PATCH:
+                    {
+                        return HTTPVerb.PATCH;
+                    }
                 default:
-                {
-                    return null;
-                }
+                    {
+                        return null;
+                    }
             }
         }
 
@@ -92,7 +101,7 @@ namespace Hl7.Fhir.Rest
                 List<KeyValuePair<string, string>> bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
-                    bodyParameters.Add(new KeyValuePair<string,string>(parameter.Name, parameter.Value.ToString()));
+                    bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
                 }
                 if (bodyParameters.Count > 0)
                 {
@@ -115,7 +124,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(format, forBundle: false);
+                request.ContentType = ContentType.BuildContentType(format, ModelInfo.Version);
             }
         }
     }

@@ -13,9 +13,7 @@ using System.Linq;
 using System.Text;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
-#if !NETSTANDARD1_1
 using System.Runtime.Serialization;
-#endif
 using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Rest
@@ -41,9 +39,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !NETSTANDARD1_1
-    [SerializableAttribute]
-#endif
+    [Serializable]
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
     public class ResourceIdentity : Uri
     {
