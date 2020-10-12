@@ -338,6 +338,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Build();
 
             var result = svc.Translate(parameters, "102", useGet: true);
+
             Assert.NotNull(result);
 
             bool? isMatch = ((FhirBoolean)result.Parameter.First().Value).Value;
@@ -387,6 +388,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Build();
 
             var result = svc.Translate(parameters, useGet: true);
+
             Assert.NotNull(result);
             var param1 = result.Parameter.FirstOrDefault();
             Assert.Equal("result", param1.Name);
@@ -404,6 +406,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Build();
 
             var result = svc.Lookup(parameters);
+
             Assert.NotNull(result);
 
             var paramDisplay = result.Parameter.Find(p => p.Name == "display");
@@ -472,6 +475,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Build();
 
             var result = svc.Lookup(parameters);
+
             Assert.NotNull(result);
             Assert.True(result.Parameter.Count > 0);
         }
@@ -500,6 +504,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .Build();
 
             var result = svc.Expand(parameters) as ValueSet;
+
             Assert.NotNull(result);
             // Exactly 10 items all starting with 'met'.
             Assert.Collection(result.Expansion.Contains,
@@ -562,6 +567,251 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.NotNull(paramOutcome);
             Assert.IsType<Code>(paramOutcome.Value);
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
+        }
+
+        [Fact]
+        public void ExternalServiceClosureExample()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            // Step 1
+            var parametersStep1 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .Build();
+
+            var resultStep1 = svc.Closure(parametersStep1) as ConceptMap;
+
+            Assert.NotNull(resultStep1);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep1.Name);
+            Assert.Equal("1", resultStep1.Version);
+
+            // Step 2
+            var conceptStep2 = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "22298006",
+            };
+            var parametersStep2 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep2 })
+                .Build();
+
+            var resultStep2 = svc.Closure(parametersStep2) as ConceptMap;
+
+            Assert.NotNull(resultStep2);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep2.Name);
+            Assert.Equal("2", resultStep2.Version);
+
+            // Step 3
+            var conceptStep3 = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "128599005",
+            };
+            var parametersStep3 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep3 })
+                .Build();
+
+            var resultStep3 = svc.Closure(parametersStep3) as ConceptMap;
+
+            Assert.NotNull(resultStep3);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep3.Name);
+            Assert.Equal("3", resultStep3.Version);
+            Assert.Collection(resultStep3.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
+
+            // Step 4
+            var conceptStep4A = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "301095005",
+            };
+            var conceptStep4B = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "298705000",
+            };
+            var conceptStep4C = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "282729004",
+            };
+            var parametersStep4 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep4A, conceptStep4B, conceptStep4C })
+                .Build();
+
+            var resultStep4 = svc.Closure(parametersStep4) as ConceptMap;
+
+            Assert.NotNull(resultStep4);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep4.Name);
+            Assert.Equal("4", resultStep4.Version);
+            Assert.Collection(resultStep4.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("128599005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("301095005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("282729004", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
+
+            var parametersStep5 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithVersion("0")
+                .Build();
+
+            var resultStep5 = svc.Closure(parametersStep5) as ConceptMap;
+
+            Assert.NotNull(resultStep5);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep5.Name);
+            Assert.Equal("4", resultStep5.Version);
+            Assert.Collection(resultStep5.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("298705000", element.Code);
+                        },
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("128599005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("301095005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("282729004", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
