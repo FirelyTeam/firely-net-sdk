@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Terminology
             throw new NotImplementedException();
         }
 
-        public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        public Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
             throw new NotImplementedException();
         }

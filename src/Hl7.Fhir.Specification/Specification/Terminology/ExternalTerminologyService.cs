@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Specification.Terminology
                 return Endpoint.InstanceOperation(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
         }
 
-        public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        public Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet);
+                return Endpoint.TypeOperation<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet);
+                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet) as Parameters;
         }
 
         public Resource Closure(Parameters parameters, bool useGet = false)

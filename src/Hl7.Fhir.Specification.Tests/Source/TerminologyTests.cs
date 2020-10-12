@@ -545,6 +545,25 @@ namespace Hl7.Fhir.Specification.Tests
                 });
         }
 
+        [Fact]
+        public void ExternalServiceSubsumesConceptASubsumesConceptB()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new SubsumesParameters()
+                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
+                .Build();
+
+            var result = svc.Subsumes(parameters);
+            
+            Assert.NotNull(result);
+            var paramOutcome = result.Parameter.Find(p => p.Name == "outcome");
+            Assert.NotNull(paramOutcome);
+            Assert.IsType<Code>(paramOutcome.Value);
+            Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
+        }
+
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void ExternalServiceValidateCodeTest()
         {

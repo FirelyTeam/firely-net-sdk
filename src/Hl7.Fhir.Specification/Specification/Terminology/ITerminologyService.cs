@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="id"></param>
         /// <param name="useGet"></param>
         /// <returns></returns>
-        Resource Subsumes(Parameters parameters, string id = null, bool useGet = false);
+        Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false);
 
         /// <summary>
         /// 
