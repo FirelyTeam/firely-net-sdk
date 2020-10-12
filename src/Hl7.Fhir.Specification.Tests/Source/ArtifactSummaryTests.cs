@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dirSource = new DirectorySource(path, new DirectorySourceSettings()
             {
                 IncludeSubDirectories = true,
-                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/", "*.zip" }
+                Excludes = new string[] { "/snapshot-test/", "/validation/", "/grahame-validation-examples/", "/validation-test-suite/", "*.zip" }
             });
 
             var summaries = dirSource.ListSummaries().ToList();
