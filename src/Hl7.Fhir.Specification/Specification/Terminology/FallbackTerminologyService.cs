@@ -54,37 +54,31 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
         }
 
         public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
         }
 
         public Parameters Lookup(Parameters parameters, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
         }
 
         public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about catch sequence
             throw new NotImplementedException();
         }
 
         public Resource Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
         }
 
         public Resource Closure(Parameters parameters, bool useGet = false)
         {
-            // TODO: KM: Talk to EK about fallback sequence
             throw new NotImplementedException();
         }
 
