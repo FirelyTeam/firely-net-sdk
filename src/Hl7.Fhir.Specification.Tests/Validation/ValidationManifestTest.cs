@@ -29,6 +29,13 @@ namespace Hl7.Fhir.Specification.Tests
             var testResolver = new CachedResolver(new MultiResolver(zipSource, _dirSource));
 
             var settings = ValidationSettings.CreateDefault();
+            settings.GenerateSnapshot = true;
+            settings.GenerateSnapshotSettings = new Snapshot.SnapshotGeneratorSettings()
+                                                {
+                                                    ForceRegenerateSnapshots = true,
+                                                    GenerateSnapshotForExternalProfiles = true,
+                                                    GenerateElementIds = true
+                                                };
             settings.ResourceResolver = testResolver;
 
            _testValidator = new Validator(settings);
@@ -43,7 +50,7 @@ namespace Hl7.Fhir.Specification.Tests
             RunTestCase(testCase);
         } 
 
-        public void RunTestCase(ValidationTestCase testCase)
+        public static void RunTestCase(ValidationTestCase testCase)
         {
             Resource testResource = null;
             if (testCase.FileName.EndsWith(".xml"))
