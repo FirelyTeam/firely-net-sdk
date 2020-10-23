@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
             var result = new ModelInspector(Specification.FhirRelease.STU3);
 
             result.Import(typeof(Resource).GetTypeInfo().Assembly);
-            result.Import(typeof(Patient).GetTypeInfo().Assembly);
+            result.Import(typeof(ModelInfo).GetTypeInfo().Assembly);
 
             return result;
         }
