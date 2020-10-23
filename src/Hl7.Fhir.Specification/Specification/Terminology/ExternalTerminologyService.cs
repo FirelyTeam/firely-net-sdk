@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -24,57 +25,57 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public BaseFhirClient Endpoint { get; set; }
 
-        public Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+                return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet) as Parameters;
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
         private Uri constructUri<T>(string id) =>
             ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
 
-        public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet);
+                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false);
             else
-                return Endpoint.InstanceOperation(constructUri<ValueSet>(id), RestOperation.EXPAND_VALUESET, parameters, useGet);
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false);
         }
 
-        public Parameters Lookup(Parameters parameters, bool useGet = false)
+        public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
-            return Endpoint.TypeOperation<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet) as Parameters;
+            return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet) as Parameters;
+                return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet) as Parameters;
+                return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        public Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return Endpoint.TypeOperation<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet) as Parameters;
+                return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return Endpoint.InstanceOperation(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet) as Parameters;
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        public Resource Closure(Parameters parameters, bool useGet = false)
+        public async Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
-            return Endpoint.WholeSystemOperation(RestOperation.CLOSURE, parameters, useGet);
+            return await Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet).ConfigureAwait(false);
         }
 
         [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]

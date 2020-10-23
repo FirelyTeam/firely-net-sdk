@@ -7,7 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -22,63 +24,69 @@ namespace Hl7.Fhir.Specification.Terminology
             _fallbackService = fallback;
         }
 
-        public Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
             try
             {
                 // First, try the local service
-                return _localService.ValueSetValidateCode(parameters, id, useGet);
+                return await _localService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
             }
             catch (TerminologyServiceException)
             {
                 // If that fails, call the fallback
                 try
                 {
-                    return _fallbackService.ValueSetValidateCode(parameters, id, useGet);
+                    return await _fallbackService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
                 }
                 catch (ValueSetUnknownException vse)
                 {
                     // The fall back service does not know the valueset. If our local service
                     // does, try get the VS from there, and retry by sending the vs inline
                     var url = parameters.GetSingleValue<FhirUri>("url")?.Value;
-                    var valueSet = _localService.FindValueset(url);
+                    var valueSet = await _localService.FindValueset(url).ConfigureAwait(false);
                     if (valueSet == null) throw vse;
 
                     parameters.Remove("valueSet");
                     parameters.Add("valueSet", valueSet);
 
-                    return _fallbackService.ValueSetValidateCode(parameters, id, useGet);
+                    return await _fallbackService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
                 }
             }
         }
 
-        public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
+        public Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Lookup(Parameters parameters, bool useGet = false)
+        public Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
+        public Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        public Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Resource Closure(Parameters parameters, bool useGet = false)
+        public Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
@@ -107,7 +115,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 {
                     // The fall back service does not know the valueset. If our local service
                     // does, try get the VS from there, and retry by sending the vs inline
-                    valueSet = _localService.FindValueset(canonical);
+                    valueSet = TaskHelper.Await(() => _localService.FindValueset(canonical));
                     if (valueSet == null) throw vse;
 
                     return _fallbackService.ValidateCode(null, context, valueSet, code, system, version, display,

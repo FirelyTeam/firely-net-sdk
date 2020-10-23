@@ -5,6 +5,7 @@ using Hl7.Fhir.Specification.Terminology;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using T = System.Threading.Tasks;
 
@@ -13,13 +14,11 @@ namespace Hl7.Fhir.Specification.Tests
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
         private readonly IAsyncResourceResolver _resolver;
-        private readonly IResourceResolver _syncResolver;
 
 
         public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
             _resolver = fixture.AsyncResolver;
-            _syncResolver = fixture.Resolver;
         }
 
         [Fact]
@@ -225,7 +224,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void LocalTSDisplayIncorrectAsWarning()
         {
-            var svc = new LocalTerminologyService(_syncResolver);
+            var svc = new LocalTerminologyService(_resolver);
 
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
 #pragma warning disable CS0618 // Type or member is obsolete
@@ -244,25 +243,23 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void LocalTSDisplayIncorrectAsMessage()
+        public async void LocalTSDisplayIncorrectAsMessage()
         {
-            var svc = new LocalTerminologyService(_syncResolver);
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
-                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Not a Number")
-                .Build();
+                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Not a Number");
 
-            var result = svc.ValueSetValidateCode(inParams);
+            var result = await svc.ValueSetValidateCode(inParams);
 
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
             Assert.Null(result.GetSingleValue<FhirString>("message"));
 
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
-                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Certainly Not a Number")
-                .Build();
+                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Certainly Not a Number");
 
-            result = svc.ValueSetValidateCode(inParams);
+            result = await svc.ValueSetValidateCode(inParams);
 
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
             Assert.NotNull(result.GetSingleValue<FhirString>("message"));
@@ -271,7 +268,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void LocalTermServiceValidateCodeTest()
         {
-            var svc = new LocalTerminologyService(_syncResolver);
+            var svc = new LocalTerminologyService(_resolver);
 
             // Do common tests for service
             testService(svc);
@@ -294,50 +291,46 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void LocalTermServiceValidateCodeWithParamsTest()
+        public async void LocalTermServiceValidateCodeWithParamsTest()
         {
-            var svc = new LocalTerminologyService(_syncResolver);
+            var svc = new LocalTerminologyService(_resolver);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/yesnodontknow")
-                .WithCode(code: "Y", system: "http://hl7.org/fhir/v2/0136")
-                .Build();
+                .WithCode(code: "Y", system: "http://hl7.org/fhir/v2/0136");
 
-            var result = svc.ValueSetValidateCode(inParams);
+            var result = await svc.ValueSetValidateCode(inParams);
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
 
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode")
                 .WithCode(code: "_AcknowledgementDetailNotSupportedCode", system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode")
-                .WithAbstract(false)
-                .Build();
+                .WithAbstract(false);
 
-            result = svc.ValueSetValidateCode(inParams);
+            result = await svc.ValueSetValidateCode(inParams);
 
             Assert.False(result.GetSingleValue<FhirBoolean>("result")?.Value);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
-                .WithCode(code: "1166006", system: "http://snomed.info/sct")
-                .Build();
-            Assert.Throws<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
+            await Assert.ThrowsAsync<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
         }
 
         [Fact]
-        public void ExternalServiceTranslateSimpleTranslate()
+        public async void ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new TranslateParameters()
                 .WithCode(code: "ACNE", system: "http://hl7.org/fhir/v2/0487")
-                .WithTarget("http:/snomed.info/sct")
-                .Build();
+                .WithTarget("http:/snomed.info/sct");
 
-            var result = svc.Translate(parameters, "102", useGet: true);
+            var result = await svc.Translate(parameters, "102", useGet: true);
 
             Assert.NotNull(result);
 
@@ -376,7 +369,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceTranslateSimpleAutomap()
+        public async void ExternalServiceTranslateSimpleAutomap()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
@@ -384,10 +377,9 @@ namespace Hl7.Fhir.Specification.Tests
             var parameters = new TranslateParameters()
                 .WithConceptMap(source: "http://snomed.info/sct?fhir_vs")
                 .WithCode(code: "90260006", system: "http://snomed.info/sct")
-                .WithTarget("http://hl7.org/fhir/ValueSet/substance-category")
-                .Build();
+                .WithTarget("http://hl7.org/fhir/ValueSet/substance-category");
 
-            var result = svc.Translate(parameters, useGet: true);
+            var result = await svc.Translate(parameters, useGet: true);
 
             Assert.NotNull(result);
             var param1 = result.Parameter.FirstOrDefault();
@@ -395,17 +387,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
                 .WithCode(code: "45313011000036107", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160630")
-                .WithProperties(new[] { "inactive", "display" })
-                .Build();
+                .WithProperties(new[] { "inactive", "display" });
 
-            var result = svc.Lookup(parameters);
+            var result = await svc.Lookup(parameters);
 
             Assert.NotNull(result);
 
@@ -432,17 +423,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceLookupInactiveStatus()
+        public async void ExternalServiceLookupInactiveStatus()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
                 .WithCode(code: "45313011000036107", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160630")
-                .WithProperties(new[] { "inactive" })
-                .Build();
+                .WithProperties(new[] { "inactive" });
 
-            var result = svc.Lookup(parameters, true);
+            var result = await svc.Lookup(parameters, true);
 
             Assert.NotNull(result);
 
@@ -465,34 +455,33 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceLookupSNOMEDCode()
+        public async void ExternalServiceLookupSNOMEDCode()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
-                .WithCode(code: "263495000", system: "http://snomed.info/sct")
-                .Build();
+                .WithCode(code: "263495000", system: "http://snomed.info/sct");
 
-            var result = svc.Lookup(parameters);
+            var result = await svc.Lookup(parameters);
 
             Assert.NotNull(result);
             Assert.True(result.Parameter.Count > 0);
         }
 
         [Fact]
-        public void ExternalServiceExpandExplicitValueSet()
+        public async void ExternalServiceExpandExplicitValueSet()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            var result = svc.Expand(null, "education-levels") as ValueSet;
+            var result = await svc.Expand(null, "education-levels") as ValueSet;
             Assert.NotNull(result);
             Assert.True(result.Expansion.Contains.Count > 0, "Expected more than 0 items.");
         }
 
         [Fact]
-        public void ExternalServiceExpandImplicitValueSetWithFilter()
+        public async void ExternalServiceExpandImplicitValueSetWithFilter()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
@@ -500,10 +489,9 @@ namespace Hl7.Fhir.Specification.Tests
             var parameters = new ExpandParameters()
                 .WithValueSet(url: "http://snomed.info/sct?fhir_vs=refset/142321000036106")
                 .WithFilter("met")
-                .WithPaging(count: 10)
-                .Build();
+                .WithPaging(count: 10);
 
-            var result = svc.Expand(parameters) as ValueSet;
+            var result = await svc.Expand(parameters) as ValueSet;
 
             Assert.NotNull(result);
             // Exactly 10 items all starting with 'met'.
@@ -551,7 +539,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceSubsumesConceptASubsumesConceptB()
+        public async void ExternalServiceSubsumesConceptASubsumesConceptB()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
@@ -560,8 +548,8 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
                 .Build();
 
-            var result = svc.Subsumes(parameters);
-            
+            var result = await svc.Subsumes(parameters);
+
             Assert.NotNull(result);
             var paramOutcome = result.Parameter.Find(p => p.Name == "outcome");
             Assert.NotNull(paramOutcome);
@@ -570,16 +558,15 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ExternalServiceClosureExample()
+        public async void ExternalServiceClosureExample()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             // Step 1
-            var parametersStep1 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
-                .Build();
+            var parametersStep1 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52");
 
-            var resultStep1 = svc.Closure(parametersStep1) as ConceptMap;
+            var resultStep1 = await svc.Closure(parametersStep1) as ConceptMap;
 
             Assert.NotNull(resultStep1);
             Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep1.Name);
@@ -592,10 +579,9 @@ namespace Hl7.Fhir.Specification.Tests
                 Code = "22298006",
             };
             var parametersStep2 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
-                .WithConcepts(new List<Coding> { conceptStep2 })
-                .Build();
+                .WithConcepts(new List<Coding> { conceptStep2 });
 
-            var resultStep2 = svc.Closure(parametersStep2) as ConceptMap;
+            var resultStep2 = await svc.Closure(parametersStep2) as ConceptMap;
 
             Assert.NotNull(resultStep2);
             Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep2.Name);
@@ -608,10 +594,9 @@ namespace Hl7.Fhir.Specification.Tests
                 Code = "128599005",
             };
             var parametersStep3 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
-                .WithConcepts(new List<Coding> { conceptStep3 })
-                .Build();
+                .WithConcepts(new List<Coding> { conceptStep3 });
 
-            var resultStep3 = svc.Closure(parametersStep3) as ConceptMap;
+            var resultStep3 = await svc.Closure(parametersStep3) as ConceptMap;
 
             Assert.NotNull(resultStep3);
             Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep3.Name);
@@ -651,10 +636,9 @@ namespace Hl7.Fhir.Specification.Tests
                 Code = "282729004",
             };
             var parametersStep4 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
-                .WithConcepts(new List<Coding> { conceptStep4A, conceptStep4B, conceptStep4C })
-                .Build();
+                .WithConcepts(new List<Coding> { conceptStep4A, conceptStep4B, conceptStep4C });
 
-            var resultStep4 = svc.Closure(parametersStep4) as ConceptMap;
+            var resultStep4 = await svc.Closure(parametersStep4) as ConceptMap;
 
             Assert.NotNull(resultStep4);
             Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep4.Name);
@@ -728,10 +712,9 @@ namespace Hl7.Fhir.Specification.Tests
                 });
 
             var parametersStep5 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
-                .WithVersion("0")
-                .Build();
+                .WithVersion("0");
 
-            var resultStep5 = svc.Closure(parametersStep5) as ConceptMap;
+            var resultStep5 = await svc.Closure(parametersStep5) as ConceptMap;
 
             Assert.NotNull(resultStep5);
             Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep5.Name);
@@ -815,17 +798,16 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public void ExternalServiceValidateCodeTest()
+        public async void ExternalServiceValidateCodeTest()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
-                .WithCode(code: "1166006", system: "http://snomed.info/sct")
-                .Build();
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
 
-            var outParams = svc.ValueSetValidateCode(parameters);
+            var outParams = await svc.ValueSetValidateCode(parameters);
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
@@ -836,7 +818,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var external = new ExternalTerminologyService(client);
-            var local = new LocalTerminologyService(_syncResolver);
+            var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
 
             testService(svc);
@@ -849,19 +831,19 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeWithParamsTest()
+        public async void FallbackServiceValidateCodeWithParamsTest()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var external = new ExternalTerminologyService(client);
-            var local = new LocalTerminologyService(_syncResolver);
+            var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
 
             // Now, this should fall back
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
-                .WithCode(code: "1166006", system: "http://snomed.info/sct")
-                .Build();
-            var result = svc.ValueSetValidateCode(inParams);
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
+
+            var result = await svc.ValueSetValidateCode(inParams);
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
         }
 
@@ -885,7 +867,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
-        private class IKnowOnlyMyTestVSResolver : IResourceResolver
+        private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {
             public ValueSet _myOnlyVS;
 
@@ -894,9 +876,12 @@ namespace Hl7.Fhir.Specification.Tests
                 _myOnlyVS = vs;
             }
 
-            public Resource ResolveByCanonicalUri(string uri) => (uri == _myOnlyVS.Url) ? _myOnlyVS : null;
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                return await T.Task.FromResult(uri == _myOnlyVS.Url ? _myOnlyVS : null);
+            }
 
-            public Resource ResolveByUri(string uri) => throw new NotImplementedException();
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }

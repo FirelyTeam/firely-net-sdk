@@ -13,15 +13,19 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class LocalTerminologyService : ITerminologyService
     {
-        private readonly IResourceResolver _resolver;
+        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
+        private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
 
-        public LocalTerminologyService(IResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
+        public LocalTerminologyService(IAsyncResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
 
@@ -31,15 +35,12 @@ namespace Hl7.Fhir.Specification.Terminology
             _expander = new ValueSetExpander(settings);
         }
 
-        internal ValueSet FindValueset(string canonical)
+        internal async T.Task<ValueSet> FindValueset(string canonical)
         {
-            // Don't want to redo ITerminologyService yet
-#pragma warning disable CS0618 // Type or member is obsolete
-            return _resolver.FindValueSet(canonical);
-#pragma warning restore CS0618 // Type or member is obsolete
+            return await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
         }
 
-        public Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
             var validCodeParams = new ValidateCodeParameters(parameters);
 
@@ -51,7 +52,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
                 try
                 {
-                    valueSet = FindValueset(validCodeParams.Url.Value);
+                    valueSet = await FindValueset(validCodeParams.Url.Value).ConfigureAwait(false);
                 }
                 catch
                 {
@@ -63,41 +64,47 @@ namespace Hl7.Fhir.Specification.Terminology
             }
 
             if (validCodeParams.CodeableConcept is { })
-                return validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value);
+                return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
             else if (validCodeParams.Coding is { })
-                return validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value);
+                return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
             else
-                return validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value);
+                return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
         }
 
         #region Not implemented methods
-        public Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Resource Expand(Parameters parameters, string id = null, bool useGet = false)
+        public T.Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Lookup(Parameters parameters, bool useGet = false)
+        public T.Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Translate(Parameters parameters, string id = null, bool useGet = false)
+        public T.Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        public T.Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
 
-        public Resource Closure(Parameters parameters, bool useGet = false)
+        public T.Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
+            // make this method async, when implementing
             throw new NotImplementedException();
         }
         #endregion
@@ -117,10 +124,11 @@ namespace Hl7.Fhir.Specification.Terminology
                 .WithAbstract(@abstract)
                 .Build();
 
-            return ValueSetValidateCode(parameters).ToOperationOutcome();
+            var parms = TaskHelper.Await(() => ValueSetValidateCode(parameters));
+            return parms.ToOperationOutcome();
         }
 
-        private Parameters validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
+        private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
         {
             var result = new Parameters();
 
@@ -133,10 +141,11 @@ namespace Hl7.Fhir.Specification.Terminology
 
             // If we have just 1 coding, we better handle this using the simpler version of ValidateBinding
             if (cc.Coding.Count == 1)
-                return validateCodeVS(vs, cc.Coding.Single(), abstractAllowed);
+                return await validateCodeVS(vs, cc.Coding.Single(), abstractAllowed).ConfigureAwait(false);
+
 
             // Else, look for one succesful match in any of the codes in the CodeableConcept
-            var callResults = cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed));
+            var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed)));
             var anySuccesful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
             if (anySuccesful == false)
@@ -161,13 +170,14 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private Parameters validateCodeVS(ValueSet vs, Coding coding, bool? abstractAllowed)
+        private async T.Task<Parameters> validateCodeVS(ValueSet vs, Coding coding, bool? abstractAllowed)
         {
-            return validateCodeVS(vs, coding.Code, coding.System, coding.Display, abstractAllowed);
+            return await validateCodeVS(vs, coding.Code, coding.System, coding.Display, abstractAllowed).ConfigureAwait(false);
         }
 
-        private Parameters validateCodeVS(ValueSet vs, string code, string system, string display, bool? abstractAllowed)
+        private async T.Task<Parameters> validateCodeVS(ValueSet vs, string code, string system, string display, bool? abstractAllowed)
         {
+
             if (code is null)
             {
                 var resultParam = new Parameters();
@@ -176,18 +186,20 @@ namespace Hl7.Fhir.Specification.Terminology
                 return resultParam;
             }
 
-            lock (vs.SyncLock)
+            await _semaphore.WaitAsync();
+            try
             {
                 // We might have a cached or pre-expanded version brought to us by the _source
                 if (!vs.HasExpansion)
                 {
                     // This will expand te vs - since we do not deepcopy() it, it will change the instance
                     // as it was passed to us from the source
-                    // Don't want to redo ITerminologyService yet
-#pragma warning disable CS0618 // Type or member is obsolete
-                    _expander.Expand(vs);
-#pragma warning restore CS0618 // Type or member is obsolete
+                    await _expander.ExpandAsync(vs).ConfigureAwait(false);
                 }
+            }
+            finally
+            {
+                _semaphore.Release();
             }
 
             var component = vs.FindInExpansion(code, system);

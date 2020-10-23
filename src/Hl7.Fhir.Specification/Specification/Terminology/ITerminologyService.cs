@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using System;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="useGet">When true, then use GET, otherwise POST</param>
         /// <returns>Returns a result (true / false), an error message, and the recommended display for the code, wrapped in a Parameters</returns>
         /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
-        Parameters ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false);
+        Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false);
 
         /// <summary>
         /// Validate that a coded value is in the code system.
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="useGet">When true, then use GET, otherwise POST</param>
         /// <returns>Returns a result (true / false), an error message, and the recommended display for the code, wrapped in a Parameters</returns>
         /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
-        Parameters CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false);
+        Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false);
 
         /// <summary>
         /// 
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="id"></param>
         /// <param name="useGet"></param>
         /// <returns></returns>
-        Resource Expand(Parameters parameters, string id = null, bool useGet = false);
+        Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false);
 
         /// <summary>
         /// 
@@ -48,16 +49,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="parameters"></param>
         /// <param name="useGet"></param>
         /// <returns></returns>
-        Parameters Lookup(Parameters parameters, bool useGet = false);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameters"></param>
-        /// <param name="id"></param>
-        /// <param name="useGet"></param>
-        /// <returns></returns>
-        Parameters Translate(Parameters parameters, string id = null, bool useGet = false);
+        Task<Parameters> Lookup(Parameters parameters, bool useGet = false);
 
         /// <summary>
         /// 
@@ -66,7 +58,16 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="id"></param>
         /// <param name="useGet"></param>
         /// <returns></returns>
-        Parameters Subsumes(Parameters parameters, string id = null, bool useGet = false);
+        Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false);
 
         /// <summary>
         /// 
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="parameters"></param>
         /// <param name="useGet"></param>
         /// <returns></returns>
-        Resource Closure(Parameters parameters, bool useGet = false);
+        Task<Resource> Closure(Parameters parameters, bool useGet = false);
 
         /// <summary>
         /// Will check whether the a code is a member of the given valueset.
