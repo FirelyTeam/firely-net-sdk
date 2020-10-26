@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
-//TODO: Need to make everything async in 2.x validator
+                //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -229,8 +229,8 @@ namespace Hl7.Fhir.Validation
                     // No inline-children, so validation depends on the presence of a <type> or <contentReference>
                     if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                     {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
-                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        outcome.Add(this.ValidateType(elementConstraints, instance));
+                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
                     }
                     else
                         Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
@@ -313,15 +313,15 @@ namespace Hl7.Fhir.Validation
                     return outcome;
                 }
 
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
+                ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
             ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
-                    Binding b = binding.ToValidatable();
-                    outcome.Add(b.Validate(instance, vc));
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -424,8 +424,8 @@ namespace Hl7.Fhir.Validation
 
         private string toStringRepresentation(ITypedElement vp)
         {
-            return vp == null || vp.Value == null ? 
-                null : 
+            return vp == null || vp.Value == null ?
+                null :
                 PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
         }
 
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
-//TODO: make everything async in 2.x validator
+                //TODO: make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
 #pragma warning restore CS0618 // Type or member is obsolete
