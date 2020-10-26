@@ -83,23 +83,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             }
         }
 
-        [TestMethod]
-        public async Task SearchUsingPost_Issue1591()
-        {
-            using var client = new FhirClient("https://vonk.fire.ly/r3");
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            var srch = new SearchParams()
-                       .Where(@"criteria=Observation?patient.identifier=http://somehost/fhir/Name%20Hospital|1234");
-
-            var result1 = await client.SearchUsingPostAsync<Subscription>(srch);
-            Assert.IsTrue(result1.Entry.Count >= 1);
-
-            var sub = result1.Entry.ByResourceType<Subscription>().First();
-            Assert.AreEqual(@"Observation?patient.identifier=http://somehost/fhir/Name%20Hospital|1234", sub.Criteria);
-        }
-
         private static async Task searchUsingPost(BaseFhirClient client)
         {
             var srch = new SearchParams()
