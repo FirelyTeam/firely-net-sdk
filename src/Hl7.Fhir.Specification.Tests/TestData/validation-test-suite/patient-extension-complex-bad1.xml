@@ -1,0 +1,16 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="extension-bad"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/patient-animal">
+    <extension url="http://hl7.org/fhir/StructureDefinition/bodySite">
+      <valueReference>
+        <display value="nothing"/>
+      </valueReference>
+    </extension>
+  </extension>
+  <active value="true"/>
+  <name>
+    <text value="Nothing"/>
+  </name>
+  <gender value="female"/>
+  <birthDate value="2010-03-23"/>
+</Patient>

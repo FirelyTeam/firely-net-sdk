@@ -1,0 +1,10 @@
+<Observation xmlns="http://hl7.org/fhir">
+  <id value="type-ref-unchecked" />
+  <status value="final" />
+  <code>
+    <text value="something"/>
+  </code>
+  <subject>
+    <reference value="Group/12345"/>
+  </subject>
+</Observation>

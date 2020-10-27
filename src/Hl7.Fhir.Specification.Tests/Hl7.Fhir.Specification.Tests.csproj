@@ -42,7 +42,7 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
+  </ItemGroup>  
 
   <ItemGroup>
     <None Remove="TestData\validation\list-with-profile-slicing.xml" />
@@ -59,7 +59,7 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
+  </ItemGroup>  
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

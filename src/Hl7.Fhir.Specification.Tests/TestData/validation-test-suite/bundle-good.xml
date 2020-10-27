@@ -1,0 +1,27 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="bundle"/>
+  <type value="collection"/>
+  <entry>
+    <fullUrl value="http://acme.com/Patient/pat1"/>
+    <resource>
+      <Patient>
+        <id value="pat1"/>
+        <link>
+          <other>
+            <reference value="Patient/pat2"/>
+          </other>
+          <type value="refer"/>
+        </link>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://acme.com/Patient/pat2"/>
+    <resource>
+      <Patient>
+        <id value="pat2"/>
+      </Patient>
+    </resource>
+  </entry>
+</Bundle>
+

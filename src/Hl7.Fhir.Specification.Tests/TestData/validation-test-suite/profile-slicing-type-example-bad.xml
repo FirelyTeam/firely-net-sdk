@@ -1,0 +1,30 @@
+<List xmlns="http://hl7.org/fhir">
+  <contained>
+     <Condition>
+       <id value="i1"/>
+	   <subject>
+	     <reference value="Patient/example"/>
+	   </subject>
+    </Condition>
+  </contained>
+  <contained>
+     <Condition>
+      <id value="i2"/>
+	   <subject>
+	     <reference value="Patient/example"/>
+	   </subject>
+    </Condition>
+  </contained>
+  <status value="current"/>
+  <mode value="working"/>
+  <entry>
+    <item>
+      <reference value="#i1"/>
+    </item>
+  </entry>
+  <entry>
+    <item>
+      <reference value="#i2"/>
+    </item>
+  </entry>
+</List>

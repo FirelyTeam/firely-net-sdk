@@ -1,0 +1,40 @@
+<Questionnaire xmlns="http://hl7.org/fhir">
+    <id value="Questionnaire-openChoice" />
+    <language value="fi" />
+    <url value="http://phr.kanta.fi/Questionnaire/Questionnaire-openChoice" />
+    <identifier>
+        <system value="urn:ietf:rfc:3986" />
+        <value value="daa60638-251b-4d53-9ee9-6f16c0e6074b" />
+    </identifier>
+    <version value="0.1" />
+    <name value="Questionnaire-openChoice" />
+    <title value="Questionnaire-openChoice" />
+    <status value="draft" />
+    <experimental value="true" />
+    <date value="2018-07-25T14:00:00Z" />
+    <description value="Questionnaire-openChoice" />
+    <code>
+        <system value="http://phr.kanta.fi/CodeSystem/fiphr-cs-questionnairecode" />
+        <code value="DAN-PSS-1" />
+    </code>
+    <item>
+        <linkId value="1" />
+        <text value="Question1" />
+        <type value="boolean" />
+        <required value="true" />
+        <repeats value="false" />
+    </item>
+    <item>
+        <linkId value="2" />
+        <text value="Question2" />
+        <type value="choice" />
+        <required value="true" />
+        <repeats value="true" />
+        <answerOption>
+            <valueCoding id="1">
+                <code value="B" />
+                <display value="B" />
+            </valueCoding>
+        </answerOption>
+    </item>
+</Questionnaire>

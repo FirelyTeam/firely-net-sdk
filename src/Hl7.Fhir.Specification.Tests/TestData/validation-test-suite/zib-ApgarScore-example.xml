@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Observation xmlns="http://hl7.org/fhir">
+    <id value="zib-apgarscore-1min-example" />
+    <meta>
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-ApgarScore" />
+    </meta>
+    <status value="final"/>
+    <code>
+        <!-- 1 minute Apgar score -->
+        <coding>
+            <system value="http://loinc.org" />
+            <code value="9272-6" />
+            <display value="1 minute Apgar Score"/>
+        </coding>
+    </code>
+    <subject>
+        <reference value="Patient/example" />
+        <display value="Example Patient" />
+    </subject>
+    <effectiveDateTime value="2016-12-19T09:00:00Z" />
+    <valueQuantity>
+        <value value="8" />
+    </valueQuantity>
+    
+    <!-- 1 minute respiratory score -->
+    <component>
+        <code>
+            <coding>
+                <system value="http://loinc.org" />
+                <code value="32410-3" />
+                <display value="AdemhalingsScore" />
+            </coding>
+        </code>
+        <valueCodeableConcept>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="LA6727-7" />
+                <display value="Flink huilen en goed doorademen" />
+            </coding>
+        </valueCodeableConcept>
+    </component>
+
+    <!-- 1 minute appearance score -->
+    <component>
+        <code>
+            <coding>
+                <system value="http://loinc.org" />
+                <code value="32406-1" />
+                <display value="Huidskleurscore" />
+            </coding>
+        </code>
+        <valueCodeableConcept>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="LA6723-6" />
+                <display value="Roze lijfje, maar blauwachtige armen en benen" />
+            </coding>
+        </valueCodeableConcept>
+    </component>
+
+    <!-- 1 minute pulse score -->
+    <component>
+        <code>
+            <coding>
+                <system value="http://loinc.org" />
+                <code value="32407-9" />
+                <display value="HartslagScore" />
+            </coding>
+        </code>
+        <valueCodeableConcept>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="LA6717-8" />
+                <display value="Een hartslag van minder dan 100 slagen per minuut" />
+            </coding>
+        </valueCodeableConcept>
+    </component>
+
+    <!-- 1 minute grimace score -->
+    <component>
+        <code>
+            <coding>
+                <system value="http://loinc.org" />
+                <code value="32409-5" />
+                <display value="ReflexenScore" />
+            </coding>
+        </code>
+        <valueCodeableConcept>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="LA6721-0" />
+                <display value="Reageert door te huilen, te hoesten of te niezen" />
+            </coding>
+        </valueCodeableConcept>
+    </component>
+
+    <!-- 1 minute muscle tone score -->
+    <component>
+        <code>
+            <coding>
+                <system value="http://loinc.org" />
+                <code value="32408-7" />
+                <display value="SpierspanningScore" />
+            </coding>
+        </code>
+        <valueCodeableConcept>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="LA6715-2" />
+                <display value="Beweegt armpjes en beentjes goed" />
+            </coding>
+        </valueCodeableConcept>
+    </component>
+    
+</Observation>

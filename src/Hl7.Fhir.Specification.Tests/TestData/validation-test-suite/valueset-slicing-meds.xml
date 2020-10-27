@@ -1,0 +1,19 @@
+<Medication xmlns="http://hl7.org/fhir">
+  <code>
+    <coding>
+      <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+      <code value="s1"/>
+    </coding>
+    <coding>
+      <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+      <code value="s2"/>
+    </coding>
+    <coding>
+      <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+      <code value="s3"/>
+    </coding>
+    <text value="some text"/>
+  </code>
+  <status value="active"/>
+  <isBrand value="false"/>
+</Medication>

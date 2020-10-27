@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<StructureDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../../../../../FHIR/schema/fhir-single.xsd">-->
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="extension-slice-profile"/>
+	<url value="http://hl7.org/fhir/StructureDefinition/extension-slice-profile"/>
+	<name value="ExtensionSliceProfile"/>
+	<status value="draft"/>
+	<description value="Test slicing by extension with fixed value"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Patient"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Patient">
+			<path value="Patient"/>
+		</element>
+		<element id="Patient.name">
+			<path value="Patient.name"/>
+			<slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="extension(&#39;http://hl7.org/fhir/StructureDefinition/data-absent-reason&#39;).value"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+		</element>
+		<element id="Patient.name:foo">
+			<path value="Patient.name"/>
+			<sliceName value="foo"/>
+			<min value="1"/>
+		</element>
+		<element id="Patient.name:foo.extension:dar">
+			<path value="Patient.name.extension"/>
+			<sliceName value="dar"/>
+			<min value="1"/>
+			<type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/data-absent-reason"/>
+      </type>
+		</element>
+		<element id="Patient.name:foo.extension:dar.valueCode">
+			<path value="Patient.name.extension.valueCode"/>
+			<fixedCode value="unknown"/>
+    </element>
+	</differential>
+</StructureDefinition>

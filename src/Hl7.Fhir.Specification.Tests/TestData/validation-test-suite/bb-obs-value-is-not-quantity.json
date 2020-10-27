@@ -1,0 +1,13 @@
+{
+  "code": {
+    "coding": [
+      {
+        "code": "5792-7",
+        "system": "http://loinc.org"
+      }
+    ]
+  },
+  "resourceType": "Observation",
+  "status": "final",
+  "valueString" : "test"
+}

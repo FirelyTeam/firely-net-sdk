@@ -1,0 +1,406 @@
+{
+    "id": "coepi-initial-health-quiz",
+    "meta": {
+        "profile": [
+            "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/argo-questionnaire"
+        ]
+    },
+    "extension": [
+        {
+            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-timeLimit",
+            "valueDuration": {
+                "code": "min",
+                "system": "http://unitsofmeasure.org",
+                "unit": "minute",
+                "value": 15
+            }
+        }
+    ],
+    "text": {
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h3>Initial Health Quiz</h3></div>",
+        "status": "additional"
+    },
+    "code": [
+        {
+            "code": "coepi-ihq",
+            "display": "Initial Health Quiz",
+            "system": "https://coepi.org/fhir/ihq"
+        }
+    ],
+    "contact": [
+        {
+            "telecom": [
+                {
+                    "system": "url",
+                    "value": "https://coepi.org"
+                }
+            ]
+        }
+    ],
+    "copyright": "You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.",
+    "date": "2020-04-04",
+    "identifier": [
+        {
+            "system": "https://coepi.org/fhir/ihq",
+            "value": "coepi-ihq"
+        }
+    ],
+    "item": [
+        {
+            "extension": [
+                {
+                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                    "valueInteger": 0
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 0
+                        }
+                    ],
+                    "linkId": "g1.d",
+                    "text": "Thanks for helping your community. By tracking and declaring any illness, you will be helping others - but this app does not provide individualised health advice, so you will also need to consider your options for your own health needs. After you provide your consent, we will anonymously pass on calculated and summarised risks to others meeting the definition of a Close Contact.  Only other participating app users are able to receive this information, however they will be able to determine when you were near to them, and thus they may deduce your identity if there were few people present at a specific time and place.",
+                    "type": "display"
+                }
+            ],
+            "linkId": "g1",
+            "required": true,
+            "text": "Declare Illness",
+            "type": "group"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                    "valueInteger": 1
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                            "valueDecimal": 3
+                        },
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 0
+                        }
+                    ],
+                    "linkId": "g2.q1",
+                    "repeats": false,
+                    "required": true,
+                    "text": "When did you first notice you were not feeling well?",
+                    "type": "dateTime"
+                }
+            ],
+            "linkId": "g2",
+            "prefix": "1.",
+            "required": true,
+            "text": "dateTime",
+            "type": "group",
+            "TODO": "represent the calculation of number of days since illness here"
+        },
+        {
+            "extension": [
+                {
+                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                    "valueInteger": 2
+                }
+            ],
+            "item": [
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                            "valueDecimal": 1
+                        },
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 0
+                        }
+                    ],
+                    "linkId": "g3.q1",
+                    "option": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 0
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 0
+                                }
+                            ],
+                            "valueString": "None"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 1
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 1
+                                }
+                            ],
+                            "valueString": "Mild - minimal symptom or temperature up to 38.5 degrees celcius"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 2
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 2
+                                }
+                            ],
+                            "valueString": "Moderate - with chills or temperature up to 39.5 degrees celcius"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 3
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 3
+                                }
+                            ],
+                            "valueString": "Severe - with uncontrollable shaking, or temperature over 39.5 degrees celcius"
+                        }
+                    ],
+                    "repeats": false,
+                    "required": true,
+                    "text": "Fever",
+                    "type": "choice"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                            "valueDecimal": 2
+                        },
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 1
+                        }
+                    ],
+                    "linkId": "g3.q2",
+                    "option": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 0
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 0
+                                }
+                            ],
+                            "valueString": "None"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 1
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 1
+                                }
+                            ],
+                            "valueString": "Infrequently - less than 5 times per day"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 2
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 2
+                                }
+                            ],
+                            "valueString": "Regularly - up to 5 times per hour"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 3
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 3
+                                }
+                            ],
+                            "valueString": "Frequently - more than 5 times per hour"
+                        }
+                    ],
+                    "repeats": false,
+                    "required": true,
+                    "text": "Cough",
+                    "type": "choice"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                            "valueDecimal": 3
+                        },
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 2
+                        }
+                    ],
+                    "linkId": "g3.q3",
+                    "option": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 0
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 0
+                                }
+                            ],
+                            "valueString": "I only get breathless with strenuous exercise"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 1
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 1
+                                }
+                            ],
+                            "valueString": "I get short of breath when hurrying on level ground or walking up a slight hill"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 2
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 2
+                                }
+                            ],
+                            "valueString": "On level ground, I walk slower than people of the same age because of breathlessness, or I have to stop for breath when walking at my own pace on the level"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 3
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 3
+                                }
+                            ],
+                            "valueString": "I stop for breath after walking about 100 yards or after a few minutes on level ground"
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                                    "valueDecimal": 4
+                                },
+                                {
+                                    "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                                    "valueInteger": 4
+                                }
+                            ],
+                            "valueString": "I am too breathless to leave the house or I am breathless when dressing"
+                        }
+
+                    ],
+                    "repeats": false,
+                    "required": true,
+                    "text": "Trouble breathing",
+                    "type": "choice"
+                },
+                {
+                    "extension": [
+                        {
+                            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-ordinalValue",
+                            "valueDecimal": 2
+                        },
+                        {
+                            "url": "http://fhir.org/guides/argonaut/questionnaire/StructureDefinition/extension-itemOrder",
+                            "valueInteger": 1
+                        }
+                    ],
+                    "linkId": "g3.q2",
+                    "repeats": false,
+                    "required": true,
+                    "text": "Fatigue (0 = Not at all fatigued, 10 = As fatigued as I could be)",
+                    "type": "integer",
+                    "TODO": "reference - Fatigue Severity Index http://www.cas.usf.edu/~jacobsen/HANDOUT.FSI&MFSI.pdf"
+                }
+            ],
+            "linkId": "g3",
+            "prefix": "2.",
+            "required": true,
+            "text": "Select the symptoms you have experienced and the maximum severity",
+            "type": "group"
+        }
+    ],
+    "jurisdiction": [
+        {
+            "coding": [
+                {
+                    "code": "US",
+                    "display": "United States of America",
+                    "system": "urn:iso:std:iso:3166"
+                }
+            ]
+        }
+    ],
+    "publisher": "CoEpi Project",
+    "status": "draft",
+    "subjectType": [
+        "Patient"
+    ],
+    "title": "Initial Health Quiz",
+    "url": "https://coepi.org/fhir/ihq",
+    "useContext": [
+        {
+            "code": {
+                "code": "task",
+                "display": "Workflow Task",
+                "system": "http://hl7.org/fhir/usage-context-type"
+            },
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "code": "example",
+                        "display": "Example of Use",
+                        "system": "http://acme.org"
+                    }
+                ]
+            }
+        }
+    ],
+    "version": "0.0.0",
+    "resourceType": "Questionnaire"
+}

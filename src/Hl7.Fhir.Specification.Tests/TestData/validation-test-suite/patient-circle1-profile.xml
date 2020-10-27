@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="patient-circle1-profile" />
+	<url value="http://hl7.org/fhir/test/StructureDefinition/patient-circle1-profile" />
+	<status value="draft" />
+	<description value="This says that linked patients must conform to the same profile - which is then used by 2 patients to link to each other in a deathly circle" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Patient" />
+	<baseDefinition	value="http://hl7.org/fhir/StructureDefinition/Patient" />
+	<derivation value="constraint" />
+	<differential>
+		<element>
+			<path value="Patient.gender"/>
+      <fixedCode value="other"/>
+		</element>
+		<element>
+			<path value="Patient.link.other"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/test/StructureDefinition/patient-circle1-profile"/>
+      </type>
+		</element>
+	</differential>
+</StructureDefinition>

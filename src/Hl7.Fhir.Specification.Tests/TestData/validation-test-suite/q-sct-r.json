@@ -1,0 +1,17 @@
+{
+    "resourceType": "QuestionnaireResponse",
+    "language": "en",
+    "questionnaire": {
+        "reference": "http://example.com/Questionnaire/testQ"
+    },
+    "status": "completed",
+    "item": [{
+        "linkId": "change",
+        "answer": [{
+            "valueCoding": {
+                "system": "http://snomed.info/sct",
+                "code": "55011004"
+            }
+        }]
+    }]
+}

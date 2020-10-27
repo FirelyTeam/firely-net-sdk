@@ -1,0 +1,29 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="2fc591f5-ac56-4d97-82fa-ffd3f6c0c179" />
+  <url value="http://fhir.de/StructureDefinition/patient-de-vsdm/0.2" />
+  <name value="test for using extension in Example"/>
+  <status value="draft" />
+  <date value="2019-03-15" />
+  <fhirVersion value="3.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Patient.address.line">
+      <path value="Patient.address.line" />
+      <example>
+        <label value="Example using extension" />
+        <valueString value="42 Nowhere St">
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+            <valueString value="Nowhere St" />
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+            <valueString value="42" />
+          </extension>
+        </valueString>
+      </example>
+    </element>
+  </differential> 
+</StructureDefinition>

@@ -1,0 +1,101 @@
+<Measure xmlns="http://hl7.org/fhir">
+  <url value="http://hl7.org/fhir/test/Measure/mr-m-full"/> 
+  <status value="active"/> 
+  <library value="Library/library-cms146-example"/> 
+  <group>
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://hl7.org/fhir/test/CodeSystem/measure-type"/> 
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.InInitialPopulation"/> 
+      </criteria> 
+    </population> 
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://hl7.org/fhir/test/CodeSystem/measure-type"/> 
+          <code value="numerator"/> 
+        </coding> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.InNumerator"/> 
+      </criteria> 
+    </population> 
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://hl7.org/fhir/test/CodeSystem/measure-type"/> 
+          <code value="denominator"/> 
+        </coding> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.InDenominator"/> 
+      </criteria> 
+    </population> 
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://hl7.org/fhir/test/CodeSystem/measure-type"/> 
+          <code value="denominator-exclusion"/> 
+        </coding> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.InDenominatorExclusions"/> 
+      </criteria> 
+    </population> 
+
+    <stratifier> 
+      <code> 
+        <text value="stratifier-ages-up-to-9"/> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.AgesUpToNine"/> 
+      </criteria> 
+    </stratifier> 
+    <stratifier> 
+      <code> 
+        <text value="stratifier-ages-10-plus"/> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.AgesTenPlus"/> 
+      </criteria> 
+    </stratifier> 
+    <stratifier> 
+      <code> 
+        <text value="stratifier-gender"/> 
+      </code> 
+      <criteria>
+       <language value="text/fhirpath"/>
+       <expression value="Patient.gender"/> 
+      </criteria> 
+    </stratifier> 
+  </group> 
+  <supplementalData> 
+    <code> 
+      <text value="supplemental-data-gender"/> 
+    </code> 
+    <criteria> 
+      <language value="text/fhirpath"/> 
+      <expression value="Patient.gender"/> 
+    </criteria> 
+  </supplementalData> 
+  <supplementalData> 
+    <code> 
+      <text value="supplemental-data-deceased"/> 
+    </code> 
+    <criteria> 
+      <language value="text/fhirpath"/> 
+      <expression value="deceasedBoolean"/> 
+    </criteria> 
+  </supplementalData> 
+</Measure> 
