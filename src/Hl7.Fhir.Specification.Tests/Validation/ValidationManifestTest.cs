@@ -3,15 +3,12 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Xml;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -51,28 +48,20 @@ namespace Hl7.Fhir.Specification.Tests
         } 
 
         public static void RunTestCase(ValidationTestCase testCase)
-        {
-            Resource testResource = null;
-            if (testCase.FileName.EndsWith(".xml"))
-            {
-                var reader = XmlReader.Create(@"TestData\\validation-test-suite\\" + testCase.FileName);
-                testResource = new FhirXmlParser().Parse<Resource>(reader);
-            }
-            else if (testCase.FileName.EndsWith(".json"))
-            {
-                var json = File.ReadAllText(@"TestData\\validation-test-suite\\" + testCase.FileName);
-                testResource = new FhirJsonParser().Parse<Resource>(json);
-            }
-
+        {            
+            var resourceText = File.ReadAllText(@$"TestData\validation-test-suite\{testCase.FileName}");
+            var testResource = testCase.FileName.EndsWith(".xml") ?
+                new FhirXmlParser().Parse<Resource>(resourceText) :
+                new FhirJsonParser().Parse<Resource>(resourceText);
             Assert.IsNotNull(testResource);
 
             var profileFilePath = testCase?.Profiles?.FirstOrDefault() ?? testCase?.ValidationProfile?.Source;
-            var profileUri = _dirSource.ListSummaries().Where(s => s.Origin.EndsWith(Path.DirectorySeparatorChar + profileFilePath)).Select(s => s.GetConformanceCanonicalUrl()).FirstOrDefault();
+            var profileUris = _dirSource.ListSummaries().Where(s => s.Origin.EndsWith(Path.DirectorySeparatorChar + profileFilePath)).Select(s => s.GetConformanceCanonicalUrl()).ToArray();
 
             OperationOutcome result = null;
-            if (profileUri != null)
+            if (profileUris.Any())
             {
-                result = _testValidator.Validate(testResource, profileUri);
+                result = _testValidator.Validate(testResource, profileUris);
             }
             else
             {
@@ -125,7 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
             return null;
         }
 
-        IEnumerable<object[]> ITestDataSource.GetData(MethodInfo methodInfo)
+        public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
             var data = ValidatorManifestParser.Parse();
             return data.Where(d=> d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))
@@ -138,7 +127,7 @@ namespace Hl7.Fhir.Specification.Tests
     {
         public static List<ValidationTestCase> Parse()
         {          
-            var manifest = File.ReadAllText(@"TestData\\validation-test-suite\\manifest.json");
+            var manifest = File.ReadAllText(@"TestData\validation-test-suite\manifest.json");
             var json = JObject.Parse(manifest);
             var testCases = CreateValidationCase(json);
             return testCases;
