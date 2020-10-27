@@ -1,0 +1,7 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter>
+    <name value="paramString"/>
+    <valueString value="  "/>
+  </parameter>
+</Parameters>
+

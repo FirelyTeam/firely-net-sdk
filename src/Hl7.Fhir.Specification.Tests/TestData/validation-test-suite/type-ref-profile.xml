@@ -1,0 +1,21 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="type-ref-profile" />
+  <url value="http://hl7.org/fhir/test/StructureDefinition/type-ref-profile" />
+  <status value="active" />
+  <fhirVersion value="4.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation.subject">
+      <path value="Observation.subject" />
+      <type>
+        <code value="Reference" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Patient" />
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/RelatedPerson" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

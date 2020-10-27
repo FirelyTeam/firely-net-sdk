@@ -1,0 +1,6 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="profile-choice-1"/>
+  <address>
+    <text value="This is text for an address that doesn't conform to either profile"/>
+  </address>
+</Patient>

@@ -1,0 +1,27 @@
+{
+  "resourceType": "ValueSet",
+  "status": "active",
+  "name": "BadCodeExaple",
+  "id": "vs-bad-code",
+  "title": "Bad Code Example",
+  "date" : "2020-06-25",
+  "version": "0.1.0",
+  "url": "http://hl7.org/fhir/test/ValueSet/vs-bad-code",
+  "compose": {
+    "include": [
+      {
+        "system": "http://snomed.info/sct",
+        "concept": [
+          {
+            "code": "1",
+            "display": "Not a legal code"
+          },
+          {
+            "code": "2",
+            "display": "Not a legal code"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -13,12 +13,12 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class BindingValidationTests : IClassFixture<ValidationFixture>
     {
-        private readonly IResourceResolver _resolver;
+        private readonly IAsyncResourceResolver _resolver;
         private readonly ITerminologyService _termService;
 
         public BindingValidationTests(ValidationFixture fixture)
         {
-            _resolver = fixture.Resolver;
+            _resolver = fixture.AsyncResolver;
             _termService = new LocalTerminologyService(_resolver);
         }
 

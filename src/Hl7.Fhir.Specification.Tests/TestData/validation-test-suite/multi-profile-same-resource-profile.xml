@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="multi-profile-same-resource-profile"/>
+	<contained>
+    <StructureDefinition>
+      <id value="pract1"/>
+      <url value="http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile-pract1"/>
+      <name value="MultiProfileSameResourceProfilePract1"/>
+      <status value="draft"/>
+      <kind value="resource"/>
+      <abstract value="false"/>
+      <type value="Practitioner"/>
+      <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+      <derivation value="constraint"/>
+      <differential>
+        <element id="Practitioner">
+          <path value="Practitioner"/>
+        </element>
+        <element id="Practitioner.name">
+          <path value="Practitioner.name"/>
+          <min value="1"/>
+        </element>
+        <element id="Practitioner.gender">
+          <path value="Practitioner.gender"/>
+          <max value="0"/>
+        </element>
+      </differential>
+    </StructureDefinition>
+  </contained>
+	<contained>
+    <StructureDefinition>
+      <id value="pract2"/>
+      <url value="http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile-pract2"/>
+      <name value="MultiProfileSameResourceProfilePract2"/>
+      <status value="draft"/>
+      <kind value="resource"/>
+      <abstract value="false"/>
+      <type value="Practitioner"/>
+      <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+      <derivation value="constraint"/>
+      <differential>
+        <element id="Practitioner">
+          <path value="Practitioner"/>
+        </element>
+        <element id="Practitioner.name">
+          <path value="Practitioner.name"/>
+          <max value="0"/>
+        </element>
+        <element id="Practitioner.gender">
+          <path value="Practitioner.gender"/>
+          <min value="1"/>
+        </element>
+      </differential>
+    </StructureDefinition>
+  </contained>
+	<url value="http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile"/>
+	<name value="MultiProfileSameResourceProfile"/>
+	<status value="draft"/>
+	<description value="Profile with multiple profiles allowed for teh same resource"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Patient"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Patient">
+			<path value="Patient"/>
+		</element>
+		<element id="Patient.generalPractitioner">
+			<path value="Patient.generalPractitioner"/>
+			<min value="1"/>
+			<max value="1"/>
+			<type>
+				<code value="Reference"/>
+				<targetProfile value="#pract1"/>
+				<targetProfile value="#pract2"/>
+			</type>
+		</element>
+	</differential>
+</StructureDefinition>

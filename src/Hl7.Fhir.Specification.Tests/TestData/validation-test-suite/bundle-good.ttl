@@ -1,0 +1,38 @@
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xs: <http://www.w3.org/2001/XMLSchema#> .
+
+# - resource -------------------------------------------------------------------
+
+[a fhir:Bundle;
+  fhir:nodeRole fhir:treeRoot;
+  fhir:Resource.id [ fhir:value "bundle"];
+  fhir:Bundle.type [ fhir:value "collection"];
+  fhir:Bundle.entry [
+     fhir:index 0;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://acme.com/Patient/pat1" ];
+     fhir:Bundle.entry.resource <http://acme.com/Patient/pat1>
+  ], [
+     fhir:index 1;
+     fhir:Bundle.entry.fullUrl [ fhir:value "http://acme.com/Patient/pat2" ];
+     fhir:Bundle.entry.resource <http://acme.com/Patient/pat2>
+  ]].
+
+<http://acme.com/Patient/pat1> a fhir:Patient;
+  fhir:index 0;
+  fhir:Resource.id [ fhir:value "pat1"];
+  fhir:Patient.link [
+     fhir:index 0;
+     fhir:Patient.link.other [
+       fhir:Reference.reference [ fhir:value "Patient/pat2" ]
+     ];
+     fhir:Patient.link.type [ fhir:value "refer" ]
+  ].
+
+<http://acme.com/Patient/pat2> a fhir:Patient;
+  fhir:index 0;
+  fhir:Resource.id [ fhir:value "pat2"].
+
+# -------------------------------------------------------------------------------------
+

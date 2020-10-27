@@ -1,0 +1,15 @@
+<Parameters xmlns="http://hl7.org/fhir">
+    <meta>
+        <profile value="http://example.org/fhir/StructureDefinition/param-profile"/>
+    </meta>
+    <parameter>
+        <name value="binaryparam"/>
+        <resource>
+            <Binary>
+                <id value="1"/>
+                <contentType value="text/plain"/>
+                <data value="VGVzdA=="/>
+            </Binary>
+        </resource>
+    </parameter>
+</Parameters>

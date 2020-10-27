@@ -1,0 +1,57 @@
+{
+  "resourceType": "CodeSystem",
+  "meta": {
+    "profile": "http://hl7.org/fhir/StructureDefinition/shareablecodesystem"
+  },
+  "url": "http://molit.eu/fhir/genomics/CodeSystem/tumorboard-cancellation-reason",
+  "version": "1.0.0",
+  "title": "Tumorboard Abbruchgrund",
+  "name": "TumorboardAbbruchgrund",
+  "status": "active",
+  "experimental": false,
+  "date": "2019-07-18",
+  "publisher": "MOLIT Institut",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "email",
+          "value": "info@molit.eu"
+        }
+      ]
+    }
+  ],
+  "description": "Grund des Abbruchs der Tumorboardteilnahme",
+  "valueSet": "http://molit.eu/fhir/ValueSet/tumorboard-cancellation-reason",
+  "content": "complete",
+  "concept": [
+    {
+      "code": "missing-consent",
+      "display": "Einverständniserklärung des Patienten/ der Patientin liegt nicht vor"
+    },
+    {
+      "code": "deceased",
+      "display": "Patient/Patientin verstorben"
+    },
+    {
+      "code": "revoked-consent",
+      "display": "Patient/Patientin widerruft sein/ihr Einverständnis zur Untersuchung"
+    },
+    {
+      "code": "insufficient-test-material",
+      "display": "Nicht genug Untersuchungsmaterial vorhanden"
+    },
+    {
+      "code": "coverage-unclear",
+      "display": "Kostenübernahme unklar"
+    },
+    {
+      "code": "terminated-by-lab",
+      "display": "Abbruch durch Labor"
+    },
+    {
+      "code": "other",
+      "display": "Sonstiger Grund"
+    }
+  ]
+}

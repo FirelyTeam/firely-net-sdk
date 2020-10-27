@@ -1,0 +1,27 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-slicing-profile-2"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-profile-2"/>
+  <version value="0.1.0"/>
+  <name value="TestProfile2"/>
+  <title value="Test Profile #2"/>
+  <status value="draft"/>
+  <date value="2017-09-06T06:30:54+00:00"/>
+  <publisher value="HL7"/>
+  <fhirVersion value="4.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Basic"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Basic"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Basic.code">
+      <path value="Basic.code"/>
+      <fixedCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/test/CodeSystem/profile-slicing-codes"/>
+          <code value="profile2"/>
+        </coding>
+      </fixedCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>
