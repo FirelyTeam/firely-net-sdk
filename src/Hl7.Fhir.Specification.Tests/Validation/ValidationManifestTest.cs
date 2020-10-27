@@ -79,18 +79,23 @@ namespace Hl7.Fhir.Specification.Tests
                 result = _testValidator.Validate(testResource);
             }
 
-            if (testCase?.Java?.ErrorCount != null)
+            var javaErrors = testCase?.ValidationProfile?.Java?.ErrorCount ?? testCase?.Java?.ErrorCount;
+
+            if (javaErrors != null)
             {
-                Assert.AreEqual(testCase.Java.ErrorCount, result.Errors);
+
+                Assert.AreEqual(javaErrors, result.Errors);
             }
             else
             {
                 Assert.IsTrue(result.Success);
             }
 
-            if (testCase?.Java?.WarningCount != null)
+            var javaWarnings = testCase?.ValidationProfile?.Java?.WarningCount ?? testCase?.Java?.WarningCount;
+
+            if (javaWarnings != null)
             {
-                Assert.AreEqual(testCase.Java.WarningCount, result.Warnings);
+                Assert.AreEqual(javaWarnings, result.Warnings);
             }
         }
       
