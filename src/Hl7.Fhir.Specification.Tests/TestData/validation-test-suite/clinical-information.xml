@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="https://example.de/fhir/StructureDefinition/ClinicalInformation"/>  
+  <id value="clinicalInformation"/>  
+  <version value="0.1"/>  
+  <name value="ClinicalInformation"/>  
+  <status value="draft"/>  
+  <fhirVersion value="3.0.1"/>  
+  <kind value="resource"/>  
+  <abstract value="false"/>  
+  <type value="Condition"/>  
+  <baseDefinition value="http://fhir.de/StructureDefinition/condition-de-basis/0.2"/>  
+  <derivation value="constraint"/>  
+  <differential>
+    <element id="Condition.extension">
+      <path value="Condition.extension"/>      
+      <slicing>
+        <discriminator>
+          <type value="value"/>          
+          <path value="url"/>        </discriminator>
+        <rules value="open"/>      </slicing>
+    </element>
+    <element id="Condition.extension:infection">
+      <path value="Condition.extension"/>      <sliceName value="infection"/>      <type>
+        <code value="Extension"/>        <profile value="https://example.de/fhir/StructureDefinition/Infection"/>      </type>
+    </element>
+    <element id="Condition.evidence.code.coding.system">
+      <path value="Condition.evidence.code.coding.system"/>      <binding>
+        <strength value="required"/>        <valueSetUri value="https://example.de/fhir/ValueSet/symptom"/>      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

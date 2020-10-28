@@ -1,0 +1,61 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "parameters-profiled-resource-profile-params",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profile-params",
+  "version" : "0.1.0",
+  "name" : "TestResourceProfileInParams",
+  "fhirVersion" : "4.0.1",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Parameters",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Parameters",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Parameters",
+        "path" : "Parameters"
+      },
+      {
+        "id" : "Parameters.parameter",
+        "path" : "Parameters.parameter",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "value",
+              "path" : "name"
+            }
+          ],
+          "rules" : "closed"
+        },
+        "min" : 1,
+        "max" : "1"
+      },
+      {
+        "id" : "Parameters.parameter:one",
+        "path" : "Parameters.parameter",
+        "sliceName" : "one",
+        "min" : 1,
+        "max" : "1"
+      },
+      {
+        "id" : "Parameters.parameter:one.name",
+        "path" : "Parameters.parameter.name",
+        "fixedString" : "one"
+      },
+      {
+        "id" : "Parameters.parameter:one.resource",
+        "path" : "Parameters.parameter.resource",
+        "min" : 1,
+        "type" : [
+          {
+            "code" : "Resource",
+            "profile" : [
+              "http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

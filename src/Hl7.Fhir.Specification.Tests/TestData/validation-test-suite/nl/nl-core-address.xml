@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://hl7.org/fhir https://hl7.org/fhir/STU3/fhir-all.xsd" xmlns="http://hl7.org/fhir">
+  <id value="nl-core-address" />
+  <url value="http://fhir.nl/fhir/StructureDefinition/nl-core-address" />
+  <version value="2.0.3" />
+  <name value="nl-core-address" />
+  <title value="nl-core-address" />
+  <status value="active" />
+  <publisher value="HL7 Netherlands" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="Base StructureDefinition for Address Type with additions for Dutch realm addresses. Dutch addresses break down Address.line in several parts and it is important to mark an address as being 'officially registered'." />
+  <purpose value="Address information is used for visiting a person or organization and for addressing of mail." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.2" />
+  <mapping>
+    <identity value="hcim-address-v2.0.1-2015EN" />
+    <uri value="https://zibs.nl/wiki/Patient-v2.0.1(2015EN)" />
+    <name value="AddressInformation as part of HCIM Patient-v2.0.1(2015EN)" />
+    <comment value="AddressInformation has become an independent information model as of release 2017 of the HCIMs" />
+  </mapping>
+  <mapping>
+    <identity value="hcim-addressinformation-v3.0-2016EN" />
+    <uri value="https://zibs.nl/wiki/Patient-v3.0(2016EN)" />
+    <name value="AddressInformation as part of HCIM Patient-v3.0(2016EN)" />
+    <comment value="AddressInformation has become an independent information model as of release 2017 of the HCIMs" />
+  </mapping>
+  <mapping>
+    <identity value="hcim-addressinformation-v1.0-2017EN" />
+    <uri value="https://zibs.nl/wiki/AddressInformation-v1.0(2017EN)" />
+    <name value="HCIM AddressInformation-v1.0.1(2017EN)" />
+  </mapping>
+  <mapping>
+    <identity value="BRP" />
+    <uri value="https://nl.wikipedia.org/wiki/Basisregistratie_Personen" />
+    <name value="Basisregistratie Personen" />
+    <comment value="Voorheen GBA - Gemeentelijke basisregistratie" />
+  </mapping>
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <type value="Address" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Address">
+      <path value="Address" />
+      <short value="Address information" />
+      <definition value="There is a variety of postal address formats defined around the world. This format defines a superset that is the basis for all addresses around the world and adds all relevant components to express Dutch addresses.&#xD;&#xA;&#xD;&#xA;A Dutch Address is a proper FHIR Address. Systems that do not understand any of the extensions, will be able to render and work with a Dutch address. Dutch addresses make certain address parts separately communicable. These parts are required for use in true Dutch systems when dealing with Dutch addresses, but may not have value for international systems when information gets sent abroad.&#xD;&#xA;&#xD;&#xA;To have true compatibility an implementer SHOULD use the core Address parts as intended. To have addresses work for Dutch context, the implementer SHOULD in addition use the extension elements.&#xD;&#xA;&#xD;&#xA;The HCIM defines certain address types in the AdresSoortCodelijst. These do not all have a one to one mapping in the FHIR Address datatype. The following explains how to deal with that. In addition, there are the ConceptMaps http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse and http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressType to define this relationship&#xD;&#xA;&#xD;&#xA;HCIM Postal Address maps to Address.type 'postal'; &#xD;&#xA;&#xD;&#xA;HCIM Primary Home Address maps to Address.extension:official 'true' + Address.use 'home' + Address.use.extension 'HP'; &#xD;&#xA;&#xD;&#xA;HCIM Visit Address (Woon-/verblijfadres) maps to Address.use 'home' + Address.type 'physical' + Address.use.extension 'PHYS'; &#xD;&#xA;&#xD;&#xA;HCIM Temporary Address maps to Address.use 'temp'; &#xD;&#xA;&#xD;&#xA;HCIM Work Place Address maps to Address.use 'work';  &#xD;&#xA;&#xD;&#xA;HCIM Vacation Home Address maps to Address.use 'temp' + Address.use.extension 'HV'.&#xD;&#xA;&#xD;&#xA;If Address.type is &quot;both&quot; then this is to be understood as a dual purpose address (postal and physical). Systems that support importing it like this are encouraged to do so, otherwise they may need to import this as two separate addresses." />
+      <alias value="AdresInformatie" />
+      <example>
+        <label value="Example of a vacation home address" />
+        <valueAddress>
+          <extension url="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official">
+            <valueBoolean value="false" />
+          </extension>
+          <use value="temp">
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-AD-use">
+              <valueCode value="HV" />
+            </extension>
+          </use>
+          <line value="Binnenkant 12A Hoog">
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+              <valueString value="Binnenkant" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+              <valueString value="12" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix">
+              <valueString value="A" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID">
+              <valueString value="Hoog" />
+            </extension>
+          </line>
+          <city value="Amsterdam" />
+          <state value="NH" />
+          <postalCode value="1000AA" />
+          <country value="NLD" />
+        </valueAddress>
+      </example>
+      <example>
+        <label value="Example of a primary home address" />
+        <valueAddress>
+          <extension url="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official">
+            <valueBoolean value="true" />
+          </extension>
+          <use value="home" />
+          <line value="Binnenkant to 10">
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+              <valueString value="Binnenkant" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator">
+              <valueString value="to" />
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+              <valueString value="10" />
+            </extension>
+          </line>
+          <city value="Amsterdam" />
+          <state value="NH" />
+          <postalCode value="1001AA" />
+          <country value="NLD" />
+        </valueAddress>
+      </example>
+      <condition value="nl-streetname-if-official-and-other-line-parts" />
+      <constraint>
+        <key value="nl-streetname-if-official-and-other-line-parts" />
+        <requirements value="This constraint checks conformance against the Dutch BRP constraints on address parts. However: when you only send postalCode + houseNumber which is enough for certain cases this may still be a valid address" />
+        <severity value="error" />
+        <human value="Address.streetName in an official address SHALL have a value if one of houseNumber|buildingNumberSuffix|additionalLocator has a value" />
+        <expression value="(extension.where(url = 'http://fhir.nl/fhir/StructureDefinition/nl-core-address-official').where(value = true)).empty() or (line.extension.where(url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').empty().not() and (line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber').empty().not() or line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix').empty().not() or line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator').empty().not()))" />
+        <xpath value="not(.[f:extension[@url='http://fhir.nl/fhir/StructureDefinition/nl-core-address-official'][f:valueBoolean/@value='true']][f:line[empty(f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName'])][f:extension[@url=('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator')]]])" />
+      </constraint>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.4" />
+        <comment value="AddressInformation" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.4" />
+        <comment value="AddressInformation" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.1" />
+        <comment value="AddressInformation" />
+      </mapping>
+    </element>
+    <element id="Address.extension">
+      <path value="Address.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.extension:official">
+      <path value="Address.extension" />
+      <sliceName value="official" />
+      <short value="Mark an address as an 'officially registered' address." />
+      <definition value="Mark an address as an 'officially registered' address. In Dutch context that means it is registered in the Basisregistratie persoonsgegevens (BRP)" />
+      <alias value="Markeer een adres als een 'officieel geregistreerd adres." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.8" />
+        <comment value="AddressType" />
+      </mapping>
+    </element>
+    <element id="Address.use">
+      <path value="Address.use" />
+      <definition value="Purpose of this address" />
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-address-v3.0-2016EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.8" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse" />
+      </mapping>
+    </element>
+    <element id="Address.use.extension">
+      <path value="Address.use.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.use.extension:AD_use">
+      <path value="Address.use.extension" />
+      <sliceName value="AD_use" />
+      <short value="Further define the address use with the exact HCIM code." />
+      <definition value="Further define the address use with the exact HCIM code. Mostly relevant to distinguish between different types of temporary addresses. TMP and WP are not included in the valueset address-use but can be included through this extension" />
+      <alias value="Precieze definiëring van adressoort op basis van exacte zib-code" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-AD-use" />
+      </type>
+    </element>
+    <element id="Address.use.extension:AD_use.valueCode:valueCode">
+      <path value="Address.use.extension.valueCode" />
+      <sliceName value="valueCode" />
+    </element>
+    <element id="Address.type">
+      <path value="Address.type" />
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressType" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-address-v3.0-2016EN" />
+        <map value="NL-CM:0.1.11" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressType" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.8" />
+        <comment value="AddressType. See for details the ConceptMap http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressType" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension">
+      <path value="Address.line.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.line.extension:streetName">
+      <path value="Address.line.extension" />
+      <sliceName value="streetName" />
+      <definition value="Street name. If the address is a P.O. Box then the Dutch word &quot;Postbus&quot; shall be communicated. If the address is an answer number (mailing address where the receiver pays postage) then the Dutch word &quot;Antwoordnummer&quot; shall be communicated." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.10 Straatnaam" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.12" />
+        <comment value="Street" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.12" />
+        <comment value="Street" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.2" />
+        <comment value="Street" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.10" />
+        <comment value="Straatnaam" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:streetName.valueString:valueString">
+      <path value="Address.line.extension.valueString" />
+      <sliceName value="valueString" />
+    </element>
+    <element id="Address.line.extension:houseNumber">
+      <path value="Address.line.extension" />
+      <sliceName value="houseNumber" />
+      <definition value="The element houseNumber shall contain the house number. The house number may contains non-numeric parts that further determine the address, e.g. &quot;23a&quot;, but only if the source system cannot discretely communicate those. House letter shall, if possible, be communicated through the element buildingNumberSuffix. Information such as &quot;to&quot; (house boats that do not have their own house number, but are across (tegenover) a house with a house number or &quot;3 hoog achter&quot; are not part of this attribute. This type of information is conveyed elsewhere in the Address datatype." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.20 Huisnummer" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.13" />
+        <comment value="HouseNumber" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.13" />
+        <comment value="HouseNumber" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.12" />
+        <comment value="HouseNumber" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.20" />
+        <comment value="Huisnummer" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:houseNumber.valueString:valueString">
+      <path value="Address.line.extension.valueString" />
+      <sliceName value="valueString" />
+    </element>
+    <element id="Address.line.extension:buildingNumbersuffix">
+      <path value="Address.line.extension" />
+      <sliceName value="buildingNumbersuffix" />
+      <definition value="HouseNumberLetter&#xD;&#xA;- A letter following the house number as assigned by the municipal authorities.&#xD;&#xA;&#xD;&#xA;HouseNumberAddition&#xD;&#xA;- The letters or signs needed to locate the mailbox, in addition to the house number and letter." />
+      <comment value="Export&#xD;&#xA;&#xD;&#xA;- If a house letter as well as a house number addition is known: house letter first, followed by a space and finally the house letter suffix.&#xD;&#xA;- If only a house letter is known send just that. No trailing space is required.&#xD;&#xA;- If only a house letter suffix is known, communicate that with a leading space.&#xD;&#xA;&#xD;&#xA;Import&#xD;&#xA;&#xD;&#xA;- If the value of buildingNumberSuffix contains no space, then the whole value is considered to be the house letter&#xD;&#xA;- If the value of buildingNumberSuffix contains a space, then everything before the first space is considered to be the house letter, and the everything trailing the first space is considered to be the house number suffix" />
+      <requirements value="Basisregistratie Persoonsgegevens 11.30 Huisletter&#xD;&#xA;11.40 Huisnummertoevoeging&#xD;&#xA;12.10 Locatieomschrijving" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.40" />
+        <comment value="HouseNumberLetter" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.41" />
+        <comment value="HouseNumberAddition" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.40" />
+        <comment value="HouseNumberLetter" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.41" />
+        <comment value="HouseNumberAddition" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.11" />
+        <comment value="HouseNumberLetter" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.10" />
+        <comment value="HouseNumberAddition" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.30" />
+        <comment value="Huisletter" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.40" />
+        <comment value="Huisnummertoevoeging" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:buildingNumbersuffix.valueString:valueString">
+      <path value="Address.line.extension.valueString" />
+      <sliceName value="valueString" />
+    </element>
+    <element id="Address.line.extension:unitID">
+      <path value="Address.line.extension" />
+      <sliceName value="unitID" />
+      <definition value="Extra information such as the building name, building number, entrance, route number." />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-unitID" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.28" />
+        <comment value="AdditionalInformation" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.28" />
+        <comment value="AdditionalInformation" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.7" />
+        <comment value="AdditionalInformation" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:unitID.valueString:valueString">
+      <path value="Address.line.extension.valueString" />
+      <sliceName value="valueString" />
+    </element>
+    <element id="Address.line.extension:additionalLocator">
+      <path value="Address.line.extension" />
+      <sliceName value="additionalLocator" />
+      <definition value="HouseNumberIndication - The indication used for addresses that do not consist of the usual street name and house number." />
+      <requirements value="Basisregistratie Persoonsgegevens 11.50 Aanduiding bij huisnummer" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator" />
+      </type>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.42" />
+        <comment value="HouseNumberIndication" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.42" />
+        <comment value="HouseNumberIndication" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.9" />
+        <comment value="HouseNumberIndication" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.50" />
+        <comment value="Aanduiding bij huisnummer" />
+      </mapping>
+    </element>
+    <element id="Address.line.extension:additionalLocator.valueString:valueString">
+      <path value="Address.line.extension.valueString" />
+      <sliceName value="valueString" />
+    </element>
+    <element id="Address.city">
+      <path value="Address.city" />
+      <requirements value="Basisregistratie Persoonsgegevens 11.70 Woonplaatsnaam" />
+      <alias value="Municipality" />
+      <alias value="woonplaats" />
+      <example>
+        <label value="Example city" />
+        <valueString value="Den Haag" />
+      </example>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.14" />
+        <comment value="Place of residence" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.14" />
+        <comment value="Place of residence" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.3" />
+        <comment value="PlaceOfResidence" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.70" />
+        <comment value="Woonplaatsnaam" />
+      </mapping>
+    </element>
+    <element id="Address.district">
+      <path value="Address.district" />
+      <comment value="District is sometimes known as county, but in some regions 'county' is used in place of city (municipality), so county name should be conveyed in city instead. In a Dutch address this element is used for the population of a &quot;gemeente&quot;" />
+      <requirements value="Basisregistratie Persoonsgegevens 09.10 Gemeente van inschrijving" />
+      <alias value="Gemeente" />
+      <example>
+        <label value="Example district" />
+        <valueString value="Wateringen" />
+      </example>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.16" />
+        <comment value="Municipality" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.16" />
+        <comment value="Municipality" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.4" />
+        <comment value="Municipality" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="09.10" />
+        <comment value="Gemeente van inschrijving" />
+      </mapping>
+    </element>
+    <element id="Address.state">
+      <path value="Address.state" />
+      <short value="Sub-unit of country (abbreviations ok)." />
+      <definition value="Sub-unit of a country with limited sovereignty in a federally organized country. A code may be used if codes are in common use (i.e. US 2 letter state codes). For Dutch addresses this element should contain the &quot;provincie&quot; code" />
+      <requirements value="Some (Dutch) cities have the same name in multiple provinces. Dutch examples include Bergen (Noord-Holland / Limburg) and  Geesteren (Gelderland / Overijssel)." />
+      <alias value="Provincie" />
+      <example>
+        <label value="Example province" />
+        <valueString value="ZH" />
+      </example>
+    </element>
+    <element id="Address.postalCode">
+      <path value="Address.postalCode" />
+      <comment value="Dutch postal codes have pattern '\d{4}[A-Z]{2}' so they do not have spaces. Systems can easily render postal codes with a space if necessary." />
+      <alias value="Postcode" />
+      <example>
+        <label value="Example postcode" />
+        <valueString value="9132AG" />
+      </example>
+      <condition value="nl-postal-code-pattern" />
+      <constraint>
+        <key value="nl-postal-code-pattern" />
+        <severity value="error" />
+        <human value="Dutch postal code pattern 'nnnnAA'" />
+        <expression value="(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\d{4}[A-Z]{2}$')" />
+        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\d{4}[A-Z]{2}$')" />
+      </constraint>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.15" />
+        <comment value="Postcode" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.15" />
+        <comment value="Postcode" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.6" />
+        <comment value="Postcode" />
+      </mapping>
+      <mapping>
+        <identity value="BRP" />
+        <map value="11.60" />
+        <comment value="Postcode" />
+      </mapping>
+    </element>
+    <element id="Address.country">
+      <path value="Address.country" />
+      <short value="Country (can be ISO 3166 3 letter code)" />
+      <definition value="A country (code) for the address." />
+      <comment value="The FHIR datatype does not properly support coding the country using a CodeableConcept or Coding datatype. If the sender supports coded countries, it SHALL send the coded value using the code-specification extension under Address.country." />
+      <alias value="land" />
+      <example>
+        <label value="Example country" />
+        <valueString value="NLD" />
+      </example>
+      <mapping>
+        <identity value="hcim-address-v2.0.1-2015EN" />
+        <map value="NL-CM:0.1.17" />
+        <comment value="Country" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v3.0-2016EN" />
+        <map value="NL-CM:0.1.17" />
+        <comment value="Country" />
+      </mapping>
+      <mapping>
+        <identity value="hcim-addressinformation-v1.0-2017EN" />
+        <map value="NL-CM:20.5.5" />
+        <comment value="Country" />
+      </mapping>
+    </element>
+    <element id="Address.country.extension">
+      <path value="Address.country.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="value" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Address.country.extension:LandGBACodelijst">
+      <path value="Address.country.extension" />
+      <sliceName value="LandGBACodelijst" />
+      <short value="LandGBACode" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/code-specification" />
+      </type>
+    </element>
+    <element id="Address.country.extension:LandGBACodelijst.valueCodeableConcept:valueCodeableConcept">
+      <path value="Address.country.extension.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <binding>
+        <strength value="required" />
+        <description value="LandGBACodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000" />
+          <display value="LandGBACodelijst" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Address.country.extension:LandISOCodelijst">
+      <path value="Address.country.extension" />
+      <sliceName value="LandISOCodelijst" />
+      <short value="LandISOCode" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://nictiz.nl/fhir/StructureDefinition/code-specification" />
+      </type>
+    </element>
+    <element id="Address.country.extension:LandISOCodelijst.valueCodeableConcept:valueCodeableConcept">
+      <path value="Address.country.extension.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <binding>
+        <strength value="required" />
+        <description value="LandISOCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000" />
+          <display value="LandISOCodelijst" />
+        </valueSetReference>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

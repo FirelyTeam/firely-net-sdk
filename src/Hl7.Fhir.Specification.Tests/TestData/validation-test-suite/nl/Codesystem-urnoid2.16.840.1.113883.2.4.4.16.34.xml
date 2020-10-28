@@ -1,0 +1,15 @@
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <url value="urn:oid:2.16.840.1.113883.2.4.4.16.34"/> 
+  <name value="NLExampleCS1"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2020-05-18"/> 
+  <publisher value="FHIR Project"/> 
+  <caseSensitive value="true"/> 
+  <content value="complete"/> 
+  <concept> 
+    <code value="6030"/> 
+    <display value="Nederland"/> 
+    <definition value="Nederland"/> 
+  </concept> 
+</CodeSystem> 

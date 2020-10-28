@@ -1,0 +1,32 @@
+{
+    "resourceType": "Questionnaire",
+	"id" : "q-enablewhen-me",
+    "url": "http://hl7.org/fhir/test/Questionnaire/q-enablewhen-me",
+    "status": "draft",
+    "item": [{
+            "type": "integer",
+            "linkId": "N0"
+        },
+        {
+            "type": "integer",
+            "linkId": "N1"
+        },
+        {
+            "type": "integer",
+            "required": true,
+            "linkId": "N2",
+			"enableBehavior" : "all",
+            "enableWhen": [{
+                    "question": "N0",
+                    "operator": "=",
+                    "answerInteger": 1
+                },
+                {
+                    "question": "N1",
+                    "operator": "=",
+                    "answerInteger": 1
+                }
+            ]
+        }
+    ]
+}

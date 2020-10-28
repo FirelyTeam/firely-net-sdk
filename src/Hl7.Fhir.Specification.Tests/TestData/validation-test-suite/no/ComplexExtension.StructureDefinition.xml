@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ComplexExtension" />
+  <url value="http://example.org/fhir/StructureDefinition/ComplexExtension" />
+  <name value="ComplexExtension" />
+  <status value="draft" />
+  <fhirVersion value="4.0.0" />
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <context>
+    <type value="element" />
+    <expression value="Address" />
+  </context>
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension.extension">
+      <path value="Extension.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Extension.extension:elementString">
+      <path value="Extension.extension" />
+      <sliceName value="elementString" />
+    </element>
+    <element id="Extension.extension:elementString.url">
+      <path value="Extension.extension.url" />
+      <fixedUri value="elementString" />
+    </element>
+    <element id="Extension.extension:elementString.value[x]">
+      <path value="Extension.extension.value[x]" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Extension.extension:elementCoding">
+      <path value="Extension.extension" />
+      <sliceName value="elementCoding" />
+    </element>
+    <element id="Extension.extension:elementCoding.url">
+      <path value="Extension.extension.url" />
+      <fixedUri value="elementCoding" />
+    </element>
+    <element id="Extension.extension:elementCoding.value[x]">
+      <path value="Extension.extension.value[x]" />
+      <type>
+        <code value="Coding" />
+      </type>
+    </element>
+    <element id="Extension.extension:elementCoding.value[x].system">
+      <path value="Extension.extension.value[x].system" />
+      <min value="1" />
+    </element>
+    <element id="Extension.extension:elementCoding.value[x].code">
+      <path value="Extension.extension.value[x].code" />
+      <min value="1" />
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url" />
+      <fixedUri value="http://example.org/fhir/StructureDefinition/ComplexExtension" />
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>

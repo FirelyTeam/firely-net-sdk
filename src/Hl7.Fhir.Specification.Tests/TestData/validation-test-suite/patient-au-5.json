@@ -1,0 +1,70 @@
+{
+  "resourceType" : "Patient",
+  "id" : "au-5",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example5</p><p><b>meta</b>: </p><p><b>identifier</b>: Medicare Number = 22968184811</p><p><b>name</b>: Sarah Simmons </p><p><b>telecom</b>: ph: (03) 4455 6677</p><p><b>gender</b>: female</p><p><b>birthDate</b>: Sep 7, 1977</p><p><b>address</b>: 55 Sarah Street Strahan TAS 7468 AU </p><p><b>generalPractitioner</b>: <a href=\"Practitioner-example3.html\">Generated Summary: id: example3; HPI-I = 8003611234567893; Francis Fernando </a></p><p><b>managingOrganization</b>: <a href=\"Organization-example3.html\">Generated Summary: id: example3; ABN = 51824754455; <span title=\"Codes: {http://hl7.org/fhir/organization-type prov}\">Healthcare Provider</span>; name: Devonport Family Medicine Clinic; reception@example.dfmc.com.au(WORK), fax: (03) 8543 5557(WORK), ph: (03) 8543 5556(WORK)</a></p><h3>Links</h3><table class=\"grid\"><tr><td>-</td><td><b>Other</b></td><td><b>Type</b></td></tr><tr><td>*</td><td><a href=\"RelatedPerson-example2.html\">Generated Summary: id: example2; Medicare Number = 22968184811; <span title=\"Codes: {http://hl7.org/fhir/v3/RoleCode MTH}\">mother</span>; Sarah Simmons ; ssimmons@example.amail.com.au(HOME), ph: (03) 4455 6677(HOME); gender: female; birthDate: Sep 7, 1977</a></td><td>seealso</td></tr></table></div>"
+  },
+  "identifier" : [
+    {
+      "type" : {
+        "coding" : [
+          {
+            "system" : "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code" : "MC",
+            "display" : "Patient's Medicare number"
+          }
+        ],
+        "text" : "Medicare Number"
+      },
+      "system" : "http://ns.electronichealth.net.au/id/medicare-number",
+      "value" : "22968184811",
+      "period" : {
+        "end" : "2022-12"
+      }
+    }
+  ],
+  "name" : [
+    {
+      "family" : "Simmons",
+      "given" : [
+        "Sarah"
+      ]
+    }
+  ],
+  "telecom" : [
+    {
+      "system" : "phone",
+      "value" : "(03) 4455 6677"
+    }
+  ],
+  "gender" : "female",
+  "birthDate" : "1977-09-07",
+  "address" : [
+    {
+      "line" : [
+        "55 Sarah Street"
+      ],
+      "city" : "Strahan",
+      "state" : "TAS",
+      "postalCode" : "7468",
+      "country" : "AU"
+    }
+  ],
+  "generalPractitioner" : [
+    {
+      "reference" : "Practitioner/example3"
+    }
+  ],
+  "managingOrganization" : {
+    "reference" : "Organization/example3"
+  },
+  "link" : [
+    {
+      "other" : {
+        "reference" : "RelatedPerson/example2"
+      },
+      "type" : "seealso"
+    }
+  ]
+}

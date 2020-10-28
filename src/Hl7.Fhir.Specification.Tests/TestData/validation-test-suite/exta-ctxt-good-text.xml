@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><Patient xmlns="http://hl7.org/fhir">
+	<id value="ext-ctxt-good-base"/>
+  <text>
+    <extension url="http://hl7.org/fhir/test/StructureDefinition/exta-ctxt-defn">
+      <valueBoolean value="true"/>
+    </extension>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">....</div>
+  </text>
+  <active value="true"/>
+</Patient>

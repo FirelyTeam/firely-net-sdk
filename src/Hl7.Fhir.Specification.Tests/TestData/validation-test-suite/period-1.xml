@@ -1,0 +1,10 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter> <!-- 1 -->
+    <name value="paramPeriod"/>
+    <valuePeriod>
+      <start value="2019-04-25T16:47:00Z"/>
+      <end value="2019-04-25"/>
+    </valuePeriod>
+  </parameter>
+</Parameters>
+

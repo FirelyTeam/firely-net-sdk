@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
-//TODO: Need to make everything async in 2.x validator
+                //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -314,15 +314,15 @@ namespace Hl7.Fhir.Validation
                     return outcome;
                 }
 
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
+                ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
             ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
-                    Binding b = binding.ToValidatable();
-                    outcome.Add(b.Validate(instance, vc));
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
-//TODO: make everything async in 2.x validator
+                //TODO: make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
 #pragma warning restore CS0618 // Type or member is obsolete
