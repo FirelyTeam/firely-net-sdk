@@ -1,12 +1,12 @@
 |DSTU2|STU3|R4|Released|
 |---|---|---|---|
-|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop-stu3)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/fhir-net-api/_apis/build/status/Continuous%20Build?branchName=develop-r4)](https://dev.azure.com/firely/fhir-net-api/_build?view=buildsHistory&definitionId=14)|[![Release status](https://vsrm.dev.azure.com/firely/_apis/public/Release/badge/d27985be-1c61-41fd-82e7-23e7a2f06dc3/1/2)](https://dev.azure.com/firely/fhir-net-api/_releaseDefinition?definitionId=1&_a=definition-pipeline)|
+|[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop-stu3)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop-r4)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Release status](https://vsrm.dev.azure.com/firely/_apis/public/Release/badge/d27985be-1c61-41fd-82e7-23e7a2f06dc3/1/2)](https://dev.azure.com/firely/firely-net-sdk/_releaseDefinition?definitionId=1&_a=definition-pipeline)|
 
 ## Introduction ##
 This is the official support API for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
 
 ## Release notes ##
-Read the releases notes on [fhir-net-api/releases](https://github.com/FirelyTeam/fhir-net-api/releases). You can find documentation about this API in [the Firely docs site][netapi-docu].
+Read the releases notes on [firely-net-sdk/releases](https://github.com/FirelyTeam/firely-net-sdk/releases). You can find documentation about this API in [the Firely docs site][netapi-docu].
 
 ## What's in the box?
 This library provides:
@@ -33,21 +33,21 @@ and develop branches in this repository below:
 
 |Spec version|Git branch|Core NuGet|
 |---|---|---|
-|R5 (experimental)| https://github.com/FirelyTeam/fhir-net-api/tree/develop-1.x/r5 | https://www.myget.org/feed/fhir-net-api/package/nuget/Hl7.Fhir.R5 |
-|R4| https://github.com/FirelyTeam/fhir-net-api/tree/develop-r4 | https://www.nuget.org/packages/Hl7.Fhir.R4 |
-|STU3| https://github.com/FirelyTeam/fhir-net-api/tree/develop-stu3 | https://www.nuget.org/packages/Hl7.Fhir.STU3 |
+|R5 (experimental)| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-1.x/r5 | https://www.myget.org/feed/firely-net-sdk/package/nuget/Hl7.Fhir.R5 |
+|R4| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-r4 | https://www.nuget.org/packages/Hl7.Fhir.R4 |
+|STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-stu3 | https://www.nuget.org/packages/Hl7.Fhir.STU3 |
 |DSTU 2.1| N/A| https://www.nuget.org/packages/Hl7.Fhir.DSTU21 |
-|DSTU2| https://github.com/FirelyTeam/fhir-net-api/tree/develop | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 |
-|DSTU1| https://github.com/FirelyTeam/fhir-net-api/tree/master-dstu1 | https://www.nuget.org/packages/Hl7.Fhir.DSTU |
+|DSTU2| https://github.com/FirelyTeam/firely-net-sdk/tree/develop | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 |
+|DSTU1| https://github.com/FirelyTeam/firely-net-sdk/tree/master-dstu1 | https://www.nuget.org/packages/Hl7.Fhir.DSTU |
 
 Please note that the source code for the FHIR .NET API is split up into two GitHub repos: one (with the branches listed above) with code that is specific to a FHIR release (this repo), and one that contains the code that is applicable across all FHIR releases (a separate [common repository][common-repo]).  This second repository is included in the first one using a Git Submodule, so all you have to do is check out the main repo (this one) and learn how to work with Submodules. To clone this repository with submodules, you can do:
 
-    git clone --recurse-submodules -j8 https://github.com/FirelyTeam/fhir-net-api.git .
+    git clone --recurse-submodules -j8 https://github.com/FirelyTeam/firely-net-sdk.git .
     
-Please refer to our [submodules overview](https://github.com/FirelyTeam/fhir-net-api/wiki/Clone-this-repository-with-submodule-common) for more details.
+Please refer to our [submodules overview](https://github.com/FirelyTeam/firely-net-sdk/wiki/Clone-this-repository-with-submodule-common) for more details.
 
 ## Support 
-We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/fhir-net-api/issues](https://github.com/FirelyTeam/fhir-net-api/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
+We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/firely-net-sdk/issues](https://github.com/FirelyTeam/firely-net-sdk/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netapi-zulip].
 
 ## Contributing ##
 We are welcoming contributors!
@@ -55,7 +55,7 @@ We are welcoming contributors!
 If you want to participate in this project, we're using [Git Flow][nvie] for our branch management, so please submit your commits using pull requests on the correct `develop`/`develop-stu3`/`develop-r4` branches as mentioned above! 
 
 [common-repo]: https://github.com/FirelyTeam/fhir-net-common
-[netapi-docu]: http://docs.fire.ly/fhirnetapi/index.html
+[netapi-docu]: http://docs.fire.ly/firelynetsdk/index.html
 [netapi-zulip]: https://chat.fhir.org/#narrow/stream/dotnet
 [nvie]: http://nvie.com/posts/a-successful-git-branching-model/
 [fhir-spec]: http://www.hl7.org/fhir
