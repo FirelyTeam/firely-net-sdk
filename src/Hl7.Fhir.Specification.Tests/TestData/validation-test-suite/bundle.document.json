@@ -1,0 +1,641 @@
+
+    {
+        "resourceType" : "Bundle",
+        "id" : "9e11848b-0e37-4bc6-92cf-153b0917cd22",
+        "identifier" : {
+          "value" : "889977665544",
+          "system" : "http://spms.min-saude.pt/SClinico/code"
+        },
+        "type" : "document",
+        "entry" : [
+          {
+            "fullUrl" : "http://spms.min-saude.pt/fhir/Composition/27eab09d-74bc-4ad3-95b1-d890b7db4c2b",
+            "resource" : {
+              "resourceType" : "Composition",
+              "id" : "27eab09d-74bc-4ad3-95b1-d890b7db4c2b",
+              "identifier" : {
+                "system" : "http://spms.min-saude.pt/SClinico/code",
+                "value" : "889977665544"
+              },
+              "status" : "final",
+              "type" : {
+                "coding" : [
+                  {
+                    "system" : "http://loinc.org",
+                    "code" : "18842-5",
+                    "display" : "Discharge Summary"
+                  }
+                ]
+              },
+              "subject" : {
+                "reference" : "Patient/94615767-9ba1-482c-8930-fdda1a0baea8"
+              },
+              "encounter" : {
+                "reference" : "Encounter/17bcea80-37a6-43ec-a40c-427ab904edd8"
+              },
+              "date" : "2019-10-02T16:48:19.000+00:00",
+              "author" : [
+                {
+                  "reference" : "Practitioner/88b07e2d-73dc-4b87-b1cf-c0d0eddd0e5c"
+                },
+                {
+                  "reference" : "Practitioner/09b68ca1-4088-48bd-9768-1c8bf6118607"
+                },
+                {
+                  "reference" : "Practitioner/ca85c061-8c81-4ff8-8188-cae8d231d872"
+                },
+                {
+                  "reference" : "Practitioner/46d2e8af-e3fb-408d-a042-43c3561291e3"
+                }
+              ],
+              "attester" : [
+                {
+                  "mode" : ["personal"],
+                  "party" : {
+                    "reference" : "Practitioner/46d2e8af-e3fb-408d-a042-43c3561291e3"
+                  }
+                }
+              ],
+              "title" : "Nota de alta de internamento",
+              "custodian" : {
+                "reference" : "Organization/08748631-6f66-46fd-a8c5-528b574dc33d"
+              },
+              "event" : [
+                {
+                  "detail" : [
+                    {
+                      "reference" : "Encounter/17bcea80-37a6-43ec-a40c-427ab904edd8"
+                    }
+                  ]
+                }
+              ],
+              "section" : [
+                {
+                  "title" : "Allergies",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "48765-2",
+                        "display" : "Allergies"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "AllergyIntolerance/4f9ad961-d5f1-4888-aa6c-05d003fce450"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Hospital course Narrative",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "8648-8",
+                        "display" : "Hospital course Narrative"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Observation/5da5de2d-93c8-40db-90b6-7d1763fed7f5"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Discharge diagnosis Narrative",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "78375-3",
+                        "display" : "Discharge diagnosis Narrative"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Encounter/17bcea80-37a6-43ec-a40c-427ab904edd8"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Discharge medications Narrative",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "75311-1",
+                        "display" : "Discharge medications Narrative"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "MedicationRequest/b684690b-bb71-45b3-9779-88fd89f1d0b5"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Admission diagnosis (narrative)",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "42347-5",
+                        "display" : "Admission diagnosis (narrative)"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Encounter/17bcea80-37a6-43ec-a40c-427ab904edd8"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Medications on admission (narrative)",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "42346-7",
+                        "display" : "Medications on admission (narrative)"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "MedicationAdministration/199a4838-e1ba-4408-8ca2-da6a826373da"
+                    },
+                    {
+                      "reference" : "MedicationAdministration/d6c8c9b2-da4e-4aac-9200-b79b05480402"
+                    },
+                    {
+                      "reference" : "MedicationAdministration/4db8b223-8c95-4554-9e7f-86906a6c80da"
+                    },
+                    {
+                      "reference" : "MedicationAdministration/d8adcea3-f539-4dcb-baef-f049bb5eae33"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Discharge diet (narrative)",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "42344-2",
+                        "display" : "Discharge diet (narrative)"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Observation/20b06357-2287-4246-b637-0c0c510ac2d5"
+                    }
+                  ]
+                },
+                {
+                  "title" : "History of Present illness Narrative",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "10164-2",
+                        "display" : "History of Present illness Narrative"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Observation/aaa443d5-222d-4e4b-8291-155750ba9bf6"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Plan of Care",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "18776-5",
+                        "display" : "Plan of care"
+                      }
+                    ]
+                  },
+                  "section" : [
+                    {
+                      "title" : "Proposta de monitorização e tratamento",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "PMT",
+                            "display" : "Proposta de monitorização e tratamento"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Observation/cfddbb48-045d-4853-b4f4-e18a2d72701f"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Orientação/agendamentos",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "ORI",
+                            "display" : "Orientação/agendamentos"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Appointment/ac28d16e-0631-4e9b-9bbf-873339010e29"
+                        },
+                        {
+                          "reference" : "Appointment/b54abdba-8f77-4900-9c79-bda7e0348eed"
+                        },
+                        {
+                          "reference" : "Appointment/e1574ddd-7a92-42cd-8a6f-733180dd1291"
+                        },
+                        {
+                          "reference" : "Appointment/5c5af0ca-ccc6-4821-91eb-ef32b7d483e6"
+                        },
+                        {
+                          "reference" : "Appointment/42e5f192-32aa-4eb2-a90e-7e3ff2f8d701"
+                        },
+                        {
+                          "reference" : "Appointment/c960cc20-15fb-4ef9-867d-d13c96750ea8"
+                        },
+                        {
+                          "reference" : "Appointment/f1d8748c-057e-437b-a8b2-5f7642250e5e"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Meios complementares de diagnóstico marcados",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "MCDTM",
+                            "display" : "Meios complementares de diagnóstico marcados"
+                          }
+                        ]
+                      },
+                      "emptyReason" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list-empty-reason",
+                            "code" : "not-found",
+                            "display" : "Not Found"
+                          }
+                        ],
+                        "text" : "Não foram encontrados registos para este utente"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "title" : "Functional status assessment note",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "47420-5",
+                        "display" : "Functional status assessment note"
+                      }
+                    ]
+                  },
+                  "section" : [
+                    {
+                      "title" : "Focos de diagnóstico de enfermagem",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "FDE",
+                            "display" : "Focos de diagnóstio de enfermagem"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Condition/3d4dcb01-5e84-4de3-bfd1-2c7a873acd74"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Atitudes Terapêuticas",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "ATI",
+                            "display" : "Atitudes terapêuticas"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Procedure/1cdba079-e745-4ff3-bfd6-6fae81238be8"
+                        },
+                        {
+                          "reference" : "Procedure/42077cf6-64c0-4309-ab0d-bb1859da03ae"
+                        },
+                        {
+                          "reference" : "Procedure/85b5f07c-f1cf-4038-be23-5ad2b9d89e92"
+                        },
+                        {
+                          "reference" : "Procedure/2afedeb5-0c0f-4e0a-a506-93f03c8bd382"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title" : "History of Procedures Document",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "47519-4",
+                        "display" : "History of Procedures Document"
+                      }
+                    ]
+                  },
+                  "section" : [
+                    {
+                      "title" : "Dispositivos implantáveis",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "DIS",
+                            "display" : "Dispositivos implantáveis"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Device/5b237d94-0ae3-49a2-9a8a-ef39607cc68d"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Intervenções Cirúrgicas",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "INT",
+                            "display" : "Intervenções cirúrgicas"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Procedure/59b211c5-32aa-4c28-91df-d81de43b1bd1"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Ventilação Mecânica",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "VEN",
+                            "display" : "Ventilação mecânica"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Procedure/ce38198b-f2e1-4625-85d7-5c58a9eb8c94"
+                        },
+                        {
+                          "reference" : "Procedure/4a42b0a8-d198-42fc-9658-d24a2214fc8d"
+                        },
+                        {
+                          "reference" : "Procedure/0ee5087f-d047-453a-afdc-d6eccba2d2df"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Infeção nosocomial",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "INF",
+                            "display" : "Infeção nosocomial"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "Procedure/a96a4c64-976a-42e5-938a-f54b844e07b0"
+                        },
+                        {
+                          "reference" : "Procedure/b18f9160-91eb-4d19-b7d2-25dc4e66cc2c"
+                        }
+                      ]
+                    },
+                    {
+                      "title" : "Meios complementares de diagnósticos efetuados",
+                      "code" : {
+                        "coding" : [
+                          {
+                            "system" : "http://spms.min-saude.pt/valueset-list",
+                            "code" : "MCDTE",
+                            "display" : "Meios complementares de diagnósticos efetuados"
+                          }
+                        ]
+                      },
+                      "entry" : [
+                        {
+                          "reference" : "ProcedureRequest/47d0cf17-65aa-4f65-abb0-1f4e4cf53f35"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/e8814151-03c6-4f85-9caf-a8ea606acb5c"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/1b1ae576-fae6-425c-a85b-78e222b269f7"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/7ed52dda-afde-4b4a-bb60-0b5600d598bd"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/8a426c75-119e-441e-bfea-55fdc50118ba"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/82a006cd-939b-4dde-8982-5f875ed862cc"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/cc8b9f10-cd3b-4240-8352-b8346cf48205"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/8b7fbb19-5ca1-4f47-8b0b-6fedcc543b5f"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/c8e08048-0c43-42b9-a611-6c92705a910d"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/26587c9f-5041-4313-ac03-ab8feda7951a"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/d65a5ce6-97fe-4959-9660-6c096d70b3a1"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/018aea83-70f9-44db-908b-bd8a0f475cd3"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/3346f637-c83f-4a3f-a82d-fbfce6286f3d"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/38ca8f90-71b2-44d9-a6cb-97aaf2df8781"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/c9320c07-569c-413f-8ffa-ef0fdaacac23"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/b4c2ec41-e1fe-43be-9ea4-97f34deca878"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/921f8560-5eb5-46fa-8dcd-0972756f5880"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/7de5bf65-09a5-4be8-8edb-9e909296e8e0"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/ff40f491-2a57-44ee-be62-19c63a5e5481"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/a2c80ea2-9b8d-46ce-a846-1b5b6a98d2a6"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/c9daa080-ef42-4b67-b252-566c4a334f81"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/206615ca-448a-418f-a287-96cb9e4ba4c4"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/307bc183-46fc-44f5-930d-af9602573204"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/a8ae7ec5-e2e4-402b-b578-4f52de17865f"
+                        },
+                        {
+                          "reference" : "ProcedureRequest/43dd4257-cd53-4cba-a851-beec3730c98f"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "title" : "Review of systems Narrative - Reporte",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "10187-3",
+                        "display" : "Review of systems Narrative Reporte"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Observation/74f5c1f7-e6d9-4cac-bff8-5f22bbbdd501"
+                    },
+                    {
+                      "reference" : "Observation/5957c0e2-ad3c-43e0-b45e-c002d2b45f05"
+                    }
+                  ]
+                },
+                {
+                  "title" : "Administrative information",
+                  "code" : {
+                    "coding" : [
+                      {
+                        "system" : "http://loinc.org",
+                        "code" : "87504-7",
+                        "display" : "Administrative information"
+                      }
+                    ]
+                  },
+                  "entry" : [
+                    {
+                      "reference" : "Patient/94615767-9ba1-482c-8930-fdda1a0baea8"
+                    },
+                    {
+                      "reference" : "Encounter/17bcea80-37a6-43ec-a40c-427ab904edd8"
+                    },
+                    {
+                      "reference" : "List/0f1eedb7-9d71-456b-b228-e910a9723dd6"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "fullUrl" : "http://spms.min-saude.pt/fhir/Patient/94615767-9ba1-482c-8930-fdda1a0baea8",
+            "resource" : {
+              "resourceType" : "Patient",
+              "id" : "94615767-9ba1-482c-8930-fdda1a0baea8",
+              "identifier" : [
+                {
+                  "type" : {
+                    "coding" : [
+                      {
+                        "system" : "http://hl7.org/fhir/v2/0203",
+                        "code" : "HC",
+                        "display" : "Health Card Number"
+                      }
+                    ],
+                    "text" : "NNU"
+                  },
+                  "system" : "http://spms.min-saude.pt/rnu/identifiers/patient-id",
+                  "value" : "383816471"
+                },
+                {
+                  "type" : {
+                    "coding" : [
+                      {
+                        "system" : "http://hl7.org/fhir/v2/0203",
+                        "code" : "MR",
+                        "display" : "Medical Record Number"
+                      }
+                    ],
+                    "text" : "Número do Processo"
+                  },
+                  "system" : "https://www.sns.gov.pt/hospitalfacilities/1137006/identifiers/patient-id",
+                  "value" : "99149257"
+                }
+              ],
+              "name" : [
+                {
+                  "text" : "MARTIM RICARDO FERREIRA",
+                  "given" : [
+                    "RICARDO",
+                    "FERREIRA"
+                  ],
+                  "family" : "MARTIM"
+                }
+              ],
+              "gender" : "male",
+              "birthDate" : "1943-11-24"
+              
+              
+            }
+          }
+        ]
+    }

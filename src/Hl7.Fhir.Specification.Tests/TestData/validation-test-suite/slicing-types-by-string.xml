@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Communication xmlns="http://hl7.org/fhir">
+  <status value="in-progress"/>
+  <payload>
+    <contentString value="test"/>
+  </payload>
+  <payload>
+    <contentAttachment>
+      <title value="some title"/>
+    </contentAttachment>  
+  </payload>
+  <payload>
+    <contentAttachment>
+      <title value="some other title"/>
+    </contentAttachment>  
+  </payload>
+</Communication>

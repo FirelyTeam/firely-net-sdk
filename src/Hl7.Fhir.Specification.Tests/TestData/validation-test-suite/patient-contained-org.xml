@@ -1,0 +1,20 @@
+<Patient xmlns="http://hl7.org/fhir">
+	<id value="patient-error-gender"/>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">
+      Check that profile validation checks contained resources - should fail because Organization is missing 'name' which is required by profile
+    </div>
+	</text>
+	<contained>
+    <Organization>
+      <id value="gp"/>
+      <identifier>
+        <value value="123"/>
+      </identifier>
+    </Organization>
+  </contained>
+  <generalPractitioner>
+    <reference value="#gp"/>
+  </generalPractitioner>
+</Patient>

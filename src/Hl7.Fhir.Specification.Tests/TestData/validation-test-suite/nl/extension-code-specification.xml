@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="code-specification" />
+  <url value="http://nictiz.nl/fhir/StructureDefinition/code-specification" />
+  <version value="1.0.1" />
+  <name value="Zib extension code specification" />
+  <title value="HCIM extension code-specification" />
+  <status value="active" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="Provides the specific HCIM code for a FHIR element that has a required binding to a FHIR ValueSet." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.1" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <contextType value="datatype" />
+  <context value="code" />
+  <context value="Coding" />
+  <context value="CodeableConcept" />
+  <context value="Address.country" />
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension">
+      <path value="Extension" />
+      <short value="Provides the specific HCIM code for a FHIR element that has a required binding to a FHIR ValueSet" />
+      <definition value="Defines a more specific coded value for a code or string. Especially useful for FHIR's required ValueSets. These extensions are primarily used on codes bound to a required value set, where you would like to use a more specific code than the codes in the bounded value set." />
+      <alias value="Bevat de specifieke code conform de zib, bij een FHIR-element die een verplichte koppeling heeft met een bepaalde FHIR waardelijst of een FHIR element die niet gecodeerd is gedefinieerd, terwijl de zib dit wel doet." />
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url" />
+      <fixedUri value="http://nictiz.nl/fhir/StructureDefinition/code-specification" />
+    </element>
+    <element id="Extension.value[x]:valueCodeableConcept">
+      <path value="Extension.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <min value="1" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

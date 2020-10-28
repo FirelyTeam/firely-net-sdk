@@ -1,0 +1,27 @@
+{
+    "resourceType": "Patient",
+    "meta": {
+        "profile": [
+            "http://fhir.nl/fhir/StructureDefinition/nl-core-patient"
+        ]
+    },
+    "address": [
+        {
+            "_country": {
+                "extension": [
+                    {
+                        "url": "http://nictiz.nl/fhir/StructureDefinition/code-specification",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "code": "NL",
+                                    "system": "urn:iso:std:iso:3166"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
