@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Organization xmlns="http://hl7.org/fhir">
+	<id value="ext-ctxt-bad-rtype"/>
+  <extension url="http://hl7.org/fhir/test/StructureDefinition/ext-ctxt-defn">
+    <valueBoolean value="true"/>
+  </extension>
+	<active value="true"/>
+  <name value="test org"/>
+</Organization>

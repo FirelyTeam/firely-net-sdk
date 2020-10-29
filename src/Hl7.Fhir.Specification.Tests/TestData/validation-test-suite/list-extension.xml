@@ -1,0 +1,12 @@
+<!-- this is all valid -->
+<List xmlns="http://hl7.org/fhir">
+  <!-- another comment -->
+  <id value="val1"/>
+  <status value="current">
+    <extension url="http://acme.com/some_url">
+      <valueCode value="code"/>
+    </extension>
+  </status>
+  <mode value="changes"/>
+</List>
+<!-- ending comment -->

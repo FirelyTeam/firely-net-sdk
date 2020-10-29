@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="slice-profile-and-local-profile"/>
+	<url value="http://hl7.org/fhir/StructureDefinition/slice-profile-and-local-profile"/>
+	<name value="slice-profile-and-local-profile"/>
+	<status value="draft"/>
+	<description value="Profile to test validation when slice has both a profile declaration and local constraints"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Patient"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Patient">
+			<path value="Patient"/>
+		</element>
+		<element id="Patient.identifier">
+			<path value="Patient.identifier"/>
+			<slicing>
+				<discriminator>
+					<type value="value"/>
+					<path value="type.coding.system"/>
+				</discriminator>
+				<discriminator>
+					<type value="value"/>
+					<path value="type.coding.code"/>
+				</discriminator>
+				<rules value="open"/>
+			</slicing>
+		</element>
+		<element id="Patient.identifier:foo">
+			<path value="Patient.identifier"/>
+			<sliceName value="foo"/>
+			<min value="1"/>
+			<type>
+				<code value="Identifier"/>
+				<!-- This profile isn't actually declaring anything new - but it's enough for test purposes.  In practice, it would point to something useful -->
+				<profile value="http://hl7.org/fhir/StructureDefinition/Identifier"/>
+			</type>
+		</element>
+		<element id="Patient.identifier:foo.type">
+			<path value="Patient.identifier.type"/>
+		</element>
+		<element id="Patient.identifier:foo.type.coding">
+			<path value="Patient.identifier.type.coding"/>
+		</element>
+		<element id="Patient.identifier:foo.type.coding.system">
+			<path value="Patient.identifier.type.coding.system"/>
+			<fixedUri value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+		</element>
+		<element id="Patient.identifier:foo.type.coding.code">
+			<path value="Patient.identifier.type.coding.code"/>
+			<fixedUri value="MR"/>
+		</element>
+	</differential>
+</StructureDefinition>

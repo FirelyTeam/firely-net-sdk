@@ -1,0 +1,57 @@
+<!--
+Conforms to the document-structure template
+ -->
+<Composition xmlns="http://hl7.org/fhir"> 
+ <id value="test-document-good"/>
+ <status value="final"/>
+ <type>
+   <text value="test document"/>
+ </type>
+ <date value="2018-11-06T07:14:00+11:00"/>
+ <author>
+   <display value="grahame grieve"/>
+ </author>
+ <title value="TestDocument"/>
+ <!-- codea section -->
+ <section> 
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+      <code value="code-a"/>
+    </coding>
+  </code>
+  <text>
+    <status value="additional"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Code A Section</div>
+  </text>
+ </section>
+ <!-- codeb section -->
+ <section> 
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+      <code value="code-b"/>
+    </coding>
+    <coding>
+      <system value="http://hl7.org/fhir/test/CodeSystem/other"/>
+      <code value="other"/>
+    </coding>
+  </code>
+  <text>
+    <status value="additional"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Code B Section</div>
+  </text>
+ </section>
+ <section> 
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+      <code value="code-c"/>
+    </coding>
+  </code>
+  <text>
+    <status value="additional"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">Code C Section</div>
+  </text>
+ </section>
+</Composition>

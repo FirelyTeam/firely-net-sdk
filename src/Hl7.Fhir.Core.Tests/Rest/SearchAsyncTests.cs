@@ -9,6 +9,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
+    [TestClass]
     public class FhirClientSearchAsyncTests
     {
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;

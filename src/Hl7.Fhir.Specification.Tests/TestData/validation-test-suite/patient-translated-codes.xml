@@ -1,0 +1,28 @@
+<Patient xmlns="http://hl7.org/fhir">
+	<id value="patient-error-gender"/>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">
+		  Test alternate displays and designations for codes
+    </div>
+	</text>
+	<contact>
+    <relationship>
+      <coding>
+        <system value="http://terminology.hl7.org/CodeSystem/v2-0131"/>
+        <code value="C"/>
+        <display value="alt-display"/>
+      </coding>
+    </relationship>
+    <relationship>
+      <coding>
+        <system value="http://terminology.hl7.org/CodeSystem/v2-0131"/>
+        <code value="N"/>
+        <display value="alt-designation"/>
+      </coding>
+    </relationship>
+    <name>
+      <text value="Someone"/>
+    </name>
+	</contact>
+</Patient>
