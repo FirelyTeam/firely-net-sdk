@@ -21,9 +21,8 @@ namespace Hl7.Fhir.Specification.Terminology
             var outcome = new OperationOutcome();
             if (message is { })
             {
-                var issue = Issue.TERMINOLOGY_SERVICE_FAILED;
-                issue.Severity = result ? OperationOutcome.IssueSeverity.Warning : OperationOutcome.IssueSeverity.Error;
-                outcome.AddIssue(message, issue);
+                var severity = result ? OperationOutcome.IssueSeverity.Warning : OperationOutcome.IssueSeverity.Error;
+                outcome.Add(OperationOutcome.ForMessage(message, OperationOutcome.IssueType.NotSupported, severity));
             }
             return outcome;
         }
