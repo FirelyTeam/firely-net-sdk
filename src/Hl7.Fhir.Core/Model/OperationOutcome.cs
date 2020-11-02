@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
+                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details != null ? _Details.DebuggerDisplay("Details.") : String.Empty));
                 }
             }
 
