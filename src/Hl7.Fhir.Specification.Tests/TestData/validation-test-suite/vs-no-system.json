@@ -1,0 +1,43 @@
+{
+  "resourceType" : "ValueSet",
+  "id" : "vs-no-system",
+  "url" : "http://hl7.org/fhir/test/ValueSet/vs-no-system",
+  "version" : "0.3.0",
+  "name" : "ValueSetWithComposeNoSystemOnExclude",
+  "title" : "ValueSetWithComposeNoSystemOnExclude",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2020-05-17",
+  "immutable" : false,
+  "copyright" : "This artifact includes content from LOINC®. LOINC codes are copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee. Terms & Conditions in https://loinc.org/license/",
+  "compose" : {
+    "include" : [
+      {
+        "system" : "http://loinc.org",
+        "filter" : [
+          {
+            "property" : "STATUS",
+            "op" : "=",
+            "value" : "ACTIVE"
+          },
+          {
+            "property" : "CLASSTYPE",
+            "op" : "=",
+            "value" : "1"
+          }
+        ]
+      }
+    ],
+    "exclude" : [
+      {
+        "filter" : [
+          {
+            "property" : "CLASS",
+            "op" : "regex",
+            "value" : "^(?!PATH\\.PROTOCOLS.*$).*"
+          }
+        ]
+      }
+    ]
+  }
+}

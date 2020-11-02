@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,10 +42,10 @@ namespace Hl7.Fhir.Rest
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage message, CancellationToken cancellationToken)
         {
-            var requestBody = message.Content != null ? await message.Content.ReadAsByteArrayAsync() : new byte[0];
+            var requestBody = message.Content != null ? await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false) : new byte[0];
             BeforeRequest(message, requestBody);
 
-            var response = await base.SendAsync(message, cancellationToken);
+            var response = await base.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
             AfterResponse(response, (await response.Content?.ReadAsByteArrayAsync() ?? new byte[0]));
 

@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
             if(prop.IsPrimitive)
             {
                 var reader = new PrimitiveValueReader(_current);
-                return reader.Deserialize(prop.ElementType);
+                return reader.Deserialize(prop.ImplementingType);
             }
 
             // A Choice property that contains a choice of any resource
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Serialization
 
             ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
-                : _inspector.ImportType(prop.ElementType);
+                : _inspector.ImportType(prop.ImplementingType);
 
             // Handle other Choices having any datatype or a list of datatypes
 
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Serialization
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now
             // assume the caller has Imported all types in the right (overriding) order.
-            ClassMapping result = _inspector.FindClassMappingByName(typeName);
+            ClassMapping result = _inspector.FindClassMapping(typeName);
 
             if (result == null)
                 ComplexTypeReader.RaiseFormatError(

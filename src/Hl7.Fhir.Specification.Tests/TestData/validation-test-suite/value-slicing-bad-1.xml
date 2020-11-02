@@ -1,0 +1,68 @@
+<List xmlns="http://hl7.org/fhir">
+  <contained>
+   <Basic>
+     <id value="i1"/>
+     <code>
+       <coding>
+         <system value="http://hl7.org/fhir/test/CodeSystem/profile-slicing-codes"/>
+         <code value="profile2"/>
+       </coding>
+     </code>
+   </Basic>
+  </contained>
+  <contained>
+   <Basic>
+     <id value="i2"/>
+     <code>
+       <coding>
+         <system value="http://hl7.org/fhir/test/CodeSystem/profile-slicing-codes"/>
+         <code value="profile2"/>
+       </coding>
+     </code>
+   </Basic>
+  </contained>
+  <contained>
+   <Basic>
+     <id value="i3"/>
+     <code>
+       <coding>
+         <system value="http://hl7.org/fhir/test/CodeSystem/profile-slicing-codes"/>
+         <code value="profile2"/>
+       </coding>
+     </code>
+   </Basic>
+  </contained>
+  <contained>
+   <Basic>
+     <id value="i4"/>
+     <code>
+       <coding>
+         <system value="http://hl7.org/fhir/test/CodeSystem/profile-slicing-codes"/>
+         <code value="profile3"/>
+       </coding>
+     </code>
+   </Basic>
+  </contained>
+  <status value="current"/>
+  <mode value="working"/>
+  <entry>
+    <item>
+      <reference value="#i1"/>
+    </item>
+  </entry>
+  <entry>
+    <item>
+      <reference value="#i2"/>
+    </item>
+  </entry>
+  <entry>
+    <item>
+      <reference value="#i3"/>
+    </item>
+  </entry>
+  <entry>
+    <item>
+      <reference value="#i4"/>
+    </item>
+  </entry>
+</List>

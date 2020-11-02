@@ -1,0 +1,120 @@
+<ValueSet xmlns="http://hl7.org/fhir">
+    <id value="2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000"/>
+    <meta>
+        <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset"/>
+      <!--<profile value="http://hl7.org/fhir/3.0/StructureDefinition/ValueSet"/>-->
+    </meta>
+    <extension url="http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod">
+        <valuePeriod>
+            <start value="2017-12-31T00:00:00+02:00"/>
+        </valuePeriod>
+    </extension>
+    <url value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3--20171231000000"/>
+    <identifier>
+        <use value="official"/>
+        <system value="http://art-decor.org/ns/oids/vs"/>
+        <value value="2.16.840.1.113883.2.4.3.11.60.40.2.20.5.3"/>
+    </identifier>
+    <version value="2017-12-31T00:00:00"/>
+    <name value="AdresSoortCodelijst"/>
+    <title value="AdresSoortCodelijst"/>
+    <status value="active"/>
+    <experimental value="false"/>
+    <publisher value="Registratie aan de bron"/>
+    <contact>
+        <name value="Registratie aan de bron"/>
+        <telecom>
+            <system value="url"/>
+            <value value="https://www.registratieaandebron.nl"/>
+        </telecom>
+        <telecom>
+            <system value="url"/>
+            <value value="https://zibs.nl"/>
+        </telecom>
+    </contact>
+    <description value="AdresSoortCodelijst"/>
+    <immutable value="false"/>
+    <compose>
+        <include>
+            <system value="http://hl7.org/fhir/v3/AddressUse"/>
+            <concept>
+                <code value="PST"/>
+                <display value="Postal Addres"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Postadres"/>
+                </designation>
+            </concept>
+            <concept>
+                <code value="HP"/>
+                <display value="Primary Home"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Officieel adres"/>
+                </designation>
+            </concept>
+            <concept>
+                <code value="PHYS"/>
+                <display value="Visit Address"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Woon-/verblijfadres"/>
+                </designation>
+            </concept>
+            <concept>
+                <code value="TMP"/>
+                <display value="Tempory Address"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Tijdelijk adres"/>
+                </designation>
+            </concept>
+            <concept>
+                <code value="WP"/>
+                <display value="Work Place"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Werkadres"/>
+                </designation>
+            </concept>
+            <concept>
+                <code value="HV"/>
+                <display value="Vacation Home"/>
+                <designation>
+                    <language value="nl-NL"/>
+                    <use>
+                        <system value="http://snomed.info/sct"/>
+                        <code value="900000000000013009"/>
+                        <display value="Synonym"/>
+                    </use>
+                    <value value="Vakantie adres"/>
+                </designation>
+            </concept>
+        </include>
+    </compose>
+</ValueSet>

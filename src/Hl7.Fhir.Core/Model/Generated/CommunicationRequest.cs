@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A request for information to be sent to a receiver
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("CommunicationRequest", IsResource=true)]
   [DataContract]
   public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource

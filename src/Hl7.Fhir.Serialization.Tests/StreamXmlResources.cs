@@ -1,12 +1,12 @@
-﻿using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
 #if NET40
 using ICSharpCode.SharpZipLib.Zip;
 #endif
@@ -116,8 +116,6 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             Debug.WriteLine($"Scanning took {sw.ElapsedMilliseconds / 250} ms");
         }
 
-#if !NETSTANDARD1_1
-
         [TestMethod]
         public void NavigateZipStream()
         {
@@ -134,25 +132,18 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 using (var entryStream = archive.GetInputStream(entry))
                 {
 #else
-            using (var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read))
-            {
-                var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
-                Assert.IsNotNull(entry);
+            using var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read);
+            var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
+            Assert.IsNotNull(entry);
 
-                using (var entryStream = entry.Open())
-                {
-#endif
-                    using (var navStream = new XmlNavigatorStream(entryStream, false))
-                    {
-                        while (navStream.MoveNext())
-                        {
-                            //Debug.WriteLine($"{navStream.Position} : {navStream.ResourceType} {(navStream.IsBundle ? "(Bundle)" : "")}");
-                            Assert.IsTrue(navStream.IsBundle);
-                            Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
-                        };
-                    }
-                }
-            }
+            using var entryStream = entry.Open();
+            using var navStream = new XmlNavigatorStream(entryStream, false);
+            while (navStream.MoveNext())
+            {
+                //Debug.WriteLine($"{navStream.Position} : {navStream.ResourceType} {(navStream.IsBundle ? "(Bundle)" : "")}");
+                Assert.IsTrue(navStream.IsBundle);
+                Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
+            };
 #endif
         }
     }

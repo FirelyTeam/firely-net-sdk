@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An amount of economic utility in some recognized currency
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Money")]
   public partial class Money : Quantity
   {
@@ -62,7 +60,7 @@ namespace Hl7.Fhir.Model
     }
 
     // TODO: Add code to enforce these constraints:
-    /// An amount of economic utility in some recognized currency.
+    // An amount of economic utility in some recognized currency.
   }
 
 }

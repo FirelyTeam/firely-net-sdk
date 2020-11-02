@@ -1,0 +1,170 @@
+{
+  "resourceType": "Bundle",
+  "id": "father",
+  "meta": {
+    "tag": [
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/v3-ActReason",
+        "code": "HTEST",
+        "display": "test health data"
+      }
+    ]
+  },
+  "identifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0"
+  },
+  "type": "document",
+  "entry": [
+    {
+      "fullUrl": "http://fhir.healthintersections.com.au/open/Composition/180f219f-97a8-486d-99d9-ed631fe4fc57",
+      "resource": {
+        "resourceType": "Composition",
+        "id": "180f219f-97a8-486d-99d9-ed631fe4fc57",
+        "meta": {
+          "lastUpdated": "2013-05-28T22:12:21Z"
+        },
+        "text": {
+          "status": "generated",
+          "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e\u003cp\u003e\u003cb\u003eGenerated Narrative with Details\u003c/b\u003e\u003c/p\u003e\u003cp\u003e\u003cb\u003eid\u003c/b\u003e: 180f219f-97a8-486d-99d9-ed631fe4fc57\u003c/p\u003e\u003cp\u003e\u003cb\u003emeta\u003c/b\u003e: \u003c/p\u003e\u003cp\u003e\u003cb\u003estatus\u003c/b\u003e: final\u003c/p\u003e\u003cp\u003e\u003cb\u003etype\u003c/b\u003e: Discharge Summary from Responsible Clinician \u003cspan\u003e(Details : {LOINC code \u002728655-9\u0027 \u003d \u0027Physician attending Discharge summary)\u003c/span\u003e\u003c/p\u003e\u003cp\u003e\u003cb\u003eencounter\u003c/b\u003e: \u003ca\u003ehttp://fhir.healthintersections.com.au/open/Encounter/doc-example\u003c/a\u003e\u003c/p\u003e\u003cp\u003e\u003cb\u003edate\u003c/b\u003e: 01/02/2013 12:30:02 PM\u003c/p\u003e\u003cp\u003e\u003cb\u003eauthor\u003c/b\u003e: \u003ca\u003eDoctor Dave\u003c/a\u003e\u003c/p\u003e\u003cp\u003e\u003cb\u003etitle\u003c/b\u003e: Discharge Summary\u003c/p\u003e\u003cp\u003e\u003cb\u003econfidentiality\u003c/b\u003e: N\u003c/p\u003e\u003c/div\u003e"
+        },
+        "status": "final",
+        "type": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "28655-9"
+            }
+          ],
+          "text": "Discharge Summary from Responsible Clinician"
+        },
+        "subject": {
+          "reference": "http://fhir.healthintersections.com.au/open/Patient/d1",
+          "display": "Eve Everywoman"
+        },
+        "encounter": {
+          "reference": "http://fhir.healthintersections.com.au/open/Encounter/doc-example"
+        },
+        "date": "2013-02-01T12:30:02Z",
+        "author": [
+          {
+            "reference": "Practitioner/example",
+            "display": "Doctor Dave"
+          }
+        ],
+        "title": "Discharge Summary"
+      }
+    },
+    {
+      "fullUrl": "http://fhir.healthintersections.com.au/open/Practitioner/example",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "example",
+        "meta": {
+          "lastUpdated": "2013-05-05T16:13:03Z"
+        },
+        "text": {
+          "status": "generated",
+          "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e\n\n            \u003cp\u003eDr Adam Careful\u003c/p\u003e\n\n          \u003c/div\u003e"
+        },
+        "identifier": [
+          {
+            "system": "http://www.acme.org/practitioners",
+            "value": "23"
+          }
+        ],
+        "name": [
+          {
+            "family": "Careful",
+            "given": [
+              "Adam"
+            ],
+            "prefix": [
+              "Dr"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "http://fhir.healthintersections.com.au/open/Encounter/doc-example",
+      "resource": {
+        "resourceType": "Encounter",
+        "id": "doc-example",
+        "meta": {
+          "lastUpdated": "2013-05-05T16:13:03Z"
+        },
+        "text": {
+          "status": "generated",
+          "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e Admitted to Orthopedics Service,\n                        Middlemore Hospital between Jan 20 and Feb ist 2013 \u003c/div\u003e"
+        },
+        "identifier": [
+          {
+            "value": "S100"
+          }
+        ],
+        "status": "finished",
+        "class": {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+          "code": "IMP",
+          "display": "inpatient encounter"
+        },
+        "type": [
+          {
+            "text": "Orthopedic Admission"
+          }
+        ],
+        "subject": {
+          "reference": "Patient/d1"
+        },
+        "period": {
+          "start": "2013-01-20T12:30:02Z",
+          "end": "2013-02-01T12:30:02Z"
+        },
+        "hospitalization": {
+          "dischargeDisposition": {
+            "text": "Discharged to care of GP"
+          }
+        }
+      }
+    },
+    {
+      "fullUrl": "http://fhir.healthintersections.com.au/open/Patient/d1",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "d1",
+        "text": {
+          "status": "generated",
+          "div": "\u003cdiv xmlns\u003d\"http://www.w3.org/1999/xhtml\"\u003e\n\n            \u003ch1\u003eEve Everywoman\u003c/h1\u003e\n\n          \u003c/div\u003e"
+        },
+        "active": true,
+        "name": [
+          {
+            "text": "Eve Everywoman",
+            "family": "Everywoman1",
+            "given": [
+              "Eve"
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-555-2003",
+            "use": "work"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1955-01-06",
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "2222 Home Street"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

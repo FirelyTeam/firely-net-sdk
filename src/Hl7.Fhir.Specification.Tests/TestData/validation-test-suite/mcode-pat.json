@@ -1,0 +1,98 @@
+{
+  "resourceType": "Patient",
+  "id": "1",
+  "meta": {
+    "versionId": "1",
+    "profile": [
+      "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-patient"
+    ]
+  },
+  "extension": [
+    {
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+      "extension": [
+        {
+          "url": "ombCategory",
+          "valueCoding": {
+            "system": "urn:oid:2.16.840.1.113883.6.238",
+            "code": "2076-8",
+            "display": "Native Hawaiian or Other Pacific Islander"
+          }
+        },
+        {
+          "url": "text",
+          "valueString": "Native Hawaiian Or Other Pacific Islander"
+        }
+      ]
+    },
+    {
+      "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+      "extension": [
+        {
+          "url": "ombCategory",
+          "valueCoding": {
+            "system": "urn:oid:2.16.840.1.113883.6.238",
+            "code": "2186-5",
+            "display": "Not Hispanic or Latino"
+          }
+        },
+        {
+          "url": "text",
+          "valueString": "Black Or African American"
+        }
+      ]
+    }
+  ],
+  "identifier": [
+    {
+      "use": "usual",
+      "type": {
+        "coding": [
+          {
+            "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+            "code": "MR"
+          }
+        ]
+      },
+      "system": "urn:oid:1.2.36.146.595.217.0.1",
+      "value": "12345",
+      "period": {
+        "start": "2001-05-06"
+      },
+      "assigner": {
+        "display": "Acme Healthcare"
+      }
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Chalmers",
+      "given": [
+        "Peter",
+        "James"
+      ]
+    },
+    {
+      "use": "usual",
+      "given": [
+        "Jim"
+      ]
+    },
+    {
+      "use": "maiden",
+      "family": "Windsor",
+      "given": [
+        "Peter",
+        "James"
+      ],
+      "period": {
+        "end": "2002"
+      }
+    }
+  ],
+  "gender": "female",
+  "birthDate": "1990-02-12",
+  "deceasedDateTime": "2020-03-20T00:00:00+03:00"
+}

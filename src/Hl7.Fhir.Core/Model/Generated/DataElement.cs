@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Resource data element
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("DataElement", IsResource=true)]
   [DataContract]
   public partial class DataElement : Hl7.Fhir.Model.DomainResource

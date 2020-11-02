@@ -359,6 +359,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity;
@@ -382,6 +383,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -425,18 +427,22 @@ namespace Hl7.Fhir.Model
 
         public static bool IsInstanceTypeFor(string superclass, string subclass)
         {
-            var superType = FhirTypeNameToFhirType(superclass);
-            var subType = FhirTypeNameToFhirType(subclass);
+            if (superclass == subclass) return true;
+
+            var superType = GetTypeForFhirType(superclass);
+            var subType = GetTypeForFhirType(subclass);
 
             if (subType == null || superType == null) return false;
 
-            return IsInstanceTypeFor(superType.Value, subType.Value);
+            return IsInstanceTypeFor(superType, subType);
         }
 
-        private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
-                            FHIRAllTypes.Count, FHIRAllTypes.Money };
-        private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
-        private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
+        {
+            if (superclass == subclass) return true;
+
+            return superclass.IsAssignableFrom(subclass);
+        }
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
@@ -453,16 +459,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                if (superclass == FHIRAllTypes.Element)
-                    return true;
-                else if (superclass == FHIRAllTypes.Quantity)
-                    return QUANTITY_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.String)
-                    return STRING_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.Integer)
-                    return INTEGER_SUBCLASSES.Contains(subclass);
-                else
-                    return false;
+                return superclass == FHIRAllTypes.Element;
             }
         }
 

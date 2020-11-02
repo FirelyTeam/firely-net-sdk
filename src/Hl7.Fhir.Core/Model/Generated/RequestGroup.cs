@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// A group of related requests
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("RequestGroup", IsResource=true)]
   [DataContract]
   public partial class RequestGroup : Hl7.Fhir.Model.DomainResource

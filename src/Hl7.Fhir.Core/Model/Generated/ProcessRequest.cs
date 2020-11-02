@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Request to perform some action on or in regards to an existing resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ProcessRequest", IsResource=true)]
   [DataContract]
   public partial class ProcessRequest : Hl7.Fhir.Model.DomainResource

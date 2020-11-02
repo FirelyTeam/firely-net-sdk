@@ -1,0 +1,12 @@
+{
+  "resourceType" : "Patient",
+  "meta" : {
+    "extension" : [{
+      "url" : "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-must-display",
+      "valueAnnotation" : {
+        "text": "Test Text"
+      }
+    }]
+  },
+  "name" : [{ "text" : "Test Name"}}]  
+}

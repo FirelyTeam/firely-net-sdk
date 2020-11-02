@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// An action that is being or was performed on a patient
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Procedure", IsResource=true)]
   [DataContract]
   public partial class Procedure : Hl7.Fhir.Model.DomainResource

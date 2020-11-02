@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Observation xmlns="http://hl7.org/fhir">
+  <status value="final"/>
+	<code>
+	  <text value="Anxiety disorder of childhood OR adolescence"/>
+	</code>
+	<subject>
+		<reference value="Patient/example"/>
+	</subject>
+</Observation>

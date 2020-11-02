@@ -1,0 +1,711 @@
+{
+  "resourceType" : "ValueSet",
+  "id" : "DocumentEntry.typeCode",
+  "meta" : {
+    "source" : "http://art-decor.org/fhir/ValueSet/2.16.756.5.30.1.127.3.10.1.27--20191103131150",
+    "profile" : [
+      "http://hl7.org/fhir/StructureDefinition/shareablevalueset"
+    ]
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod",
+      "valuePeriod" : {
+        "start" : "2019-11-03T13:11:50+01:00"
+      }
+    }
+  ],
+  "url" : "http://fhir.ch/ig/ch-epr-term/ValueSet/DocumentEntry.typeCode",
+  "identifier" : [
+    {
+      "use" : "official",
+      "system" : "http://art-decor.org/ns/oids/vs",
+      "value" : "2.16.756.5.30.1.127.3.10.1.27"
+    }
+  ],
+  "version" : "2.0.1",
+  "name" : "DocumentEntry.typeCode",
+  "title" : "DocumentEntry.typeCode",
+  "status" : "active",
+  "experimental" : false,
+  "date" : "2019-11-15T10:02:59+01:00",
+  "publisher" : "eHealth Suisse",
+  "contact" : [
+    {
+      "name" : "eHealth Suisse",
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "www.e-health-suisse.ch"
+        }
+      ]
+    }
+  ],
+  "description" : "Type of document as per Annex 3  EPRO-FDHA.\n      The code defines a document’s type (e.g. discharge report, laboratory report). Each document type should be assigned to precisely one document class.\n    ",
+  "immutable" : false,
+  "copyright" : "This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.",
+  "compose" : {
+    "include" : [
+      {
+        "system" : "http://snomed.info/sct",
+        "concept" : [
+          {
+            "code" : "371529009",
+            "display" : "History and physical report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Anamnese / Untersuchungsbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Anamnèse / rapport d’analyse"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Anamnesi / Rapporto di visita medica"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "History and physical report"
+              }
+            ]
+          },
+          {
+            "code" : "419891008",
+            "display" : "Record artifact (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Nicht näher bezeichnetes Dokument"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Document non précisé"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Documento non meglio specificato"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Record artifact"
+              }
+            ]
+          },
+          {
+            "code" : "721965002",
+            "display" : "Laboratory order (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Laborauftrag"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Mandat d’analyse en laboratoire"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Richiesta di analisi di laboratorio"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Laboratory Order"
+              }
+            ]
+          },
+          {
+            "code" : "721966001",
+            "display" : "Pathology order (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Pathologieauftrag"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Mandat de rapport d’examen pathologique"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Richiesta di esame istologico"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Pathology order"
+              }
+            ]
+          },
+          {
+            "code" : "4201000179104",
+            "display" : "Imaging report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Befundbericht zur Bildgebung"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport de résultat relatif à l’imagerie"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Referto di immaginografia"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Imaging report"
+              }
+            ]
+          },
+          {
+            "code" : "737427001",
+            "display" : "Clinical Management plan (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Behandlungsplan"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Plan de traitement"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Piano di trattamento"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Clinical Management plan"
+              }
+            ]
+          },
+          {
+            "code" : "765492005",
+            "display" : "Non-drug prescription record (record artifact)",
+            "designation" : [
+              {
+                "language" : "en-US",
+                "value" : "Non-drug prescription"
+              },
+              {
+                "language" : "de-CH",
+                "value" : "Nicht-Arzneimittel-Verschreibung / Rezept"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Prescription sans médicaments / ordonnance"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Prescrizione non di medicamenti"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              }
+            ]
+          },
+          {
+            "code" : "773130005",
+            "display" : "Nursing care plan (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Pflegeplan"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Plan de soins"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Piano di cura"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Nursing care plan"
+              }
+            ]
+          },
+          {
+            "code" : "736055001",
+            "display" : "Rehabilitation care plan (record articact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Rehabilitationsplan"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Plan de réhabilitation"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Piano di riabilitazione"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Rehabilitation care plan"
+              }
+            ]
+          },
+          {
+            "code" : "761938008",
+            "display" : "Medical Prescription record (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Arzneimittel-Verschreibung / Rezept"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Prescription de médicaments / ordonnance"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Prescrizione di medicamenti"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Medical Prescription record"
+              }
+            ]
+          },
+          {
+            "code" : "722446000",
+            "display" : "Allergy record (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Allergieausweis"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Carnet des allergies"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Passaporto delle allergie"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Allergy record"
+              }
+            ]
+          },
+          {
+            "code" : "772786005",
+            "display" : "Medical certificate (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Ärztliches Attest"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Certificat médical"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Certificato medico"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Medical certificate"
+              }
+            ]
+          },
+          {
+            "code" : "373942005",
+            "display" : "Discharge summary (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Austrittsbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport de sortie"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Rapporto di dimissione"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Discharge summary"
+              }
+            ]
+          },
+          {
+            "code" : "371535009",
+            "display" : "Transfer summary report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Überweisungsbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport de transfert"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Rapporto di trasferimento"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Transfer summary report"
+              }
+            ]
+          },
+          {
+            "code" : "445300006",
+            "display" : "Emergency department record (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Notfallberichtt"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport d’urgence"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Referto di pronto soccorso"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Emergency department record"
+              }
+            ]
+          },
+          {
+            "code" : "445418005",
+            "display" : "Professional allied to medicine clinical report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Dokument ausserhalb des Behandlungskontextes"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Document hors contexte de traitement"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Documento al di fuori del contesto trattato"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Professional allied to medicine clinical report"
+              }
+            ]
+          },
+          {
+            "code" : "371530004",
+            "display" : "Clinical consultation report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Beurteilung durch Fachspezialisten"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Évaluation par des spécialistes"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Valutazione dello specialista"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Consultation report"
+              }
+            ]
+          },
+          {
+            "code" : "4241000179101",
+            "display" : "Laboratory report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Laborbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport de laboratoire"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Referto di laboratorio"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Laboratory report"
+              }
+            ]
+          },
+          {
+            "code" : "371526002",
+            "display" : "Operative report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Operationsbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport d’opération"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Rapporto operatorio"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Operative report"
+              }
+            ]
+          },
+          {
+            "code" : "371532007",
+            "display" : "Progress report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Verlaufsbericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport d’historique"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Rapporto sul decorso"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Progress note"
+              }
+            ]
+          },
+          {
+            "code" : "900000000000471006",
+            "display" : "Image reference (foundation metadata concept)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Bild"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Image"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Immagine"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Image"
+              }
+            ]
+          },
+          {
+            "code" : "41000179103",
+            "display" : "Immunization record (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Impfausweis"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Carnet de vaccination"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Certificato di vaccinazione"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Immunization record"
+              }
+            ]
+          },
+          {
+            "code" : "371528001",
+            "display" : "Pathology report (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Pathologiebericht"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Rapport d’examen pathologique"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Referto istologico"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Pathology report"
+              }
+            ]
+          },
+          {
+            "code" : "721912009",
+            "display" : "Medication summary document (record artifact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Medikationsliste"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Liste de médication"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Elenco dei medicamenti"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Medication summary document"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "system" : "urn:oid:2.16.756.5.30.1.127.3.4",
+        "concept" : [
+          {
+            "code" : "2161000195103",
+            "display" : "Imaging order (record articact)",
+            "designation" : [
+              {
+                "language" : "de-CH",
+                "value" : "Bildgebungsauftrag"
+              },
+              {
+                "language" : "fr-CH",
+                "value" : "Mandat d’imagerie"
+              },
+              {
+                "language" : "it-CH",
+                "value" : "Richiesta di immaginografia"
+              },
+              {
+                "language" : "rm-CH",
+                "value" : "TODO"
+              },
+              {
+                "language" : "en-US",
+                "value" : "Imaging Order"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

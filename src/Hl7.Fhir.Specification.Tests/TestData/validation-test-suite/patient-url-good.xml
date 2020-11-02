@@ -1,0 +1,9 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="pat-good"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      some text in no particular language. <a href="link.html">Link</a> <a href="http://example.com/link.html">Absolute Link</a>
+    </div>
+  </text>
+</Patient>

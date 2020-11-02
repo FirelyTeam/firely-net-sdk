@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Contact information
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ContactDetail")]
   [DataContract]
   public partial class ContactDetail : Hl7.Fhir.Model.DataType

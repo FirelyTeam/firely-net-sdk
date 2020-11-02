@@ -1,0 +1,42 @@
+<ValueSet xmlns="http://hl7.org/fhir">
+    <id value="2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000"/>
+    <meta>
+        <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset"/>
+      <!--<profile value="http://hl7.org/fhir/3.0/StructureDefinition/ValueSet"/>-->
+    </meta>
+    <extension url="http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod">
+        <valuePeriod>
+            <start value="2017-12-31T00:00:00+02:00"/>
+        </valuePeriod>
+    </extension>
+    <url value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000"/>
+    <identifier>
+        <use value="official"/>
+        <system value="http://art-decor.org/ns/oids/vs"/>
+        <value value="2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2"/>
+    </identifier>
+    <version value="2017-12-31T00:00:00"/>
+    <name value="LandISOCodelijst"/>
+    <title value="LandISOCodelijst"/>
+    <status value="active"/>
+    <experimental value="false"/>
+    <publisher value="Registratie aan de bron"/>
+    <contact>
+        <name value="Registratie aan de bron"/>
+        <telecom>
+            <system value="url"/>
+            <value value="https://www.registratieaandebron.nl"/>
+        </telecom>
+        <telecom>
+            <system value="url"/>
+            <value value="https://zibs.nl"/>
+        </telecom>
+    </contact>
+    <description value="ISO 3166-1 (alpha-2) - Alle waarden"/>
+    <immutable value="false"/>
+    <compose>
+        <include>
+            <system value="urn:iso:std:iso:3166"/>
+        </include>
+    </compose>
+</ValueSet>

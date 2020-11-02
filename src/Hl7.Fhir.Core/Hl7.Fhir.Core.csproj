@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;netstandard1.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;netstandard1.6</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -44,13 +44,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
@@ -59,58 +52,5 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Model\Generated\Template-Bindings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Bindings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-DataTypeModel.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-Model.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ModelInfo.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Model\Generated\Template-Bindings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Children.ttinclude">
-      <Generator>
-      </Generator>
-    </None>
-    <None Update="Model\Generated\Template-DataTypeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ModelInfo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ProfiledDataTypes.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>

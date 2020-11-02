@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Group of multiple entities
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("Group", IsResource=true)]
   [DataContract]
   public partial class Group : Hl7.Fhir.Model.DomainResource

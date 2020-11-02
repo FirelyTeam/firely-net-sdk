@@ -1,0 +1,9 @@
+<Basic xmlns="http://hl7.org/fhir">
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/ValueSet/account-type"/>
+      <code value="132037003"/>
+      <display value="Pineywoods pig breed"/>
+    </coding>
+  </code>
+</Basic>

@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Information about patient's relatives, relevant for patient
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("FamilyMemberHistory", IsResource=true)]
   [DataContract]
   public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource

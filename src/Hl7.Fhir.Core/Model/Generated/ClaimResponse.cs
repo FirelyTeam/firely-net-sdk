@@ -45,9 +45,7 @@ namespace Hl7.Fhir.Model
   /// <summary>
   /// Remittance resource
   /// </summary>
-#if !NETSTANDARD1_1
   [Serializable]
-#endif
   [FhirType("ClaimResponse", IsResource=true)]
   [DataContract]
   public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource

@@ -1,0 +1,48 @@
+{
+    "resourceType": "Patient",    
+    "name": [
+        {
+            "use": "official",
+            "family": "Meyer",
+            "given": [
+                "Niels",
+                "Christian"
+            ],
+            "prefix": [
+                "Mr"
+            ]
+        },
+        {
+            "use": "usual",
+            "given": [
+                "Bubber"
+            ]
+        }
+    ],
+    "maritalStatus": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+                "code": "M",
+                "display": "Married"
+            }
+        ]
+    },
+    "identifier": [
+        {
+            "system": "urn:oid:1.2.208.176.1.2",
+            "value": "1112640001"
+        }
+    ],
+    "gender": "male",
+    "birthDate": "1964-12-11",
+    "generalPractitioner": [
+        {
+            "identifier": {
+                "system": "urn:oid:1.2.208.176.1.1",
+                "value": "73456734567345673456"
+            },
+            "display": "Charlottenlund Lægehus"
+        }
+    ]
+}
