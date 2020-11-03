@@ -18,11 +18,13 @@ namespace Hl7.Fhir.Model
 
         public static OperationOutcome ForMessage(string message, OperationOutcome.IssueType code, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
-            return new OperationOutcome() {
-                      Issue = new List<OperationOutcome.IssueComponent>()
-                            { new OperationOutcome.IssueComponent() 
-                                    { Severity = severity, Code = code, Diagnostics = message } 
-                            } };
+            return new OperationOutcome()
+            {
+                Issue = new List<OperationOutcome.IssueComponent>()
+                            { new OperationOutcome.IssueComponent()
+                                    { Severity = severity, Code = code, Diagnostics = message }
+                            }
+            };
         }
 
         [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
@@ -35,7 +37,7 @@ namespace Hl7.Fhir.Model
             var result = OperationOutcome.ForMessage(e.Message, type, severity);
             var ie = e.InnerException;
 
-            while(ie != null)
+            while (ie != null)
             {
                 result.Issue.Add(new IssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
                 ie = ie.InnerException;
@@ -56,7 +58,7 @@ namespace Hl7.Fhir.Model
             if (Success)
                 textBuilder.Append("Overall result: SUCCESS");
             else
-                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors+Fatals, Warnings);
+                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors + Fatals, Warnings);
             textBuilder.AppendLine();
 
             if (Issue.Any())
@@ -119,7 +121,7 @@ namespace Hl7.Fhir.Model
             {
                 get
                 {
-                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details != null ? _Details.DebuggerDisplay("Details.") : String.Empty));
+                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details?.DebuggerDisplay("Details.") ?? "(no details)");
                 }
             }
 
