@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
       [EnumLiteral("not_first", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the first")]
-      NotFirst,
+      Not_first,
       /// <summary>
       /// Only process this rule for the last in the list
       /// (system: http://hl7.org/fhir/map-source-list-mode)
@@ -170,13 +170,13 @@ namespace Hl7.Fhir.Model
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
       [EnumLiteral("not_last", "http://hl7.org/fhir/map-source-list-mode"), Description("All but the last")]
-      NotLast,
+      Not_last,
       /// <summary>
       /// Only process this rule is there is only item
       /// (system: http://hl7.org/fhir/map-source-list-mode)
       /// </summary>
       [EnumLiteral("only_one", "http://hl7.org/fhir/map-source-list-mode"), Description("Enforce only one")]
-      OnlyOne,
+      Only_one,
     }
 
     /// <summary>
