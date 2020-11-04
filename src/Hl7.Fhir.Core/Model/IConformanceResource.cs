@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     {
         // I think DataElement should have Description too
         [NotMapped]
-        [Obsolete("This property is internal only, and doesn't actually exist in the FHIR object model")]
+        [Obsolete("This property is internal only, and doesn't actually exist in the FHIR object model", true)]
         public Markdown Description
         {
             get { return null; }
