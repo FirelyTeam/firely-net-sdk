@@ -126,13 +126,13 @@ namespace Hl7.Fhir.Model
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("MORN.early", "http://hl7.org/fhir/event-timing"), Description("Early Morning")]
-      MORNEarly,
+      MORN_early,
       /// <summary>
       /// Event occurs during the late morning. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("MORN.late", "http://hl7.org/fhir/event-timing"), Description("Late Morning")]
-      MORNLate,
+      MORN_late,
       /// <summary>
       /// Event occurs around 12:00pm. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
@@ -150,13 +150,13 @@ namespace Hl7.Fhir.Model
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("AFT.early", "http://hl7.org/fhir/event-timing"), Description("Early Afternoon")]
-      AFTEarly,
+      AFT_early,
       /// <summary>
       /// Event occurs during the late afternoon. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("AFT.late", "http://hl7.org/fhir/event-timing"), Description("Late Afternoon")]
-      AFTLate,
+      AFT_late,
       /// <summary>
       /// Event occurs during the evening. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
@@ -168,13 +168,13 @@ namespace Hl7.Fhir.Model
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("EVE.early", "http://hl7.org/fhir/event-timing"), Description("Early Evening")]
-      EVEEarly,
+      EVE_early,
       /// <summary>
       /// Event occurs during the late evening. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
       /// </summary>
       [EnumLiteral("EVE.late", "http://hl7.org/fhir/event-timing"), Description("Late Evening")]
-      EVELate,
+      EVE_late,
       /// <summary>
       /// Event occurs during the night. The exact time is unspecified and established by institution convention or patient interpretation.
       /// (system: http://hl7.org/fhir/event-timing)
