@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patient xmlns="http://hl7.org/fhir">
+	<id value="profile-version-reference-test-instance" />
+	<meta>
+    <profile value="http://hl7.org/fhir/test/StructureDefinition/profile-version-reference-test-profile|0.2"/>
+	</meta>
+	<name>
+    <given value="Bob"/>
+	</name>
+</Patient>

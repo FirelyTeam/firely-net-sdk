@@ -1,0 +1,50 @@
+{
+    "resourceType": "CarePlan",
+    "id": "example",
+    "text": {
+        "status": "additional",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\">test careplan</div>"
+    },
+    "status": "active",
+    "intent": "plan",
+    "subject": {
+        "reference": "Patient/123"
+    },
+    "activity": [
+        {
+            "reference": {
+                "display": "Prenatal vitamin MedicationRequest"
+            }
+        },
+        {
+            "detail": {
+                "kind": "Appointment",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://example.org/mySystem",
+                            "code": "1an"
+                        }
+                    ],
+                    "text": "First Antenatal encounter"
+                },
+                "status": "scheduled",
+                "doNotPerform": false,
+                "scheduledTiming": {
+                    "repeat": {
+                        "boundsPeriod": {
+                            "start": "2013-02-14",
+                            "end": "2013-02-28"
+                        },
+                        "offset": 1,
+                        "when": [
+                            "ACM",
+                            "AC"
+                        ]
+                    }
+                },
+                "description": "The first antenatal encounter. This is where a detailed physical examination is performed.             and the pregnanacy discussed with the mother-to-be."
+            }
+        }
+    ]
+}

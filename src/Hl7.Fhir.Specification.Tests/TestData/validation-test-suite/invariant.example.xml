@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Practitioner xmlns="http://hl7.org/fhir">
+  <meta>
+    <profile value = "https://example.de/fhir/StructureDefinition/MyPractitioner"/>
+  </meta>
+  <active value="true"/>
+  <name>
+    <use value = "temp"/>
+    <family value="Meier"/>
+    <given value="Maria"/>
+    <given value="Anna"/>
+    <prefix value = "Dr.med."/>
+  </name>
+  <name>
+    <use value = "maiden"/>
+    <family value="Müller"/>
+    <given value="Maria"/>
+    <given value="Anna"/>
+    <prefix value = "Dr.med."/>
+  </name>
+  <telecom>
+    <system value="phone" />
+    <value value= "030-1234567"/>
+    <use value = "work"/>
+  </telecom>
+  <telecom>
+    <system value="email" />
+    <value value= "meierA@hno.de"/>
+    <use value = "work"/>
+  </telecom>
+    <address>
+    <use value = "work"/>
+    <type value = "physical"/>
+    <state value = "DE-BE"/>
+    <postalCode value = "10117"/>
+    <country value = "DE"/>
+  </address>
+</Practitioner>

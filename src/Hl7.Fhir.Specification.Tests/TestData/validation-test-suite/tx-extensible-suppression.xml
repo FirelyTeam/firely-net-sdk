@@ -1,0 +1,20 @@
+<ValueSet xmlns="http://hl7.org/fhir"> 
+ <url value="http://hl7.org/fhir/test/ValueSet/tx-extensible-suppression"/>
+ <name value="SomeName"/>
+ <status value="active"/>
+ <compose>  
+  <include> 
+   <system value="http://something/something"/>
+   <concept>  
+    <code value="something"/>
+    <designation>  
+     <use>
+       <system value="http://hl7.org/fhir/test/CodeSystem/something"/>
+       <code value="something"/>
+     </use>
+     <value value="something"/>
+    </designation>
+   </concept>
+  </include>
+ </compose>
+</ValueSet>

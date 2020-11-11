@@ -34,6 +34,8 @@ namespace Hl7.Fhir.Specification.Tests
                 return;
             if (path.Contains("Type Slicing"))
                 return;
+            if (path.Contains("validation-test-suite"))
+                return;
 
 
             var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();

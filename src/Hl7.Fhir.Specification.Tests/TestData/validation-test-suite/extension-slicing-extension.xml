@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="extActionType"/>
+  <url value="http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType"/>
+  <version value="0.0.5"/>
+  <name value="ActionType"/>
+  <title value="Action Type"/>
+  <status value="draft"/>
+  <experimental value="false"/>
+  <date value="2020-01-05T00:00:00-07:00"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <context>
+    <type value="element"/>
+    <expression value="PlanDefinition.action"/>
+  </context>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Extension">
+      <path value="Extension"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url"/>
+      <type>
+        <code value="uri"/>
+      </type>
+      <fixedUri value="http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType"/>
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]"/>
+      <type>
+        <code value="code"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

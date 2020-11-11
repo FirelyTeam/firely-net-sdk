@@ -1,0 +1,23 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="568584c9-6f10-4f80-8658-be04bb64a698" />
+	<url value="urn:oid:568584c9-6f10-4f80-8658-be04bb64a698" />
+	<version value="4.0.0" />
+	<name value="Patient address profile" />
+	<status value="draft" />
+	<fhirVersion value="4.0.0" />
+	<kind value="complex-type" />
+	<abstract value="false" />
+	<type value="Patient" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Patient.address">
+			<path value="Patient.address" />
+      <type>
+        <code value="Address" />
+        <profile value="urn:oid:29a8b2a7-070f-4383-af2c-bdea61d358c9" />
+        <profile value="urn:oid:81812c1b-6be6-47ab-9518-975b068a6557" />
+      </type>
+		</element>
+	</differential>
+</StructureDefinition>

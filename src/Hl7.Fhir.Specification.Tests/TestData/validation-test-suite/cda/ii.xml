@@ -1,0 +1,54 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="II"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+  <version value="0.0.1"/>
+  <name value="II"/>
+  <title value="II: InstanceIdentifier (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2019-12-12T22:24:25+00:00"/>
+  <publisher value="HL7"/>
+  <description value="An identifier that uniquely identifies a thing or object. Examples are object identifier for HL7 RIM objects, medical record number, order id, service catalog item id, Vehicle Identification Number (VIN), etc. Instance identifiers are defined based on ISO object identifiers."/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="II"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="II">
+      <path value="II"/>
+      <definition
+                  value="An identifier that uniquely identifies a thing or object. Examples are object identifier for HL7 RIM objects, medical record number, order id, service catalog item id, Vehicle Identification Number (VIN), etc. Instance identifiers are defined based on ISO object identifiers."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="II.extension">
+      <path value="II.extension"/>
+      <representation value="xmlAttr"/>
+      <label value="Extension"/>
+      <definition
+                  value="A character string as a unique identifier within the scope of the identifier root."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="II.root">
+      <path value="II.root"/>
+      <representation value="xmlAttr"/>
+      <label value="Root"/>
+      <definition
+                  value="A unique identifier that guarantees the global uniqueness of the instance identifier. The root alone may be the entire instance identifier."/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8"?>
+
+<CodeSystem xmlns="http://hl7.org/fhir">
+  <id value="icd11-mms"/>
+  <url value="http://id.who.int/icd11/mms"/>
+  <version value="2019-04"/>
+  <name value="ICD11MMS"/>
+  <title value="ICD-11 MMS Linearization"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2019-04-06"/>
+  <publisher value="WHO"/>
+  <copyright value="Consult WHO For terms of use"/>
+  <caseSensitive value="true"/>
+  <valueSet value="http://id.who.int/icd11/ValueSet/all-MMS"/>
+  <hierarchyMeaning value="classified-with"/>
+  <compositional value="true"/>
+  <versionNeeded value="true"/>
+  <content value="complete"/>
+  <concept id="1185467033">
+    <code value="1B20.20"/>
+    <display value="Type I leprosy reaction"/>
+    <definition value="This phenomenon, also named downgrading reaction,&#x001D; occurs in borderline leprosy states and is associated with a decrease in cell-mediated immunity with a shift towards the lepromatous end of the clinical spectrum"/>
+  </concept>
+</CodeSystem>

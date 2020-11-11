@@ -1,0 +1,26 @@
+{
+    "resourceType": "Questionnaire",
+    "url": "http://example.com/Questionnaire/testQ",
+    "status": "draft",
+    "item": [{
+        "linkId": "change",
+        "type": "choice",
+        "options": {
+            "reference": "#includesVS"
+        }
+    }],
+    "contained": [{
+        "resourceType": "ValueSet",
+        "url": "http://example.com/ValueSet/testVS",
+        "id": "includesVS",
+        "status": "active",
+        "expansion": {
+            "identifier": "urn:uuid:1f503a0a-b45d-406e-9bfa-43e78a25fe97",
+            "timestamp": "2020-06-23T12:08:51.687Z",
+            "contains": [{
+                "system": "http://snomed.info/sct",
+                "code": "55011004"
+            }]
+        }
+    }]
+}

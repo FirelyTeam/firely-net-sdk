@@ -1,0 +1,27 @@
+<Person xmlns="http://hl7.org/fhir">
+	<address>
+	<!-- Norwegian address: http://hl7.no/fhir/StructureDefinition/no-basis-Address -->
+	<!-- Norwegian basisprofil for Address resource adding Norwegian specific property information, official use of address and further explanation of the use for the data-elements in a Norwegian address. -->
+		<extension url="http://example.org/fhir/StructureDefinition/SimpleExtension">
+		<!-- Identification of a real property in Norway is defined using gårdsnummer, bruksnummer and kommunenummer. In addition real property can be rented out, the area of the real property that is rented is measured and is further identified by its festenummer. In addition some real property is split into sections identified by its seksjonsnummer. -->
+			<valueString value="streng"/>
+		</extension>
+		<extension url="http://example.org/fhir/StructureDefinition/ComplexExtension">
+			<extension url="elementString">
+				<valueString value="ugradert"/>
+			</extension>
+			<extension url="elementCoding">
+				<valueCoding>
+					<system value="urn:iso:std:iso:3166"/>
+					<code value="NO"/>
+				</valueCoding>
+			</extension>
+		</extension>
+		<use value="home"/>
+		<line value="Nyhaugveien 3"/>
+		<city value="BERGEN"/> <!-- Poststed -->
+		<district value="BERGEN"/> <!-- Kommunenavn -->
+		<postalCode value="5067"/> <!-- postnummer -->
+		<country value="NO"/> <!-- land (er overflødig i norge -->
+	</address>
+</Person>

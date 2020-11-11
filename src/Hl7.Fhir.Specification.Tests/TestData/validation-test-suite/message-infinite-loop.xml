@@ -1,0 +1,489 @@
+<Bundle xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <id value="d3e5cc68-9d33-4b77-98b7-fa48da8b0f06"/>
+  <meta>
+    <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/ITK-Message-Bundle-1"/>
+  </meta>
+  <identifier>
+    <value value="504bff5b-f048-4add-8e42-09b6150c5106"/>
+  </identifier>
+  <type value="message"/>
+  <entry>
+    <fullUrl value="urn:uuid:ed5909a3-b7fe-417e-ab34-fb674844c9a0"/>
+    <resource>
+      <MessageHeader>
+        <id value="ed5909a3-b7fe-417e-ab34-fb674844c9a0"/>
+        <meta>
+          <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/ITK-MessageHeader-2"/>
+        </meta>
+        <extension url="https://fhir.nhs.uk/STU3/StructureDefinition/Extension-ITK-MessageHandling-2">
+          <extension url="BusAckRequested">
+            <valueBoolean value="false"/>
+          </extension>
+          <extension url="InfAckRequested">
+            <valueBoolean value="true"/>
+          </extension>
+          <extension url="RecipientType">
+            <valueCoding>
+              <system value="https://fhir.nhs.uk/STU3/CodeSystem/ITK-RecipientType-1"/>
+              <code value="FA"/>
+              <display value="For Action"/>
+            </valueCoding>
+          </extension>
+          <extension url="MessageDefinition">
+            <valueReference>
+              <reference value="https://fhir.nhs.uk/STU3/MessageDefinition/ITK-eDischarge-MessageDefinition-Instance-1"/>
+            </valueReference>
+          </extension>
+          <extension url="SenderReference">
+            <valueString value="NULL"/>
+          </extension>
+          <extension url="LocalExtension">
+            <valueString value="NULL"/>
+          </extension>
+        </extension>
+        <event>
+          <system value="https://fhir.nhs.uk/STU3/CodeSystem/ITK-MessageEvent-2"/>
+          <code value="ITK003D"/>
+          <display value="ITK eDischarge"/>
+        </event>
+        <receiver>
+          <reference value="urn:uuid:81ec3a28-a34a-400d-acf1-6d57832633ca"/>
+        </receiver>
+        <sender>
+          <reference value="urn:uuid:90ea7469-5e8c-4a45-8de0-e9866c2f6848"/>
+        </sender>
+        <timestamp value="2018-12-11T09:41:16-00:00"/>
+        <source>
+          <endpoint value="NOWOT004"/>
+        </source>
+        <focus>
+          <reference value="urn:uuid:5152d044-f569-4ab4-bff8-bb69f55fea98"/>
+        </focus>
+      </MessageHeader>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:90ea7469-5e8c-4a45-8de0-e9866c2f6848"/>
+    <resource>
+      <Practitioner>
+        <id value="90ea7469-5e8c-4a45-8de0-e9866c2f6848"/>
+        <meta>
+          <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-ITK-Header-Practitioner-1"/>
+        </meta>
+        <identifier>
+          <system value="https://fhir.nhs.uk/Id/sds-user-id"/>
+          <value value="033345750510"/>
+        </identifier>
+        <name>
+          <family value="Bibi"/>
+          <given value="Sugra"/>
+          <prefix value="Ms"/>
+        </name>
+      </Practitioner>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:81ec3a28-a34a-400d-acf1-6d57832633ca"/>
+    <resource>
+      <Organization>
+        <id value="81ec3a28-a34a-400d-acf1-6d57832633ca"/>
+        <meta>
+          <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-ITK-Header-Organization-1"/>
+        </meta>
+        <identifier>
+          <system value="https://fhir.nhs.uk/Id/ods-organization-code"/>
+          <value value="A111111"/>
+        </identifier>
+      </Organization>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:5152d044-f569-4ab4-bff8-bb69f55fea98"/>
+    <resource>
+      <Bundle>
+        <id value="5152d044-f569-4ab4-bff8-bb69f55fea98"/>
+        <meta>
+          <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/ITK-Document-Bundle-1"/>
+        </meta>
+        <identifier>
+          <system value="https://tools.ietf.org/html/rfc4122"/>
+          <value value="48aefa89-2b26-4dcb-9346-9ae8c0a354c9"/>
+        </identifier>
+        <type value="document"/>
+        <entry>
+          <fullUrl value="urn:uuid:2178176b-99c7-4b09-9628-099dbccc9886"/>
+          <resource>
+            <Composition>
+              <id value="2178176b-99c7-4b09-9628-099dbccc9886"/>
+              <meta>
+                <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-ITK-OPL-Composition-1"/>
+              </meta>
+              <!-- Extension to carry details of the Correspondence Care Setting Type. -->
+              <extension url="https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareSettingType-1">
+                   <coding>
+                    <system value="http://snomed.info/sct" />
+                    <code value="310160007" />
+                    <display value="Ophthalmology service" />
+                  </coding>
+              </extension>
+              <identifier>
+                <system value="https://tools.ietf.org/html/rfc4122"/>
+                <value value="020ba2cc-396b-4a09-b559-52ff84b019ab"/>
+              </identifier>
+              <status value="final"/>
+              <type>
+                <!--Outpatient letter -->
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="823681000000100"/>
+                  <display value="Outpatient letter"/>
+                </coding>
+              </type>
+              <subject>
+                <reference value="urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+              </subject>
+              <!--Reference to the clinical encounter or type of care this documentation is associated with.-->
+              <encounter>
+                <reference value="urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b"/>
+              </encounter>
+              <!--The composition editing time, when the composition was last logically changed by the author.-->
+              <date value="2018-01-23T14:34:00-00:00"/>
+              <!--Identifies who is responsible for the information in the composition, not necessarily who typed it in-->
+              <author>
+                <reference value="urn:uuid:b8fe561b-6b36-46f5-b6bb-433529955b8c"/>
+              </author>
+              <title value="Outpatient letter"/>
+              <!--Identifies the organization responsible for ongoing maintenance of and access to the composition/document information.-->
+              <custodian>
+                <reference value="urn:uuid:97775e71-21d7-4f2d-aadb-2f3f5a1da6a6"/>
+              </custodian>
+              <section>
+                <title value="Allergies and adverse reactions"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="886921000000105"/>
+                    <display value="Allergies and adverse reactions"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Allergies and adverse reactions Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Attendance details"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="1077881000000105"/>
+                    <display value="Attendance details"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Attendance details Text-</p>
+                  </div>
+                </text>
+                <entry>
+                  <reference value="urn:uuid:a7f1f367-144b-4bf3-8c65-a0826787986b"/>
+                </entry>
+              </section>
+              <section>
+                <title value="Clinical summary"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="887181000000106"/>
+                    <display value="Clinical summary"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Clinical summary Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Diagnoses"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="887161000000102"/>
+                    <display value="Diagnoses"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Diagnoses Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Referrer details"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="1052891000000108"/>
+                    <display value="Referrer details"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Referrer details Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Examination finding"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="715851000000102"/>
+                    <display value="Examination findings"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Examination findings Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="History"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="717121000000105"/>
+                    <display value="History"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>History Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Medications and medical devices"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="933361000000108"/>
+                    <display value="Medications and medical devices"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Medications and medical devices Text</p>
+                  </div>
+                </text>
+                <entry>
+                  <reference value="urn:uuid:16bbba8a-ba9b-46ea-b571-a64dba136a2a"/>
+                </entry>
+              </section>
+              <section>
+                <title value="Procedures"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="887171000000109"/>
+                    <display value="Procedures"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Procedures Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Plan and requested actions"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="887201000000105"/>
+                    <display value="Plan and requested actions"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Plan and requested actions Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Information and advice given"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="1052951000000105"/>
+                    <display value="Information and advice given"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Information and advice given Text</p>
+                  </div>
+                </text>
+              </section>
+              <section>
+                <title value="Patient demographics"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="886731000000109"/>
+                    <display value="Patient demographics"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Patient demographics Text</p>
+                  </div>
+                </text>
+                <entry>
+                  <reference value="urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+                </entry>
+              </section>
+              <section>
+                <title value="Person completing record"/>
+                <code>
+                  <coding>
+                    <system value="http://snomed.info/sct"/>
+                    <code value="887231000000104"/>
+                    <display value="Person completing record"/>
+                  </coding>
+                </code>
+                <text>
+                  <status value="generated"/>
+                  <div xmlns="http://www.w3.org/1999/xhtml">
+                    <p>Person completing record Text</p>
+                  </div>
+                </text>
+              </section>
+            </Composition>
+          </resource>
+        </entry>
+        <entry>
+          <fullUrl value="urn:uuid:75624dcb-fdae-4129-adec-953644046c54"/>
+          <resource>
+            <AllergyIntolerance>
+              <id value="75624dcb-fdae-4129-adec-953644046c54"/>
+              <meta>
+                <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-ITK-AllergyIntolerance-1"/>
+              </meta>
+              <identifier>
+                <system value="https://tools.ietf.org/html/rfc4122"/>
+                <value value="d8c0bd1f-1c12-4065-bc29-fa181920dd21"/>
+              </identifier>
+              <clinicalStatus value="active"/>
+              <verificationStatus value="confirmed"/>
+              <code>
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="9290701000001101"/>
+                  <display value="Optrex"/>
+                </coding>
+              </code>
+              <patient>
+                <reference value="urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+              </patient>
+            </AllergyIntolerance>
+          </resource>
+        </entry>
+        <entry>
+          <fullUrl value="urn:uuid:3d7d07c0-8ed2-43ea-92d4-1adad6e315fc"/>
+          <resource>
+            <List>
+              <id value="3d7d07c0-8ed2-43ea-92d4-1adad6e315fc"/>
+              <meta>
+                <profile value="https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-ITK-Allergy-List-1" />
+              </meta>
+              <identifier>
+                <system value="https://tools.ietf.org/html/rfc4122"/>
+                <value value="95affce1-842d-4ef4-81f4-d559313f739d"/>
+              </identifier>
+              <status value="current"/>
+              <mode value="snapshot"/>
+              <code>
+                <coding>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="886921000000105"/>
+                  <display value="Allergies and adverse reactions"/>
+                </coding>
+              </code>
+              <subject>
+                <reference value="urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+              </subject>
+            </List>
+          </resource>
+        </entry>
+        <entry>
+          <fullUrl value="urn:uuid:9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+          <resource>
+            <Patient>
+              <id value="9439fa97-f1a9-438d-8a9c-80f52bcbce64"/>
+              <meta>
+                <profile value="https://fhir.hl7.org.uk/STU3/StructureDefinition/CareConnect-Patient-1"/>
+              </meta>
+              <identifier>
+                <extension url="https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1">
+                  <valueCodeableConcept>
+                    <coding>
+                      <system value="https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-NHSNumberVerificationStatus-1"/>
+                      <code value="01"/>
+                      <display value="Number present and verified"/>
+                    </coding>
+                  </valueCodeableConcept>
+                </extension>
+                <system value="https://fhir.nhs.uk/Id/nhs-number"/>
+                <value value="1234567890"/>
+              </identifier>
+              <identifier>
+                <system value="https://fhir.nhs.uk/Id/local-patient-identifier"/>
+                <value value="G654321"/>
+              </identifier>
+              <active value="true"/>
+              <name>
+                <use value="official"/>
+                <family value="Patfamily"/>
+                <given value="Patgiven"/>
+                <prefix value="Mr"/>
+              </name>
+              <telecom>
+                <system value="phone"/>
+                <value value="null"/>
+                <use value="mobile"/>
+              </telecom>
+              <telecom>
+                <system value="email"/>
+                <value value="null"/>
+                <use value="home"/>
+              </telecom>
+              <gender value="male"/>
+              <birthDate value="1950-01-01"/>
+              <address>
+                <use value="home"/>
+                <line value=" 1 Whitehall Quay, Leeds"/>
+                <postalCode value="LS1 4HR"/>
+              </address>
+            </Patient>
+          </resource>
+        </entry>
+      </Bundle>
+    </resource>
+  </entry>
+</Bundle>

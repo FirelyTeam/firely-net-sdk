@@ -1,0 +1,536 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <identifier>
+    <system value="urn:ietf:rfc:3986" />
+    <value value="b4096d47-5fba-4267-a4d3-7ec9aa6093f0" />
+  </identifier>
+  <type value="document" />
+  <entry>
+    <fullUrl value="1fe46da3-595d-44aa-ab3d-3e2350d99636" />
+    <resource>
+      <Composition>
+        <id value="1fe46da3-595d-44aa-ab3d-3e2350d99636" />
+        <text>
+            <status value="generated" />
+            <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>【入院目的】　
+            ＰＣＩスタンバイ目的</p>
+            <p>【既往歴】
+            小児気管支喘息
+                喘息</p>
+            <p>【現病歴】
+            初発労作型狭心症で松田病院より紹介。
+            ここ1ヶ月労作時の胸痛出現。逆流性食道炎と思っていたが軽快為ないため前医受診。
+                CTにてLAD等狭窄認め、精査加療目的で入院となる。</p>
+            <p>【入院中経過】
+            2019年1月28日に心カテ実施。
+            LAD　#1 25% #6　75％　iFR0.90-0.91(#6　distal で0.94-0.95になり#6の病変部で1.00までjump)  #9　90％ #12 99%
+            心カテ直前に最近も喘息有りとのことで念のため、ソル・メルコート500を点滴した。
+                そのまま#12にPCI追加guide　BL3.5。CaravelにSion blueのせて持ち込むも病変部をクロスできず。XTRに交換してクロスに成功。尖端造影で確認。TREK2.0*20で前拡張。IVUSでみると#12入口部中間部にプラークとrupture様所見もあり。（12月にACＳになった可能性も有り）ステントでカバーする方針としてＤＥＳ(Xience sierra2.25*18をLCX＃11の狭窄後分岐justからカバー,最大9気圧）IVUSではjustから1ストラット分がLCX#11に出ている感じではあるがカバーはできている。末梢は血栓様所見にみえた。血管造影も問題なく特に解離所見などもなく手技終了とした。特に問題なく1月30日に退院した。</p>
+            <p>【患者への説明内容】
+            狭心症の検査と治療を実施した。当科2月27日外来で状態チェックする。1年後に心カテフォローします。
+            【退院後の診療計画（検査予定，処方，再来係への引継ぎ事項）】
+            次回当科2月27日外来予約あり。</p>
+            <p>【処方】
+            バイアスピリン錠１００ｍｇ 1 錠 １日１回朝食後　　　　　 　メインテート錠２．５ｍｇ 1 錠 １日１回朝食後 
+            クレストール錠２．５ｍｇ 1 錠 １日１回朝食後　　　　　　 　 エフィエント錠３．７５ｍｇ 1 錠 １日１回朝食後 
+            ムコダイン錠２５０mg 3 錠 １日３回に分服毎食後 　　　 　パルミコート２００μｇタービュヘイラー５６吸入 1 V１回２吸入１日２回吸入
+            ラベプラゾールNa錠10mg　１錠　１日１回内服朝食後
+            </p></div>
+        </text>
+        <status value="preliminary" />
+        <title value="退院時サマリー" />
+        <type>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="18842-5" />
+            <display value="Discharge Summary" />
+          </coding>
+          <text value="Discharge Summary" />
+        </type>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <date value="2019-04-11T16:37:53+09:00" />
+        <section>
+          <title value="admissionDetail" />
+          <entry>
+            <reference value="1c46f165-cb84-4931-9e34-318f459d9782" />
+          </entry>
+        </section>
+          <section>
+          <title value="careteam" />
+          <entry>
+            <reference value="13083ac1-7956-496b-a8bf-e6057a9f2add" />
+          </entry>
+        </section>
+        <section>
+          <title value="来院理由" />
+          <code>
+            <coding>
+              <system value="http://loinc.org" />
+              <code value="29299-5" />
+            </coding>
+            <text value="Reason for visit Narrative" />
+          </code>
+          <text>
+            <status value="additional" />
+            <div xmlns="http://www.w3.org/1999/xhtml">\n\n
+<p>平成19年喘息と診断を受けた。平成20年7月喘息の急性増悪にて当院呼吸器内科入院。退院後HL7医院にてFollowされていた</p><p>平成21年10月20日頃より右足首にじんじん感が出現。左足首、両手指にも認めるようになった。同時に37℃台の熱発出現しWBC28000、Eosi58%と上昇していた</p><p>このとき尿路感染症が疑われセフメタゾン投与されるも改善せず。WBC31500、Eosi64%と上昇、しびれ感の増悪認めた。またHb 7.3 Ht 20.0と貧血を認めた</p><p>膠原病、特にChuge-stress-syndoromeが疑われ平成21年11月8日当院膠原病内科入院となった</p></div>
+          </text>
+        </section>
+        <section>
+          <title value="observations" />
+          <entry>
+            <reference value="36939539-03ab-4383-b839-e0b081bbbe4a" />
+          </entry>
+          <entry>
+            <reference value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+          </entry>
+          <entry>
+            <reference value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+          </entry>
+        </section>
+          <section>
+          <title value="produces" />
+          <entry>
+            <reference value="Produce001" />
+          </entry>
+        </section>
+          <section>
+          <title value="devices" />
+          <entry>
+            <reference value="Device001" />
+          </entry>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+    <resource>
+      <Patient>
+        <id value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        <identifier>
+          <system value="2.16.840.1.113883.2.2.3.10.1.2&quot;" />
+          <value value="PID" />
+        </identifier>
+        <name>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation">
+            <valueString value="SYL" />
+          </extension>
+          <use value="official" />
+          <family value="トウキョウ" />
+          <given value="ハナコ" />
+        </name>
+        <name>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation">
+            <valueString value="IDE" />
+          </extension>
+          <use value="official" />
+          <family value="東京" />
+          <given value="花子" />
+        </name>
+        <gender value="female" />
+        <birthDate value="1937-07-23">
+        </birthDate>
+        <address>
+          <use value="home" />
+          <line value="新橋2丁目5番5号" />
+          <city value="港区" />
+          <state value="東京都" />
+          <postalCode value="105-0004" />
+          <country value="日本" />
+        </address>
+        <telecom>
+            <system value="phone" />
+            <value value="tel:03-3506-8010" />
+        </telecom>
+        <contact>
+          <telecom>
+            <system value="phone" />
+            <value value="tel:03-3506-8010" />
+          </telecom>
+        </contact>
+        <managingOrganization>
+          <reference value="2f527a27-9fc8-497e-abe0-6d1412f0347b" />
+        </managingOrganization>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="2f527a27-9fc8-497e-abe0-6d1412f0347b" />
+    <resource>
+      <Organization>
+        <id value="2f527a27-9fc8-497e-abe0-6d1412f0347b" />
+        <name value="日本HL7新橋病院" />
+        <telecom>
+          <value value="03-3267-1921" />
+          <use value="work" />
+        </telecom>
+        <address>
+          <line value="神楽坂一丁目1番地" />
+          <city value="新宿区" />
+          <state value="東京都" />
+          <postalCode value="162-0825" />
+          <country value="Japan" />
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="13083ac1-7956-496b-a8bf-e6057a9f2add" />
+    <resource>
+      <CareTeam>
+        <id value="13083ac1-7956-496b-a8bf-e6057a9f2add" />
+        <participant>
+          <member>
+            <reference value="73ce0386-82d1-4db6-8ec7-71c1bcc0fdfe" />
+          </member>
+        </participant>
+      </CareTeam>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="1c46f165-cb84-4931-9e34-318f459d9782" />
+    <resource>
+      <Encounter>
+        <id value="1c46f165-cb84-4931-9e34-318f459d9782" />
+        <diagnosis>
+          <condition>
+            <reference value="ca645ab4-0a86-4bed-b5a8-78937f835a8a" />
+          </condition>
+        </diagnosis>
+      </Encounter>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="ca645ab4-0a86-4bed-b5a8-78937f835a8a" />
+    <resource>
+      <Condition>
+        <id value="ca645ab4-0a86-4bed-b5a8-78937f835a8a" />
+        <code>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/icd-10" />
+            <code value="N801" />
+          </coding>
+          <text value="AP" />
+        </code>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="a55bc205-1dbc-4652-924d-3db21d6d6c02" />
+    <resource>
+      <Location>
+        <id value="a55bc205-1dbc-4652-924d-3db21d6d6c02" />
+        <name value="○○クリニック" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/ValueSet/v3-ServiceDeliveryLocationRoleType" />
+            <code value="COAG" />
+          </coding>
+          <text value="Coagulation clinic" />
+        </type>
+      </Location>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="50b36085-27a7-4f9d-a45c-05349ce457bc" />
+    <resource>
+      <Practitioner>
+        <id value="50b36085-27a7-4f9d-a45c-05349ce457bc" />
+        <name>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-EN-representation">
+            <valueString value="IDE" />
+          </extension>
+          <use value="official" />
+          <family value="日本" />
+          <given value="二郎" />
+        </name>
+      </Practitioner>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="73ce0386-82d1-4db6-8ec7-71c1bcc0fdfe" />
+    <resource>
+      <PractitionerRole>
+        <id value="73ce0386-82d1-4db6-8ec7-71c1bcc0fdfe" />
+        <practitioner>
+          <reference value="50b36085-27a7-4f9d-a45c-05349ce457bc" />
+        </practitioner>
+        <code>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/participant-role" />
+            <code value="394733009" />
+          </coding>
+          <text value="Attending physician" />
+        </code>
+      </PractitionerRole>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+    <resource>
+      <Observation>
+        <id value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+        <status value="final" />
+        <code>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="身長" />
+            <display value="8302-2" />
+          </coding>
+          <text value="8302-2" />
+        </code>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <valueQuantity>
+          <value value="2.004" />
+          <unit value="m" />
+        </valueQuantity>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+    <resource>
+      <Observation>
+        <id value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+        <status value="final" />
+        <code> 
+            <coding> 
+             <system value="http://loinc.org"/> 
+             <code value="8867-4"/> 
+             <display value="Heart rate"/> 
+            </coding> 
+            <text value="Heart rate"/> 
+        </code> 
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <valueQuantity> 
+            <value value="44"/> 
+            <unit value="beats/minute"/> 
+            <system value="http://unitsofmeasure.org"/> 
+            <code value="/min"/> 
+        </valueQuantity> 
+      </Observation>
+    </resource>
+  </entry>
+    <entry>
+    <fullUrl value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+    <resource>
+      <Observation>
+        <id value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+        <status value="final" />
+        <code> 
+            <coding> 
+                <system value="http://loinc.org"/> 
+                <code value="883-9"/> 
+                <display value="ABO group [Type] in Blood"/> 
+            </coding> 
+            <text value="Blood Group"/> 
+        </code> 
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <valueCodeableConcept> 
+            <coding> 
+                <system value="http://snomed.info/sct"/> 
+                <code value="112144000"/> 
+                <display value="Blood group A (finding)"/> 
+            </coding> 
+            <text value="A"/> 
+        </valueCodeableConcept>  
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+    <resource>
+      <Observation>
+        <id value="754d6deb-2fa0-42f8-a6c8-7d203f165879" />
+        <status value="final" />
+        <code> 
+            <coding> 
+                <system value="http://loinc.org"/> 
+                <code value="10331-7"/> 
+                <display value="Rh [Type] in Blood"/> 
+            </coding> 
+            <text value="Blood Rh Group"/> 
+        </code> 
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <valueCodeableConcept> 
+            <coding> 
+                <system value="http://snomed.info/sct"/> 
+                <code value="10828004"/> 
+                <display value="Positive (qualifier value)"/> 
+            </coding> 
+            <text value="Positive"/> 
+        </valueCodeableConcept>  
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+    <resource>
+      <Observation>
+        <id value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+        <status value="final" />
+        <code>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="18684-1" />
+            <display value="血圧" />
+          </coding>
+          <text value="血圧" />
+        </code>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+        <component>
+          <code>
+            <coding>
+              <system value="http://loinc.org" />
+              <code value="8480-6" />
+              <display value="収縮期血圧" />
+            </coding>
+            <text value="収縮期血圧血圧" />
+          </code>
+          <valueQuantity>
+            <value value="120" />
+            <unit value="mm[Hg]" />
+          </valueQuantity>
+        </component>
+        <component>
+          <code>
+            <coding>
+              <system value="http://loinc.org" />
+              <code value="8462-4" />
+              <display value="拡張期血圧" />
+            </coding>
+            <text value="拡張期血圧" />
+          </code>
+          <valueQuantity>
+            <value value="100" />
+            <unit value="mm[Hg]" />
+          </valueQuantity>
+        </component>
+      </Observation>
+    </resource>
+  </entry>
+　<entry>
+    <fullUrl value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+    <resource>
+      <Observation>
+        <id value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+        <status value="final" />
+        <code>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="718-7" />
+            <display value="Hemoglobin [Mass/volume] in Blood" />
+          </coding>
+          <text value="Hb" />
+        </code>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+          <valueQuantity>
+            <value value="15.2" />
+            <unit value="g/dL" />
+          </valueQuantity>
+      </Observation>
+    </resource>
+  </entry>
+    <entry>
+    <fullUrl value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+    <resource>
+      <Observation>
+        <id value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+        <status value="final" />
+        <code>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="38483-4" />
+            <display value="Creat Bld-mCnc" />
+          </coding>
+          <text value="Cr" />
+        </code>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+          <valueQuantity>
+            <value value="0.96" />
+            <unit value="mg/dL" />
+          </valueQuantity>
+      </Observation>
+    </resource>
+  </entry>
+    <entry>
+    <fullUrl value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+    <resource>
+      <Observation>
+        <id value="47bc33d5-5eea-45fd-8a46-b3543a7c4495" />
+        <status value="final" />
+        <code>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="2093-3" />
+            <display value="Cholesterol [Mass/volume] in Serum or Plasma" />
+          </coding>
+          <text value="Tchol" />
+        </code>
+        <subject>
+          <reference value="c282c3ec-6bd3-4826-b654-5a171776e296" />
+        </subject>
+          <valueQuantity>
+            <value value="158" />
+            <unit value="mg/dL" />
+          </valueQuantity>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+        <Procedure>
+          <id value="Produce001"/>  
+          <status value="completed"/> 
+          <code> 
+            <coding> 
+              <system value="http://snomed.info/sct"/> 
+              <code value="233588003"/> 
+              <display value="Continuous hemodiafiltration"/> 
+            </coding> 
+          </code> 
+          <subject> 
+            <reference value="c282c3ec-6bd3-4826-b654-5a171776e296"/> 
+          </subject> 
+          <encounter> 
+            <reference value="1c46f165-cb84-4931-9e34-318f459d9782"/> 
+          </encounter>
+        </Procedure>
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+        <Device>
+          <id value="Device001"/>  
+          <status value="active"/> 
+          <code> 
+            <coding> 
+              <system value="http://snomed.info/sct"/> 
+              <code value="360066001"/> 
+              <display value="left ventricular assist device"/> 
+            </coding> 
+          </code> 
+          <subject> 
+            <reference value="c282c3ec-6bd3-4826-b654-5a171776e296"/> 
+          </subject> 
+        </Device>
+    </resource>
+  </entry>
+</Bundle>

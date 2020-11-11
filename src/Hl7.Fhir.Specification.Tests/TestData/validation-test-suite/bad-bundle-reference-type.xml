@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <type value="collection"/>
+  <entry>
+    <fullUrl value="urn:uuid:54fc3e09-e279-4b74-a8ff-2649ec968642"/>
+    <resource>
+      <Patient>
+        <generalPractitioner>
+          <reference value="Practitioner/5d9588d8-3cd6-4b32-8fb7-ad13694e069d"/>
+        </generalPractitioner>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:5d9588d8-3cd6-4b32-8fb7-ad13694e069d"/>
+    <resource>
+      <Organization>
+        <name value="foo"/>
+      </Organization>
+    </resource>
+  </entry>
+</Bundle>

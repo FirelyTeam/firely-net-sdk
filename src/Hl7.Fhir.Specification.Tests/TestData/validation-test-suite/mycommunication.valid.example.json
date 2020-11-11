@@ -1,0 +1,20 @@
+{
+    "resourceType": "Communication",
+    "id": "myCommValid",
+    "status": "completed",
+    "basedOn": [
+        {
+            "reference": "Patient/pat-good"
+        }
+    ],
+    "partOf": [
+        {
+            "reference": "Patient/pat-good"
+        }
+    ],
+    "about": [
+        {
+            "reference": "Patient/pat-good"
+        }
+    ]
+}
