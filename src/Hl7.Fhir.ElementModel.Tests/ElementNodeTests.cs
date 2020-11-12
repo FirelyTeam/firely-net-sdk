@@ -19,6 +19,9 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Specification.Source;
+using System.Threading.Tasks;
+using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -90,6 +93,23 @@ namespace Hl7.FhirPath.Tests
             var contained = patient.Select("DomainResource.contained");
             Assert.IsNotNull(contained);
             Assert.AreEqual("Observation", contained.FirstOrDefault().InstanceType);
+        }
+
+        [TestMethod]
+        public void TestFpNavigateCustomResource()
+        {
+            var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
+            var customResource = ElementNode.Root(provider, "MyCustomResource");
+            customResource.Add(provider, "UpperCaseElement", true);
+            customResource.Add(provider, "lowerCaseElement", false);
+
+            var result = customResource.Select("UpperCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(true, result.FirstOrDefault().Value);
+
+            result = customResource.Select("lowerCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(false, result.FirstOrDefault().Value);
         }
 
         [TestMethod]
@@ -342,6 +362,32 @@ namespace Hl7.FhirPath.Tests
 
             var location = humanname.Location;
             Assert.AreEqual("Practitioner.name[0]", location);
+        }
+
+        private class CustomResourceResolver : IAsyncResourceResolver
+        {
+            private readonly ZipSource _zipSource;
+            private readonly CachedResolver _resolver;
+
+            public CustomResourceResolver()
+            {
+                _zipSource = new ZipSource("specification.zip");
+                _resolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
+            }
+
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                var sd = await _resolver.FindStructureDefinitionAsync(uri);
+                if (!sd.HasSnapshot)
+                {
+                    var snapShotGenerator = new SnapshotGenerator(_resolver);
+                    await snapShotGenerator.UpdateAsync(sd);
+                }
+
+                return sd;
+            }
+
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }
