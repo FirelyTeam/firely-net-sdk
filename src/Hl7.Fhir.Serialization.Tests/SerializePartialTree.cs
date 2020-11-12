@@ -17,7 +17,17 @@ namespace Hl7.Fhir.Serialization.Tests
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
         public ITypedElement getJsonNode(string json, FhirJsonParsingSettings s = null) =>
             JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
-        
+
+        [TestMethod]
+        public void DeterminePocoInstanceTypeWithRedirect()
+        {
+            var pat = new Patient();
+            pat.Text = new Narrative();
+            pat.Text.Div = "whatever";
+
+            var patNav = pat.ToTypedElement();
+            Assert.AreEqual("xhtml", patNav.Children("text").Children("div").Single().InstanceType);
+        }
 
         [TestMethod]
         public void CanSerializeSubtree()
