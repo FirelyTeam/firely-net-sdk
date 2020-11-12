@@ -34,6 +34,7 @@ using System.Linq;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
@@ -472,6 +473,24 @@ namespace Hl7.Fhir.Model
         {
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
+
+        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
+        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
+        private static readonly Lazy<ModelInspector> _versionedProvider
+            = new Lazy<ModelInspector>(createVersionedProvider);
+
+        private static ModelInspector createVersionedProvider()
+        {
+            var result = new ModelInspector(Specification.FhirRelease.STU3);
+
+            result.Import(typeof(Resource).GetTypeInfo().Assembly);
+            result.Import(typeof(ModelInfo).GetTypeInfo().Assembly);
+
+            return result;
+        }
+
+        internal static ModelInspector GetStructureDefinitionSummaryProvider() =>
+            _versionedProvider.Value;
 
         public static readonly Type[] OpenTypes =
         {

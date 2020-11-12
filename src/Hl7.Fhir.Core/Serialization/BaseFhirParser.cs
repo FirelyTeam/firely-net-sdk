@@ -24,28 +24,6 @@ namespace Hl7.Fhir.Serialization
             Settings = settings?.Clone() ?? new ParserSettings();
         }
 
-        private static readonly Lazy<ModelInspector> _inspector = createDefaultModelInspector();
-
-        private static Lazy<ModelInspector> createDefaultModelInspector()
-        {
-            return new Lazy<ModelInspector>(() =>
-            {
-                var result = new ModelInspector(Specification.FhirRelease.STU3);
-
-                result.Import(typeof(Resource).GetTypeInfo().Assembly);
-                result.Import(typeof(Patient).GetTypeInfo().Assembly);
-                return result;
-            });
-        }
-
-        internal static ModelInspector Inspector
-        {
-            get
-            {
-                return _inspector.Value;
-            }
-        }
-
         private PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>
             new PocoBuilderSettings
             {

@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <summary>
         /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
         /// </summary>
-        [Fact]
+        [Fact, Trait("Category", "LongRunner")]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
         {
             var cr = new CachedResolver(

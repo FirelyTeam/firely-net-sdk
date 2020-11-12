@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
-                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
+                correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 // [WMR 20160817] TODO: Merge extensions
                 // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
             }
 
-            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            private void correctListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
             {
                 if (replacement is List<T> list && !list.Any())
                 {
