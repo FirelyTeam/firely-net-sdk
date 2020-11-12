@@ -265,7 +265,6 @@
 // Age.cs
 // Annotation.cs
 // Attachment.cs
-// CodeableConcept.cs
 // ContactDetail.cs
 // ContactPoint.cs
 // Contributor.cs
@@ -277,18 +276,15 @@
 // ElementDefinition.cs
 // Expression.cs
 // HumanName.cs
-// Identifier.cs
 // MarketingStatus.cs
 // Money.cs
 // ParameterDefinition.cs
-// Period.cs
 // Population.cs
 // ProdCharacteristic.cs
 // ProductShelfLife.cs
 // Quantity.cs
 // Range.cs
 // Ratio.cs
-// ResourceReference.cs
 // RelatedArtifact.cs
 // SampledData.cs
 // Signature.cs
@@ -338,7 +334,6 @@
 // DiagnosticReport.cs
 // DocumentManifest.cs
 // DocumentReference.cs
-// DomainResource.cs
 // EffectEvidenceSynthesis.cs
 // Encounter.cs
 // Endpoint.cs
