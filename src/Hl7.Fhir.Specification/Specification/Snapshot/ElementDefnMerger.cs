@@ -12,7 +12,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -108,7 +107,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
-                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
+                correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.Definition = mergePrimitiveElement(snap.Definition, diff.Definition, true);
@@ -176,7 +175,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
             }
 
-            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            private void correctListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
             {
                 if (replacement is List<T> list && !list.Any())
                 {
