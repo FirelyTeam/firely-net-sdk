@@ -7,6 +7,7 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
+using Hl7.Fhir.Specification;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -34,6 +35,21 @@ namespace Hl7.Fhir.Tests.Rest
                 _ = ClassMapping.TryCreate(testee, out var cm);
                 return cm.IsNestedType;
             }
+        }
+
+        [TestMethod]
+        public void HidesPocoClassNames()
+        {
+            _ = ClassMapping.TryCreate(typeof(Patient.ContactComponent), out var mapping);
+            Assert.AreEqual("BackboneElement", getName(mapping));
+
+            _ = ClassMapping.TryCreate(typeof(DataRequirement.CodeFilterComponent), out mapping);
+            Assert.AreEqual("Element", getName(mapping));
+
+            _ = ClassMapping.TryCreate(typeof(Code<AdministrativeGender>), out mapping);
+            Assert.AreEqual("code", getName(mapping));
+
+            string getName(ClassMapping mp) => ((IStructureDefinitionSummary)mp).TypeName;
         }
 
         [TestMethod]
