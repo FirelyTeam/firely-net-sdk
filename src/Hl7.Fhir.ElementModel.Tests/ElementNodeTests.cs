@@ -19,6 +19,9 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Specification.Source;
+using System.Threading.Tasks;
+using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -55,6 +58,58 @@ namespace Hl7.FhirPath.Tests
             identifier1.Add(_provider, "value", "7654321");
 
             return patientRoot;
+        }
+
+        [TestMethod]
+        public void TestFpNavigate()
+        {
+            var patient = ElementNode.Root(_provider, "Patient");
+            patient.Add(_provider, "active", true);
+
+            var obs = ElementNode.Root(_provider, "Observation");
+            obs.Add(_provider, "id", "test");
+
+            patient.Add(_provider, obs, "contained");
+
+            // Select on the root of the resource, path should match with resource name included
+            var active = patient.Select("Patient.active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, resource type does not match
+            var id = obs.Select("Patient.id");
+            Assert.IsNull(id.FirstOrDefault());
+
+            // Select on root of the resource, path does not include the resourceType
+            active = patient.Select("active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, path is for a generic Resource / DomainResource element
+            id = obs.Select("Resource.id");
+            Assert.IsNotNull(id);
+            Assert.AreEqual("test", id.FirstOrDefault().Value);
+
+            var contained = patient.Select("DomainResource.contained");
+            Assert.IsNotNull(contained);
+            Assert.AreEqual("Observation", contained.FirstOrDefault().InstanceType);
+        }
+
+        [TestMethod]
+        public void TestFpNavigateCustomResource()
+        {
+            var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
+            var customResource = ElementNode.Root(provider, "MyCustomResource");
+            customResource.Add(provider, "UpperCaseElement", true);
+            customResource.Add(provider, "lowerCaseElement", false);
+
+            var result = customResource.Select("UpperCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(true, result.FirstOrDefault().Value);
+
+            result = customResource.Select("lowerCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(false, result.FirstOrDefault().Value);
         }
 
         [TestMethod]
@@ -307,6 +362,32 @@ namespace Hl7.FhirPath.Tests
 
             var location = humanname.Location;
             Assert.AreEqual("Practitioner.name[0]", location);
+        }
+
+        private class CustomResourceResolver : IAsyncResourceResolver
+        {
+            private readonly ZipSource _zipSource;
+            private readonly CachedResolver _resolver;
+
+            public CustomResourceResolver()
+            {
+                _zipSource = new ZipSource("specification.zip");
+                _resolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
+            }
+
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                var sd = await _resolver.FindStructureDefinitionAsync(uri);
+                if (!sd.HasSnapshot)
+                {
+                    var snapShotGenerator = new SnapshotGenerator(_resolver);
+                    await snapShotGenerator.UpdateAsync(sd);
+                }
+
+                return sd;
+            }
+
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }
