@@ -7,9 +7,8 @@
   <Import Project="..\firely-net-sdk.targets" />
 
   <PropertyGroup>
-    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.Specification.STU3</PackageId>
-    <Title>HL7 FHIR Specification support API for STU3</Title>
+    <Title>HL7 FHIR Specification support SDK for STU3</Title>
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR STU3 (3.0).</Summary>
     <Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
     <PackageTags>HL7;FHIR;Profile;Metadata;Validation;Publication;Schematron;Schema;Firely;SDK</PackageTags>
