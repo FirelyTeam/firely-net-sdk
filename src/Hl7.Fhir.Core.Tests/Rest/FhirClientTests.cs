@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        //Test for github issue https://github.com/FirelyTeam/fhir-net-api/issues/145
+        //Test for github issue https://github.com/FirelyTeam/firely-net-sdk/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        //Test for github issue https://github.com/ewoutkramer/fhir-net-api/issues/145
+        //Test for github issue https://github.com/FirelyTeam/firely-net-sdk/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantityHttpClient()
         {
             using (FhirClient client = new FhirClient(testEndpoint))
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentException()
         {
-            // This test case proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1206 is fixed. 
+            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed. 
             // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the 
             // name part of the parameters to be unique.
             // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
@@ -1234,7 +1234,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentExceptionHttpClient()
         {
-            // This test case proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1206 is fixed. 
+            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed. 
             // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the 
             // name part of the parameters to be unique.
             // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
@@ -1755,7 +1755,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         /// <summary>
-        /// Test for showing issue https://github.com/FirelyTeam/fhir-net-api/issues/128
+        /// Test for showing issue https://github.com/FirelyTeam/firely-net-sdk/issues/128
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResource()
@@ -1777,7 +1777,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         /// <summary>
-        /// Test for showing issue https://github.com/FirelyTeam/fhir-net-api/issues/128
+        /// Test for showing issue https://github.com/FirelyTeam/firely-net-sdk/issues/128
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestCreatingBinaryResourceHttpClient()

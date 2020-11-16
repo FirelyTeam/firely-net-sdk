@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
@@ -409,7 +409,7 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsTrue(cached < uncached / 2);
         }
 
-        // Verifies https://github.com/FirelyTeam/fhir-net-api/issues/1140
+        // Verifies https://github.com/FirelyTeam/firely-net-sdk/issues/1140
         [TestMethod]
         public void TestELD13Bug()
         {

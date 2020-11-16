@@ -4,14 +4,14 @@
   <PropertyGroup>
     <VersionPrefix>2.0.0</VersionPrefix>
     <VersionSuffix>alpha-beta3</VersionSuffix>
-    <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
+    <Authors>Firely (info@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2013-2020 Firely.  Contains materials (C) HL7 International</Copyright>
-    <PackageProjectUrl>https://github.com/FirelyTeam/fhir-net-api</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/FirelyTeam/fhir-net-api</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIcon>icon-fhir-32.png</PackageIcon>
-    <PackageReleaseNotes>See https://github.com/FirelyTeam/fhir-net-api/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>

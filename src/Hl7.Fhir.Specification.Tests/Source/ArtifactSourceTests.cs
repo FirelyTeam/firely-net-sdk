@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20170817] NEW
-        // https://github.com/FirelyTeam/fhir-net-api/issues/410
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/410
         // DirectorySource should gracefully handle insufficient access permissions
         // i.e. silently ignore all inaccessible files & folders
 
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // LoadByName should handle duplicate filenames in (different subfolders of) the contentdirectory
-        // https://github.com/FirelyTeam/fhir-net-api/issues/875
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
         public void OpenDuplicateFileNames()
