@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
@@ -19,72 +19,130 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Specification.Source;
+using System.Threading.Tasks;
+using Hl7.Fhir.Specification.Snapshot;
 
 namespace Hl7.FhirPath.Tests
 {
     [TestClass]
     public class ElementNodeTests
     {
-        readonly IStructureDefinitionSummaryProvider provider = new PocoStructureDefinitionSummaryProvider();
+        private readonly IStructureDefinitionSummaryProvider _provider = new PocoStructureDefinitionSummaryProvider();
 
         private ElementNode createPatient()
         {
-            var patientRoot = ElementNode.Root(provider, "Patient");
+            var patientRoot = ElementNode.Root(_provider, "Patient");
 
-            var containedObs = ElementNode.Root(provider, "Observation", "contained");
-            containedObs.Add(provider, "value", true, "boolean");
-            patientRoot.Add(provider, containedObs);
+            var containedObs = ElementNode.Root(_provider, "Observation", "contained");
+            containedObs.Add(_provider, "value", true, "boolean");
+            patientRoot.Add(_provider, containedObs);
 
-            var activeNode = patientRoot.Add(provider, "active", true);
-            activeNode.Add(provider, "id", "myId1");
+            var activeNode = patientRoot.Add(_provider, "active", true);
+            activeNode.Add(_provider, "id", "myId1");
                
             activeNode.AddAnnotation("a string annotation");
-            var ext1 = activeNode.Add(provider, "extension");
-            ext1.Add(provider, "value", 4, "integer");
-            ext1.Add(provider, "url", "urn:1");
-            var ext2 = activeNode.Add(provider, "extension");
-            ext2.Add(provider, "value", "world!", "string");
-            ext2.Add(provider, "url", "urn:2");
+            var ext1 = activeNode.Add(_provider, "extension");
+            ext1.Add(_provider, "value", 4, "integer");
+            ext1.Add(_provider, "url", "urn:1");
+            var ext2 = activeNode.Add(_provider, "extension");
+            ext2.Add(_provider, "value", "world!", "string");
+            ext2.Add(_provider, "url", "urn:2");
 
-            var identifier0 = patientRoot.Add(provider, "identifier");
-            identifier0.Add(provider, "system", "http://nu.nl");
-            identifier0.Add(provider, "value", "1234567");
+            var identifier0 = patientRoot.Add(_provider, "identifier");
+            identifier0.Add(_provider, "system", "http://nu.nl");
+            identifier0.Add(_provider, "value", "1234567");
 
-            var identifier1 = patientRoot.Add(provider, "identifier");
-            identifier1.Add(provider, "system", "http://toen.nl");
-            identifier1.Add(provider, "value", "7654321");
+            var identifier1 = patientRoot.Add(_provider, "identifier");
+            identifier1.Add(_provider, "system", "http://toen.nl");
+            identifier1.Add(_provider, "value", "7654321");
 
             return patientRoot;
+        }
+
+        [TestMethod]
+        public void TestFpNavigate()
+        {
+            var patient = ElementNode.Root(_provider, "Patient");
+            patient.Add(_provider, "active", true);
+
+            var obs = ElementNode.Root(_provider, "Observation");
+            obs.Add(_provider, "id", "test");
+
+            patient.Add(_provider, obs, "contained");
+
+            // Select on the root of the resource, path should match with resource name included
+            var active = patient.Select("Patient.active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, resource type does not match
+            var id = obs.Select("Patient.id");
+            Assert.IsNull(id.FirstOrDefault());
+
+            // Select on root of the resource, path does not include the resourceType
+            active = patient.Select("active");
+            Assert.IsNotNull(active);
+            Assert.AreEqual(true, active.FirstOrDefault().Value);
+
+            // Select on the root of the resource, path is for a generic Resource / DomainResource element
+            id = obs.Select("Resource.id");
+            Assert.IsNotNull(id);
+            Assert.AreEqual("test", id.FirstOrDefault().Value);
+
+            var contained = patient.Select("DomainResource.contained");
+            Assert.IsNotNull(contained);
+            Assert.AreEqual("Observation", contained.FirstOrDefault().InstanceType);
+        }
+
+        [TestMethod]
+        public void TestFpNavigateCustomResource()
+        {
+            var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
+            var customResource = ElementNode.Root(provider, "MyCustomResource");
+            customResource.Add(provider, "UpperCaseElement", true);
+            customResource.Add(provider, "lowerCaseElement", false);
+
+            var result = customResource.Select("UpperCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(true, result.FirstOrDefault().Value);
+
+            result = customResource.Select("lowerCaseElement");
+            Assert.IsNotNull(result.FirstOrDefault());
+            Assert.AreEqual(false, result.FirstOrDefault().Value);
         }
 
         [TestMethod]
         public void TestAutoDeriveTypeForPolymorphicElement()
         {
             // Explicit types will be passed through on polymorphic elements
-            var obs = ElementNode.Root(provider, "Observation");
-            var value = obs.Add(provider, "value", true, "boolean");
+            var obs = ElementNode.Root(_provider, "Observation");
+            var value = obs.Add(_provider, "value", true, "boolean");
             Assert.AreEqual("boolean", value.InstanceType);
 
             // But if you leave the type out, Add() will try to determine the type
-            obs = ElementNode.Root(provider, "Observation");
-            value = obs.Add(provider, "value", true);  // without an explicit type
+            obs = ElementNode.Root(_provider, "Observation");
+#if !NET40
+            Assert.ThrowsException<ArgumentException>(() => obs.Add(_provider, "value", true));  // without an explicit type
+#endif
+            value = obs.Add(_provider, "value", true, "boolean");  // with an explicit type
             Assert.AreEqual("boolean", value.InstanceType);
 
             // complex types are untouched
-            var id = obs.Add(provider, "identifier");
+            var id = obs.Add(_provider, "identifier");
             Assert.AreEqual("Identifier", id.InstanceType);
 
             // so are unvalued primitive non-polymorphic elements
-            var act = obs.Add(provider, "status");
+            var act = obs.Add(_provider, "status");
             Assert.AreEqual("code", act.InstanceType);
 
             // and valued non-polymorhpic primitives
-            act = obs.Add(provider, "status", "registered");
+            act = obs.Add(_provider, "status", "registered");
             Assert.AreEqual("code", act.InstanceType);
 
             // actual type from definition will always win
-            var data = ElementNode.Root(provider, "SampledData");
-            var dims = data.Add(provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
+            var data = ElementNode.Root(_provider, "SampledData");
+            var dims = data.Add(_provider, "dimensions", 3);  // though this is a long, the actual type should be more precise
             Assert.AreEqual("positiveInt", dims.InstanceType);
         }
 
@@ -234,16 +292,16 @@ namespace Hl7.FhirPath.Tests
         {
             var patient = createPatient();
 
-            var newActive = ElementNode.Root(provider, "boolean");
+            var newActive = ElementNode.Root(_provider, "boolean");
             newActive.Value = false;
-            patient.Replace(provider, patient["active"].Single(), newActive);
+            patient.Replace(_provider, patient["active"].Single(), newActive);
             Assert.AreEqual(1, patient["active"].Count);
             Assert.AreEqual(false, patient["active"].Single().Value);
 
-            var newIdentifier = ElementNode.Root(provider, "Identifier");
-            newIdentifier.Add(provider, "system", "http://nos.nl");
-            newIdentifier.Add(provider, "value", "1234");
-            patient["identifier"].Last().ReplaceWith(provider, newIdentifier);
+            var newIdentifier = ElementNode.Root(_provider, "Identifier");
+            newIdentifier.Add(_provider, "system", "http://nos.nl");
+            newIdentifier.Add(_provider, "value", "1234");
+            patient["identifier"].Last().ReplaceWith(_provider, newIdentifier);
             Assert.AreEqual(2, patient["identifier"].Count());
             Assert.AreEqual(newIdentifier, patient["identifier"].Last());
         }
@@ -272,7 +330,7 @@ namespace Hl7.FhirPath.Tests
         {
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
             var bundle = FhirJsonNode.Parse(bundleJson);
-            var typedBundle = bundle.ToTypedElement(provider, "Bundle");
+            var typedBundle = bundle.ToTypedElement(_provider, "Bundle");
 
             //Type of entry is BackboneElement, but you can't set that, see below.
             Assert.AreEqual("BackboneElement", typedBundle.Select("$this.entry[0]").First().InstanceType);
@@ -282,12 +340,54 @@ namespace Hl7.FhirPath.Tests
             try
             {
                 var typedEntry =
-                    entry.ToTypedElement(provider, "Element");
+                    entry.ToTypedElement(_provider, "Element");
                 Microsoft.VisualStudio.TestTools.UnitTesting.Assert.Fail("Should have thrown on invalid Div format");
             }
             catch (ArgumentException)
             {
             }
+        }        
+
+        [TestMethod]
+        public void TestImportChild()
+        {
+            var humanname = ElementNode.Root(_provider, "HumanName", "name");
+            humanname.Add(_provider, "given", "given");
+
+            var patient = ElementNode.Root(_provider, "Patient", "Patient");
+            var practitioner = ElementNode.Root(_provider, "Practitioner", "Practitioner");
+
+            patient.Add(_provider, humanname);
+            practitioner.Add(_provider, humanname); // Parent of humanname needs to be switched from Patient to Practitioner
+
+            var location = humanname.Location;
+            Assert.AreEqual("Practitioner.name[0]", location);
+        }
+
+        private class CustomResourceResolver : IAsyncResourceResolver
+        {
+            private readonly ZipSource _zipSource;
+            private readonly CachedResolver _resolver;
+
+            public CustomResourceResolver()
+            {
+                _zipSource = new ZipSource("specification.zip");
+                _resolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
+            }
+
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                var sd = await _resolver.FindStructureDefinitionAsync(uri);
+                if (!sd.HasSnapshot)
+                {
+                    var snapShotGenerator = new SnapshotGenerator(_resolver);
+                    await snapShotGenerator.UpdateAsync(sd);
+                }
+
+                return sd;
+            }
+
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }

@@ -1,36 +1,47 @@
-﻿using System;
-using System.Linq;
-using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Task = System.Threading.Tasks.Task;
+using Hl7.Fhir.Rest.Legacy;
+using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
     [TestClass]
-    public class SearchAsyncTests
+    public class FhirClientSearchAsyncTests
     {
-        private readonly string _endpoint = "http://sqlonfhir-r4.azurewebsites.net/fhir"; // https://api.hspconsortium.org/rpineda/open";
-
-        //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
-        private readonly string _endpointSupportingSearchUsingPost = "http://sqlonfhir-r4.azurewebsites.net/fhir"; // http://nde-fhir-ehelse.azurewebsites.net/fhir";
+        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+        private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
+            await searchUsingParam(client);
+        }
+
+        public async Task Search_UsingSearchParams_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchUsingParam(client);
+            }
+        }
+
+        private static async Task searchUsingParam(BaseFhirClient client)
+        {
             var srch = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = await client.SearchAsync<Patient>(srch);
             Assert.IsTrue(result1.Entry.Count >= 1);
@@ -51,20 +62,80 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPost_UsingSearchParams_SearchReturned()
+        {
+            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+
+            await searchUsingPost(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPost_UsingSearchParams_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchUsingPost(client);
+            }
+        }
+
+        private static async Task searchUsingPost(BaseFhirClient client)
+        {
+            var srch = new SearchParams()
+                            .Where("name=Donald")
+                            .LimitTo(5)
+                            .SummaryOnly();
+
+            var result1 = await client.SearchUsingPostAsync<Patient>(srch);
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
+            {
+                foreach (var e in result1.Entry)
+                {
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
+                }
+                result1 = client.Continue(result1, PageDirection.Next);
+            }
+
+            Console.WriteLine("Test Completed");
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
+            searchSync(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public void SearchSync_UsingSearchParams_SearchReturnedHttpCLient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                searchSync(client);
+            }
+        }
+
+        private static void searchSync(BaseFhirClient client)
+        {
             var srch = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var result1 = client.Search<Patient>(srch);
 
@@ -88,50 +159,60 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public void SearchUsingPostSync_UsingSearchParams_SearchReturnedHttpClient()
         {
-            using (var client = new FhirClient(_endpointSupportingSearchUsingPost)
+            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+
+            var srch = new SearchParams()
+                .Where("name=Donald")
+                .LimitTo(10)
+                .SummaryOnly();
+
+            var result1 = client.SearchUsingPost<Patient>(srch);
+
+            Assert.IsTrue(result1.Entry.Count >= 1);
+
+            while (result1 != null)
             {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            })
-            {
-                var srch = new SearchParams()
-                    .Where("name=Peter")
-                    .LimitTo(10)
-                    .SummaryOnly()
-                    .OrderBy("birthdate",
-                        SortOrder.Descending);
-
-                var result1 = client.SearchUsingPost<Patient>(srch);
-
-                Assert.IsTrue(result1.Entry.Count >= 1);
-
-                while (result1 != null)
+                foreach (var e in result1.Entry)
                 {
-                    foreach (var e in result1.Entry)
-                    {
-                        Patient p = (Patient)e.Resource;
-                        Console.WriteLine(
-                            $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                    }
-                    result1 = client.Continue(result1, PageDirection.Next);
+                    Patient p = (Patient)e.Resource;
+                    Console.WriteLine(
+                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
                 }
-
-                Console.WriteLine("Test Completed");
+                result1 = client.Continue(result1, PageDirection.Next);
             }
+
+            Console.WriteLine("Test Completed");
+
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
 
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+
+            await searchMultiple(client);
+        }
+
+        public async Task SearchMultiple_UsingSearchParams_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchMultiple(client);
+            }
+        }
+
+        private static async Task searchMultiple(BaseFhirClient client)
+        {
             var srchParams = new SearchParams()
-                .Where("name=Daniel")
+                .Where("name=Donald")
                 .LimitTo(10)
                 .SummaryOnly()
                 .OrderBy("birthdate",
@@ -167,18 +248,31 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirClient(_endpointSupportingSearchUsingPost)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
+            await searchMultipleUsingPost(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchMultipleUsingPost(client);
+            }
+        }
+
+        private static async Task searchMultipleUsingPost(BaseFhirClient client)
+        {
             var srchParams = new SearchParams()
-                .Where("name=Peter")
+                .Where("name=Donald")
                 .LimitTo(10)
-                .SummaryOnly()
-                .OrderBy("birthdate",
-                    SortOrder.Descending);
+                .SummaryOnly();
 
             var task1 = client.SearchUsingPostAsync<Patient>(srchParams);
             var task2 = client.SearchUsingPostAsync<Patient>(srchParams);
@@ -210,13 +304,29 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" });
+
+            await searchWithCriteria(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchWithCriteria(client);
+            }
+        }
+
+        private static async Task searchWithCriteria(BaseFhirClient client)
+        {
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -238,13 +348,29 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpointSupportingSearchUsingPost)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
-            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Chalmers" }, pageSize: 5);
+            await searchUsingPostWithCriteria(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchUsingPostWithCriteria(client);
+            }
+        }
+
+
+        private static async Task searchUsingPostWithCriteria(BaseFhirClient client)
+        {
+            var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -266,13 +392,30 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" }, null, 1);
+            await searchWithCriteriaAsynContinue(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchWithCriteria_AsyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchWithCriteriaAsynContinue(client);
+            }
+
+
+        }
+
+        private static async Task searchWithCriteriaAsynContinue(BaseFhirClient client)
+        {
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -295,13 +438,29 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturned()
         {
-            var client = new FhirClient(_endpointSupportingSearchUsingPost)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Chalmers" }, null, 1);
+            await searchUsingPostAsyncContinue(client);
+        }
+
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await searchUsingPostAsyncContinue(client);
+            }
+        }
+
+
+        private static async Task searchUsingPostAsyncContinue(BaseFhirClient client)
+        {
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -320,4 +479,5 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
     }
+#pragma warning restore CS0618 // Type or member is obsolete
 }

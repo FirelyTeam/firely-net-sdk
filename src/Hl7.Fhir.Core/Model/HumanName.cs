@@ -46,7 +46,6 @@ namespace Hl7.Fhir.Model
     public partial class HumanName
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        [NotMapped]
         private string DebuggerDisplay
         {
             get

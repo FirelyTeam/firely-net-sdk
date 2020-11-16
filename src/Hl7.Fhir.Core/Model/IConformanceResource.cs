@@ -96,7 +96,6 @@ namespace Hl7.Fhir.Model
     {
         //I think ImplementationGuide should have a purpose element.
         [Obsolete("This property is not a part of the official FHIR specification", true)]
-        [NotMapped]
         public Markdown Purpose
         {
             get { return null; }
@@ -155,21 +154,18 @@ namespace Hl7.Fhir.Model
     {
         // I think NamingSystem should have Experimental too
         [Obsolete("This property is not a part of the official FHIR specification", true)]
-        [NotMapped]
         public Markdown Purpose
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
-        [NotMapped]
         public bool? Experimental
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
-        [NotMapped]
         public FhirBoolean ExperimentalElement
         {
             get { return null; }
@@ -179,7 +175,6 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
         /// </summary>
-        [NotMapped]
         public string Url
         {
             get
@@ -190,7 +185,6 @@ namespace Hl7.Fhir.Model
             set { throw new NotImplementedException(); }
         }
 
-        [NotMapped]
         public FhirUri UrlElement
         {
             get

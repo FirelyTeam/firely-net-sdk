@@ -1,0 +1,21 @@
+<Questionnaire xmlns="http://hl7.org/fhir">
+  <id value="q-bundle"/>
+  <contained >
+    <Bundle >
+      <id value="PrePopQuery"/>
+      <type value="batch"/>
+      <entry>
+        <fullUrl value="urn:uuid:88f151c0-a954-468a-88bd-5ae15c08e059"/>
+        <request >
+          <method value="GET"/>
+          <url value="RelatedPerson?patient={{%LaunchPatient.id}}&amp;active=true"/>
+        </request>
+      </entry>
+    </Bundle>
+  </contained>
+  <extension url="http://example.org/test">
+    <valueCanonical value="#PrePopQuery"/>
+  </extension>
+  <status value="draft"/>
+</Questionnaire >
+  

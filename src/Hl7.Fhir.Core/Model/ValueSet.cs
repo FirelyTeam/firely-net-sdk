@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Support;
@@ -21,7 +21,6 @@ namespace Hl7.Fhir.Model
         [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
         public string Define { get; set; }
 
-        [NotMapped]
         public bool HasExpansion => Expansion != null;
 
         public bool CodeInExpansion(String code, string system = null)

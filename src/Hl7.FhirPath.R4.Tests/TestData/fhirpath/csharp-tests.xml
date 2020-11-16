@@ -22,10 +22,10 @@
   </test>
   <test name="CSharpTest0006" inputfile="fp-test-patient.xml">
     <expression>@2012-04-15 ~ @2012-04-15T10:00:00</expression>
-    <output type="boolean">true</output>
+    <output type="boolean">false</output>
   </test>
   <test name="CSharpTest0007" inputfile="fp-test-patient.xml">
-    <expression>@T10:01:02Z !~ @T10:01:55+01:00</expression>
+    <expression>@T10:01:02 !~ @T10:01:55</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0008" inputfile="fp-test-patient.xml">
@@ -105,7 +105,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0027" inputfile="fp-test-patient.xml">
-    <expression>'abc'.replace('', 'xh') = 'xhaxhbxhc'</expression>
+    <expression>'abc'.replace('', 'xh') = 'xhaxhbxhcxh'</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0028" inputfile="fp-test-patient.xml">
@@ -312,7 +312,7 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0084" inputfile="fp-test-patient.xml">
-    <expression>@2015-01-01 != @2015-01</expression>
+    <expression>(@2015-01-01 != @2015-01).empty()</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0085" inputfile="fp-test-patient.xml">
@@ -320,11 +320,11 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0086" inputfile="fp-test-patient.xml">
-    <expression>@T13:45:02Z = @T13:45:02+00:00</expression>
+    <expression>@T13:45:02 = @T13:45:02</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0087" inputfile="fp-test-patient.xml">
-    <expression>@T13:45:02+00:00 != @T13:45:02+01:00</expression>
+    <expression>@T13:45:02 != @T14:45:02</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0088" inputfile="fp-test-patient.xml">
@@ -467,7 +467,11 @@
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0123" inputfile="fp-test-patient.xml">
-    <expression>Patient.birthDate.extension(%"ext-patient-birthTime").exists()</expression>
+    <expression>Patient.birthDate.extension(%`ext-patient-birthTime`).exists()</expression>
+    <output type="boolean">true</output>
+  </test>
+  <test name="CSharpTest0123b" inputfile="fp-test-patient.xml">
+    <expression>Patient.birthDate.extension(%'ext-patient-birthTime').exists()</expression>
     <output type="boolean">true</output>
   </test>
   <test name="CSharpTest0124" inputfile="fp-test-patient.xml">

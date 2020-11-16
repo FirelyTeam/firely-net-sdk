@@ -1,0 +1,22 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-duplicate-id",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "Patient/1",
+      "resource": {
+          "resourceType": "Patient",
+          "id" : "1"
+        }
+    },
+    {
+      "fullUrl": "RelatedPerson/1",
+      "resource": {
+        "resourceType": "RelatedPerson",
+        "id" : "1",
+        "patient" : { "reference" : "Patient/1" }
+      }
+    }
+  ]
+}

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.ElementModel
         public static T Resolve<T>(this T element, string reference, Func<string, T> externalResolver = null) where T : class, ITypedElement
         {
             // Then, resolve the url within the instance data first - this is only
-            // possibly if we have a ScopedNavigator at hand
+            // possibly if we have a ScopedNode at hand
             if (element is ScopedNode scopedNode)
             {
                 var identity = scopedNode.MakeAbsolute(new ResourceIdentity(reference));
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.ElementModel
             // First, get the url to fetch from the focus
             string url = null;
 
-            if (element.InstanceType == FHIRAllTypes.String.GetLiteral() && element.Value is string s)
+            if (element.Value is string s)
                 url = s;
             else if (element.InstanceType == FHIRAllTypes.Reference.GetLiteral())
                 url = element.ParseResourceReference()?.Reference;

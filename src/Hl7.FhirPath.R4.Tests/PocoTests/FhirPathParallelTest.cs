@@ -1,50 +1,41 @@
-﻿using FluentAssertions;
-using Hl7.Fhir.ElementModel;
+﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
-using Xunit;
-using Xunit.Abstractions;
 using T = System.Threading.Tasks;
 
 namespace Vonk.FhirPath.R4.Tests
 {
-    public class SpecZipResourcesFixture
+    [TestClass]
+    public class FhirPathExtensionsTests
     {
-        public SpecZipResourcesFixture()
+        private static Dictionary<string, ValueSet> Resources;
+        private static TestContext Context;
+
+        [ClassInitialize]
+        public static void Initialize(TestContext ctx)
         {
+            Context = ctx;
             var specSource = ZipSource.CreateValidationSource();
 
             Resources = specSource.FindAll<ValueSet>().ToDictionary<ValueSet, string>(sd => sd.Url);
             //By putting all the url's in a dictionary we can be sure there are no duplicates. 
-        }
-        public Dictionary<string, ValueSet> Resources { get; private set; }
-    }
 
-    public class FhirPathExtensionsTests : IClassFixture<SpecZipResourcesFixture>
-    {
-        private readonly ITestOutputHelper _outputHelper;
-        private readonly SpecZipResourcesFixture _fixture;
-
-        public FhirPathExtensionsTests(ITestOutputHelper outputHelper, SpecZipResourcesFixture fixture)
-        {
-            _outputHelper = outputHelper;
-            _fixture = fixture;
         }
 
-        public static IEnumerable<object[]> GetSelectMethods()
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async T.Task TestSelectMethods()
         {
-            return new[]
-            {
-                new object[]{ "Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)) },
-                new object[]{ "Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context))},
-            };
+            await MassiveParallelSelectsShouldBeCorrect("Api", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => IValueProviderFPExtensions.Select(nav, expr, context)));
+            await MassiveParallelSelectsShouldBeCorrect("Concurrent", new Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>>((nav, expr, context) => FhirPathExtensions.Select(nav, expr, context)));
         }
 
         /// <summary>
@@ -55,13 +46,7 @@ namespace Vonk.FhirPath.R4.Tests
         /// This may indicate a multithreading problem in the FhirPath evaluation.
         /// You may need to run the test in Release mode to reveal the error.
         /// </summary>
-        /// <param name="testDescriptor"></param>
-        /// <param name="selector"></param>
-        /// <returns></returns>
-        [Theory]
-        [MemberData(nameof(GetSelectMethods))]
-        [Trait("TestCategory", "LongRunner")]
-        public async T.Task MassiveParallelSelectsShouldBeCorrect(string testDescriptor, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
+        public static async T.Task MassiveParallelSelectsShouldBeCorrect(string testName, Func<ITypedElement, string, EvaluationContext, IEnumerable<ITypedElement>> selector)
         {
             var actual = new ConcurrentBag<(string canonical, ValueSet resource)>();
             var buffer = new BufferBlock<ValueSet>();
@@ -78,7 +63,7 @@ namespace Vonk.FhirPath.R4.Tests
                     MaxDegreeOfParallelism = 100
                 });
             buffer.LinkTo(processor, new DataflowLinkOptions { PropagateCompletion = true });
-            var resources = _fixture.Resources;
+            var resources = Resources;
 
             var sw = new Stopwatch();
             sw.Restart();
@@ -89,10 +74,13 @@ namespace Vonk.FhirPath.R4.Tests
             buffer.Complete();
             await processor.Completion;
             sw.Stop();
-            _outputHelper.WriteLine($"{testDescriptor}: Extracting urls took {sw.Elapsed.ToString("c")} ms");
+            Context.WriteLine($"Extracting urls took {sw.Elapsed.ToString("c")} ms");
 
-            actual.Count().Should().Be(resources.Count(), $"{testDescriptor}: All Resources should have a url.");
-            actual.Select(sd => new { sd.canonical, sd.resource.Url, sd.resource.Id }).Where(check => check.canonical != check.Url).Should().BeEmpty($"{testDescriptor}: Extracted urls should be equal to url property values.");
+            Assert.AreEqual(actual.Count(), resources.Count(), $"{testName}: All Resources should have a url.");
+            Assert.IsFalse(actual
+                .Select(sd => new { sd.canonical, sd.resource.Url, sd.resource.Id })
+                .Where(check => check.canonical != check.Url)
+                .Any(), $"{testName}: Extracted urls should be equal to url property values.");
         }
 
     }

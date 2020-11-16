@@ -69,21 +69,9 @@ namespace Hl7.Fhir.Support
             return outcome.Issue.Where(issue => !issue.Success);
         }
 
-        [Obsolete("Use IssuesAt(this OperationOutcome outcome, string path) instead")]
-        public static IEnumerable<OperationOutcome.IssueComponent> IssuesAt(this OperationOutcome outcome, IElementNavigator node)
-        {
-            return outcome.Issue.Where(issue => issue.IsAt(node));
-        }
-
         public static IEnumerable<OperationOutcome.IssueComponent> IssuesAt(this OperationOutcome outcome, string path)
         {
             return outcome.Issue.Where(issue => issue.IsAt(path));
-        }
-
-        [Obsolete("Use ErrorsAt(this OperationOutcome outcome, string path) instead")]
-        public static IEnumerable<OperationOutcome.IssueComponent> ErrorsAt(this OperationOutcome outcome, IElementNavigator node)
-        {
-            return outcome.ListErrors().Where(issue => issue.IsAt(node));
         }
 
         public static IEnumerable<OperationOutcome.IssueComponent> ErrorsAt(this OperationOutcome outcome, string path)
@@ -129,12 +117,5 @@ namespace Hl7.Fhir.Support
 
             return false;
         }
-
-        [Obsolete("Use IsAt(this OperationOutcome.IssueComponent issue, string path) instead")]
-        public static bool IsAt(this OperationOutcome.IssueComponent issue, IElementNavigator location)
-        {
-            return issue.IsAt(location.Location);
-        }
-
     }
 }

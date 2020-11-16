@@ -1,19 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net40;net45;netstandard2.0</TargetFrameworks>
-    <MinClientVersion>3.3.0</MinClientVersion>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\firely-net-sdk.props" />
+  <Import Project="..\firely-net-sdk.targets" />
 
   <PropertyGroup>
-    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.Specification.R4</PackageId>
-    <Title>HL7 FHIR Specification support API for R4</Title>
+    <Title>HL7 FHIR Specification support SDK for R4</Title>
     <Summary>Support for working with FHIR metadata and validation. Supports FHIR R4 (3.2).</Summary>
     <Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
-    <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema</PackageTags>
+    <PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema;Firely;SD</PackageTags>
     <AssemblyName>Hl7.Fhir.R4.Specification</AssemblyName>
     <RootNamespace>Hl7.Fhir.Specification</RootNamespace>
   </PropertyGroup>
@@ -27,7 +25,7 @@
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
     <PackageReference Include="System.Threading.Tasks.Parallel" Version="4.3.0" />
   </ItemGroup>
@@ -40,6 +38,7 @@
     <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
   </ItemGroup>
 
@@ -59,8 +58,6 @@
   <Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
     <Message Text="(Re)creating specification.zip" />
     <Delete Files="specification.zip" />
-   <!--    <CleanSpecFiles DirectoryName="data" /> -->
-    <!-- <CleanSpecFiles DirectoryName="data" /> -->
     <ZipDirectory SourceDirectory="data" DestinationFile="specification.zip" />
   </Target>
 

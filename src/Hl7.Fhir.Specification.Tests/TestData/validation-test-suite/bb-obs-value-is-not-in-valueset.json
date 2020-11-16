@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "profile": [
+      "https://bb/StructureDefinition/BBDemographicAge"
+    ]
+  },
+  "code": {
+    "coding": [
+      {
+        "code": "5792-7",
+        "system": "http://loinc.org"
+      }
+    ]
+  },
+  "resourceType": "Observation",
+  "status": "final",
+  "valueQuantity" : {
+    "system" : "http://unitsofmeasure.org",
+    "code" : "cm",
+    "value" : 8
+  }
+}

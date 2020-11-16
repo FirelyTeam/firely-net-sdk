@@ -1,27 +1,44 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Rest.Legacy;
 using Hl7.Fhir.Tests;
+using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
-    [TestClass]
     public class UpdateRefreshDeleteAsyncTests
     {
-        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
+        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedWebClient()
         {
-            var client = new FhirClient(_endpoint)
-            {
-                PreferredFormat = ResourceFormat.Json,
-                PreferredReturn = Prefer.ReturnRepresentation
-            };
+            var client = new LegacyFhirClient(_endpoint);
+            client.Settings.PreferredFormat = ResourceFormat.Json;
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;            
 
+            await updateDelete(client);
+        }
+        
+        [TestMethod]
+        [TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
+        {
+            using (var client = new FhirClient(_endpoint))
+            {
+                client.Settings.PreferredFormat = ResourceFormat.Json;
+                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                await updateDelete(client);
+            }           
+        }
+
+
+        private static async System.Threading.Tasks.Task updateDelete(BaseFhirClient client)
+        {
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
@@ -48,14 +65,13 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            Func<System.Threading.Tasks.Task> act = async () =>
+            async System.Threading.Tasks.Task act()
             {
                 await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            };
+            }
 
             // VERIFY //
-            ExceptionAssert.Throws<FhirOperationException>(act, "the patient is no longer on the server");
-
+            await ExceptionAssert.Throws<FhirOperationException>(act);
 
             Console.WriteLine("Test Completed");
         }

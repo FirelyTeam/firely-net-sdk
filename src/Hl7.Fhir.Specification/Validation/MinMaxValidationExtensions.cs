@@ -1,9 +1,9 @@
-﻿/* 
+/* 
  * Copyright (c) 2016, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -11,6 +11,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Validation
 {
@@ -20,21 +21,23 @@ namespace Hl7.Fhir.Validation
         {
             if (instance == null) throw Error.ArgumentNull(nameof(instance));
             if (definition == null) throw Error.ArgumentNull(nameof(definition));
-            if (!(definition is Primitive || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
-            if (definition is Primitive pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
+            if (!(definition is PrimitiveType || definition is Quantity)) throw Error.Argument(nameof(definition), "Must be Primitive or Quantity");
+            if (definition is PrimitiveType pr && pr.ObjectValue == null) throw Error.ArgumentNull(nameof(definition));
 
-            if (instance is Model.Primitives.PartialDateTime)
+            if (instance is P.DateTime)
             {
                 if (definition is FhirDateTime fdt)
-                    return instance.CompareTo(fdt.ToPartialDateTime());
+                    return instance.CompareTo(fdt.Value is { } ? P.DateTime.Parse(fdt.Value) : null);
                 else if (definition is Date d)
-                    return instance.CompareTo(d.ToPartialDateTime());
+                    return instance.CompareTo(d.Value is { } ? P.DateTime.Parse(d.Value) : null);
                 else if (definition is Instant ins)
-                    return instance.CompareTo(ins.ToPartialDateTime());
+                    return instance.CompareTo(ins.Value is { } ? P.DateTime.FromDateTimeOffset(ins.Value.Value) : null);
             }
 
-            else if (instance is Model.Primitives.PartialTime && definition is Time t)
-                return instance.CompareTo(t.ToTime());
+            else if (instance is P.Time && definition is Time t)
+                return instance.CompareTo(t.Value is { } ? P.Time.Parse(t.Value) : null);
+            else if (instance is P.Date && definition is Date dt)
+                return instance.CompareTo(dt.Value is { } ? P.Date.Parse(dt.Value) : null);
 
             else if (instance is decimal && definition is FhirDecimal d)
                 return instance.CompareTo(d.Value.Value);
@@ -57,7 +60,7 @@ namespace Hl7.Fhir.Validation
             else if (instance is string && definition is FhirString fs)
                 return instance.CompareTo(fs.Value);
 
-            else if (instance is Model.Primitives.Quantity && definition is Quantity q)
+            else if (instance is P.Quantity && definition is Quantity q)
                 return instance.CompareTo(q.ToQuantity());
 
             throw Error.NotSupported($"Value '{definition}' and instance value '{instance}' are of incompatible types and can not be compared");
@@ -73,11 +76,13 @@ namespace Hl7.Fhir.Validation
                     throw Error.NotSupported("Cannot interpret quantities with a comparison");
                 if (q.Value == null)
                     throw Error.NotSupported("Cannot interpret quantities without a value");
+                if (q.System != P.Quantity.UCUM)
+                    throw Error.NotSupported("Cannot compare quantities other than those from UCUM");
 
-                return new Model.Primitives.Quantity(q.Value.Value, q.Unit, q.System ?? Model.Primitives.Quantity.UCUM);
+                return new P.Quantity(q.Value.Value, q.Unit);
             }
-            else if (instance.Value is IComparable)
-                return (IComparable)instance.Value;
+            else if (instance.Value is IComparable ic)
+                return ic;
             else
                 return null;
         }

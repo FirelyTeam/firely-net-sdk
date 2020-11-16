@@ -1,0 +1,38 @@
+{
+  "resourceType": "AllergyIntolerance",
+  "id": "4e329898-43ea-e611-8128-0a69c1b3225b",
+  "meta": {
+    "lastUpdated": "2017-02-03T19:04:33.517+00:00"
+  },
+  "clinicalStatus": {
+    "coding": [
+      {
+        "system": "http://fhir.whatever.com/codes/AllergyClinicalStatus",
+        "code": "active",
+        "display": "Active",
+        "userSelected": true
+      },
+      {
+        "system": "http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical",
+        "code": "active",
+        "display": "active",
+        "userSelected": false
+      }
+    ],
+    "text": "Active"
+  },
+  "type": "allergy",
+  "_category": [
+    {
+      "extension": [
+        {
+          "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+          "valueCode": "unknown"
+        }
+      ]
+    }
+  ],
+  "patient": {
+    "reference": "Patient/abc"
+  }
+}

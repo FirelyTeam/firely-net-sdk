@@ -1,0 +1,44 @@
+{
+  "resourceType": "QuestionnaireResponse",
+  "id": "220293",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2019-12-05T10:40:10.257+00:00",
+    "source": "#8VT59CPwUir1ahuR"
+  },
+  "identifier": {
+    "system": "http://acme.com/lab/reports",
+    "value": "5234342"
+  },
+  "basedOn": [ {
+    "reference": "CarePlan/220209"
+  } ],
+  "partOf": [ {
+    "reference": "Procedure/220213"
+  } ],
+  "questionnaire": "http://hl7.org/fhir/us/sirb/Questionnaire/sirb-recruitment-questionnaire|0.1.0",
+  "status": "entered-in-error",
+  "subject": {
+    "reference": "Patient/220224",
+    "display": "Peter James Chalmers"
+  },
+  "encounter": {
+    "reference": "Encounter/220211"
+  },
+  "authored": "2014-12-11T04:44:16Z",
+  "author": {
+    "reference": "Patient/220224"
+  },
+  "source": {
+    "reference": "Practitioner/220207"
+  },
+  "item": [ {
+    "linkId": "1.1",
+    "answer": [ {
+      "valueCoding": {
+        "code": "LA6560-2",
+        "display": "Confused"
+      }
+    } ]
+  } ]
+}

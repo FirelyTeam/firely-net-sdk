@@ -3,33 +3,85 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Serialization;
+using System;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class ExternalTerminologyService : ITerminologyService
     {
-        public ExternalTerminologyService(IFhirClient client)
+        public ExternalTerminologyService(BaseFhirClient client)
         {
             Endpoint = client;
         }
 
-        public IFhirClient Endpoint { get; set; }
+        public BaseFhirClient Endpoint { get; set; }
 
-        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, 
-            string code = null, string system = null, string version = null, string display = null, 
-            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null, 
+        public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+
+        public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+
+        private Uri constructUri<T>(string id) =>
+            ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
+
+        public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false);
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false);
+        }
+
+        public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
+        {
+            return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+
+        public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+
+        public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
+        {
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
+            else
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
+        }
+
+        public async Task<Resource> Closure(Parameters parameters, bool useGet = false)
+        {
+            return await Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet).ConfigureAwait(false);
+        }
+
+        [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]
+        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
+            string code = null, string system = null, string version = null, string display = null,
+            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
             bool? @abstract = null, string displayLanguage = null)
         {
             try
@@ -38,12 +90,12 @@ namespace Hl7.Fhir.Specification.Terminology
                     Endpoint.ValidateCode(
                                 url: canonical != null ? new FhirUri(canonical) : null,
                                 context: context != null ? new FhirUri(context) : null,
-                                valueSet: valueSet, 
+                                valueSet: valueSet,
                                 code: code != null ? new Code(code) : null,
                                 system: system != null ? new FhirUri(system) : null,
                                 version: version != null ? new FhirString(version) : null,
                                 display: display != null ? new FhirString(display) : null,
-                                coding: coding, codeableConcept: codeableConcept, date: date, 
+                                coding: coding, codeableConcept: codeableConcept, date: date,
                                 @abstract: @abstract != null ? new FhirBoolean(@abstract) : null,
                                 displayLanguage: displayLanguage != null ? new Code(displayLanguage) : null);
 
@@ -62,11 +114,10 @@ namespace Hl7.Fhir.Specification.Terminology
             }
         }
 
-
         private OperationOutcome processResult(string code, string system, string display, Coding coding, CodeableConcept codeableConcept, ValidateCodeResult result)
         {
             if (result?.Result?.Value == null)
-                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint.ToString()} did not return a result.");
+                throw Error.InvalidOperation($"Terminology service at {Endpoint.Endpoint} did not return a result.");
 
             var outcome = new OperationOutcome();
 
@@ -87,7 +138,7 @@ namespace Hl7.Fhir.Specification.Terminology
                                             : jsonSer.SerializeToString(coding);
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
-                                $"the terminology service at {Endpoint.Endpoint.ToString()} did not provide further details.",
+                                $"the terminology service at {Endpoint.Endpoint} did not provide further details.",
                                 Issue.TERMINOLOGY_CODE_NOT_IN_VALUESET);
                 }
             }

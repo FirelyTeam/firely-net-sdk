@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    <url value="http://example.org/fhir/StructureDefinition/param-profile"/>
+    <name value="ParamProfile"/>
+    <status value="draft"/>
+    <fhirVersion value="4.0.0"/>
+    <kind value="resource"/>
+    <abstract value="false"/>
+    <type value="Parameters"/>
+    <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
+    <derivation value="constraint"/>
+    <differential>
+        <element id="Parameters.parameter">
+            <path value="Parameters.parameter"/>
+            <slicing>
+                <discriminator>
+                    <type value="value"/>
+                    <path value="name"/>
+                </discriminator>
+                <rules value="open"/>
+            </slicing>
+        </element>
+        <element id="Parameters.parameter:p1">
+            <path value="Parameters.parameter"/>
+            <sliceName value="p1"/>
+            <min value="0"/>
+            <max value="1"/>
+        </element>
+        <element id="Parameters.parameter:p1.name">
+            <path value="Parameters.parameter.name"/>
+            <fixedString value="binaryparam"/>
+        </element>
+        <element id="Parameters.parameter:p1.resource">
+            <path value="Parameters.parameter.resource"/>
+            <type>
+                <code value="Resource"/>    
+                <profile value="http://example.org/fhir/StructureDefinition/text-binary"/>  
+            </type>
+        </element>
+        <element id="Parameters.parameter:p2">
+            <path value="Parameters.parameter"/>
+            <sliceName value="p2"/>
+            <min value="0"/>
+            <max value="1"/>
+        </element>
+        <element id="Parameters.parameter:p2.name">
+            <path value="Parameters.parameter.name"/>
+            <fixedString value="bundleparam"/>
+        </element>
+        <element id="Parameters.parameter:p2.resource">
+            <path value="Parameters.parameter.resource"/>
+            <type>
+                <code value="Resource"/>    
+                <profile value="http://hl7.org/fhir/StructureDefinition/Bundle"/>  
+            </type>
+        </element>
+    </differential>
+</StructureDefinition>
+

@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlNode(tpXml);
-            ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
+            ParseDemoPatient.CanReadThroughTypedElement(nav, typed: true);
         }
 
         [TestMethod]

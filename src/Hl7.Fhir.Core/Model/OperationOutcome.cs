@@ -10,32 +10,23 @@ namespace Hl7.Fhir.Model
     [System.Diagnostics.DebuggerDisplay(@"\{{ToString()}}")]
     public partial class OperationOutcome
     {
-        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
-        public static OperationOutcome ForMessage(string message, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
-        {
-            return ForMessage(message, IssueType.Processing, severity);
-        }
-
         public static OperationOutcome ForMessage(string message, OperationOutcome.IssueType code, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
-            return new OperationOutcome() {
-                      Issue = new List<OperationOutcome.IssueComponent>()
-                            { new OperationOutcome.IssueComponent() 
-                                    { Severity = severity, Code = code, Diagnostics = message } 
-                            } };
+            return new OperationOutcome()
+            {
+                Issue = new List<OperationOutcome.IssueComponent>()
+                            { new OperationOutcome.IssueComponent()
+                                    { Severity = severity, Code = code, Diagnostics = message }
+                            }
+            };
         }
 
-        [Obsolete("You should now pass in the IssueType. This now defaults to IssueType.Processing")]
-        public static OperationOutcome ForException(Exception e, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
-        {
-            return ForException(e, IssueType.Processing, severity);
-        }
         public static OperationOutcome ForException(Exception e, OperationOutcome.IssueType type, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
         {
             var result = OperationOutcome.ForMessage(e.Message, type, severity);
             var ie = e.InnerException;
 
-            while(ie != null)
+            while (ie != null)
             {
                 result.Issue.Add(new IssueComponent { Diagnostics = ie.Message, Severity = IssueSeverity.Information });
                 ie = ie.InnerException;
@@ -56,7 +47,7 @@ namespace Hl7.Fhir.Model
             if (Success)
                 textBuilder.Append("Overall result: SUCCESS");
             else
-                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors+Fatals, Warnings);
+                textBuilder.AppendFormat("Overall result: FAILURE ({0} errors and {1} warnings)", Errors + Fatals, Warnings);
             textBuilder.AppendLine();
 
             if (Issue.Any())
@@ -72,7 +63,6 @@ namespace Hl7.Fhir.Model
             return textBuilder.ToString();
         }
 
-        [NotMapped]
         public bool Success
         {
             get
@@ -82,7 +72,6 @@ namespace Hl7.Fhir.Model
         }
 
 
-        [NotMapped]
         public int Fatals
         {
             get
@@ -91,7 +80,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public int Errors
         {
             get
@@ -100,7 +88,6 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        [NotMapped]
         public int Warnings
         {
             get
@@ -114,16 +101,14 @@ namespace Hl7.Fhir.Model
         public partial class IssueComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get
                 {
-                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details.DebuggerDisplay("Details."));
+                    return String.Format("Code=\"{0}\" {1}", this.Code, _Details?.DebuggerDisplay("Details.") ?? "(no details)");
                 }
             }
 
-            [NotMapped]
             public bool Success
             {
                 get
@@ -167,7 +152,6 @@ namespace Hl7.Fhir.Model
 
             public const string OPERATIONOUTCOME_ISSUE_HIERARCHY = "http://hl7.org/fhir/StructureDefinition/operationoutcome-issue-hierarchy";
 
-            [NotMapped]
             public int HierarchyLevel
             {
                 get

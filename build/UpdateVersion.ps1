@@ -7,7 +7,16 @@ Param(
 #Go to src (version is not relevant to test projects)
 Push-Location $PsScriptRoot\..\src
 
-$xml = [xml](get-content fhir-net-api.props) 
+if (Test-Path  ..\src\firely-net-sdk.props -PathType leaf)
+{
+     $propFile = "..\src\firely-net-sdk.props"
+}
+else
+{
+   $propFile = "..\src\fhir-net-api.props" # fallback to old name
+}
+
+$xml = [xml](get-content $propFile)
 
 # newVersion is not set, so getting it from the fhir-net-api.props
 If ([string]::IsNullOrEmpty($newVersion)) 
@@ -29,12 +38,12 @@ if (!$oldSuffix.StartsWith("alpha") -or [string]::IsNullOrEmpty($oldSuffix))
 Write-Host "Replacing version information with version: [$newVersion] suffix: [$suffix]" 
 
 #Replacing the version and suffix
-(Get-Content fhir-net-api.props) |
+(Get-Content $propFile) |
     Foreach-Object { $_ `
         -replace "<VersionPrefix>.*</VersionPrefix>", "<VersionPrefix>$newVersion</VersionPrefix>" `
         -replace "<VersionSuffix>.*</VersionSuffix>", "<VersionSuffix>$suffix</VersionSuffix>" `
     } |
-    Set-Content fhir-net-api.props
+    Set-Content $propFile
 
 #go back to the original directory
 Pop-Location

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -11,7 +11,6 @@ using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,6 +66,8 @@ namespace Hl7.Fhir.Test.Validation
                         if (entry.Name.Contains("v2-tables"))
                             continue; // this file is known to have a single dud valueset - have reported on Zulip
                                       // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+                        if (entry.Name == "observation-decimal(decimal).xml")
+                            continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
 
                         testFileCount++;
 
@@ -117,11 +118,11 @@ namespace Hl7.Fhir.Test.Validation
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.TypeName && !String.IsNullOrEmpty(r.Expression));
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache
-                string key = resource.ResourceType.ToString() + "_" + index.Name;
+                string key = resource.TypeName + "_" + index.Name;
                 if (!exampleSearchValues.ContainsKey(key))
                     exampleSearchValues.Add(key, 0);
 

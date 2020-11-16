@@ -1,9 +1,9 @@
-﻿/* 
+/* 
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification
 {
@@ -21,24 +22,24 @@ namespace Hl7.Fhir.Specification
     {
         public delegate bool TypeNameMapper(string typeName, out string canonical);
 
-        private readonly IResourceResolver _resolver;
+        private readonly IAsyncResourceResolver _resolver;
         private readonly TypeNameMapper _typeNameMapper;
 
         public static bool DefaultTypeNameMapper(string name, out string canonical)
         {
-            var typeName = ModelInfo.IsProfiledQuantity(name) ? "Quantity" : name;
-
-            canonical = ResourceIdentity.CORE_BASE_URL + typeName;
+            canonical = ResourceIdentity.CORE_BASE_URL + name;
             return true;
         }
 
-        public StructureDefinitionSummaryProvider(IResourceResolver resolver, TypeNameMapper mapper = null)
+#pragma warning disable CS0618 // Type or member is obsolete
+        public StructureDefinitionSummaryProvider(ISyncOrAsyncResourceResolver resolver, TypeNameMapper mapper = null)
+#pragma warning restore CS0618 // Type or member is obsolete
         {
-            _resolver = resolver;
+            _resolver = resolver.AsAsync();
             _typeNameMapper = mapper ?? DefaultTypeNameMapper;
         }
 
-        public IStructureDefinitionSummary Provide(string canonical)
+        public async T.Task<IStructureDefinitionSummary> ProvideAsync(string canonical)
         {
             var isLocalType = !canonical.Contains("/");
             string mappedCanonical = canonical;
@@ -49,11 +50,17 @@ namespace Hl7.Fhir.Specification
                 if (!mapSuccess) return null;
             }
 
-            var sd = _resolver.FindStructureDefinition(mappedCanonical);
-            if (sd == null) return null;
-
-            return new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
+            var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical).ConfigureAwait(false);
+            
+            return sd is null ? 
+                null 
+                : (IStructureDefinitionSummary)new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
         }
+
+        [Obsolete("StructureDefinitionSummaryProvider now works best with asynchronous resolvers. Use ProvideAsync() instead.")]
+        public IStructureDefinitionSummary Provide(string canonical) =>
+            //TaskHelper.Await(() => ProvideAsync(canonical));
+            ProvideAsync(canonical).GetAwaiter().GetResult();
     }
 
     internal struct BackboneElementComplexTypeSerializationInfo : IStructureDefinitionSummary
@@ -169,13 +176,7 @@ namespace Hl7.Fhir.Specification
             _definition = nav.Current;
             Order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
 
-            string noChoiceSuffix(string n)
-            {
-                if (n.EndsWith("[x]"))
-                    return n.Substring(0, n.Length - 3);
-                else
-                    return n;
-            }
+            string noChoiceSuffix(string n) => n.EndsWith("[x]") ? n.Substring(0, n.Length - 3) : n;
         }
 
         private static ITypeSerializationInfo[] buildTypes(ElementDefinitionNavigator nav)

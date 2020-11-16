@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 // [WMR 20171023] TODO
@@ -21,14 +21,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
+using T=System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource
+    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Specification.Source
             if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
 
             var fullList = GetFilePaths();
-            // [WMR 20190219] https://github.com/FirelyTeam/fhir-net-api/issues/875
+            // [WMR 20190219] https://github.com/FirelyTeam/firely-net-sdk/issues/875
             // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
             //return fullFileName == null ? null : File.OpenRead(fullFileName);
 
@@ -540,9 +540,7 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
 
-            if (match?.Origin is null) { return null; }
-
-            return File.OpenRead(match.Origin);
+            return match?.Origin is null ? null : File.OpenRead(match.Origin);
         }
 
         #endregion
@@ -913,7 +911,7 @@ namespace Hl7.Fhir.Specification.Source
                 try
                 {
                     // Process files in parallel
-                    var loopResult = Parallel.For(0, cnt,
+                    var loopResult = T.Parallel.For(0, cnt,
                         // new ParallelOptions() { MaxDegreeOfParallelism = Environment.ProcessorCount },
                         i =>
                         {
@@ -1029,6 +1027,10 @@ namespace Hl7.Fhir.Specification.Source
         /// The underlying artifact summaries are loaded on demand.
         /// </summary>
         protected IEnumerable<string> GetFileNames() => GetSummaries().Select(s => Path.GetFileName(s.Origin)).Distinct();
+
+        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+
+        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
 
         #endregion
 

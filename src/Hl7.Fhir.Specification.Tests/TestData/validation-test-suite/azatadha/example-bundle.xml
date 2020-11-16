@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+    <type value="collection"/>
+    <entry>
+        <resource>
+            <Binary>
+                <id value="1"/>
+                <contentType value="text/plain"/> 
+                <data value="VGVzdA=="/>   
+            </Binary>
+        </resource>
+    </entry>
+</Bundle>

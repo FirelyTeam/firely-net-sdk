@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using System.Collections.Generic;
@@ -29,10 +29,6 @@ namespace Hl7.Fhir.Support
             new CodeableConcept(API_OPERATION_OUTCOME_SYSTEM, issueCode.ToString(), text);
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, ITypedElement location = null) => 
-            ToIssueComponent(message, location?.Location);
-
-        [Obsolete("Use ToIssueComponent(string message, ITypedElement location = null) instead")]
-        public OperationOutcome.IssueComponent ToIssueComponent(string message, IElementNavigator location = null) =>
             ToIssueComponent(message, location?.Location);
 
         public OperationOutcome.IssueComponent ToIssueComponent(string message, string path = null)
@@ -151,12 +147,6 @@ namespace Hl7.Fhir.Support
             return outcome;
         }
 
-        [Obsolete("Use NewOutcomeWithIssue(this Issue infoIssue, string message, ITypedElement location) instead")]
-        public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, IElementNavigator location)
-        {
-            return NewOutcomeWithIssue(infoIssue, message, location.ToTypedElement());
-        }
-
         public static OperationOutcome NewOutcomeWithIssue(this Issue infoIssue, string message, string location = null)
         {
             var outcome = new OperationOutcome();
@@ -171,13 +161,6 @@ namespace Hl7.Fhir.Support
             outcome.AddIssue(issue);
             return issue;
         }
-
-        [Obsolete("Use AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, ITypedElement location) instead")]
-        public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, IElementNavigator location)
-        {
-            return AddIssue(outcome, message, infoIssue, location.ToTypedElement());
-        }
-
 
         public static OperationOutcome.IssueComponent AddIssue(this OperationOutcome outcome, string message, Issue infoIssue, string location = null)
         {

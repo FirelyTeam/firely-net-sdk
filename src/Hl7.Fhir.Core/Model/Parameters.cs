@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [System.Diagnostics.DebuggerDisplay(@"\{Count={_Parameter != null ? _Parameter.Count : 0}}")]
     public partial class Parameters
-    {   
+    {
         /// <summary>
         /// Add a parameter with a given name and value.
         /// </summary>
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
                     new ParameterComponent()
                     {
                         Name = name,
-                        Value = value as Element,
+                        Value = value as DataType,
                         Resource = value as Resource
                     });
             }
@@ -94,8 +94,8 @@ namespace Hl7.Fhir.Model
                 var newPart = new ParameterComponent() { Name = tuple.Item1 };
                 newParam.Part.Add(newPart);
 
-                if (tuple.Item2 is Element)
-                    newPart.Value = (Element)tuple.Item2;
+                if (tuple.Item2 is DataType dt)
+                    newPart.Value = dt;
                 else
                 {
                     //TODO: Due to an error in the jan2015 version of DSTU2, this is not yet possible
@@ -151,7 +151,6 @@ namespace Hl7.Fhir.Model
             return Get(name, matchPrefix).SingleOrDefault();
         }
 
-        [NotMapped]
         public ParameterComponent this[string name] => GetSingle(name);
 
         /// <summary>
@@ -174,7 +173,6 @@ namespace Hl7.Fhir.Model
         public partial class ParameterComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            [NotMapped]
             private string DebuggerDisplay
             {
                 get
@@ -182,7 +180,7 @@ namespace Hl7.Fhir.Model
                     return String.Format("Name=\"{0}\" Value=\"{1}\"", this.Name, this.Value);
                 }
             }
-        }
+        }   
 
     }
 }

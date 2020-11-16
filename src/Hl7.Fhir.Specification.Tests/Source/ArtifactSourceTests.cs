@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using T = System.Threading.Tasks;
 using ssac = System.Security.AccessControl;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -26,9 +27,9 @@ namespace Hl7.Fhir.Specification.Tests
         private static string _testPath;
 
         [ClassInitialize]
-        public static void SetupExampleDir(TestContext context)
+        public static void SetupExampleDir(TestContext _)
         {
-            _testPath = prepareExampleDirectory(out int numFiles);
+            _testPath = prepareExampleDirectory(out int _);
         }
 
         private static string prepareExampleDirectory(out int numFiles)
@@ -122,8 +123,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UseFileArtifactSource()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Mask = "*.xml|*.xsd";
+            var fa = new DirectorySource(_testPath)
+            {
+                Mask = "*.xml|*.xsd"
+            };
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(5, names.Count());
@@ -144,9 +147,11 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void UseIncludeExcludeFilter()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Includes = new[] { "*.xml", "pa*.sch" };
-            fa.Excludes = new[] { "nonfhir*.*" };
+            var fa = new DirectorySource(_testPath)
+            {
+                Includes = new[] { "*.xml", "pa*.sch" },
+                Excludes = new[] { "nonfhir*.*" }
+            };
 
             var names = fa.ListArtifactNames();
 
@@ -177,10 +182,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void FileSourceSkipsInvalidXml()
+        public async T.Task FileSourceSkipsInvalidXml()
         {
-            var fa = new DirectorySource(_testPath);
-            fa.Mask = "*.xml";
+            var fa = new DirectorySource(_testPath)
+            {
+                Mask = "*.xml"
+            };
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(4, names.Count());
@@ -192,7 +199,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
-            var sd = fa.FindStructureDefinition("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
+            var sd = await fa.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();
@@ -247,8 +254,10 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
-            var za = new ZipSource(zipFile);
-            za.Mask = "profiles-types.xml";
+            var za = new ZipSource(zipFile)
+            {
+                Mask = "profiles-types.xml"
+            };
 
             var artifacts = za.ListArtifactNames().ToArray();
             Assert.AreEqual(1, artifacts.Length);
@@ -258,17 +267,23 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(resourceIds);
             Assert.IsTrue(resourceIds.Count > 0);
             Assert.IsTrue(resourceIds.All(url => url.StartsWith("http://hl7.org/fhir/StructureDefinition/")));
-            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/xhtml");  // xhtml is not represented in the pocos
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
+            resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/MoneyQuantity");
 
             // + total number of known FHIR core types
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
+            // - 4 for abstract R5 base types not present as R4 structuredefs
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
             var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
                                                                             && kvp.Value != "Resource"
                                                                             && kvp.Value != "DomainResource"
+                                                                            && kvp.Value != "BackboneType"
+                                                                            && kvp.Value != "Base"
+                                                                            && kvp.Value != "DataType"
+                                                                            && kvp.Value != "PrimitiveType"
                                                                             )
                                                             .Select(kvp => kvp.Value);
             var numCoreDataTypes = coreDataTypes.Count();
@@ -284,7 +299,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20170817] NEW
-        // https://github.com/FirelyTeam/fhir-net-api/issues/410
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/410
         // DirectorySource should gracefully handle insufficient access permissions
         // i.e. silently ignore all inaccessible files & folders
 
@@ -413,12 +428,12 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // LoadByName should handle duplicate filenames in (different subfolders of) the contentdirectory
-        // https://github.com/FirelyTeam/fhir-net-api/issues/875
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
         public void OpenDuplicateFileNames()
         {
-            var testPath = prepareExampleDirectory(out int numFiles);
+            var testPath = prepareExampleDirectory(out int _);
 
             // Additional temporary folder without read permissions
             const string subFolderName = "sub";
@@ -452,7 +467,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            var xml = new FhirXmlSerializer().SerializeToString(res);
+            _ = new FhirXmlSerializer().SerializeToString(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));

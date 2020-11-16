@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
@@ -12,12 +12,9 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Model.Primitives;
-using Hl7.FhirPath.Functions;
-using Hl7.FhirPath.Tests;
+using P = Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -34,80 +31,6 @@ namespace Hl7.FhirPath.R4.Tests
         public TestContext TestContext { get; set; }
 
         [TestMethod]
-        public void ConvertToInteger()
-        {
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(1).ToInteger());
-            Assert.AreEqual(2L, ElementNode.ForPrimitive("2").ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive("2.4").ToInteger());
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToInteger());
-            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive(2.4m).ToInteger());
-            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToInteger());
-        }
-
-        [TestMethod]
-        public void ConvertToString()
-        {
-            Assert.AreEqual("hoi", ElementNode.ForPrimitive("hoi").ToString());
-            Assert.AreEqual("3.4", ElementNode.ForPrimitive(3.4m).ToString());
-            Assert.AreEqual("4", ElementNode.ForPrimitive(4L).ToString());
-            Assert.AreEqual("true", ElementNode.ForPrimitive(true).ToString());
-            Assert.AreEqual("false", ElementNode.ForPrimitive(false).ToString());
-            Assert.IsNotNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToString());
-        }
-
-        [TestMethod]
-        public void ConvertToDecimal()
-        {
-            Assert.AreEqual(1m, ElementNode.ForPrimitive(1m).ToDecimal());
-            Assert.AreEqual(2.01m, ElementNode.ForPrimitive("2.01").ToDecimal());
-            Assert.AreEqual(1L, ElementNode.ForPrimitive(true).ToDecimal());
-            Assert.AreEqual(0L, ElementNode.ForPrimitive(false).ToDecimal());
-            Assert.IsNull(ElementNode.ForPrimitive(2).ToDecimal());
-            //            Assert.Null(ElementNode.ForPrimitive("2").ToDecimal());   Not clear according to spec
-            Assert.IsNull(ElementNode.ForPrimitive(DateTimeOffset.Now).ToDecimal());
-        }
-
-        [TestMethod]
-        public void CheckTypeDetermination()
-        {
-            var values = ElementNode.CreateList(1, true, "hi", 4.0m, 4.0f, PartialDateTime.Now());
-
-
-            Test.IsInstanceOfType(values.Item(0).Single().Value, typeof(Int64));
-            Test.IsInstanceOfType(values.Item(1).Single().Value, typeof(Boolean));
-            Test.IsInstanceOfType(values.Item(2).Single().Value, typeof(String));
-            Test.IsInstanceOfType(values.Item(3).Single().Value, typeof(Decimal));
-            Test.IsInstanceOfType(values.Item(4).Single().Value, typeof(Decimal));
-            Test.IsInstanceOfType(values.Item(5).Single().Value, typeof(PartialDateTime));
-        }
-
-
-        [TestMethod]
-        public void TestItemSelection()
-        {
-            var values = ElementNode.CreateList(1, 2, 3, 4, 5, 6, 7);
-
-            Assert.AreEqual((Int64)1, values.Item(0).Single().Value);
-            Assert.AreEqual((Int64)3, values.Item(2).Single().Value);
-            Assert.AreEqual((Int64)1, values.First().Value);
-            Assert.IsFalse(values.Item(100).Any());
-        }
-
-        [TestMethod]
-        public void TypeInfoEquality()
-        {
-            Assert.AreEqual(TypeInfo.Boolean, TypeInfo.Boolean);
-            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.AreNotEqual(TypeInfo.Boolean, TypeInfo.String);
-            Assert.IsTrue(TypeInfo.Decimal == TypeInfo.ByName("decimal"));
-            Assert.AreEqual(TypeInfo.ByName("something"), TypeInfo.ByName("something"));
-            Assert.AreNotEqual(TypeInfo.ByName("something"), TypeInfo.ByName("somethingElse"));
-            Assert.IsTrue(TypeInfo.ByName("something") == TypeInfo.ByName("something"));
-            Assert.IsTrue(TypeInfo.ByName("something") != TypeInfo.ByName("somethingElse"));
-        }
-
-        [TestMethod]
         public void TestFhirPathPolymporphism()
         {
             var patient = new Patient() { Active = false };
@@ -116,7 +39,7 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = nav.Select("Resource.meta.lastUpdated");
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
         }
 
         [TestMethod]
@@ -129,7 +52,7 @@ namespace Hl7.FhirPath.R4.Tests
             EvaluationContext ctx = new FhirEvaluationContext();
             var result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
 
             bool traced = false;
             ctx.Tracer = (string name, System.Collections.Generic.IEnumerable<ITypedElement> results) =>
@@ -146,7 +69,7 @@ namespace Hl7.FhirPath.R4.Tests
             };
             result = nav.Select("Resource.meta.trace('log').lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
 
             traced = false;
@@ -163,7 +86,7 @@ namespace Hl7.FhirPath.R4.Tests
             };
             result = nav.Select("Resource.trace('id', id).meta.trace('log', lastUpdated).lastUpdated", ctx);
             Assert.IsNotNull(result.FirstOrDefault());
-            Assert.AreEqual(PartialDateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
+            Assert.AreEqual(P.DateTime.Parse("2018-05-24T14:48:00+00:00"), result.First().Value);
             Assert.IsTrue(traced);
         }
 
@@ -204,6 +127,16 @@ namespace Hl7.FhirPath.R4.Tests
 
             result = patient.Predicate("identifier[0].value.combine($this.identifier[0].value).isDistinct()");
             Assert.IsFalse(result);
+        }
+
+
+        [TestMethod]
+        public void TestImplicitQuantityCast()
+        {
+            var obs = new Observation { Value = new Hl7.Fhir.Model.Quantity(75m, "kg") };
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value > 74 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value = 75 'kg'"));
+            Assert.IsTrue(obs.ToTypedElement().Predicate("Observation.value ~ 75 'kg'"));
         }
 
         [TestMethod]

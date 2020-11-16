@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // [WMR 20161219] Save and reuse existing instance, so generator can detect & handle recursion
@@ -109,38 +109,6 @@ namespace Hl7.Fhir.Validation
             return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); ;
         }
 
-        #region Obsolete public methods
-        [Obsolete("Use Validate(ITypedElement instance) instead")]
-        public OperationOutcome Validate(IElementNavigator instance)
-        {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null).RemoveDuplicateMessages(); ;
-        }
-
-        [Obsolete("Use Validate(ITypedElement instance, params string[] definitionUris) instead")]
-        public OperationOutcome Validate(IElementNavigator instance, params string[] definitionUris)
-        {
-            return Validate(instance.ToTypedElement(), (IEnumerable<string>)definitionUris).RemoveDuplicateMessages(); ;
-        }
-
-        [Obsolete("Use Validate(ITypedElement instance, IEnumerable<string> definitionUris) instead")]
-        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<string> definitionUris)
-        {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); 
-        }
-
-        [Obsolete("Use Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) instead")]
-        public OperationOutcome Validate(IElementNavigator instance, params StructureDefinition[] structureDefinitions)
-        {
-            return Validate(instance.ToTypedElement(), (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages(); 
-        }
-
-        [Obsolete("Use Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions) instead")]
-        public OperationOutcome Validate(IElementNavigator instance, IEnumerable<StructureDefinition> structureDefinitions)
-        {
-            return Validate(instance.ToTypedElement(), declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); 
-        }
-        #endregion
-
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
         {
@@ -154,7 +122,10 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             StructureDefinition profileResolutionNeeded(string canonical) =>
+                //TODO: Need to make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
@@ -343,15 +314,15 @@ namespace Hl7.Fhir.Validation
                     return outcome;
                 }
 
-                ts = new LocalTerminologyService(Settings.ResourceResolver);
+                ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
             ValidationContext vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
-                    Binding b = binding.ToValidatable();
-                    outcome.Add(b.Validate(instance, vc));
+                Binding b = binding.ToValidatable();
+                outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)
             {
@@ -461,7 +432,7 @@ namespace Hl7.Fhir.Validation
                 }
                 catch (Exception e)
                 {
-                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver API failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
+                    Trace(outcome, $"Resolution of reference '{reference}' using the Resolver SDK failed: " + e.Message, Issue.UNAVAILABLE_REFERENCED_RESOURCE, path);
                 }
             }
 
@@ -489,7 +460,10 @@ namespace Hl7.Fhir.Validation
             var generator = this.SnapshotGenerator;
             if (generator != null)
             {
+                //TODO: make everything async in 2.x validator
+#pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(definition);
+#pragma warning restore CS0618 // Type or member is obsolete
 
 #if DEBUG
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);

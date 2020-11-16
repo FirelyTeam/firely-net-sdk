@@ -1,0 +1,103 @@
+{
+    "resourceType":"Observation",
+    "id":"1minute-apgar-score",
+    "meta":{
+        "versionId":"2",
+        "lastUpdated":"10/2/2017 5:13:51 PM",
+        "profile": [
+            "http://AAUprofiles/StructureDefinition/DAS28ObservationPractioner"
+        ]
+    },
+    "contained": [
+        {
+            "resourceType":"Patient",
+            "id":"newborn",
+            "identifier": [
+                {
+                    "system":"http://acmehealthcare/org/mrns",
+                    "value":"12345"
+                }
+            ],
+            "active":true,
+            "name": [
+                {
+                    "family":"Chalmers",
+                    "given": [
+                        "Peter",
+                        "James"
+                    ]
+                }
+            ],
+            "gender":"male",
+            "birthDate":"2016-05-18",
+            "_birthDate":{
+                "extension": [
+                    {
+                        "url":"http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+                        "valueDateTime":"5/18/2016 10:28:45 AM"
+                    }
+                ]
+            }
+        }
+    ],
+    "status":"final",
+    "category": [
+        {
+            "coding": [
+                {
+                    "system":"http://hl7.org/fhir/observation-category",
+                    "code":"survey",
+                    "display":"Survey"
+                }
+            ],
+            "text":"Survey"
+        }
+    ],
+    "code":{
+        "coding": [
+            {
+                "system":"http://snomed.info/sct",
+                "code":"444060007"
+            }
+        ],
+        "text":"1 minute Apgar Score"
+    },
+    "subject":{
+        "reference":"#newborn"
+    },
+    "effectiveDateTime":"5/18/2016 10:33:22 PM",
+    "performer": [
+        {
+            "reference":"Practitioner/example"
+        }
+    ],
+    "valueQuantity":{
+        "value":"0",
+        "system":"http://unitsofmeasure.org",
+        "code":"{score}"
+    },
+    "component": [
+        {
+            "code":{
+                "coding": [
+                    {
+                        "system":"http://snomed.info/sct",
+                        "code":"55235003"
+                    }
+                ],
+                "text":"Apgar color score"
+            }
+        },
+        {
+            "code":{
+                "coding": [
+                    {
+                        "system":"http://snomed.info/sct",
+                        "code":"446661009"
+                    }
+                ],
+                "text":"Apgar color score"
+            }
+        }
+    ]
+}

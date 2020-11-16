@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // To introduce the DSTU2 FHIR specification
@@ -102,33 +102,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(7, patient["active"].DescendantsAndSelf().Count());
             Assert.AreEqual(2, patient["active"]["extension"].Count());
         }
-
-        [TestMethod]
-        public void CanNavigateOverNode()
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            var nav = patient.ToElementNavigator();
-#pragma warning restore CS0618 // Type or member is obsolete
-
-            Assert.AreEqual("Patient", nav.Name);
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("active", nav.Name);
-           // Assert.AreEqual("boolean", nav.Type);
-            Assert.IsFalse(nav.MoveToNext());
-
-            Assert.AreEqual("true", nav.Value);
-            Assert.IsTrue(nav.MoveToFirstChild("id"));
-            Assert.AreEqual("id", nav.Name);
-            Assert.IsFalse(nav.MoveToFirstChild());
-            Assert.IsTrue(nav.MoveToNext());
-            Assert.AreEqual("id", nav.Name);
-            Assert.IsTrue(nav.MoveToNext("extension"));
-            Assert.AreEqual("extension", nav.Name);
-            Assert.IsTrue(nav.MoveToFirstChild());
-            Assert.AreEqual("value", nav.Name);
-        }
-
+   
         [TestMethod]
         public void KeepsAnnotations()
         {

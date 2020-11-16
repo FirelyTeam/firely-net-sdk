@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 
@@ -19,25 +19,16 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoBuilderExtensions
     {
         public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(source, pocoType);
+            new PocoBuilder(ModelInfo.GetStructureDefinitionSummaryProvider(), settings).BuildFrom(source, pocoType);
 
         public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
                (T)source.ToPoco(typeof(T), settings);
 
         public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(settings).BuildFrom(element);
+            new PocoBuilder(ModelInfo.GetStructureDefinitionSummaryProvider(), settings).BuildFrom(element);
 
         public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
                (T)element.ToPoco(settings);
-
-#pragma warning disable 612, 618
-        public static Base ToPoco(this IElementNavigator navigator, Type pocoType = null,
-            PocoBuilderSettings settings = null) => navigator.ToSourceNode().ToPoco(pocoType, settings);
-
-        public static T ToPoco<T>(this IElementNavigator navigator, PocoBuilderSettings settings = null) where T : Base =>
-               (T)navigator.ToPoco(typeof(T), settings);
-#pragma warning restore 612, 618
-
 
         public static Model.Quantity ParseQuantity(this ITypedElement instance)
         {
@@ -85,18 +76,18 @@ namespace Hl7.Fhir.ElementModel
                 case FHIRAllTypes.CodeableConcept:
                     return instance.ParseCodeableConcept();
                 case FHIRAllTypes.Quantity:
-                    return parseQuantity(instance);
+                    return parseQuantity();
                 case FHIRAllTypes.String:
                     return new Code(instance.ParsePrimitive<FhirString>()?.Value);
                 case FHIRAllTypes.Uri:
                     return new Code(instance.ParsePrimitive<FhirUri>()?.Value);
                 case FHIRAllTypes.Extension:
-                    return parseExtension(instance);
+                    return parseExtension();
                 default:
                     return null;
             }
 
-            Coding parseQuantity(ITypedElement nav)
+            Coding parseQuantity()
             {
                 var newCoding = new Coding();
                 var q = instance.ParseQuantity();
@@ -105,14 +96,14 @@ namespace Hl7.Fhir.ElementModel
                 return newCoding;
             }
 
-            Element parseExtension(ITypedElement nav)
+            Element parseExtension()
             {
                 var valueChild = instance.Children("value").FirstOrDefault();
                 return valueChild?.ParseBindable();
             }
         }
 
-        public static T ParsePrimitive<T>(this ITypedElement instance) where T : Primitive, new()
+        public static T ParsePrimitive<T>(this ITypedElement instance) where T : PrimitiveType, new()
                     => new T() { ObjectValue = instance.Value };
 
 
@@ -148,35 +139,5 @@ namespace Hl7.Fhir.ElementModel
         }
 
         public static string GetString(this IEnumerable<ITypedElement> instance) => instance.SingleOrDefault()?.Value as string;
-
-        [Obsolete("Use ParseCodeableConcept(this ITypedElement instance) instead")]
-        public static CodeableConcept ParseCodeableConcept(this IElementNavigator instance)
-            => ParseCodeableConcept(instance.ToTypedElement());
-
-
-        [Obsolete("Use GetString(this IEnumerable<ITypedElement> instance) instead")]
-        public static string GetString(this IEnumerable<IElementNavigator> instance)
-            => instance.SingleOrDefault()?.Value as string;
-
-
-        [Obsolete("Use ParseQuantity(this ITypedElement instance) instead")]
-        public static Model.Quantity ParseQuantity(this IElementNavigator instance) => ParseQuantity(instance.ToTypedElement());
-
-        [Obsolete("Use ParseBindable(this ITypedElement instance) instead")]
-        public static Element ParseBindable(this IElementNavigator instance) => ParseBindable(instance.ToTypedElement());
-
-
-        [Obsolete("Use ParsePrimitive<T>(this ITypedElement instance) instead")]
-        public static T ParsePrimitive<T>(this IElementNavigator instance) where T : Primitive, new()
-            => ParsePrimitive<T>(instance.ToTypedElement());
-
-        [Obsolete("Use ParseCoding(this ITypedElement instance) instead")]
-        public static Coding ParseCoding(this IElementNavigator instance)
-            => ParseCoding(instance.ToTypedElement());
-
-        [Obsolete("Use ParseResourceReference(this ITypedElement instance) instead")]
-        public static ResourceReference ParseResourceReference(this IElementNavigator instance)
-             => ParseResourceReference(instance.ToTypedElement());
-
     }
 }

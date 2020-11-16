@@ -3,6 +3,7 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
 using System;
 using System.Diagnostics;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
     /// Ensures that resolved <see cref="StructureDefinition"/> resources have a snapshot component (re-generate on demand).
     /// </summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class SnapshotSource : IResourceResolver
+    public class SnapshotSource : IResourceResolver, IAsyncResourceResolver
     {
         /// <summary>Creates a new instance of the <see cref="SnapshotSource"/> for the specified snapshot generator instance.</summary>
         /// <param name="generator">A <see cref="SnapshotGenerator"/> instance.</param>
@@ -58,34 +59,40 @@ namespace Hl7.Fhir.Specification.Source
         public SnapshotSource(IResourceResolver source) 
             : this(source, SnapshotGeneratorSettings.CreateDefault()) { }
 
-        /// <summary>Returns a reference to the internal artifact source, as specified in the constructor.</summary>
-        /// <remarks>Used by the snapshot <see cref="Generator"/> to resolve references to external profiles.</remarks>
-        public IResourceResolver Source => Generator.Source;
-
         /// <summary>Returns the internal <see cref="SnapshotGenerator"/> instance used by the source.</summary>
         public SnapshotGenerator Generator { get; }
 
         #region IResourceResolver
 
+        private IAsyncResourceResolver _resolver => Generator.AsyncResolver;
+
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public Resource ResolveByUri(string uri) => ensureSnapshot(Source.ResolveByUri(uri));
+        public async T.Task<Resource> ResolveByUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+
+        /// <inheritdoc cref="ResolveByUriAsync(string)"/>
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByUriAsync() instead.")]
+        public Resource ResolveByUri(string uri) => TaskHelper.Await(() => ResolveByUriAsync(uri));
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <remarks>The source ensures that resolved <see cref="StructureDefinition"/> instances have a snapshot component.</remarks>
-        public Resource ResolveByCanonicalUri(string uri) => ensureSnapshot(Source.ResolveByCanonicalUri(uri));
+        public async T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => await ensureSnapshot(await _resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false)).ConfigureAwait(false);
+
+        /// <inheritdoc cref="ResolveByCanonicalUriAsync(string)"/>
+        [Obsolete("SnapshotSource now works best with asynchronous resolvers. Use ResolveByCanonicalUriAsync() instead.")]
+        public Resource ResolveByCanonicalUri(string uri) => TaskHelper.Await(() => ResolveByCanonicalUriAsync(uri));
 
         #endregion
 
         // If the specified resource is a StructureDefinition,
         // then ensure snapshot component is available, (re-)generate on demand
-        Resource ensureSnapshot(Resource res)
+        private async T.Task<Resource> ensureSnapshot(Resource res)
         {
             if (res is StructureDefinition sd)
             {
                 if (!sd.HasSnapshot || Generator.Settings.ForceRegenerateSnapshots || !sd.Snapshot.IsCreatedBySnapshotGenerator())
                 {
-                    Generator.Update(sd);
+                    await Generator.UpdateAsync(sd).ConfigureAwait(false);
                 }
             }
             return res;
@@ -94,6 +101,6 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {Source.DebuggerDisplayString()}";
+        internal protected virtual string DebuggerDisplay => $"{GetType().Name} for {_resolver.DebuggerDisplayString()}";
     }
 }

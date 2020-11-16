@@ -3,10 +3,10 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
- #define DEBUG_SNAP_ELEM_ANNOTATIONS
+#define DEBUG_SNAP_ELEM_ANNOTATIONS
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -23,9 +23,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         #region Annotation: Created By Snapshot Generator
 
         /// <summary>Annotation to mark a generated element, so we can prevent duplicate re-generation.</summary>
-#if !NETSTANDARD1_1
         [Serializable]
-#endif
         sealed class CreatedBySnapshotGeneratorAnnotation
         {
             public DateTimeOffset Created { get; }
@@ -48,9 +46,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Custom annotation for elements and properties in the <see cref="StructureDefinition.SnapshotComponent"/>
         /// that are constrained by the <see cref="StructureDefinition.DifferentialComponent"/>.
         /// </summary>
-#if !NETSTANDARD1_1
         [Serializable]
-#endif
         sealed class ConstrainedByDiffAnnotation
         {
             //
@@ -123,9 +119,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         //    WARNING: DeepCopy() also copies annotations, take care...
 
         /// <summary>For annotating a differential element definition with a reference to the associated generated snapshot element definition.</summary>
-#if !NETSTANDARD1_1
         [Serializable]
-#endif
         sealed class SnapshotElementDefinitionAnnotation
         {
             /// <summary>
@@ -193,7 +187,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Return the annotated reference to the associated root <see cref="ElementDefinition"/> instance
         /// in the <see cref="StructureDefinition.Snapshot"/> component, if it exists, or <c>null</c> otherwise.
         /// </summary>
-        internal static ElementDefinition GetSnapshotRootElementAnnotation(this StructureDefinition sd) 
+        internal static ElementDefinition GetSnapshotRootElementAnnotation(this StructureDefinition sd)
             => sd?.Differential?.Element[0]?.GetSnapshotElementAnnotation();
 
         /// <summary>
@@ -235,7 +229,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Remove all <see cref="SnapshotElementDefinitionAnnotation"/> instances from the specified <see cref="ElementDefinition"/>.</summary>
         internal static void RemoveSnapshotElementAnnotations(this ElementDefinition ed) { ed?.RemoveAnnotations<SnapshotElementDefinitionAnnotation>(); }
 
-#endregion
+        #endregion
 
     }
 }

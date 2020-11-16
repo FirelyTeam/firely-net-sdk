@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // [WMR 20190910] R4: Normalize renamed type slices in snapshot
@@ -12,14 +12,10 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
 using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Snapshot
@@ -111,7 +107,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
-                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
+                correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.Definition = mergePrimitiveElement(snap.Definition, diff.Definition, true);
@@ -179,7 +175,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
             }
 
-            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            private void correctListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
             {
                 if (replacement is List<T> list && !list.Any())
                 {
@@ -300,7 +296,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             // Merge a collection of primitive values
-            List<T> mergePrimitiveCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : Primitive
+            List<T> mergePrimitiveCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : PrimitiveType
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -473,7 +469,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // Now, diff has a numeric limit
                     // So, if snap has no limit, take the diff
-                    if(snap.Value == "*")
+                    if (snap.Value == "*")
                         return deepCopyAndRaiseOnConstraint(diff);
 
                     // snap and diff both have a numeric value
@@ -483,7 +479,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // compare them if they are both numerics
                         return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
                     }
-                    
+
                     // one of the two values cannot be parsed, just don't
                     // do anything to not break it any further.
                     return snap;
@@ -545,7 +541,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// then append differential text to snapshot text.
             /// Merge differential extensions with snapshot extensions.
             /// </summary>
-            T mergePrimitiveElement<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
+            T mergePrimitiveElement<T>(T snap, T diff, bool allowAppend = false) where T : PrimitiveType
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -646,7 +642,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             static bool matchCanonicals(Canonical x, Canonical y) => matchStringValues(x, y);
 
-            static bool matchStringValues<T>(T x, T y) where T : Primitive<string>, IStringValue
+            static bool matchStringValues<T>(T x, T y) where T : PrimitiveType, IValue<string>
                 => !(x is null) && !(y is null) && IsEqualString(x.Value, y.Value);
 
             static bool IsEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);
