@@ -10,7 +10,7 @@ namespace Hl7.Fhir.ElementModel.Tests
     public class TypedElementToSourceNodeAdapterTests
     {
         /// <summary>
-        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/888
+        /// This test proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/888
         /// </summary>
         [TestMethod]
         public void AnnotationsTest()

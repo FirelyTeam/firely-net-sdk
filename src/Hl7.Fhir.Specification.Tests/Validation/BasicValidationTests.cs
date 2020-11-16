@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// This unit test proves issue 552: https://github.com/FirelyTeam/fhir-net-api/issues/552
+        /// This unit test proves issue 552: https://github.com/FirelyTeam/firely-net-sdk/issues/552
         /// </summary>
         [Fact]
         public async T.Task ValidateOidType()
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <summary>
         /// The sdf-8 constraint on element StructureDefinition.Snapshot in the differential is not correct encoded. We manually changed 
         /// this in Hl7.Fhir.Specification\data\profiles-resources.xml. 
-        /// See also issue https://github.com/FirelyTeam/fhir-net-api/issues/1302
+        /// See also issue https://github.com/FirelyTeam/firely-net-sdk/issues/1302
         /// </summary>
         [Fact]
         public async T.Task CheckSdf8Expression()
@@ -1048,7 +1048,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 423  (https://github.com/FirelyTeam/fhir-net-api/issues/423)
+        /// Test for issue 423  (https://github.com/FirelyTeam/firely-net-sdk/issues/423)
         /// </summary>
         [Fact]
         public void ValidateInternalReferenceWithinContainedResources()
@@ -1079,7 +1079,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         /// <summary>
-        /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
+        /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
         /// </summary>
         [Fact, Trait("Category", "LongRunner")]
         public async System.Threading.Tasks.Task RunValueSetExpanderMultiThreaded()
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         /// <summary>
-        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/1140
+        /// This test proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1140
         /// </summary>
         [Fact]
         public async T.Task ValidatePrimitiveWithEmptyTypeElement()
@@ -1182,7 +1182,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         /// <summary>
-        /// This test proves issue https://github.com/FirelyTeam/fhir-net-api/issues/617
+        /// This test proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/617
         /// </summary>
         [Fact]
         public void ValidateConditionalResourceInBundle()
