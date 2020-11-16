@@ -4,8 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\firely-net-sdk.props" />
+  <Import Project="..\firely-net-sdk.targets" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>

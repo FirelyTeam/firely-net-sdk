@@ -4,8 +4,8 @@
     <TargetFrameworks Condition=" '$(Configuration)' != 'Debug' ">$(TargetFrameworks);net45</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\firely-net-sdk.props" />
+  <Import Project="..\firely-net-sdk.targets" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Serialization.Tests</AssemblyName>

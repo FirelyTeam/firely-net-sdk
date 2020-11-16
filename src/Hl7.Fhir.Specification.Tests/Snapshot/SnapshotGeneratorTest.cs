@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // [WMR 20170411] HACK - suppress infinite recursion
@@ -5764,7 +5764,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         // Isue #387
-        // https://github.com/FirelyTeam/fhir-net-api/issues/387
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/387
         // Cannot reproduce in STU3?
         // [WMR 20170713] Note: in DSTU2, the QuestionnaireResponse core resource definition
         // specifies an example binding on element "QuestionnaireResponse.group.question.answer.value[x]"
@@ -6986,7 +6986,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20180115]
-        // https://github.com/FirelyTeam/fhir-net-api/issues/510
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/510
         // "Missing diff annotation on ElementDefinition.TypeRefComponent"
         [TestMethod]
         public async T.Task TestConstrainedByDiff_Type()
@@ -7316,7 +7316,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20180604] Issue #611
-        // https://github.com/FirelyTeam/fhir-net-api/issues/611
+        // https://github.com/FirelyTeam/firely-net-sdk/issues/611
 
         [TestMethod]
         public async T.Task TestSnapshotForDerivedSlice()

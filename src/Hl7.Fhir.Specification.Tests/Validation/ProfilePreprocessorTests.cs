@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
     public class ProfilePreprocessorTests
     {
         /// <summary>
-        /// Test for issue 556 (https://github.com/FirelyTeam/fhir-net-api/issues/556) 
+        /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
         /// </summary>
         [Fact, Trait("Category", "LongRunner")]
         public async T.Task RunSnapshotMultiThreaded()
