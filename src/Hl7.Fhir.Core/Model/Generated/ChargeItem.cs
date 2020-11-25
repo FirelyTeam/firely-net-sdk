@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Item containing charge code(s) associated with the provision of healthcare provider products
   /// </summary>
   [Serializable]
-  [FhirType("ChargeItem", IsResource=true)]
   [DataContract]
+  [FhirType("ChargeItem", IsResource=true)]
   public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -110,8 +110,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who performed charged service
     /// </summary>
-    [FhirType("ChargeItem#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ChargeItem#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

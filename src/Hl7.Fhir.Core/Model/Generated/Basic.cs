@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Resource for non-supported content
   /// </summary>
   [Serializable]
-  [FhirType("Basic", IsResource=true)]
   [DataContract]
+  [FhirType("Basic", IsResource=true)]
   public partial class Basic : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

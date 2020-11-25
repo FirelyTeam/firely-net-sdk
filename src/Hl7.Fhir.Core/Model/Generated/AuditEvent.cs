@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Event record kept for security purposes
   /// </summary>
   [Serializable]
-  [FhirType("AuditEvent", IsResource=true)]
   [DataContract]
+  [FhirType("AuditEvent", IsResource=true)]
   public partial class AuditEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -172,8 +172,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved in the event
     /// </summary>
-    [FhirType("AuditEvent#Agent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AuditEvent#Agent", IsNestedType=true)]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -520,8 +521,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical network location for application activity
     /// </summary>
-    [FhirType("AuditEvent#Network", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AuditEvent#Network", IsNestedType=true)]
     public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -662,8 +664,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Audit Event Reporter
     /// </summary>
-    [FhirType("AuditEvent#Source", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AuditEvent#Source", IsNestedType=true)]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -806,8 +809,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data or objects used
     /// </summary>
-    [FhirType("AuditEvent#Entity", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AuditEvent#Entity", IsNestedType=true)]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1114,8 +1118,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional Information about the entity
     /// </summary>
-    [FhirType("AuditEvent#Detail", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AuditEvent#Detail", IsNestedType=true)]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A Diagnostic report - a combination of request information, atomic results, images, interpretation, as well as formatted reports
   /// </summary>
   [Serializable]
-  [FhirType("DiagnosticReport", IsResource=true)]
   [DataContract]
+  [FhirType("DiagnosticReport", IsResource=true)]
   public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -128,8 +128,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants in producing the report
     /// </summary>
-    [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -237,8 +238,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Key images associated with this report
     /// </summary>
-    [FhirType("DiagnosticReport#Image", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DiagnosticReport#Image", IsNestedType=true)]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

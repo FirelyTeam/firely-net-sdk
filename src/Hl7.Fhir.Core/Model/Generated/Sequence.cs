@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Information about a biological sequence
   /// </summary>
   [Serializable]
-  [FhirType("Sequence", IsResource=true)]
   [DataContract]
+  [FhirType("Sequence", IsResource=true)]
   public partial class Sequence : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -126,8 +126,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A sequence used as reference
     /// </summary>
-    [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -434,8 +435,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Variant in sequence
     /// </summary>
-    [FhirType("Sequence#Variant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Sequence#Variant", IsNestedType=true)]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -704,8 +706,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An set of value as quality of sequence
     /// </summary>
-    [FhirType("Sequence#Quality", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Sequence#Quality", IsNestedType=true)]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1225,8 +1228,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External repository which contains detailed report related with observedSeq in this resource
     /// </summary>
-    [FhirType("Sequence#Repository", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Sequence#Repository", IsNestedType=true)]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

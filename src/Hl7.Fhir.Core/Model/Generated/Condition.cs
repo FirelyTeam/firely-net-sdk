@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Detailed information about conditions, problems or diagnoses
   /// </summary>
   [Serializable]
-  [FhirType("Condition", IsResource=true)]
   [DataContract]
+  [FhirType("Condition", IsResource=true)]
   public partial class Condition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -144,8 +144,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Stage/grade, usually assessed formally
     /// </summary>
-    [FhirType("Condition#Stage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Condition#Stage", IsNestedType=true)]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,8 +254,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting evidence
     /// </summary>
-    [FhirType("Condition#Evidence", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Condition#Evidence", IsNestedType=true)]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

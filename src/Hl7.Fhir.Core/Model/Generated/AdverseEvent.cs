@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Medical care, research study or other healthcare event causing physical injury
   /// </summary>
   [Serializable]
-  [FhirType("AdverseEvent", IsResource=true)]
   [DataContract]
+  [FhirType("AdverseEvent", IsResource=true)]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -148,8 +148,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The suspected agent causing the adverse event
     /// </summary>
-    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

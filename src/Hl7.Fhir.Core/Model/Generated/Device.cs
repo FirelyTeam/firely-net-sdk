@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Item used in healthcare
   /// </summary>
   [Serializable]
-  [FhirType("Device", IsResource=true)]
   [DataContract]
+  [FhirType("Device", IsResource=true)]
   public partial class Device : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -138,8 +138,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string
     /// </summary>
-    [FhirType("Device#Udi", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#Udi", IsNestedType=true)]
     public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

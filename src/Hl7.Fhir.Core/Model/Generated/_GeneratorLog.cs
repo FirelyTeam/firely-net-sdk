@@ -223,7 +223,6 @@
 // Age.cs
 // Annotation.cs
 // Attachment.cs
-// CodeableConcept.cs
 // ContactDetail.cs
 // ContactPoint.cs
 // Contributor.cs
@@ -234,14 +233,11 @@
 // Duration.cs
 // ElementDefinition.cs
 // HumanName.cs
-// Identifier.cs
 // Money.cs
 // ParameterDefinition.cs
-// Period.cs
 // Quantity.cs
 // Range.cs
 // Ratio.cs
-// ResourceReference.cs
 // RelatedArtifact.cs
 // SampledData.cs
 // Signature.cs

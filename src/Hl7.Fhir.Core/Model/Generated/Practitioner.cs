@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A person with a  formal responsibility in the provisioning of healthcare or related services
   /// </summary>
   [Serializable]
-  [FhirType("Practitioner", IsResource=true)]
   [DataContract]
+  [FhirType("Practitioner", IsResource=true)]
   public partial class Practitioner : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Qualifications obtained by training and certification
     /// </summary>
-    [FhirType("Practitioner#Qualification", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Practitioner#Qualification", IsNestedType=true)]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

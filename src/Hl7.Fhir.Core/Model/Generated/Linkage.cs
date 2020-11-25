@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Links records for 'same' item
   /// </summary>
   [Serializable]
-  [FhirType("Linkage", IsResource=true)]
   [DataContract]
+  [FhirType("Linkage", IsResource=true)]
   public partial class Linkage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item to be linked
     /// </summary>
-    [FhirType("Linkage#Item", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Linkage#Item", IsNestedType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

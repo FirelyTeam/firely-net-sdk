@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Describes the results of a TestScript execution
   /// </summary>
   [Serializable]
-  [FhirType("TestReport", IsResource=true)]
   [DataContract]
+  [FhirType("TestReport", IsResource=true)]
   public partial class TestReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -194,8 +194,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A participant in the test execution, either the execution engine, a client, or a server
     /// </summary>
-    [FhirType("TestReport#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -374,8 +375,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The results of the series of required setup operations before the tests were executed
     /// </summary>
-    [FhirType("TestReport#Setup", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Setup", IsNestedType=true)]
     public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -463,8 +465,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A setup operation or assert that was executed
     /// </summary>
-    [FhirType("TestReport#SetupAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#SetupAction", IsNestedType=true)]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,8 +572,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The operation to perform
     /// </summary>
-    [FhirType("TestReport#Operation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Operation", IsNestedType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -730,8 +734,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The assertion to perform
     /// </summary>
-    [FhirType("TestReport#Assert", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Assert", IsNestedType=true)]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -891,8 +896,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A test executed from the test script
     /// </summary>
-    [FhirType("TestReport#Test", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Test", IsNestedType=true)]
     public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1052,8 +1058,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A test operation or assert that was performed
     /// </summary>
-    [FhirType("TestReport#TestAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#TestAction", IsNestedType=true)]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1158,8 +1165,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The results of running the series of required clean up steps
     /// </summary>
-    [FhirType("TestReport#Teardown", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#Teardown", IsNestedType=true)]
     public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1247,8 +1255,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or more teardown operations performed
     /// </summary>
-    [FhirType("TestReport#TeardownAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestReport#TeardownAction", IsNestedType=true)]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

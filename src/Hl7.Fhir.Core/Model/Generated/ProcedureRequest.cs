@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A request for a procedure or diagnostic to be performed
   /// </summary>
   [Serializable]
-  [FhirType("ProcedureRequest", IsResource=true)]
   [DataContract]
+  [FhirType("ProcedureRequest", IsResource=true)]
   public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting procedure or diagnostic
     /// </summary>
-    [FhirType("ProcedureRequest#Requester", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ProcedureRequest#Requester", IsNestedType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

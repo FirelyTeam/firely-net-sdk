@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A healthcare consumer's policy choices to permits or denies recipients or roles to perform actions for specific purposes and periods of time
   /// </summary>
   [Serializable]
-  [FhirType("Consent", IsResource=true)]
   [DataContract]
+  [FhirType("Consent", IsResource=true)]
   public partial class Consent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -160,8 +160,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who|what controlled by this consent (or group, by role)
     /// </summary>
-    [FhirType("Consent#Actor", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#Actor", IsNestedType=true)]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -270,8 +271,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Policies covered by this consent
     /// </summary>
-    [FhirType("Consent#Policy", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#Policy", IsNestedType=true)]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -412,8 +414,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data controlled by this consent
     /// </summary>
-    [FhirType("Consent#Data", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#Data", IsNestedType=true)]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -540,8 +543,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional rule -  addition or removal of permissions
     /// </summary>
-    [FhirType("Consent#Except", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#Except", IsNestedType=true)]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -816,8 +820,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who|what controlled by this exception (or group, by role)
     /// </summary>
-    [FhirType("Consent#ExceptActor", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#ExceptActor", IsNestedType=true)]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -926,8 +931,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data controlled by this exception
     /// </summary>
-    [FhirType("Consent#ExceptData", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Consent#ExceptData", IsNestedType=true)]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

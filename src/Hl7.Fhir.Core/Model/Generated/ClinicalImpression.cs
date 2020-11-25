@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A clinical assessment performed when planning treatments and management strategies for a patient
   /// </summary>
   [Serializable]
-  [FhirType("ClinicalImpression", IsResource=true)]
   [DataContract]
+  [FhirType("ClinicalImpression", IsResource=true)]
   public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or more sets of investigations (signs, symptions, etc.)
     /// </summary>
-    [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -196,8 +197,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Possible or likely findings and diagnoses
     /// </summary>
-    [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

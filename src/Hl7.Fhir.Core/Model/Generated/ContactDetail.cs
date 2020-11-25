@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Contact information
   /// </summary>
   [Serializable]
-  [FhirType("ContactDetail")]
   [DataContract]
+  [FhirType("ContactDetail")]
   public partial class ContactDetail : Hl7.Fhir.Model.DataType
   {
     /// <summary>

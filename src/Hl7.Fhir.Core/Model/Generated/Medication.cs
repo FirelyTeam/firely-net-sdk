@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition of a Medication
   /// </summary>
   [Serializable]
-  [FhirType("Medication", IsResource=true)]
   [DataContract]
+  [FhirType("Medication", IsResource=true)]
   public partial class Medication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Active or inactive ingredient
     /// </summary>
-    [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Medication#Ingredient", IsNestedType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -231,8 +232,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details about packaged medications
     /// </summary>
-    [FhirType("Medication#Package", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Medication#Package", IsNestedType=true)]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -357,8 +359,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What is  in the package
     /// </summary>
-    [FhirType("Medication#Content", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Medication#Content", IsNestedType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -466,8 +469,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies a single production run
     /// </summary>
-    [FhirType("Medication#Batch", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Medication#Batch", IsNestedType=true)]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A structured set of questions
   /// </summary>
   [Serializable]
-  [FhirType("Questionnaire", IsResource=true)]
   [DataContract]
+  [FhirType("Questionnaire", IsResource=true)]
   public partial class Questionnaire : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -172,8 +172,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Questions and sections within the Questionnaire
     /// </summary>
-    [FhirType("Questionnaire#Item", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Questionnaire#Item", IsNestedType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -684,8 +685,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Only allow data when
     /// </summary>
-    [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -847,8 +849,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Permitted answer
     /// </summary>
-    [FhirType("Questionnaire#Option", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Questionnaire#Option", IsNestedType=true)]
     public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

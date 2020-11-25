@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Information about the success/failure of an action
   /// </summary>
   [Serializable]
-  [FhirType("OperationOutcome", IsResource=true)]
   [DataContract]
+  [FhirType("OperationOutcome", IsResource=true)]
   public partial class OperationOutcome : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -276,8 +276,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A single issue associated with the action
     /// </summary>
-    [FhirType("OperationOutcome#Issue", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("OperationOutcome#Issue", IsNestedType=true)]
     public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

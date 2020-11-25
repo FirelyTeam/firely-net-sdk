@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Defines behaviour and contraints on the ValueSet Expansion operation
   /// </summary>
   [Serializable]
-  [FhirType("ExpansionProfile", IsResource=true)]
   [DataContract]
+  [FhirType("ExpansionProfile", IsResource=true)]
   public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fix use of a code system to a particular version
     /// </summary>
-    [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
     public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -267,8 +268,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Systems/Versions to be exclude
     /// </summary>
-    [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
     public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -410,8 +412,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the expansion profile imposes designation contraints
     /// </summary>
-    [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -516,8 +519,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Designations to be included
     /// </summary>
-    [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
     public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -605,8 +609,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The designation to be included
     /// </summary>
-    [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
     public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -729,8 +734,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Designations to be excluded
     /// </summary>
-    [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
     public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -818,8 +824,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The designation to be excluded
     /// </summary>
-    [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
     public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
