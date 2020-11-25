@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Reference to a resource or a concept
   /// </summary>
   [Serializable]
-  [FhirType("CodeableReference")]
   [DataContract]
+  [FhirType("CodeableReference")]
   public partial class CodeableReference : Hl7.Fhir.Model.DataType
   {
     /// <summary>

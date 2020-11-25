@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Dispensing a medication to a named patient
   /// </summary>
   [Serializable]
-  [FhirType("MedicationDispense", IsResource=true)]
   [DataContract]
+  [FhirType("MedicationDispense", IsResource=true)]
   public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -122,8 +122,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who performed event
     /// </summary>
-    [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationDispense#Performer", IsNestedType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -231,8 +232,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether a substitution was performed on the dispense
     /// </summary>
-    [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Item used in healthcare
   /// </summary>
   [Serializable]
-  [FhirType("Device", IsResource=true)]
   [DataContract]
+  [FhirType("Device", IsResource=true)]
   public partial class Device : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -144,8 +144,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string
     /// </summary>
-    [FhirType("Device#UdiCarrier", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#UdiCarrier", IsNestedType=true)]
     public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -430,8 +431,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name or names of the device as known to the manufacturer and/or patient
     /// </summary>
-    [FhirType("Device#DeviceName", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#DeviceName", IsNestedType=true)]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -574,8 +576,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
     /// </summary>
-    [FhirType("Device#Specialization", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#Specialization", IsNestedType=true)]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -699,8 +702,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual design of the device or software version running on the device
     /// </summary>
-    [FhirType("Device#Version", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#Version", IsNestedType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -842,8 +846,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
     /// </summary>
-    [FhirType("Device#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -969,8 +974,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The status of the device itself - whether it is switched on, or activated, etc
     /// </summary>
-    [FhirType("Device#OperationalStatus", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#OperationalStatus", IsNestedType=true)]
     public partial class OperationalStatusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1076,8 +1082,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The state of the usage or application of the device
     /// </summary>
-    [FhirType("Device#AssociationStatus", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Device#AssociationStatus", IsNestedType=true)]
     public partial class AssociationStatusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

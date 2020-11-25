@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Medical care, research study or other healthcare event causing physical injury
   /// </summary>
   [Serializable]
-  [FhirType("AdverseEvent", IsResource=true)]
   [DataContract]
+  [FhirType("AdverseEvent", IsResource=true)]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -114,8 +114,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was involved in the adverse event or the potential adverse event and what they did
     /// </summary>
-    [FhirType("AdverseEvent#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -223,8 +224,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The suspected agent causing the adverse event
     /// </summary>
-    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -332,8 +334,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information on the possible cause of the event
     /// </summary>
-    [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#Causality", IsNestedType=true)]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -458,8 +461,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contributing factors suspected to have increased the probability or severity of the adverse event
     /// </summary>
-    [FhirType("AdverseEvent#ContributingFactor", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#ContributingFactor", IsNestedType=true)]
     public partial class ContributingFactorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -549,8 +553,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preventive actions that contributed to avoiding the adverse event
     /// </summary>
-    [FhirType("AdverseEvent#PreventiveAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#PreventiveAction", IsNestedType=true)]
     public partial class PreventiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -640,8 +645,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ameliorating actions taken after the adverse event occured in order to reduce the extent of harm
     /// </summary>
-    [FhirType("AdverseEvent#MitigatingAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#MitigatingAction", IsNestedType=true)]
     public partial class MitigatingActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -731,8 +737,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting information relevant to the event
     /// </summary>
-    [FhirType("AdverseEvent#SupportingInfo", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdverseEvent#SupportingInfo", IsNestedType=true)]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

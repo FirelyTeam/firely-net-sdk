@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Invoice containing ChargeItems from an Account
   /// </summary>
   [Serializable]
-  [FhirType("Invoice", IsResource=true)]
   [DataContract]
+  [FhirType("Invoice", IsResource=true)]
   public partial class Invoice : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -98,8 +98,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participant in creation of this Invoice
     /// </summary>
-    [FhirType("Invoice#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Invoice#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -207,8 +208,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Line items of this Invoice
     /// </summary>
-    [FhirType("Invoice#LineItem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Invoice#LineItem", IsNestedType=true)]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -353,8 +355,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Components of total line item price
     /// </summary>
-    [FhirType("Invoice#PriceComponent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Invoice#PriceComponent", IsNestedType=true)]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

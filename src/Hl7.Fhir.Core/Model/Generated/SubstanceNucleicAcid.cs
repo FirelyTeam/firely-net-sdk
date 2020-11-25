@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction
   /// </summary>
   [Serializable]
-  [FhirType("SubstanceNucleicAcid", IsResource=true)]
   [DataContract]
+  [FhirType("SubstanceNucleicAcid", IsResource=true)]
   public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subunits are listed in order of decreasing length; sequences of the same length will be ordered by molecular weight; subunits that have identical sequences will be repeated multiple times
     /// </summary>
-    [FhirType("SubstanceNucleicAcid#Subunit", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceNucleicAcid#Subunit", IsNestedType=true)]
     public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -328,8 +329,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The linkages between sugar residues will also be captured
     /// </summary>
-    [FhirType("SubstanceNucleicAcid#Linkage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceNucleicAcid#Linkage", IsNestedType=true)]
     public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -524,8 +526,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// 5.3.6.8.1 Sugar ID (Mandatory)
     /// </summary>
-    [FhirType("SubstanceNucleicAcid#Sugar", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceNucleicAcid#Sugar", IsNestedType=true)]
     public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

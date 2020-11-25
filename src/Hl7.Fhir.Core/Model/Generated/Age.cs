@@ -46,6 +46,7 @@ namespace Hl7.Fhir.Model
   /// A duration of time during which an organism (or a process) has existed
   /// </summary>
   [Serializable]
+  [DataContract]
   [FhirType("Age")]
   public partial class Age : Quantity
   {

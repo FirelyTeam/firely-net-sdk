@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A EvidenceReport
   /// </summary>
   [Serializable]
-  [FhirType("EvidenceReport", IsResource=true)]
   [DataContract]
+  [FhirType("EvidenceReport", IsResource=true)]
   public partial class EvidenceReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -92,8 +92,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Focus of the report
     /// </summary>
-    [FhirType("EvidenceReport#Subject", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceReport#Subject", IsNestedType=true)]
     public partial class SubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -200,8 +201,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristic
     /// </summary>
-    [FhirType("EvidenceReport#Characteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceReport#Characteristic", IsNestedType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -364,8 +366,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationships to other compositions/documents
     /// </summary>
-    [FhirType("EvidenceReport#RelatesTo", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceReport#RelatesTo", IsNestedType=true)]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -492,8 +495,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition is broken into sections
     /// </summary>
-    [FhirType("EvidenceReport#Section", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceReport#Section", IsNestedType=true)]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

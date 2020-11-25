@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A statement of system capabilities
   /// </summary>
   [Serializable]
-  [FhirType("CapabilityStatement2", IsResource=true)]
   [DataContract]
+  [FhirType("CapabilityStatement2", IsResource=true)]
   public partial class CapabilityStatement2 : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Software that is covered by this capability statement
     /// </summary>
-    [FhirType("CapabilityStatement2#Software", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#Software", IsNestedType=true)]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -237,8 +238,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this describes a specific instance
     /// </summary>
-    [FhirType("CapabilityStatement2#Implementation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#Implementation", IsNestedType=true)]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -400,8 +402,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the endpoint is a RESTful one
     /// </summary>
-    [FhirType("CapabilityStatement2#Rest", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#Rest", IsNestedType=true)]
     public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -638,8 +641,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource served on the REST interface
     /// </summary>
-    [FhirType("CapabilityStatement2#Resource", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#Resource", IsNestedType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -893,8 +897,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What operations are supported?
     /// </summary>
-    [FhirType("CapabilityStatement2#ResourceInteraction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#ResourceInteraction", IsNestedType=true)]
     public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1018,8 +1023,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Search parameters supported by implementation
     /// </summary>
-    [FhirType("CapabilityStatement2#SearchParam", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#SearchParam", IsNestedType=true)]
     public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1216,8 +1222,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition of a resource operation
     /// </summary>
-    [FhirType("CapabilityStatement2#Operation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#Operation", IsNestedType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1378,8 +1385,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What operations are supported?
     /// </summary>
-    [FhirType("CapabilityStatement2#SystemInteraction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CapabilityStatement2#SystemInteraction", IsNestedType=true)]
     public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

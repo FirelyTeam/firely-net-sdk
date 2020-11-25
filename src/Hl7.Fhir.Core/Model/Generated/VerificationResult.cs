@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Describes validation requirements, source(s), status and dates for one or more elements
   /// </summary>
   [Serializable]
-  [FhirType("VerificationResult", IsResource=true)]
   [DataContract]
+  [FhirType("VerificationResult", IsResource=true)]
   public partial class VerificationResult : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -104,8 +104,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the primary source(s) involved in validation
     /// </summary>
-    [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
     public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -323,8 +324,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the entity attesting to information
     /// </summary>
-    [FhirType("VerificationResult#Attestation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("VerificationResult#Attestation", IsNestedType=true)]
     public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -595,8 +597,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the entity validating information
     /// </summary>
-    [FhirType("VerificationResult#Validator", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("VerificationResult#Validator", IsNestedType=true)]
     public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

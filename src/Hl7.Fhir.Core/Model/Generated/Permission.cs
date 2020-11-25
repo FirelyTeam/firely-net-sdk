@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Permission
   /// </summary>
   [Serializable]
-  [FhirType("Permission", IsResource=true)]
   [DataContract]
+  [FhirType("Permission", IsResource=true)]
   public partial class Permission : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -92,8 +92,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A description or definition of which activities are allowed to be done on the data
     /// </summary>
-    [FhirType("Permission#ProcessingActivity", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Permission#ProcessingActivity", IsNestedType=true)]
     public partial class ProcessingActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -222,8 +223,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The asserted justification for using the data
     /// </summary>
-    [FhirType("Permission#Justification", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Permission#Justification", IsNestedType=true)]
     public partial class JustificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

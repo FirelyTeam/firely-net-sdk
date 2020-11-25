@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A definition of a condition
   /// </summary>
   [Serializable]
-  [FhirType("ConditionDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("ConditionDefinition", IsResource=true)]
   public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -108,8 +108,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observations particularly relevant to this condition
     /// </summary>
-    [FhirType("ConditionDefinition#Observation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ConditionDefinition#Observation", IsNestedType=true)]
     public partial class ObservationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -214,8 +215,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medications particularly relevant for this condition
     /// </summary>
-    [FhirType("ConditionDefinition#Medication", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ConditionDefinition#Medication", IsNestedType=true)]
     public partial class MedicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -320,8 +322,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observation that suggets this condition
     /// </summary>
-    [FhirType("ConditionDefinition#Precondition", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ConditionDefinition#Precondition", IsNestedType=true)]
     public partial class PreconditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -466,8 +469,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Questionnaire for this condition
     /// </summary>
-    [FhirType("ConditionDefinition#Questionnaire", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ConditionDefinition#Questionnaire", IsNestedType=true)]
     public partial class QuestionnaireComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -594,8 +598,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan that is appropriate
     /// </summary>
-    [FhirType("ConditionDefinition#Plan", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ConditionDefinition#Plan", IsNestedType=true)]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A set of resources composed into a single coherent clinical statement with clinical attestation
   /// </summary>
   [Serializable]
-  [FhirType("Composition", IsResource=true)]
   [DataContract]
+  [FhirType("Composition", IsResource=true)]
   public partial class Composition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -138,8 +138,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attests to accuracy of composition
     /// </summary>
-    [FhirType("Composition#Attester", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Composition#Attester", IsNestedType=true)]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -301,8 +302,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationships to other compositions/documents
     /// </summary>
-    [FhirType("Composition#RelatesTo", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Composition#RelatesTo", IsNestedType=true)]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -429,8 +431,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The clinical service(s) being documented
     /// </summary>
-    [FhirType("Composition#Event", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Composition#Event", IsNestedType=true)]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -557,8 +560,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition is broken into sections
     /// </summary>
-    [FhirType("Composition#Section", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Composition#Section", IsNestedType=true)]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

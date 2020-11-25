@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// How the medication is/was taken or should be taken
   /// </summary>
   [Serializable]
-  [FhirType("Dosage")]
   [DataContract]
+  [FhirType("Dosage")]
   public partial class Dosage : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Amount of medication administered
     /// </summary>
-    [FhirType("Dosage#DoseAndRate", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Dosage#DoseAndRate", IsNestedType=true)]
     public partial class DoseAndRateComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

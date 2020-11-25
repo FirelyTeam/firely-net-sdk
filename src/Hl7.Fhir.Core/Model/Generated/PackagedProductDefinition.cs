@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A medically related item or items, in a container or package
   /// </summary>
   [Serializable]
-  [FhirType("PackagedProductDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("PackagedProductDefinition", IsResource=true)]
   public partial class PackagedProductDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Batch numbering
     /// </summary>
-    [FhirType("PackagedProductDefinition#BatchIdentifier", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("PackagedProductDefinition#BatchIdentifier", IsNestedType=true)]
     public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -165,8 +166,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A packaging item, as a container for medically related items, possibly with other packaging items within
     /// </summary>
-    [FhirType("PackagedProductDefinition#Package", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("PackagedProductDefinition#Package", IsNestedType=true)]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -443,8 +445,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General characteristics of this item
     /// </summary>
-    [FhirType("PackagedProductDefinition#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("PackagedProductDefinition#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -552,8 +555,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The item(s) within the packaging
     /// </summary>
-    [FhirType("PackagedProductDefinition#ContainedItem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("PackagedProductDefinition#ContainedItem", IsNestedType=true)]
     public partial class ContainedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

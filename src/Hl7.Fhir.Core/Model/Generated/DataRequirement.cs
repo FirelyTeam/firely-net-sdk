@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Describes a required data item
   /// </summary>
   [Serializable]
-  [FhirType("DataRequirement")]
   [DataContract]
+  [FhirType("DataRequirement")]
   public partial class DataRequirement : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -80,8 +80,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What codes are expected
     /// </summary>
-    [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -277,8 +278,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What dates/date ranges are expected
     /// </summary>
-    [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -439,8 +441,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Order of the results
     /// </summary>
-    [FhirType("DataRequirement#Sort", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DataRequirement#Sort", IsNestedType=true)]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Record of food or fluid being taken by a patient
   /// </summary>
   [Serializable]
-  [FhirType("NutritionIntake", IsResource=true)]
   [DataContract]
+  [FhirType("NutritionIntake", IsResource=true)]
   public partial class NutritionIntake : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What food or fluid product or item was consumed
     /// </summary>
-    [FhirType("NutritionIntake#ConsumedItem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionIntake#ConsumedItem", IsNestedType=true)]
     public partial class ConsumedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -274,8 +275,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Total nutrient for the whole meal, product, serving
     /// </summary>
-    [FhirType("NutritionIntake#IngredientLabel", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionIntake#IngredientLabel", IsNestedType=true)]
     public partial class IngredientLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -382,8 +384,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was performed in the intake
     /// </summary>
-    [FhirType("NutritionIntake#Performer", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionIntake#Performer", IsNestedType=true)]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

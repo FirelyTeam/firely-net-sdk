@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Investigation to increase healthcare-related patient-independent knowledge
   /// </summary>
   [Serializable]
-  [FhirType("ResearchStudy", IsResource=true)]
   [DataContract]
+  [FhirType("ResearchStudy", IsResource=true)]
   public partial class ResearchStudy : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -135,8 +135,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defined path through the study for a subject
     /// </summary>
-    [FhirType("ResearchStudy#Arm", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ResearchStudy#Arm", IsNestedType=true)]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -296,8 +297,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A goal for the study
     /// </summary>
-    [FhirType("ResearchStudy#Objective", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ResearchStudy#Objective", IsNestedType=true)]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
