@@ -13,7 +13,7 @@
     <PackageIcon>icon-fhir-32.png</PackageIcon>
     <PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
+    <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
   <PropertyGroup>
