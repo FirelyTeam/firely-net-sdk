@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Kind of specimen
   /// </summary>
   [Serializable]
-  [FhirType("SpecimenDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("SpecimenDefinition", IsResource=true)]
   public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -80,8 +80,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen in container intended for testing by lab
     /// </summary>
-    [FhirType("SpecimenDefinition#TypeTested", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SpecimenDefinition#TypeTested", IsNestedType=true)]
     public partial class TypeTestedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -351,8 +352,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specimen's container
     /// </summary>
-    [FhirType("SpecimenDefinition#Container", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SpecimenDefinition#Container", IsNestedType=true)]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -604,8 +606,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additive associated with container
     /// </summary>
-    [FhirType("SpecimenDefinition#Additive", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SpecimenDefinition#Additive", IsNestedType=true)]
     public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -695,8 +698,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen handling before testing
     /// </summary>
-    [FhirType("SpecimenDefinition#Handling", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SpecimenDefinition#Handling", IsNestedType=true)]
     public partial class HandlingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

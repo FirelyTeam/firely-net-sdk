@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// MedicinalProductInteraction
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductInteraction", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductInteraction", IsResource=true)]
   public partial class MedicinalProductInteraction : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific medication, food or laboratory test that interacts
     /// </summary>
-    [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

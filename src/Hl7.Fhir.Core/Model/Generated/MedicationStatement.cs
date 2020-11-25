@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Record of medication being taken by a patient
   /// </summary>
   [Serializable]
-  [FhirType("MedicationStatement", IsResource=true)]
   [DataContract]
+  [FhirType("MedicationStatement", IsResource=true)]
   public partial class MedicationStatement : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

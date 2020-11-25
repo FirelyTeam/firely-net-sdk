@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// CoverageEligibilityRequest resource
   /// </summary>
   [Serializable]
-  [FhirType("CoverageEligibilityRequest", IsResource=true)]
   [DataContract]
+  [FhirType("CoverageEligibilityRequest", IsResource=true)]
   public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -92,8 +92,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting information
     /// </summary>
-    [FhirType("CoverageEligibilityRequest#SupportingInformation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CoverageEligibilityRequest#SupportingInformation", IsNestedType=true)]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -256,8 +257,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient insurance information
     /// </summary>
-    [FhirType("CoverageEligibilityRequest#Insurance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CoverageEligibilityRequest#Insurance", IsNestedType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -419,8 +421,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item to be evaluated for eligibiity
     /// </summary>
-    [FhirType("CoverageEligibilityRequest#Details", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CoverageEligibilityRequest#Details", IsNestedType=true)]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -697,8 +700,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Applicable diagnosis
     /// </summary>
-    [FhirType("CoverageEligibilityRequest#Diagnosis", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CoverageEligibilityRequest#Diagnosis", IsNestedType=true)]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

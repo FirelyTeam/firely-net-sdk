@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Specific and identified anatomical structure
   /// </summary>
   [Serializable]
-  [FhirType("BodyStructure", IsResource=true)]
   [DataContract]
+  [FhirType("BodyStructure", IsResource=true)]
   public partial class BodyStructure : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition of properties and rules about how the price and the applicability of a ChargeItem can be determined
   /// </summary>
   [Serializable]
-  [FhirType("ChargeItemDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("ChargeItemDefinition", IsResource=true)]
   public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether or not the billing code is applicable
     /// </summary>
-    [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -236,8 +237,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Group of properties which are applicable under the same conditions
     /// </summary>
-    [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -344,8 +346,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Components of total line item price
     /// </summary>
-    [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

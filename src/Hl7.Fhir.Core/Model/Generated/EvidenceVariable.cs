@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A population, intervention, or exposure definition
   /// </summary>
   [Serializable]
-  [FhirType("EvidenceVariable", IsResource=true)]
   [DataContract]
+  [FhirType("EvidenceVariable", IsResource=true)]
   public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the evidence element
     /// </summary>
-    [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
