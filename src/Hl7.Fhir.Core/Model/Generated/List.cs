@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Information summarized from a list of other resources
   /// </summary>
   [Serializable]
-  [FhirType("List", IsResource=true)]
   [DataContract]
+  [FhirType("List", IsResource=true)]
   public partial class List : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entries in the list
     /// </summary>
-    [FhirType("List#Entry", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("List#Entry", IsNestedType=true)]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

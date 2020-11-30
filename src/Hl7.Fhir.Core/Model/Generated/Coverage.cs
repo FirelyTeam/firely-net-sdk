@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Insurance or medical plan or a payment agreement
   /// </summary>
   [Serializable]
-  [FhirType("Coverage", IsResource=true)]
   [DataContract]
+  [FhirType("Coverage", IsResource=true)]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional coverage classifications
     /// </summary>
-    [FhirType("Coverage#Group", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Coverage#Group", IsNestedType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

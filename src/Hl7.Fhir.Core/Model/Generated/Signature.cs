@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A digital Signature - XML DigSig, JWT, Graphical image of signature, etc.
   /// </summary>
   [Serializable]
-  [FhirType("Signature")]
   [DataContract]
+  [FhirType("Signature")]
   public partial class Signature : Hl7.Fhir.Model.DataType
   {
     /// <summary>

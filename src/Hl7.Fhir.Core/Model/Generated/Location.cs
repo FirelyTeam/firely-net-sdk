@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Details and position information for a physical place
   /// </summary>
   [Serializable]
-  [FhirType("Location", IsResource=true)]
   [DataContract]
+  [FhirType("Location", IsResource=true)]
   public partial class Location : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -108,8 +108,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The absolute geographic location
     /// </summary>
-    [FhirType("Location#Position", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Location#Position", IsNestedType=true)]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

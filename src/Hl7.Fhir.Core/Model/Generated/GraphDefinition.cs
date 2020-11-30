@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition of an graph of resources
   /// </summary>
   [Serializable]
-  [FhirType("GraphDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("GraphDefinition", IsResource=true)]
   public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -92,8 +92,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links this graph makes rules about
     /// </summary>
-    [FhirType("GraphDefinition#Link", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("GraphDefinition#Link", IsNestedType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -362,8 +363,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential target for the link
     /// </summary>
-    [FhirType("GraphDefinition#Target", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("GraphDefinition#Target", IsNestedType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -543,8 +545,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Compartment Consistency Rules
     /// </summary>
-    [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

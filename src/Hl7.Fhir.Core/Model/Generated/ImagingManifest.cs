@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Key Object Selection
   /// </summary>
   [Serializable]
-  [FhirType("ImagingManifest", IsResource=true)]
   [DataContract]
+  [FhirType("ImagingManifest", IsResource=true)]
   public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Study identity of the selected instances
     /// </summary>
-    [FhirType("ImagingManifest#Study", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImagingManifest#Study", IsNestedType=true)]
     public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -225,8 +226,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Series identity of the selected instances
     /// </summary>
-    [FhirType("ImagingManifest#Series", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImagingManifest#Series", IsNestedType=true)]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -372,8 +374,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The selected instance
     /// </summary>
-    [FhirType("ImagingManifest#Instance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImagingManifest#Instance", IsNestedType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

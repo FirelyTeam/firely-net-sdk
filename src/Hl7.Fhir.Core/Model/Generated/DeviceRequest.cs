@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Medical device request
   /// </summary>
   [Serializable]
-  [FhirType("DeviceRequest", IsResource=true)]
   [DataContract]
+  [FhirType("DeviceRequest", IsResource=true)]
   public partial class DeviceRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting diagnostics
     /// </summary>
-    [FhirType("DeviceRequest#Requester", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceRequest#Requester", IsNestedType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

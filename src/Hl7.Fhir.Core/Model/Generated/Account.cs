@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Tracks balance, charges, for patient or cost center
   /// </summary>
   [Serializable]
-  [FhirType("Account", IsResource=true)]
   [DataContract]
+  [FhirType("Account", IsResource=true)]
   public partial class Account : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
     /// </summary>
-    [FhirType("Account#Coverage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Account#Coverage", IsNestedType=true)]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -213,8 +214,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible for the account
     /// </summary>
-    [FhirType("Account#Guarantor", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Account#Guarantor", IsNestedType=true)]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

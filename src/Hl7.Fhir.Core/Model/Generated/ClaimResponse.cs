@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Remittance resource
   /// </summary>
   [Serializable]
-  [FhirType("ClaimResponse", IsResource=true)]
   [DataContract]
+  [FhirType("ClaimResponse", IsResource=true)]
   public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Line items
     /// </summary>
-    [FhirType("ClaimResponse#Item", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Item", IsNestedType=true)]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -240,8 +241,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Adjudication details
     /// </summary>
-    [FhirType("ClaimResponse#Adjudication", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Adjudication", IsNestedType=true)]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -401,8 +403,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detail line items
     /// </summary>
-    [FhirType("ClaimResponse#ItemDetail", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#ItemDetail", IsNestedType=true)]
     public partial class ItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -583,8 +586,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subdetail line items
     /// </summary>
-    [FhirType("ClaimResponse#SubDetail", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#SubDetail", IsNestedType=true)]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -746,8 +750,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer added line items
     /// </summary>
-    [FhirType("ClaimResponse#AddedItem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#AddedItem", IsNestedType=true)]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1019,8 +1024,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Added items details
     /// </summary>
-    [FhirType("ClaimResponse#AddedItemsDetail", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#AddedItemsDetail", IsNestedType=true)]
     public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1236,8 +1242,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing errors
     /// </summary>
-    [FhirType("ClaimResponse#Error", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Error", IsNestedType=true)]
     public partial class ErrorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1433,8 +1440,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment details, if paid
     /// </summary>
-    [FhirType("ClaimResponse#Payment", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Payment", IsNestedType=true)]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1629,8 +1637,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing notes
     /// </summary>
-    [FhirType("ClaimResponse#Note", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Note", IsNestedType=true)]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1807,8 +1816,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance or medical plan
     /// </summary>
-    [FhirType("ClaimResponse#Insurance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClaimResponse#Insurance", IsNestedType=true)]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

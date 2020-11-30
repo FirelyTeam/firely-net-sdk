@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition of an element in a resource or extension
   /// </summary>
   [Serializable]
-  [FhirType("ElementDefinition")]
   [DataContract]
+  [FhirType("ElementDefinition")]
   public partial class ElementDefinition : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -244,8 +244,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This element is sliced - slices follow
     /// </summary>
-    [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -442,8 +443,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Element values that are used to distinguish the slices
     /// </summary>
-    [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -586,8 +588,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Base definition information for tools
     /// </summary>
-    [FhirType("ElementDefinition#Base", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Base", IsNestedType=true)]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -767,8 +770,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data type and Profile for this element
     /// </summary>
-    [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1019,8 +1023,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Example value (as defined for type)
     /// </summary>
-    [FhirType("ElementDefinition#Example", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Example", IsNestedType=true)]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1147,8 +1152,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that must evaluate to true
     /// </summary>
-    [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1473,8 +1479,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ValueSet details if this is coded
     /// </summary>
-    [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1636,8 +1643,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Map element to another set of definitions
     /// </summary>
-    [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

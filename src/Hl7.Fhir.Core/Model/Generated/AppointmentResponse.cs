@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection
   /// </summary>
   [Serializable]
-  [FhirType("AppointmentResponse", IsResource=true)]
   [DataContract]
+  [FhirType("AppointmentResponse", IsResource=true)]
   public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

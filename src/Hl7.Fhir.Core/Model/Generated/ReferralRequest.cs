@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A request for referral or transfer of care
   /// </summary>
   [Serializable]
-  [FhirType("ReferralRequest", IsResource=true)]
   [DataContract]
+  [FhirType("ReferralRequest", IsResource=true)]
   public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is requesting service
     /// </summary>
-    [FhirType("ReferralRequest#Requester", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ReferralRequest#Requester", IsNestedType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

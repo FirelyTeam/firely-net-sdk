@@ -46,6 +46,7 @@ namespace Hl7.Fhir.Model
   /// A measured or measurable amount
   /// </summary>
   [Serializable]
+  [DataContract]
   [FhirType("Count")]
   public partial class Count : Quantity
   {

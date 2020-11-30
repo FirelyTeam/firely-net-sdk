@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Determine insurance validity and scope of coverage
   /// </summary>
   [Serializable]
-  [FhirType("EligibilityRequest", IsResource=true)]
   [DataContract]
+  [FhirType("EligibilityRequest", IsResource=true)]
   public partial class EligibilityRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Clinical issue with action
   /// </summary>
   [Serializable]
-  [FhirType("DetectedIssue", IsResource=true)]
   [DataContract]
+  [FhirType("DetectedIssue", IsResource=true)]
   public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Step taken to address
     /// </summary>
-    [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

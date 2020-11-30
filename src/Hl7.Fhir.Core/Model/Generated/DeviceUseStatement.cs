@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Record of use of a device
   /// </summary>
   [Serializable]
-  [FhirType("DeviceUseStatement", IsResource=true)]
   [DataContract]
+  [FhirType("DeviceUseStatement", IsResource=true)]
   public partial class DeviceUseStatement : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

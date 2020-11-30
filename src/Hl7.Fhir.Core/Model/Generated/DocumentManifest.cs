@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A list that defines a set of documents
   /// </summary>
   [Serializable]
-  [FhirType("DocumentManifest", IsResource=true)]
   [DataContract]
+  [FhirType("DocumentManifest", IsResource=true)]
   public partial class DocumentManifest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The items included
     /// </summary>
-    [FhirType("DocumentManifest#Content", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DocumentManifest#Content", IsNestedType=true)]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -149,8 +150,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related things
     /// </summary>
-    [FhirType("DocumentManifest#Related", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DocumentManifest#Related", IsNestedType=true)]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

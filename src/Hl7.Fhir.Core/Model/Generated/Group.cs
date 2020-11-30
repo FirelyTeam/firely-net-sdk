@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Group of multiple entities
   /// </summary>
   [Serializable]
-  [FhirType("Group", IsResource=true)]
   [DataContract]
+  [FhirType("Group", IsResource=true)]
   public partial class Group : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -104,8 +104,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Trait of group members
     /// </summary>
-    [FhirType("Group#Characteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Group#Characteristic", IsNestedType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -269,8 +270,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who or what is in group
     /// </summary>
-    [FhirType("Group#Member", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Group#Member", IsNestedType=true)]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
