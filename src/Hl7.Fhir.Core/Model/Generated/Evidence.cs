@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Single evidence bit
   /// </summary>
   [Serializable]
-  [FhirType("Evidence", IsResource=true)]
   [DataContract]
+  [FhirType("Evidence", IsResource=true)]
   public partial class Evidence : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evidence variable such as population, exposure, or outcome
     /// </summary>
-    [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
     public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -242,8 +243,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Level of certainty
     /// </summary>
-    [FhirType("Evidence#Certainty", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Evidence#Certainty", IsNestedType=true)]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -405,8 +407,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A domain or subdomain of certainty rating
     /// </summary>
-    [FhirType("Evidence#CertaintySubcomponent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Evidence#CertaintySubcomponent", IsNestedType=true)]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

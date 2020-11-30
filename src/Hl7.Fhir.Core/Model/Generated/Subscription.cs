@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Notification about a SubscriptionTopic
   /// </summary>
   [Serializable]
-  [FhirType("Subscription", IsResource=true)]
   [DataContract]
+  [FhirType("Subscription", IsResource=true)]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Criteria for narrowing the subscription topic stream
     /// </summary>
-    [FhirType("Subscription#FilterBy", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Subscription#FilterBy", IsNestedType=true)]
     public partial class FilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

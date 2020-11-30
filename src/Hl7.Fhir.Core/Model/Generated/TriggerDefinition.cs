@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Defines an expected trigger for a module
   /// </summary>
   [Serializable]
-  [FhirType("TriggerDefinition")]
   [DataContract]
+  [FhirType("TriggerDefinition")]
   public partial class TriggerDefinition : Hl7.Fhir.Model.DataType
   {
     /// <summary>

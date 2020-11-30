@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s)
   /// </summary>
   [Serializable]
-  [FhirType("Appointment", IsResource=true)]
   [DataContract]
+  [FhirType("Appointment", IsResource=true)]
   public partial class Appointment : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -157,8 +157,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants involved in appointment
     /// </summary>
-    [FhirType("Appointment#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Appointment#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

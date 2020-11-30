@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A set of rules about how FHIR is used
   /// </summary>
   [Serializable]
-  [FhirType("ImplementationGuide", IsResource=true)]
   [DataContract]
+  [FhirType("ImplementationGuide", IsResource=true)]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2178,8 +2178,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another Implementation guide this depends on
     /// </summary>
-    [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
     public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2357,8 +2358,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Profiles that apply globally
     /// </summary>
-    [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Global", IsNestedType=true)]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2501,8 +2503,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information needed to build the IG
     /// </summary>
-    [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
     public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2665,8 +2668,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Grouping used to present related resources in the IG
     /// </summary>
-    [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
     public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2808,8 +2812,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource in the implementation guide
     /// </summary>
-    [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3064,8 +3069,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Page/Section in the Guide
     /// </summary>
-    [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Page", IsNestedType=true)]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3248,8 +3254,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defines how IG is built by tools
     /// </summary>
-    [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3392,8 +3399,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A template for building resources
     /// </summary>
-    [FhirType("ImplementationGuide#Template", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Template", IsNestedType=true)]
     public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3572,8 +3580,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about an assembled IG
     /// </summary>
-    [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
     public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3790,8 +3799,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource in the implementation guide
     /// </summary>
-    [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
     public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3937,8 +3947,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// HTML page within the parent IG
     /// </summary>
-    [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
     public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

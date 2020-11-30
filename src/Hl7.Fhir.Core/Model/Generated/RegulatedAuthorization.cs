@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// The regulatory authorization of a type of medicinal item or service
   /// </summary>
   [Serializable]
-  [FhirType("RegulatedAuthorization", IsResource=true)]
   [DataContract]
+  [FhirType("RegulatedAuthorization", IsResource=true)]
   public partial class RegulatedAuthorization : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other dates associated with the authorization. It is common for an authorization to have renewal dates, initial time limited phases and so on
     /// </summary>
-    [FhirType("RegulatedAuthorization#RelatedDate", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("RegulatedAuthorization#RelatedDate", IsNestedType=true)]
     public partial class RelatedDateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -168,8 +169,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The case or regulatory procedure for granting or amending a marketing authorization
     /// </summary>
-    [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
     public partial class CaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

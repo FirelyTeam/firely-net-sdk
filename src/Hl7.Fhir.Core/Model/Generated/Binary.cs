@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Pure binary content defined by a format other than FHIR
   /// </summary>
   [Serializable]
-  [FhirType("Binary", IsResource=true)]
   [DataContract]
+  [FhirType("Binary", IsResource=true)]
   public partial class Binary : Hl7.Fhir.Model.Resource
   {
     /// <summary>

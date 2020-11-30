@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A single item of clinical particulars - an indication, contraindication, interaction etc. for a medicinal product
   /// </summary>
   [Serializable]
-  [FhirType("ClinicalUseIssue", IsResource=true)]
   [DataContract]
+  [FhirType("ClinicalUseIssue", IsResource=true)]
   public partial class ClinicalUseIssue : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -98,8 +98,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is a contraindication
     /// </summary>
-    [FhirType("ClinicalUseIssue#Contraindication", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#Contraindication", IsNestedType=true)]
     public partial class ContraindicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -263,8 +264,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
     /// </summary>
-    [FhirType("ClinicalUseIssue#OtherTherapy", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#OtherTherapy", IsNestedType=true)]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -373,8 +375,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is an indication
     /// </summary>
-    [FhirType("ClinicalUseIssue#Indication", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#Indication", IsNestedType=true)]
     public partial class IndicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -574,8 +577,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is an interaction
     /// </summary>
-    [FhirType("ClinicalUseIssue#Interaction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#Interaction", IsNestedType=true)]
     public partial class InteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -735,8 +739,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific medication, food or laboratory test that interacts
     /// </summary>
-    [FhirType("ClinicalUseIssue#Interactant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#Interactant", IsNestedType=true)]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -826,8 +831,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A possible negative outcome from the use of this treatment
     /// </summary>
-    [FhirType("ClinicalUseIssue#UndesirableEffect", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ClinicalUseIssue#UndesirableEffect", IsNestedType=true)]
     public partial class UndesirableEffectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

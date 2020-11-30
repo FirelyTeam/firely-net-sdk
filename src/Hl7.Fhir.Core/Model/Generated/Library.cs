@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Represents a library of quality improvement components
   /// </summary>
   [Serializable]
-  [FhirType("Library", IsResource=true)]
   [DataContract]
+  [FhirType("Library", IsResource=true)]
   public partial class Library : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

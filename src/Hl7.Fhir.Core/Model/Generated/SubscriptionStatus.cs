@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Status information about a Subscription provided during event notification
   /// </summary>
   [Serializable]
-  [FhirType("SubscriptionStatus", IsResource=true)]
   [DataContract]
+  [FhirType("SubscriptionStatus", IsResource=true)]
   public partial class SubscriptionStatus : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

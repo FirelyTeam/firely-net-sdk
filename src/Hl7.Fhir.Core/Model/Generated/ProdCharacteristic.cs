@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available
   /// </summary>
   [Serializable]
-  [FhirType("ProdCharacteristic")]
   [DataContract]
+  [FhirType("ProdCharacteristic")]
   public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

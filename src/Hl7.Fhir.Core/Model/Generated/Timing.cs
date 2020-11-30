@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A timing schedule that specifies an event that may occur multiple times
   /// </summary>
   [Serializable]
-  [FhirType("Timing")]
   [DataContract]
+  [FhirType("Timing")]
   public partial class Timing : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -276,8 +276,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event is to occur
     /// </summary>
-    [FhirType("Timing#Repeat", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Timing#Repeat", IsNestedType=true)]
     public partial class RepeatComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

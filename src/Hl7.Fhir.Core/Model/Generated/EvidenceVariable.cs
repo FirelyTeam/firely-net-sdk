@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A definition of an exposure, outcome, or other variable
   /// </summary>
   [Serializable]
-  [FhirType("EvidenceVariable", IsResource=true)]
   [DataContract]
+  [FhirType("EvidenceVariable", IsResource=true)]
   public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -126,8 +126,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the evidence element
     /// </summary>
-    [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -381,8 +382,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observation time from study start
     /// </summary>
-    [FhirType("EvidenceVariable#TimeFromStart", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceVariable#TimeFromStart", IsNestedType=true)]
     public partial class TimeFromStartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,8 +544,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A grouping for ordinal or polychotomous variables
     /// </summary>
-    [FhirType("EvidenceVariable#Category", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EvidenceVariable#Category", IsNestedType=true)]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

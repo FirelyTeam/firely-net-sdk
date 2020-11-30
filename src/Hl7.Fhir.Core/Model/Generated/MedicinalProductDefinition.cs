@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use)
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductDefinition", IsResource=true)]
   public partial class MedicinalProductDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A product specific contact, person (in a role), or an organization
     /// </summary>
-    [FhirType("MedicinalProductDefinition#Contact", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#Contact", IsNestedType=true)]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -167,8 +168,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product's name, including full name and possibly coded parts
     /// </summary>
-    [FhirType("MedicinalProductDefinition#Name", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#Name", IsNestedType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -330,8 +332,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coding words or phrases of the name
     /// </summary>
-    [FhirType("MedicinalProductDefinition#NamePart", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#NamePart", IsNestedType=true)]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -456,8 +459,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Country where the name applies
     /// </summary>
-    [FhirType("MedicinalProductDefinition#CountryLanguage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#CountryLanguage", IsNestedType=true)]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -582,8 +586,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to another product, e.g. for linking authorised to investigational product
     /// </summary>
-    [FhirType("MedicinalProductDefinition#CrossReference", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#CrossReference", IsNestedType=true)]
     public partial class CrossReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -689,8 +694,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An operation applied to the product, for manufacturing or adminsitrative purpose
     /// </summary>
-    [FhirType("MedicinalProductDefinition#ManufacturingBusinessOperation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductDefinition#ManufacturingBusinessOperation", IsNestedType=true)]
     public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

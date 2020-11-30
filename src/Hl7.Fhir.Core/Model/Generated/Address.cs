@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An address expressed using postal conventions (as opposed to GPS or other location definition formats)
   /// </summary>
   [Serializable]
-  [FhirType("Address")]
   [DataContract]
+  [FhirType("Address")]
   public partial class Address : Hl7.Fhir.Model.DataType
   {
     /// <summary>

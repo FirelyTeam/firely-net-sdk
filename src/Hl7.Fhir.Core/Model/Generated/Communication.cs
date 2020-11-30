@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A clinical or business level record of information being transmitted or shared
   /// </summary>
   [Serializable]
-  [FhirType("Communication", IsResource=true)]
   [DataContract]
+  [FhirType("Communication", IsResource=true)]
   public partial class Communication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message payload
     /// </summary>
-    [FhirType("Communication#Payload", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Communication#Payload", IsNestedType=true)]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

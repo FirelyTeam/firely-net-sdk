@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A description of when an event can occur
   /// </summary>
   [Serializable]
-  [FhirType("EventDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("EventDefinition", IsResource=true)]
   public partial class EventDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

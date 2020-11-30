@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An ingredient of a manufactured item or pharmaceutical product
   /// </summary>
   [Serializable]
-  [FhirType("Ingredient", IsResource=true)]
   [DataContract]
+  [FhirType("Ingredient", IsResource=true)]
   public partial class Ingredient : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The substance that comprises this ingredient
     /// </summary>
-    [FhirType("Ingredient#Substance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Ingredient#Substance", IsNestedType=true)]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -168,8 +169,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
     /// </summary>
-    [FhirType("Ingredient#Strength", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Ingredient#Strength", IsNestedType=true)]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -456,8 +458,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Strength expressed in terms of a reference substance
     /// </summary>
-    [FhirType("Ingredient#ReferenceStrength", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Ingredient#ReferenceStrength", IsNestedType=true)]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -638,8 +641,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A specified substance that comprises this ingredient
     /// </summary>
-    [FhirType("Ingredient#SpecifiedSubstance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Ingredient#SpecifiedSubstance", IsNestedType=true)]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

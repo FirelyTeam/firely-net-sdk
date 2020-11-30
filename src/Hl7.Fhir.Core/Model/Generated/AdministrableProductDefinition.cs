@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A pharmaceutical product described in terms of its composition and dose form
   /// </summary>
   [Serializable]
-  [FhirType("AdministrableProductDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("AdministrableProductDefinition", IsResource=true)]
   public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristics e.g. a products onset of action
     /// </summary>
-    [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -185,8 +186,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The path by which the pharmaceutical product is taken into or makes contact with the body
     /// </summary>
-    [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -383,8 +385,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A species for which this route applies
     /// </summary>
-    [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -491,8 +494,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A species specific time during which consumption of animal product is not appropriate
     /// </summary>
-    [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

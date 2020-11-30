@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Allergy or Intolerance (generally: Risk of adverse reaction to a substance)
   /// </summary>
   [Serializable]
-  [FhirType("AllergyIntolerance", IsResource=true)]
   [DataContract]
+  [FhirType("AllergyIntolerance", IsResource=true)]
   public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -238,8 +238,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Adverse Reaction Events linked to exposure to substance
     /// </summary>
-    [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product
   /// </summary>
   [Serializable]
-  [FhirType("ManufacturedItemDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("ManufacturedItemDefinition", IsResource=true)]
   public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General characteristics of this item
     /// </summary>
-    [FhirType("ManufacturedItemDefinition#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ManufacturedItemDefinition#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
