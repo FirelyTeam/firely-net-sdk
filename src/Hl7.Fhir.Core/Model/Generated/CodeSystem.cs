@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Declares the existence of and describes a code system or code system supplement
   /// </summary>
   [Serializable]
-  [FhirType("CodeSystem", IsResource=true)]
   [DataContract]
+  [FhirType("CodeSystem", IsResource=true)]
   public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -184,8 +184,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Filter that can be used in a value set
     /// </summary>
-    [FhirType("CodeSystem#Filter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CodeSystem#Filter", IsNestedType=true)]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -401,8 +402,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information supplied about each concept
     /// </summary>
-    [FhirType("CodeSystem#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CodeSystem#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -617,8 +619,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Concepts in the code system
     /// </summary>
-    [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -853,8 +856,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional representations for the concept
     /// </summary>
-    [FhirType("CodeSystem#Designation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CodeSystem#Designation", IsNestedType=true)]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1014,8 +1018,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Property value for the concept
     /// </summary>
-    [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

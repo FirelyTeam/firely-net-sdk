@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A series of measurements taken by a device
   /// </summary>
   [Serializable]
-  [FhirType("SampledData")]
   [DataContract]
+  [FhirType("SampledData")]
   public partial class SampledData : Hl7.Fhir.Model.DataType
   {
     /// <summary>

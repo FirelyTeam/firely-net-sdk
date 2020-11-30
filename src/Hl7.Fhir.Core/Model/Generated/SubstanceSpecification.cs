@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// The detailed description of a substance, typically at a level beyond what is used for prescribing
   /// </summary>
   [Serializable]
-  [FhirType("SubstanceSpecification", IsResource=true)]
   [DataContract]
+  [FhirType("SubstanceSpecification", IsResource=true)]
   public partial class SubstanceSpecification : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Moiety, for structural modifications
     /// </summary>
-    [FhirType("SubstanceSpecification#Moiety", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Moiety", IsNestedType=true)]
     public partial class MoietyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,8 +293,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General specifications for this substance, including how it is related to other substances
     /// </summary>
-    [FhirType("SubstanceSpecification#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -474,8 +476,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structural information
     /// </summary>
-    [FhirType("SubstanceSpecification#Structure", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Structure", IsNestedType=true)]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -729,8 +732,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Applicable for single substances that contain a radionuclide or a non-natural isotopic ratio
     /// </summary>
-    [FhirType("SubstanceSpecification#Isotope", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Isotope", IsNestedType=true)]
     public partial class IsotopeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -889,8 +893,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The molecular weight or weight range (for proteins, polymers or nucleic acids)
     /// </summary>
-    [FhirType("SubstanceSpecification#MolecularWeight", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#MolecularWeight", IsNestedType=true)]
     public partial class MolecularWeightComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1013,8 +1018,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Molecular structural representation
     /// </summary>
-    [FhirType("SubstanceSpecification#Representation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Representation", IsNestedType=true)]
     public partial class RepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1155,8 +1161,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes associated with the substance
     /// </summary>
-    [FhirType("SubstanceSpecification#Code", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Code", IsNestedType=true)]
     public partial class CodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1354,8 +1361,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Names applicable to this substance
     /// </summary>
-    [FhirType("SubstanceSpecification#Name", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Name", IsNestedType=true)]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1668,8 +1676,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details of the official nature of this name
     /// </summary>
-    [FhirType("SubstanceSpecification#Official", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Official", IsNestedType=true)]
     public partial class OfficialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1810,8 +1819,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A link between this substance and another, with details of the relationship
     /// </summary>
-    [FhirType("SubstanceSpecification#Relationship", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceSpecification#Relationship", IsNestedType=true)]
     public partial class RelationshipComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

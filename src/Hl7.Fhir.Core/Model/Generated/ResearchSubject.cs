@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Physical entity which is the primary unit of interest in the study
   /// </summary>
   [Serializable]
-  [FhirType("ResearchSubject", IsResource=true)]
   [DataContract]
+  [FhirType("ResearchSubject", IsResource=true)]
   public partial class ResearchSubject : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

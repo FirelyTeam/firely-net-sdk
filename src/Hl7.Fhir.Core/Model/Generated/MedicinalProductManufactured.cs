@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// The manufactured item as contained in the packaged medicinal product
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductManufactured", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductManufactured", IsResource=true)]
   public partial class MedicinalProductManufactured : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
