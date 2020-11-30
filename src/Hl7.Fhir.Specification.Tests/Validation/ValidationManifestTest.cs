@@ -1,6 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
@@ -34,6 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
                                                     GenerateElementIds = true
                                                 };
             settings.ResourceResolver = testResolver;
+            settings.TerminologyService = new LocalTerminologyService(testResolver);
 
            _testValidator = new Validator(settings);
         }
