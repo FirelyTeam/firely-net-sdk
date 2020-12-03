@@ -26,11 +26,12 @@ namespace Hl7.Fhir.Serialization
 
 #if NETSTANDARD2_0
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements).ToJsonText(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary, elements).ToJson(buildFhirJsonWriterSettings());
 #else
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
            MakeElementStack(instance, summary, elements).ToJson(buildFhirJsonWriterSettings());
 #endif
+
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
             MakeElementStack(instance, summary, elements).ToJsonBytes(buildFhirJsonWriterSettings());
 
