@@ -7428,6 +7428,51 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public async T.Task TestExtensionOnValueSetBinding()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Address.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Address),
+                Name = "MyCustomAddress",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomAddress",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Address.use")
+                        {
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent
+                            {
+                                Strength = BindingStrength.Required,
+                                ValueSet = new Canonical
+                                {
+                                    Extension = new List<Extension>{new Extension
+                                        {
+                                            Url = "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap",
+                                            Value = new ResourceReference
+                                            {
+                                                Reference = "http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse",
+                                                Display = "AdresSoortCodelijst-to-AddressUse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
+
+            Assert.IsNotNull(expanded?.Snapshot?.Element);
+            Assert.IsTrue(expanded.Snapshot.Element.Where(e => e.Path == "Address.use").FirstOrDefault().Binding.ValueSetElement.Extension.Any(e => e.Url == "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap"));
+            Assert.IsNotNull(expanded.Snapshot.Element.Where(e => e.Path == "Address.use")?.FirstOrDefault()?.Binding?.ValueSetElement?.Value);
+        }
+
 
         // [WMR 20180611] New: Forge issue "Only first item in code field for element is saved"
         // Issue: if element in diff specifies multiple codes with only display values,
