@@ -17,7 +17,12 @@ namespace Hl7.Fhir.Specification.Tests
     public class ValidationManifestTest
     {
         private static Validator _testValidator;
-        private static DirectorySource _dirSource;        
+        private static DirectorySource _dirSource;
+        //Ignore these tests 
+        private readonly static string[] _ignoreTests = {
+                "message.xml",
+                "message-empty-entry.xml"
+                };
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -50,7 +55,12 @@ namespace Hl7.Fhir.Specification.Tests
         } 
 
         public static void RunTestCase(ValidationTestCase testCase)
-        {            
+        {
+            if(_ignoreTests.Contains(testCase.FileName))
+            {
+                Assert.Inconclusive("testcase ignored");
+            }
+
             var resourceText = File.ReadAllText(@$"TestData\validation-test-suite\{testCase.FileName}");
             var testResource = testCase.FileName.EndsWith(".xml") ?
                 new FhirXmlParser().Parse<Resource>(resourceText) :
@@ -102,9 +112,7 @@ namespace Hl7.Fhir.Specification.Tests
     }
 
     internal class CustomDataSourceAttribute : Attribute, ITestDataSource
-    {
-        //Ignore these tests 
-        private readonly string[] _ignoreTests = { };
+    {   
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)
         {
@@ -119,8 +127,7 @@ namespace Hl7.Fhir.Specification.Tests
         public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
             var data = ValidatorManifestParser.Parse();
-            return data.Where(d=> d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))
-                       .Where(d=> !_ignoreTests.Contains(d.FileName))
+            return data.Where(d=> d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))                      
                        .Select(e => new object[]{ e });
         }
     }
