@@ -6944,6 +6944,46 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestExtensionOnPrimitive()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Address.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Address),
+                Name = "MyCustomAddress",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomAddress",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Address.use")
+                        {
+                            DefinitionElement = new Markdown
+                            {
+                                Extension = new List<Extension>
+                                {
+                                    new Extension
+                                    {
+                                        Url = "http://example.org/fhir/StructureDefinition/myExtension",
+                                        Value = new FhirString("TestValue")
+                                    }
+                                }
+                            }                           
+                        },
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
+
+            Assert.IsNotNull(expanded?.Snapshot?.Element);
+            Assert.IsTrue(expanded.Snapshot.Element.Where(e => e.Path == "Address.use").FirstOrDefault().DefinitionElement.Extension.Any(e => e.Url == "http://example.org/fhir/StructureDefinition/myExtension"));
+            Assert.IsNotNull(expanded.Snapshot.Element.Where(e => e.Path == "Address.use")?.FirstOrDefault()?.DefinitionElement?.Value);
+        }
+
+
+        [TestMethod]
         public async T.Task TestReferenceTargetProfile()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
