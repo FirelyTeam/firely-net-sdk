@@ -7444,9 +7444,8 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition("Address.use")
                         {
                             Binding = new ElementDefinition.ElementDefinitionBindingComponent
-                            {
-                                Strength = BindingStrength.Required,
-                                ValueSet = new Canonical
+                            {                               
+                                ValueSetElement = new Canonical
                                 {
                                     Extension = new List<Extension>{new Extension
                                         {
