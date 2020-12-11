@@ -7534,6 +7534,29 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestInvariantsOnValueX()
+        {
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
+            var generator = _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
+
+            dumpOutcome(generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("MedicationAdministration.dosage.rate[x]"));
+            Assert.IsNotNull(nav.Current);
+
+            //verify that rate[x] contains ele-1 but not rat-1
+            Assert.IsTrue(nav.Current.Constraint.Any(c=> c.Key == "ele-1"));
+            Assert.IsFalse(nav.Current.Constraint.Any(c => c.Key == "rat-1"));
+
+        }
+
+        [TestMethod]
         public async T.Task TestReferenceTargetProfile()
         {
             // Verify that the snapshot generator correctly expands elements with a targetProfile (on ResourceReference itself)
@@ -8956,5 +8979,7 @@ namespace Hl7.Fhir.Specification.Tests
             newSliceSystem.Should().NotBeNull("The new slice 'newSlice' should be present in the snapshot");
             newSliceSystem.Fixed.Should().BeNull("No constraint elements from the base slice (BSN) should be present");
         }
+
+        
     }
 }
