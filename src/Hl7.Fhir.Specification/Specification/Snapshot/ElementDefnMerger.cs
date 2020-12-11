@@ -340,6 +340,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return snap;
             }
 
+
+            //[MS 20201211] Separate function introduced to make sure that introduced extensions on Binding.Valueset in the diff are merged with the base.
+            // This is a very specific fix and might be replaced by a more general merging method using ITypedElement in the future.
             private ElementDefinition.ElementDefinitionBindingComponent mergeBinding(ElementDefinition.ElementDefinitionBindingComponent snap, ElementDefinition.ElementDefinitionBindingComponent diff)
             {
                 var result = snap;
