@@ -350,15 +350,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     if (snap.IsNullOrEmpty())
                     {
-                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();                        
+                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();
+                        onConstraint(result);
                     }
                     else if (!diff.IsExactly(snap))
                     {
                         snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
-                        snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);                        
+                        snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        onConstraint(result);
                     }
-                    onConstraint(result);
                 }
                 return result;
             }
