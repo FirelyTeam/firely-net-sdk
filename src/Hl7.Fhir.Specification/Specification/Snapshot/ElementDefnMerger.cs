@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
 
-                snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
+                snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
@@ -338,6 +338,30 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                     return snap;
+            }
+
+
+            //[MS 20201211] Separate function introduced to make sure that introduced extensions on Binding.Valueset in the diff are merged with the base.
+            // This is a very specific fix and might be replaced by a more general merging method using ITypedElement in the future.
+            private ElementDefinition.ElementDefinitionBindingComponent mergeBinding(ElementDefinition.ElementDefinitionBindingComponent snap, ElementDefinition.ElementDefinitionBindingComponent diff)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
+                        snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
+                        snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        onConstraint(result);
+                    }
+                }
+                return result;
             }
 
             string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)

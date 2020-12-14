@@ -6899,6 +6899,91 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestExtensionOnValueSetBinding()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Address.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Address),
+                Name = "MyCustomAddress",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomAddress",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Address.use")
+                        {
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent
+                            {
+                                Strength = BindingStrength.Required,
+                                ValueSet = new ResourceReference
+                                {
+                                    Extension = new List<Extension>{new Extension
+                                        {
+                                            Url = "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap",
+                                            Value = new ResourceReference
+                                            {
+                                                Reference = "http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse",
+                                                Display = "AdresSoortCodelijst-to-AddressUse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    }
+                }
+            };            
+            
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
+
+            Assert.IsNotNull(expanded?.Snapshot?.Element);
+            Assert.IsTrue(expanded.Snapshot.Element.Where(e => e.Path == "Address.use").FirstOrDefault().Binding.ValueSet.Extension.Any(e => e.Url == "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap"));
+            Assert.IsNotNull(((ResourceReference)expanded.Snapshot.Element.Where(e => e.Path == "Address.use")?.FirstOrDefault()?.Binding?.ValueSet)?.Reference);
+        }
+
+        [TestMethod]
+        [Ignore] //[MS 20201211] TODO: Changing elementDefnMerger from mergeprimitives to mergecomplexattribute seems to do the trick, but there are is some string specific code that will be ignored in that case.
+        public async T.Task TestExtensionOnPrimitive()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Address.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Address),
+                Name = "MyCustomAddress",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomAddress",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Address.use")
+                        {
+                            DefinitionElement = new Markdown
+                            {
+                                Extension = new List<Extension>
+                                {
+                                    new Extension
+                                    {
+                                        Url = "http://example.org/fhir/StructureDefinition/myExtension",
+                                        Value = new FhirString("TestValue")
+                                    }
+                                }
+                            }                           
+                        },
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
+
+            Assert.IsNotNull(expanded?.Snapshot?.Element);
+            Assert.IsTrue(expanded.Snapshot.Element.Where(e => e.Path == "Address.use").FirstOrDefault().DefinitionElement.Extension.Any(e => e.Url == "http://example.org/fhir/StructureDefinition/myExtension"));
+            Assert.IsNotNull(expanded.Snapshot.Element.Where(e => e.Path == "Address.use")?.FirstOrDefault()?.DefinitionElement?.Value);
+        }
+
+        [TestMethod]
         public async T.Task TestInvariantsOnValueX()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
@@ -6916,7 +7001,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current);
 
             //verify that rate[x] contains ele-1 but not rat-1
-            Assert.IsTrue(nav.Current.Constraint.Any(c=> c.Key == "ele-1"));
+            Assert.IsTrue(nav.Current.Constraint.Any(c => c.Key == "ele-1"));
             Assert.IsFalse(nav.Current.Constraint.Any(c => c.Key == "rat-1"));
 
         }
