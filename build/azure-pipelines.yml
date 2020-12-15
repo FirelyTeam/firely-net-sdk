@@ -17,6 +17,7 @@ name: $(date:yyyyMMdd)$(rev:-r)
 
 variables:
   NET_CORE_SDK: 2.1.x
+  isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
   
 pool:
   vmImage: 'windows-latest'
@@ -112,6 +113,7 @@ stages:
         arguments: --no-build --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient
 
   - job: BuildAndPack
+    condition: and(succeeded(), nq(variables['Build.Reason'], 'PullRequest')) # not a PR
     displayName: Build and Pack in Release mode
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 1
@@ -186,6 +188,7 @@ stages:
 - stage: deploy_myget
   displayName: Deploy to MyGet
   dependsOn: build
+  condition: and(succeeded(), nq(variables['Build.Reason'], 'PullRequest')) # not a PR
   jobs:
   - deployment: myget
     displayName: MyGet
@@ -209,9 +212,10 @@ stages:
                   publishFeedCredentials: MyGet
                   verbosityPush: Normal    
 
-- stage: deploy_nuget
+- stage: deploy_nuget 
   displayName: Deploy to NuGet
   dependsOn: deploy_myget
+  condition: and(succeeded(), eq(variables.isTagBranch, true)) 
   jobs:
   - deployment: nuget
     displayName: NuGet
@@ -225,12 +229,46 @@ stages:
                 artifactName: 'NuGetPackages'
                 downloadPath: '$(System.ArtifactsDirectory)/NuGetArtifacts'
   
-  
             - task: NuGetCommand@2
-              displayName: 'NuGet push'
+              displayName: 'NuGet Push DSTU2 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
               inputs:
                   command: push
-                  packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*.nupkg'
+                  packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*DSTU2*.nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
-                  verbosityPush: Normal    
+                  verbosityPush: normal    
+                  includeSymbols: false
+            
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push STU3 packages only and common packages'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
+              inputs:
+                command: push
+                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R4 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
+              inputs:
+                command: push
+                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*R4*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R5 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
+              inputs:
+                command: push
+                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*R5*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal 
+                includeSymbols: false  
