@@ -113,7 +113,7 @@ stages:
         arguments: --no-build --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient
 
   - job: BuildAndPack
-    condition: and(succeeded(), nq(variables['Build.Reason'], 'PullRequest')) # not a PR
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
     displayName: Build and Pack in Release mode
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 1
@@ -188,7 +188,7 @@ stages:
 - stage: deploy_myget
   displayName: Deploy to MyGet
   dependsOn: build
-  condition: and(succeeded(), nq(variables['Build.Reason'], 'PullRequest')) # not a PR
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
   jobs:
   - deployment: myget
     displayName: MyGet
