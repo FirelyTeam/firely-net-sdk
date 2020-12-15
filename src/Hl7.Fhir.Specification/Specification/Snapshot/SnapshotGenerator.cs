@@ -780,8 +780,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (newConstraints != null)
                 {
                     var keys = newConstraints.Select(c => c.Key);
-                    var removedConstraints = element.Constraint.Where(c => keys.Contains(c.Key))?.ToList();
-                    removedConstraints.ForEach(c => element.Constraint.Remove(c));
+                    element.Constraint.RemoveAll(c => keys.Contains(c.Key));
                 }
             }
         }
