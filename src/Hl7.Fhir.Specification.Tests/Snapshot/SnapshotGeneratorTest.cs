@@ -6987,11 +6987,10 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestInvariantsOnValueX()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
-            var generator = _generator = new SnapshotGenerator(_testResolver, _settings);
-
+          
             (_, var expanded) = await generateSnapshotAndCompare(sd);
 
-            dumpOutcome(generator.Outcome);
+            dumpOutcome(_generator.Outcome);
             dumpBaseElems(expanded.Snapshot.Element);
             Assert.IsNotNull(expanded);
             Assert.IsTrue(expanded.HasSnapshot);
