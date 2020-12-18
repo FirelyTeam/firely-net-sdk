@@ -63,5 +63,17 @@ namespace Hl7.Fhir.Tests.Introspection
                 return null;
             }
         }
+
+        [TestMethod]
+        public void TestSelectDate()
+        {
+            var goal = new Goal {Start = new Date(2000, 1, 1)};
+            var result = goal.Select("(Goal.start as date)");
+            Assert.IsNotNull(result);
+
+            var date = result.FirstOrDefault();
+            Assert.IsNotNull(date);
+            Assert.AreEqual(new Date(2000, 1, 1), date);
+        }
     }
 }

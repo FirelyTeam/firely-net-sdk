@@ -112,6 +112,7 @@ namespace Hl7.Fhir.FhirPath
                     long _ => new Integer((int)(long)result),
                     decimal _ => new FhirDecimal((decimal)result),
                     string _ => new FhirString((string)result),
+                    P.Date d => new Date(d.ToString()),
                     P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
                     _ => (Base)result
                 };
