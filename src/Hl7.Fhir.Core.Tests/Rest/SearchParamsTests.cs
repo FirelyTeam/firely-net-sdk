@@ -390,6 +390,15 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual("Invalid _elements value: it cannot be empty", formatException.Message);
         }
 
+        [TestMethod]
+        public void FormatExceptionOnSingleDashSortParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_sort", "-"));
+            Assert.AreEqual("Invalid _sort: one of the values is just a single '-', an element name must be provided", formatException.Message);            
+        }
+
+
         private void FormatExceptionOnDuplicateOrEmptyParam(string paramName)
         {
             var q = new SearchParams();
