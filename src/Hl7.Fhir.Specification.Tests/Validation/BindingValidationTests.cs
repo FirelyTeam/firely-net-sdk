@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new ResourceReference("http://fhir.nl/fhir/NamingSystem/uzi-rolcode"),
+                ValueSet = new Canonical("http://fhir.nl/fhir/NamingSystem/uzi-rolcode"),
                 Strength = BindingStrength.Required
             };
 
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://non-existing.code.system", "01.015"));
-          
+
 
             var result = val.Validate(cc.ToTypedElement(), vc);
             Assert.True(result.Success);
