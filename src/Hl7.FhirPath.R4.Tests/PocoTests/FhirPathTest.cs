@@ -12,12 +12,13 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using P = Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks.Dataflow;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.R4.Tests
 {
@@ -244,10 +245,34 @@ namespace Hl7.FhirPath.R4.Tests
 
             var absolutueInvariantcheck = nav.Scalar("Appointment.cancelationReason.exists() implies(Appointment.status = 'no-show' or Appointment.status = 'cancelled')");
             Assert.AreEqual(true, absolutueInvariantcheck);
-            
+
             var invariantcheck = nav.Scalar("cancelationReason.exists() implies(status = 'no-show' or status = 'cancelled')");
             Assert.AreEqual(true, invariantcheck);
 
+        }
+
+        public static IEnumerable<object[]> CastAsDataTypeTestCases() =>
+           new (PrimitiveType input, string castToDataType)[]
+               {
+                   (new FhirBoolean(true), "boolean"),
+                   (new FhirDecimal(12), "decimal"),
+                   (new FhirString("a string"), "string"),
+
+                   (new Date("2021-07-01"), "date"),
+                   (new Time("16:01:12"), "time"),
+                   (FhirDateTime.Now(), "dateTime"),
+               }.Select(t => new object[] { t.input, t.castToDataType });
+
+        [DataTestMethod]
+        [DynamicData(nameof(CastAsDataTypeTestCases), DynamicDataSourceType.Method)]
+        public void AssertCastAs(PrimitiveType input, string castToDataType)
+        {
+            var observation = new Observation { Value = input };
+            var result = observation.Select($"Observation.value as {castToDataType}");
+
+            var dataType = result?.FirstOrDefault();
+            Assert.IsNotNull(dataType, "Select should result an instance");
+            Assert.IsInstanceOfType(dataType, input.GetType(), "dataType should be the same type of the input");
         }
     }
 }
