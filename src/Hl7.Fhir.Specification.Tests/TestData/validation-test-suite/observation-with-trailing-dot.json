@@ -1,0 +1,28 @@
+{
+  "resourceType": "Observation",
+  "status": "final",
+  "subject": {
+    "reference": "Patient/123"
+  },
+  "code": {
+    "coding": [
+      {
+        "system": "http://foo",
+        "code": "123"
+      }
+    ]
+  },
+  "referenceRange": [
+    {
+      "low": {
+        "value": 210.0,
+        "unit": "pg/mL"
+      },
+      "high": {
+        "value": 925.,
+        "unit": "pg/mL"
+      },
+      "text": "The 'high' value above has an invalid number with a trailing dot"
+    }
+  ]
+}

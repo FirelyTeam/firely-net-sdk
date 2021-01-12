@@ -3473,133 +3473,133 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.01", "http://hl7.org/fhir/FHIR-version"), Description("0.01")]
-    N001,
+    N0_01,
     /// <summary>
     /// 1st Draft for Comment (Sept 2012 Ballot).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.05", "http://hl7.org/fhir/FHIR-version"), Description("0.05")]
-    N005,
+    N0_05,
     /// <summary>
     /// 2nd Draft for Comment (January 2013 Ballot).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.06", "http://hl7.org/fhir/FHIR-version"), Description("0.06")]
-    N006,
+    N0_06,
     /// <summary>
     /// DSTU 1 Ballot version.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.11", "http://hl7.org/fhir/FHIR-version"), Description("0.11")]
-    N011,
+    N0_11,
     /// <summary>
     /// DSTU 1 Official version.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.0.80", "http://hl7.org/fhir/FHIR-version"), Description("0.0.80")]
-    N0080,
+    N0_0_80,
     /// <summary>
     /// DSTU 1 Official version Technical Errata #1.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.0.81", "http://hl7.org/fhir/FHIR-version"), Description("0.0.81")]
-    N0081,
+    N0_0_81,
     /// <summary>
     /// DSTU 1 Official version Technical Errata #2.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.0.82", "http://hl7.org/fhir/FHIR-version"), Description("0.0.82")]
-    N0082,
+    N0_0_82,
     /// <summary>
     /// Draft For Comment (January 2015 Ballot).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.4.0", "http://hl7.org/fhir/FHIR-version"), Description("0.4.0")]
-    N040,
+    N0_4_0,
     /// <summary>
     /// DSTU 2 Ballot version (May 2015 Ballot).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("0.5.0", "http://hl7.org/fhir/FHIR-version"), Description("0.5.0")]
-    N050,
+    N0_5_0,
     /// <summary>
     /// DSTU 2 QA Preview + CQIF Ballot (Sep 2015).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.0.0", "http://hl7.org/fhir/FHIR-version"), Description("1.0.0")]
-    N100,
+    N1_0_0,
     /// <summary>
     /// DSTU 2 (Official version).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.0.1", "http://hl7.org/fhir/FHIR-version"), Description("1.0.1")]
-    N101,
+    N1_0_1,
     /// <summary>
     /// DSTU 2 (Official version) with 1 technical errata.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.0.2", "http://hl7.org/fhir/FHIR-version"), Description("1.0.2")]
-    N102,
+    N1_0_2,
     /// <summary>
     /// GAO Ballot + draft changes to main FHIR standard.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.1.0", "http://hl7.org/fhir/FHIR-version"), Description("1.1.0")]
-    N110,
+    N1_1_0,
     /// <summary>
     /// CQF on FHIR Ballot + Connectathon 12 (Montreal).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.4.0", "http://hl7.org/fhir/FHIR-version"), Description("1.4.0")]
-    N140,
+    N1_4_0,
     /// <summary>
     /// FHIR STU3 Ballot + Connectathon 13 (Baltimore).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.6.0", "http://hl7.org/fhir/FHIR-version"), Description("1.6.0")]
-    N160,
+    N1_6_0,
     /// <summary>
     /// FHIR STU3 Candidate + Connectathon 14 (San Antonio).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("1.8.0", "http://hl7.org/fhir/FHIR-version"), Description("1.8.0")]
-    N180,
+    N1_8_0,
     /// <summary>
     /// FHIR Release 3 (STU).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("3.0.0", "http://hl7.org/fhir/FHIR-version"), Description("3.0.0")]
-    N300,
+    N3_0_0,
     /// <summary>
     /// FHIR Release 3 (STU) with 1 technical errata.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("3.0.1", "http://hl7.org/fhir/FHIR-version"), Description("3.0.1")]
-    N301,
+    N3_0_1,
     /// <summary>
     /// R4 Ballot #1.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("3.3.0", "http://hl7.org/fhir/FHIR-version"), Description("3.3.0")]
-    N330,
+    N3_3_0,
     /// <summary>
     /// R4 Ballot #2.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("3.5.0", "http://hl7.org/fhir/FHIR-version"), Description("3.5.0")]
-    N350,
+    N3_5_0,
     /// <summary>
     /// FHIR Release 4 (Normative + STU).
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
-    N400,
+    N4_0_0,
     /// <summary>
     /// FHIR Release 4 Technical Correction.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("4.0.1", "http://hl7.org/fhir/FHIR-version"), Description("4.0.1")]
-    N401,
+    N4_0_1,
   }
 
   /// <summary>

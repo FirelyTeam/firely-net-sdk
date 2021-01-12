@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -22,28 +22,6 @@ namespace Hl7.Fhir.Serialization
         public BaseFhirParser(ParserSettings settings = null)
         {
             Settings = settings?.Clone() ?? new ParserSettings();
-        }
-
-        private static readonly Lazy<ModelInspector> _inspector = createDefaultModelInspector();
-
-        private static Lazy<ModelInspector> createDefaultModelInspector()
-        {
-            return new Lazy<ModelInspector>(() =>
-            {
-                var result = new ModelInspector(Specification.FhirRelease.R4);
-
-                result.Import(typeof(Resource).GetTypeInfo().Assembly);
-                result.Import(typeof(Patient).GetTypeInfo().Assembly);
-                return result;
-            });
-        }
-
-        public static ModelInspector Inspector
-        {
-            get
-            {
-                return _inspector.Value;
-            }
         }
 
         private PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>

@@ -3,15 +3,80 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
+using System;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public interface ITerminologyService
     {
+        /// <summary>
+        /// Validate that a coded value is in the set of codes allowed by a value set.
+        /// </summary>
+        /// <param name="parameters">The In Parameters of the ValueSet-validate-code operation</param>
+        /// <param name="id">The Logical Id of a resource</param>
+        /// <param name="useGet">When true, then use GET, otherwise POST</param>
+        /// <returns>Returns a result (true / false), an error message, and the recommended display for the code, wrapped in a Parameters</returns>
+        /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
+        Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// Validate that a coded value is in the code system.
+        /// </summary>
+        /// <param name="parameters">The In Parameters of the CodeSystem-validate-code operation</param>
+        /// <param name="id">The Logical Id of a resource</param>
+        /// <param name="useGet">When true, then use GET, otherwise POST</param>
+        /// <returns>Returns a result (true / false), an error message, and the recommended display for the code, wrapped in a Parameters</returns>
+        /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
+        Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Parameters> Lookup(Parameters parameters, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="id"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <param name="useGet"></param>
+        /// <returns></returns>
+        Task<Resource> Closure(Parameters parameters, bool useGet = false);
+
         /// <summary>
         /// Will check whether the a code is a member of the given valueset.
         /// </summary>
@@ -29,10 +94,10 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="displayLanguage">Language to be used for description when validating the display property</param>
         /// <returns>An OperationOutcome with the result of the validation</returns>
         /// <remarks>See http://hl7.org/valueset-operations.html#validate-code for more information</remarks>
+        [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]
         OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null, string code = null,
                 string system = null, string version = null, string display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
                 bool? @abstract = null, string displayLanguage = null);
-
     }
 }

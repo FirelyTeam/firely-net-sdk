@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 // [WMR 20171023] TODO
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Specification.Source
             if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
 
             var fullList = GetFilePaths();
-            // [WMR 20190219] https://github.com/FirelyTeam/fhir-net-api/issues/875
+            // [WMR 20190219] https://github.com/FirelyTeam/firely-net-sdk/issues/875
             // var fullFileName = GetFilePaths().SingleOrDefault(path => path.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison));
             //return fullFileName == null ? null : File.OpenRead(fullFileName);
 

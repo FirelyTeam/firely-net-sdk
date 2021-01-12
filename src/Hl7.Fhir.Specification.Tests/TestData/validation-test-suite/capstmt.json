@@ -1,0 +1,54 @@
+{
+  "resourceType" : "CapabilityStatement",
+  "url" : "http://hl7.org/fhir/test/CapabilityStatement/capstmt",
+  "status" : "draft",
+  "date" : "2019-08-24T00:00:00.000+10:00",
+  "kind" : "requirements",
+  "fhirVersion" : "4.0.0",
+  "description" : "Has one wrong search parameter type",
+  "format" : [
+    "xml",
+    "json",
+    "application/fhir+json"
+  ],
+  "rest" : [
+    {
+      "mode" : "server",
+      "resource" : [
+        {
+          "type" : "AllergyIntolerance",
+          "profile" : "http://hl7.org/fhir/uv/ipa/StructureDefinition/ipa-allergyintolerance",
+          "interaction" : [
+            {
+              "code" : "search-type"
+            }
+          ],
+          "updateCreate" : false,
+          "conditionalCreate" : false,
+          "conditionalUpdate" : false,
+          "conditionalDelete" : "not-supported",
+          "referencePolicy" : [
+            "resolves"
+          ],
+          "searchRevInclude" : [
+            "Provenance:target"
+          ],
+          "searchParam" : [
+            {
+              "name" : "clinical-status",
+              "definition" : "http://hl7.org/fhir/SearchParameter/AllergyIntolerance-clinical-status",
+              "type" : "date",
+              "documentation" : "active | inactive | resolved"
+            },
+            {
+              "name" : "code",
+              "definition" : "http://hl7.org/fhir/SearchParameter/clinical-code",
+              "type" : "token",
+              "documentation" : "Code that identifies the allergy or intolerance"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

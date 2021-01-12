@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -13,6 +13,6 @@ namespace Hl7.Fhir.ElementModel
     public static class TypedElementExtensions
     {
         public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoElementNode(@base, rootName: rootName);
+            new PocoElementNode(ModelInfo.GetStructureDefinitionSummaryProvider(), @base, rootName: rootName);
     }
 }

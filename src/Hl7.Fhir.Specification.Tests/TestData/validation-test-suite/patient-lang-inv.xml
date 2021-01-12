@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patient xmlns="http://hl7.org/fhir">
+    <id value="patient-lang-inv"/>
+    <identifier>
+        <system value="urn:oid:2.16.840.1.113883.2.4.6.3"/>
+        <value value="574687583"/>
+    </identifier>
+    <active value="true"/>
+    <name>
+        <family value="DeLarosa"/>
+        <given value="Martha"/>
+    </name>
+    <telecom>
+        <system value="phone"/>
+        <value value="+31788700800"/>
+        <use value="home"/>
+    </telecom>
+    <gender value="female"/>
+    <birthDate value="1992-05-01"/>
+    <address>
+        <line value="Laan Van Europa 1600"/>
+        <city value="Dordrecht"/>
+        <postalCode value="3317 DB"/>
+        <country value="NL"/>
+    </address>
+    <contact>
+        <relationship>
+            <coding>
+                <system value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+                <code value="MTH"/>
+            </coding>
+        </relationship>
+        <name>
+            <family value="Mum"/>
+            <given value="Martha"/>
+        </name>
+        <telecom>
+            <system value="phone"/>
+            <value value="+33-555-20036"/>
+            <use value="home"/>
+        </telecom>
+        <address>
+            <line value="Promenade des Anglais 111"/>
+            <city value="Lyon"/>
+            <postalCode value="69001"/>
+            <country value="FR"/>
+        </address>
+    </contact>
+</Patient>

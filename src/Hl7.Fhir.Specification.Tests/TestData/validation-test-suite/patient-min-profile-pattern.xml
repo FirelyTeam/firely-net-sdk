@@ -1,0 +1,21 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Patient-min-profile-pattern"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/Patient-min-profile-pattern"/>
+  <status value="draft"/>
+  <date value="2018-03-20T15:43:56+00:00"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <min value="0"/>
+      <patternIdentifier>
+        <use value="usual"/>
+      </patternIdentifier>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Server push subscription criteria
   /// </summary>
   [Serializable]
-  [FhirType("Subscription", IsResource=true)]
   [DataContract]
+  [FhirType("Subscription", IsResource=true)]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -132,8 +132,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The channel on which to report matches to the criteria
     /// </summary>
-    [FhirType("Subscription#Channel", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Subscription#Channel", IsNestedType=true)]
     public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

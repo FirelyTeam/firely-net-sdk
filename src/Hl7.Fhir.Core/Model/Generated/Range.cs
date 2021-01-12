@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Set of values bounded by low and high
   /// </summary>
   [Serializable]
-  [FhirType("Range")]
   [DataContract]
+  [FhirType("Range")]
   public partial class Range : Hl7.Fhir.Model.DataType
   {
     /// <summary>

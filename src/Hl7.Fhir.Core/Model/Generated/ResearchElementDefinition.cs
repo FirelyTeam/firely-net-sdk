@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A population, intervention, or exposure definition
   /// </summary>
   [Serializable]
-  [FhirType("ResearchElementDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("ResearchElementDefinition", IsResource=true)]
   public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the research element
     /// </summary>
-    [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 // DEBUGGING
@@ -779,6 +779,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Max = diff.Current.Max, // newElement.Max
                 };
 
+                //Remove type specific constraints on polymorph type elements.
+                if (diff.Current.Type.Count > 1)
+                {
+                    removeNewTypeConstraint(newElement, typeStructure);
+                }
+
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, targetElement);
 
@@ -827,6 +833,28 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // Merge children
             await mergeElement(snap, diff).ConfigureAwait(false);
+        }
+
+        private void removeNewTypeConstraint(ElementDefinition element, StructureDefinition typeStructure)
+        {
+            if (typeStructure?.Differential?.Element != null && !element.Constraint.IsNullOrEmpty())
+            {
+                List<ElementDefinition.ConstraintComponent> newConstraints = null;
+
+                //See if there are new constraints introduced by the type
+                var nav = new ElementDefinitionNavigator(typeStructure.Differential.Element);
+                if (nav.MoveToFirstChild())
+                {
+                    if (nav.Current.IsRootElement())
+                        newConstraints = nav.Current.Constraint;
+                }
+                //If there are any newly introduced constraints, remove them from the new element.
+                if (newConstraints != null)
+                {
+                    var keys = newConstraints.Select(c => c.Key);
+                    element.Constraint.RemoveAll(c => keys.Contains(c.Key));
+                }
+            }
         }
 
         private static void addConstraintSource(ElementDefinition targetElement, string url)

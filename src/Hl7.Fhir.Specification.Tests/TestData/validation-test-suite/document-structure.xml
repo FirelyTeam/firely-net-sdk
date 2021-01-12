@@ -1,0 +1,84 @@
+<!-- 
+Document structure definition
+
+uses the section library to require 3 sections, each 
+with a different code: 
+ - code a
+ - code b
+ - code c
+ -->
+<StructureDefinition xmlns="http://hl7.org/fhir"> 
+  <id value="document-structure"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/document-structure"/>
+  <name value="DocumentStructure"/>
+  <title value="Document Structure (For testing section templates)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2018-11-05T17:47:00+11:00"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <type value="Composition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Composition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <!-- this is present to work around a bug in the snapshot generator -->
+      <path value="Composition"/>
+    </element>
+    <element>
+      <!-- set up slicing on Composition.section - by the code -->  
+      <path value="Composition.section"/>
+      <slicing>  
+        <discriminator> 
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <description value="Slice by .section.code"/>
+        <ordered value="true"/>
+        <rules value="closed"/>
+       </slicing>
+    </element>
+    <element>
+       <!-- first slice -->  
+      <path value="Composition.section"/>
+      <sliceName value="code-A"/>
+      <min value="1"/>
+      <type>
+        <code value="BackboneElement"/> 
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/document-section-library">
+          <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-profile-element">
+            <valueString value="Composition.section:codeA"/>
+          </extension>
+        </profile>
+      </type>
+    </element>
+    <element>
+       <!-- first slice -->  
+      <path value="Composition.section"/>
+      <sliceName value="code-B"/>
+      <min value="1"/>
+      <type>
+        <code value="BackboneElement"/> 
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/document-section-library">
+          <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-profile-element">
+            <valueString value="Composition.section:codeB"/>
+          </extension>
+        </profile>
+      </type>
+    </element>
+    <element>
+       <!-- first slice -->  
+      <path value="Composition.section"/>
+      <sliceName value="code-C"/>
+      <min value="0"/>
+      <type>
+        <code value="BackboneElement"/> 
+        <profile value="http://hl7.org/fhir/test/StructureDefinition/document-section-library">
+          <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-profile-element">
+            <valueString value="Composition.section:codeC"/>
+          </extension>
+        </profile>
+      </type>
+    </element>    
+ </differential>
+</StructureDefinition>

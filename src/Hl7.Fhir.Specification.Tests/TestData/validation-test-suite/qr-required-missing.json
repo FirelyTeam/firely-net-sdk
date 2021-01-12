@@ -1,0 +1,13 @@
+{
+    "resourceType": "QuestionnaireResponse",
+    "questionnaire": {
+        "reference": "http://example.com/Questionnaire/practice-questionnaire-test2"
+    },
+    "status": "completed",
+    "item": [{
+        "linkId": "date",
+        "answer": [{
+            "valueDate": "2020-03-23"
+        }]
+    }]
+}

@@ -1,0 +1,13 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="extension-slice"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+    </div>
+  </text>
+  <name>
+    <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+      <valueCode value="unknown"/>
+    </extension>
+  </name>
+</Patient>

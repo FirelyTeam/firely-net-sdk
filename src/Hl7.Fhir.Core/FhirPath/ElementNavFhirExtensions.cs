@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -112,6 +112,8 @@ namespace Hl7.Fhir.FhirPath
                     long _ => new Integer((int)(long)result),
                     decimal _ => new FhirDecimal((decimal)result),
                     string _ => new FhirString((string)result),
+                    P.Date d => new Date(d.ToString()),
+                    P.Time t => new Time(t.ToString()),
                     P.DateTime dt => new FhirDateTime(dt.ToDateTimeOffset(TimeSpan.Zero).ToUniversalTime()),
                     _ => (Base)result
                 };

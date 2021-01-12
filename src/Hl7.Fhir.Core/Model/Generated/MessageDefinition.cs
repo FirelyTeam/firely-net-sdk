@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A resource that defines a type of message that can be exchanged between systems
   /// </summary>
   [Serializable]
-  [FhirType("MessageDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("MessageDefinition", IsResource=true)]
   public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that are the subject of the event
     /// </summary>
-    [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MessageDefinition#Focus", IsNestedType=true)]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -302,8 +303,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responses to this message
     /// </summary>
-    [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -1,0 +1,20 @@
+{
+  "resourceType" : "StructureDefinition",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd",
+  "status" : "active",
+  "date" : "2019-08-26T00:00:00+10:00",
+  "fhirVersion" : "4.0.1",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Patient",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "path" : "Patient.name",
+        "min" : 1
+      }
+    ]
+  }
+}

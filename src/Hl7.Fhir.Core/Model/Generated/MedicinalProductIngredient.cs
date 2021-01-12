@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An ingredient of a manufactured item or pharmaceutical product
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductIngredient", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductIngredient", IsResource=true)]
   public partial class MedicinalProductIngredient : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A specified substance that comprises this ingredient
     /// </summary>
-    [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -203,8 +204,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product
     /// </summary>
-    [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -420,8 +422,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Strength expressed in terms of a reference substance
     /// </summary>
-    [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -600,8 +603,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ingredient substance
     /// </summary>
-    [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

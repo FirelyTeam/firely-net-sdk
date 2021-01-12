@@ -1,0 +1,13 @@
+<Observation xmlns="http://hl7.org/fhir">
+  <status value="final"/>
+  <code>
+    <text value="test"/>
+  </code>
+  <subject>
+    <identifier>
+      <system value="http://something/somepath"/>
+      <value value="something"/>
+    </identifier>
+    <type value="ValueSet"/>
+  </subject>
+</Observation>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// MedicinalProductContraindication
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductContraindication", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductContraindication", IsResource=true)]
   public partial class MedicinalProductContraindication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the use of the medicinal product in relation to other therapies described as part of the indication
     /// </summary>
-    [FhirType("MedicinalProductContraindication#OtherTherapy", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductContraindication#OtherTherapy", IsNestedType=true)]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

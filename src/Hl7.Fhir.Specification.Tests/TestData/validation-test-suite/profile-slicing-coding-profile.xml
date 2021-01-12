@@ -1,0 +1,46 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="ncdhc-observation-urinalysis-protein"/>
+  <url value="http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-observation-urinalysis-protein"/>
+  <version value="dv0.0.1"/>
+  <name value="NCDHCUrinalysisObservationProfile"/>
+  <title value="NCDHC Urinalysis Observation"/>
+  <status value="draft"/>
+  <date value="2019-06-21"/>
+  <publisher value="National Children&#39;s Digital Health Collaborative (NCDHC)"/>
+  <description value="Urine dipstick screening for Leukocytes, nitrite, urobilinogen, protein, pH, blood, specific gravity, ketones, glucose, bilirubin"/>
+  <purpose value="To record Urinalysis result"/>
+  <copyright  value="Copyright © 2019 Australian Digital Health Agency - All rights reserved. This content is licensed under a Creative Commons Attribution 4.0 International License. See https://creativecommons.org/licenses/by/4.0/"/>
+  <fhirVersion value="3.0.2"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation.code">
+      <path value="Observation.code"/>
+      <short value="Urinalysis (Protein / Glucose)"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Observation.code.coding">
+      <path value="Observation.code.coding"/>
+      <slicing>
+        <discriminator>
+          <type value="pattern"/>
+          <path value="$this"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+    </element>
+    <element id="Observation.code.coding:Urinalysis-SNOMED-CT">
+      <path value="Observation.code.coding"/>
+      <sliceName value="Urinalysis-SNOMED-CT"/>
+      <min value="1"/>
+      <max value="1"/>
+      <patternCoding>
+        <system value="http://snomed.info/sct"/>
+        <code value="27171005"/>
+      </patternCoding>
+    </element>
+  </differential>
+</StructureDefinition>

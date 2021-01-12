@@ -1,0 +1,218 @@
+{
+	"resourceType": "Bundle",
+	"id": "mni-patientOverview-bundle-example1", 
+	"identifier": {
+		"system": "urn:ietf:rfc:3986",
+		"value": "urn:uuid:0c3151bd-1cbf-4d64-b04d-cd9187a4c6e0"
+	},
+	"type": "document",
+	"timestamp": "2020-04-24T11:06:00+01:00", 
+	
+	"entry": [
+		{  
+      "id" : "1a",
+			"fullUrl": "Composition/1", 
+			"resource": {
+				"resourceType": "Composition",
+				"id": "1a", 
+				"language": "de-CH", 
+				
+				"status": "final",
+				"type": {
+					"coding": [
+						{
+							"system": "http://loinc.org",
+							"code": "60591-5",
+							"display": "Patient summary Document"
+						}
+					]
+				},
+				"subject": {
+					"reference": "Patient/1" 
+				},
+				"date": "2020-04-24T11:06:00+01:00", 
+				"author": [ 
+					{
+						"reference": "Device/1"
+					}
+				],
+				"title": "PatientOverview",
+				"confidentiality": "N",
+				"section": [
+				]
+			}
+		},
+		
+	
+	
+	
+		{
+			"fullUrl": "Patient/1", 
+			"resource": {
+				"resourceType": "Patient",
+				"id": "1", 
+				
+				"identifier": [
+				
+					
+					
+					
+					{
+     				"id": "2", 
+						"type": {
+							"coding": [
+								{
+									"system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+									"code": "MR",
+									"display": "Medical record number"
+								}
+							]
+						},
+						"system": "https://mysoftware.ch", 
+																			
+						"value": "123456"
+					},
+					
+					
+					
+					
+					{
+						"system": "urn:oid:2.16.756.5.32",
+						"value": "7561234567897" 
+					}
+				],
+				
+				
+				
+				
+				
+				"name": [
+					{
+     				"id": "2", 
+						"use": "usual", 
+						"family": "Muster",
+						"given": [ 
+							"Anna",
+							"Paola"
+						],
+						"prefix": [ 
+							"Dr. phil."
+						],
+						"suffix": [ 
+							"Jr."
+						]
+					},
+					{
+						"use": "maiden", 
+						"family": "Meier",
+						"given": [ 
+							"Anna",
+							"Paola"
+						],
+						"prefix": [ 
+							"Dr. phil."
+						],
+						"suffix": [
+							"Junior" 
+						]
+					}
+				],
+				
+				
+				
+				
+				
+				
+				"telecom": [
+					{
+						"system": "phone", 
+						"value": "0615617461",
+						"use": "home", 
+						"rank": 3 
+					},
+					{
+						"system": "phone", 
+						"value": "0615617462",
+						"use": "mobile", 
+						"rank": 1 
+					},
+					{
+						"system": "email", 
+						"value": "anna.muster@sampledomain.ch",
+						"use": "home", 
+						"rank": 2 
+					}
+				],
+				
+				
+				
+				
+				"gender": "female", 
+				
+				
+				
+				
+				"birthDate": "1985-12-12", 
+				
+				
+				
+				
+				
+				"address": [
+					{
+						"use": "home", 
+						"line": [
+							"Pfeffingerstrasse 19"
+						],
+						"city": "Reinach",
+						"postalCode": "4153",
+						"country": "CH" 
+					}
+				],
+				
+				
+				
+				
+				"maritalStatus" : {
+					"coding": [
+						{
+              "id" : "1",
+							"system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", 
+							"code": "M", 
+							"display": "Married"
+						}
+					]
+				}
+				
+			}
+		},
+		
+	
+		{
+      "id" : "1a",
+			"fullUrl": "Device/1", 
+			"resource": {
+				"resourceType": "Device",
+				"id": "1", 
+				"manufacturer": "MySoftCompany",
+				"deviceName": [
+					{
+						"name": "MySoftware",
+						"type": "user-friendly-name"
+					}
+				],
+				"version": [
+					{
+						"value": "1.0.0"
+					}
+				]
+			}
+		}
+		
+	
+	
+	
+	
+	
+	]
+}

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Example of workflow instance
   /// </summary>
   [Serializable]
-  [FhirType("ExampleScenario", IsResource=true)]
   [DataContract]
+  [FhirType("ExampleScenario", IsResource=true)]
   public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -80,8 +80,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor participating in the resource
     /// </summary>
-    [FhirType("ExampleScenario#Actor", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Actor", IsNestedType=true)]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -278,8 +279,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each resource and each version that is present in the workflow
     /// </summary>
-    [FhirType("ExampleScenario#Instance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Instance", IsNestedType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -514,8 +516,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A specific version of the resource
     /// </summary>
-    [FhirType("ExampleScenario#Version", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Version", IsNestedType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -640,8 +643,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resources contained in the instance
     /// </summary>
-    [FhirType("ExampleScenario#ContainedInstance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#ContainedInstance", IsNestedType=true)]
     public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -783,8 +787,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each major process - a group of operations
     /// </summary>
-    [FhirType("ExampleScenario#Process", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Process", IsNestedType=true)]
     public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -963,8 +968,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each step of the process
     /// </summary>
-    [FhirType("ExampleScenario#Step", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Step", IsNestedType=true)]
     public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1125,8 +1131,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each interaction or action
     /// </summary>
-    [FhirType("ExampleScenario#Operation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Operation", IsNestedType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1502,8 +1509,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alternate non-typical step action
     /// </summary>
-    [FhirType("ExampleScenario#Alternative", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("ExampleScenario#Alternative", IsNestedType=true)]
     public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
