@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Validation
                 ResolveExternalReferences = Settings.ResolveExternalReferences,
                 FhirPathCompiler = new FhirPathCompiler(symbolTable),
                 ConstraintBestPractices = (ValidateBestPractices)Settings.ConstraintBestPractices,   // TODO MV Validation: mapper for enum
-                TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver)),
+                TerminologyService = new TerminologyServiceAdapter(new LocalTerminologyService(Settings.ResourceResolver.AsAsync())),
                 IncludeFilter = Settings.SkipConstraintValidation ? (Func<IAssertion, bool>)(a => !(a is FhirPathAssertion)) : (Func<IAssertion, bool>)null,
                 // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
                 // should be removed from STU3/R4 once we get the new normative version
