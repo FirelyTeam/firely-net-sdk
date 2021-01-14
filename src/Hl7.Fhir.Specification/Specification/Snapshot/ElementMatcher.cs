@@ -335,6 +335,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                     AddOrMergeCurrentOrNext(sliceName);
                 }
 
+                if (!TypeIsSubSetOf(diffNav, snapNav))
+                {
+                    // diff.Types is not a subset of snap.Types, which is not allowed
+                    throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructChoiceTypeMatch)}): choice type of diff does not occur in snap, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
+                }
+
                 // Diff and snap both represent common constraints for all types ("value[x]"); merge
 
             }
@@ -393,6 +399,28 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             return matches;
+        }
+
+        private static bool TypeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
+            => !diffNav.Current.Type.Except(snapNav.Current.Type, new TypeRefEqualityComparer()).Any();
+
+        private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
+        {
+            public bool Equals(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
+            {
+                if (x is null && y is null)
+                {
+                    return true;
+                }
+                if (x is null || y is null)
+                {
+                    return false;
+                }
+                return x.Code.Equals(y.Code);
+            }
+
+            public int GetHashCode(ElementDefinition.TypeRefComponent obj)
+                => obj?.Code?.GetHashCode() ?? 1;
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
@@ -657,8 +685,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                 }
 
-            // Scan only sibling slices at the current level
-            // Child re-slices are handled by recursive call above
+                // Scan only sibling slices at the current level
+                // Child re-slices are handled by recursive call above
             } while (diffNav.MoveToNextSlice());
 
             // Consume any remaining re-slices
@@ -869,7 +897,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 //throw new NotImplementedException();
 
                 // Force the use of Equals
-                return 0; 
+                return 0;
             }
         }
 

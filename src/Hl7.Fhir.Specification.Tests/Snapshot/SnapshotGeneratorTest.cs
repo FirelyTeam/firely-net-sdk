@@ -42,7 +42,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
-using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -226,7 +225,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
         }
 
-          [TestMethod]
+        [TestMethod]
         public async T.Task TestConstraintSources()
         {
             var dom = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/DomainResource");
@@ -246,7 +245,7 @@ namespace Hl7.Fhir.Specification.Tests
             await generateSnapshotAndCompare(pat);
             Assert.IsTrue(pat.Snapshot?.Element
                           .Where(e => e.Path == "Patient").FirstOrDefault()
-                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);       
+                          .Constraint.Any(c => c.Key == "dom-2" && c.Source == "http://hl7.org/fhir/StructureDefinition/DomainResource") == true);
 
         }
 
@@ -5030,7 +5029,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(snapshot.GetRootElement().SliceName);
             Assert.IsNull(_generator.Outcome);
         }
-         
+
         // [WMR 20170406] NEW
         // Issue reported by Vadim
         // Complex extension:   structure.cdstools-typedstage
@@ -6266,7 +6265,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify there is NO warning about invalid element type constraint
             Assert.IsTrue(issues == null || !issues.Any());
-            
+
         }
 
         // [WMR 20170925] BUG: Stefan Lang - Forge displays both valueString and value[x]
@@ -7444,7 +7443,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition("Address.use")
                         {
                             Binding = new ElementDefinition.ElementDefinitionBindingComponent
-                            {                               
+                            {
                                 ValueSetElement = new Canonical
                                 {
                                     Extension = new List<Extension>{new Extension
@@ -7537,7 +7536,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestInvariantsOnValueX()
         {
             var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
-          
+
             (_, var expanded) = await generateSnapshotAndCompare(sd);
 
             dumpOutcome(_generator.Outcome);
@@ -7550,7 +7549,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current);
 
             //verify that rate[x] contains ele-1 but not rat-1
-            Assert.IsTrue(nav.Current.Constraint.Any(c=> c.Key == "ele-1"));
+            Assert.IsTrue(nav.Current.Constraint.Any(c => c.Key == "ele-1"));
             Assert.IsFalse(nav.Current.Constraint.Any(c => c.Key == "rat-1"));
 
         }
@@ -8979,6 +8978,28 @@ namespace Hl7.Fhir.Specification.Tests
             newSliceSystem.Fixed.Should().BeNull("No constraint elements from the base slice (BSN) should be present");
         }
 
-        
+        [TestMethod]
+        public async T.Task AddingSliceInClosedSlicing()
+        {
+            var testProfiles = new TestProfileArtifactSource();
+
+            var resolver = new CachedResolver(
+                new SnapshotSource(
+                    new MultiResolver(
+                        new CachedResolver(
+                            new TestProfileArtifactSource()),
+                            ZipSource.CreateValidationSource())));
+
+            var observation = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing");
+
+            var openingSlice = observation.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Observation.value[x]");
+            openingSlice.Should().NotBeNull("The opening slice should be present in the snapshot");
+            openingSlice.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
+
+            Func<T.Task> act = async () => { await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity"); };
+            await act
+              .Should().ThrowAsync<InvalidOperationException>()
+              .WithMessage("*choice type of diff does not occur in snap*");
+        }
     }
 }

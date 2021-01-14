@@ -34,8 +34,57 @@ namespace Hl7.Fhir.Validation
             buildQuantityWithUnlimitedRootCardinality(),
             buildRangeWithLowAsAQuantityWithUnlimitedRootCardinality(),
             buildPatientWithIdentifierSlicing(),
-            buildMiPatient()
+            buildMiPatient(),
+            slicingWithCodeableConcept(),
+            slicingWithQuantity()
         };
+
+        private static StructureDefinition slicingWithCodeableConcept()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing", "ObservationValueSlicing",
+                       "Test Observation with slicing on value, first slice CodeableConcept", FHIRAllTypes.Observation);
+
+            var cons = result.Differential.Element;
+
+            var slicingIntro = new ElementDefinition("Observation.value[x]")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed)
+               .OfType(FHIRAllTypes.CodeableConcept);
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Observation.value[x]")
+            {
+                ElementId = "Observation.value[x]:valueCodeableConcept",
+                SliceName = "valueCodeableConcept",
+            }.OfType(FHIRAllTypes.CodeableConcept)
+             .WithBinding("http://somewhere/something", BindingStrength.Required));
+
+            return result;
+        }
+
+        private static StructureDefinition slicingWithQuantity()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity", "ObservationValueSlicingQuantity",
+                       "Test Observation with slicing on value, first slice Quantity", FHIRAllTypes.Observation,
+                       "http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing");
+
+            var cons = result.Differential.Element;
+
+            var slicingIntro = new ElementDefinition("Observation.value[x]")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed)
+               .OfType(FHIRAllTypes.Quantity);
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Observation.value[x]")
+            {
+                ElementId = "Observation.value[x]:valueQuantity",
+                SliceName = "valueQuantity",
+            }.OfType(FHIRAllTypes.Quantity)
+             .WithBinding("http://somewhere/something-else", BindingStrength.Required));
+
+            return result;
+        }
 
         private static StructureDefinition buildPatientWithIdentifierSlicing()
         {
