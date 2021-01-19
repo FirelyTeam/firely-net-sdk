@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.IsSummaryElement = mergePrimitiveElement(snap.IsSummaryElement, diff.IsSummaryElement);
 
-                snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
+                snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
@@ -330,6 +330,29 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             onConstraint(mergedItem);
                         }
+                    }
+                }
+                return result;
+            }
+
+            //[MS 20201211] Separate function introduced to make sure that introduced extensions on Binding.Valueset in the diff are merged with the base.
+            // This is a very specific fix and might be replaced by a more general merging method using ITypedElement in the future.
+            private ElementDefinition.ElementDefinitionBindingComponent mergeBinding(ElementDefinition.ElementDefinitionBindingComponent snap, ElementDefinition.ElementDefinitionBindingComponent diff)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        snap.StrengthElement = mergePrimitiveElement(snap.StrengthElement, diff.StrengthElement);
+                        snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
+                        snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
+                        onConstraint(result);
                     }
                 }
                 return result;

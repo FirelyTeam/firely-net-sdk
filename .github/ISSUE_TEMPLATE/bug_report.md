@@ -7,8 +7,10 @@ assignees: ''
 
 ---
 
+:information_source: Do you want to ask something or start a discussion, then go [here](https://github.com/FirelyTeam/firely-net-sdk/discussions)
+
 **Describe the bug**
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is. 
 
 **To Reproduce**
 Steps to reproduce the behavior:

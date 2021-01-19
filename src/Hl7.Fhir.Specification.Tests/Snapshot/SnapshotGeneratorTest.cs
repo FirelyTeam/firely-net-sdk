@@ -7430,6 +7430,50 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public async T.Task TestExtensionOnValueSetBinding()
+        {
+            var profile = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Address.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Address),
+                Name = "MyCustomAddress",
+                Url = "http://example.org/fhir/StructureDefinition/MyCustomAddress",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Address.use")
+                        {
+                            Binding = new ElementDefinition.ElementDefinitionBindingComponent
+                            {                               
+                                ValueSetElement = new Canonical
+                                {
+                                    Extension = new List<Extension>{new Extension
+                                        {
+                                            Url = "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap",
+                                            Value = new ResourceReference
+                                            {
+                                                Reference = "http://nictiz.nl/fhir/ConceptMap/AdresSoortCodelijst-to-AddressUse",
+                                                Display = "AdresSoortCodelijst-to-AddressUse"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                    }
+                }
+            };
+
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+            (_, var expanded) = await generateSnapshotAndCompare(profile);
+
+            Assert.IsNotNull(expanded?.Snapshot?.Element);
+            Assert.IsTrue(expanded.Snapshot.Element.Where(e => e.Path == "Address.use").FirstOrDefault().Binding.ValueSetElement.Extension.Any(e => e.Url == "http://hl7.org/fhir/StructureDefinition/11179-permitted-value-conceptmap"));
+            Assert.IsNotNull(expanded.Snapshot.Element.Where(e => e.Path == "Address.use")?.FirstOrDefault()?.Binding?.ValueSetElement?.Value);
+        }
+
 
         // [WMR 20180611] New: Forge issue "Only first item in code field for element is saved"
         // Issue: if element in diff specifies multiple codes with only display values,
@@ -7489,6 +7533,28 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(2, elem.Code.Count);
             Assert.AreEqual("foo", elem.Code[0].Display);
             Assert.AreEqual("bar", elem.Code[1].Display);
+        }
+
+        [TestMethod]
+        public async T.Task TestInvariantsOnValueX()
+        {
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/MedicationAdministration");
+          
+            (_, var expanded) = await generateSnapshotAndCompare(sd);
+
+            dumpOutcome(_generator.Outcome);
+            dumpBaseElems(expanded.Snapshot.Element);
+            Assert.IsNotNull(expanded);
+            Assert.IsTrue(expanded.HasSnapshot);
+
+            var nav = ElementDefinitionNavigator.ForSnapshot(expanded);
+            Assert.IsTrue(nav.JumpToFirst("MedicationAdministration.dosage.rate[x]"));
+            Assert.IsNotNull(nav.Current);
+
+            //verify that rate[x] contains ele-1 but not rat-1
+            Assert.IsTrue(nav.Current.Constraint.Any(c=> c.Key == "ele-1"));
+            Assert.IsFalse(nav.Current.Constraint.Any(c => c.Key == "rat-1"));
+
         }
 
         [TestMethod]
@@ -8915,5 +8981,7 @@ namespace Hl7.Fhir.Specification.Tests
             newSliceSystem.Should().NotBeNull("The new slice 'newSlice' should be present in the snapshot");
             newSliceSystem.Fixed.Should().BeNull("No constraint elements from the base slice (BSN) should be present");
         }
+
+        
     }
 }
