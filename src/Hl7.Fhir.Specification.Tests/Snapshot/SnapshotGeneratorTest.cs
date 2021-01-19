@@ -8990,7 +8990,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new TestProfileArtifactSource()),
                             ZipSource.CreateValidationSource())));
 
-            var observation = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing");
+            var observation = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationSlicingCodeableConcept");
 
             var openingSlice = observation.Snapshot.Element.FirstOrDefault(e => e.ElementId == "Observation.value[x]");
             openingSlice.Should().NotBeNull("The opening slice should be present in the snapshot");

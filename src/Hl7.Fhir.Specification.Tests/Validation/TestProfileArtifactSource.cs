@@ -41,8 +41,8 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition slicingWithCodeableConcept()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing", "ObservationValueSlicing",
-                       "Test Observation with slicing on value, first slice CodeableConcept", FHIRAllTypes.Observation);
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationSlicingCodeableConcept", "ObservationSlicingCodeableConcept",
+                       "Test Observation with slicing on value[x], first slice CodeableConcept", FHIRAllTypes.Observation);
 
             var cons = result.Differential.Element;
 
@@ -64,9 +64,9 @@ namespace Hl7.Fhir.Validation
 
         private static StructureDefinition slicingWithQuantity()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity", "ObservationValueSlicingQuantity",
-                       "Test Observation with slicing on value, first slice Quantity", FHIRAllTypes.Observation,
-                       "http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicing");
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationValueSlicingQuantity", "ObservationSlicingQuantity",
+                       "Test Observation with slicing on value[x], first slice Quantity", FHIRAllTypes.Observation,
+                       "http://validationtest.org/fhir/StructureDefinition/ObservationSlicingCodeableConcept");
 
             var cons = result.Differential.Element;
 
