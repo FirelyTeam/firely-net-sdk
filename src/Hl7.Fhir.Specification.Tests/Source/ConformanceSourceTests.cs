@@ -122,7 +122,6 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
             var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsFalse(sm.Any());
-            var de = source.ListResourceUris(ResourceType.DataElement); Assert.IsTrue(de.Any());
             var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
             var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
@@ -138,12 +137,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var all = source.ListResourceUris();
 
-            Assert.AreEqual(sd.Count() + sm.Count() + de.Count() + cf.Count() + md.Count() + od.Count() +
+            Assert.AreEqual(sd.Count() + sm.Count() + cf.Count() + md.Count() + od.Count() +
                         sp.Count() + cd.Count() + ig.Count() + cs.Count() + vs.Count() + cm.Count() +
                         ep.Count() + ns.Count(), all.Count());
 
             Assert.IsTrue(sd.Contains("http://hl7.org/fhir/StructureDefinition/shareablevalueset"));
-            Assert.IsTrue(de.Contains("http://hl7.org/fhir/DataElement/Device.manufactureDate"));
             Assert.IsTrue(cf.Contains("http://hl7.org/fhir/CapabilityStatement/base"));
             Assert.IsTrue(od.Contains("http://hl7.org/fhir/OperationDefinition/ValueSet-validate-code"));
             Assert.IsTrue(sp.Contains("http://hl7.org/fhir/SearchParameter/Condition-onset-info"));
