@@ -4433,10 +4433,10 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 // Constrain Quantity to SimpleQuantity
-                                // Code = FHIRDefinedType.Quantity,
-                                // Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.SimpleQuantity) }
+                                Code = FHIRDefinedType.Quantity.GetLiteral(),
+                                Profile = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity) 
 
-                                Code = FHIRAllTypes.SimpleQuantity.GetLiteral()
+                                // Code = FHIRAllTypes.SimpleQuantity.GetLiteral()
                             },
                         }
                     }
@@ -4478,7 +4478,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("Observation.valueQuantity"));
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
-            Assert.AreEqual(FHIRAllTypes.SimpleQuantity.GetLiteral(), nav.Current.Type[0].Code);
+            Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), nav.Current.Type[0].Code);
 
             var type = nav.Current.Type.First();
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile}'");
