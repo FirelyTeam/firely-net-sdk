@@ -200,6 +200,17 @@ namespace Hl7.Fhir.Specification.Snapshot
             bool baseIsSliced = snapNav.Current.Slicing != null;
             bool diffIsSliced = diffIsExtension || diffNav.Current.Slicing != null;
 
+            var isChoice = diffNav.Current.IsChoice() || snapNav.Current.IsChoice();
+
+            if (isChoice)
+            {
+                if (!TypeIsSubSetOf(diffNav, snapNav))
+                {
+                    // diff.Types is not a subset of snap.Types, which is not allowed
+                    throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructMatch)}): choice type of diff does not occur in snap, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
+                }
+            }
+
             if (baseIsSliced || diffIsSliced)
             {
                 // This is a slice match - process it separately
@@ -256,6 +267,28 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
             }
             return result;
+        }
+
+        private static bool TypeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
+            => !diffNav.Current.Type.Except(snapNav.Current.Type, new TypeRefEqualityComparer()).Any();
+
+        private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
+        {
+            public bool Equals(ElementDefinition.TypeRefComponent x, ElementDefinition.TypeRefComponent y)
+            {
+                if (x is null && y is null)
+                {
+                    return true;
+                }
+                if (x is null || y is null)
+                {
+                    return false;
+                }
+                return x.Code.Equals(y.Code);
+            }
+
+            public int GetHashCode(ElementDefinition.TypeRefComponent obj)
+                => obj?.Code?.GetHashCode() ?? 1;
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
