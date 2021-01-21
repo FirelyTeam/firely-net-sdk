@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
            _testValidator = new Validator(settings);
         }
 
-        [Ignore]
+        //[Ignore]
         [TestMethod]
         [DataTestMethod]
         [CustomDataSource]
@@ -154,20 +154,21 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static ValidationTestCase CreateValidationTestCase(JToken json)
         {
-            var values = json.FirstOrDefault()?.ToObject<JObject>();
+           // var json = jsonx.FirstOrDefault()?.ToObject<JObject>();
             var validationObject = new ValidationTestCase
             {
-                FileName = json.ToObject<JProperty>()?.Name,
-                UseTest = values["usetest"]?.Value<bool>(),
-                Version = values["version"]?.Value<string>(),
-                Language = values["language"]?.Value<string>(),
-                Questionnaire = values["questionnaire"]?.Value<string>(),
-                AllowedExtensionsDomains = GetAllowedExtensionDomains(values),
-                CodeSystems = ((JArray)values["questionnaire"])?.Values<string>()?.ToList(),
-                Profiles = ((JArray)values["profiles"])?.Values<string>()?.ToList(),
-                ValidationProfile = values["profile"] != null ? GetProfileInfo(values["profile"]) : null,
-                Java = values["java"] != null ? GetJavaValidatorResults(values["java"]) : null,
-                Logical = values["logical"] != null ? GetLogicalModelInfo(values["logical"]) : null
+                Name = json["name"]?.Value<string>(),
+                FileName = json["file"]?.Value<string>(),
+                UseTest = json["usetest"]?.Value<bool>(),
+                Version = json["version"]?.Value<string>(),
+                Language = json["language"]?.Value<string>(),
+                Questionnaire = json["questionnaire"]?.Value<string>(),
+                AllowedExtensionsDomains = GetAllowedExtensionDomains(json.ToObject<JObject>()),
+                CodeSystems = ((JArray)json["questionnaire"])?.Values<string>()?.ToList(),
+                Profiles = ((JArray)json["profiles"])?.Values<string>()?.ToList(),
+                ValidationProfile = json["profile"] != null ? GetProfileInfo(json["profile"]) : null,
+                Java = json["java"] != null ? GetJavaValidatorResults(json["java"]) : null,
+                Logical = json["logical"] != null ? GetLogicalModelInfo(json["logical"]) : null
             };
             return validationObject;
         }
@@ -221,6 +222,7 @@ namespace Hl7.Fhir.Specification.Tests
      
     public class ValidationTestCase { 
 
+        public string Name { get; set; }
         public string FileName { get; set; }
         public bool? UseTest { get; set; }
         public List<string> AllowedExtensionsDomains { get; set; }
