@@ -1,0 +1,61 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "sdoh-type-slice",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/sdoh-type-slice",
+  "status" : "draft",
+  "fhirVersion" : "4.0.1",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Observation",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Observation",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "id" : "Observation.effective[x]",
+        "path" : "Observation.effective[x]",
+        "slicing" : {
+          "discriminator" : [
+            {
+              "type" : "type",
+              "path" : "$this"
+            }
+          ],
+          "rules" : "open"
+        },
+        "min" : 1,
+        "type" : [
+          {
+            "code" : "dateTime"
+          },
+          {
+            "code" : "Period"
+          }
+        ],
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.effective[x]:effectivePeriod",
+        "path" : "Observation.effective[x]",
+        "sliceName" : "effectivePeriod",
+        "type" : [
+          {
+            "code" : "Period"
+          }
+        ]
+      },
+      {
+        "id" : "Observation.effective[x]:effectivePeriod.start",
+        "path" : "Observation.effective[x].start",
+        "min" : 1,
+        "mustSupport" : true
+      },
+      {
+        "id" : "Observation.effective[x]:effectivePeriod.end",
+        "path" : "Observation.effective[x].end",
+        "min" : 1,
+        "mustSupport" : true
+      }
+    ]
+  }
+}

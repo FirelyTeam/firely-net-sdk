@@ -1,0 +1,10 @@
+{
+    "resourceType": "DocumentReference",
+    "status": "current",
+    "category": [{
+        "coding": []
+    }],
+    "content": [
+        { "attachment": { "contentType": "text/plain", "data": "Zm9v" } }
+    ]
+}

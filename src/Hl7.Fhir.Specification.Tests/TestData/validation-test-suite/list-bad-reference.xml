@@ -1,0 +1,10 @@
+<List xmlns="http://hl7.org/fhir">
+  <id value="list-bad-reference"/>
+  <status value="current"/>
+  <mode value="changes"/>
+  <entry>
+    <item>
+      <reference value="XXX/_history/1"/>
+    </item>
+  </entry>
+</List>

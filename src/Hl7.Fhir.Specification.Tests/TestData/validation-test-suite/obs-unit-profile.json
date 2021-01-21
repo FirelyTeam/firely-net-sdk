@@ -14,8 +14,7 @@
     "element": [{
         "id": "Observation...unit",
         "path": "Observation...unit",
-        "fixedString": "%",
-        "mapping": []
+        "fixedString": "%"
     }]
   }
 }

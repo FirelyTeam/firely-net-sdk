@@ -23,7 +23,7 @@
 				],
 				"binding": {
 					"strength": "required",
-					"valueSet": "http://hl7.org/fhir/ValueSet/account-type"
+					"valueSet": "http://hl7.org/fhir/ValueSet/age-units"
 				}
 			}
 		]

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+    <id value="test-input-params-example1"/>
+    <parameter>
+        <extension url="http://hl7.org/fhir/StructureDefinition/parameters-fullUrl">
+            <valueUri value="http://sra.digitalhealth.gov.au/fhir/registrationCode-123"/>
+        </extension>
+        <modifierExtension url="http://example.org/fhir/StructureDefinition/modify">
+            <valueBoolean value="true"/>
+        </modifierExtension>
+        <name value="param1"/>
+        <valueString value="Dummy data value 1"/>
+    </parameter>
+    <parameter>
+        <name value="param2"/>
+        <valueString value="Dummy data value 2"/>
+    </parameter>
+</Parameters>

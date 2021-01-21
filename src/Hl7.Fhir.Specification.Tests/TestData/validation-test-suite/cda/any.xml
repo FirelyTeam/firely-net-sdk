@@ -1,9 +1,9 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="ANY"/>
   <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
-    <valueUri value="urn:hl7-org:v3"/>
+    <valueUri value="urn:hl7-org:v3-test"/>
   </extension>
-  <url value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <url value="http://hl7.org/fhir/cdatest/StructureDefinition/ANY"/>
   <version value="0.0.1"/>
   <name value="ANY"/>
   <title value="ANY: DataValue (V3 Data Type)"/>

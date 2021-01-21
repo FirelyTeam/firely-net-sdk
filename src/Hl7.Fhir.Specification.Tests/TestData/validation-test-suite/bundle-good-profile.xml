@@ -1,0 +1,25 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="bundle-good-profile" />
+	<url value="http://hl7.org/fhir/tests/StructureDefinition/bundle-good-profile" />
+	<version value="4.0.0" />
+	<name value="bundle-good-profile" />
+	<title value="Bundle Good Profile" />
+	<status value="draft" />
+	<experimental value="false" />
+	<date value="2019-05-06" />
+	<fhirVersion value="4.0.0" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Bundle" />
+	<baseDefinition	value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Bundle.entry.resource">
+			<path value="Bundle.entry.resource" />
+      <type>
+        <code value="Resource"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+      </type>
+		</element>
+	</differential>
+</StructureDefinition>

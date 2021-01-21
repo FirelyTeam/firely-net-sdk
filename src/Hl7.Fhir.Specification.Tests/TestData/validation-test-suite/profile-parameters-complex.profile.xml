@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="profile-parameters-complex"/>
+	<url value="http://example.com/fhir/StructureDefinition/profile-parameters-complex"/>
+	<name value="ParametersProfileComplex"/>
+	<status value="draft"/>
+	<fhirVersion value="4.0.1"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Parameters"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Parameters.parameter">
+			<path value="Parameters.parameter"/>
+			<slicing>
+				<discriminator>
+					<type value="value"/>
+					<path value="name"/>
+				</discriminator>
+				<rules value="closed"/>
+			</slicing>
+		</element>
+		<element id="Parameters.parameter:over100flag">
+			<path value="Parameters.parameter"/>
+			<sliceName value="over100flag"/>
+			<max value="1"/>
+		</element>
+		<element id="Parameters.parameter:over100flag.name">
+			<path value="Parameters.parameter.name"/>
+			<fixedString value="over100flag"/>
+		</element>
+		<element id="Parameters.parameter:over100flag.value[x]">
+			<path value="Parameters.parameter.value[x]"/>
+			<min value="1"/>
+			<type>
+				<code value="boolean"/>
+			</type>
+		</element>
+		<element id="Parameters.parameter:address">
+			<path value="Parameters.parameter"/>
+			<sliceName value="address"/>
+			<min value="1"/>
+			<max value="100"/>
+		</element>
+		<element id="Parameters.parameter:address.name">
+			<path value="Parameters.parameter.name"/>
+			<fixedString value="address"/>
+		</element>
+		<element id="Parameters.parameter:address.value[x]">
+			<path value="Parameters.parameter.value[x]"/>
+			<max value="0"/>
+		</element>
+		<element id="Parameters.parameter:address.resource">
+			<path value="Parameters.parameter.resource"/>
+			<max value="0"/>
+		</element>
+		<element id="Parameters.parameter:address.part">
+			<path value="Parameters.parameter.part"/>
+			<slicing>
+				<discriminator>
+					<type value="value"/>
+					<path value="name"/>
+				</discriminator>
+				<rules value="closed"/>
+			</slicing>
+			<min value="3"/>
+			<max value="5"/>
+		</element>
+		<element id="Parameters.parameter:address.part:number">
+			<path value="Parameters.parameter.part"/>
+			<sliceName value="number"/>
+			<min value="1"/>
+			<max value="1"/>
+		</element>
+		<element id="Parameters.parameter:address.part:number.name">
+			<path value="Parameters.parameter.part.name"/>
+			<fixedString value="number"/>
+		</element>
+		<element id="Parameters.parameter:address.part:number.value[x]">
+			<path value="Parameters.parameter.part.value[x]"/>
+			<min value="1"/>
+			<type>
+				<code value="integer"/>
+			</type>
+		</element>
+		<element id="Parameters.parameter:address.part:number.resource">
+			<path value="Parameters.parameter.part.resource"/>
+			<max value="0"/>
+		</element>
+		<element id="Parameters.parameter:address.part:number.part">
+			<path value="Parameters.parameter.part.part"/>
+			<max value="0"/>
+		</element>
+		<element id="Parameters.parameter:address.part:resources">
+			<path value="Parameters.parameter.part"/>
+			<sliceName value="resources"/>
+			<min value="1"/>
+			<max value="3"/>
+		</element>
+		<element id="Parameters.parameter:address.part:resources.name">
+			<path value="Parameters.parameter.part.name"/>
+			<fixedString value="resources"/>
+		</element>
+		<element id="Parameters.parameter:address.part:resources.value[x]">
+			<path value="Parameters.parameter.part.value[x]"/>
+			<type>
+				<code value="id"/>
+			</type>
+		</element>
+		<element id="Parameters.parameter:address.part:resources.resource">
+			<path value="Parameters.parameter.part.resource"/>
+			<min value="1"/>
+			<type>
+				<code value="PractitionerRole"/>
+			</type>
+			<type>
+				<code value="Practitioner"/>
+			</type>
+			<type>
+				<code value="Organization"/>
+			</type>
+		</element>
+		<element id="Parameters.parameter:address.part:recipientHealthcareService">
+			<path value="Parameters.parameter.part"/>
+			<sliceName value="recipientHealthcareService"/>
+			<min value="1"/>
+			<max value="10"/>
+		</element>
+		<element id="Parameters.parameter:address.part:recipientHealthcareService.name">
+			<path value="Parameters.parameter.part.name"/>
+			<fixedString value="recipientHealthcareService"/>
+		</element>
+		<element id="Parameters.parameter:address.part:recipientHealthcareService.value[x]">
+			<path value="Parameters.parameter.part.value[x]"/>
+			<min value="1"/>
+			<type>
+				<code value="code"/>
+			</type>
+			<mustSupport value="true"/>
+		</element>
+		<element id="Parameters.parameter:address.part:recipientHealthcareService.resource">
+			<path value="Parameters.parameter.part.resource"/>
+			<max value="0"/>
+		</element>
+		<element id="Parameters.parameter:address.part:recipientHealthcareService.part">
+			<path value="Parameters.parameter.part.part"/>
+			<max value="0"/>
+		</element>
+	</differential>
+</StructureDefinition>

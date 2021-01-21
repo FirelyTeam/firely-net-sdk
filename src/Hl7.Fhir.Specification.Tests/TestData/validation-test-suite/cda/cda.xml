@@ -1,9 +1,9 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="ClinicalDocument"/>
   <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
-    <valueUri value="urn:hl7-org:v3"/>
+    <valueUri value="urn:hl7-org:v3-test"/>
   </extension>
-  <url value="http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument"/>
+  <url value="http://hl7.org/fhir/cdatest/StructureDefinition/ClinicalDocument"/>
   <version value="0.0.1"/>
   <name value="CDAR2.ClinicalDocument"/>
   <title value="ClinicalDocument (CDA Class)"/>
@@ -61,7 +61,7 @@
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/II"/>
       </type>
     </element>
     <element id="ClinicalDocument.id">
@@ -69,7 +69,7 @@
       <min value="1"/>
       <max value="1"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/II"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/II"/>
       </type>
     </element>
     <element id="ClinicalDocument.code">
@@ -82,7 +82,7 @@
         <max value="1"/>
       </base>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/CE"/>
       </type>
       <binding>
         <strength value="extensible"/>
@@ -94,7 +94,7 @@
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/ST"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/ST"/>
       </type>
     </element>
   </differential>

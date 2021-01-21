@@ -17,7 +17,7 @@
 		<element id="Patient">
 			<path value="Patient" />
 			<constraint>
-				<key value="conformsToCheck" />
+				<key value="ck-1" />
 				<severity value="error" />
 				<human value="conformsToCheck" />
 				<expression
@@ -27,7 +27,7 @@
 		<element id="Patient.maritalStatus">
 			<path value="Patient.maritalStatus" />
 			<constraint>
-					<key value="conformsToCheck" />
+					<key value="ck-2" />
 				<severity value="error" />
 				<human value="conformsToCheck" />
 				<expression

@@ -1,0 +1,35 @@
+{
+  "resourceType" : "Observation",
+  "id" : "SDOHCC-Observation-HungerVitalSign-Example-2",
+  "meta" : {
+    "versionId" : "3",
+    "lastUpdated" : "2020-11-04T05:03:14.699+00:00",
+    "source" : "#9mEtDcPhOj7HjaHj"
+  },
+  "status" : "final",
+  "code" : {
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "code" : "88123-5",
+        "display" : "Within the past 12 months the food we bought just didn't last and we didn't have money to get more [U.S. FSS]"
+      }
+    ]
+  },
+  "subject" : {
+    "reference" : "Patient/pat-53234",
+    "display" : "COLIN ABBAS"
+  },
+  "effectiveDateTime" : "2020-09-10T21:56:54.671Z",
+  "issued" : "2020-09-10T21:56:54.671Z",
+  "valueCodeableConcept" : {
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "code" : "LA28397-0",
+        "display" : "Often true"
+      }
+    ],
+    "text" : "Often true"
+  }
+}

@@ -1,0 +1,26 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="observation-bad-profile" />
+	<url value="http://hl7.org/fhir/StructureDefinition/observation-bp-profile" />
+	<version value="4.0.0" />
+	<name value="observation-bp" />
+	<title value="Observation Bad Profile" />
+	<status value="draft" />
+	<experimental value="false" />
+	<date value="2019-05-06" />
+	<fhirVersion value="4.0.0" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Observation" />
+	<baseDefinition
+		value="http://hl7.org/fhir/StructureDefinition/Observation" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Observation.valueQuantity">
+			<path value="Observation.valueQuantity" />
+      <type>
+        <code value="Quantity"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/Count"/>
+      </type>
+		</element>
+	</differential>
+</StructureDefinition>

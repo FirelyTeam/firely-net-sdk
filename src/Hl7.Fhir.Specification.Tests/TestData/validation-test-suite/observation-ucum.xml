@@ -1,0 +1,58 @@
+<Observation xmlns="http://hl7.org/fhir">
+	<!-- extract from https://www.hl7.org/fhir/observation-example-bloodpressure.xml, 
+		changed id from blood-pressure to observation-bp -->
+	<id value="observation-bp" />
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+      Some Narrative
+		</div>
+	</text>
+	<status value="final" />
+	<code>
+		<coding>
+			<system value="http://loinc.org" />
+			<code value="85354-9" />
+			<display
+				value="Blood pressure panel with all children optional" />
+		</coding>
+		<text value="Blood pressure systolic &amp; diastolic" />
+	</code>
+	<subject>
+		<reference value="Patient/example" />
+	</subject>
+	<effectiveDateTime value="2012-09-17" />
+	<performer>
+		<reference value="Practitioner/example" />
+	</performer>
+	<component>
+		<code>
+			<coding>
+				<system value="http://loinc.org" />
+				<code value="8480-6" />
+				<display value="Systolic blood pressure" />
+			</coding>
+		</code>
+		<valueQuantity>
+			<value value="107" />
+			<unit value="mmHg" />
+			<system value="http://unitsofmeasure.org" />
+			<code value="mm[Hg]{hg}" />
+		</valueQuantity>
+	</component>
+	<component>
+		<code>
+			<coding>
+				<system value="http://loinc.org" />
+				<code value="8462-4" />
+				<display value="Diastolic blood pressure" />
+			</coding>
+		</code>
+		<valueQuantity>
+			<value value="60" />
+			<unit value="mmHg" />
+			<system value="http://unitsofmeasure.org" />
+			<code value="fmm[Hg]" />
+		</valueQuantity>
+	</component>
+</Observation>

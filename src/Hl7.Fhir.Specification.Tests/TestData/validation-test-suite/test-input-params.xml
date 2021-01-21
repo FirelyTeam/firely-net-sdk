@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="test-input-params"/>
+  <url
+    value="http://sra.digitalhealth.gov.au/fhir/StructureDefinition/test-input-params"/>
+  <version value="2.0.0-alpha.1" />  
+  <name value="TestInputParams"/>
+  <title value="Test Input Parameters"/>
+  <status value="draft"/>
+  <publisher value="Australian Digital Health Agency"/>
+  <contact>
+    <telecom>
+      <system value="email" />
+      <value value="help@digitalhealth.gov.au" />
+    </telecom>
+  </contact>
+  <description
+    value="Test input parameter profile"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Parameters"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Parameters"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Parameters">
+      <path value="Parameters"/>
+      <short value="Test input parameter profile"/>
+    </element>
+    <element id="Parameters.parameter">
+      <path value="Parameters.parameter"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="name"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+    </element>
+    <element id="Parameters.parameter.extension">
+      <path value="Parameters.parameter.extension"/>
+      <max value="0"/>
+    </element>
+    <element id="Parameters.parameter.modifierExtension">
+      <path value="Parameters.parameter.modifierExtension"/>
+      <max value="0"/>
+    </element>
+    <element id="Parameters.parameter:param1">
+      <path value="Parameters.parameter"/>
+      <sliceName value="param1"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Parameters.parameter:param1.name">
+      <path value="Parameters.parameter.name"/>
+      <fixedString value="param1"/>
+    </element>
+    <element id="Parameters.parameter:param1.value[x]:valueString">
+      <path value="Parameters.parameter.value[x]"/>
+      <sliceName value="valueString"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element id="Parameters.parameter:param2">
+      <path value="Parameters.parameter"/>
+      <sliceName value="param2"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="Parameters.parameter:param2.name">
+      <path value="Parameters.parameter.name"/>
+      <fixedString value="param2"/>
+    </element>
+    <element id="Parameters.parameter:param2.value[x]:valueString">
+      <path value="Parameters.parameter.value[x]"/>
+      <sliceName value="valueString"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

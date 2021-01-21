@@ -1,4 +1,4 @@
-<ClinicalDocument xmlns="urn:hl7-org:v3" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3 CDA.xsd">
+<ClinicalDocument xmlns="urn:hl7-org:v3-test" xmlns:sdtc="urn:hl7-org:sdtc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:hl7-org:v3-test CDA.xsd">
 	<templateId root="2.16.840.1.113883.3.27.1776"/>
 	<id extension="c266" root="2.16.840.1.113883.19.4"/>
   <code code="X-34133-9" displayName="SoEN" sdtc:displayName="SoEN2" codeSystem="2.16.840.1.113883.6.1" codeSystemName="LOINC"/>

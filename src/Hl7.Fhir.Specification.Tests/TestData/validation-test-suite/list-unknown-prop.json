@@ -1,14 +1,6 @@
 {
   "resourceType": "List",
-  "fhir_comments": [
-    " this is all valid "
-  ],
   "id": "val1",
-  "_id": {
-    "fhir_comments": [
-      " another comment "
-    ]
-  },
   "other" : "nothing",
   "status": "current",
   "mode": "changes"

@@ -8,7 +8,8 @@
             <Bundle>
                 <type value="collection"/>
                 <entry>
-                    <resource>
+                    <fullUrl value="http://something/Bundle/1"/>
+                    <resource>                      
                         <Binary>
                             <id value="1"/>
                             <contentType value="text/plain"/>
