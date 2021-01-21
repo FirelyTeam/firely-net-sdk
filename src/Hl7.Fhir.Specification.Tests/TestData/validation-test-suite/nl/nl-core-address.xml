@@ -517,7 +517,7 @@
         <severity value="error" />
         <human value="Dutch postal code pattern 'nnnnAA'" />
         <expression value="(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\d{4}[A-Z]{2}$')" />
-        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\d{4}[A-Z]{2}$')" />
+        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\\d{4}[A-Z]{2}$')" />
       </constraint>
       <mapping>
         <identity value="hcim-address-v2.0.1-2015EN" />

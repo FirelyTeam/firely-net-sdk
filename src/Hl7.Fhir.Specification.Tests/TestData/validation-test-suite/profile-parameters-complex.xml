@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Parameters xmlns="http://hl7.org/fhir">
+	<id value="profile-parameters-complex"/>
+	<parameter>
+		<name value="over100flag"/>
+		<valueBoolean value="false"/>
+	</parameter>
+	<parameter>
+		<name value="address"/>
+		<part>
+			<name value="number"/>
+			<valueInteger value="1"/>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<PractitionerRole>
+					<id value="PractitionerRoleDestinationCPRID"/>
+					<active value="true"/>
+				</PractitionerRole>
+			</resource>
+		</part>
+		<part>
+			<name value="recipientHealthcareService"/>
+			<valueCode value="eServicesConsumer"/>
+		</part>
+	</parameter>
+	<parameter>
+		<name value="address"/>
+		<part>
+			<name value="number"/>
+			<valueInteger value="2"/>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<Practitioner>
+					<id value="CDXPP12345"/>
+					<name>
+						<use value="official"/>
+						<family value="General Inbox (CDX)"/>
+						<given value="Medical Clinic ABC"/>
+						<prefix value="Dr"/>
+					</name>
+				</Practitioner>
+			</resource>
+		</part>
+		<part>
+			<name value="recipientHealthcareService"/>
+			<valueCode value="eServicesConsumer"/>
+		</part>
+	</parameter>
+	<parameter>
+		<name value="address"/>
+		<part>
+			<name value="number"/>
+			<valueInteger value="3"/>
+		</part>
+		<part>
+			<name value="resources"/>
+			<resource>
+				<Organization>
+					<id value="CDXORG12345"/>
+					<name value="Medical Clinic ABC"/>
+				</Organization>
+			</resource>
+		</part>
+		<part>
+			<name value="recipientHealthcareService"/>
+			<valueCode value="eServicesConsumer"/>
+		</part>
+	</parameter>
+</Parameters>

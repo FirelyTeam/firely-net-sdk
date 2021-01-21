@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="Header" />
+	<extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+		<valueUri value="default"/>
+	</extension>
+	<url value="http://fhir.ch/ig/ch-alis/StructureDefinition/Header" />
+	<version value="0.1.0" />
+	<name value="ChAlisLeistungsschnittstelle" />
+	<title value="CH ALIS Leistungsschnittstelle" />
+	<status value="draft" />
+	<date value="2020-08-13" />
+	<publisher value="ALIS-Connect" />
+	<contact>
+		<name value="ALIS-Connect" />
+		<telecom>
+			<system value="url" />
+			<value value="https://www.alis-connect.ch/" />
+		</telecom>
+	</contact>
+	<description value="Leistungsschnittstelle ALIS Version 4.3" />
+	<jurisdiction>
+		<coding>
+			<system value="urn:iso:std:iso:3166" />
+			<code value="CH" />
+		</coding>
+	</jurisdiction>
+	<fhirVersion value="4.0.1" />
+	<kind value="logical" />
+	<abstract value="false" />
+	<type value="Header" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Base" />
+	<derivation value="specialization" />
+	<differential>
+		<element id="Header">
+			<path value="Header" />
+			<min value="1" />
+			<max value="1" />
+		</element>
+		<element id="Header.Version">
+			<path value="Header.Version" />
+			<representation value="xmlAttr" />
+			<short value="Optional according to specification, and required according to XSD" />
+			<min value="0" />
+			<max value="1" />
+			<type>
+				<code value="decimal" />
+			</type>
+		</element>
+		<element id="Header.ReceivingApplication">
+			<path value="Header.ReceivingApplication"/>
+			<min value="1"/>
+			<max value="1"/>
+			<type>
+				<code value="http://fhir.ch/ig/ch-alis/StructureDefinition/Text" />
+			</type>
+		</element>
+	</differential>
+</StructureDefinition>

@@ -8,9 +8,9 @@
     </div>
   </text>
   <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
-    <valueUri value="urn:hl7-org:v3"/>
+    <valueUri value="urn:hl7-org:v3-test"/>
   </extension>
-  <url value="http://hl7.org/fhir/cda/StructureDefinition/ST"/>
+  <url value="http://hl7.org/fhir/cdatest/StructureDefinition/ST"/>
   <name value="ST"/>
   <title value="ST: CharacterString (V3 Data Type)"/>
   <status value="active"/>
@@ -20,7 +20,7 @@
   <kind value="logical"/>
   <abstract value="false"/>
   <type value="ED"/>
-  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+  <baseDefinition value="http://hl7.org/fhir/cdatest/StructureDefinition/ED"/>
   <derivation value="constraint"/>
   <differential>
     <element id="ED">

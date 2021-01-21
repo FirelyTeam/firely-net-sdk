@@ -8,9 +8,9 @@
     </div>
   </text>
   <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
-    <valueUri value="urn:hl7-org:v3"/>
+    <valueUri value="urn:hl7-org:v3-test"/>
   </extension>
-  <url value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+  <url value="http://hl7.org/fhir/cdatest/StructureDefinition/ED"/>
   <name value="ED"/>
   <title value="ED: EncapsulatedData (V3 Data Type)"/>
   <status value="active"/>
@@ -20,7 +20,7 @@
   <kind value="logical"/>
   <abstract value="false"/>
   <type value="ED"/>
-  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <baseDefinition value="http://hl7.org/fhir/cdatest/StructureDefinition/ANY"/>
   <derivation value="specialization"/>
   <differential>
     <element id="ED">
@@ -132,7 +132,7 @@
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/TEL"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/TEL"/>
       </type>
     </element>
     <element id="ED.thumbnail">
@@ -142,7 +142,7 @@
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/ED"/>
       </type>
     </element>
   </differential>

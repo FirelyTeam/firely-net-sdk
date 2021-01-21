@@ -36,9 +36,7 @@
 					}
 				],
 				"title": "PatientOverview",
-				"confidentiality": "N",
-				"section": [
-				]
+				"confidentiality": "N"
 			}
 		},
 		

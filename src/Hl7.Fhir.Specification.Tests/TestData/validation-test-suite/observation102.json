@@ -2,17 +2,11 @@
   "resourceType": "Observation",
   "id": "example",
   "text": {
-    "fhir_comments": [
-      "    the mandatory quality flags:    "
-    ],
     "status": "generated",
     "div": "<div><p><b>Generated Narrative with Details</b></p><p><b>id</b>: example</p><p><b>status</b>: final</p><p><b>category</b>: Vital Signs <span>(Details : {http://hl7.org/fhir/observation-category code 'vital-signs' = 'Vital Signs', given as 'Vital Signs'})</span></p><p><b>code</b>: Weight Measured <span>(Details : {LOINC code '3141-9' = 'Body weight Measured', given as 'Weight Measured'}; {SNOMED CT code '27113001' = '27113001', given as 'Body weight'}; {http://acme.org/devices/clinical-codes code 'body-weight' = '??', given as 'Body Weight'})</span></p><p><b>subject</b>: <a>Patient/example</a></p><p><b>encounter</b>: <a>Encounter/example</a></p><p><b>value</b>: 185 lbs<span> (Details: http://unitsofmeasure.org code [lb_av] = '??')</span></p></div>"
   },
   "status": "final",
   "category": {
-    "fhir_comments": [
-      "   category code is A code that classifies the general type of observation being made. This is used for searching, sorting and display purposes.  "
-    ],
     "coding": [
       {
         "system": "http://hl7.org/fhir/observation-category",
@@ -22,30 +16,18 @@
     ]
   },
   "code": {
-    "fhir_comments": [
-      "   \n    Observations are often coded in multiple code systems.\n      - LOINC provides a very specific code (though not usefully more specific in this particular case)\n      - snomed provides a clinically relevant code that is usually less granular than LOINC\n      - the source system provides its own code, which may be less or more granular than LOINC\n     "
-    ],
     "coding": [
       {
-        "fhir_comments": [
-          "    LOINC - always recommended to have a LOINC code    "
-        ],
         "system": "http://loinc.org",
         "code": "3141-9",
         "display": "Weight Measured"
       },
       {
-        "fhir_comments": [
-          "    SNOMED CT Codes - becoming more common    "
-        ],
         "system": "http://snomed.info/sct",
         "code": "27113001",
         "display": "Body weight"
       },
       {
-        "fhir_comments": [
-          "    Also, a local code specific to the source system    "
-        ],
         "system": "http://acme.org/devices/clinical-codes",
         "code": "body-weight",
         "display": "Body Weight"
@@ -59,9 +41,6 @@
     "reference": "Encounter/example"
   },
   "valueQuantity": {
-    "fhir_comments": [
-      "    In FHIR, units may be represented twice. Once in the\n    agreed human representation, and once in a coded form.\n    Both is best, since it's not always possible to infer\n    one from the other in code.\n\n    When a computable unit is provided, UCUM (http://unitsofmeasure.org)\n    is always preferred, but it doesn't provide notional units (such as\n    \"tablet\"), etc. For these, something else is required (e.g. SNOMED CT)\n      "
-    ],
     "value": 185,
     "unit": "lbs",
     "system": "http://unitsofmeasure.org",

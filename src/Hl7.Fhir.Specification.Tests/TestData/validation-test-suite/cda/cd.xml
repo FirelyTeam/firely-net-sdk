@@ -1,9 +1,9 @@
 <StructureDefinition xmlns="http://hl7.org/fhir">
   <id value="CD"/>
   <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
-    <valueUri value="urn:hl7-org:v3"/>
+    <valueUri value="urn:hl7-org:v3-test"/>
   </extension>
-  <url value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+  <url value="http://hl7.org/fhir/cdatest/StructureDefinition/CD"/>
   <version value="0.0.1"/>
   <name value="CD"/>
   <title value="CD: ConceptDescriptor (V3 Data Type)"/>
@@ -22,7 +22,7 @@
   <kind value="logical"/>
   <abstract value="false"/>
   <type value="CD"/>
-  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/ANY"/>
+  <baseDefinition value="http://hl7.org/fhir/cdatest/StructureDefinition/ANY"/>
   <derivation value="specialization"/>
   <differential>
     <element id="CD">
@@ -181,7 +181,7 @@
       <min value="0"/>
       <max value="1"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/ED"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/ED"/>
       </type>
       <mapping>
         <identity value="fhir"/>
@@ -196,7 +196,7 @@
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/CD"/>
       </type>
     </element>
     <element id="CD.translation">
@@ -208,7 +208,7 @@
       <min value="0"/>
       <max value="*"/>
       <type>
-        <code value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+        <code value="http://hl7.org/fhir/cdatest/StructureDefinition/CD"/>
       </type>
       <mapping>
         <identity value="fhir"/>

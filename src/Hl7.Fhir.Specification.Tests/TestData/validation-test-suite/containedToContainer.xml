@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="testContainedToContainer"/>
+  <type value="collection"/>
+  <entry>
+    <fullUrl value="http://example.org/Patient/1"/>
+    <resource>
+      <Patient>
+        <id value="1"/>
+        <contained>
+          <Provenance>
+            <id value="someProvenance"/>
+            <target>
+              <reference value="#"/>
+            </target>
+            <recorded value="2020-10-18T23:43:17.0000-06:00"/>
+            <agent>
+              <who>
+                <display value="Someone"/>
+              </who>
+            </agent>
+          </Provenance>
+        </contained>
+        <gender value="male"/>
+      </Patient>
+    </resource>
+  </entry>
+</Bundle>

@@ -1,0 +1,17 @@
+{  "resourceType": "MedicationRequest",
+  "meta": {
+    "versionId": "1",
+    "profile": [
+      "http://electronichealth.se/fhir/StructureDefinition/NLLMedicationRequest"
+    ]
+  },
+  "status": "active",
+  "intent": "plan",
+  "subject": {
+    "reference": "Patient/21e495cf-aab6-482e-b630-cdd87b437cab"
+  },
+  "authoredOn": "2020-11-11T10:58:14.768528",
+  "requester": {
+    "reference": "#1505724e-2d13-4790-ab25-e9ae2fa8d272"
+  }
+ }

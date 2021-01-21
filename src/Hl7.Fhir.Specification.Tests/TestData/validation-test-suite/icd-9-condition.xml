@@ -4,7 +4,7 @@
   <code>
     <coding>
       <system value="http://hl7.org/fhir/sid/icd-9-cm"/>
-      <code value="250.0"/>
+      <code value="99.00"/>
     </coding>
   </code>
 	<subject>

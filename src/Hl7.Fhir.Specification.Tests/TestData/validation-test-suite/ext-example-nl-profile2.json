@@ -649,7 +649,7 @@
                         "key":"nl-postal-code-pattern",
                         "severity":"error",
                         "human":"Dutch postal code pattern 'nnnnAA'",
-                        "expression":"(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\d{4}[A-Z]{2}$')"
+                        "expression":"(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\\\d{4}[A-Z]{2}$')"
                     }
                 ],
                 "mapping": [

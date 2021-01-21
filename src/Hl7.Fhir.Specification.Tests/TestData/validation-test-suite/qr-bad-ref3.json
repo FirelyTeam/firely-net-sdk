@@ -1,0 +1,7 @@
+{
+  "resourceType": "QuestionnaireResponse",
+  "id": "questionnaireresponse-sdc-example-ussg-fht-answers",
+  "questionnaire": "http://hl7.org/fhir/uv/sdc/Questionnaire/54127-6|2015",
+  "status": "in-progress",
+  "authored": "2008-01-17"
+}
