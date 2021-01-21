@@ -11,8 +11,7 @@ $srcdir = "$baseDir\src";
 
 
 # These are all files from the spec that we need. Narratives are stripped after download
-$allFiles = @("conceptmaps.xml", 
-				"dataelements.xml", 
+$allFiles = @("conceptmaps.xml",				 
 				"extension-definitions.xml", 
 				"namingsystem-registry.xml",
 				"profiles-others.xml", 
@@ -189,7 +188,6 @@ Write-Host -ForegroundColor White "Copy files to project..."
 # Copy the files necessary for the specification library (specification.zip / data)
 Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*" -Force
 CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "dataelements.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "namingsystem-registry.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
