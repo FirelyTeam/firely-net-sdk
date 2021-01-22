@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A quantified estimate of effect based on a body of evidence
   /// </summary>
   [Serializable]
-  [FhirType("EffectEvidenceSynthesis", IsResource=true)]
   [DataContract]
+  [FhirType("EffectEvidenceSynthesis", IsResource=true)]
   public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -80,8 +80,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What sample size was involved?
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -258,8 +259,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What was the result per exposure?
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
     public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -439,8 +441,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What was the estimated effect
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
     public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -654,8 +657,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How precise the estimate is
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -850,8 +854,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How certain is the effect
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -977,8 +982,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A component that contributes to the overall certainty
     /// </summary>
-    [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

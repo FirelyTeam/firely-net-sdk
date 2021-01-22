@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Chemical substances are a single substance type whose primary defining element is the molecular structure. Chemical substances shall be defined on the basis of their complete covalent molecular structure; the presence of a salt (counter-ion) and/or solvates (water, alcohols) is also captured. Purity, grade, physical form or particle size are not taken into account in the definition of a chemical substance or in the assignment of a Substance ID
   /// </summary>
   [Serializable]
-  [FhirType("SubstanceAmount")]
   [DataContract]
+  [FhirType("SubstanceAmount")]
   public partial class SubstanceAmount : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference range of possible or expected values
     /// </summary>
-    [FhirType("SubstanceAmount#ReferenceRange", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstanceAmount#ReferenceRange", IsNestedType=true)]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

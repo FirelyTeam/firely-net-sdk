@@ -46,6 +46,7 @@ namespace Hl7.Fhir.Model
   /// A length - a value with a unit that is a physical distance
   /// </summary>
   [Serializable]
+  [DataContract]
   [FhirType("Distance")]
   public partial class Distance : Quantity
   {

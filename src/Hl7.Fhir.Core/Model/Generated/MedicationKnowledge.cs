@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition of Medication Knowledge
   /// </summary>
   [Serializable]
-  [FhirType("MedicationKnowledge", IsResource=true)]
   [DataContract]
+  [FhirType("MedicationKnowledge", IsResource=true)]
   public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated or related medication information
     /// </summary>
-    [FhirType("MedicationKnowledge#RelatedMedicationKnowledge", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#RelatedMedicationKnowledge", IsNestedType=true)]
     public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -196,8 +197,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated documentation about the medication
     /// </summary>
-    [FhirType("MedicationKnowledge#Monograph", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Monograph", IsNestedType=true)]
     public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,8 +306,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Active or inactive ingredient
     /// </summary>
-    [FhirType("MedicationKnowledge#Ingredient", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Ingredient", IsNestedType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -449,8 +452,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The pricing of the medication
     /// </summary>
-    [FhirType("MedicationKnowledge#Cost", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Cost", IsNestedType=true)]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,8 +597,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Program under which a medication is reviewed
     /// </summary>
-    [FhirType("MedicationKnowledge#MonitoringProgram", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#MonitoringProgram", IsNestedType=true)]
     public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -717,8 +722,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Guidelines for administration of the medication
     /// </summary>
-    [FhirType("MedicationKnowledge#AdministrationGuidelines", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#AdministrationGuidelines", IsNestedType=true)]
     public partial class AdministrationGuidelinesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -845,8 +851,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dosage for the medication for the specific guidelines
     /// </summary>
-    [FhirType("MedicationKnowledge#Dosage", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Dosage", IsNestedType=true)]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -953,8 +960,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristics of the patient that are relevant to the administration guidelines
     /// </summary>
-    [FhirType("MedicationKnowledge#PatientCharacteristics", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#PatientCharacteristics", IsNestedType=true)]
     public partial class PatientCharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1081,8 +1089,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of the medication within a formulary or classification system
     /// </summary>
-    [FhirType("MedicationKnowledge#MedicineClassification", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#MedicineClassification", IsNestedType=true)]
     public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1189,8 +1198,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details about packaged medications
     /// </summary>
-    [FhirType("MedicationKnowledge#Packaging", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Packaging", IsNestedType=true)]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1295,8 +1305,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifies descriptive properties of the medicine
     /// </summary>
-    [FhirType("MedicationKnowledge#DrugCharacteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#DrugCharacteristic", IsNestedType=true)]
     public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1403,8 +1414,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Regulatory information about a medication
     /// </summary>
-    [FhirType("MedicationKnowledge#Regulatory", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Regulatory", IsNestedType=true)]
     public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1550,8 +1562,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifies if changes are allowed when dispensing a medication from a regulatory perspective
     /// </summary>
-    [FhirType("MedicationKnowledge#Substitution", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Substitution", IsNestedType=true)]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1676,8 +1689,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifies the schedule of a medication in jurisdiction
     /// </summary>
-    [FhirType("MedicationKnowledge#Schedule", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Schedule", IsNestedType=true)]
     public partial class ScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1765,8 +1779,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The maximum number of units of the medication that can be dispensed in a period
     /// </summary>
-    [FhirType("MedicationKnowledge#MaxDispense", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#MaxDispense", IsNestedType=true)]
     public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1872,8 +1887,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The time course of drug absorption, distribution, metabolism and excretion of a medication from the body
     /// </summary>
-    [FhirType("MedicationKnowledge#Kinetics", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicationKnowledge#Kinetics", IsNestedType=true)]
     public partial class KineticsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

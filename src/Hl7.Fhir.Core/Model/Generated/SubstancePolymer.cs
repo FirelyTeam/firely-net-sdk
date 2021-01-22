@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Todo
   /// </summary>
   [Serializable]
-  [FhirType("SubstancePolymer", IsResource=true)]
   [DataContract]
+  [FhirType("SubstancePolymer", IsResource=true)]
   public partial class SubstancePolymer : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
     public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -165,8 +166,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
     public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -325,8 +327,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
     public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -504,8 +507,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
     public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -684,8 +688,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
     public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -790,8 +795,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
     public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

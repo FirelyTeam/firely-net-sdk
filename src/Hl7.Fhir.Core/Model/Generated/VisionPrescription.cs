@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Prescription for vision correction products for a patient
   /// </summary>
   [Serializable]
-  [FhirType("VisionPrescription", IsResource=true)]
   [DataContract]
+  [FhirType("VisionPrescription", IsResource=true)]
   public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -114,8 +114,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vision lens authorization
     /// </summary>
-    [FhirType("VisionPrescription#LensSpecification", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("VisionPrescription#LensSpecification", IsNestedType=true)]
     public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -620,8 +621,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Eye alignment compensation
     /// </summary>
-    [FhirType("VisionPrescription#Prism", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("VisionPrescription#Prism", IsNestedType=true)]
     public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A medicinal product in a container or package
   /// </summary>
   [Serializable]
-  [FhirType("MedicinalProductPackaged", IsResource=true)]
   [DataContract]
+  [FhirType("MedicinalProductPackaged", IsResource=true)]
   public partial class MedicinalProductPackaged : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Batch numbering
     /// </summary>
-    [FhirType("MedicinalProductPackaged#BatchIdentifier", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductPackaged#BatchIdentifier", IsNestedType=true)]
     public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -165,8 +166,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A packaging item, as a contained for medicine, possibly with other packaging items within
     /// </summary>
-    [FhirType("MedicinalProductPackaged#PackageItem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("MedicinalProductPackaged#PackageItem", IsNestedType=true)]
     public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

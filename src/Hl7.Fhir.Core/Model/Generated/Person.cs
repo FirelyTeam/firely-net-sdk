@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A generic person record
   /// </summary>
   [Serializable]
-  [FhirType("Person", IsResource=true)]
   [DataContract]
+  [FhirType("Person", IsResource=true)]
   public partial class Person : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -92,8 +92,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to a resource that concerns the same actual person
     /// </summary>
-    [FhirType("Person#Link", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Person#Link", IsNestedType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

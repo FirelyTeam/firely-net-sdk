@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Describes a set of tests
   /// </summary>
   [Serializable]
-  [FhirType("TestScript", IsResource=true)]
   [DataContract]
+  [FhirType("TestScript", IsResource=true)]
   public partial class TestScript : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -290,8 +290,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An abstract server representing a client or sender in a message exchange
     /// </summary>
-    [FhirType("TestScript#Origin", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Origin", IsNestedType=true)]
     public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -416,8 +417,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An abstract server representing a destination or receiver in a message exchange
     /// </summary>
-    [FhirType("TestScript#Destination", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Destination", IsNestedType=true)]
     public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,8 +544,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Required capability that is assumed to function correctly on the FHIR server being tested
     /// </summary>
-    [FhirType("TestScript#Metadata", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Metadata", IsNestedType=true)]
     public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -650,8 +653,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links to the FHIR specification
     /// </summary>
-    [FhirType("TestScript#Link", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Link", IsNestedType=true)]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -793,8 +797,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Capabilities  that are assumed to function correctly on the FHIR server being tested
     /// </summary>
-    [FhirType("TestScript#Capability", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Capability", IsNestedType=true)]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1120,8 +1125,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fixture in the test script - by reference (uri)
     /// </summary>
-    [FhirType("TestScript#Fixture", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Fixture", IsNestedType=true)]
     public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1284,8 +1290,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Placeholder for evaluated elements
     /// </summary>
-    [FhirType("TestScript#Variable", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Variable", IsNestedType=true)]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1643,8 +1650,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A series of required setup operations before tests are executed
     /// </summary>
-    [FhirType("TestScript#Setup", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Setup", IsNestedType=true)]
     public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1732,8 +1740,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A setup operation or assert to perform
     /// </summary>
-    [FhirType("TestScript#SetupAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#SetupAction", IsNestedType=true)]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1838,8 +1847,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The setup operation to perform
     /// </summary>
-    [FhirType("TestScript#Operation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Operation", IsNestedType=true)]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2486,8 +2496,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Each operation can have one or more header elements
     /// </summary>
-    [FhirType("TestScript#RequestHeader", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#RequestHeader", IsNestedType=true)]
     public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2630,8 +2641,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The assertion to perform
     /// </summary>
-    [FhirType("TestScript#Assert", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Assert", IsNestedType=true)]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3493,8 +3505,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A test in this script
     /// </summary>
-    [FhirType("TestScript#Test", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Test", IsNestedType=true)]
     public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3654,8 +3667,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A test operation or assert to perform
     /// </summary>
-    [FhirType("TestScript#TestAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#TestAction", IsNestedType=true)]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3760,8 +3774,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A series of required clean up steps
     /// </summary>
-    [FhirType("TestScript#Teardown", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#Teardown", IsNestedType=true)]
     public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3849,8 +3864,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or more teardown operations to perform
     /// </summary>
-    [FhirType("TestScript#TeardownAction", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TestScript#TeardownAction", IsNestedType=true)]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
