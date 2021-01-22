@@ -197,17 +197,11 @@ stages:
       runOnce:
         deploy:
             steps:
-            - task: DownloadBuildArtifacts@0
-              inputs:
-                artifactName: 'NuGetPackages'
-                downloadPath: '$(System.ArtifactsDirectory)/NuGetArtifacts'
-  
-  
             - task: NuGetCommand@2
               displayName: 'MyGet push'
               inputs:
                   command: push
-                  packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: MyGet
                   verbosityPush: Normal    
@@ -224,17 +218,12 @@ stages:
       runOnce:
         deploy:
             steps:
-            - task: DownloadBuildArtifacts@0
-              inputs:
-                artifactName: 'NuGetPackages'
-                downloadPath: '$(System.ArtifactsDirectory)/NuGetArtifacts'
-  
             - task: NuGetCommand@2
               displayName: 'NuGet Push DSTU2 packages only'
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
               inputs:
                   command: push
-                  packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*DSTU2*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
@@ -245,7 +234,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
               inputs:
                 command: push
-                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -256,7 +245,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
               inputs:
                 command: push
-                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*R4*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -267,7 +256,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
               inputs:
                 command: push
-                packagesToPush: '$(System.ArtifactsDirectory)/NuGetArtifacts/*R5*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
