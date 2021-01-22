@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An instance of a medical-related component of a medical device
   /// </summary>
   [Serializable]
-  [FhirType("DeviceDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("DeviceDefinition", IsResource=true)]
   public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string
     /// </summary>
-    [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -239,8 +240,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name or names of the device as given by the manufacturer
     /// </summary>
-    [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -383,8 +385,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication
     /// </summary>
-    [FhirType("DeviceDefinition#Specialization", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#Specialization", IsNestedType=true)]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -526,8 +529,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional capabilities of the device
     /// </summary>
-    [FhirType("DeviceDefinition#Capability", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#Capability", IsNestedType=true)]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -634,8 +638,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties
     /// </summary>
-    [FhirType("DeviceDefinition#Property", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#Property", IsNestedType=true)]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -761,8 +766,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A substance used to create the material(s) of which the device is made
     /// </summary>
-    [FhirType("DeviceDefinition#Material", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("DeviceDefinition#Material", IsNestedType=true)]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

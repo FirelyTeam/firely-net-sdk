@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An ordered list (distribution) of statistics
   /// </summary>
   [Serializable]
-  [FhirType("OrderedDistribution")]
   [DataContract]
+  [FhirType("OrderedDistribution")]
   public partial class OrderedDistribution : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval
     /// </summary>
-    [FhirType("OrderedDistribution#Interval", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("OrderedDistribution#Interval", IsNestedType=true)]
     public partial class IntervalComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

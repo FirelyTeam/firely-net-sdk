@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// EnrollmentResponse resource
   /// </summary>
   [Serializable]
-  [FhirType("EnrollmentResponse", IsResource=true)]
   [DataContract]
+  [FhirType("EnrollmentResponse", IsResource=true)]
   public partial class EnrollmentResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

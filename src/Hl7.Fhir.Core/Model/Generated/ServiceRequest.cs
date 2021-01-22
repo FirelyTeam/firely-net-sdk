@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A request for a service to be performed
   /// </summary>
   [Serializable]
-  [FhirType("ServiceRequest", IsResource=true)]
   [DataContract]
+  [FhirType("ServiceRequest", IsResource=true)]
   public partial class ServiceRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

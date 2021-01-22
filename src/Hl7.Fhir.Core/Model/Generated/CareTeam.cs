@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Planned participants in the coordination and delivery of care
   /// </summary>
   [Serializable]
-  [FhirType("CareTeam", IsResource=true)]
   [DataContract]
+  [FhirType("CareTeam", IsResource=true)]
   public partial class CareTeam : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -98,8 +98,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Members of the team
     /// </summary>
-    [FhirType("CareTeam#Participant", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CareTeam#Participant", IsNestedType=true)]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

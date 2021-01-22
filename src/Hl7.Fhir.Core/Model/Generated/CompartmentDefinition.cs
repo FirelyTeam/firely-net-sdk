@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Compartment Definition for a resource
   /// </summary>
   [Serializable]
-  [FhirType("CompartmentDefinition", IsResource=true)]
   [DataContract]
+  [FhirType("CompartmentDefinition", IsResource=true)]
   public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How a resource is related to the compartment
     /// </summary>
-    [FhirType("CompartmentDefinition#Resource", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CompartmentDefinition#Resource", IsNestedType=true)]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

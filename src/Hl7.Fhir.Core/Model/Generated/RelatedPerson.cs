@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A person that is related to a patient, but who is not a direct target of care
   /// </summary>
   [Serializable]
-  [FhirType("RelatedPerson", IsResource=true)]
   [DataContract]
+  [FhirType("RelatedPerson", IsResource=true)]
   public partial class RelatedPerson : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language which may be used to communicate with about the patient's health
     /// </summary>
-    [FhirType("RelatedPerson#Communication", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("RelatedPerson#Communication", IsNestedType=true)]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Definition Pattern
   /// </summary>
   [Serializable]
-  [FhirType("SubscriptionTopic", IsResource=true)]
   [DataContract]
+  [FhirType("SubscriptionTopic", IsResource=true)]
   public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Criteria for including a resource update in the subscription topic
     /// </summary>
-    [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -321,8 +322,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Query based trigger rule
     /// </summary>
-    [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -499,8 +501,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Properties by which a Subscription can further filter a SubscriptionTopic
     /// </summary>
-    [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A Map of relationships between 2 structures that can be used to transform data
   /// </summary>
   [Serializable]
-  [FhirType("StructureMap", IsResource=true)]
   [DataContract]
+  [FhirType("StructureMap", IsResource=true)]
   public partial class StructureMap : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -344,8 +344,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structure Definition used by this map
     /// </summary>
-    [FhirType("StructureMap#Structure", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Structure", IsNestedType=true)]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -560,8 +561,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named sections for reader convenience
     /// </summary>
-    [FhirType("StructureMap#Group", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Group", IsNestedType=true)]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -813,8 +815,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named instance provided when invoking the map
     /// </summary>
-    [FhirType("StructureMap#Input", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Input", IsNestedType=true)]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1029,8 +1032,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transform Rule from source to target
     /// </summary>
-    [FhirType("StructureMap#Rule", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Rule", IsNestedType=true)]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1247,8 +1251,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source inputs to the mapping
     /// </summary>
-    [FhirType("StructureMap#Source", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Source", IsNestedType=true)]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1698,8 +1703,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content to create because of this mapping rule
     /// </summary>
-    [FhirType("StructureMap#Target", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Target", IsNestedType=true)]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2040,8 +2046,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parameters to the transform
     /// </summary>
-    [FhirType("StructureMap#Parameter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Parameter", IsNestedType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2131,8 +2138,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Which other rules to apply in the context of this rule
     /// </summary>
-    [FhirType("StructureMap#Dependent", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("StructureMap#Dependent", IsNestedType=true)]
     public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

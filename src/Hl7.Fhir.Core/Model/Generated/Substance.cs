@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A homogeneous material with a definite composition
   /// </summary>
   [Serializable]
-  [FhirType("Substance", IsResource=true)]
   [DataContract]
+  [FhirType("Substance", IsResource=true)]
   public partial class Substance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this describes a specific package/container of the substance
     /// </summary>
-    [FhirType("Substance#Instance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Substance#Instance", IsNestedType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -228,8 +229,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition information about the substance
     /// </summary>
-    [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Substance#Ingredient", IsNestedType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

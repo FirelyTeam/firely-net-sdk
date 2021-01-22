@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A product used for nutritional purposes
   /// </summary>
   [Serializable]
-  [FhirType("NutritionProduct", IsResource=true)]
   [DataContract]
+  [FhirType("NutritionProduct", IsResource=true)]
   public partial class NutritionProduct : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -86,8 +86,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product's nutritional information expressed by the nutrients
     /// </summary>
-    [FhirType("NutritionProduct#Nutrient", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionProduct#Nutrient", IsNestedType=true)]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,8 +194,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ingredients contained in this product
     /// </summary>
-    [FhirType("NutritionProduct#Ingredient", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionProduct#Ingredient", IsNestedType=true)]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -301,8 +303,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifies descriptive properties of the nutrition product
     /// </summary>
-    [FhirType("NutritionProduct#ProductCharacteristic", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionProduct#ProductCharacteristic", IsNestedType=true)]
     public partial class ProductCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -411,8 +414,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// One or several physical instances or occurrences of the nutrition product
     /// </summary>
-    [FhirType("NutritionProduct#Instance", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("NutritionProduct#Instance", IsNestedType=true)]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

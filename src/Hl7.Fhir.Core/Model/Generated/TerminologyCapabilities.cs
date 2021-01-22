@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// A statement of system capabilities
   /// </summary>
   [Serializable]
-  [FhirType("TerminologyCapabilities", IsResource=true)]
   [DataContract]
+  [FhirType("TerminologyCapabilities", IsResource=true)]
   public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -80,8 +80,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Software that is covered by this terminology capability statement
     /// </summary>
-    [FhirType("TerminologyCapabilities#Software", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Software", IsNestedType=true)]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -223,8 +224,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this describes a specific instance
     /// </summary>
-    [FhirType("TerminologyCapabilities#Implementation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Implementation", IsNestedType=true)]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -366,8 +368,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code system supported by the server
     /// </summary>
-    [FhirType("TerminologyCapabilities#CodeSystem", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#CodeSystem", IsNestedType=true)]
     public partial class CodeSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -527,8 +530,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version of Code System supported
     /// </summary>
-    [FhirType("TerminologyCapabilities#Version", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Version", IsNestedType=true)]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -798,8 +802,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Filter Properties supported
     /// </summary>
-    [FhirType("TerminologyCapabilities#Filter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Filter", IsNestedType=true)]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -942,8 +947,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the [ValueSet/$expand](valueset-operation-expand.html) operation
     /// </summary>
-    [FhirType("TerminologyCapabilities#Expansion", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Expansion", IsNestedType=true)]
     public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1157,8 +1163,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supported expansion parameter
     /// </summary>
-    [FhirType("TerminologyCapabilities#Parameter", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Parameter", IsNestedType=true)]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1300,8 +1307,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the [ValueSet/$validate-code](valueset-operation-validate-code.html) operation
     /// </summary>
-    [FhirType("TerminologyCapabilities#ValidateCode", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#ValidateCode", IsNestedType=true)]
     public partial class ValidateCodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1407,8 +1415,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the [ConceptMap/$translate](conceptmap-operation-translate.html) operation
     /// </summary>
-    [FhirType("TerminologyCapabilities#Translation", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Translation", IsNestedType=true)]
     public partial class TranslationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1514,8 +1523,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the [ConceptMap/$closure](conceptmap-operation-closure.html) operation
     /// </summary>
-    [FhirType("TerminologyCapabilities#Closure", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("TerminologyCapabilities#Closure", IsNestedType=true)]
     public partial class ClosureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

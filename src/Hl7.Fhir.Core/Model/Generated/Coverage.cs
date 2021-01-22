@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// Insurance or medical plan or a payment agreement
   /// </summary>
   [Serializable]
-  [FhirType("Coverage", IsResource=true)]
   [DataContract]
+  [FhirType("Coverage", IsResource=true)]
   public partial class Coverage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -58,8 +58,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional coverage classifications
     /// </summary>
-    [FhirType("Coverage#Class", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Coverage#Class", IsNestedType=true)]
     public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -220,8 +221,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient payments for services/products
     /// </summary>
-    [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
     public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -348,8 +350,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Exceptions for patient payments
     /// </summary>
-    [FhirType("Coverage#Exemption", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("Coverage#Exemption", IsNestedType=true)]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

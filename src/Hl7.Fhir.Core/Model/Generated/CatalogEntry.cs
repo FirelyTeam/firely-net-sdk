@@ -46,8 +46,8 @@ namespace Hl7.Fhir.Model
   /// An entry in a catalog
   /// </summary>
   [Serializable]
-  [FhirType("CatalogEntry", IsResource=true)]
   [DataContract]
+  [FhirType("CatalogEntry", IsResource=true)]
   public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -208,8 +208,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another entry of the catalog related to this one
     /// </summary>
-    [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
+    [Serializable]
     [DataContract]
+    [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
     public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

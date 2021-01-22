@@ -10,9 +10,8 @@ $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
 # These are all files from the spec that we need. Narratives are stripped after download
-$allFiles = @("conceptmaps.xml", 
-				"dataelements.xml", 
-				"extension-definitions.xml", 
+$allFiles = @("conceptmaps.xml",
+                "extension-definitions.xml", 
 				"namingsystem-registry.xml",
 				"profiles-others.xml", 
 				"profiles-resources.xml", 
@@ -140,7 +139,7 @@ function ExtractXsdZipFile($destPath)
 	if ($server.EndsWith('2020Sep/') )
 	{
 		# In release 2020Sep is an error in the fhir-single.xsd.  
-		Write-Host -ForegroundColor White ".. correct errors in fhir-single.xsd"
+		Write-Host -ForegroundColor White ".. corrected errors in fhir-single.xsd"
 		$xsdFile = Join-Path $extractPath "fhir-single.xsd"
 		RemoveIncorrectXsdElements $xsdFile
 	}
@@ -163,7 +162,6 @@ Write-Host -ForegroundColor White "Copy files to project..."
 # Copy the files necessary for the specification library (specification.zip / data)
 Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*" -Force
 CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "dataelements.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "namingsystem-registry.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
