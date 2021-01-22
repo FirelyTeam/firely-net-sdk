@@ -3,10 +3,10 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>2.0.2</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>Firely (info@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
-    <Copyright>Copyright 2013-2020 Firely.  Contains materials (C) HL7 International</Copyright>
+    <Copyright>Copyright 2013-2021 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
