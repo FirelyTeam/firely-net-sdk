@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using System;
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 merger.merge(snap, diff, mergeElementId);
             }
 
-            SnapshotGenerator _generator;
+            readonly SnapshotGenerator _generator;
 
             ElementDefnMerger(SnapshotGenerator generator)
             {
@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
 
-                snap.Binding = mergeComplexAttribute(snap.Binding, diff.Binding);
+                snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
-                CorrectListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
+                correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 // [WMR 20160817] TODO: Merge extensions
                 // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
             }
 
-            private void CorrectListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
+            private void correctListMerge<T>(List<T> originalBase, List<T> replacement, Action<List<T>> setBase)
             {
                 if (replacement is List<T> list && !list.Any())
                 {
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <param name="diff"></param>
             /// <param name="allowAppend"></param>
             /// <returns></returns>
-            T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : Primitive
+            T mergePrimitiveAttribute<T>(T snap, T diff, bool allowAppend = false) where T : PrimitiveType
             {
                 // [WMR 20160718] Handle snap == null
                 // if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
@@ -224,14 +224,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // [WMR 20160719] Handle snap == null
                             // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
                             var prefix = snap != null ? snap.ObjectValue as string : null;
-                            if (string.IsNullOrEmpty(prefix))
-                            {
-                                diffText = diffText.Substring(3);
-                            }
-                            else
-                            {
-                                diffText = prefix + "\r\n" + diffText.Substring(3);
-                            }
+                            diffText = string.IsNullOrEmpty(prefix) ? 
+                                diffText.Substring(3) 
+                                : prefix + "\r\n" + diffText.Substring(3);
                         }
 
                         result.ObjectValue = diffText;
@@ -343,6 +338,30 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
                 else
                     return snap;
+            }
+
+
+            //[MS 20201211] Separate function introduced to make sure that introduced extensions on Binding.Valueset in the diff are merged with the base.
+            // This is a very specific fix and might be replaced by a more general merging method using ITypedElement in the future.
+            private ElementDefinition.ElementDefinitionBindingComponent mergeBinding(ElementDefinition.ElementDefinitionBindingComponent snap, ElementDefinition.ElementDefinitionBindingComponent diff)
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (ElementDefinition.ElementDefinitionBindingComponent)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
+                        snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
+                        snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        onConstraint(result);
+                    }
+                }
+                return result;
             }
 
             string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)

@@ -1,0 +1,46 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "extension-must-display",
+  "url": "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-must-display",
+  "name": "ExtensionMustDisplay",
+  "title": "Must Display",
+  "version": "0.1",
+  "description": "Specifies that a marking must be displayed when the resource is rendered in print or in electronic form.",
+  "status": "draft",
+  "kind": "complex-type",
+  "abstract": false,
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "context": [
+    {
+      "type": "element",
+      "expression": "Encounter.meta"
+    }
+  ],
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension",
+        "path": "Extension",
+        "min": 0,
+        "max": "*"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "http://hl7.org/fhir/uv/security-label-ds4p/StructureDefinition/extension-must-display"
+      },
+      {
+        "id": "Extension.valueAnnotation",
+        "path": "Extension.valueAnnotation",
+        "min": 1,
+        "type": [
+          {
+            "code": "Annotation"
+          }
+        ]
+      }
+    ]
+  }
+}

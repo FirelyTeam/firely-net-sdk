@@ -1,0 +1,56 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="bundle"/>
+  <type value="collection"/>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/test/Patient/pat1"/>
+    <resource>
+      <Patient>
+        <id value="pat1"/>
+        <active value="false"/>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/test/Obervation/obs1"/>
+    <resource>
+      <Observation>
+        <id value="obs1"/>
+        <status value="final"/>
+        <code>
+          <coding>
+            <system value="http://acme.org/obs-codes"/>
+            <code value="obs1"/>
+          </coding>
+        </code>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/test/Obervation/obs2"/>
+    <resource>
+      <Observation>
+        <id value="obs2"/>
+        <status value="final"/>
+        <code>
+          <coding>
+            <system value="http://acme.org/obs-codes"/>
+            <code value="obs1"/>
+          </coding>
+        </code>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/test/Procedure/proc1"/>
+    <resource>
+      <Procedure>      
+        <id value="proc1"/>
+        <status value="completed"/>
+        <subject>
+          <reference value="Patient/pat1"/>
+        </subject>
+      </Procedure>
+    </resource>
+  </entry>
+</Bundle>
+

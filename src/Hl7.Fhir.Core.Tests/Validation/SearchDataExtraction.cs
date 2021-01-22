@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using System;
@@ -113,11 +113,11 @@ namespace Hl7.Fhir.Test.Validation
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
         {
             // Extract the search properties
-            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.ResourceType.ToString() && !String.IsNullOrEmpty(r.Expression));
+            var searchparameters = ModelInfo.SearchParameters.Where(r => r.Resource == resource.TypeName && !String.IsNullOrEmpty(r.Expression));
             foreach (var index in searchparameters)
             {
                 // prepare the search data cache
-                string key = resource.ResourceType.ToString() + "_" + index.Name;
+                string key = resource.TypeName + "_" + index.Name;
                 if (!exampleSearchValues.ContainsKey(key))
                     exampleSearchValues.Add(key, 0);
 

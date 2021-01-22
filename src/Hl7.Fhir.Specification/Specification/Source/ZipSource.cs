@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -13,13 +13,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="DirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource
+    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -126,7 +127,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>List all resource uris, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default(ResourceType?))
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
             => FileSource.ListResourceUris(filter);
 
         /// <summary>
@@ -189,6 +190,9 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
         public Resource ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
+
+        public Task<Resource> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
+        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
 
         #endregion
 

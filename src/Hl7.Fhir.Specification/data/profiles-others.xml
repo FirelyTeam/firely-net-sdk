@@ -1,7 +1,9 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="profiles-others" />
-  <!-- Removed Meta/LastModified -->
+  <meta>
+    <lastUpdated value="2019-10-24T11:53:00+11:00" />
+  </meta>
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/StructureDefinition/consentdirective" />
@@ -10,14 +12,12 @@
         <id value="consentdirective" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/consentdirective" />
         <name value="Consent Directive" />
         <status value="draft" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven International (Community Based Collaborative Care)" />
         <contact>
           <telecom>
@@ -3263,15 +3263,13 @@
         <id value="familymemberhistory-genetic" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/familymemberhistory-genetic" />
         <name value="Family member history for genetics analysis" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2013-10-02" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -4550,15 +4548,13 @@
         <id value="shareablevalueset" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
         <name value="Shareable ValueSet" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets" />
         <fhirVersion value="3.0.2" />
@@ -6660,15 +6656,13 @@
         <id value="procedurerequest-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/procedurerequest-genetics" />
         <name value="ProcedureRequest-Genetics" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-10-20" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -8145,15 +8139,13 @@
         <id value="shareablecodesystem" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/shareablecodesystem" />
         <name value="Shareable CodeSystem" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2019-10-24T11:53:00+11:00" />
         <publisher value="HL7" />
         <description value="Enforces the minimum information set for the value set metadata required by HL7 and other organisations that share and publish value sets" />
         <fhirVersion value="3.0.2" />
@@ -9820,15 +9812,13 @@
         <id value="devicemetricobservation" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/devicemetricobservation" />
         <name value="Device Metric Observation Profile" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2014-11-17" />
         <publisher value="Health Level Seven International (Health Care Devices)" />
         <contact>
           <telecom>
@@ -11853,15 +11843,13 @@
         <id value="observation-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/observation-genetics" />
         <name value="Observation-genetics" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-14" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -14390,9 +14378,7 @@
         <id value="vitalsigns" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="### Complete Summary of the Mandatory Requirements&#xA;&#xA;1.  One status in `Observation.status`which has a [required](http://hl7.org/fhir/STU3/terminologies.html#extensible) binding to:&#xA;    -    [ObservationStatus] value set.&#xA;1.  A category in `Observation.category` which must have:&#xA;    -   a fixed `Observation.category.coding.system`=&quot;http://hl7.org/fhir/observation-category&quot;&#xA;    -   a fixed `Observation.category.coding.code`= &quot;vital-signs&quot;&#xA;&#xA;1.  A code in `Observation.code`&#xA;    -   a fixed `Observation.code.coding.system`= &quot;http://loinc.org&quot;&#xA;    -   a LOINC code in `Observation.code.coding.code` which has an [extensible](http://hl7.org/fhir/STU3/terminologies.html#extensible) binding to:&#xA;         -   [Vital Signs] value set.&#xA;                &#xA;1.  One patient in `Observation.subject`&#xA;1.  A date and time in `effectiveDateTime` or `effectivePeriod`&#xA;1.  Either one `Observation.valueQuantity` or, if there is no value, one code in `Observation.DataAbsentReason`&#xA;    -   Each Observation.valueQuantity must have:&#xA;        -   One numeric value in `Observation.valueQuantity.value`&#xA;        -   a fixed `Observation.valueQuantity.system`=&quot;http://unitsofmeasure&quot;&#xA;        -   a UCUM unit code in `Observation.valueQuantity.code` which has an [required] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;    -   Observation.DataAbsentReason is bound to [Observation Value&#xA;        Absent Reason] value set.&#xA;&#xA;1.  When using a panel code to group component observations (Note: See&#xA;    the comments regarding blood pressure in the table above), one or&#xA;    more `Observation.component.code` each of which must have:&#xA;    -   a fixed&#xA;        `Observation.component.code.coding.system` =&quot;&lt;http://loinc.org&gt;&quot;&#xA;         -   a LOINC code in `Observation.code.coding.code` which has an [extensible] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;&#xA;1.  Either one `Observation.component.valueQuantity` or, if there is&#xA;    no value, one code in `Observation.component.DataAbsentReason`&#xA;    -   Each Observation.component.valueQuantity must have:&#xA;        -   One numeric value in&#xA;            `Observation.component.valueQuantity.value`&#xA;        -   a fixed `Observation.component.valueQuantity.system`= &quot;&lt;http://unitsofmeasure.org&gt;&quot;&#xA;        -   a UCUM unit code in&#xA;            `Observation.component.valueQuantity.code` which has an [required] binding to:&#xA;             -   [Vital Signs Units] value set.&#xA;    -   Observation.component.DataAbsentReason is bound to [Observation&#xA;        Value Absent Reason] value set.&#xA;&#xA;1.  When using a panel code to group observations, one or more reference&#xA;    to Vitals Signs Observations in `Observation.related.target`&#xA;    -   a fixed `Observation.related.type`= &quot;has-member&quot;&#xA;&#xA; [Vital Signs]: valueset-observation-vitalsignresult.html&#xA;  [Vital Signs Units]: valueset-ucum-vitals-common.html&#xA;  [extensible]: terminologies.html#extensible&#xA;  [ObservationStatus]: valueset-observation-status.html&#xA; [Observation Value Absent Reason]: valueset-observation-valueabsentreason.html&#xA;[required]: terminologies.html#required" />
@@ -14402,7 +14388,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -16939,9 +16925,7 @@
         <id value="bodyweight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'29463-7'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  `Observation.valueQuantity.code` = **'kg', 'g', or '[lb_av]'**" />
@@ -16951,7 +16935,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -19589,9 +19573,7 @@
         <id value="resprate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'9279-1'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'/min'**" />
@@ -19601,7 +19583,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -22224,9 +22206,7 @@
         <id value="heartrate" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8867-4'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'/min'**" />
@@ -22236,7 +22216,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -24859,9 +24839,7 @@
         <id value="bodytemp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8310-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'Cel', or '[degF]'**" />
@@ -24871,7 +24849,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -27509,9 +27487,7 @@
         <id value="bodyheight" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8302-2'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -27521,7 +27497,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -30159,9 +30135,7 @@
         <id value="bodylength" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8306-3'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -30171,7 +30145,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -32809,9 +32783,7 @@
         <id value="headcircum" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'8287-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'cm', or '[in_i]'**" />
@@ -32821,7 +32793,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -35459,9 +35431,7 @@
         <id value="oxygensat" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="&quot;####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'59408-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'%'**&#xD;&quot;" />
@@ -35471,7 +35441,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -38094,9 +38064,7 @@
         <id value="bmi" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **'39156-5'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  a fixed`Observation.valueQuantity.code` = **'kg/m2'**" />
@@ -38106,7 +38074,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -40729,9 +40697,7 @@
         <id value="bp" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xD;&#xD;1.  One code in `Observation.code` which must have&#xD;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xD;    -   a fixed  `Observation.code.coding.code`= **85354-9'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;2.  One  `Observation.component.code`  which must have&#xD;    -   a fixed `Observation.component.code.coding.system`=**'http://loinc.org'**&#xD;    -   fixed  `Observation.component.code.coding.code`= **'8480-6'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;3.   One  `Observation.component.code`  which must have&#xD;    -   a fixed `Observation.component.code.coding.system`=**'http://loinc.org'**&#xD;    -   fixed  `Observation.component.code.coding.code`= **'8462-4'**&#xD;    -   Other additional codes are allowed - e.g. more specific LOINC&#xD;        Codes, SNOMED CT concepts, system specific codes. All codes&#xD;        SHALL have an system value&#xD;4.  fixed`Observation.component.valueQuantity.code` = **'mm[Hg]'**" />
@@ -40741,7 +40707,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -44744,9 +44710,7 @@
         <id value="vitalspanel" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="####Complete Summary of the Mandatory Requirements&#xA;&#xA;1.  One code in `Observation.code` which must have&#xA;    -   a fixed `Observation.code.coding.system`=**'http ://loinc.org'**&#xA;    -   a fixed  `Observation.code.coding.code`= **'85353-1'**&#xA;    -   Other additional codes are allowed - e.g. more specific LOINC&#xA;        Codes, SNOMED CT concepts, system specific codes. All codes&#xA;        SHALL have an system value&#xA;1.  No value in `Observation.value[x]`&#xA;1.  At Least one Vitals Sign Observation reference in `Observation.related`" />
@@ -44756,7 +44720,7 @@
         <title value="VitalSigns" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-03-25" />
         <publisher value="Health Level Seven International (Orders and Observations Workgroup)" />
         <contact>
           <telecom>
@@ -47378,9 +47342,7 @@
         <id value="lipidprofile" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-summary">
           <valueMarkdown value="This is a test summary [lipids](observation.html)" />
@@ -47395,7 +47357,7 @@
         <name value="Example Lipid Profile" />
         <status value="draft" />
         <experimental value="true" />
-        <!-- Removed date -->
+        <date value="2012-05-12" />
         <publisher value="Grahame Grieve" />
         <contact>
           <telecom>
@@ -48846,9 +48808,7 @@
         <id value="cholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -48860,7 +48820,7 @@
         <name value="Example Lipid Profile" />
         <status value="draft" />
         <experimental value="true" />
-        <!-- Removed date -->
+        <date value="2012-05-12" />
         <publisher value="Grahame Grieve" />
         <contact>
           <telecom>
@@ -51065,9 +51025,7 @@
         <id value="triglyceride" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -51079,7 +51037,7 @@
         <name value="Example Lipid Profile" />
         <status value="draft" />
         <experimental value="true" />
-        <!-- Removed date -->
+        <date value="2012-05-12" />
         <publisher value="Grahame Grieve" />
         <contact>
           <telecom>
@@ -52996,9 +52954,7 @@
         <id value="hdlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -53010,7 +52966,7 @@
         <name value="Example Lipid Profile" />
         <status value="draft" />
         <experimental value="true" />
-        <!-- Removed date -->
+        <date value="2012-05-12" />
         <publisher value="Grahame Grieve" />
         <contact>
           <telecom>
@@ -54967,9 +54923,7 @@
         <id value="ldlcholesterol" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm">
           <valueInteger value="1" />
@@ -54981,7 +54935,7 @@
         <name value="Example Lipid Profile" />
         <status value="draft" />
         <experimental value="true" />
-        <!-- Removed date -->
+        <date value="2012-05-12" />
         <publisher value="Grahame Grieve" />
         <contact>
           <telecom>
@@ -56933,15 +56887,13 @@
         <id value="diagnosticreport-genetics" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/diagnosticreport-genetics" />
         <name value="DiagnosticReport-Genetics" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -58268,15 +58220,13 @@
         <id value="hlaresult" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/hlaresult" />
         <name value="Profile for HLA Genotyping Results" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-10-09" />
         <publisher value="Health Level Seven International (Clinical Genomics)" />
         <contact>
           <telecom>
@@ -59641,15 +59591,13 @@
         <id value="clinicaldocument" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/clinicaldocument" />
         <name value="Clinical Document Profile for Composition" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-03-17" />
         <publisher value="Health Level Seven, Inc. - Structured Documents WG" />
         <contact>
           <telecom>
@@ -61259,9 +61207,7 @@
         <id value="elementdefinition-de" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="fhir" />
@@ -61270,7 +61216,7 @@
         <name value="DataElement constraint on ElementDefinition data type" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-02-28" />
         <publisher value="Health Level Seven International (Orders and Observations)" />
         <contact>
           <telecom>
@@ -64526,9 +64472,7 @@
         <id value="ehrsrle-auditevent" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="ehr" />
@@ -64537,7 +64481,7 @@
         <name value="EHRS FM Record Lifecycle Event - Audit Event" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2014-12-04" />
         <publisher value="Health Level Seven International (Electronic Health Record)" />
         <contact>
           <telecom>
@@ -66706,9 +66650,7 @@
         <id value="ehrsrle-provenance" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-wg">
           <valueCode value="ehr" />
@@ -66717,7 +66659,7 @@
         <name value="EHRS FM Record Lifecycle Event - Provenance" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2014-01-31" />
         <publisher value="Health Level Seven International (Electronic Health Record)" />
         <contact>
           <telecom>
@@ -67778,15 +67720,13 @@
         <id value="cqif-questionnaire" />
         <text>
           <status value="generated" />
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
-          </div>
+          <div xmlns="http://www.w3.org/1999/xhtml">to do<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p></div>
         </text>
         <url value="http://hl7.org/fhir/StructureDefinition/cqif-questionnaire" />
         <name value="CQIF-Questionnaire" />
         <status value="draft" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2015-05-30" />
         <publisher value="Health Level Seven, Inc. - CDS WG" />
         <contact>
           <telecom>

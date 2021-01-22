@@ -1,0 +1,61 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!-- Solution-wide properties for NuGet packaging -->
+  <PropertyGroup>
+    <VersionPrefix>2.0.2</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <Authors>Firely (info@fire.ly) and contributors</Authors>
+    <Company>Firely (https://fire.ly)</Company>
+    <Copyright>Copyright 2013-2021 Firely.  Contains materials (C) HL7 International</Copyright>
+    <PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon-fhir-32.png</PackageIcon>
+    <PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
+    Consider applying the 'await' operator to the result of the call.	-->
+    <WarningsAsErrors>CS4014</WarningsAsErrors>       
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="..\..\icon-fhir-32.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
+
+  <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
+  one version of our library that does not require it, since iOS does not have support for it.
+  Considering netstd1.1 is our lowest common denominator, I've chosen that version to not use
+  codegen -->
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'netstandard1.1' ">
+    <DefineConstants>$(DefineConstants);USE_CODE_GEN</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Compiler settings -->
+  <PropertyGroup>
+    <LangVersion>8.0</LangVersion>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Configurations>Debug;Release;FullDebug</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
+     <DebugType>portable</DebugType>
+     <DebugSymbols>True</DebugSymbols>
+     <NoWarn>1591</NoWarn>
+     <Optimize>false</Optimize>
+     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+</Project>
+

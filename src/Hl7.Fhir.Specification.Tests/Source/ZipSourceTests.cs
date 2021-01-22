@@ -9,7 +9,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
     public class ZipSourceTests
     {
         /// <summary>
-        /// This unittest proves issue https://github.com/FirelyTeam/fhir-net-api/issues/883
+        /// This unittest proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/883
         /// It will use the zipfile 'ResourcesInSubfolder.zip' in folder TestData"/>  
         /// </summary>
         [TestMethod]

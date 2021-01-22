@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+    <id value="text-binary"/>
+    <url value="http://example.org/fhir/StructureDefinition/text-binary"/>
+    <name value="TextBinary"/>
+    <status value="draft"/>
+    <description value="Text represented as a FHIR Binary resource"/>
+    <fhirVersion value="4.0.0"/>
+    <kind value="resource"/>
+    <abstract value="false"/>
+    <type value="Binary"/>
+    <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Binary"/>
+    <derivation value="constraint"/>
+    <differential>
+        <element id="Binary">
+            <path value="Binary"/>
+        </element>
+        <element id="Binary.contentType">
+            <path value="Binary.contentType"/>
+            <short value="MimeType for a test"/>
+            <fixedCode value="text/plain"/>
+        </element>
+    </differential>
+</StructureDefinition>
+

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
 {
     public static class BundleExtensions
     {
-        public static async Task<Bundle> RefreshBundleAsync(this FhirClient client, Bundle bundle)
+        public static async Task<Bundle> RefreshBundleAsync(this BaseFhirClient client, Bundle bundle)
         {
             if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+        public static Bundle RefreshBundle(this BaseFhirClient client, Bundle bundle)
         {
             return RefreshBundleAsync(client, bundle).WaitResult();
         }

@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 using System;
@@ -21,6 +21,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>List all resource uris for the resources managed by the source, optionally filtered by type.</summary>
         /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
         /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
+        /// <remarks>The returned uris are the physical uris for the resources, not the canonical uris.</remarks>
         IEnumerable<string> ListResourceUris(ResourceType? filter = null);
 
         /// <summary>

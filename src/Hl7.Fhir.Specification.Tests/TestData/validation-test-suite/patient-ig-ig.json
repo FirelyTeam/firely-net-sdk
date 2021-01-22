@@ -1,0 +1,12 @@
+{
+  "resourceType" : "ImplementationGuide",
+  "url" : "http://hl7.org/fhir/test/ImplementationGuide/patient-ig-ig",
+  "status" : "active",
+  "date" : "2019-08-26T00:00:00+10:00",
+  "packageId" : "hl7.fhir.test.ig-ig",
+  "fhirVersion" : ["4.0.1"],
+  "global" : [{
+    "type" : "Patient",
+    "profile" : "http://hl7.org/fhir/test/StructureDefinition/patient-ig-sd"
+  }]
+}

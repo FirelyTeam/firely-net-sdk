@@ -1,0 +1,17 @@
+{
+    "resourceType": "Questionnaire",
+    "url": "http://example.com/Questionnaire/practice-questionnaire-test2",
+    "status": "draft",
+    "item": [{
+        "linkId": "date",
+        "required": true,
+        "text": "Date of hospital visit",
+        "type": "date",
+        "item": [{
+            "linkId": "rating",
+            "required": true,
+            "text": "What general score would you give the hospital on a scale from 1 to 10?",
+            "type": "integer"
+        }]
+    }]
+}

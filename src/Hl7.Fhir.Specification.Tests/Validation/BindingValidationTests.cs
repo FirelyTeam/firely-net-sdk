@@ -13,14 +13,12 @@ namespace Hl7.Fhir.Specification.Tests
     [Trait("Category", "Validation")]
     public class BindingValidationTests : IClassFixture<ValidationFixture>
     {
-        private readonly IResourceResolver _resolver;
+        private readonly IAsyncResourceResolver _resolver;
         private readonly ITerminologyService _termService;
-        private readonly Validator _validator;
 
         public BindingValidationTests(ValidationFixture fixture)
         {
-            _resolver = fixture.Resolver;
-            _validator = fixture.Validator;
+            _resolver = fixture.AsyncResolver;
             _termService = new LocalTerminologyService(_resolver);
         }
 
@@ -138,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Now, switch to a required binding
             binding.Strength = BindingStrength.Required;
             val = binding.ToValidatable();
-           
+
             // Then, with no code at all in a CC with a required binding
             result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
@@ -190,6 +188,34 @@ namespace Hl7.Fhir.Specification.Tests
             result = val2.Validate(cc.ToTypedElement(), vc);
             Assert.True(result.Success);
             Assert.Equal(0, result.Warnings);
+        }
+
+        [Fact]
+        public void TestValidationErrorMessageForCodings()
+        {
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            {
+                ValueSet = new ResourceReference("http://fhir.nl/fhir/NamingSystem/uzi-rolcode"),
+                Strength = BindingStrength.Required
+            };
+
+            var val = binding.ToValidatable();
+            var vc = new ValidationContext() { TerminologyService = _termService };
+
+            var cc = new CodeableConcept();
+            cc.Coding.Add(new Coding("http://non-existing.code.system", "01.015"));
+          
+
+            var result = val.Validate(cc.ToTypedElement(), vc);
+            Assert.True(result.Success);
+            Assert.True(result.Issue.Count == 1);
+            Assert.StartsWith("Terminology service failed while validating code '01.015' (system 'http://non-existing.code.system')", result.Issue[0].Details.Text);
+
+            cc.Coding.Add(new Coding("http://another-non-existing.code.system", "01.016"));
+            result = val.Validate(cc.ToTypedElement(), vc);
+            Assert.True(result.Success);
+            Assert.True(result.Issue.Count == 1);
+            Assert.StartsWith("Terminology service failed while validating the codes", result.Issue[0].Details.Text);
         }
     }
 }

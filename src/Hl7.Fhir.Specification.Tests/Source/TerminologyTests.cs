@@ -1,31 +1,30 @@
-﻿using Hl7.Fhir.Model;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
-using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
-        private IResourceResolver _resolver;
-        private readonly Xunit.Abstractions.ITestOutputHelper output;
+        private readonly IAsyncResourceResolver _resolver;
 
 
-        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper output)
+        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
-            _resolver = fixture.Resolver;
-            this.output = output;
+            _resolver = fixture.AsyncResolver;
         }
 
         [Fact]
-        public void ExpansionOfWholeSystem()
+        public async T.Task ExpansionOfWholeSystem()
         {
-            var issueTypeVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/issue-type").DeepCopy() as ValueSet;
+            var issueTypeVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
@@ -33,7 +32,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
-            expander.Expand(issueTypeVs);
+            await expander.ExpandAsync(issueTypeVs);
 
             Assert.True(issueTypeVs.HasExpansion);
             var id = issueTypeVs.Expansion.Identifier;
@@ -53,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Now, make this a versioned system
             issueTypeVs.Version = "3.14";
-            expander.Expand(issueTypeVs);
+            await expander.ExpandAsync(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
             Assert.Equal(29, issueTypeVs.Expansion.Total);
 
@@ -63,46 +62,46 @@ namespace Hl7.Fhir.Specification.Tests
 
 
         [Fact]
-        public void ExpansionOfComposeInclude()
+        public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/marital-status").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.Equal(11, testVs.Expansion.Total);
         }
 
 
         [Fact]
-        public void ExpansionOfComposeImport()
+        public async T.Task ExpansionOfComposeImport()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/v3-ObservationMethod").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/v3-ObservationMethod")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             expander.Settings.MaxExpansionSize = 50;
 
-            Assert.Throws<ValueSetExpansionTooBigException>(() => expander.Expand(testVs));
+            await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
 
             expander.Settings.MaxExpansionSize = 500;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.Equal(304, testVs.Expansion.Total);
         }
 
         [Fact]
-        public void TestIncludeDesignation()
+        public async T.Task TestIncludeDesignation()
         {
-            var testVs = _resolver.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/animal-genderstatus").DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
 
             //Import codes from codesystem
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
 
             expander.Settings.IncludeDesignations = true;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
 
             Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
             Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "gesteriliseerd"));
@@ -140,19 +139,19 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             expander.Settings.IncludeDesignations = false;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
             Assert.DoesNotContain(testVs.Expansion.Contains, c => c.Designation.Any());
             expander.Settings.IncludeDesignations = true;
-            expander.Expand(testVs);
+            await expander.ExpandAsync(testVs);
 
             Assert.Contains(testVs.Expansion.Parameter, p => p.Name == "includeDesignations" && (p.Value as FhirBoolean).Value == true);
             Assert.Contains(testVs.Expansion.Contains, c => c.Designation.Any(d => d.Language == "nl" && d.Value == "onbekend"));
         }
 
         [Fact]
-        public void TestPropertyRetrieval()
+        public async T.Task TestPropertyRetrieval()
         {
-            var testCs = _resolver.FindCodeSystem("http://hl7.org/fhir/item-type");
+            var testCs = await _resolver.FindCodeSystemAsync("http://hl7.org/fhir/item-type");
 
             var conceptGroup = testCs.Concept.Single(c => c.Code == "group");
             var conceptQuestion = testCs.Concept.Single(c => c.Code == "question");
@@ -165,6 +164,7 @@ namespace Hl7.Fhir.Specification.Tests
         private void testService(ITerminologyService svc)
         {
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
             Assert.True(result.Success);
 
@@ -205,6 +205,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
             result = svc.ValidateCode(vsUrl, codeableConcept: cc);
+#pragma warning restore CS0618 // Type or member is obsolete
             DebugDumpOutputXml(result);
 
             Assert.True(result.Success);
@@ -226,15 +227,42 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
                 display: "Not a Number");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
             Assert.Equal(0, result.Warnings);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
                         display: "Certainly Not a Number");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
             Assert.Equal(1, result.Warnings);
+        }
+
+        [Fact]
+        public async void LocalTSDisplayIncorrectAsMessage()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+            var inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
+                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Not a Number");
+
+            var result = await svc.ValueSetValidateCode(inParams);
+
+            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+            Assert.Null(result.GetSingleValue<FhirString>("message"));
+
+            inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
+                .WithCode(code: "NaN", system: "http://hl7.org/fhir/data-absent-reason", display: "Certainly Not a Number");
+
+            result = await svc.ValueSetValidateCode(inParams);
+
+            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+            Assert.NotNull(result.GetSingleValue<FhirString>("message"));
         }
 
         [Fact]
@@ -246,7 +274,9 @@ namespace Hl7.Fhir.Specification.Tests
             testService(svc);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
+
             Assert.True(result.Success);
 
             // This test is not always correctly done by the external services, so copied here instead
@@ -257,23 +287,533 @@ namespace Hl7.Fhir.Specification.Tests
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             Assert.Throws<ValueSetExpansionTooComplexException>(
                 () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void ExternalServiceValidateCodeTest()
+        [Fact]
+        public async void LocalTermServiceValidateCodeWithParamsTest()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
+            var inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/yesnodontknow")
+                .WithCode(code: "Y", system: "http://hl7.org/fhir/v2/0136");
+
+            var result = await svc.ValueSetValidateCode(inParams);
+            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+
+            // This test is not always correctly done by the external services, so copied here instead
+            inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode")
+                .WithCode(code: "_AcknowledgementDetailNotSupportedCode", system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode")
+                .WithAbstract(false);
+
+            result = await svc.ValueSetValidateCode(inParams);
+
+            Assert.False(result.GetSingleValue<FhirBoolean>("result")?.Value);
+
+            // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
+            inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
+            await Assert.ThrowsAsync<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
+        }
+
+        [Fact]
+        public async void ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var svc = new ExternalTerminologyService(client);
 
-            // Do common tests for service
-            testService(svc);
+            var parameters = new TranslateParameters()
+                .WithCode(code: "ACNE", system: "http://hl7.org/fhir/v2/0487")
+                .WithTarget("http:/snomed.info/sct");
 
-            // Any good external service should be able to handle this one
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
-            Assert.True(result.Success);
+            var result = await svc.Translate(parameters, "102", useGet: true);
+
+            Assert.NotNull(result);
+
+            bool? isMatch = ((FhirBoolean)result.Parameter.First().Value).Value;
+            if (isMatch.HasValue && isMatch.Value)
+            {
+                Assert.Collection(result.Parameter,
+                    param =>
+                    {
+                        // This is the same parameter were we fetched the isMatch parameter.
+                        // Need to include this since Assert.Collection does not skip any elements
+                        Assert.Equal("result", param.Name);
+                    },
+                    param =>
+                    {
+                        Assert.Equal("match", param.Name);
+                        Assert.Collection(param.Part,
+                            part =>
+                            {
+                                Assert.Equal("equivalence", part.Name);
+                            },
+                            part =>
+                            {
+                                Assert.Equal("concept", part.Name);
+                                Coding concept = (Coding)part.Value;
+                                Assert.Equal("http://snomed.info/sct", concept.System);
+                                Assert.Equal("309068002", concept.Code);
+                            },
+                            part =>
+                            {
+                                Assert.Equal("source", part.Name);
+                                Assert.Equal("http://hl7.org/fhir/ConceptMap/102", ((FhirString)part.Value).Value);
+                            });
+                    });
+            }
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
+        [Fact]
+        public async void ExternalServiceTranslateSimpleAutomap()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new TranslateParameters()
+                .WithConceptMap(source: "http://snomed.info/sct?fhir_vs")
+                .WithCode(code: "90260006", system: "http://snomed.info/sct")
+                .WithTarget("http://hl7.org/fhir/ValueSet/substance-category");
+
+            var result = await svc.Translate(parameters, useGet: true);
+
+            Assert.NotNull(result);
+            var param1 = result.Parameter.FirstOrDefault();
+            Assert.Equal("result", param1.Name);
+        }
+
+        [Fact]
+        public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new LookupParameters()
+                .WithCode(code: "45313011000036107", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160630")
+                .WithProperties(new[] { "inactive", "display" });
+
+            var result = await svc.Lookup(parameters);
+
+            Assert.NotNull(result);
+
+            var paramDisplay = result.Parameter.Find(p => p.Name == "display");
+            Assert.NotNull(paramDisplay);
+            Assert.IsType<FhirString>(paramDisplay.Value);
+            Assert.Equal("teriparatide 20 microgram injection, 2.4 mL cartridge", ((FhirString)paramDisplay.Value).Value);
+
+            var paramProperty = result.Parameter.Find(p => p.Name == "property");
+            Assert.NotNull(paramProperty);
+            Assert.Collection(paramProperty.Part,
+                part =>
+                {
+                    Assert.Equal("code", part.Name);
+                    Assert.IsType<Code>(part.Value);
+                    Assert.Equal("inactive", ((Code)part.Value).Value);
+                },
+                part =>
+                {
+                    Assert.Equal("valueBoolean", part.Name);
+                    Assert.IsType<FhirBoolean>(part.Value);
+                    Assert.Equal(true, ((FhirBoolean)part.Value).Value);
+                });
+        }
+
+        [Fact]
+        public async void ExternalServiceLookupInactiveStatus()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new LookupParameters()
+                .WithCode(code: "45313011000036107", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160630")
+                .WithProperties(new[] { "inactive" });
+
+            var result = await svc.Lookup(parameters, true);
+
+            Assert.NotNull(result);
+
+            var parameter = result.Parameter.Find(p => p.Name == "property");
+            Assert.NotNull(parameter);
+
+            Assert.Collection(parameter.Part,
+                part =>
+                {
+                    Assert.Equal("code", part.Name);
+                    Assert.IsType<Code>(part.Value);
+                    Assert.Equal("inactive", ((Code)part.Value).Value);
+                },
+                part =>
+                {
+                    Assert.Equal("valueBoolean", part.Name);
+                    Assert.IsType<FhirBoolean>(part.Value);
+                    Assert.Equal(true, ((FhirBoolean)part.Value).Value);
+                });
+        }
+
+        [Fact]
+        public async void ExternalServiceLookupSNOMEDCode()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new LookupParameters()
+                .WithCode(code: "263495000", system: "http://snomed.info/sct");
+
+            var result = await svc.Lookup(parameters);
+
+            Assert.NotNull(result);
+            Assert.True(result.Parameter.Count > 0);
+        }
+
+        [Fact]
+        public async void ExternalServiceExpandExplicitValueSet()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var result = await svc.Expand(null, "education-levels") as ValueSet;
+            Assert.NotNull(result);
+            Assert.True(result.Expansion.Contains.Count > 0, "Expected more than 0 items.");
+        }
+
+        [Fact]
+        public async void ExternalServiceExpandImplicitValueSetWithFilter()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new ExpandParameters()
+                .WithValueSet(url: "http://snomed.info/sct?fhir_vs=refset/142321000036106")
+                .WithFilter("met")
+                .WithPaging(count: 10);
+
+            var result = await svc.Expand(parameters) as ValueSet;
+
+            Assert.NotNull(result);
+            // Exactly 10 items all starting with 'met'.
+            Assert.Collection(result.Expansion.Contains,
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                },
+                item =>
+                {
+                    Assert.StartsWith("met", item.Display, StringComparison.OrdinalIgnoreCase);
+                });
+        }
+
+        [Fact]
+        public async void ExternalServiceSubsumesConceptASubsumesConceptB()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new SubsumesParameters()
+                .WithCode(codeA: "235856003", codeB: "3738000", system: "http://snomed.info/sct", version: "http://snomed.info/sct/32506021000036107/version/20160430")
+                .Build();
+
+            var result = await svc.Subsumes(parameters);
+
+            Assert.NotNull(result);
+            var paramOutcome = result.Parameter.Find(p => p.Name == "outcome");
+            Assert.NotNull(paramOutcome);
+            Assert.IsType<Code>(paramOutcome.Value);
+            Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
+        }
+
+        [Fact]
+        public async void ExternalServiceClosureExample()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            // Step 1
+            var parametersStep1 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52");
+
+            var resultStep1 = await svc.Closure(parametersStep1) as ConceptMap;
+
+            Assert.NotNull(resultStep1);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep1.Name);
+            Assert.Equal("1", resultStep1.Version);
+
+            // Step 2
+            var conceptStep2 = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "22298006",
+            };
+            var parametersStep2 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep2 });
+
+            var resultStep2 = await svc.Closure(parametersStep2) as ConceptMap;
+
+            Assert.NotNull(resultStep2);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep2.Name);
+            Assert.Equal("2", resultStep2.Version);
+
+            // Step 3
+            var conceptStep3 = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "128599005",
+            };
+            var parametersStep3 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep3 });
+
+            var resultStep3 = await svc.Closure(parametersStep3) as ConceptMap;
+
+            Assert.NotNull(resultStep3);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep3.Name);
+            Assert.Equal("3", resultStep3.Version);
+            Assert.Collection(resultStep3.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
+
+            // Step 4
+            var conceptStep4A = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "301095005",
+            };
+            var conceptStep4B = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "298705000",
+            };
+            var conceptStep4C = new Coding
+            {
+                System = "http://snomed.info/sct",
+                Code = "282729004",
+            };
+            var parametersStep4 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithConcepts(new List<Coding> { conceptStep4A, conceptStep4B, conceptStep4C });
+
+            var resultStep4 = await svc.Closure(parametersStep4) as ConceptMap;
+
+            Assert.NotNull(resultStep4);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep4.Name);
+            Assert.Equal("4", resultStep4.Version);
+            Assert.Collection(resultStep4.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("128599005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("301095005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("282729004", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
+
+            var parametersStep5 = new ClosureParameters("9214d56c-032e-4f87-a003-e515f7386a52")
+                .WithVersion("0");
+
+            var resultStep5 = await svc.Closure(parametersStep5) as ConceptMap;
+
+            Assert.NotNull(resultStep5);
+            Assert.Equal("9214d56c-032e-4f87-a003-e515f7386a52", resultStep5.Name);
+            Assert.Equal("4", resultStep5.Version);
+            Assert.Collection(resultStep5.Group,
+                group =>
+                {
+                    Assert.Equal("http://snomed.info/sct", group.Source);
+                    Assert.Equal("http://snomed.info/sct", group.Target);
+                    Assert.Collection(group.Element,
+                        element =>
+                        {
+                            Assert.Equal("298705000", element.Code);
+                        },
+                        element =>
+                        {
+                            Assert.Equal("22298006", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("128599005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("301095005", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        },
+                        element =>
+                        {
+                            Assert.Equal("282729004", element.Code);
+                            Assert.Collection(element.Target,
+                                target =>
+                                {
+                                    Assert.Equal("128599005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("301095005", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                },
+                                target =>
+                                {
+                                    Assert.Equal("298705000", target.Code);
+                                    Assert.Equal(ConceptMap.ConceptMapEquivalence.Subsumes, target.Equivalence);
+                                });
+                        });
+                });
+        }
+
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async void ExternalServiceValidateCodeTest()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var svc = new ExternalTerminologyService(client);
+
+            var parameters = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
+
+            var outParams = await svc.ValueSetValidateCode(parameters);
+            var result = outParams.GetSingleValue<FhirBoolean>("result");
+            Assert.NotNull(result);
+            Assert.True(result.Value);
+        }
+
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
@@ -284,16 +824,35 @@ namespace Hl7.Fhir.Specification.Tests
             testService(svc);
 
             // Now, this should fall back
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
         }
 
-        [Fact, Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeTestWithVS()
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async void FallbackServiceValidateCodeWithParamsTest()
+        {
+            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var external = new ExternalTerminologyService(client);
+            var local = new LocalTerminologyService(_resolver);
+            var svc = new FallbackTerminologyService(local, external);
+
+            // Now, this should fall back
+            var inParams = new ValidateCodeParameters()
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
+                .WithCode(code: "1166006", system: "http://snomed.info/sct");
+
+            var result = await svc.ValueSetValidateCode(inParams);
+            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+        }
+
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async T.Task FallbackServiceValidateCodeTestWithVS()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
             var service = new ExternalTerminologyService(client);
-            var vs = _resolver.FindValueSet("http://hl7.org/fhir/ValueSet/substance-code");
+            var vs = await _resolver.FindValueSetAsync("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);
 
             // Override the canonical with something the remote server cannot know
@@ -302,11 +861,13 @@ namespace Hl7.Fhir.Specification.Tests
             var fallback = new FallbackTerminologyService(local, service);
 
             // Now, this should fall back to external + send our vs (that the server cannot know about)
+#pragma warning disable CS0618 // Type or member is obsolete
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
+#pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
         }
 
-        private class IKnowOnlyMyTestVSResolver : IResourceResolver
+        private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {
             public ValueSet _myOnlyVS;
 
@@ -315,9 +876,12 @@ namespace Hl7.Fhir.Specification.Tests
                 _myOnlyVS = vs;
             }
 
-            public Resource ResolveByCanonicalUri(string uri) => (uri == _myOnlyVS.Url) ? _myOnlyVS : null;
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                return await T.Task.FromResult(uri == _myOnlyVS.Url ? _myOnlyVS : null);
+            }
 
-            public Resource ResolveByUri(string uri) => throw new NotImplementedException();
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }

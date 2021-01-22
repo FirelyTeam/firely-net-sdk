@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.ElementModel;
@@ -14,6 +14,7 @@ using Hl7.Fhir.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Schema
 {
@@ -91,7 +92,7 @@ namespace Hl7.Fhir.Specification.Schema
             var outcome = VerifyContentRequirements(input, bindable);
             if (!outcome.Success) return outcome;
 
-            return ValidateCode(input, bindable, vc);
+            return TaskHelper.Await(() => ValidateCode(input, bindable, vc));
         }
 
         private static Element parseBindable(ITypedElement input)
@@ -103,20 +104,20 @@ namespace Hl7.Fhir.Specification.Schema
             return bindable;
         }
 
-        internal OperationOutcome ValidateCode(ITypedElement source, Element bindable, ValidationContext vc)
+        internal async Task<OperationOutcome> ValidateCode(ITypedElement source, Element bindable, ValidationContext vc)
         {
             OperationOutcome outcome;
 
             switch (bindable)
             {
                 case Code co:
-                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
                     break;
                 case Coding cd:
-                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
                     break;
                 case CodeableConcept cc:
-                    outcome = callService(vc.TerminologyService, source.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
                     break;
                 default:
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
@@ -130,20 +131,31 @@ namespace Hl7.Fhir.Specification.Schema
             return Strength == BindingStrength.Required ? outcome : new OperationOutcome();
         }
 
-        private OperationOutcome callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
+        private async Task<OperationOutcome> callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
                 Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
         {
             try
             {
-                var outcome = svc.ValidateCode(canonical: canonical, code: code, system: system, display: display,
-                                coding: coding, codeableConcept: cc, @abstract: abstractAllowed);
+                var parameters = new ValidateCodeParameters()
+                    .WithValueSet(canonical)
+                    .WithCode(code: code, system: system, display: display)
+                    .WithCoding(coding)
+                    .WithCodeableConcept(cc)
+                    .WithAbstract(abstractAllowed)
+                    .Build();
+
+                var outcome = (await svc.ValueSetValidateCode(parameters).ConfigureAwait(false)).ToOperationOutcome();
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
                 return outcome;
             }
             catch (TerminologyServiceException tse)
             {
+                string message = (cc?.Coding == null || cc.Coding.Count == 1) 
+                    ? $"Terminology service failed while validating code '{code ?? coding?.Code ?? cc?.Coding[0]?.Code}' (system '{system ?? coding?.System ?? cc?.Coding[0]?.System}'): {tse.Message}"
+                    : $"Terminology service failed while validating the codes: {tse.Message}";            
+
                 return Issue.TERMINOLOGY_SERVICE_FAILED
-                    .NewOutcomeWithIssue($"Terminology service failed while validating code '{code}' (system '{system}'): {tse.Message}", location);
+                        .NewOutcomeWithIssue(message, location);
             }
         }
 
@@ -163,7 +175,7 @@ namespace Hl7.Fhir.Specification.Schema
                 case CodeableConcept cc when !codeableConceptHasCode(cc) && Strength == BindingStrength.Required:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"No code found in {source.InstanceType} with a required binding.", source);
-                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) && 
+                case CodeableConcept cc when !codeableConceptHasCode(cc) && String.IsNullOrEmpty(cc.Text) &&
                                 Strength == BindingStrength.Extensible:
                     return Issue.TERMINOLOGY_NO_CODE_IN_INSTANCE
                         .NewOutcomeWithIssue($"Extensible binding requires code or text.", source);

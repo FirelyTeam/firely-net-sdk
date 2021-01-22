@@ -1,0 +1,15 @@
+{
+  "resourceType": "List",
+  "id": "val1",
+  "contained": [
+    {
+      "resourceType": "Patient",
+      "id" : "pat"
+    }
+  ],
+  "status": "current",
+  "mode": "changes",
+  "subject": {
+    "reference": "#pat"
+  }
+}

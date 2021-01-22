@@ -1,0 +1,103 @@
+{
+    "resourceType": "Measure",
+    "id": "er5hkfRvpy.uu4BZHxPJPlMySI1rbVYY96z6LzV9o.pY3",
+    "url": "http://open.epic.com/Measure/MR-COVID-19-SCREENING-RATE",
+    "name": "MR_COVID_19_SCREENING_RATE",
+    "title": "COVID-19 Screening Rate",
+    "status": "draft",
+    "subjectCodeableConcept": {
+        "coding": [
+            {
+                "system": "http://hl7.org/fhir/resource-types",
+                "code": "Patient",
+                "display": "Patient"
+            }
+        ]
+    },
+    "date": "2020-03-30T17:03:27Z",
+    "publisher": "Epic",
+    "contact": [
+        {
+            "name": "Michael Donnelly",
+            "telecom": [
+                {
+                    "system": "url",
+                    "value": "https://chat.fhir.org/#narrow/stream/226195-Covid-19-Response/topic/Example.20Measure.20definition",
+                    "rank": 1
+                },
+                {
+                    "system": "email",
+                    "value": "michael.donnelly@epic.com",
+                    "rank": 2
+                }
+            ]
+        }
+    ],
+    "description": "Percentage of patients with a face-to-face, telehealth, telephone, or admission encounter for whom a COVID-19 communicable disease screening was performed.",
+    "useContext": [
+        {
+            "code": {
+                "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+                "code": "focus"
+            },
+            "valueCodeableConcept": {
+                "coding": [
+                    {
+                        "system": "http://snomed.info/sct",
+                        "code": "840535000",
+                        "display": "Antibody to 2019 novel coronavirus"
+                    }
+                ],
+                "text": "COVID-19"
+            }
+        }
+    ],
+    "library": [ "http://open.epic.com/Library/COVID19Screening" ],
+    "scoring": {
+        "coding": [
+            {
+                "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+                "code": "proportion",
+                "display": "Proportion"
+            }
+        ]
+    },
+    "group": [
+        {
+            "population": [
+                {
+                    "code": {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                "code": "numerator",
+                                "display": "Numerator"
+                            }
+                        ]
+                    },
+                    "description": "Patients for whom a COVID-19 communicable disease screening was performed.",
+                    "criteria": {
+                      "language": "text/cql.identifier",
+                      "expression": "Initial Population"
+                    }
+                },
+                {
+                    "code": {
+                        "coding": [
+                            {
+                                "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                                "code": "denominator",
+                                "display": "Denominator"
+                            }
+                        ]
+                    },
+                    "description": "Patients with a face-to-face, telehealth, telephone, or admission encounter.",
+                    "criteria": {
+                      "language": "text/cql.identifier",
+                      "expression": "Denominator"
+                    }
+                }
+            ]
+        }
+    ]
+}

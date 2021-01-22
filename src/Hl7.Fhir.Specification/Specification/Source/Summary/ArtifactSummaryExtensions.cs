@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://github.com/FirelyTeam/fhir-net-api/blob/master/LICENSE
+ * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Specification.Source
                 switch (list.Count)
                 {
                     case 0:
-                        return default(TSource);
+                        return default;
                     case 1:
                         return list[0];
                 }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Specification.Source
                 {
                     if (!enumerator.MoveNext())
                     {
-                        return default(TSource);
+                        return default;
                     }
                     TSource current = enumerator.Current;
                     if (!enumerator.MoveNext())
