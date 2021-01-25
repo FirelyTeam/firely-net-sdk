@@ -280,12 +280,28 @@ namespace Hl7.FhirPath.R4.Tests
         {
             var obs = new Observation()
             {
-                Value = new Quantity() { Value = 1, Unit = "%" },
-                Component = new List<Observation.ComponentComponent>() { new Observation.ComponentComponent() { Value = new Quantity() { Value = 1, Unit = "min"} } }
+                Id = "test",
+                Status = ObservationStatus.Final,
+                Code = new CodeableConcept() { Text = "test"},
+                Value = new Quantity() { Value = 1, Code = "%", System = "http://unitsofmeasure.org" },
+                Component = new List<Observation.ComponentComponent>() 
+                { 
+                    new Observation.ComponentComponent()
+                    { 
+                        Code = new CodeableConcept() { Text = "test"}, 
+                        Value = new Quantity() 
+                        { 
+                            Value = 1, 
+                            Code = "L/min", 
+                            System = "http://unitsofmeasure.org" 
+                        } 
+                    } 
+                }
             };
 
             var typedElement = obs.ToTypedElement();
             var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
+            Assert.AreEqual(1, result.Count());
         }
     }
 }
