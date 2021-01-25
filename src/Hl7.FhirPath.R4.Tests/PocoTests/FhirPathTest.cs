@@ -274,5 +274,18 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsNotNull(dataType, "Select should result an instance");
             Assert.IsInstanceOfType(dataType, input.GetType(), "dataType should be the same type of the input");
         }
+
+        [TestMethod]
+        public void TestSelectDifferentQuantities()
+        {
+            var obs = new Observation()
+            {
+                Value = new Quantity() { Value = 1, Unit = "%" },
+                Component = new List<Observation.ComponentComponent>() { new Observation.ComponentComponent() { Value = new Quantity() { Value = 1, Unit = "min"} } }
+            };
+
+            var typedElement = obs.ToTypedElement();
+            var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
+        }
     }
 }
