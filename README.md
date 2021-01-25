@@ -1,6 +1,7 @@
 |STU3|R4|R5|Released|
 |---|---|---|---|
 |[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop-stu3)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop-r4)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Build status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/Continuous%20Build?branchName=develop-r5)](https://dev.azure.com/firely/firely-net-sdk/_build?view=buildsHistory&definitionId=14)|[![Release status](https://vsrm.dev.azure.com/firely/_apis/public/Release/badge/d27985be-1c61-41fd-82e7-23e7a2f06dc3/1/2)](https://dev.azure.com/firely/firely-net-sdk/_releaseDefinition?definitionId=1&_a=definition-pipeline)|
+| [![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.STU3)](https://www.nuget.org/packages/Hl7.Fhir.STU3) |[![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.R4)](https://www.nuget.org/packages/Hl7.Fhir.R4) | [![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.R5)](https://www.nuget.org/packages/Hl7.Fhir.R5) |
 
 ## Introduction ##
 This is the official support SDK for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
@@ -34,11 +35,10 @@ and develop branches in this repository below:
 |Spec version|Git branch|Core NuGet|
 |---|---|---|
 |R5 (experimental)| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-r5 | https://www.nuget.org/packages/Hl7.Fhir.R5 |
-|R4| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-r4 | https://www.nuget.org/packages/Hl7.Fhir.R4 |
-|STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-stu3 | https://www.nuget.org/packages/Hl7.Fhir.STU3 |
-|DSTU 2.1| N/A| https://www.nuget.org/packages/Hl7.Fhir.DSTU21 |
-|DSTU2| https://github.com/FirelyTeam/firely-net-sdk/tree/develop | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 |
-|DSTU1| https://github.com/FirelyTeam/firely-net-sdk/tree/master-dstu1 | https://www.nuget.org/packages/Hl7.Fhir.DSTU |
+|R4| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-r4 | https://www.nuget.org/packages/Hl7.Fhir.R4 | 
+|STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-stu3 | https://www.nuget.org/packages/Hl7.Fhir.STU3 | 
+|DSTU2| https://github.com/FirelyTeam/firely-net-sdk/tree/develop | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 | 
+|DSTU1| https://github.com/FirelyTeam/firely-net-sdk/tree/master-dstu1 | https://www.nuget.org/packages/Hl7.Fhir.DSTU | 
 
 Please note that the source code for the Firely .NET SDK is split up into two GitHub repos: one (with the branches listed above) with code that is specific to a FHIR release (this repo), and one that contains the code that is applicable across all FHIR releases (a separate [common repository][common-repo]).  This second repository is included in the first one using a Git Submodule, so all you have to do is check out the main repo (this one) and learn how to work with Submodules. To clone this repository with submodules, you can do:
 
