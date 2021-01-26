@@ -364,6 +364,20 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual("Practitioner.name[0]", location);
         }
 
+        [TestMethod]
+        public void TestValueAttrRepresentationLogicalModelDataType()
+        {
+            var basicWithTel = "<?xml version=\"1.0\" encoding=\"utf - 8\"?><BasicWithTel xmlns=\"http://hl7.org/fhir\"><telecom value =\"(tel)06-12345678\"/></BasicWithTel>";
+            var node = FhirXmlNode.Parse(basicWithTel);
+            var errors = node.VisitAndCatch();
+            Assert.IsFalse(errors.Any());
+
+            var provider = new StructureDefinitionSummaryProvider(new CustomResourceResolver());
+            var typedElement = node.ToTypedElement(provider);
+            errors = typedElement.VisitAndCatch();
+            Assert.IsFalse(errors.Any());
+        }
+
         private class CustomResourceResolver : IAsyncResourceResolver
         {
             private readonly ZipSource _zipSource;
