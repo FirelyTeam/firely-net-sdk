@@ -234,7 +234,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg;!$(Agent.BuildDirectory)/NuGetPackages/Hl7.Fhir.ElementModel.2.0.2.nupkg;$(Agent.BuildDirectory)/NuGetPackages/Hl7.Fhir.ElementModel.2.0.2.snupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
