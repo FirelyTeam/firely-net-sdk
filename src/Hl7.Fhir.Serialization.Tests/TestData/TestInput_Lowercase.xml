@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<myObservations>
+	<test_ID>123456</test_ID>
+	<case>
+		<patient_ID>PAT1234</patient_ID>
+		<iDAT>
+			<nachname>MAX</nachname>
+			<vorname>MUSTERMANN</vorname>
+			<geburtsdatum>1958-03-31</geburtsdatum>
+			<geschlecht>W</geschlecht>
+		</iDAT>
+		<observation>
+			<observation_ID>123</observation_ID>
+			<name>TEST</name>
+			<result>
+				<startdate>2020-09-01</startdate>
+				<result_Text>everything is fine</result_Text>
+				<result_Flag>1</result_Flag>
+			</result>
+		</observation>
+	</case>
+</myObservations>

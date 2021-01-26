@@ -50,6 +50,8 @@
     <None Remove="TestData\source-test\project.assets.json" />
     <None Remove="TestData\test-empty-nodes.json" />
     <None Remove="TestData\test-empty-nodes.xml" />
+    <None Remove="TestData\TestInput_Lowercase.xml" />
+    <None Remove="TestData\TestInput_Uppercase.xml" />
     <None Remove="TestData\typeErrors.xml" />
   </ItemGroup>
 
