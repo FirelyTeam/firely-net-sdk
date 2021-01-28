@@ -12,10 +12,8 @@ using System.Threading;
 namespace Hl7.Fhir.Core.Tests.Rest
 {
     [TestClass]
-    public class VerifyFhirVersionTests
+    public class FhirClientMockTest
     {
-
-
         [TestMethod]
         public async System.Threading.Tasks.Task VerifyFhirVersionTest()
         {
@@ -34,11 +32,12 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient/1"),
             };
 
+            //Two mocks, since response messages get disposed after each "SendAsync()", and the test required two rest calls.
             mock
                .Protected()
                        .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
                           "SendAsync",
-                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com")),  //IsAny<HttpRequestMessage>(),
+                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/metadata?_summary=true")), //the call to check capabilitystatement
                           ItExpr.IsAny<CancellationToken>())
                        .ReturnsAsync(response);
 
@@ -47,7 +46,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                .Protected()
                        .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
                           "SendAsync",
-                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient/1")),  //IsAny<HttpRequestMessage>(),
+                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient/1")),  //the GET Patient
                           ItExpr.IsAny<CancellationToken>())
                        .ReturnsAsync(patientResponse);
 
