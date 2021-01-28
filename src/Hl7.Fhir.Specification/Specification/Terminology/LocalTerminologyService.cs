@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
 
             // Else, look for one succesful match in any of the codes in the CodeableConcept
-            var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed)));
+            var callResults = await T.Task.WhenAll(cc.Coding.Select(coding => validateCodeVS(vs, coding, abstractAllowed))).ConfigureAwait(false);
             var anySuccesful = callResults.Any(p => p.GetSingleValue<FhirBoolean>("result")?.Value == true);
 
             if (anySuccesful == false)
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 return resultParam;
             }
 
-            await _semaphore.WaitAsync();
+            await _semaphore.WaitAsync().ConfigureAwait(false);
             try
             {
                 // We might have a cached or pre-expanded version brought to us by the _source
