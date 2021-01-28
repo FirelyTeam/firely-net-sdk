@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             var response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(@"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": ""3.0.1""}", Encoding.UTF8, "application/json"),
+                Content = new StringContent(@"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}", Encoding.UTF8, "application/json"),
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com"),
             };
 
@@ -60,5 +60,50 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 Assert.Fail($"Expected no exception, but got: {ex.Message}");
             }
         }
+        
+        [TestMethod]
+        [ExpectedException(typeof(NotSupportedException))]
+        public async System.Threading.Tasks.Task VerifyFhirVersionTestErrorThrown()
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": ""0.0.0""}", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com"),
+            };
+
+            var patientResponse = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Patient"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient/1"),
+            };
+
+            //Two mocks, since response messages get disposed after each "SendAsync()", and the test required two rest calls.
+            mock
+               .Protected()
+                       .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
+                          "SendAsync",
+                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/metadata?_summary=true")), //the call to check capabilitystatement
+                          ItExpr.IsAny<CancellationToken>())
+                       .ReturnsAsync(response);
+
+
+            mock
+               .Protected()
+                       .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
+                          "SendAsync",
+                          ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient/1")),  //the GET Patient
+                          ItExpr.IsAny<CancellationToken>())
+                       .ReturnsAsync(patientResponse);
+
+            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = true }, mock.Object);
+           
+            var patient = await client.ReadAsync<Patient>("Patient/1");
+           
+            
+        }
+
     }
 }
