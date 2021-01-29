@@ -55,7 +55,7 @@ We are welcoming contributors!
 If you want to participate in this project, we're using [Git Flow][nvie] for our branch management, so please submit your commits using pull requests on the correct `develop-stu3`/`develop-r4`/`develop-r5` branches as mentioned above! 
 
 [common-repo]: https://github.com/FirelyTeam/firely-net-common
-[netsdk-docu]: http://docs.fire.ly/firelynetsdk/index.html
+[netsdk-docu]: https://docs.fire.ly/projects/Firely-NET-SDK/
 [netsdk-zulip]: https://chat.fhir.org/#narrow/stream/dotnet
 [nvie]: http://nvie.com/posts/a-successful-git-branching-model/
 [fhir-spec]: http://www.hl7.org/fhir
