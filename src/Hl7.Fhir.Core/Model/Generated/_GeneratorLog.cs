@@ -223,8 +223,6 @@
 // Age.cs
 // Annotation.cs
 // Attachment.cs
-// ContactDetail.cs
-// ContactPoint.cs
 // Contributor.cs
 // Count.cs
 // DataRequirement.cs
@@ -235,8 +233,6 @@
 // HumanName.cs
 // Money.cs
 // ParameterDefinition.cs
-// Quantity.cs
-// Range.cs
 // Ratio.cs
 // RelatedArtifact.cs
 // SampledData.cs
