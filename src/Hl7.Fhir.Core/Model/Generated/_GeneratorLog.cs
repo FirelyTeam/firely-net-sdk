@@ -239,7 +239,6 @@
 // Signature.cs
 // Timing.cs
 // TriggerDefinition.cs
-// UsageContext.cs
 // Account.cs
 // ActivityDefinition.cs
 // AdverseEvent.cs
