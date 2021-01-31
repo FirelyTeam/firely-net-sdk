@@ -11,6 +11,7 @@ trigger:
     - hotfix/*
     - hotfix-*
     - refs/tags/v*
+    - devops/*              ########### TODO remove during PR 
   batch: True
 
 name: $(date:yyyyMMdd)$(rev:-r)
@@ -30,9 +31,10 @@ resources:
 
 stages:
 - stage: build
+  displayName: Build
   jobs:
   - job: UnitTesting
-    displayName: Unit test in Debug mode
+    displayName: Build in Debug mode
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 1
     steps:
@@ -54,16 +56,12 @@ stages:
       displayName: Build
       inputs:
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration Debug --no-restore
-    - task: DotNetCoreCLI@2
-      displayName: Test
-      inputs:
-        command: test
-        projects: >-
-          **/Hl7.Fhir*Tests.csproj
+        arguments: --configuration Debug --no-restore -o bin
 
-          !**/Hl7.FhirPath*Tests.csproj
-        arguments: --no-build -f netcoreapp2.1 --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"
+    - publish: $(System.DefaultWorkingDirectory)/bin
+      displayName: Publish build artifacts
+      artifact: Build
+    
     - task: PowerShell@2
       displayName: Extract variable RunFhirPathTests
       inputs:
@@ -104,90 +102,129 @@ stages:
 
 
           Write-Host $RunFhirPathTests
-    - task: DotNetCoreCLI@2
-      displayName: Test FhirPath
-      condition: and(succeeded(), eq(variables.RunFhirPathTests, 'true'))
-      inputs:
-        command: test
-        projects: '**/Hl7.FhirPath*Tests.csproj'
-        arguments: --no-build --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient
 
-  - job: BuildAndPack
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
-    displayName: Build and Pack in Release mode
-    timeoutInMinutes: 120
-    cancelTimeoutInMinutes: 1
-    steps:
-    - checkout: self
-      clean: true
-      submodules: true
-      fetchDepth: 100
-    - task: UseDotNet@2
-      displayName: Use .NET Core sdk $(NET_CORE_SDK)
-      inputs:
-        version: $(NET_CORE_SDK)
-    - task: DownloadSecureFile@1
-      displayName: Download Signing key file
-      inputs:
-        secureFile: 47f5a9d4-7009-4fe1-9cb2-c0d6122ded23
-        retryCount: 5
-    - task: CopyFiles@2
-      displayName: Copy key file to $(Build.SourcesDirectory)\src
-      inputs:
-        SourceFolder: $(Agent.TempDirectory)
-        Contents: FhirNetApi.snk
-        TargetFolder: $(Build.SourcesDirectory)\src
-    - task: CopyFiles@2
-      displayName: Copy key file to $(Build.SourcesDirectory)\common\src
-      inputs:
-        SourceFolder: $(Agent.TempDirectory)
-        Contents: FhirNetApi.snk
-        TargetFolder: $(Build.SourcesDirectory)\common\src
-    - task: PowerShell@2
-      displayName: Retrieve current version
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)\build\RetrieveVersion.ps1
-    - task: PowerShell@2
-      displayName: Setting version
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)\build\UpdateVersion.ps1
-        arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
-    - task: PowerShell@2
-      displayName: Setting version for common projects
-      inputs:
-        filePath: $(Build.SourcesDirectory)\common\build\UpdateVersion.ps1
-        arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
-        workingDirectory: $(Build.SourcesDirectory)\common\build
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: ./Hl7.Fhir.sln
-        verbosityRestore: Minimal
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        projects: ./Hl7.Fhir.sln
-        arguments: --configuration Release --no-restore
-    - task: DotNetCoreCLI@2
-      displayName: Pack
-      inputs:
-        command: pack
-        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
-        configurationToPack: Release
-        nobuild: true
-        verbosityPack: Normal
-    - task: PublishBuildArtifacts@1
-      displayName: Publish Artifact
-      inputs:
-        pathToPublish: $(Build.ArtifactStagingDirectory)
-        ArtifactName: NuGetPackages
-      
+- stage: test
+  displayName: Test
+  dependsOn: build
+  jobs:
+  - template: templates/test-job-template.yml
+    parameters:
+      testRunTitle: Tests common test projects
+      projects: |
+        build/Hl7.Fhir.Support.Tests.dll
+        build/HL7.FhirPath.Tests.dll
+#  - template: templates/test-job-template.yml
+#    condition: eq(variables.RunFhirPathTests, 'true')
+#    parameters:
+#       testRunTitle: Tests FhirPath test projects
+#       projects: |
+#         build/Hl7.FhirPath.R4.Tests.dll
+  - template: templates/test-job-template.yml
+    parameters:
+       testRunTitle: Tests Serialization test project
+       projects: |
+         build/Hl7.Fhir.Serialization.Tests.dll
+  - template: templates/test-job-template.yml
+    parameters:
+      testRunTitle: Tests Specification test project
+      projects: |
+        build/Hl7.Fhir.Specification.Tests.dll
+        - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification test project
+          projects: |
+            build/Hl7.Fhir.Specification.Tests.dll
+  - template: templates/test-job-template.yml
+    parameters:
+      testRunTitle: Tests Core test project
+      projects: |
+        build/Hl7.Fhir.Core.Tests.dll
+  - template: templates/test-job-template.yml
+    parameters:
+      testRunTitle: Tests ElementModel test project
+      projects: |
+        build/Hl7.Fhir.ElementModel.Tests.dll
+                          
+- stage: pack
+  displayName: Pack
+  dependsOn: test
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  jobs:
+    - job: BuildAndPack
+      displayName: Build and Pack in Release mode
+      timeoutInMinutes: 120
+      cancelTimeoutInMinutes: 1
+      steps:
+      - checkout: self
+        clean: true
+        submodules: true
+        fetchDepth: 100
+      - task: UseDotNet@2
+        displayName: Use .NET Core sdk $(NET_CORE_SDK)
+        inputs:
+          version: $(NET_CORE_SDK)
+      - task: DownloadSecureFile@1
+        displayName: Download Signing key file
+        inputs:
+          secureFile: 47f5a9d4-7009-4fe1-9cb2-c0d6122ded23
+          retryCount: 5
+      - task: CopyFiles@2
+        displayName: Copy key file to $(Build.SourcesDirectory)\src
+        inputs:
+          SourceFolder: $(Agent.TempDirectory)
+          Contents: FhirNetApi.snk
+          TargetFolder: $(Build.SourcesDirectory)\src
+      - task: CopyFiles@2
+        displayName: Copy key file to $(Build.SourcesDirectory)\common\src
+        inputs:
+          SourceFolder: $(Agent.TempDirectory)
+          Contents: FhirNetApi.snk
+          TargetFolder: $(Build.SourcesDirectory)\common\src
+      - task: PowerShell@2
+        displayName: Retrieve current version
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\build\RetrieveVersion.ps1
+      - task: PowerShell@2
+        displayName: Setting version
+        inputs:
+          targetType: filePath
+          filePath: $(Build.SourcesDirectory)\build\UpdateVersion.ps1
+          arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+      - task: PowerShell@2
+        displayName: Setting version for common projects
+        inputs:
+          filePath: $(Build.SourcesDirectory)\common\build\UpdateVersion.ps1
+          arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+          workingDirectory: $(Build.SourcesDirectory)\common\build
+      - task: DotNetCoreCLI@2
+        displayName: Restore
+        inputs:
+          command: restore
+          projects: ./Hl7.Fhir.sln
+          verbosityRestore: Minimal
+      - task: DotNetCoreCLI@2
+        displayName: Build
+        inputs:
+          projects: ./Hl7.Fhir.sln
+          arguments: --configuration Release --no-restore
+      - task: DotNetCoreCLI@2
+        displayName: Pack
+        inputs:
+          command: pack
+          searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
+          configurationToPack: Release
+          nobuild: true
+          verbosityPack: Normal
+      - task: PublishBuildArtifacts@1
+        displayName: Publish Artifact
+        inputs:
+          pathToPublish: $(Build.ArtifactStagingDirectory)
+          ArtifactName: NuGetPackages
+   
 - stage: deploy_myget
   displayName: Deploy to MyGet
-  dependsOn: build
+  dependsOn: pack
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
   jobs:
   - deployment: myget
