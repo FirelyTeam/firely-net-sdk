@@ -10,7 +10,6 @@ parameters:
 jobs:
 - job: 
   displayName: ${{ parameters.testRunTitle }}
-  services: ${{ parameters.services }}
 
   steps:
   - checkout: none
