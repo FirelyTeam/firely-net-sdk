@@ -28,6 +28,7 @@ resources:
   repositories:
   - repository: self
     type: git
+    fetchDepth: 5
     ref: develop-stu3
 
 stages:
@@ -71,8 +72,7 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
-        Contents: |
-          **\publish\**
+        Contents: '**\publish\**'
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
