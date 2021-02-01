@@ -19,6 +19,7 @@ name: $(date:yyyyMMdd)$(rev:-r)
 variables:
   NET_CORE_SDK: 2.1.x
   isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   
 pool:
   vmImage: 'windows-latest'
@@ -61,7 +62,9 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy build output to $(System.DefaultWorkingDirectory)/bin'
       inputs:
-        Contents: $(System.DefaultWorkingDirectory)/src/**/bin/Debug/*
+        Contents: |
+          $(System.DefaultWorkingDirectory)\src\**\bin\Debug\*
+          $(System.DefaultWorkingDirectory)\Common\src\**\bin\Debug\*
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
