@@ -42,7 +42,7 @@ stages:
     - checkout: self
       clean: true
       submodules: true
-      fetchDepth: 5
+      fetchDepth: 3
     - task: UseDotNet@2
       displayName: Use .NET Core sdk $(NET_CORE_SDK)
       inputs:
@@ -66,6 +66,7 @@ stages:
         command: publish
         projects: '**/Hl7.*Tests/*.csproj'
         publishWebProjects: false
+        zipAfterPublish: false
         arguments: --configuration Debug --no-build -f netcoreapp2.1
 
     - bash: |
@@ -74,7 +75,7 @@ stages:
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         sourceFolder: $(System.DefaultWorkingDirectory)
-        Contents: '**\publish\**'
+        Contents: '**\bin\Debug\*\publish\**'
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)\bin'   
 
