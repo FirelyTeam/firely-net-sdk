@@ -61,15 +61,15 @@ stages:
         arguments: --configuration Debug --no-restore
 
     - task: DotNetCoreCLI@2
-      displayName: Build
+      displayName: Create Test artifacts
       inputs:
         command: publish
-        projects: '**/Hl7.*Test/*.csproj'
+        projects: '**/Hl7.*Tests/*.csproj'
         publishWebProjects: false
         arguments: --configuration Debug --no-build 
 
     - task: CopyFiles@2
-      displayName: 'Copy build output to $(System.DefaultWorkingDirectory)/bin'
+      displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         Contents: |
           **\bin\Debug\*\publish\**
@@ -77,6 +77,7 @@ stages:
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
     - task: PublishPipelineArtifact@1
+      displayName: Publish Test artifacts
       inputs:
         targetPath: $(System.DefaultWorkingDirectory)/bin
         artifactName: TestBuild
