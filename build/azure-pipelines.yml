@@ -68,6 +68,8 @@ stages:
         publishWebProjects: false
         arguments: --configuration Debug --no-build -f netcoreapp2.1
 
+    - bash: |
+        ls -lR *
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
