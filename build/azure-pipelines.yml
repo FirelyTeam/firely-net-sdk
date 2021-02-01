@@ -72,7 +72,7 @@ stages:
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         Contents: |
-          **\bin\Debug\*\publish\**
+          **\bin\Debug\netcoreapp2.1\publish\**
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
