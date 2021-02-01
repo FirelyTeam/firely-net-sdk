@@ -56,7 +56,14 @@ stages:
       displayName: Build
       inputs:
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration Debug --no-restore -o bin
+        arguments: --configuration Debug --no-restore
+
+    - task: CopyFiles@2
+      displayName: 'Copy DockerfileWithoutBuild to: $(Build.ArtifactStagingDirectory)/Output/Vonk.Server'
+      inputs:
+        Contents: $(System.DefaultWorkingDirectory)/src/**/bin/Debug/*
+        flattenFolders: false
+        TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
     - publish: $(System.DefaultWorkingDirectory)/bin
       displayName: Publish build artifacts
@@ -111,8 +118,8 @@ stages:
     parameters:
       testRunTitle: Tests common test projects
       projects: |
-        build/Hl7.Fhir.Support.Tests.dll
-        build/HL7.FhirPath.Tests.dll
+        build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.Support.Tests.dll
+        build/**/Debug/Debug/netcoreapp2.1/HL7.FhirPath.Tests.dll
 #  - template: templates/test-job-template.yml
 #    condition: eq(variables.RunFhirPathTests, 'true')
 #    parameters:
@@ -123,27 +130,27 @@ stages:
     parameters:
        testRunTitle: Tests Serialization test project
        projects: |
-         build/Hl7.Fhir.Serialization.Tests.dll
+         build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.Serialization.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Specification test project
       projects: |
-        build/Hl7.Fhir.Specification.Tests.dll
-        - template: templates/test-job-template.yml
-        parameters:
-          testRunTitle: Tests Specification test project
-          projects: |
-            build/Hl7.Fhir.Specification.Tests.dll
+        build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.Specification.Tests.dll
+  - template: templates/test-job-template.yml
+    parameters:
+      testRunTitle: Tests Specification test project
+      projects: |
+        build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.Specification.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Core test project
       projects: |
-        build/Hl7.Fhir.Core.Tests.dll
+        build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.Core.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests ElementModel test project
       projects: |
-        build/Hl7.Fhir.ElementModel.Tests.dll
+        build/**/Debug/Debug/netcoreapp2.1/Hl7.Fhir.ElementModel.Tests.dll
                           
 - stage: pack
   displayName: Pack

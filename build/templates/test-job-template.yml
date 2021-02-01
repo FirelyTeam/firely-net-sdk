@@ -13,6 +13,8 @@ jobs:
 
   steps:
   - checkout: none
+  - bash: |
+      ls -l *
   - task: DownloadPipelineArtifact@2
     inputs:
       displayName: Download Build artifacts
