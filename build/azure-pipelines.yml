@@ -65,6 +65,7 @@ stages:
       inputs:
         command: publish
         projects: '**/Hl7.*Test/*.csproj'
+        publishWebProjects: false
         arguments: --configuration Debug --no-build 
 
     - task: CopyFiles@2
