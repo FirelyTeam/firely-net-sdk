@@ -59,15 +59,16 @@ stages:
         arguments: --configuration Debug --no-restore
 
     - task: CopyFiles@2
-      displayName: 'Copy DockerfileWithoutBuild to: $(Build.ArtifactStagingDirectory)/Output/Vonk.Server'
+      displayName: 'Copy build output to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         Contents: $(System.DefaultWorkingDirectory)/src/**/bin/Debug/*
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
-    - publish: $(System.DefaultWorkingDirectory)/bin
-      displayName: Publish build artifacts
-      artifact: Build
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: $(System.DefaultWorkingDirectory)/bin
+        artifactName: Build
     
     - task: PowerShell@2
       displayName: Extract variable RunFhirPathTests
