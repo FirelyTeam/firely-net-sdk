@@ -16,8 +16,8 @@ jobs:
   - task: DownloadPipelineArtifact@2
     inputs:
       displayName: Download Build artifacts
-      artifact: 'Build'
-      path: $(System.DefaultWorkingDirectory)/build
+      artifact: 'TestBuild'
+      path: $(System.DefaultWorkingDirectory)/TestBuild
       
   - task: DotNetCoreCLI@2
     displayName: Running unit tests

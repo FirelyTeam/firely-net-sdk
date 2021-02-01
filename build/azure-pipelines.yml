@@ -56,21 +56,29 @@ stages:
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
+        command: build
         projects: ./Hl7.Fhir.sln
         arguments: --configuration Debug --no-restore
+
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: publish
+        projects: '**/Hl7.*Test/*.csproj'
+        arguments: --configuration Debug --no-build 
 
     - task: CopyFiles@2
       displayName: 'Copy build output to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         Contents: |
-          **\bin\Debug\**
+          **\bin\Debug\*\publish\**
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: $(System.DefaultWorkingDirectory)/bin
-        artifactName: Build
+        artifactName: TestBuild
     
     - task: PowerShell@2
       displayName: Extract variable RunFhirPathTests
@@ -121,8 +129,8 @@ stages:
     parameters:
       testRunTitle: Tests common test projects
       projects: |
-        build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.Support.Tests.dll
-        build/**/bin/Debug/netcoreapp2.1/HL7.FhirPath.Tests.dll
+        **/publish/Hl7.Fhir.Support.Tests.dll
+        **/publish/HL7.FhirPath.Tests.dll
 #  - template: templates/test-job-template.yml
 #    condition: eq(variables.RunFhirPathTests, 'true')
 #    parameters:
@@ -133,27 +141,27 @@ stages:
     parameters:
        testRunTitle: Tests Serialization test project
        projects: |
-         build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.Serialization.Tests.dll
+         **/publish//Hl7.Fhir.Serialization.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Specification test project
       projects: |
-        build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.Specification.Tests.dll
+        **/publish/Hl7.Fhir.Specification.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Specification test project
       projects: |
-        build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.Specification.Tests.dll
+        **/publish/Hl7.Fhir.Specification.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Core test project
       projects: |
-        build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.Core.Tests.dll
+        **/publish/Hl7.Fhir.Core.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests ElementModel test project
       projects: |
-        build/**/bin/Debug/netcoreapp2.1/Hl7.Fhir.ElementModel.Tests.dll
+        **/publish/Hl7.Fhir.ElementModel.Tests.dll
                           
 - stage: pack
   displayName: Pack
