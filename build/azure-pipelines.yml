@@ -28,7 +28,6 @@ resources:
   repositories:
   - repository: self
     type: git
-    fetchDepth: 5
     ref: develop-stu3
 
 stages:
@@ -43,7 +42,7 @@ stages:
     - checkout: self
       clean: true
       submodules: true
-      fetchDepth: 100
+      fetchDepth: 5
     - task: UseDotNet@2
       displayName: Use .NET Core sdk $(NET_CORE_SDK)
       inputs:
@@ -72,9 +71,10 @@ stages:
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
+        sourceFolder: $(System.DefaultWorkingDirectory)
         Contents: '**\publish\**'
         flattenFolders: false
-        TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
+        TargetFolder: '$(System.DefaultWorkingDirectory)\bin'   
 
     - task: PublishPipelineArtifact@1
       displayName: Publish Test artifacts
