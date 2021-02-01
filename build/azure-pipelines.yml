@@ -63,8 +63,7 @@ stages:
       displayName: 'Copy build output to $(System.DefaultWorkingDirectory)/bin'
       inputs:
         Contents: |
-          $(System.DefaultWorkingDirectory)\src\**\bin\Debug\**
-          $(System.DefaultWorkingDirectory)\Common\src\**\bin\Debug\**
+          **\bin\Debug\**
         flattenFolders: false
         TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
 
