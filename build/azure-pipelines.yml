@@ -134,8 +134,8 @@ stages:
     parameters:
       testRunTitle: Tests common test projects
       projects: |
-        **/publish/Hl7.Fhir.Support.Tests.dll
-        **/publish/HL7.FhirPath.Tests.dll
+        **/common/**/publish/Hl7.Fhir.Support.Tests.dll
+        **/common/**/publish/HL7.FhirPath.Tests.dll
 #  - template: templates/test-job-template.yml
 #    condition: eq(variables.RunFhirPathTests, 'true')
 #    parameters:
@@ -154,11 +154,6 @@ stages:
         **/publish/Hl7.Fhir.Specification.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
-      testRunTitle: Tests Specification test project
-      projects: |
-        **/publish/Hl7.Fhir.Specification.Tests.dll
-  - template: templates/test-job-template.yml
-    parameters:
       testRunTitle: Tests Core test project
       projects: |
         **/publish/Hl7.Fhir.Core.Tests.dll
@@ -169,7 +164,7 @@ stages:
         **/publish/Hl7.Fhir.ElementModel.Tests.dll
                           
 - stage: pack
-  displayName: Pack
+  displayName: Build and Pack
   dependsOn: test
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
   jobs:
