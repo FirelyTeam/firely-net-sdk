@@ -247,7 +247,7 @@ stages:
             steps:
             - download: current
               artifact: NuGetPackages
-              displayName: Download artifact WebApp
+              displayName: Download artifact NuGetPackages
             - task: NuGetCommand@2
               displayName: 'MyGet push'
               inputs:
@@ -271,7 +271,7 @@ stages:
             steps:
             - download: current
               artifact: NuGetPackages
-              displayName: Download artifact WebApp
+              displayName: Download artifact NuGetPackages
             - task: NuGetCommand@2
               displayName: 'NuGet Push DSTU2 packages only'
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
