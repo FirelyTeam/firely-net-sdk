@@ -69,8 +69,6 @@ stages:
         zipAfterPublish: false
         arguments: --configuration Debug --no-build -f netcoreapp2.1
 
-    - bash: |
-        ls -lR *
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
       inputs:
@@ -136,32 +134,27 @@ stages:
       projects: |
         **/common/**/publish/Hl7.Fhir.Support.Tests.dll
         **/common/**/publish/HL7.FhirPath.Tests.dll
-#  - template: templates/test-job-template.yml
-#    condition: eq(variables.RunFhirPathTests, 'true')
-#    parameters:
-#       testRunTitle: Tests FhirPath test projects
-#       projects: |
-#         build/Hl7.FhirPath.R4.Tests.dll
+  - ${{ if eq(variables.RunFhirPathTests, true) }}:
+    - template: templates/test-job-template.yml
+      parameters:
+        testRunTitle: Tests FhirPath Core test project
+        projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
   - template: templates/test-job-template.yml
     parameters:
        testRunTitle: Tests Serialization test project
-       projects: |
-         **/publish//Hl7.Fhir.Serialization.Tests.dll
+       projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Specification test project
-      projects: |
-        **/publish/Hl7.Fhir.Specification.Tests.dll
+      projects: '**/publish/Hl7.Fhir.Specification.Tests.dll'
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Core test project
-      projects: |
-        **/publish/Hl7.Fhir.Core.Tests.dll
+      projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests ElementModel test project
-      projects: |
-        **/publish/Hl7.Fhir.ElementModel.Tests.dll
+      projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
                           
 - stage: pack
   displayName: Build and Pack
@@ -252,6 +245,9 @@ stages:
       runOnce:
         deploy:
             steps:
+            - download: current
+              artifact: NuGetPackages
+              displayName: Download artifact WebApp
             - task: NuGetCommand@2
               displayName: 'MyGet push'
               inputs:
@@ -273,6 +269,9 @@ stages:
       runOnce:
         deploy:
             steps:
+            - download: current
+              artifact: NuGetPackages
+              displayName: Download artifact WebApp
             - task: NuGetCommand@2
               displayName: 'NuGet Push DSTU2 packages only'
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
