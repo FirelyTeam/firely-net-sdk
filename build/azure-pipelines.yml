@@ -95,8 +95,6 @@ stages:
 - stage: test
   displayName: Test
   dependsOn: build
-  timeoutInMinutes: 120
-  cancelTimeoutInMinutes: 1
   jobs:
   - template: templates/test-job-template.yml
     parameters:
