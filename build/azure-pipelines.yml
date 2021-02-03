@@ -17,12 +17,11 @@ trigger:
 name: $(date:yyyyMMdd)$(rev:-r)
 
 variables:
-  NET_CORE_SDK: 2.1.x
-  isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
-  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+- template: build-variables.yml
+- template: pipeline-variables.yml
   
 pool:
-  vmImage: 'windows-latest'
+  vmImage: windows-latest
 
 resources:
   repositories:
@@ -65,7 +64,7 @@ stages:
         projects: '**/Hl7.*Tests/*.csproj'
         publishWebProjects: false
         zipAfterPublish: false
-        arguments: --configuration Debug --no-build -f netcoreapp2.1
+        arguments: --configuration Debug --no-build -f $(TEST_TARGETFRAMEWORK)
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
