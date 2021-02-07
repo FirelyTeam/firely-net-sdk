@@ -1,0 +1,10 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="patient-circle2-good-linked1"/>
+  <gender value="other"/>
+  <link>
+    <other>
+      <reference value="Patient/patient-circle2-good-target1"/>
+    </other>
+    <type value="seealso"/>
+  </link>
+</Patient>

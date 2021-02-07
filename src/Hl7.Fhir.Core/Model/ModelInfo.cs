@@ -31,10 +31,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Introspection;
 using System.Diagnostics;
 using Hl7.Fhir.Utility;
+using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
@@ -92,10 +92,10 @@ namespace Hl7.Fhir.Model
         // [WMR 2017-10-25] Remove Lazy initialization
         // These methods are used frequently throughout the API (and by clients) and initialization cost is low
 
-        static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
+        private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
             = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
 
-        static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
+        private static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
             = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRAllTypes"/> enum value, or <c>null</c>.</summary>
@@ -134,12 +134,6 @@ namespace Hl7.Fhir.Model
             return FhirCsTypeToString.TryGetValue(type, out var result) ? result : null;
         }
 
-        [Obsolete("Use GetFhirTypeNameForType() instead")]
-        public static string GetFhirTypeForType(Type type)
-        {
-            return GetFhirTypeNameForType(type);
-        }
-
         /// <summary>Determines if the specified value represents the name of a known FHIR resource.</summary>
         public static bool IsKnownResource(string name)
         {
@@ -159,25 +153,6 @@ namespace Hl7.Fhir.Model
         {
             var name = FhirTypeToFhirTypeName(type);
             return name != null && IsKnownResource(name);
-        }
-
-        [Obsolete("Use GetTypeForFhirType() which covers all types, not just resources")]
-        public static Type GetTypeForResourceName(string name)
-        {
-            if (!IsKnownResource(name)) return null;
-
-            return GetTypeForFhirType(name);
-        }
-
-        [Obsolete("Use GetFhirTypeNameForType() which covers all types, not just resources")]
-        public static string GetResourceNameForType(Type type)
-        {
-            var name = GetFhirTypeForType(type);
-
-            if (name != null && IsKnownResource(name))
-                return name;
-            else
-                return null;
         }
 
         /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
@@ -337,14 +312,18 @@ namespace Hl7.Fhir.Model
         public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ConformanceResourceTypes.Contains(type.Value);
 
 
-        /// <summary>Determines if the specified value represents the name of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
             // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
 
         
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
-        /// <summary>Determines if the specified value represents the canonical uri of a core Resource, Datatype or primitive.</summary>
+        /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
+        /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
+        /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelTypeUri(Uri uri)
         {
             return uri != null
@@ -381,6 +360,7 @@ namespace Hl7.Fhir.Model
             return IsCoreSuperType(fat.Value);
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(FHIRAllTypes type)
         {
             return type == FHIRAllTypes.SimpleQuantity;
@@ -404,6 +384,7 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)
         {
             var definedType = FhirTypeNameToFhirType(type);
@@ -447,18 +428,22 @@ namespace Hl7.Fhir.Model
 
         public static bool IsInstanceTypeFor(string superclass, string subclass)
         {
-            var superType = FhirTypeNameToFhirType(superclass);
-            var subType = FhirTypeNameToFhirType(subclass);
+            if (superclass == subclass) return true;
+
+            var superType = GetTypeForFhirType(superclass);
+            var subType = GetTypeForFhirType(subclass);
 
             if (subType == null || superType == null) return false;
 
-            return IsInstanceTypeFor(superType.Value, subType.Value);
+            return IsInstanceTypeFor(superType, subType);
         }
 
-        private static readonly FHIRAllTypes[] QUANTITY_SUBCLASSES = new[] { FHIRAllTypes.Age, FHIRAllTypes.Distance, FHIRAllTypes.Duration,
-                            FHIRAllTypes.Count, FHIRAllTypes.Money };
-        private static readonly FHIRAllTypes[] STRING_SUBCLASSES = new[] { FHIRAllTypes.Code, FHIRAllTypes.Id, FHIRAllTypes.Markdown };
-        private static readonly FHIRAllTypes[] INTEGER_SUBCLASSES = new[] { FHIRAllTypes.UnsignedInt, FHIRAllTypes.PositiveInt };
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass)
+        {
+            if (superclass == subclass) return true;
+
+            return superclass.IsAssignableFrom(subclass);
+        }
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
@@ -475,16 +460,7 @@ namespace Hl7.Fhir.Model
             }
             else
             {
-                if (superclass == FHIRAllTypes.Element)
-                    return true;
-                else if (superclass == FHIRAllTypes.Quantity)
-                    return QUANTITY_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.String)
-                    return STRING_SUBCLASSES.Contains(subclass);
-                else if (superclass == FHIRAllTypes.Integer)
-                    return INTEGER_SUBCLASSES.Contains(subclass);
-                else
-                    return false;
+                return superclass == FHIRAllTypes.Element;
             }
         }
 
@@ -498,10 +474,89 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
+        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
+        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
+        private static readonly Lazy<ModelInspector> _versionedProvider
+            = new Lazy<ModelInspector>(createVersionedProvider);
+
+        private static ModelInspector createVersionedProvider()
+        {
+            var result = new ModelInspector(Specification.FhirRelease.STU3);
+
+            result.Import(typeof(Resource).GetTypeInfo().Assembly);
+            result.Import(typeof(ModelInfo).GetTypeInfo().Assembly);
+
+            return result;
+        }
+
+        internal static ModelInspector GetStructureDefinitionSummaryProvider() =>
+            _versionedProvider.Value;
+
+        public static readonly Type[] OpenTypes =
+        {
+            typeof(Model.Address),
+            typeof(Model.Age),
+            typeof(Model.Annotation),
+            typeof(Model.Attachment),
+            typeof(Model.Base64Binary),
+            typeof(Model.FhirBoolean),
+            typeof(Model.Canonical),
+            typeof(Model.Code),
+            typeof(Model.CodeableConcept),
+            typeof(Model.Coding),
+            typeof(Model.ContactDetail),
+            typeof(Model.ContactPoint),
+            typeof(Model.Contributor),
+            typeof(Model.Count),
+            typeof(Model.DataRequirement),
+            typeof(Model.Date),
+            typeof(Model.FhirDateTime),
+            typeof(Model.FhirDecimal),
+            typeof(Model.Distance),
+            typeof(Model.Dosage),
+            typeof(Model.Duration),
+            typeof(Model.HumanName),
+            typeof(Model.Id),
+            typeof(Model.Identifier),
+            typeof(Model.Instant),
+            typeof(Model.Integer),
+            typeof(Model.Markdown),
+            typeof(Model.Meta),
+            typeof(Model.Money),
+            typeof(Model.Oid),
+            typeof(Model.ParameterDefinition),
+            typeof(Model.Period),
+            typeof(Model.PositiveInt),
+            typeof(Model.Quantity),
+            typeof(Model.Range),
+            typeof(Model.Ratio),
+            typeof(Model.ResourceReference),
+            typeof(Model.RelatedArtifact),
+            typeof(Model.SampledData),
+            typeof(Model.Signature),
+            typeof(Model.FhirString),
+            typeof(Model.Time),
+            typeof(Model.Timing),
+            typeof(Model.TriggerDefinition),
+            typeof(Model.UnsignedInt),
+            typeof(Model.FhirUri),
+            typeof(Model.FhirUrl),
+            typeof(Model.UsageContext),
+            typeof(Model.Uuid)
+        };
+
     }
 
     public static class ModelInfoExtensions
     {
+        public static bool TryDeriveResourceType(this Resource r, out ResourceType rt)
+        {
+            var result = ModelInfo.FhirTypeNameToResourceType(r.TypeName);
+            rt = result.GetValueOrDefault(default);
+            return result.HasValue;
+        }
+
+
         [Obsolete("Use ModelInfo.GetFhirTypeNameForType() instead.")]       // Obsoleted on 20181213 by EK
         public static string GetCollectionName(this Type type)
         {

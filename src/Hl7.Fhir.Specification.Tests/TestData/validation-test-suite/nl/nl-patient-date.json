@@ -1,0 +1,9 @@
+{
+    "resourceType": "Patient",
+    "meta": {
+        "profile": [
+            "http://fhir.nl/fhir/StructureDefinition/nl-core-patient"
+        ]
+    },
+    "birthDate": "1996-11-23"
+}

@@ -1,30 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;net40;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;netstandard1.6</TargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\firely-net-sdk.props" />
+  <Import Project="..\firely-net-sdk.targets" />
+  <Import Project="..\platforms.props" />
 
    <PropertyGroup>
-    <Version>$(FhirApiVersion)</Version>
     <PackageId>Hl7.Fhir.STU3</PackageId>
-    <Title>HL7 FHIR Core support API for STU3</Title>	
+    <Title>HL7 FHIR Core support SDK for STU3</Title>	
     <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Summary>
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
-    <PackageTags>HL7 FHIR REST parse serialize class model</PackageTags>
+    <PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
     <AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Rest\Search\**" />
-    <EmbeddedResource Remove="Rest\Search\**" />
-    <None Remove="Rest\Search\**" />
-  </ItemGroup>
- 
   <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -42,18 +36,12 @@
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
@@ -63,58 +51,5 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Model\Generated\Template-Bindings.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Bindings.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-DataTypeModel.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-DataTypeModel.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-Model.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-Model.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ModelInfo.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ModelInfo.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Model\Generated\Template-ProfiledDataTypes.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Template-ProfiledDataTypes.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Model\Generated\Template-Bindings.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Bindings.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Children.ttinclude">
-      <Generator>
-      </Generator>
-    </None>
-    <None Update="Model\Generated\Template-DataTypeModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-DataTypeModel.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-Model.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-Model.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ModelInfo.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ModelInfo.cs</LastGenOutput>
-    </None>
-    <None Update="Model\Generated\Template-ProfiledDataTypes.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Template-ProfiledDataTypes.cs</LastGenOutput>
-    </None>
   </ItemGroup>
 </Project>

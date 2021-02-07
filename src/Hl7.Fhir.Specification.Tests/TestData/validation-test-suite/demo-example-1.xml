@@ -1,0 +1,45 @@
+<Composition xmlns="http://hl7.org/fhir">
+  <id value="demo-example-1"/>
+  <meta>
+    <profile value="http://example.org/fhir/StructureDefinition/demo-profile-1"/>
+  </meta>
+  <status value="preliminary"/>
+  <type>
+    <coding>
+      <system value="http://loinc.org"/>
+      <version value="current"/>
+      <code value="56445-0"/>
+      <display value="Medication summary Doc"/>
+    </coding>
+    <text value="Meds doc"/>
+  </type>
+  <subject>
+    <display value="Patient"/>
+  </subject>
+  <date value="2019-09-02T10:00:15+10:00"/>
+  <author>
+    <display value="Practitioner"/>
+  </author>
+  <title value="Testing document"/>
+  <section>
+    <title value="Allergies and Intolerances"/>
+    <code>
+      <coding>
+        <system value="http://loinc.org"/>
+        <version value="current"/>
+        <code value="48765-2"/>
+        <display value="Allergies and adverse reactions"/>
+      </coding>
+      <text value="Allergies"/>
+    </code>
+    <text>
+      <status value="generated"/>
+      <div xmlns="http://www.w3.org/1999/xhtml" lang="en-AU">
+        <p>No known allergies</p>
+      </div>
+    </text>
+    <entry>
+      <display value="Allergy list"/>
+    </entry>
+  </section>
+</Composition>

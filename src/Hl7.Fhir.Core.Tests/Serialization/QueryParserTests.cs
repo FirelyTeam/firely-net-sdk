@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -35,10 +35,12 @@ namespace Hl7.Fhir.Test.Serialization
         public void TestParseQueryFromUriParametersInclude()
         {
             var uriParams = parseParams("_include=Subject");
-
             var test = SearchParams.FromUriParamList(uriParams);
+            Assert.IsTrue(test.Include.Contains(("Subject", IncludeModifier.None)));
 
-            Assert.IsTrue(test.Include.Contains("Subject"));
+            var uriParamsRecurse = parseParams("_include:recurse=Subject");
+            var testRecurse = SearchParams.FromUriParamList(uriParamsRecurse);
+            Assert.IsTrue(testRecurse.Include.Contains(("Subject", IncludeModifier.Recurse)));
         }
 
         [TestMethod]

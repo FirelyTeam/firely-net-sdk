@@ -1,0 +1,10 @@
+<CodeSystem xmlns="http://hl7.org/fhir"> 
+  <url value="http://hl7.org/fhir/test/CodeSystem/something"/>
+  <name value="SomeName"/>
+  <status value="active"/>
+  <content value="complete"/>
+  <concept>
+    <code value="something"/>
+    <display value="Something"/>
+  </concept>
+</CodeSystem>

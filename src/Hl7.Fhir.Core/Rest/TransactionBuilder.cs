@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using Hl7.Fhir.Model;
@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Rest
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";
 
-        private Bundle _result;
+        private readonly Bundle _result;
         private readonly Uri _baseUrl;
 
         public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
@@ -36,24 +36,7 @@ namespace Hl7.Fhir.Rest
             : this(baseUri.OriginalString, type)
         {
         }
-
-
-        internal enum InteractionType
-        {
-            Search,
-            Unspecified,
-            Read,
-            VRead,
-            Update,
-            Delete,
-            Create,
-            Capabilities,
-            History,
-            Operation,
-            Transaction,
-            Patch
-        }
-
+        
         private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
             var newEntry = new Bundle.EntryComponent();
@@ -131,7 +114,7 @@ namespace Hl7.Fhir.Rest
             addEntry(entry, path);
 
             return this;
-        }
+        }        
 
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId=null)
         {
@@ -139,6 +122,31 @@ namespace Hl7.Fhir.Rest
             entry.Resource = body;
             entry.Request.IfMatch = createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
+            path.AddParams(condition.ToUriParamList());
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
+        {
+            //No PATCH in Bundle.HttpVerb in STU3, but this will be corrected in BundleToEntryRequest
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
+            entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
+            var path = newRestUrl().AddPath(resourceType, id);
+            addEntry(entry, path);
+
+            return this;
+        }
+
+        public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string versionId = null)
+        {
+            //No PATCH in Bundle.HttpVerb in STU3, but this will be corrected in BundleToEntryRequest
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Patch);
+            entry.Resource = body;
+            entry.Request.IfMatch = createIfMatchETag(versionId);
+            var path = newRestUrl().AddPath(resourceType);
             path.AddParams(condition.ToUriParamList());
             addEntry(entry, path);
 

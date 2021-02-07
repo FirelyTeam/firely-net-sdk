@@ -1,0 +1,263 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/azure-pipelines.yml
+
+trigger:
+  branches:
+    include:
+    - develop
+    - develop-*
+    - release/*
+    - release-*
+    - hotfix/*
+    - hotfix-*
+    - refs/tags/v*
+  batch: True
+
+name: $(date:yyyyMMdd)$(rev:-r)
+
+variables:
+  NET_CORE_SDK: 2.1.x
+  isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
+  
+pool:
+  vmImage: 'windows-latest'
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: develop-stu3
+
+stages:
+- stage: build
+  jobs:
+  - job: UnitTesting
+    displayName: Unit test in Debug mode
+    timeoutInMinutes: 120
+    cancelTimeoutInMinutes: 1
+    steps:
+    - checkout: self
+      clean: true
+      submodules: true
+      fetchDepth: 100
+    - task: UseDotNet@2
+      displayName: Use .NET Core sdk $(NET_CORE_SDK)
+      inputs:
+        version: $(NET_CORE_SDK)
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: ./Hl7.Fhir.sln
+        verbosityRestore: Minimal
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: ./Hl7.Fhir.sln
+        arguments: --configuration Debug --no-restore
+    - task: DotNetCoreCLI@2
+      displayName: Test
+      inputs:
+        command: test
+        projects: >-
+          **/Hl7.Fhir*Tests.csproj
+
+          !**/Hl7.FhirPath*Tests.csproj
+        arguments: --no-build -f netcoreapp2.1 --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"
+    - task: PowerShell@2
+      displayName: Extract variable RunFhirPathTests
+      inputs:
+        targetType: inline
+        script: >-
+          if (Test-Path  .\src\firely-net-sdk.props -PathType leaf)
+
+          {
+              $propFile = ".\src\firely-net-sdk.props"
+          }
+
+          else
+
+          {
+            $propFile = ".\src\fhir-net-api.props" # fallback to old name
+          }
+
+
+          $xml = [xml](get-content $propFile)
+
+
+          #Get the variable RunFhirPathTests
+
+          $RunFhirPathTests = [string]$xml.Project.PropertyGroup.RunFhirPathTests
+
+
+          $RunFhirPathTests = $RunFhirPathTests.Trim()
+
+
+          if ([string]::IsNullOrEmpty($RunFhirPathTests))
+
+          {
+              $RunFhirPathTests = "true"
+          }
+
+
+          Write-Host "##vso[task.setvariable variable=RunFhirPathTests]$RunFhirPathTests"
+
+
+          Write-Host $RunFhirPathTests
+    - task: DotNetCoreCLI@2
+      displayName: Test FhirPath
+      condition: and(succeeded(), eq(variables.RunFhirPathTests, 'true'))
+      inputs:
+        command: test
+        projects: '**/Hl7.FhirPath*Tests.csproj'
+        arguments: --no-build --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient
+
+  - job: BuildAndPack
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+    displayName: Build and Pack in Release mode
+    timeoutInMinutes: 120
+    cancelTimeoutInMinutes: 1
+    steps:
+    - checkout: self
+      clean: true
+      submodules: true
+      fetchDepth: 100
+    - task: UseDotNet@2
+      displayName: Use .NET Core sdk $(NET_CORE_SDK)
+      inputs:
+        version: $(NET_CORE_SDK)
+    - task: DownloadSecureFile@1
+      displayName: Download Signing key file
+      inputs:
+        secureFile: 47f5a9d4-7009-4fe1-9cb2-c0d6122ded23
+        retryCount: 5
+    - task: CopyFiles@2
+      displayName: Copy key file to $(Build.SourcesDirectory)\src
+      inputs:
+        SourceFolder: $(Agent.TempDirectory)
+        Contents: FhirNetApi.snk
+        TargetFolder: $(Build.SourcesDirectory)\src
+    - task: CopyFiles@2
+      displayName: Copy key file to $(Build.SourcesDirectory)\common\src
+      inputs:
+        SourceFolder: $(Agent.TempDirectory)
+        Contents: FhirNetApi.snk
+        TargetFolder: $(Build.SourcesDirectory)\common\src
+    - task: PowerShell@2
+      displayName: Retrieve current version
+      inputs:
+        targetType: filePath
+        filePath: $(Build.SourcesDirectory)\build\RetrieveVersion.ps1
+    - task: PowerShell@2
+      displayName: Setting version
+      inputs:
+        targetType: filePath
+        filePath: $(Build.SourcesDirectory)\build\UpdateVersion.ps1
+        arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+    - task: PowerShell@2
+      displayName: Setting version for common projects
+      inputs:
+        filePath: $(Build.SourcesDirectory)\common\build\UpdateVersion.ps1
+        arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+        workingDirectory: $(Build.SourcesDirectory)\common\build
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: ./Hl7.Fhir.sln
+        verbosityRestore: Minimal
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        projects: ./Hl7.Fhir.sln
+        arguments: --configuration Release --no-restore
+    - task: DotNetCoreCLI@2
+      displayName: Pack
+      inputs:
+        command: pack
+        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
+        configurationToPack: Release
+        nobuild: true
+        verbosityPack: Normal
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: NuGetPackages
+      
+- stage: deploy_myget
+  displayName: Deploy to MyGet
+  dependsOn: build
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  jobs:
+  - deployment: myget
+    displayName: MyGet
+    environment: MyGet
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - task: NuGetCommand@2
+              displayName: 'MyGet push'
+              inputs:
+                  command: push
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                  nuGetFeedType: external
+                  publishFeedCredentials: MyGet
+                  verbosityPush: Normal    
+
+- stage: deploy_nuget 
+  displayName: Deploy to NuGet
+  dependsOn: deploy_myget
+  condition: and(succeeded(), eq(variables.isTagBranch, true)) 
+  jobs:
+  - deployment: nuget
+    displayName: NuGet
+    environment: NuGet
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push DSTU2 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
+              inputs:
+                  command: push
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
+                  nuGetFeedType: external
+                  publishFeedCredentials: NuGet
+                  verbosityPush: normal    
+                  includeSymbols: false
+            
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push STU3 packages only and common packages'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R4 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R5 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal 
+                includeSymbols: false  

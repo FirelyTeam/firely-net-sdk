@@ -1,14 +1,19 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="v3-valuesets" />
-  <!-- Removed Meta/LastModified -->
+  <meta>
+    <lastUpdated value="2019-10-24T11:53:00+11:00" />
+  </meta>
   <type value="collection" />
   <entry>
     <fullUrl value="http://hl7.org/fhir/ValueSet/v3-CalendarType" />
     <resource>
       <ValueSet>
         <id value="v3-CalendarType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30,7 +35,7 @@
         <name value="v3 Code System CalendarType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -53,7 +58,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ManagedParticipationStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -75,7 +83,7 @@
         <name value="v3 Code System ManagedParticipationStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -98,7 +106,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActConsentDirective" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -150,7 +161,10 @@
     <resource>
       <ValueSet>
         <id value="v3-InformationSensitivityPolicy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -199,7 +213,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -221,7 +238,7 @@
         <name value="v3 Code System RoleClass" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -244,7 +261,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ConfidentialityClassification" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -309,7 +329,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ServiceDeliveryLocationRoleType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -367,7 +390,10 @@
     <resource>
       <ValueSet>
         <id value="v3-QueryResponse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -389,7 +415,7 @@
         <name value="v3 Code System QueryResponse" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -412,7 +438,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SecurityPolicy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -461,7 +490,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TableCellHorizontalAlign" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -483,7 +515,7 @@
         <name value="v3 Code System TableCellHorizontalAlign" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -506,7 +538,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassOrganization" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -555,7 +590,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationTargetDirect" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -604,7 +642,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipHasComponent" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -653,7 +694,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProbabilityDistributionType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -675,7 +719,7 @@
         <name value="v3 Code System ProbabilityDistributionType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -698,7 +742,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -719,7 +766,7 @@
         <name value="v3 Code System ActPriority" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -742,7 +789,10 @@
     <resource>
       <ValueSet>
         <id value="v3-CommunicationFunctionType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -764,7 +814,7 @@
         <name value="v3 Code System CommunicationFunctionType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -787,7 +837,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ReligiousAffiliation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -805,7 +858,7 @@
         <name value="v3 Code System ReligiousAffiliation" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -828,7 +881,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ResponseMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -850,7 +906,7 @@
         <name value="v3 Code System ResponseMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -873,7 +929,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActMood" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -895,7 +954,7 @@
         <name value="v3 Code System ActMood" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -918,7 +977,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassSupply" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -967,7 +1029,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SecurityIntegrityObservationValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1022,7 +1087,10 @@
     <resource>
       <ValueSet>
         <id value="v3-substanceAdminSubstitution" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1040,7 +1108,7 @@
         <name value="v3 Code System substanceAdminSubstitution" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1063,7 +1131,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AmericanIndianAlaskaNativeLanguages" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1081,7 +1152,7 @@
         <name value="v3 Code System AmericanIndianAlaskaNativeLanguages" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1104,7 +1175,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AcknowledgementCondition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1126,7 +1200,7 @@
         <name value="v3 Code System AcknowledgementCondition" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1149,7 +1223,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1170,7 +1247,7 @@
         <name value="v3 Code System ParticipationMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1193,7 +1270,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassDocument" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1242,7 +1322,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TargetAwareness" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1264,7 +1347,7 @@
         <name value="v3 Code System TargetAwareness" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1287,7 +1370,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNameUseR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1309,7 +1395,7 @@
         <name value="v3 Code System EntityNameUseR2" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1332,7 +1418,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AdministrativeGender" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1354,7 +1443,7 @@
         <name value="v3 Code System AdministrativeGender" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1377,7 +1466,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityRisk" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1395,7 +1487,7 @@
         <name value="v3 Code System EntityRisk" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1418,7 +1510,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RefrainPolicy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1467,7 +1562,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationTargetSubject" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1516,7 +1614,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipPertains" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1565,7 +1666,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1587,7 +1691,7 @@
         <name value="v3 Code System ActStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1610,7 +1714,10 @@
     <resource>
       <ValueSet>
         <id value="v3-DocumentStorage" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1628,7 +1735,7 @@
         <name value="v3 Code System DocumentStorage" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1651,7 +1758,10 @@
     <resource>
       <ValueSet>
         <id value="v3-QueryPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1673,7 +1783,7 @@
         <name value="v3 Code System QueryPriority" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1696,7 +1806,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TribalEntityUS" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1714,7 +1827,7 @@
         <name value="v3 Code System TribalEntityUS" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1737,7 +1850,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ResponseLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1759,7 +1875,7 @@
         <name value="v3 Code System ResponseLevel" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1782,7 +1898,10 @@
     <resource>
       <ValueSet>
         <id value="v3-IntegrityCheckAlgorithm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1804,7 +1923,7 @@
         <name value="v3 Code System IntegrityCheckAlgorithm" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -1827,7 +1946,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassManufacturedProduct" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1876,7 +1998,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassROI" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1931,7 +2056,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassRelationshipFormal" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -1986,7 +2114,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SpecimenType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2004,7 +2135,7 @@
         <name value="v3 Code System SpecimenType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2027,7 +2158,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActSubstanceAdminSubstitutionCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2085,7 +2219,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProvenanceEventCurrentState-AS" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2147,7 +2284,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ResponseModality" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2169,7 +2309,7 @@
         <name value="v3 Code System ResponseModality" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2192,7 +2332,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassPartitive" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2247,7 +2390,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassDevice" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2296,7 +2442,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2318,7 +2467,7 @@
         <name value="v3 Code System EntityStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2341,7 +2490,10 @@
     <resource>
       <ValueSet>
         <id value="v3-DataOperation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2359,7 +2511,7 @@
         <name value="v3 Code System DataOperation" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2382,7 +2534,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Race" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2400,7 +2555,7 @@
         <name value="v3 Code System Race" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2423,7 +2578,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SubstitutionCondition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2441,7 +2599,7 @@
         <name value="v3 Code System SubstitutionCondition" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2464,7 +2622,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProvenanceEventCurrentState-DC" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2523,7 +2684,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TelecommunicationCapabilities" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2545,7 +2709,7 @@
         <name value="v3 Code System TelecommunicationCapabilities" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2568,7 +2732,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AcknowledgementDetailCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2586,7 +2753,7 @@
         <name value="v3 Code System AcknowledgementDetailCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2609,7 +2776,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SubstanceAdminSubstitutionReason" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2667,7 +2837,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipSubset" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2689,7 +2862,7 @@
         <name value="v3 Code System ActRelationshipSubset" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2712,7 +2885,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassPassive" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2767,7 +2943,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipSplit" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2789,7 +2968,7 @@
         <name value="v3 Code System ActRelationshipSplit" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2812,7 +2991,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassClinicalDocument" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2861,7 +3043,10 @@
     <resource>
       <ValueSet>
         <id value="v3-IdentifierScope" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2883,7 +3068,7 @@
         <name value="v3 Code System IdentifierScope" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2906,7 +3091,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassObservation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2955,7 +3143,10 @@
     <resource>
       <ValueSet>
         <id value="v3-QueryRequestLimit" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -2973,7 +3164,7 @@
         <name value="v3 Code System QueryRequestLimit" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -2996,7 +3187,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActUncertainty" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3018,7 +3212,7 @@
         <name value="v3 Code System ActUncertainty" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3041,7 +3235,10 @@
     <resource>
       <ValueSet>
         <id value="v3-HL7UpdateMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3063,7 +3260,7 @@
         <name value="v3 Code System HL7UpdateMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3086,7 +3283,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EmployeeJobClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3108,7 +3308,7 @@
         <name value="v3 Code System EmployeeJobClass" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3131,7 +3331,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EncounterAdmissionSource" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3153,7 +3356,7 @@
         <name value="v3 Code System EncounterAdmissionSource" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3176,7 +3379,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationPhysicalPerformer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3225,7 +3431,10 @@
     <resource>
       <ValueSet>
         <id value="v3-HumanLanguage" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3269,7 +3478,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassRoot" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3318,7 +3530,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActInvoiceElementModifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3340,7 +3555,7 @@
         <name value="v3 Code System ActInvoiceElementModifier" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3363,7 +3578,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TableRules" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3385,7 +3603,7 @@
         <name value="v3 Code System TableRules" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3408,7 +3626,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ObservationValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3426,7 +3647,7 @@
         <name value="v3 Code System ObservationValue" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3449,7 +3670,10 @@
     <resource>
       <ValueSet>
         <id value="v3-PersonDisabilityType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3467,7 +3691,7 @@
         <name value="v3 Code System PersonDisabilityType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3490,7 +3714,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNamePartType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3512,7 +3739,7 @@
         <name value="v3 Code System EntityNamePartType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3535,7 +3762,10 @@
     <resource>
       <ValueSet>
         <id value="v3-MessageWaitingPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3553,7 +3783,7 @@
         <name value="v3 Code System MessageWaitingPriority" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3576,7 +3806,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationFunction" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3598,7 +3831,7 @@
         <name value="v3 Code System ParticipationFunction" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3621,7 +3854,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TableFrame" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3643,7 +3879,7 @@
         <name value="v3 Code System TableFrame" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3666,7 +3902,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassSpecimen" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3715,7 +3954,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Calendar" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3737,7 +3979,7 @@
         <name value="v3 Code System Calendar" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3760,7 +4002,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActMoodIntent" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3809,7 +4054,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityDeterminerDetermined" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3858,7 +4106,10 @@
     <resource>
       <ValueSet>
         <id value="v3-hl7V3Conformance" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3876,7 +4127,7 @@
         <name value="v3 Code System hl7V3Conformance" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3899,7 +4150,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ObservationType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3951,7 +4205,10 @@
     <resource>
       <ValueSet>
         <id value="v3-LanguageAbilityProficiency" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -3973,7 +4230,7 @@
         <name value="v3 Code System LanguageAbilityProficiency" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -3996,7 +4253,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4017,7 +4277,7 @@
         <name value="v3 Code System ActCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4040,7 +4300,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassPlace" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4089,7 +4352,10 @@
     <resource>
       <ValueSet>
         <id value="v3-DocumentSectionType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4133,7 +4399,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4151,7 +4420,7 @@
         <name value="v3 Code System EntityCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4174,7 +4443,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassRoot" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4223,7 +4495,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipJoin" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4245,7 +4520,7 @@
         <name value="v3 Code System ActRelationshipJoin" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4268,7 +4543,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationInformationTranscriber" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4317,7 +4595,10 @@
     <resource>
       <ValueSet>
         <id value="v3-LanguageAbilityMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4339,7 +4620,7 @@
         <name value="v3 Code System LanguageAbilityMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4362,7 +4643,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProvenanceEventCurrentState" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4409,7 +4693,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActCoverageTypeCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4458,7 +4745,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActExposureLevelCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4476,7 +4766,7 @@
         <name value="v3 Code System ActExposureLevelCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4499,7 +4789,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProcessingID" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4521,7 +4814,7 @@
         <name value="v3 Code System ProcessingID" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4544,7 +4837,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ContainerCap" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4562,7 +4858,7 @@
         <name value="v3 Code System ContainerCap" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4585,7 +4881,10 @@
     <resource>
       <ValueSet>
         <id value="v3-DocumentCompletion" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4607,7 +4906,7 @@
         <name value="v3 Code System DocumentCompletion" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4630,7 +4929,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TableCellScope" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4652,7 +4954,7 @@
         <name value="v3 Code System TableCellScope" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4675,7 +4977,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationInformationGenerator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4730,7 +5035,10 @@
     <resource>
       <ValueSet>
         <id value="v3-DeviceAlertLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4752,7 +5060,7 @@
         <name value="v3 Code System DeviceAlertLevel" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4775,7 +5083,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Confidentiality" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4793,7 +5104,7 @@
         <name value="v3 Code System Confidentiality" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4816,7 +5127,10 @@
     <resource>
       <ValueSet>
         <id value="v3-xBasicConfidentialityKind" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4869,7 +5183,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Ethnicity" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4887,7 +5204,7 @@
         <name value="v3 Code System Ethnicity" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4910,7 +5227,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -4928,7 +5248,7 @@
         <name value="v3 Code System RoleCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -4951,7 +5271,10 @@
     <resource>
       <ValueSet>
         <id value="v3-MilitaryRoleType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5000,7 +5323,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActConsentType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5049,7 +5375,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AcknowledgementType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5071,7 +5400,7 @@
         <name value="v3 Code System AcknowledgementType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5094,7 +5423,10 @@
     <resource>
       <ValueSet>
         <id value="v3-hl7Realm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5116,7 +5448,7 @@
         <name value="v3 Code System hl7Realm" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5139,7 +5471,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassAssociative" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5194,7 +5529,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Compartment" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5243,7 +5581,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ExposureMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5261,7 +5602,7 @@
         <name value="v3 Code System ExposureMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5284,7 +5625,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EncounterSpecialCourtesy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5306,7 +5650,7 @@
         <name value="v3 Code System EncounterSpecialCourtesy" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5329,7 +5673,10 @@
     <resource>
       <ValueSet>
         <id value="v3-QueryStatusCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5351,7 +5698,7 @@
         <name value="v3 Code System QueryStatusCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5374,7 +5721,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5396,7 +5746,7 @@
         <name value="v3 Code System RoleStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5419,7 +5769,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5441,7 +5794,7 @@
         <name value="v3 Code System ActClass" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5464,7 +5817,10 @@
     <resource>
       <ValueSet>
         <id value="v3-PatientImportance" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5486,7 +5842,7 @@
         <name value="v3 Code System PatientImportance" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5509,7 +5865,10 @@
     <resource>
       <ValueSet>
         <id value="v3-LocalRemoteControlState" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5531,7 +5890,7 @@
         <name value="v3 Code System LocalRemoteControlState" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5554,7 +5913,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SecurityControlObservationValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5610,7 +5972,10 @@
     <resource>
       <ValueSet>
         <id value="v3-PersonalRelationshipRoleType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5665,7 +6030,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ContextControl" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5687,7 +6055,7 @@
         <name value="v3 Code System ContextControl" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5710,7 +6078,10 @@
     <resource>
       <ValueSet>
         <id value="v3-PaymentTerms" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5732,7 +6103,7 @@
         <name value="v3 Code System PaymentTerms" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5755,7 +6126,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SetOperator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5777,7 +6151,7 @@
         <name value="v3 Code System SetOperator" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5800,7 +6174,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNamePartQualifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5822,7 +6199,7 @@
         <name value="v3 Code System EntityNamePartQualifier" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5845,7 +6222,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationVerifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5894,7 +6274,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActMoodPredicate" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5949,7 +6332,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActReason" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -5970,7 +6356,7 @@
         <name value="v3 Code System ActReason" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -5993,7 +6379,10 @@
     <resource>
       <ValueSet>
         <id value="v3-LivingArrangement" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6011,7 +6400,7 @@
         <name value="v3 Code System LivingArrangement" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6034,7 +6423,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassLivingSubject" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6083,7 +6475,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AcknowledgementDetailType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6105,7 +6500,7 @@
         <name value="v3 Code System AcknowledgementDetailType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6128,7 +6523,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActSite" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6146,7 +6544,7 @@
         <name value="v3 Code System ActSite" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6169,7 +6567,10 @@
     <resource>
       <ValueSet>
         <id value="v3-VaccineManufacturer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6191,7 +6592,7 @@
         <name value="v3 Code System VaccineManufacturer" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6214,7 +6615,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationIndirectTarget" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6263,7 +6667,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ObservationMethod" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6285,7 +6692,7 @@
         <name value="v3 Code System ObservationMethod" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6308,7 +6715,10 @@
     <resource>
       <ValueSet>
         <id value="v3-SeverityObservation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6363,7 +6773,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AddressUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6385,7 +6798,7 @@
         <name value="v3 Code System AddressUse" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6408,7 +6821,10 @@
     <resource>
       <ValueSet>
         <id value="v3-CalendarCycle" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6426,7 +6842,7 @@
         <name value="v3 Code System CalendarCycle" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6449,7 +6865,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassAgent" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6498,7 +6917,10 @@
     <resource>
       <ValueSet>
         <id value="v3-GenderStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6520,7 +6942,7 @@
         <name value="v3 Code System GenderStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6543,7 +6965,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6565,7 +6990,7 @@
         <name value="v3 Code System ActRelationshipType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6588,7 +7013,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Charset" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6610,7 +7038,7 @@
         <name value="v3 Code System Charset" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6633,7 +7061,10 @@
     <resource>
       <ValueSet>
         <id value="v3-MapRelationship" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6655,7 +7086,7 @@
         <name value="v3 Code System MapRelationship" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6678,7 +7109,10 @@
     <resource>
       <ValueSet>
         <id value="v3-CodingRationale" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6700,7 +7134,7 @@
         <name value="v3 Code System CodingRationale" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6723,7 +7157,10 @@
     <resource>
       <ValueSet>
         <id value="v3-AddressPartType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6745,7 +7182,7 @@
         <name value="v3 Code System AddressPartType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6768,7 +7205,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ContainerSeparator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6790,7 +7230,7 @@
         <name value="v3 Code System ContainerSeparator" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6813,7 +7253,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActEncounterCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6871,7 +7314,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EquipmentAlertLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6893,7 +7339,7 @@
         <name value="v3 Code System EquipmentAlertLevel" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6916,7 +7362,10 @@
     <resource>
       <ValueSet>
         <id value="v3-QueryParameterValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6934,7 +7383,7 @@
         <name value="v3 Code System QueryParameterValue" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -6957,7 +7406,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipCheckpoint" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -6979,7 +7431,7 @@
         <name value="v3 Code System ActRelationshipCheckpoint" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7002,7 +7454,10 @@
     <resource>
       <ValueSet>
         <id value="v3-GTSAbbreviation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7020,7 +7475,7 @@
         <name value="v3 Code System GTSAbbreviation" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7043,7 +7498,10 @@
     <resource>
       <ValueSet>
         <id value="v3-NullFlavor" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7065,7 +7523,7 @@
         <name value="v3 Code System NullFlavor" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7088,7 +7546,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ContentProcessingMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7110,7 +7571,7 @@
         <name value="v3 Code System ContentProcessingMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7133,7 +7594,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNameUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7155,7 +7619,7 @@
         <name value="v3 Code System EntityNameUse" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7178,7 +7642,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipConditional" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7233,7 +7700,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RelationshipConjunction" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7255,7 +7725,7 @@
         <name value="v3 Code System RelationshipConjunction" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7278,7 +7748,10 @@
     <resource>
       <ValueSet>
         <id value="v3-PurposeOfUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7330,7 +7803,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RouteOfAdministration" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7348,7 +7824,7 @@
         <name value="v3 Code System RouteOfAdministration" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7371,7 +7847,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClassManufacturedMaterial" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7420,7 +7899,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RelationalOperator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7442,7 +7924,7 @@
         <name value="v3 Code System RelationalOperator" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7465,7 +7947,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActRelationshipFulfills" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7514,7 +7999,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActIncidentCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7572,7 +8060,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7594,7 +8085,7 @@
         <name value="v3 Code System ParticipationType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7617,7 +8108,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleLinkStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7639,7 +8133,7 @@
         <name value="v3 Code System RoleLinkStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7662,7 +8156,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActInvoiceGroupCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7720,7 +8217,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassProcedure" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7769,7 +8269,10 @@
     <resource>
       <ValueSet>
         <id value="v3-GeneralPurposeOfUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7840,7 +8343,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActClassInvestigation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7889,7 +8395,10 @@
     <resource>
       <ValueSet>
         <id value="v3-VerificationMethod" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7938,7 +8447,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EducationLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -7960,7 +8472,7 @@
         <name value="v3 Code System EducationLevel" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -7983,7 +8495,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActTaskCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8032,7 +8547,10 @@
     <resource>
       <ValueSet>
         <id value="v3-FamilyMember" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8084,7 +8602,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ObservationInterpretation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8106,7 +8627,7 @@
         <name value="v3 Code System ObservationInterpretation" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8129,7 +8650,10 @@
     <resource>
       <ValueSet>
         <id value="v3-Sequencing" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8151,7 +8675,7 @@
         <name value="v3 Code System Sequencing" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8174,7 +8698,10 @@
     <resource>
       <ValueSet>
         <id value="v3-CompressionAlgorithm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8196,7 +8723,7 @@
         <name value="v3 Code System CompressionAlgorithm" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8219,7 +8746,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassMutualRelationship" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8274,7 +8804,10 @@
     <resource>
       <ValueSet>
         <id value="v3-MaritalStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8292,7 +8825,7 @@
         <name value="v3 Code System MaritalStatus" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8315,7 +8848,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TimingEvent" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8337,7 +8873,7 @@
         <name value="v3 Code System TimingEvent" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8360,7 +8896,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8382,7 +8921,7 @@
         <name value="v3 Code System EntityClass" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8405,7 +8944,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ModifyIndicator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8427,7 +8969,7 @@
         <name value="v3 Code System ModifyIndicator" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8450,7 +8992,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TransmissionRelationshipTypeCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8472,7 +9017,7 @@
         <name value="v3 Code System TransmissionRelationshipTypeCode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8495,7 +9040,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNamePartQualifierR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8517,7 +9065,7 @@
         <name value="v3 Code System EntityNamePartQualifierR2" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8540,7 +9088,10 @@
     <resource>
       <ValueSet>
         <id value="v3-orderableDrugForm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8558,7 +9109,7 @@
         <name value="v3 Code System orderableDrugForm" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8581,7 +9132,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ObligationPolicy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8630,7 +9184,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationTargetLocation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8679,7 +9236,10 @@
     <resource>
       <ValueSet>
         <id value="v3-TableCellVerticalAlign" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8701,7 +9261,7 @@
         <name value="v3 Code System TableCellVerticalAlign" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8724,7 +9284,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ParticipationSignature" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8746,7 +9309,7 @@
         <name value="v3 Code System ParticipationSignature" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8769,7 +9332,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityDeterminer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8791,7 +9357,7 @@
         <name value="v3 Code System EntityDeterminer" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8814,7 +9380,10 @@
     <resource>
       <ValueSet>
         <id value="v3-HtmlLinkType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8836,7 +9405,7 @@
         <name value="v3 Code System HtmlLinkType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8859,7 +9428,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ProcessingMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8881,7 +9453,7 @@
         <name value="v3 Code System ProcessingMode" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8904,7 +9476,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityNamePartTypeR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8926,7 +9501,7 @@
         <name value="v3 Code System EntityNamePartTypeR2" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8949,7 +9524,10 @@
     <resource>
       <ValueSet>
         <id value="v3-EntityHandling" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -8971,7 +9549,7 @@
         <name value="v3 Code System EntityHandling" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -8994,7 +9572,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleClassServiceDeliveryLocation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9043,7 +9624,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActPharmacySupplyType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2019-10-24T11:53:00+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9101,7 +9685,10 @@
     <resource>
       <ValueSet>
         <id value="v3-LocalMarkupIgnore" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9123,7 +9710,7 @@
         <name value="v3 Code System LocalMarkupIgnore" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -9146,7 +9733,10 @@
     <resource>
       <ValueSet>
         <id value="v3-RoleLinkType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9171,7 +9761,7 @@
         <name value="v3 Code System RoleLinkType" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -9194,7 +9784,10 @@
     <resource>
       <ValueSet>
         <id value="v3-ActUSPrivacyLaw" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9212,7 +9805,7 @@
         <name value="v3 Code System ActUSPrivacyLaw" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -9235,7 +9828,10 @@
     <resource>
       <ValueSet>
         <id value="v3-IdentifierReliability" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+          <profile value="http://hl7.org/fhir/StructureDefinition/shareablevalueset" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9257,7 +9853,7 @@
         <name value="v3 Code System IdentifierReliability" />
         <status value="active" />
         <experimental value="false" />
-        <!-- Removed date -->
+        <date value="2016-11-11" />
         <publisher value="HL7, Inc" />
         <contact>
           <telecom>
@@ -9280,7 +9876,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9373,7 +9971,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RelationalOperator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9456,7 +10056,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ModifyIndicator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9509,7 +10111,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ExposureMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9587,7 +10191,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-PaymentTerms" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9650,7 +10256,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ContentProcessingMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9703,7 +10311,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Charset" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9796,7 +10406,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-DocumentStorage" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -9859,7 +10471,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-orderableDrugForm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -10771,7 +11385,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ProcessingMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -10834,7 +11450,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TelecommunicationCapabilities" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -10902,7 +11520,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ObservationMethod" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -12497,7 +13117,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AddressPartType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -12764,7 +13386,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RoleClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13445,7 +14069,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13623,7 +14249,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AcknowledgementDetailCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13816,7 +14444,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Calendar" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13864,7 +14494,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-GenderStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13917,7 +14549,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-IdentifierReliability" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -13975,7 +14609,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-QueryParameterValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -14120,7 +14756,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ResponseLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -14198,7 +14836,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-LivingArrangement" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -14301,7 +14941,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-DeviceAlertLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -14364,7 +15006,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AmericanIndianAlaskaNativeLanguages" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16072,7 +16716,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ResponseModality" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16130,7 +16776,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ReligiousAffiliation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16583,7 +17231,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AcknowledgementDetailType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16668,7 +17318,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TableCellVerticalAlign" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16731,7 +17383,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ProbabilityDistributionType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16819,7 +17473,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-MaritalStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -16912,7 +17568,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-substanceAdminSubstitution" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -17015,7 +17673,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-VaccineManufacturer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -17258,7 +17918,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Race" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -21906,7 +22568,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TargetAwareness" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -21979,7 +22643,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TribalEntityUS" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -24876,7 +25542,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-MapRelationship" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -24934,7 +25602,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-QueryStatusCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25002,7 +25672,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActRelationshipType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25880,7 +26552,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RoleLinkType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -25966,7 +26640,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TransmissionRelationshipTypeCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26014,7 +26690,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-SetOperator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26097,7 +26775,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityHandling" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26230,7 +26910,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityRisk" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26328,7 +27010,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ParticipationSignature" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26386,7 +27070,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActMood" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26635,7 +27321,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-IntegrityCheckAlgorithm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26688,7 +27376,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-HL7UpdateMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26859,7 +27549,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ProcessingID" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -26917,7 +27609,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RoleCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -27617,7 +28311,7 @@
               <concept>
                 <code value="COUSN" />
                 <display value="cousin" />
-                <definition value="The player of the role is a relative of the scoping person descended from a common ancestor, such as a &#x9;grandparent, by two or more steps in a diverging line." />
+                <definition value="The player of the role is a relative of the scoping person descended from a common ancestor, such as a 	grandparent, by two or more steps in a diverging line." />
                 <concept>
                   <code value="MCOUSN" />
                   <display value="maternal cousin" />
@@ -27811,16 +28505,16 @@
               <concept>
                 <code value="NIENEPH" />
                 <display value="niece/nephew" />
-                <definition value="The player of the role is a child of scoping person's brother or sister or of the brother or sister of the &#x9;scoping person's spouse." />
+                <definition value="The player of the role is a child of scoping person's brother or sister or of the brother or sister of the 	scoping person's spouse." />
                 <concept>
                   <code value="NEPHEW" />
                   <display value="nephew" />
-                  <definition value="The player of the role is a son of the scoping person's brother or sister or of the brother or sister of the &#x9;scoping person's spouse." />
+                  <definition value="The player of the role is a son of the scoping person's brother or sister or of the brother or sister of the 	scoping person's spouse." />
                 </concept>
                 <concept>
                   <code value="NIECE" />
                   <display value="niece" />
-                  <definition value="The player of the role is a daughter of the scoping person's brother or sister or of the brother or sister of the &#x9;scoping person's spouse." />
+                  <definition value="The player of the role is a daughter of the scoping person's brother or sister or of the brother or sister of the 	scoping person's spouse." />
                 </concept>
               </concept>
               <concept>
@@ -28133,7 +28827,7 @@
           <concept>
             <code value="NBOR" />
             <display value="neighbor" />
-            <definition value="The player of the role lives near or next to the &#x9;scoping person." />
+            <definition value="The player of the role lives near or next to the 	scoping person." />
           </concept>
           <concept>
             <code value="ONESELF" />
@@ -29312,7 +30006,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActRelationshipCheckpoint" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29380,7 +30076,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AdministrativeGender" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29438,7 +30136,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Sequencing" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29496,7 +30196,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-hl7Realm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29788,7 +30490,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ContainerCap" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -29876,7 +30580,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-CalendarCycle" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30061,7 +30767,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-QueryResponse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30124,7 +30832,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Confidentiality" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30401,7 +31111,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ParticipationMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30522,7 +31234,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNamePartQualifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30792,7 +31506,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AcknowledgementType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -30865,7 +31581,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RouteOfAdministration" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34081,7 +34799,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ResponseMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34139,7 +34859,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ContextControl" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34256,7 +34978,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-NullFlavor" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34397,7 +35121,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EquipmentAlertLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34460,7 +35186,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AcknowledgementCondition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34533,7 +35261,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-PersonDisabilityType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34626,7 +35356,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNamePartQualifierR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34818,7 +35550,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EncounterSpecialCourtesy" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -34886,7 +35620,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ObservationInterpretation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -35308,7 +36044,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RelationshipConjunction" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -35366,7 +36104,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActRelationshipJoin" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -35429,7 +36169,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RoleStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -35507,7 +36249,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -35731,7 +36475,7 @@
           <concept>
             <code value="DISPACT" />
             <display value="disciplinary action" />
-            <definition value="An action taken with respect to a subject Entity by a regulatory or authoritative body with supervisory capacity over that entity. The action is taken in response to behavior by the subject Entity that body finds to be &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;undesirable.&#xD;&#xA;&#xA;                        Suspension, license restrictions, monetary fine, letter of reprimand, mandated training, mandated supervision, etc.Examples:" />
+            <definition value="An action taken with respect to a subject Entity by a regulatory or authoritative body with supervisory capacity over that entity. The action is taken in response to behavior by the subject Entity that body finds to be 							undesirable.&#xD;&#xA;&#xA;                        Suspension, license restrictions, monetary fine, letter of reprimand, mandated training, mandated supervision, etc.Examples:" />
           </concept>
           <concept>
             <code value="EXPOS" />
@@ -36318,7 +37062,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-IdentifierScope" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36381,7 +37127,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-Ethnicity" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36639,7 +37387,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36760,7 +37510,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ContainerSeparator" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36813,7 +37565,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActExposureLevelCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36886,7 +37640,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-CommunicationFunctionType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -36944,7 +37700,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ObservationValue" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38366,7 +39124,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EducationLevel" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38454,7 +39214,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38532,7 +39294,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-PatientImportance" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38620,7 +39384,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityDeterminer" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38708,7 +39474,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-LocalMarkupIgnore" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38761,7 +39529,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-LanguageAbilityMode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -38834,7 +39604,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ParticipationType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39206,7 +39978,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-CalendarType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39254,7 +40028,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-RoleLinkStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39327,7 +40103,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-AddressUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39483,7 +40261,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-LocalRemoteControlState" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39536,7 +40316,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-GTSAbbreviation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -39774,7 +40556,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ParticipationFunction" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -40100,7 +40884,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TableCellHorizontalAlign" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -40168,7 +40954,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-SpecimenType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -40841,7 +41629,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-HtmlLinkType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -40959,7 +41749,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNameUseR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41106,7 +41898,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActSite" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41433,7 +42227,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNamePartType" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41501,7 +42297,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TimingEvent" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41634,7 +42432,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActRelationshipSplit" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41697,7 +42497,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNameUse" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41825,7 +42627,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActInvoiceElementModifier" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -41888,7 +42692,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-DataOperation" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42031,7 +42837,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-MessageWaitingPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42089,7 +42897,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-LanguageAbilityProficiency" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42152,7 +42962,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActRelationshipSubset" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42275,7 +43087,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-DocumentCompletion" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42363,7 +43177,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-QueryPriority" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42416,7 +43232,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityNamePartTypeR2" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42479,7 +43297,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EncounterAdmissionSource" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42537,7 +43357,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-QueryRequestLimit" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -42600,7 +43422,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActReason" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -44194,7 +45018,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-CompressionAlgorithm" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -44267,7 +45093,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-hl7V3Conformance" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -44340,7 +45168,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ManagedParticipationStatus" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -44413,7 +45243,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EntityCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45272,7 +46104,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-EmployeeJobClass" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45325,7 +46159,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActUncertainty" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45378,7 +46214,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-SubstitutionCondition" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45456,7 +46294,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TableCellScope" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45519,7 +46359,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActUSPrivacyLaw" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45631,7 +46473,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-ActCode" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -45690,7 +46534,7 @@
         <concept>
           <code value="_ActAccountCode" />
           <display value="ActAccountCode" />
-          <definition value="An account represents a grouping of financial transactions that are tracked and reported together with a single balance. &#x9; &#x9;Examples of account codes (types) are Patient billing accounts (collection of charges), Cost centers; Cash." />
+          <definition value="An account represents a grouping of financial transactions that are tracked and reported together with a single balance. 	 	Examples of account codes (types) are Patient billing accounts (collection of charges), Cost centers; Cash." />
           <property>
             <code value="notSelectable" />
             <valueBoolean value="true" />
@@ -45883,7 +46727,7 @@
           <concept>
             <code value="FINBILL" />
             <display value="financial" />
-            <definition value="A billing arrangement where a Provider charges for non-clinical items.  This includes interest in arrears, mileage, etc.  Clinical content is not &#x9;included in Invoices submitted with this type of billing arrangement." />
+            <definition value="A billing arrangement where a Provider charges for non-clinical items.  This includes interest in arrears, mileage, etc.  Clinical content is not 	included in Invoices submitted with this type of billing arrangement." />
           </concept>
           <concept>
             <code value="ROST" />
@@ -46829,12 +47673,12 @@
             <concept>
               <code value="HSAPOL" />
               <display value="health spending account" />
-              <definition value="Insurance policy that provides for an allotment of funds replenished on a periodic (e.g. annual) basis. The use of the funds under this policy is at the &#x9;discretion of the covered party." />
+              <definition value="Insurance policy that provides for an allotment of funds replenished on a periodic (e.g. annual) basis. The use of the funds under this policy is at the 	discretion of the covered party." />
             </concept>
             <concept>
               <code value="AUTOPOL" />
               <display value="automobile" />
-              <definition value="Insurance policy for injuries sustained in an automobile accident.  Will also typically covered non-named parties to the policy, such as pedestrians &#x9;and passengers." />
+              <definition value="Insurance policy for injuries sustained in an automobile accident.  Will also typically covered non-named parties to the policy, such as pedestrians 	and passengers." />
               <concept>
                 <code value="COL" />
                 <display value="collision coverage policy" />
@@ -46849,7 +47693,7 @@
             <concept>
               <code value="PUBLICPOL" />
               <display value="public healthcare" />
-              <definition value="Insurance policy funded by a public health system such as a provincial or national health plan.  Examples include BC MSP (British Columbia &#x9;Medical Services Plan) OHIP (Ontario Health Insurance Plan), NHS (National Health Service)." />
+              <definition value="Insurance policy funded by a public health system such as a provincial or national health plan.  Examples include BC MSP (British Columbia 	Medical Services Plan) OHIP (Ontario Health Insurance Plan), NHS (National Health Service)." />
               <concept>
                 <code value="DENTPRG" />
                 <display value="dental program" />
@@ -48574,7 +49418,7 @@
           <concept>
             <code value="REPSERV" />
             <display value="repeated service" />
-            <definition value="The same service was delivered within a time period that would usually indicate a duplicate billing.  However, the repeated service is a medical &#x9;necessity and therefore not a duplicate." />
+            <definition value="The same service was delivered within a time period that would usually indicate a duplicate billing.  However, the repeated service is a medical 	necessity and therefore not a duplicate." />
           </concept>
           <concept>
             <code value="UNRELAT" />
@@ -51850,7 +52694,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TableRules" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -51918,7 +52764,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-CodingRationale" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">
@@ -52019,7 +52867,9 @@
     <resource>
       <CodeSystem>
         <id value="v3-TableFrame" />
-        <!-- Removed Meta/LastModified -->
+        <meta>
+          <lastUpdated value="2016-11-11T00:00:00.000+11:00" />
+        </meta>
         <text>
           <status value="generated" />
           <div xmlns="http://www.w3.org/1999/xhtml">

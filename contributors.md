@@ -2,15 +2,18 @@
 
 This library was a collective effort by the following developers:
 
-Brian Postlethwaite (Telstra Health)
-Ewout Kramer (Firely)
-Marten Smits (Firely)
-Christiaan Knaap (Firely)
-Martijn Harthoorn (Firely)
-Michel Rutten (Firely)
-Tilo Christ (Siemens)
-Henley Devereux (Artisan Technology Group)
-Kenneth Myhra (Kufu)
+* Ewout Kramer (Firely)
+* Brian Postlethwaite (Telstra Health)
+* Marten Smits (Firely)
+* Marco Visser (Firely)
+* Christiaan Knaap (Firely)
+* Martijn Harthoorn (Firely)
+* Michel Rutten (Firely)
+* Tilo Christ (Siemens)
+* Henley Devereux (Artisan Technology Group)
+* Kenneth Myhra (Kufu)
 
-
-HSCIC (NHS Digital) for their financial support
+Thanks to:
+* HSCIC (NHS Digital) for their financial support
+* Max Hauser (https://github.com/maxhauser/semver) for the Semver parsing library
+* Nicholas Blumhardt (https://github.com/sprache/Sprache) for the Sprache general parsing library

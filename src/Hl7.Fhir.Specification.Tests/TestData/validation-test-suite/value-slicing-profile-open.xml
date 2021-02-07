@@ -1,0 +1,66 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-slicing-profile-list"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-profile-list"/>
+  <version value="0.1.0"/>
+  <name value="TestProfileList"/>
+  <title value="Test Profile List"/>
+  <status value="draft"/>
+  <date value="3017-09-06T06:30:54+00:00"/>
+  <publisher value="HL7"/>
+  <fhirVersion value="4.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="List"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/List"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="List.entry">
+      <path value="List.entry"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="item.resolve().code"/>
+        </discriminator>
+        <ordered value="false"/>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="List.entry:slice1">
+      <path value="List.entry"/>
+      <sliceName value="slice1"/>
+      <min value="1"/>
+    </element>
+    <element id="List.entry:slice1.item">
+      <path value="List.entry.item"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-profile-1"/>
+      </type>
+    </element>
+    <element id="List.entry:slice2">
+      <path value="List.entry"/>
+      <sliceName value="slice2"/>
+      <min value="1"/>
+      <max value="3"/>
+    </element>
+    <element id="List.entry:slice2.item">
+      <path value="List.entry.item"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-profile-2"/>
+      </type>
+    </element>
+    <element id="List.entry:slice3">
+      <path value="List.entry"/>
+      <sliceName value="slice3"/>
+      <max value="1"/>
+    </element>
+    <element id="List.entry:slice3.item">
+      <path value="List.entry.item"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/test/StructureDefinition/profile-slicing-profile-3"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

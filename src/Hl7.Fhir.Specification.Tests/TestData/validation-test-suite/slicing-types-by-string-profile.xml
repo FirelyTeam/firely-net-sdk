@@ -1,0 +1,48 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CCDA-on-FHIR-Referral-Note"/>
+  <url value="http://hl7.org/fhir/ccda/StructureDefinition/slicing-types-by-string-profile"/>
+  <name value="Test of slicing by type with string"/>
+  <status value="draft"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Communication"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Communication"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Communication"/>
+    </element>
+    <element>
+      <path value="Communication.payload"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="content"/>
+        </discriminator>
+        <rules value="closed"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Communication.payload"/>
+      <sliceName value="string"/>
+    </element>
+    <element>
+      <path value="Communication.payload.contentString"/>
+      <min value="1"/>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element>
+      <path value="Communication.payload"/>
+      <sliceName value="attachment"/>
+      <max value="10"/>
+    </element>
+    <element>
+      <path value="Communication.payload.contentAttachment"/>
+      <type>
+        <code value="Attachment"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

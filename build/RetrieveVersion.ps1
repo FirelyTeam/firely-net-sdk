@@ -1,6 +1,15 @@
 Push-Location $PsScriptRoot\..\src
 
-$xml = [xml](get-content ..\src\fhir-net-api.props)
+if (Test-Path  ..\src\firely-net-sdk.props -PathType leaf)
+{
+     $propFile = "..\src\firely-net-sdk.props"
+}
+else
+{
+   $propFile = "..\src\fhir-net-api.props" # fallback to old name
+}
+
+$xml = [xml](get-content $propFile)
 
 #Get the version 
 [string]$version = $xml.Project.PropertyGroup.VersionPrefix

@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <Import Project="..\fhir-net-api.props" />
-  <Import Project="..\fhir-net-api.targets" />
+  <Import Project="..\firely-net-sdk.props" />
+  <Import Project="..\firely-net-sdk.targets" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>
@@ -20,11 +20,11 @@
 
   
   <ItemGroup>
-      <PackageReference Include="FluentAssertions" Version="5.4.2" />
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+      <PackageReference Include="FluentAssertions" Version="5.10.3" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+      <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
       <PackageReference Include="Moq" Version="4.13.1" />
-      <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-      <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
       <PackageReference Include="System.IO.Compression" Version="4.3.0" />
       <PackageReference Include="System.IO.FileSystem.AccessControl" Version="4.5.0" />
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="4.9.0" />
@@ -42,7 +42,7 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
+  </ItemGroup>  
 
   <ItemGroup>
     <None Remove="TestData\validation\list-with-profile-slicing.xml" />
@@ -59,7 +59,7 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
+  </ItemGroup>  
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

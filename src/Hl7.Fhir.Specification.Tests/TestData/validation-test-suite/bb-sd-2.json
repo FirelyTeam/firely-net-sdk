@@ -1,0 +1,33 @@
+{
+	"abstract": false,
+	"version": "1.0",
+	"baseDefinition": "http://hl7.org/fhir/StructureDefinition/Observation",
+	"date": "2019-12-10",
+	"derivation": "constraint",
+	"differential": {
+		"element": [
+			{
+				"id": "Observation.value[x]",
+				"min": 1,
+				"path": "Observation.value[x]",
+				"type": [
+					{
+						"code": "Quantity"
+					},
+					{
+						"code": "CodeableConcept"
+					}
+				]
+			}
+		]
+	},
+	"fhirVersion": "4.0.0",
+	"id": "BBDemographicAge",
+	"kind": "resource",
+	"name": "BBDemographicAge",
+	"resourceType": "StructureDefinition",
+	"status": "draft",
+	"title": "Babylon Demographic Age",
+	"type": "Observation",
+	"url": "https://bb/StructureDefinition/BBDemographicAge"
+}

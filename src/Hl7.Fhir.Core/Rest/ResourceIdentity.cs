@@ -3,20 +3,13 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Utility;
-#if !NETSTANDARD1_1
-using System.Runtime.Serialization;
-#endif
-using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Rest
 {
@@ -41,9 +34,7 @@ namespace Hl7.Fhir.Rest
     ///   * Anchor: just the "logical id"
     /// 
     /// </summary>
-#if !NETSTANDARD1_1
-    [SerializableAttribute]
-#endif
+    [Serializable]
     [System.Diagnostics.DebuggerDisplay(@"\{ResourceType={ResourceType} Id={Id} VersionId={VersionId} Base={BaseUri} ToString={ToString()}")]
     public class ResourceIdentity : Uri
     {
@@ -52,7 +43,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="uri">Relative or absolute location of a Resource</param>
         /// <returns></returns>
-        public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute) 
+        public ResourceIdentity(string uri) : base(uri, UriKind.RelativeOrAbsolute)
         {
             parseComponents(uri);
         }
@@ -62,7 +53,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="uri">Relative or absolute location of a Resource</param>
         /// <returns></returns>
-        public ResourceIdentity(Uri uri) : base(uri.OriginalString, UriKind.RelativeOrAbsolute) 
+        public ResourceIdentity(Uri uri) : base(uri.OriginalString, UriKind.RelativeOrAbsolute)
         {
             parseComponents(this.OriginalString);
         }
@@ -102,8 +93,8 @@ namespace Hl7.Fhir.Rest
 
         }
 
-        private ResourceIdentity(Uri baseUri, string resourceType, string id, string versionId, ResourceIdentityForm form) : 
-            base(constructUri(baseUri,resourceType,id,versionId, form), UriKind.RelativeOrAbsolute)
+        private ResourceIdentity(Uri baseUri, string resourceType, string id, string versionId, ResourceIdentityForm form) :
+            base(constructUri(baseUri, resourceType, id, versionId, form), UriKind.RelativeOrAbsolute)
         {
             BaseUri = baseUri;
             ResourceType = resourceType;
@@ -220,7 +211,7 @@ namespace Hl7.Fhir.Rest
         {
             try
             {
-                var uri = new Uri(url,UriKind.RelativeOrAbsolute);
+                var uri = new Uri(url, UriKind.RelativeOrAbsolute);
                 return uri.IsAbsoluteUri;
             }
             catch
@@ -250,18 +241,13 @@ namespace Hl7.Fhir.Rest
             return url.StartsWith("#");
         }
 
-        // Encure path ends in a '/'
-        private static string delimit(string path)
-        {
-            return path.EndsWith(@"/") ? path : path + @"/";
-        }
 
         private static string construct(Uri endpoint, IEnumerable<string> components)
         {
             UriBuilder builder = new UriBuilder(endpoint);
-            string _path = delimit(builder.Path);
+            builder.Path = builder.Path.EnsureEndsWith(@"/");
             string _components = string.Join("/", components).Trim('/');
-            builder.Path = _path + _components;
+            builder.Path = builder.Path + _components;
 
             return builder.Uri.ToString();
         }
@@ -274,11 +260,11 @@ namespace Hl7.Fhir.Rest
 
         public ResourceIdentityForm Form { get; private set; }
 
-        public bool IsAbsoluteRestUrl{ get{ return Form == ResourceIdentityForm.AbsoluteRestUrl; } }
+        public bool IsAbsoluteRestUrl { get { return Form == ResourceIdentityForm.AbsoluteRestUrl; } }
 
-        public bool IsRelativeRestUrl{ get { return Form == ResourceIdentityForm.RelativeRestUrl; } }
-       
-        public bool IsUrn { get  { return Form == ResourceIdentityForm.Urn; } }
+        public bool IsRelativeRestUrl { get { return Form == ResourceIdentityForm.RelativeRestUrl; } }
+
+        public bool IsUrn { get { return Form == ResourceIdentityForm.Urn; } }
 
         public bool IsLocal { get { return Form == ResourceIdentityForm.Local; } }
 
@@ -305,8 +291,8 @@ namespace Hl7.Fhir.Rest
                 if (count < 2) return;  // unparseable               
 
                 var history = -1;
-                for(var index=0; index<count; index++) 
-                    if(components[index] == TransactionBuilder.HISTORY) history = index;
+                for (var index = 0; index < count; index++)
+                    if (components[index] == TransactionBuilder.HISTORY) history = index;
                 if (history > -1 && history == count - 1) return; // illegal use, there's just a _history component, but no version id
 
                 int resourceTypePos = (history > -1) ? history - 2 : count - 2;
@@ -322,9 +308,8 @@ namespace Hl7.Fhir.Rest
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/"));
-                    if (!baseUri.EndsWith("/")) baseUri += "/";
-                    BaseUri = new Uri(baseUri,UriKind.Absolute);
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/"); ;
+                    BaseUri = new Uri(baseUri, UriKind.Absolute);
                 }
 
                 if (history != -1 && count >= 4 && history < count - 1)
@@ -341,13 +326,13 @@ namespace Hl7.Fhir.Rest
                 if (url.StartsWith("urn:uuid:")) lastSep = 8;
                 if (url.StartsWith("urn:oid:")) lastSep = 7;
 
-                BaseUri = new Uri(url.Substring(0, lastSep+1), UriKind.Absolute);
+                BaseUri = new Uri(url.Substring(0, lastSep + 1), UriKind.Absolute);
                 Id = OriginalString.Substring(lastSep + 1);
                 Form = ResourceIdentityForm.Urn;
             }
             else if (isLocal(url))
             {
-                Id =  OriginalString.Substring(1);        // strip '#'
+                Id = OriginalString.Substring(1);        // strip '#'
                 Form = ResourceIdentityForm.Local;
             }
         }
@@ -359,13 +344,6 @@ namespace Hl7.Fhir.Rest
         public Uri BaseUri
         {
             get; private set;
-        }
-
-
-        [Obsolete("Use the ResourceType instead")]
-        public string Collection
-        {
-            get { return ResourceType; }
         }
 
         /// <summary>
@@ -476,7 +454,7 @@ namespace Hl7.Fhir.Rest
         {
             if (IsAbsoluteRestUrl || (IsRelativeRestUrl && isAbsoluteRestUrl(baseUri)))
             {
-                if (!baseUri.EndsWith("/")) baseUri += "/";
+                baseUri = baseUri.EnsureEndsWith("/");
                 return ResourceIdentity.Build(new Uri(baseUri, UriKind.Absolute), this.ResourceType, this.Id, this.VersionId);
             }
             else if (isUrn(baseUri))
@@ -563,5 +541,5 @@ namespace Hl7.Fhir.Rest
         OID
     }
 
-   
+
 }

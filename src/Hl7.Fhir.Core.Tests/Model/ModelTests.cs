@@ -3,7 +3,7 @@
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
- * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
 using System;
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestStringValueInterface()
         {
-            IStringValue sv = new FhirString("test");
+            IValue<string> sv = new FhirString("test");
             Assert.IsNotNull(sv);
             sv.Value = "string";
             Assert.AreEqual(sv.Value, "string");
@@ -371,9 +371,34 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void TestSubclassInfoByType()
+        {
+            testTrue(typeof(Resource), typeof(Patient));
+            testTrue(typeof(DomainResource), typeof(Patient));
+            testTrue(typeof(Patient), typeof(Patient));
+            testFalse(typeof(Observation), typeof(Patient));
+            testFalse(typeof(Element), typeof(Patient));
+            testTrue(typeof(Resource), typeof(Bundle));
+            testFalse(typeof(DomainResource), typeof(Bundle));
+
+            testTrue(typeof(Element), typeof(HumanName));
+            testFalse(typeof(Element), typeof(Patient));
+            testTrue(typeof(Element), typeof(Oid));
+            testFalse(typeof(FhirString), typeof(Markdown));
+            testFalse(typeof(Integer), typeof(UnsignedInt));
+
+            static void testTrue(Type super, Type sub) =>
+                Assert.IsTrue(ModelInfo.IsInstanceTypeFor(super, sub));
+
+            static void testFalse(Type super, Type sub) =>
+                Assert.IsFalse(ModelInfo.IsInstanceTypeFor(super, sub));
+        }
+
+
+        [TestMethod]
         public void TestIntegerValueInterface()
         {
-            INullableIntegerValue iv = new Integer(null);
+            INullableValue<int> iv = new Integer(null);
             Assert.IsNotNull(iv);
             iv.Value = 12345;
             Assert.AreEqual(iv.Value, 12345);

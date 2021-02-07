@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = getJsonNode(tp);
-            ParseDemoPatient.CanReadThroughNavigator(nav, typed: true);
+            ParseDemoPatient.CanReadThroughTypedElement(nav, typed: true);
         }
         
         [TestMethod]

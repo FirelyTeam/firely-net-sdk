@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.ElementModel.Tests
 
         }
 
-        private class CCDAResourceResolver : IResourceResolver
+        private class CCDAResourceResolver : IAsyncResourceResolver
         {
             private readonly Dictionary<string, StructureDefinition> _cache;
             private readonly ZipSource _zipSource;
@@ -238,27 +238,23 @@ namespace Hl7.Fhir.ElementModel.Tests
                 _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
             }
 
-            public Resource ResolveByCanonicalUri(string uri)
+            public async T.Task<Resource> ResolveByCanonicalUriAsync(string uri)
             {
-                StructureDefinition sd = null;
-                if (_cache.TryGetValue(uri, out sd))
+                if (_cache.TryGetValue(uri, out StructureDefinition sd))
                     return sd;
 
-                sd = (StructureDefinition)_coreResolver.ResolveByCanonicalUri(uri);
+                sd = await _coreResolver.FindStructureDefinitionAsync(uri);
                 if (!sd.HasSnapshot)
                 {
                     var snapShotGenerator = new SnapshotGenerator(_coreResolver);
-                    snapShotGenerator.Update(sd);
+                    await snapShotGenerator.UpdateAsync(sd);
                     _cache.Add(sd.Url, sd);
                 }
 
                 return sd;
             }
 
-            public Resource ResolveByUri(string uri)
-            {
-                throw new NotImplementedException();
-            }
+            public T.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
     }
