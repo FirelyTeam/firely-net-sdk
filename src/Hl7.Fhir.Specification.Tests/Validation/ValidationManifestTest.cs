@@ -67,8 +67,8 @@ namespace Hl7.Fhir.Specification.Tests
                 new FhirJsonParser().Parse<Resource>(resourceText);
             Assert.IsNotNull(testResource);
 
-            var profileFilePath = testCase?.Profiles?.FirstOrDefault() ?? testCase?.ValidationProfile?.Source;
-            var profileUris = _dirSource.ListSummaries().Where(s => s.Origin.EndsWith(Path.DirectorySeparatorChar + profileFilePath)).Select(s => s.GetConformanceCanonicalUrl()).ToArray();
+            var profileFilePaths = testCase?.Profiles ?? new List<string> { testCase?.ValidationProfile?.Source };
+            var profileUris = _dirSource.ListSummaries().Where(s => profileFilePaths.Any(p => s.Origin.EndsWith(Path.DirectorySeparatorChar + p))).Select(s => s.GetConformanceCanonicalUrl()).ToArray();
 
             OperationOutcome result = null;
             if (profileUris.Any())
