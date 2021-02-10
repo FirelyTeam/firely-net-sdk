@@ -34,7 +34,7 @@ stages:
   displayName: Build
   jobs:
   - job: restoreAndBuild
-    displayName: Build in $(buildConfiguration) mode
+    displayName: 'Build in $(buildConfiguration) mode'
     steps:
     - checkout: self
       clean: true
@@ -44,7 +44,7 @@ stages:
     - template: templates/apply-versioning-steps-template.yml
     
     - task: UseDotNet@2
-      displayName: Use .NET Core sdk $(NET_CORE_SDK)
+      displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
       inputs:
         version: $(NET_CORE_SDK)
     - task: DotNetCoreCLI@2
