@@ -6,3 +6,4 @@ variables:
   NET_CORE_SDK: 2.1.x
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   TEST_TARGETFRAMEWORK: netcoreapp2.1
+  buildConfiguration: Release

@@ -1,0 +1,21 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/templates/apply-signingkey-steps-template.yml
+
+steps:
+  - task: DownloadSecureFile@1
+    displayName: Download Signing key file
+    inputs:
+      secureFile: 47f5a9d4-7009-4fe1-9cb2-c0d6122ded23
+      retryCount: 5
+  - task: CopyFiles@2
+    displayName: Copy key file to $(Build.SourcesDirectory)/src
+    inputs:
+      SourceFolder: $(Agent.TempDirectory)
+      Contents: FhirNetApi.snk
+      TargetFolder: $(Build.SourcesDirectory)/src
+  - task: CopyFiles@2
+    displayName: Copy key file to $(Build.SourcesDirectory)/common/src
+    inputs:
+      SourceFolder: $(Agent.TempDirectory)
+      Contents: FhirNetApi.snk
+      TargetFolder: $(Build.SourcesDirectory)/common/src
