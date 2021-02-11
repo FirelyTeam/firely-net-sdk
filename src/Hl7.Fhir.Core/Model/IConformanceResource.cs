@@ -27,38 +27,12 @@
   
 */
 
+using Hl7.Fhir.Introspection;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
-    public interface IConformanceResource
-    {
-        string Url { get; set; }
-        Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
-        string Name { get; set; }
-        FhirString NameElement { get; set; }
-        PublicationStatus? Status { get; set; }
-        string Publisher { get; set; }
-        FhirString PublisherElement { get; set; }
-        List<ContactDetail> Contact { get; set; }
-        Markdown Description { get; set; }
-        List<UsageContext> UseContext { get; set; }
-        Markdown Purpose { get; set; }
-        Code<Hl7.Fhir.Model.PublicationStatus> StatusElement { get; set; }
-        bool? Experimental { get; set; }
-        Hl7.Fhir.Model.FhirBoolean ExperimentalElement { get; set; }
-        string Date { get; set; }
-        Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
-    }
-
-    public interface IVersionableConformanceResource : IConformanceResource
-    {
-        string Version { get; set; }
-
-        Hl7.Fhir.Model.FhirString VersionElement { get; set; }
-    }
-
     public partial class StructureDefinition : IVersionableConformanceResource
     {
 

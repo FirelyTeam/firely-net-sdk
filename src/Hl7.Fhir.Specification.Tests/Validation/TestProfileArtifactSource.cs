@@ -458,11 +458,11 @@ namespace Hl7.Fhir.Validation
             else
                 result.Kind = StructureDefinition.StructureDefinitionKind.Logical;
 
-            result.Type = constrainedType.ToString();
+            result.Type = constrainedType.GetLiteral();
             result.Abstract = false;
 
             if (baseUri == null)
-                baseUri = ResourceIdentity.Core(constrainedType).ToString();
+                baseUri = ResourceIdentity.Core(constrainedType.GetLiteral()).ToString();
 
             result.BaseDefinition = baseUri;
 
