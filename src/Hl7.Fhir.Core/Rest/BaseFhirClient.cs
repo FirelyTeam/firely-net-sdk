@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Rest
         {
             if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
 
-            endpoint = new Uri(endpoint.OriginalString.EnsureEndsWith("/"));              
+            endpoint = new Uri(endpoint.OriginalString.EnsureEndsWith("/"));
 
             if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
 
@@ -430,7 +430,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">Location of the resource</param>
         /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
         /// <returns>The patched resource</returns>
-        public Task<Resource> PatchAsync(Uri location, Parameters patchParameters) 
+        public Task<Resource> PatchAsync(Uri location, Parameters patchParameters)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<Resource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
-       
+
         ///<inheritdoc cref="PatchAsync(Uri, Parameters)"/>
         public Resource Patch(Uri location, Parameters patchParameters)
         {
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="PatchAsync{TResource}(string, Parameters, string)"/>
-        public TResource Patch<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource: Resource
+        public TResource Patch<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource : Resource
         {
             return PatchAsync<TResource>(id, patchParameters, versionId).WaitResult();
         }
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Rest
         {
             var tx = new TransactionBuilder(Endpoint);
             var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
-            tx.Patch(resourceType, condition, patchParameters);       
+            tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Rest
         }
 
         #endregion
-        
+
         private ResourceIdentity verifyResourceIdentity(Uri location, bool needId, bool needVid)
         {
             var result = new ResourceIdentity(location);
@@ -966,17 +966,17 @@ namespace Hl7.Fhir.Rest
             // entry -> ITyped -> tx
             var entryRequest = request.ToEntryRequest(Settings);
 
-            
+
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
                 typedEntryResponse = entryResponse.ToTypedEntryResponse(_provider);
             }
-            catch(UnsupportedBodyTypeException ex)
+            catch (UnsupportedBodyTypeException ex)
             {
 
-                typedEntryResponse.Status = entryResponse.Status;                 
+                typedEntryResponse.Status = entryResponse.Status;
 
                 var errorResult = new Bundle.EntryComponent
                 {
@@ -992,13 +992,13 @@ namespace Hl7.Fhir.Rest
                 Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                 throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
             }
-           
+
 
             Bundle.EntryComponent response = null;
             try
             {
                 response = typedEntryResponse.ToBundleEntry(Settings.ParserSettings);
-                
+
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;
 
@@ -1007,19 +1007,19 @@ namespace Hl7.Fhir.Rest
                     Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                     throw FhirOperationException.BuildFhirOperationException(code, response.Resource);
                 }
-                
+
             }
             catch (AggregateException ae)
             {
                 throw ae.GetBaseException();
             }
-            
+
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
             {
                 Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                 throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
             }
-            
+
             Resource result;
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
@@ -1081,11 +1081,11 @@ namespace Hl7.Fhir.Rest
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
 
-            if (conf.Version == null)
+            if (conf.FhirVersion == null)
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.Version))
+            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.FhirVersion))
             {
                 throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
             }
