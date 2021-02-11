@@ -6,10 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Hl7.Fhir.Test
 {
@@ -107,10 +108,10 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestCoreIdentifiers()
         {
-            var patientId = ResourceIdentity.Core(FHIRAllTypes.Patient);
+            var patientId = ResourceIdentity.Core(FHIRAllTypes.Patient.GetLiteral());
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/Patient", patientId.ToString());
 
-            var oidId = ResourceIdentity.Core(FHIRAllTypes.Oid);
+            var oidId = ResourceIdentity.Core(FHIRAllTypes.Oid.GetLiteral());
             Assert.AreEqual("http://hl7.org/fhir/StructureDefinition/oid", oidId.ToString());
 
             var observationId = ResourceIdentity.Core("Observation");
@@ -226,7 +227,7 @@ namespace Hl7.Fhir.Test
             id = new ResourceIdentity("http://localhost/services/fhir/v012/Patient/3/_history/50");
             Assert.IsTrue(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
             Assert.IsTrue(id.IsTargetOf("Patient/3/_history/50"));
-            
+
             id = new ResourceIdentity("Patient/3");
             Assert.IsFalse(id.IsTargetOf("http://localhost/services/fhir/v012/Patient/3"));
             Assert.IsTrue(id.IsTargetOf("Patient/3"));
