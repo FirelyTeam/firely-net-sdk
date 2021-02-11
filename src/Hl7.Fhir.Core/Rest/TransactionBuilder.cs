@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Rest
 {
     public class TransactionBuilder
     {
-        public const string HISTORY = "_history";
+        public const string HISTORY = ResourceIdentity.HISTORY;
         public const string METADATA = "metadata";
         public const string OPERATIONPREFIX = "$";
 
