@@ -1085,7 +1085,7 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.FhirVersion))
+            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.FhirVersion.GetLiteral()))
             {
                 throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
             }
