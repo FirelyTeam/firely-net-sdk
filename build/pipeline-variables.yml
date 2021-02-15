@@ -1,0 +1,6 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/pipeline-variables.yml
+# Variables used during the whole pipeline.
+
+variables:
+  isTagBranch: $[startswith(variables['Build.SourceBranch'], 'refs/tags/v')]
