@@ -1,254 +1,298 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public class ValidationManifestTest
     {
+        [Flags]
+        enum AssertionOptions
+        {
+            NoAssertion = 1 << 1,
+            JavaAssertion = 1 << 2,
+            FirelySdkAssertion = 1 << 3,
+            OutputTextAssertion = 1 << 4
+        }
+
         private static Validator _testValidator;
-        private static DirectorySource _dirSource;        
+        private static DirectorySource _dirSource;
+        private static List<TestCase> _testCases = new List<TestCase>(); // only used by AddFirelySdkResults
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             _dirSource = new DirectorySource(@"TestData\\validation-test-suite", new DirectorySourceSettings { IncludeSubDirectories = true });
             var zipSource = ZipSource.CreateValidationSource();
-            var testResolver = new CachedResolver(new MultiResolver(zipSource, _dirSource));
+            var resolver = new CachedResolver(new MultiResolver(zipSource, _dirSource));
 
             var settings = ValidationSettings.CreateDefault();
             settings.GenerateSnapshot = true;
             settings.GenerateSnapshotSettings = new Snapshot.SnapshotGeneratorSettings()
-                                                {
-                                                    ForceRegenerateSnapshots = true,
-                                                    GenerateSnapshotForExternalProfiles = true,
-                                                    GenerateElementIds = true
-                                                };
-            settings.ResourceResolver = testResolver;
-            settings.TerminologyService = new LocalTerminologyService(testResolver);
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateSnapshotForExternalProfiles = true,
+                GenerateElementIds = true
+            };
+            settings.ResourceResolver = resolver;
+            settings.TerminologyService = new LocalTerminologyService(resolver);
 
-           _testValidator = new Validator(settings);
+            _testValidator = new Validator(settings);
         }
 
-        //[Ignore]
-        [TestMethod]
+        [Ignore]
         [DataTestMethod]
-        [CustomDataSource]
-        public void TestValidationManifest(ValidationTestCase testCase)
-        {
-            RunTestCase(testCase);
-        } 
+        [ValidationManifestDataSource(@"TestData\validation-test-suite\manifest.json", ignoreTests: new[] { "message", "message-empty-entry" })]
+        public void TestValidationManifest(TestCase testCase) => runTestCase(testCase);
 
-        public static void RunTestCase(ValidationTestCase testCase)
-        {            
-            var resourceText = File.ReadAllText(@$"TestData\validation-test-suite\{testCase.FileName}");
-            var testResource = testCase.FileName.EndsWith(".xml") ?
+        // [Ignore]
+        [DataTestMethod]
+        [ValidationManifestDataSource(@"TestData\validation-test-suite\manifest.json", singleTest: "nl/nl-core-patient-01")]
+        public void RunSingleTest(TestCase testCase) => runTestCase(testCase);
+
+        [DataTestMethod]
+        [ValidationManifestDataSource(@"TestData\validation-test-suite\manifest-with-firelysdk-results.json")]
+        public void RunFirelySdkTests(TestCase testCase) => runTestCase(testCase, AssertionOptions.FirelySdkAssertion | AssertionOptions.OutputTextAssertion);
+
+        private (OperationOutcome, OperationOutcome) runTestCase(TestCase testCase, AssertionOptions options = AssertionOptions.JavaAssertion)
+        {
+            var testResource = parseResource(@$"TestData\validation-test-suite\{testCase.FileName}");
+
+            OperationOutcome outcomeWithProfile = null;
+            if (testCase.Profile?.Source is { } source)
+            {
+                var profileUri = _dirSource.ListSummaries().First(s => s.Origin.EndsWith(Path.DirectorySeparatorChar + source)).GetConformanceCanonicalUrl();
+
+                outcomeWithProfile = _testValidator.Validate(testResource, profileUri);
+                assertResult(options.HasFlag(AssertionOptions.JavaAssertion) ? testCase.Profile.Java : testCase.Profile.FirelySDK, outcomeWithProfile, options);
+            }
+
+            OperationOutcome outcome = _testValidator.Validate(testResource);
+            assertResult(options.HasFlag(AssertionOptions.JavaAssertion) ? testCase.Java : testCase.FirelySDK, outcome, options);
+
+            return (outcome, outcomeWithProfile);
+        }
+
+        private void assertResult(ExpectedResult result, OperationOutcome outcome, AssertionOptions options)
+        {
+            if (options.HasFlag(AssertionOptions.NoAssertion)) return; // no assertion asked
+
+            result.Should().NotBeNull("There should be an expected result");
+
+            (outcome.Errors + outcome.Fatals).Should().Be(result.ErrorCount ?? 0);
+            outcome.Warnings.Should().Be(result.WarningCount ?? 0);
+
+            if (options.HasFlag(AssertionOptions.OutputTextAssertion))
+            {
+                outcome.Issue.Select(i => i.ToString()).ToList().Should().BeEquivalentTo(result.Output);
+            }
+        }
+
+        private Resource parseResource(string fileName)
+        {
+            var resourceText = File.ReadAllText(fileName);
+            var testResource = fileName.EndsWith(".xml") ?
                 new FhirXmlParser().Parse<Resource>(resourceText) :
                 new FhirJsonParser().Parse<Resource>(resourceText);
             Assert.IsNotNull(testResource);
+            return testResource;
+        }
 
-            var profileFilePaths = testCase?.Profiles ?? new List<string> { testCase?.ValidationProfile?.Source };
-            var profileUris = _dirSource.ListSummaries().Where(s => profileFilePaths.Any(p => s.Origin.EndsWith(Path.DirectorySeparatorChar + p))).Select(s => s.GetConformanceCanonicalUrl()).ToArray();
-
-            OperationOutcome result = null;
-            if (profileUris.Any())
+        private ExpectedResult writeFirelySDK(OperationOutcome outcome)
+        {
+            return new ExpectedResult
             {
-                result = _testValidator.Validate(testResource, profileUris);
+                ErrorCount = outcome.Errors + outcome.Fatals,
+                WarningCount = outcome.Warnings,
+                Output = outcome.Issue.Select(i => i.ToString()).ToList()
+            };
+        }
+
+        [Ignore]
+        [DataTestMethod]
+        [ValidationManifestDataSource(@"TestData\validation-test-suite\manifest.json", ignoreTests: new[] { "message", "message-empty-entry" })]
+        public void AddFirelySdkResults(TestCase testCase)
+        {
+            var (outcome, outcomeProfile) = runTestCase(testCase, AssertionOptions.NoAssertion);
+
+            testCase.FirelySDK = writeFirelySDK(outcome);
+            if (outcomeProfile != null)
+            {
+                testCase.Profile.FirelySDK = writeFirelySDK(outcomeProfile);
             }
-            else
+
+            _testCases.Add(testCase);
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            if (_testCases.Any())
             {
-                result = _testValidator.Validate(testResource);
-            }
+                var newManifest = new Manifest
+                {
+                    TestCases = _testCases
+                };
 
-            var javaErrors = testCase?.ValidationProfile?.Java?.ErrorCount ?? testCase?.Java?.ErrorCount;
-
-            if (javaErrors != null)
-            {
-
-                Assert.AreEqual(javaErrors, result.Errors);
-            }
-            else
-            {
-                Assert.IsTrue(result.Success);
-            }
-
-            var javaWarnings = testCase?.ValidationProfile?.Java?.WarningCount ?? testCase?.Java?.WarningCount;
-
-            if (javaWarnings != null)
-            {
-                Assert.AreEqual(javaWarnings, result.Warnings);
+                var json = JsonSerializer.Serialize(newManifest,
+                                new JsonSerializerOptions()
+                                {
+                                    WriteIndented = true,
+                                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                                });
+                File.WriteAllText(@"..\..\..\TestData\validation-test-suite\manifest-with-firelysdk-results.json", json);
             }
         }
-      
+
         [Ignore]
         [TestMethod]
-        public void RunSingleTest()
+        public void RoundTripTest()
         {
-            var testCase = ValidatorManifestParser.Parse().Where(t => t.FileName == "questionnaireResponse-enableWhen-test3.xml").FirstOrDefault();
-            Assert.IsNotNull(testCase);
-            RunTestCase(testCase);
-        }
+            var expected = File.ReadAllText(@"TestData\validation-test-suite\manifest.json");
+            var manifest = JsonSerializer.Deserialize<Manifest>(expected, new JsonSerializerOptions() { AllowTrailingCommas = true });
+            manifest.Should().NotBeNull();
+            manifest.TestCases.Should().NotBeNull();
+            manifest.TestCases.Should().HaveCountGreaterThan(0);
 
+            var actual = JsonSerializer.Serialize(manifest,
+                new JsonSerializerOptions()
+                {
+                    WriteIndented = true,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+
+
+                });
+
+            List<string> errors = new List<string>();
+            //JsonAssert.AreSame("manifest.json", expected, actual, errors);
+            errors.Should().BeEmpty();
+        }
     }
 
-    internal class CustomDataSourceAttribute : Attribute, ITestDataSource
+
+    class ValidationManifestDataSourceAttribute : Attribute, ITestDataSource
     {
-        //Ignore these tests 
-        private readonly string[] _ignoreTests = { };
+        private string _manifestFileName;
+        private string _singleTest;
+        private IEnumerable<string> _ignoreTests;
+
+        public ValidationManifestDataSourceAttribute(string manifestFileName, string singleTest = null, string[] ignoreTests = null)
+        {
+            _manifestFileName = manifestFileName;
+            _singleTest = singleTest;
+            _ignoreTests = ignoreTests;
+        }
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)
         {
-            if(data.FirstOrDefault() is ValidationTestCase testCase)
+            if (data.FirstOrDefault() is TestCase testCase)
             {
-                return testCase?.FileName;
+                return testCase.Name;
             }
 
-            return null;
+            return default;
         }
 
         public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
-            var data = ValidatorManifestParser.Parse();
-            return data.Where(d=> d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))
-                       .Where(d=> !_ignoreTests.Contains(d.FileName))
-                       .Select(e => new object[]{ e });
+            var manifestJson = File.ReadAllText(_manifestFileName);
+            var manifest = JsonSerializer.Deserialize<Manifest>(manifestJson, new JsonSerializerOptions() { AllowTrailingCommas = true });
+
+            IEnumerable<TestCase> testCases = manifest.TestCases;
+
+            testCases = testCases.Where(t => t.Version != null && ModelInfo.CheckMinorVersionCompatibility(t.Version));
+
+            if (!string.IsNullOrEmpty(_singleTest))
+                testCases = testCases.Where(t => t.Name == _singleTest);
+            if (_ignoreTests != null)
+                testCases = testCases.Where(t => !_ignoreTests.Contains(t.Name));
+
+            return testCases.Select(e => new object[] { e });
         }
     }
 
-    internal static class ValidatorManifestParser
+    public class ExpectedResult
     {
-        public static List<ValidationTestCase> Parse()
-        {          
-            var manifest = File.ReadAllText(@"TestData\validation-test-suite\manifest.json");
-            var json = JObject.Parse(manifest);
-            var testCases = CreateValidationCase(json);
-            return testCases;
-        }
+        [JsonPropertyName("errorCount")]
+        public int? ErrorCount { get; set; }
 
-        private static List<ValidationTestCase> CreateValidationCase(JObject json)
-        {
-            var validationCases = new List<ValidationTestCase>();
-            foreach(var child in json["test-cases"].Children())
-            {
-                validationCases.Add(CreateValidationTestCase(child));
-            }
-            return validationCases;
-        }
+        [JsonPropertyName("output")]
+        public List<string> Output { get; set; }
 
-        private static ValidationTestCase CreateValidationTestCase(JToken json)
-        {
-           // var json = jsonx.FirstOrDefault()?.ToObject<JObject>();
-            var validationObject = new ValidationTestCase
-            {
-                Name = json["name"]?.Value<string>(),
-                FileName = json["file"]?.Value<string>(),
-                UseTest = json["usetest"]?.Value<bool>(),
-                Version = json["version"]?.Value<string>(),
-                Language = json["language"]?.Value<string>(),
-                Questionnaire = json["questionnaire"]?.Value<string>(),
-                AllowedExtensionsDomains = GetAllowedExtensionDomains(json.ToObject<JObject>()),
-                CodeSystems = ((JArray)json["questionnaire"])?.Values<string>()?.ToList(),
-                Profiles = ((JArray)json["profiles"])?.Values<string>()?.ToList(),
-                ValidationProfile = json["profile"] != null ? GetProfileInfo(json["profile"]) : null,
-                Java = json["java"] != null ? GetJavaValidatorResults(json["java"]) : null,
-                Logical = json["logical"] != null ? GetLogicalModelInfo(json["logical"]) : null
-            };
-            return validationObject;
-        }
+        [JsonPropertyName("warningCount")]
+        public int? WarningCount { get; set; }
 
-        private static ValidationTestCase.LogicalModel GetLogicalModelInfo(JToken json)
-        {
-            var values = json.ToObject<JObject>();
-            return new ValidationTestCase.LogicalModel
-            {
-                Supporting = values["supporting"]?.Values<string>().ToList(),
-                Expressions = values["expressions"]?.Values<string>().ToList(),
-                Java = values["java"] != null ? GetJavaValidatorResults(values["java"]) : null
-            };
-        }
+        [JsonPropertyName("todo")]
+        public string Todo { get; set; }
 
-        private static ValidationTestCase.Profile GetProfileInfo(JToken json)
-        {
-            var values = json.ToObject<JObject>();
-            return new ValidationTestCase.Profile
-            {
-                Source = values["source"]?.Value<string>(),
-                Supporting = values["supporting"]?.Values<string>().ToList(),
-                Java = values["java"] != null ? GetJavaValidatorResults(values["java"]) : null
-            };
-        }
-
-        private static ValidationTestCase.ExpectedResult GetJavaValidatorResults(JToken json)
-        {            
-            var values = json.ToObject<JObject>();
-            return new ValidationTestCase.ExpectedResult
-            {
-                ErrorCount = values["errorCount"]?.Value<int>(),
-                WarningCount = values["warningCount"]?.Value<int>(),
-                InfoCount = values["infoCount"]?.Value<int>(),
-                Output = values["output"]?.Values<string>().ToList()
-            };
-        }
-
-        private static List<string> GetAllowedExtensionDomains(JObject values)
-        {
-            var extensiondomains = new List<string>();
-
-            if(values["allowed-extension-domain"] != null)
-                extensiondomains.Add(values["allowed-extension-domain"].Value<string>());
-            if(values["allowed-extension-domains"] != null)
-                extensiondomains.AddRange(((JArray)values["allowed-extension-domains"])?.Values<string>());
-
-            return extensiondomains;            
-        }
+        [JsonPropertyName("infoCount")]
+        public int? InfoCount { get; set; }
     }
-     
-    public class ValidationTestCase { 
 
-        public string Name { get; set; }
-        public string FileName { get; set; }
-        public bool? UseTest { get; set; }
-        public List<string> AllowedExtensionsDomains { get; set; }
-        public string Language { get; set; }
-        public string Questionnaire { get; set; }
-        public List<string> CodeSystems { get; set; }
-        public List<string> Profiles { get; set; }
-        public Profile ValidationProfile { get; set; }  
-        public string Version { get; set; }
+    public class Profile
+    {
+        [JsonPropertyName("source")]
+        public string Source { get; set; }
+
+        [JsonPropertyName("java")]
         public ExpectedResult Java { get; set; }
-        public LogicalModel Logical { get; set; }
 
+        [JsonPropertyName("firely-sdk")]
+        public ExpectedResult FirelySDK { get; set; }
 
-        public class ExpectedResult
-        {
-            public int? ErrorCount { get; set; }
-            public int? WarningCount { get; set; }
-            public int? InfoCount { get; set; }
-            public List<string> Output { get; set; }
-        }
+        [JsonPropertyName("supporting")]
+        public List<string> Supporting { get; set; }
+    }
 
-        public class Profile
-        {
-            public string Source { get; set; }
-            public List<string> Supporting { get; set; }
-            public  ExpectedResult Java { get; set; }
-        }
+    public class TestCase
+    {
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
 
-        public class LogicalModel
-        {
-            public List<string> Supporting { get; set; }
-            public List<string> Expressions { get; set; }
-            public ExpectedResult Java { get; set; }
-        }
-    }  
+        [JsonPropertyName("file")]
+        public string FileName { get; set; }
+
+        [JsonPropertyName("version")]
+        public string Version { get; set; }
+
+        [JsonPropertyName("java")]
+        public ExpectedResult Java { get; set; }
+
+        [JsonPropertyName("firely-sdk")]
+        public ExpectedResult FirelySDK { get; set; }
+
+        [JsonPropertyName("profiles")]
+        public List<string> Profiles { get; set; }
+
+        [JsonPropertyName("profile")]
+        public Profile Profile { get; set; }
+
+        [JsonPropertyName("supporting")]
+        public List<string> Supporting { get; set; }
+
+        [JsonPropertyName("allowed-extension-domain")]
+        public string AllowedExtensionDomain { get; set; }
+    }
+
+    public class Manifest
+    {
+        [JsonPropertyName("documentation")]
+        public List<string> Documentation { get; set; }
+
+        [JsonPropertyName("test-cases")]
+        public List<TestCase> TestCases { get; set; }
+    }
+
 }
