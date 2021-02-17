@@ -6,15 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -96,6 +90,39 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.IsTrue(vs.CodeInExpansion("code3", sys1));
             Assert.IsTrue(vs.CodeInExpansion("code4", sys2));
+        }
+
+        [TestMethod]
+        public void CanConvertToSystemCoding()
+        {
+            var fhirCode = new Code("atem");
+            var systemCode = fhirCode.ToSystemCode();
+            Assert.AreEqual("atem", systemCode.Value);
+            Assert.IsNull(systemCode.System);
+
+            var fhirCodeOfT = new Code<AdministrativeGender>(AdministrativeGender.Male);
+            systemCode = fhirCodeOfT.ToSystemCode();
+            Assert.AreEqual("male", systemCode.Value);
+            Assert.AreEqual("http://hl7.org/fhir/administrative-gender", systemCode.System);
+
+            var fhirCoding = new Coding("http://nu.nl", "yes", "positive") { Version = "1.0.0" };
+            systemCode = fhirCoding.ToSystemCode();
+            verifyCoding(systemCode);
+
+            var fhirCodeableConcept = new CodeableConcept("http://nu.nl", "yes", "positive", "Original text");
+            fhirCodeableConcept.Coding[0].Version = "1.0.0";
+            var systemConcept = fhirCodeableConcept.ToSystemConcept();
+            Assert.AreEqual("Original text", systemConcept.Display);
+            Assert.AreEqual(1, systemConcept.Codes.Count);
+            verifyCoding(systemConcept.Codes.First());
+
+            static void verifyCoding(ElementModel.Types.Code systemCode)
+            {
+                Assert.AreEqual("yes", systemCode.Value);
+                Assert.AreEqual("http://nu.nl", systemCode.System);
+                Assert.AreEqual("positive", systemCode.Display);
+                Assert.AreEqual("1.0.0", systemCode.Version);
+            }
         }
     }
 }
