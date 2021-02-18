@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(nrOfParrallelTasks, successes);
         }
 
-     
+
         /// <summary>
         /// This test should show that the rng-2 constraint is totally ignored (it's
         /// incorrect in DSTU2 and STU3), but others are not.
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Specification.Tests
             var instance = new Observation
             {
                 // this should not trigger rng-2
-                Value = new Range()
+                Value = new Model.Range()
                 {
                     Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
                     High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
@@ -1179,7 +1179,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-      
+
 
         private class ClearSnapshotResolver : IResourceResolver
         {
