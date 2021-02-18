@@ -1,0 +1,21 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/templates/apply-versioning-steps-template.yml
+
+steps:
+- task: PowerShell@2
+  displayName: Retrieve current version
+  inputs:
+    targetType: filePath
+    filePath: $(Build.SourcesDirectory)/build/RetrieveVersion.ps1
+- task: PowerShell@2
+  displayName: Setting version
+  inputs:
+    targetType: filePath
+    filePath: $(Build.SourcesDirectory)/build/UpdateVersion.ps1
+    arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+- task: PowerShell@2
+  displayName: Setting version for common projects
+  inputs:
+    filePath: $(Build.SourcesDirectory)/common/build/UpdateVersion.ps1
+    arguments: -newVersion $(CurrentVersion) -suffix $(CurrentSuffix)-$(Build.BuildNumber)
+    workingDirectory: $(Build.SourcesDirectory)/common/build
