@@ -1150,7 +1150,7 @@ namespace Hl7.Fhir.Specification.Tests
             var instance = new Observation
             {
                 // this should not trigger rng-2
-                Value = new Range()
+                Value = new Model.Range()
                 {
                     Low = new Quantity() { Value = 5, Code = "kg", System = "ucum.org" },
                     High = new Quantity() { Value = 4, Code = "kg", System = "ucum.org" },
