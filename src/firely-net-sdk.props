@@ -37,7 +37,7 @@
 
   <!-- Compiler settings -->
   <PropertyGroup>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Configurations>Debug;Release;FullDebug</Configurations>
   </PropertyGroup>
@@ -54,7 +54,7 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
     <IncludeSymbols>True</IncludeSymbols>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 </Project>
