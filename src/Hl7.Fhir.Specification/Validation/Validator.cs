@@ -259,6 +259,12 @@ namespace Hl7.Fhir.Validation
             var pattern = elementDef.GetStringExtension(uri);
             if (pattern != null)
             {
+                // See issue https://github.com/FirelyTeam/firely-net-sdk/issues/1563 and https://hl7.org/fhir/datatypes.html#string 
+                // the regex provided by the Fhir standard is not sufficient enough. The regex [\r\n\t\u0020-\uFFFF]* is more recommended 
+                if (instance?.InstanceType == FHIRAllTypes.String.GetLiteral() && pattern == @"[ \r\n\t\S]+")
+                {
+                    pattern = @"[\r\n\t\u0020-\uFFFF]*";
+                }
                 var regex = new Regex(pattern);
                 var value = toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + regex + "$").Success;
