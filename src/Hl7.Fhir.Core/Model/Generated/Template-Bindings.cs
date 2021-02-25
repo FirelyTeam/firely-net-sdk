@@ -2821,70 +2821,6 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// The kind of operation to perform as a part of a property based filter.
-  /// (url: http://hl7.org/fhir/ValueSet/filter-operator)
-  /// (system: http://hl7.org/fhir/filter-operator)
-  /// </summary>
-  [FhirEnumeration("FilterOperator")]
-  public enum FilterOperator
-  {
-    /// <summary>
-    /// The specified property of the code equals the provided value.
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("=", "http://hl7.org/fhir/filter-operator"), Description("Equals")]
-    Equal,
-    /// <summary>
-    /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, including the provided concept itself (i.e. include child codes)
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("is-a", "http://hl7.org/fhir/filter-operator"), Description("Is A (by subsumption)")]
-    IsA,
-    /// <summary>
-    /// Includes all concept ids that have a transitive is-a relationship with the concept Id provided as the value, excluding the provided concept itself (i.e. include child codes)
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("descendent-of", "http://hl7.org/fhir/filter-operator"), Description("Descendent Of (by subsumption)")]
-    DescendentOf,
-    /// <summary>
-    /// The specified property of the code does not have an is-a relationship with the provided value.
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("is-not-a", "http://hl7.org/fhir/filter-operator"), Description("Not (Is A) (by subsumption)")]
-    IsNotA,
-    /// <summary>
-    /// The specified property of the code  matches the regex specified in the provided value.
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("regex", "http://hl7.org/fhir/filter-operator"), Description("Regular Expression")]
-    Regex,
-    /// <summary>
-    /// The specified property of the code is in the set of codes or concepts specified in the provided value (comma separated list).
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("in", "http://hl7.org/fhir/filter-operator"), Description("In Set")]
-    In,
-    /// <summary>
-    /// The specified property of the code is not in the set of codes or concepts specified in the provided value (comma separated list).
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("not-in", "http://hl7.org/fhir/filter-operator"), Description("Not in Set")]
-    NotIn,
-    /// <summary>
-    /// Includes all concept ids that have a transitive is-a relationship from the concept Id provided as the value, including the provided concept itself (e.g. include parent codes)
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("generalizes", "http://hl7.org/fhir/filter-operator"), Description("Generalizes (by Subsumption)")]
-    Generalizes,
-    /// <summary>
-    /// The specified property of the code has at least one value (if the specified value is true; if the specified value is false, then matches when the specified property of the code has no values)
-    /// (system: http://hl7.org/fhir/filter-operator)
-    /// </summary>
-    [EnumLiteral("exists", "http://hl7.org/fhir/filter-operator"), Description("Exists")]
-    Exists,
-  }
-
-  /// <summary>
   /// This value set includes Status codes.
   /// (url: http://hl7.org/fhir/ValueSet/fm-status)
   /// (system: http://hl7.org/fhir/fm-status)
@@ -3114,40 +3050,6 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
     NeedsAction,
-  }
-
-  /// <summary>
-  /// The lifecycle status of a Value Set or Concept Map.
-  /// (url: http://hl7.org/fhir/ValueSet/publication-status)
-  /// (system: http://hl7.org/fhir/publication-status)
-  /// </summary>
-  [FhirEnumeration("PublicationStatus")]
-  public enum PublicationStatus
-  {
-    /// <summary>
-    /// This resource is still under development and is not yet considered to be ready for normal use.
-    /// (system: http://hl7.org/fhir/publication-status)
-    /// </summary>
-    [EnumLiteral("draft", "http://hl7.org/fhir/publication-status"), Description("Draft")]
-    Draft,
-    /// <summary>
-    /// This resource is ready for normal use.
-    /// (system: http://hl7.org/fhir/publication-status)
-    /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/publication-status"), Description("Active")]
-    Active,
-    /// <summary>
-    /// This resource has been withdrawn or superseded and should no longer be used.
-    /// (system: http://hl7.org/fhir/publication-status)
-    /// </summary>
-    [EnumLiteral("retired", "http://hl7.org/fhir/publication-status"), Description("Retired")]
-    Retired,
-    /// <summary>
-    /// The authoring system does not know which of the status values currently applies for this resource.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
-    /// (system: http://hl7.org/fhir/publication-status)
-    /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/publication-status"), Description("Unknown")]
-    Unknown,
   }
 
   /// <summary>

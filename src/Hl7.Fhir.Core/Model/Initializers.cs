@@ -73,39 +73,10 @@ namespace Hl7.Fhir.Model
         {
             if (!String.IsNullOrEmpty(Text))
                 return String.Format("Text=\"{0}\"", Text);
-            return string.Join(", ", string.Join(", ", Line.ToArray()), 
+            return string.Join(", ", string.Join(", ", Line.ToArray()),
                 City, State, PostalCode, Country)
                 + (Use.HasValue ? " Use=\"" + Use.Value + "\"" : "")
                 + (Type.HasValue ? " Type=\"" + Type.Value + "\"" : "");
-        }
-    }
-
-    public partial class ContactPoint
-    {
-        public ContactPoint()
-        {
-        }
-
-        public ContactPoint(ContactPointSystem? system, ContactPointUse? use, string value)
-        {
-            this.System = system;
-            this.Use = use;
-            this.Value = value;
-        }
-    }
-
-    public partial class Quantity
-    {
-        public Quantity()
-        {
-        }
-
-        public Quantity(decimal value, string unit, string system= "http://unitsofmeasure.org")
-        {
-            Value = value;
-            Unit = unit;
-            Code = unit;
-            System = system;
         }
     }
 }

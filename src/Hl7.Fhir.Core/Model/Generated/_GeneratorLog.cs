@@ -95,7 +95,7 @@
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Procedure.status
 
-// Generated Shared Enumeration: FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
+// Deferred generation of Shared Enumeration (will be generated in common): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
   // Used in model class (resource): ValueSet.compose.include.filter.op
 
@@ -140,7 +140,7 @@
   // Used in model class (resource): Appointment.participant.status
   // Used in model class (resource): AppointmentResponse.participantStatus
 
-// Generated Shared Enumeration: PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
+// Deferred generation of Shared Enumeration (will be generated in common): PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
   // Used in model class (resource): ActivityDefinition.status
   // Used in model class (resource): CapabilityStatement.status
   // Used in model class (resource): CodeSystem.status
@@ -223,8 +223,6 @@
 // Age.cs
 // Annotation.cs
 // Attachment.cs
-// ContactDetail.cs
-// ContactPoint.cs
 // Contributor.cs
 // Count.cs
 // DataRequirement.cs
@@ -235,15 +233,12 @@
 // HumanName.cs
 // Money.cs
 // ParameterDefinition.cs
-// Quantity.cs
-// Range.cs
 // Ratio.cs
 // RelatedArtifact.cs
 // SampledData.cs
 // Signature.cs
 // Timing.cs
 // TriggerDefinition.cs
-// UsageContext.cs
 // Account.cs
 // ActivityDefinition.cs
 // AdverseEvent.cs
@@ -321,9 +316,7 @@
 // NutritionOrder.cs
 // Observation.cs
 // OperationDefinition.cs
-// OperationOutcome.cs
 // Organization.cs
-// Parameters.cs
 // Patient.cs
 // PaymentNotice.cs
 // PaymentReconciliation.cs
