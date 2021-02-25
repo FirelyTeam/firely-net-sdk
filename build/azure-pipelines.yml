@@ -220,3 +220,17 @@ stages:
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
                 includeSymbols: false  
+                
+            - task: GitHubRelease@1
+              displayName: 'GitHub release (create)'  
+              inputs:
+                gitHubConnection: 'GitHub Fhir-net-api'
+                repositoryName: '$(Build.Repository.Name)'
+                action: 'create'
+                target: '$(Build.SourceVersion)'
+                tagSource: userSpecifiedTag
+                tag: '$(Build.SourceBranch)'
+                isDraft: true
+                isPreRelease: true
+                changeLogCompareToRelease: 'lastFullRelease'
+                changeLogType: 'issueBased'
