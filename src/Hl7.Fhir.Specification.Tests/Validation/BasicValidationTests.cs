@@ -1259,7 +1259,13 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-
+        [Fact]
+        public void ValidateNonBreakingWhitespaceInString()
+        {
+            var value = new FhirString("Non-breaking" + '\u00A0' + "space");
+            var result = _validator.Validate(value);
+            Assert.True(result.Success);
+        }
 
         private class ClearSnapshotResolver : IResourceResolver
         {
