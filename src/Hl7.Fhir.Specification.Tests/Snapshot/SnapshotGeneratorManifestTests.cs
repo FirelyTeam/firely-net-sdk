@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public async T.Task Test_obs2_0a() => await ExecuteTest("obs-2a");
         [Ignore("issue #1253")]
         [TestMethod] public async T.Task Test_obs2_0b() => await ExecuteTest("obs-2b");
-        
+
         [TestMethod] public async T.Task Test_obs2_1() => await ExecuteTest("obs-2-1");
         [TestMethod] public async T.Task Test_obs2_2() => await ExecuteTest("obs-2-2");
 
@@ -529,10 +529,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public async T.Task Test_obs2_3() => await ExecuteTest("obs-2-3");
         [Ignore("issue #1254")]
         [TestMethod] public async T.Task Test_obs3_0() => await ExecuteTest("obs-3");
-       
+
         [Ignore("issue #1255")]
         [TestMethod] public async T.Task Test_obs4_0() => await ExecuteTest("obs-4");
-        
+
         [Ignore("issue #1256")]
         [TestMethod] public async T.Task Test_obs5_0() => await ExecuteTest("obs-5");
 
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             public SnapshotEvaluationContext(
                 string testPath, IResourceResolver resolver, string id,
-                StructureDefinition input, StructureDefinition generated) : base(generated)
+                StructureDefinition input, StructureDefinition generated) : base(generated.ToTypedElement())
             {
                 _testPath = testPath ?? throw new ArgumentNullException(nameof(testPath));
                 TestResolver = resolver ?? throw new ArgumentNullException(nameof(resolver));

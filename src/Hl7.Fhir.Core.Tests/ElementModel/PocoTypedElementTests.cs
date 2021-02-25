@@ -1,14 +1,14 @@
-﻿using Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.FhirPath;
-using Hl7.Fhir.ElementModel;
-using System.Diagnostics;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System.IO;
-using System.Linq;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
-using Hl7.Fhir.FhirPath;
+using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace Hl7.Fhir.Core.Tests.ElementModel
 {
