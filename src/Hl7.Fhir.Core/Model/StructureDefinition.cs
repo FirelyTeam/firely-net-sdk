@@ -26,13 +26,12 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 */
-
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Model
 {
@@ -43,9 +42,12 @@ namespace Hl7.Fhir.Model
     }
 
     // [WMR 20161005] Added specific debugger display attribute that includes the canonical url
-    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={ResourceIdentity()}} Url={Url}")]
+    [System.Diagnostics.DebuggerDisplay("\\{\"{TypeName,nq}/{Id,nq}\" Identity={DebuggerDisplay}} Url={Url}")]
     public partial class StructureDefinition
     {
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
+       
         public partial class SnapshotComponent : IElementList {}
 
         public partial class DifferentialComponent : IElementList { }
