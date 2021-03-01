@@ -46,7 +46,7 @@ Please note that the source code for the Firely .NET SDK is split up into two Gi
     
 Please refer to our [submodules overview](https://github.com/FirelyTeam/firely-net-sdk/wiki/Clone-this-repository-with-submodule-common) for more details.
 
-## Uprading
+## Upgrading
 Upgrading to 2.x? Breaking changes [listed here](https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-2.0).
 
 Going further? See [3.x breaking changes](https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-3.0).
