@@ -7,6 +7,7 @@ steps:
   inputs:
     targetType: filePath
     filePath: $(Build.SourcesDirectory)/build/RetrieveVersion.ps1
+    arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props
 - powershell: |
      if ($(isTagBranch) -eq $false)
      {  
