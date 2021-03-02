@@ -9,7 +9,7 @@ steps:
     filePath: $(Build.SourcesDirectory)/build/RetrieveVersion.ps1
     arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props
 - powershell: |
-     if ($Env:isTagBranch -eq $true)
+     if ($Env:isTagBranch -eq $false)
      {  
         # append a build number when we are not releasing
         Write-Host "##vso[task.setvariable variable=CurrentSuffix]$Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER"
