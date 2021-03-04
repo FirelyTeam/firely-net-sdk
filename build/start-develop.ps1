@@ -1,7 +1,7 @@
 Param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true, HelpMessage="Enter the new version for the next development phase.")]
     [string] $newVersion,
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$true, HelpMessage="Enter the new suffix for the next development phase (alpha is default).")]
     [string] $versionSuffix = "alpha"
 )
 
@@ -59,3 +59,6 @@ Update-Version -develop_branch "develop" -propFile $repo_root\common\src\firely-
 Pop-Location
 
 $fhir_releases | ForEach-Object { Update-Common -fhir_release $PSItem}
+
+# back to the directory when this script was started
+Pop-Location
