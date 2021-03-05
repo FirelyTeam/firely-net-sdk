@@ -46,10 +46,17 @@ jobs:
       dockerComposeCommand: 'up -d' 
 
   - powershell: |
+      Write-Host "Waiting 20s"
+
       Start-Sleep -s 20
+      
+      Write-Host "Invoking Patient request"
 
       $Response = Invoke-WebRequest -Uri "http://localhost:8080/Patient"
-      Write-Host $Response.StatusCode
+
+      Write-Host "Done web request"
+
+      Write-Host "$Response.StatusCode"
 
   - task: DownloadPipelineArtifact@2
     inputs:
