@@ -119,8 +119,8 @@ stages:
     parameters:
       testRunTitle: Tests FhirClient unit tests
       projects: |
-        '**/publish/Hl7.Fhir.Core.Tests.dll'
-        '**/publish/Hl7.Fhir.Specification.Tests.dll'
+        **/publish/Hl7.Fhir.Core.Tests.dll
+        **/publish/Hl7.Fhir.Specification.Tests.dll
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests common test projects

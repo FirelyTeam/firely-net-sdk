@@ -25,6 +25,7 @@ jobs:
           volumes:
             - ./firelyserver-license.json:/app/firelyserver-license.json
       EOF
+    displayName: 'Create docker-compose file'
   - task: DownloadSecureFile@1
     displayName: Download license file for Firely Server
     inputs:
