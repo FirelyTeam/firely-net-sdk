@@ -24,7 +24,7 @@ jobs:
           ports:
           - "8080:4080"
           volumes:
-          - .:/app
+            - ./firelyserver-license.json:/app/firelyserver-license.json
       EOF
   - task: DownloadSecureFile@1
     displayName: Download license key for Firely Server
@@ -44,6 +44,12 @@ jobs:
       dockerComposeFile: 'docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d' 
+
+  - powershell: |
+      Start-Sleep -s 20
+
+      $Response = Invoke-WebRequest -Uri "http://localhost:8080/Patient"
+      Write-Host $Response.StatusCode
 
   - task: DownloadPipelineArtifact@2
     inputs:
