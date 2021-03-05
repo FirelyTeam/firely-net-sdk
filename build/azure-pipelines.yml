@@ -20,7 +20,7 @@ variables:
 - template: pipeline-variables.yml
   
 pool:
-  vmImage: windows-latest
+  vmImage: ubuntu-latest
 
 resources:
   repositories:
