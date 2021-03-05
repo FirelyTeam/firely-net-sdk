@@ -1,5 +1,5 @@
 # Repo: FirelyTeam/firely-net-sdk
-# File: build/templates/test-job-template.yml
+# File: build/fhir-client-tests.yml
 parameters:
 - name: testRunTitle
   default: 'Test'

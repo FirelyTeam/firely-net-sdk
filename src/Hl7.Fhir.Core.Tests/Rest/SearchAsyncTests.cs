@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     public class FhirClientSearchAsyncTests
     {
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
-        private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
+        private readonly string _endpointSupportingSearchUsingPost = FhirClientTests._endpointSupportingSearchUsingPost.OriginalString;
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
