@@ -63,6 +63,7 @@ namespace Hl7.Fhir.Tests.Rest
             if (testEndpoint is not null)
             {
                 FhirClientTests.testEndpoint = new Uri(testEndpoint);
+                _endpointSupportingSearchUsingPost = new Uri(testEndpoint);
             }
 
             CreateItems();

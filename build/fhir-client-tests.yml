@@ -6,7 +6,6 @@ parameters:
 - name: buildConfiguration
   default: 'Release'
 - name: projects
-- name: filter
 
 jobs:
 - job: fhirClientTestJob
@@ -27,12 +26,12 @@ jobs:
             - ./firelyserver-license.json:/app/firelyserver-license.json
       EOF
   - task: DownloadSecureFile@1
-    displayName: Download license key for Firely Server
+    displayName: Download license file for Firely Server
     inputs:
       secureFile: firelyserver-license.json
       retryCount: 5
   - task: CopyFiles@2
-    displayName: Copy license key to $(System.DefaultWorkingDirectory)
+    displayName: Copy license file to working directory
     inputs:
       SourceFolder: $(Agent.TempDirectory)
       Contents: firelyserver-license.json
@@ -52,12 +51,12 @@ jobs:
       
       Write-Host "Invoking Patient request"
 
-      $Response = Invoke-WebRequest -Uri "http://localhost:8080/Patient"
+      $Response = Invoke-WebRequest -Uri "http://localhost:8080/metadata?_elements=status"
 
       Write-Host "Done web request"
 
-      Write-Host "$Response.StatusCode"
-
+      Write-Host "$Response"
+    displayName: 'Test request Firely Server'
   - task: DownloadPipelineArtifact@2
     inputs:
       displayName: Download Build artifacts
@@ -69,7 +68,7 @@ jobs:
     inputs:
       command: test
       projects: ${{ parameters.projects }}
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter TestCategory=IntegrationTest|TestCategory=FhirClient --collect "Code coverage"'
       testRunTitle: ${{ parameters.testRunTitle }}
     env:
       FHIR_ENDPOINT: http://localhost:8080
@@ -82,3 +81,8 @@ jobs:
       dockerComposeFile: 'docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'down'
+  - task: DeleteFiles@1
+    displayName: 'Remove License file from working directory'
+    inputs:
+      SourceFolder: (System.DefaultWorkingDirectory)
+      Contents: 'firelyserver-license.json' 
