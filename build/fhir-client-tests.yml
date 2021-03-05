@@ -36,25 +36,38 @@ jobs:
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d' 
 
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      displayName: Download Build artifacts
-      artifact: 'TestBuild'
-      path: $(System.DefaultWorkingDirectory)/TestBuild
+#  - task: DownloadPipelineArtifact@2
+#    inputs:
+#      displayName: Download Build artifacts
+#      artifact: 'TestBuild'
+#      path: $(System.DefaultWorkingDirectory)/TestBuild
       
-  - task: DotNetCoreCLI@2
-    displayName: Running unit tests
-    inputs:
-      command: test
-      projects: ${{ parameters.projects }}
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
-      testRunTitle: ${{ parameters.testRunTitle }}
+#  - task: DotNetCoreCLI@2
+#    displayName: Running unit tests
+#    inputs:
+#     command: test
+#      projects: ${{ parameters.projects }}
+#      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
+#      testRunTitle: ${{ parameters.testRunTitle }}
+
+  - powershell: |
+      Start-Sleep -s 60
+      try
+      {
+          $Response = Invoke-WebRequest -Uri "http://localhost:4001"
+          $StatusCode = $Response.StatusCode
+      }
+      catch
+      {
+          $StatusCode = $_.Exception.Response.StatusCode.value__
+      }
+      $StatusCode
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
     condition: always()
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerComposeFile: 'docker-compose.yml'
+      dockerComposeFile: 'build/docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'down'
