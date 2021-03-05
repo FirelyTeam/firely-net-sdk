@@ -4,7 +4,7 @@ parameters:
 - name: testRunTitle
   default: 'Test'
 - name: buildConfiguration
-  default: 'Debug'
+  default: 'Release'
 - name: projects
 - name: filter
 
@@ -23,7 +23,7 @@ jobs:
         firelyserver:
           image: "simplifier/vonk"
           ports:
-          - "4001:4080"
+          - "8080:4080"
           volumes:
           - .:/app
       EOF
@@ -32,12 +32,12 @@ jobs:
     inputs:
       secureFile: firelyserver-license.json
       retryCount: 5
-#  - task: CopyFiles@2
-#    displayName: Copy license key to $(Pipeline.Workspace)
-#    inputs:
-#      SourceFolder: $(Agent.TempDirectory)
-#      Contents: firelyserver-license.json
-#      TargetFolder: $(Pipeline.Workspace)
+  - task: CopyFiles@2
+    displayName: Copy license key to $(System.DefaultWorkingDirectory)
+    inputs:
+      SourceFolder: $(Agent.TempDirectory)
+      Contents: firelyserver-license.json
+      TargetFolder: $(System.DefaultWorkingDirectory)
   - task: DockerCompose@0
     displayName: 'Start Firely Server'
     inputs:
@@ -46,25 +46,21 @@ jobs:
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d' 
 
-#  - task: DownloadPipelineArtifact@2
-#    inputs:
-#      displayName: Download Build artifacts
-#      artifact: 'TestBuild'
-#      path: $(System.DefaultWorkingDirectory)/TestBuild
+  - task: DownloadPipelineArtifact@2
+    inputs:
+      displayName: Download Build artifacts
+      artifact: 'TestBuild'
+      path: $(System.DefaultWorkingDirectory)/TestBuild
       
-#  - task: DotNetCoreCLI@2
-#    displayName: Running unit tests
-#    inputs:
-#     command: test
-#      projects: ${{ parameters.projects }}
-#      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
-#      testRunTitle: ${{ parameters.testRunTitle }}
-
-  - powershell: |
-      Start-Sleep -s 20
-
-      $Response = Invoke-WebRequest -Uri "localhost:4001/Patient"
-      Write-Host $Response.StatusCode
+  - task: DotNetCoreCLI@2
+    displayName: Running unit tests
+    inputs:
+      command: test
+      projects: ${{ parameters.projects }}
+      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
+      testRunTitle: ${{ parameters.testRunTitle }}
+      env:
+        FHIR_ENDPOINT: "http://localhost:8080"
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
