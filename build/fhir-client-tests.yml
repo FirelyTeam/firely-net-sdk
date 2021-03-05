@@ -84,6 +84,7 @@ jobs:
       dockerComposeCommand: 'down'
   - task: DeleteFiles@1
     displayName: 'Remove License file from working directory'
+    condition: always()
     inputs:
       SourceFolder: (System.DefaultWorkingDirectory)
       Contents: 'firelyserver-license.json' 
