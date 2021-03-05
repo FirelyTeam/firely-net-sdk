@@ -1,0 +1,8 @@
+version: "3"
+services:
+  firelyserver:
+    image: "simplifier/vonk"
+    ports:
+      - "4001:4080"
+    volumes:
+      - .:/app

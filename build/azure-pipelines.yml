@@ -32,6 +32,11 @@ stages:
 - stage: build
   displayName: Build
   jobs:
+  - template: fhir-client-tests.yml
+    parameters:
+      testRunTitle: Tests FhirClient unit tests
+      projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
+      filter: TestCategory=IntegrationTest|TestCategory=FhirClient
   - job: restoreAndBuild
     displayName: 'Build in $(buildConfiguration) mode'
     steps:
