@@ -61,7 +61,7 @@ jobs:
       {
           $StatusCode = $_.Exception.Response.StatusCode.value__
       }
-      Write-Output $StatusCode
+      Write-Verbose $StatusCode
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
