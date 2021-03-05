@@ -10,12 +10,13 @@ parameters:
 
 
 jobs:
-- job: 
+- job: fhirClientTestJob
   timeoutInMinutes: 120
   cancelTimeoutInMinutes: 1
   displayName: ${{ parameters.testRunTitle }}
   steps:
-  - checkout: none
+  - checkout: self
+    fetchDepth: 1
   - task: DownloadSecureFile@1
     displayName: Download license key for Firely Server
     inputs:
@@ -31,7 +32,7 @@ jobs:
     displayName: 'Start Firely Server'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerComposeFile: 'docker-compose.yml'
+      dockerComposeFile: 'build/docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d' 
 
