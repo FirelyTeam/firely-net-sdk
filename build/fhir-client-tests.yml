@@ -15,8 +15,18 @@ jobs:
   cancelTimeoutInMinutes: 1
   displayName: ${{ parameters.testRunTitle }}
   steps:
-  - checkout: self
-    fetchDepth: 1
+  - checkout: none
+  - bash: |
+      cat > docker-compose.yml << EOF 
+      version: "3"
+      services:
+        firelyserver:
+          image: "simplifier/vonk"
+          ports:
+          - "4001:4080"
+          volumes:
+          - .:/app
+      EOF
   - task: DownloadSecureFile@1
     displayName: Download license key for Firely Server
     inputs:
@@ -32,7 +42,7 @@ jobs:
     displayName: 'Start Firely Server'
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerComposeFile: 'build/docker-compose.yml'
+      dockerComposeFile: 'docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'up -d' 
 
@@ -53,7 +63,7 @@ jobs:
   - powershell: |
       Start-Sleep -s 20
 
-      $Response = Invoke-WebRequest -Uri "http://localhost:4001/Patient"
+      $Response = Invoke-WebRequest -Uri "localhost:4001/Patient"
       Write-Host $Response.StatusCode
 
   - task: DockerCompose@0
@@ -61,6 +71,6 @@ jobs:
     condition: always()
     inputs:
       containerregistrytype: 'Container Registry'
-      dockerComposeFile: 'build/docker-compose.yml'
+      dockerComposeFile: 'docker-compose.yml'
       action: 'Run a Docker Compose command'
       dockerComposeCommand: 'down'
