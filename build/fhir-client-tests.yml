@@ -51,17 +51,10 @@ jobs:
 #      testRunTitle: ${{ parameters.testRunTitle }}
 
   - powershell: |
-      Start-Sleep -s 60
-      try
-      {
-          $Response = Invoke-WebRequest -Uri "http://localhost:4001/Patient"
-          $StatusCode = $Response.StatusCode
-      }
-      catch
-      {
-          $StatusCode = $_.Exception.Response.StatusCode.value__
-      }
-      Write-Verbose $StatusCode
+      Start-Sleep -s 20
+
+      $Response = Invoke-WebRequest -Uri "http://localhost:4001/Patient"
+      Write-Host $Response.StatusCode
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
