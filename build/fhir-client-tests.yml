@@ -8,7 +8,6 @@ parameters:
 - name: projects
 - name: filter
 
-
 jobs:
 - job: fhirClientTestJob
   timeoutInMinutes: 120
@@ -60,7 +59,7 @@ jobs:
       arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter ${{ parameters.filter }} --collect "Code coverage"'
       testRunTitle: ${{ parameters.testRunTitle }}
       env:
-        FHIR_ENDPOINT: "http://localhost:8080"
+        FHIR_ENDPOINT: http://localhost:8080
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
