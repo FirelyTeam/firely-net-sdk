@@ -54,14 +54,14 @@ jobs:
       Start-Sleep -s 60
       try
       {
-          $Response = Invoke-WebRequest -Uri "http://localhost:4001"
+          $Response = Invoke-WebRequest -Uri "http://localhost:4001/Patient"
           $StatusCode = $Response.StatusCode
       }
       catch
       {
           $StatusCode = $_.Exception.Response.StatusCode.value__
       }
-      $StatusCode
+      Write-Output $StatusCode
 
   - task: DockerCompose@0
     displayName: 'Shutdown Firely Server'
