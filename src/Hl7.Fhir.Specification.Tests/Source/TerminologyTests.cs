@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [Fac(), Trait("TestCategory", "IntegrationTest")]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleAutomap()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
