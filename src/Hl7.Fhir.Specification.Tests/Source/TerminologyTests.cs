@@ -321,6 +321,38 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
+        public async T.Task LocalTermServiceUsingDuplicateParamaters()
+        {
+            var svc = new LocalTerminologyService(_resolver);           
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                     new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                      new Parameters.ParameterComponent
+                    {
+                        Name = "url",
+                        Value = new FhirUri("urn:iso:std:iso:3166")
+                    },
+                }
+            };           
+
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+
+            Assert.Equal("List of input parameters contains duplicates", ex.Message);
+        }
+
+
+            [Fact]
         public async void ExternalServiceTranslateSimpleTranslate()
         {
             var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
