@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
         private readonly IAsyncResourceResolver _resolver;
-
+        private static Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
 
         public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
@@ -352,10 +352,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-            [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleTranslate()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new TranslateParameters()
@@ -400,10 +400,10 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleAutomap()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new TranslateParameters()
@@ -418,10 +418,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("result", param1.Name);
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceLookupPropertiesDisplayAndInactiveStatus()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
@@ -454,10 +454,10 @@ namespace Hl7.Fhir.Specification.Tests
                 });
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceLookupInactiveStatus()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
@@ -486,10 +486,10 @@ namespace Hl7.Fhir.Specification.Tests
                 });
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceLookupSNOMEDCode()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new LookupParameters()
@@ -501,10 +501,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Parameter.Count > 0);
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceExpandExplicitValueSet()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var result = await svc.Expand(null, "education-levels") as ValueSet;
@@ -512,10 +512,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Expansion.Contains.Count > 0, "Expected more than 0 items.");
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceExpandImplicitValueSetWithFilter()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new ExpandParameters()
@@ -570,10 +570,10 @@ namespace Hl7.Fhir.Specification.Tests
                 });
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceSubsumesConceptASubsumesConceptB()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new SubsumesParameters()
@@ -589,10 +589,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        [Fact]
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             // Step 1
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceValidateCodeTest()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var svc = new ExternalTerminologyService(client);
 
             var parameters = new ValidateCodeParameters()
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
             var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
@@ -865,7 +865,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public async void FallbackServiceValidateCodeWithParamsTest()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var external = new ExternalTerminologyService(client);
             var local = new LocalTerminologyService(_resolver);
             var svc = new FallbackTerminologyService(local, external);
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public async T.Task FallbackServiceValidateCodeTestWithVS()
         {
-            var client = new FhirClient("https://ontoserver.csiro.au/stu3-latest");
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
             var service = new ExternalTerminologyService(client);
             var vs = await _resolver.FindValueSetAsync("http://hl7.org/fhir/ValueSet/substance-code");
             Assert.NotNull(vs);
