@@ -318,7 +318,29 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
             await Assert.ThrowsAsync<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
+        }       
+
+        [Fact]
+        public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },                  
+                }
+            };
+
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
+
+            Assert.Equal("If a code is provided, a system or a context must be provided", ex.Message);
         }
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleTranslate()
@@ -865,6 +887,94 @@ namespace Hl7.Fhir.Specification.Tests
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
 #pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
+        }
+
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
+        public async void ExternalServiceCheckRules()
+        {
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
+            var svc = new ExternalTerminologyService(client);
+
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                }
+            };
+
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Lookup(inParams));
+            Assert.Equal("If a code is provided, a system must be provided", ex.Message);
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
+            Assert.Equal("If a code is provided, a system or a context must be provided", ex.Message);
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Translate(inParams));
+            Assert.Equal("If a code is provided, a system must be provided", ex.Message);
+
+            inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "codeA",
+                        Value = new Code("DE")
+                    },
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "system",
+                        Value = new FhirString("http://example.org")
+                    }
+                }
+            };
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            Assert.Equal("If 'codeA' is provided, 'codeB' must be provided", ex.Message);
+
+            inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "codeA",
+                        Value = new Code("DE")
+                    },
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "codeB",
+                        Value = new Code("NL")
+                    }
+                }
+            };
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            Assert.Equal("If codes are provided, a system must be provided", ex.Message);
+
+
+            inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "codingA",
+                        Value = new Coding
+                        {
+                            System = "http://example.org",
+                            Code = "DE"
+                        }
+                    }
+                }
+            };
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            Assert.Equal("If 'codingA' is provided, 'codingB' must be provided", ex.Message);
         }
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
