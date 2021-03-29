@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Terminology
@@ -29,10 +30,11 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly string _displayLanguageAttribute = "displayLanguage";
 
         public ValidateCodeParameters(Parameters parameters)
-        {           
-            if(parameters.Parameter?.Select(p => p.Name)?.ContainsDuplicates() == true)
+        {        
+            
+            if(parameters.TryGetDuplicates(out var duplicates) == true)
             {
-                throw Error.Argument("List of input parameters contains duplicates");
+                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
             }
             else
             {
