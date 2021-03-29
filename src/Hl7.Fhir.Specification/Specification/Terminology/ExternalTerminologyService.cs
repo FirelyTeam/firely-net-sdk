@@ -12,12 +12,22 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class ExternalTerminologyService : ITerminologyService
     {
+        private readonly string _contextAttribute = "context";
+        private readonly string _codeAttribute = "code";
+        private readonly string _systemAttribute = "system";
+
+        private readonly string _codeASubsumesAttribute = "codeA";
+        private readonly string _codeBSubsumesAttribute = "codeB";
+        private readonly string _codingASubsumesAttribute = "codingA";
+        private readonly string _codingBSubsumesAttribute = "codingB";
+  
         public ExternalTerminologyService(BaseFhirClient client)
         {
             Endpoint = client;
@@ -27,10 +37,18 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
-            if (string.IsNullOrEmpty(id))
-                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
+                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
+            {
+                throw Error.Argument($"If a code is provided, a system or a context must be provided");
+            }
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            {
+                if (string.IsNullOrEmpty(id))
+                    return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                else
+                    return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+            }           
         }
 
         public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
@@ -54,11 +72,19 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
         {
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !parameters.Parameter.Any(p => p.Name == _systemAttribute))
+            {
+                throw Error.Argument($"If a code is provided, a system must be provided");
+            }
             return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
         public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !parameters.Parameter.Any(p => p.Name == _systemAttribute))
+            {
+                throw Error.Argument($"If a code is provided, a system must be provided");
+            }
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
@@ -67,10 +93,31 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
+            validateSubsumptionParameters(parameters);            
+           
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;       
+        }
+
+        private void validateSubsumptionParameters(Parameters parameters)
+        {
+            if (parameters.Parameter.Any(p => p.Name == _codeASubsumesAttribute))
+            {
+                if (!parameters.Parameter.Any(p => p.Name == _codeBSubsumesAttribute))
+                {
+                    throw Error.Argument($"If '{_codeASubsumesAttribute}' is provided, '{_codeBSubsumesAttribute}' must be provided");
+                }
+                else if (!parameters.Parameter.Any(p => p.Name == _systemAttribute))
+                {
+                    throw Error.Argument($"If codes are provided, a system must be provided");
+                }
+            }
+            else if (parameters.Parameter.Any(p => p.Name == _codingASubsumesAttribute) && !parameters.Parameter.Any(p => p.Name == _codingBSubsumesAttribute))
+            {
+                throw Error.Argument($"If '{_codingASubsumesAttribute}' is provided, '{_codingBSubsumesAttribute}' must be provided");
+            }
         }
 
         public async Task<Resource> Closure(Parameters parameters, bool useGet = false)

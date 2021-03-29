@@ -7,6 +7,8 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -28,19 +30,27 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public ValidateCodeParameters(Parameters parameters)
         {
-            Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
-            Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
-            ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
-            ValueSetVersion = parameters.GetSingleValue<FhirString>(_valueSetVersionAttribute);
-            Code = parameters.GetSingleValue<Code>(_codeAttribute);
-            System = parameters.GetSingleValue<FhirUri>(_systemAttribute);
-            SystemVersion = parameters.GetSingleValue<FhirString>(_systemVersionAttribute);
-            Display = parameters.GetSingleValue<FhirString>(_displayAttribute);
-            Coding = parameters.GetSingleValue<Coding>(_codingAttribute);
-            CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
-            Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
-            Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
-            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) || 
+                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
+            {
+                throw Error.Argument($"If a code is provided, a system or a context must be provided");
+            }
+            else
+            {
+                Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
+                Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
+                ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
+                ValueSetVersion = parameters.GetSingleValue<FhirString>(_valueSetVersionAttribute);
+                Code = parameters.GetSingleValue<Code>(_codeAttribute);
+                System = parameters.GetSingleValue<FhirUri>(_systemAttribute);
+                SystemVersion = parameters.GetSingleValue<FhirString>(_systemVersionAttribute);
+                Display = parameters.GetSingleValue<FhirString>(_displayAttribute);
+                Coding = parameters.GetSingleValue<Coding>(_codingAttribute);
+                CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
+                Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
+                Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
+                DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
+            }                 
         }
 
 
