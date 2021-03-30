@@ -36,7 +36,8 @@ namespace Hl7.Fhir.Validation
             buildPatientWithIdentifierSlicing(),
             buildMiPatient(),
             slicingWithCodeableConcept(),
-            slicingWithQuantity()
+            slicingWithQuantity(),
+            buildPatientWithExistsSlicing()
         };
 
         private static StructureDefinition slicingWithCodeableConcept()
@@ -109,6 +110,55 @@ namespace Hl7.Fhir.Validation
             {
                 ElementId = "Patient.identifier:BSN.system",
             }.Value(fix: new FhirUri("http://example.com/someuri")));
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithExistsSlicing()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/PatientExistsSlicing", "PatientExistsSlicing",
+                       "Test Patient with exists slicing on Identifier", FHIRAllTypes.Patient);
+
+            var cons = result.Differential.Element;
+            var slicingIntro = new ElementDefinition("Patient.identifier")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed,
+               (ElementDefinition.DiscriminatorType.Exists, "use"));
+
+            cons.Add(slicingIntro);
+
+            // Slice 1: if there is no use, then there should not be a system
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:WithoutUse",
+                SliceName = "WithoutUse"
+            });
+
+            cons.Add(new ElementDefinition("Patient.identifier.use")
+            {
+                ElementId = "Patient.identifier:WithoutUse.system",
+            }.Prohibited());
+
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:WithoutUse.system",
+            }.Prohibited());
+
+            // Slice 2: if there is a use, then there should be a system
+            cons.Add(new ElementDefinition("Patient.identifier")
+            {
+                ElementId = "Patient.identifier:WithUse",
+                SliceName = "WithUse"
+            });
+
+            cons.Add(new ElementDefinition("Patient.identifier.use")
+            {
+                ElementId = "Patient.identifier:WithUse.system",
+            }.Required());
+
+            cons.Add(new ElementDefinition("Patient.identifier.system")
+            {
+                ElementId = "Patient.identifier:WithUse.system",
+            }.Required());
 
             return result;
         }

@@ -6,12 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using System.Linq;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -26,9 +26,8 @@ namespace Hl7.Fhir.Validation
         /// <param name="discriminators">A set of discriminators that determine whether or not an instance is part of this bucket.</param>
         public DiscriminatorBucket(ElementDefinitionNavigator sliceConstraints, Validator validator, IDiscriminator[] discriminators) : base(sliceConstraints.Current)
         {
-            //TODO: discriminator-less validation?
             if (discriminators == null || discriminators.Length == 0)
-                throw Error.NotImplemented($"Discriminator-less slicing is not implemented. Must pass at least one discriminator - none found at '{sliceConstraints.CanonicalPath()}'");
+                throw Error.InvalidOperation($"Discriminator bucket requires at least one discriminator. Otherwise, use the ConstraintsBucket instead.");
 
             // Keep a copy of the constraints for this slice, so we can use them to validate the instances against later.
             SliceConstraints = sliceConstraints.ShallowCopy();
@@ -36,7 +35,7 @@ namespace Hl7.Fhir.Validation
             Validator = validator;
             Discriminators = discriminators;
         }
-    
+
         public ElementDefinitionNavigator SliceConstraints { get; private set; }
 
         public Validator Validator { get; private set; }

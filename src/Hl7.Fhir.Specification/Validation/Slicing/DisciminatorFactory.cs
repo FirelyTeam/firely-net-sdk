@@ -19,12 +19,12 @@ namespace Hl7.Fhir.Validation
 {
     internal static class DiscriminatorFactory
     {
-        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec, 
+        public static IDiscriminator Build(ElementDefinition.DiscriminatorComponent spec,
             IResourceResolver resolver,
             string location, ElementDefinitionNavigator root, Validator validator)
         {
             if (spec?.Type == null) throw new ArgumentNullException(nameof(spec), "Encountered a discriminator component without a discriminator type.");
-            if(resolver == null) throw Error.ArgumentNull(nameof(resolver));
+            if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
             var condition = walkToCondition(root, spec.Path, resolver);
 
@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Validation
                 //    return buildValueDiscriminator(condition, spec.Path, validator);
                 //case ElementDefinition.DiscriminatorType.Pattern:
                 //    return buildPatternDiscriminator(condition, spec.Path, validator);
-                
+
                 case ElementDefinition.DiscriminatorType.Value:
                     return buildCombinedDiscriminator("value", condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Pattern:
@@ -44,33 +44,25 @@ namespace Hl7.Fhir.Validation
                     return buildTypeDiscriminator(condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Profile:
                     return buildProfileDiscriminator(condition, spec.Path, validator);
+                case ElementDefinition.DiscriminatorType.Exists:
+                    return buildExistsDiscriminator(condition, spec.Path, validator);
                 default:
                     throw Error.NotImplemented($"Found a slice discriminator of type '{spec.Type.Value.GetLiteral()}' at '{location}' which is not yet supported by this validator.");
             }
         }
 
-        private static IDiscriminator buildValueDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
+        private static IDiscriminator buildExistsDiscriminator(ElementDefinitionNavigator condition, string path, Validator validator)
         {
-            var spec = nav.Current;
+            var spec = condition.Current;
 
-            if (spec.Fixed != null)
-                return new ValueDiscriminator(spec.Fixed, discriminator, validator);
-            else if (spec.Binding != null)
-                return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
-            else if(spec.Fixed != null && spec.Binding != null)
-                throw new IncorrectElementDefinitionException($"The value discriminator has both a 'fixed[x]' AND 'binding' element set on '{nav.CanonicalPath()}'.");
-            else
-                throw new IncorrectElementDefinitionException($"The value discriminator should have either a 'fixed[x]' or 'binding' element set on '{nav.CanonicalPath()}'.");
-        }
+            var existsMode = spec switch
+            {
+                { Max: "0" } => false,
+                { Min: 1 } => true,
+                _ => throw new IncorrectElementDefinitionException("For an exists slice, there should be one slice with a max set to 0 and one slice with a min set to 1.")
+            };
 
-        private static IDiscriminator buildPatternDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
-        {
-            var spec = nav.Current;
-
-            if (spec.Pattern != null)
-                return new PatternDiscriminator(spec.Pattern, discriminator, validator);
-            else
-                throw new IncorrectElementDefinitionException($"The pattern discriminator should have a 'pattern[x]' element set on '{nav.CanonicalPath()}'.");
+            return new ExistsDiscriminator(existsMode, path);
         }
 
         private static IDiscriminator buildCombinedDiscriminator(string name, ElementDefinitionNavigator nav, string discriminator, Validator validator)
@@ -81,17 +73,17 @@ namespace Hl7.Fhir.Validation
             {
                 var spec = nav.Current;
 
-                if(spec.Fixed == null && spec.Binding == null && spec.Pattern == null)
+                if (spec.Fixed == null && spec.Binding == null && spec.Pattern == null)
                     throw new IncorrectElementDefinitionException($"The {name} discriminator should have a 'fixed[x]', 'pattern[x]' or binding element set on '{nav.CanonicalPath()}'.");
 
                 if (spec.Fixed != null)
                     yield return new ValueDiscriminator(spec.Fixed, discriminator, validator);
-                
+
                 if (spec.Binding != null)
                     yield return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
-                
+
                 if (spec.Pattern != null)
-                    yield return new PatternDiscriminator(spec.Pattern, discriminator, validator);                
+                    yield return new PatternDiscriminator(spec.Pattern, discriminator, validator);
             }
         }
 
@@ -109,8 +101,8 @@ namespace Hl7.Fhir.Validation
         private static IDiscriminator buildProfileDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
             var spec = nav.Current;
-            
-            if(spec.IsRootElement())
+
+            if (spec.IsRootElement())
             {
                 // Firsts case: we are at the root of a StructureDefinition, most commonly because
                 // the discriminator path ended in a resolve(). We need to find the canonical url
@@ -127,7 +119,7 @@ namespace Hl7.Fhir.Validation
                 // the current element can only be profiled by the <profile> tag(s) on the <type> element.
                 // Note that the element pointed to by the discriminator should have constrained the types
                 // to a single (unique) type, but we will allow multiple <profile>s.
-                if(spec.Type.Select(tr=>tr.Code).Distinct().Count() != 1)   // STU3, in R4 codes are always unique
+                if (spec.Type.Select(tr => tr.Code).Distinct().Count() != 1)   // STU3, in R4 codes are always unique
                     throw new IncorrectElementDefinitionException($"The profile discriminator '{discriminator}' should navigate to an ElementDefinition with exactly one 'type' element at '{nav.CanonicalPath()}'.");
 
                 var profiles = spec.Type.Select(tr => tr.Profile).Distinct();
