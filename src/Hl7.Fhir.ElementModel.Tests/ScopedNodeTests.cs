@@ -192,10 +192,11 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void AtResourceWithoutDefinition()
         {
-            var elementNode = ElementNodeAdapter.Root("Patient");
-            elementNode.Add("active", true, "boolean");
+            var provider = new NoTypeProvider();
+            var elementNode = ElementNode.Root(provider, "Patient");
+            elementNode.Add(provider, "active", true, "boolean");
 
-            var node = new ScopedNode(elementNode);
+            var node = new ScopedNode(new TypedElementWithoutDefinition(elementNode));
 
             Assert.IsTrue(node.AtResource);
             var inner = (ScopedNode)node.Children().First();
@@ -271,59 +272,31 @@ namespace Hl7.Fhir.ElementModel.Tests
             public T.Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
-        private class ElementNodeAdapter : ITypedElement, IResourceTypeSupplier
+        private class TypedElementWithoutDefinition : ITypedElement, IResourceTypeSupplier
         {
-            private ElementNode _elementNodeInstance;
-            private IStructureDefinitionSummaryProvider _structureDefinitionSummaryProvider;
+            private readonly ITypedElement _wrapped;
 
-            public string Name => _elementNodeInstance.Name;
+            public TypedElementWithoutDefinition(ITypedElement wrapped) => _wrapped = wrapped;
 
-            public string InstanceType => _elementNodeInstance.InstanceType;
+            public string Name => _wrapped.Name;
 
-            public object Value => _elementNodeInstance.Value;
+            public string InstanceType => _wrapped.InstanceType;
 
-            public string Location => _elementNodeInstance.Location;
+            public object Value => _wrapped.Value;
 
-            public IElementDefinitionSummary Definition => _elementNodeInstance.Definition;
+            public string Location => _wrapped.Location;
+
+            public IElementDefinitionSummary? Definition => null;
 
             public string? ResourceType => !string.IsNullOrEmpty(InstanceType) && char.IsUpper(InstanceType, 0) ? InstanceType : null;
 
-            public static ElementNodeAdapter Root(string type, string? name = null, object? value = null)
-            {
-                var def = new NoTypeProvider();
-                var instance = ElementNode.Root(def, type, name, value);
-                return new ElementNodeAdapter(instance, def);
-
-            }
-            private ElementNodeAdapter(ElementNode elementNode, IStructureDefinitionSummaryProvider structureDefinitionSummaryProvider)
-            {
-                _elementNodeInstance = elementNode;
-                _structureDefinitionSummaryProvider = structureDefinitionSummaryProvider;
-            }
-
-            public IEnumerable<ITypedElement> Children(string? name = null) => _elementNodeInstance.Children(name);
-
-            internal void Add(string name, object? value = null, string? instanceType = null)
-                => _elementNodeInstance.Add(_structureDefinitionSummaryProvider, name, value, instanceType);
-
-
-            internal void Add(ITypedElement child, string name)
-            {
-                switch (child)
-                {
-                    case ElementNodeAdapter node:
-                        _elementNodeInstance.Add(_structureDefinitionSummaryProvider, node._elementNodeInstance, name);
-                        break;
-                    default:
-                        throw new ArgumentException($"{nameof(child)} is not of type {nameof(ElementNodeAdapter)}");
-                }
-            }
-
-            private class NoTypeProvider : IStructureDefinitionSummaryProvider
-            {
-                public IStructureDefinitionSummary? Provide(string canonical) => null;
-            }
+            public IEnumerable<ITypedElement> Children(string? name = null) =>
+                _wrapped.Children(name).Select(c => new TypedElementWithoutDefinition(c));
         }
 
+        private class NoTypeProvider : IStructureDefinitionSummaryProvider
+        {
+            public IStructureDefinitionSummary? Provide(string canonical) => null;
+        }
     }
 }
