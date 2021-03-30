@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Specification
 
             // Take First(), since we have determined above that there's just one distinct result to expect.
             // (this will be the case when Type=R
-            var expanded = Expand().Single();           
+            var expanded = Expand().Single();
             var nav = expanded.Current.ShallowCopy();
 
             if (!nav.MoveToFirstChild()) yield break;
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Specification
         public StructureDefinitionWalker Extension(string url)
         {
             // find the extension children of the current node
-            var extensionChildren = childDefinitions("extension");
+            var extensionChildren = childDefinitions("extension").ToList();
             var selection = extensionChildren.Where(c => isExtensionFor(c, url)).ToList();
 
             // No children in the current profile -> we can still continue in the definition
@@ -245,8 +245,13 @@ namespace Hl7.Fhir.Specification
             else
                 throw new StructureDefinitionWalkerException($"extension('{url}') found multiple extension slices constraining the same extension, with is not allowed for the discriminator at '{Current.CanonicalPath()}'.");
 
-            bool isExtensionFor(ElementDefinitionNavigator nav, string u) =>
-                nav.Current.Type.Any(tr => tr.Code == FHIRAllTypes.Extension.GetLiteral() && tr.Profile == u);
+            static bool isExtensionFor(ElementDefinitionNavigator nav, string u)
+            {
+                //  nav.Current.Type.Any(tr => tr.Code == FHIRAllTypes.Extension.GetLiteral() && tr.Profile == u);
+                var childNav = nav.ShallowCopy();
+                if (!childNav.MoveToChild("url")) return false;
+                return childNav.Current.Fixed is FhirUri fu && fu.Value == u;
+            }
         }
     };
 

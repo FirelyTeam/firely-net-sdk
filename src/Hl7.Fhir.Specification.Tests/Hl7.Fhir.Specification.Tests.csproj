@@ -47,6 +47,7 @@
   <ItemGroup>
     <None Remove="TestData\validation\list-with-profile-slicing.xml" />
     <None Remove="TestData\validation\observation-profile-for-discriminator-test.xml" />
+    <None Remove="TestData\validation\patient-sliced-complex-extension.xml" />
   </ItemGroup>
   
   <ItemGroup>
