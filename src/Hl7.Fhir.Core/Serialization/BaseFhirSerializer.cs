@@ -6,11 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.ElementModel;
-using System.Linq;
 using Hl7.Fhir.Utility;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -24,6 +24,9 @@ namespace Hl7.Fhir.Serialization
         }
 
         protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
+            => MakeElementStack(instance, summary, elements, false);
+
+        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements, bool includeMandatoryToElements)
         {
             if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
 
@@ -47,7 +50,7 @@ namespace Hl7.Fhir.Serialization
                 case SummaryType.Count:
                     return MaskingNode.ForCount(baseNav);
                 case SummaryType.False:
-                    return MaskingNode.ForElements(baseNav, elements);
+                    return MaskingNode.ForElements(baseNav, elements, includeMandatoryToElements);
                 default:
                     return baseNav;
             }
