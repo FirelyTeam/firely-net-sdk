@@ -1,13 +1,6 @@
-Push-Location $PsScriptRoot\..\src
-
-if (Test-Path  ..\src\firely-net-sdk.props -PathType leaf)
-{
-     $propFile = "..\src\firely-net-sdk.props"
-}
-else
-{
-   $propFile = "..\src\fhir-net-api.props" # fallback to old name
-}
+Param(
+  [Parameter(Mandatory=$true)] [string]$propFile
+)
 
 $xml = [xml](get-content $propFile)
 
@@ -24,6 +17,3 @@ Write-Host "##vso[task.setvariable variable=CurrentVersion]$version"
 
 #Setting task variable $CurrentVersion (used for VSTS) 
 Write-Host "##vso[task.setvariable variable=CurrentSuffix]$suffix"
-
-#go back to the original directory
-Pop-Location
