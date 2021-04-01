@@ -130,6 +130,22 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task WalkToInlineComplexExtensionConstraints()
+        {
+            var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
+            nav.JumpToFirst("Patient.communication");
+            nav.MoveToNextSlice();
+            var walker = new StructureDefinitionWalker(nav, _source);
+
+            var elem = walker.Walk("extension('http://hl7.org/fhir/StructureDefinition/patient-proficiency').extension('type').value").Single();
+            var pattern = elem.Current.Current.Pattern;
+
+            Assert.IsTrue(pattern is Coding c && c.Code == "RSP");
+        }
+
+
+        [TestMethod]
         public async T.Task ParseInvalidDiscriminatorExpressions()
         {
             var patientDef = await _source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
