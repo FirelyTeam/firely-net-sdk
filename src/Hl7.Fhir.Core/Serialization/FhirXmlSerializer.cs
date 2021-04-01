@@ -24,22 +24,22 @@ namespace Hl7.Fhir.Serialization
             new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false)
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXml(settings: buildFhirXmlWriterSettings());
 
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false)
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXmlBytes(settings: buildFhirXmlWriterSettings());
 
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-           MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false)
+           MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
 
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false)
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .WriteTo(writer, settings: buildFhirXmlWriterSettings());
     }

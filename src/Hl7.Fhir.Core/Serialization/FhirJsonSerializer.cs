@@ -23,15 +23,15 @@ namespace Hl7.Fhir.Serialization
             new FhirJsonSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
 
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false).ToJson(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false).ToJson(buildFhirJsonWriterSettings());
 
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false).ToJsonBytes(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false).ToJsonBytes(buildFhirJsonWriterSettings());
 
         public JObject SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false).ToJObject(buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false).ToJObject(buildFhirJsonWriterSettings());
 
         public void Serialize(Base instance, JsonWriter writer, SummaryType summary = SummaryType.False, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryToElements ?? false).WriteTo(writer, buildFhirJsonWriterSettings());
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false).WriteTo(writer, buildFhirJsonWriterSettings());
     }
 }

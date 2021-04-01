@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void IncludeMandatoryToElementsTest()
+        public void IncludeMandatoryInElementsSummaryTest()
         {
             Observation obs = new()
             {
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(json.ContainsKey("status"));
 
             // Adding mandatory elements to the set of elements
-            json = new FhirJsonSerializer(new SerializerSettings() { IncludeMandatoryToElements = true })
+            json = new FhirJsonSerializer(new SerializerSettings() { IncludeMandatoryInElementsSummary = true })
                 .SerializeToDocument(obs, elements: new[] { "issued" });
 
             Assert.IsTrue(json.ContainsKey("issued"));

@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
         protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
             => MakeElementStack(instance, summary, elements, false);
 
-        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements, bool includeMandatoryToElements)
+        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements, bool includeMandatoryInElementsSummary)
         {
             if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
 
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Serialization
                 case SummaryType.Count:
                     return MaskingNode.ForCount(baseNav);
                 case SummaryType.False:
-                    return MaskingNode.ForElements(baseNav, elements, includeMandatoryToElements);
+                    return MaskingNode.ForElements(baseNav, elements, includeMandatoryInElementsSummary);
                 default:
                     return baseNav;
             }
