@@ -14,7 +14,7 @@ function TagAndPush([string] $release_branch, [string] $tag_name)
     Write-Host "Tag $release_type with $tag_name"
 
     # go to release branch
-    git checkout $release_branch --recurse-submodules
+    git checkout $release_branch 
 
     # tag the release
     git tag -a -m "version $tag_name" $tag_name
@@ -31,7 +31,7 @@ function Merge-Push([string] $source_branch, [string] $target_branch)
     $current = git branch --show-current
 
     # go to target branch
-    git checkout $target_branch --recurse-submodules
+    git checkout $target_branch 
 
     # merge source branch (fast forward)
     git merge --ff origin/$source_branch
@@ -40,7 +40,7 @@ function Merge-Push([string] $source_branch, [string] $target_branch)
     git push 
 
     # go back to the previous branch
-    git checkout $current --recurse-submodules
+    git checkout $current 
 }
 
 function Finalize([string] $fhir_release_suffix)
