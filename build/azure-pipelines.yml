@@ -13,7 +13,7 @@ trigger:
     - refs/tags/v*
   batch: True
 
-name: $(date:yyyyMMdd)$(rev:-r)
+name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
 - template: build-variables.yml
@@ -222,15 +222,14 @@ stages:
                 includeSymbols: false  
                 
             - task: GitHubRelease@1
-              displayName: 'GitHub release (create)'  
+              displayName: 'GitHub release notes (create)'  
               inputs:
                 gitHubConnection: 'GitHub Fhir-net-api'
                 repositoryName: '$(Build.Repository.Name)'
                 action: 'create'
                 target: '$(Build.SourceVersion)'
                 tagSource: userSpecifiedTag
-                tag: '$(Build.SourceBranch)'
+                tag: '$(Build.SourceBranchName)'
                 isDraft: true
-                isPreRelease: true
                 changeLogCompareToRelease: 'lastFullRelease'
                 changeLogType: 'issueBased'

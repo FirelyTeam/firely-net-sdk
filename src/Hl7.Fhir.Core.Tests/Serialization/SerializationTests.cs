@@ -597,5 +597,28 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.AreEqual(1, newPoco.Name.Count);
         }
+
+        [TestMethod]
+        public void IncludeMandatoryInElementsSummaryTest()
+        {
+            Observation obs = new()
+            {
+                Status = ObservationStatus.Final,
+                Issued = DateTimeOffset.Now
+            };
+
+            // default behavior
+            var json = new FhirJsonSerializer().SerializeToDocument(obs, elements: new[] { "issued" });
+
+            Assert.IsTrue(json.ContainsKey("issued"));
+            Assert.IsFalse(json.ContainsKey("status"));
+
+            // Adding mandatory elements to the set of elements
+            json = new FhirJsonSerializer(new SerializerSettings() { IncludeMandatoryInElementsSummary = true })
+                .SerializeToDocument(obs, elements: new[] { "issued" });
+
+            Assert.IsTrue(json.ContainsKey("issued"));
+            Assert.IsTrue(json.ContainsKey("status"));
+        }
     }
 }
