@@ -1,7 +1,8 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using T = System.Threading.Tasks;
 
@@ -111,6 +112,24 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elem = walker.Child("performer").Resolve().OfType("Practitioner").Child("name").Single();
             Assert.AreEqual("Practitioner.name", elem.Current.Path);
+        }
+
+        [TestMethod]
+        public async T.Task WalkAcrossInlineExtension()
+        {
+            var sd = await _source.FindStructureDefinitionAsync("http://unittest.com/StructureDefinition/patient-sliced-complex-extension");
+            var nav = ElementDefinitionNavigator.ForSnapshot(sd);
+            nav.JumpToFirst("Patient.communication");
+            nav.MoveToNextSlice();
+
+            var fortest = nav.StructureDefinition.ToXml();
+            var walker = new StructureDefinitionWalker(nav, _source);
+
+            var elem = walker.Extension("http://hl7.org/fhir/StructureDefinition/patient-proficiency");
+            elem = elem.Extension("type");
+
+            Assert.IsNotNull(elem);
+            Assert.AreEqual("Patient.communication:languageControlListening.extension:languageControlListening-proficiency.extension:type", elem.Current.Current.ElementId);
         }
     }
 }
