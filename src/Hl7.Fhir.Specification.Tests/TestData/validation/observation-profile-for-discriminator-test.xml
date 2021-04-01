@@ -19,24 +19,6 @@
         <rules value="open"/>
       </slicing>
     </element>
-    <element id="Observation.identifier.extension">
-      <path value="Observation.identifier.extension"/>
-      <slicing>
-        <discriminator>
-          <type value="value"/>
-          <path value="url"/>
-        </discriminator>
-        <rules value="open"/>
-      </slicing>
-    </element>
-    <element id="Observation.identifier.extension:myExtension">
-      <path value="Observation.identifier.extension"/>
-      <sliceName value="myExtension"/>
-      <type>
-        <code value="Extension"/>
-        <profile value="http://example.org/fhir/StructureDefinition/string-extension-for-discriminator-test"/>
-      </type>
-    </element>
     <element id="Observation.identifier:someCustomIdentifier">
       <path value="Observation.identifier"/>
       <sliceName value="someCustomIdentifier"/>

@@ -7,6 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
@@ -28,6 +31,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public ValidateCodeParameters(Parameters parameters)
         {
+            if (parameters.TryGetDuplicates(out var duplicates) == true)
+            {
+                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+            }
             Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
             Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
             ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
@@ -40,9 +47,8 @@ namespace Hl7.Fhir.Specification.Terminology
             CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
             Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
             Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
-            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
+            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);                    
         }
-
 
         public ValidateCodeParameters()
         {

@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
-using System;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -17,30 +16,30 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirXmlSerializer : BaseFhirSerializer
     {
-        public FhirXmlSerializer(SerializerSettings settings=null) : base(settings)
+        public FhirXmlSerializer(SerializerSettings settings = null) : base(settings)
         {
         }
 
         private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
             new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
 
-        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) => 
-            MakeElementStack(instance, summary, elements)
+        public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXml(settings: buildFhirXmlWriterSettings());
 
-        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) => 
-            MakeElementStack(instance, summary, elements)
+        public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXmlBytes(settings: buildFhirXmlWriterSettings());
 
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-           MakeElementStack(instance, summary, elements)
+           MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
 
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
-            MakeElementStack(instance, summary, elements)
+            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .WriteTo(writer, settings: buildFhirXmlWriterSettings());
     }
