@@ -30,28 +30,24 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly string _displayLanguageAttribute = "displayLanguage";
 
         public ValidateCodeParameters(Parameters parameters)
-        {        
-            
-            if(parameters.TryGetDuplicates(out var duplicates) == true)
+        {
+            if (parameters.TryGetDuplicates(out var duplicates) == true)
             {
                 throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
             }
-            else
-            {
-                Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
-                Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
-                ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
-                ValueSetVersion = parameters.GetSingleValue<FhirString>(_valueSetVersionAttribute);
-                Code = parameters.GetSingleValue<Code>(_codeAttribute);
-                System = parameters.GetSingleValue<FhirUri>(_systemAttribute);
-                SystemVersion = parameters.GetSingleValue<FhirString>(_systemVersionAttribute);
-                Display = parameters.GetSingleValue<FhirString>(_displayAttribute);
-                Coding = parameters.GetSingleValue<Coding>(_codingAttribute);
-                CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
-                Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
-                Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
-                DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
-            }           
+            Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
+            Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
+            ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
+            ValueSetVersion = parameters.GetSingleValue<FhirString>(_valueSetVersionAttribute);
+            Code = parameters.GetSingleValue<Code>(_codeAttribute);
+            System = parameters.GetSingleValue<FhirUri>(_systemAttribute);
+            SystemVersion = parameters.GetSingleValue<FhirString>(_systemVersionAttribute);
+            Display = parameters.GetSingleValue<FhirString>(_displayAttribute);
+            Coding = parameters.GetSingleValue<Coding>(_codingAttribute);
+            CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
+            Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
+            Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
+            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);                    
         }
 
         public ValidateCodeParameters()
