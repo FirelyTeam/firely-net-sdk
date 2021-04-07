@@ -12,10 +12,9 @@ using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
-
-    internal static class ElementDefinitionNavigatorExtensions
+    public static class ElementDefinitionNavigatorExtensions
     {
-        public static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
+        internal static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
             // This was required for 3.0.0, but was rectified in the 3.0.1 technical update
             //if (cc.Key == "ele-1")
@@ -37,7 +36,7 @@ namespace Hl7.Fhir.Validation
 
         public static bool IsSlicing(this ElementDefinitionNavigator nav) => nav.Current.Slicing != null;
 
-        public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
+        internal static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
             var desc = cc.Key;
 
