@@ -6,10 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Linq;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -33,11 +32,10 @@ namespace Hl7.Fhir.Validation
             return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
         }
 
-        internal static bool IsResourcePlaceholder(this ElementDefinition ed)
-        {
-            if (ed.Type == null) return false;
-            return ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
-        }
+        public static bool IsResourcePlaceholder(this ElementDefinition ed)
+            => ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
+
+        public static bool IsSlicing(this ElementDefinitionNavigator nav) => nav.Current.Slicing != null;
 
         public static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
@@ -47,7 +45,7 @@ namespace Hl7.Fhir.Validation
                 desc += " \"" + cc.Human + "\"";
 
             return desc;
-        }     
+        }
     }
 
 }
