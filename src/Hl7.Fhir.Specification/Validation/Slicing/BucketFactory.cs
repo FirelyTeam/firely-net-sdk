@@ -6,10 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System.Collections.Generic;
-using System.Linq;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -23,14 +23,14 @@ namespace Hl7.Fhir.Validation
             if (root.Current.Slicing == null)
                 return entryBucket;
             else
-                return CreateGroup(root, resolver, validator, entryBucket, atRoot: true);
+                return CreateGroup(root, resolver, validator, entryBucket);
         }
 
-        public static IBucket CreateGroup(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, IBucket entryBucket, bool atRoot)
+        public static IBucket CreateGroup(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, IBucket entryBucket)
         {
             var discriminatorSpecs = root.Current.Slicing.Discriminator.ToArray();  // copy, since root will move after this
             var location = root.Current.Path;
-            var slices = root.FindMemberSlices(atRoot);
+            var slices = root.FindMemberSlices();
             var bm = root.Bookmark();
             var subs = new List<IBucket>();
 
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Validation
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);
                 else
-                    subs.Add(CreateGroup(root, resolver, validator, subBucket, atRoot: false));
+                    subs.Add(CreateGroup(root, resolver, validator, subBucket));
             }
 
             root.ReturnToBookmark(bm);
