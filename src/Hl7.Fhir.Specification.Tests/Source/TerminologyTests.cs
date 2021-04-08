@@ -342,6 +342,38 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+        [Fact]
+        public async T.Task LocalTermServiceUsingDuplicateParameters()
+        {
+            var svc = new LocalTerminologyService(_resolver);           
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                     new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                      new Parameters.ParameterComponent
+                    {
+                        Name = "url",
+                        Value = new FhirUri("urn:iso:std:iso:3166")
+                    },
+                }
+            };           
+
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+
+            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+        }
+
+
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleTranslate()
         {
@@ -578,6 +610,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsType<Code>(paramOutcome.Value);
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
+
+        
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -833,6 +867,44 @@ namespace Hl7.Fhir.Specification.Tests
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
+        }
+
+        [Fact(), Trait("TestCategory", "IntegrationTest")]
+        public async void ExternalServiceDuplicatesTest()
+        {
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
+            var svc = new ExternalTerminologyService(client);
+
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                     new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },
+                      new Parameters.ParameterComponent
+                    {
+                        Name = "url",
+                        Value = new FhirUri("urn:iso:std:iso:3166")
+                    },
+                }
+            };
+
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
+            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+
+            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));
+            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]

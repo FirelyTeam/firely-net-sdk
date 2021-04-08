@@ -6,18 +6,17 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Introspection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -57,9 +56,9 @@ namespace Hl7.Fhir.Tests.Serialization
         public void ParsePatientXmlNullType()
         {
             string xmlPacientTest = TestDataHelper.ReadTestData("TestPatient.xml");
-            
+
             var poco = new FhirXmlParser().Parse(xmlPacientTest);
-            
+
             Assert.AreEqual(((Patient)poco).Id, "pat1");
             Assert.AreEqual(((Patient)poco).Contained.First().Id, "1");
             Assert.AreEqual(((Patient)poco).Name.First().Family, "Donald");
@@ -195,7 +194,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var ext = new FhirDecimal(dec6);
             var obs = new Observation();
             obs.AddExtension("http://example.org/DecimalPrecision", ext);
-            
+
             var json = FhirJsonSerializer.SerializeToString(obs);
             var obs2 = FhirJsonParser.Parse<Observation>(json);
 
@@ -230,7 +229,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var dec6 = 6m;
             var ext = new FhirDecimal(dec6);
-            var obs = new Observation{ Value = new FhirDecimal(dec6) };
+            var obs = new Observation { Value = new FhirDecimal(dec6) };
             var json = FhirJsonSerializer.SerializeToString(obs);
             try
             {
@@ -275,7 +274,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = FhirXmlSerializer.SerializeToString(x);
             Assert.IsFalse(xml.Contains("<script"));
-        }       
+        }
 
 
         [TestMethod]
@@ -368,7 +367,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
             Assert.IsNotNull(json);
-            var parser = new FhirJsonParser { Settings = { PermissiveParsing = true} };
+            var parser = new FhirJsonParser { Settings = { PermissiveParsing = true } };
             var vs = parser.Parse<ValueSet>(json);
             Assert.IsNotNull(vs);
 
@@ -556,7 +555,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(patient.IsExactly(res), "1");
 
             // Is the parsing still correct without milliseconds?
-            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero)} };
+            patient = new Patient { Meta = new Meta { LastUpdated = new DateTimeOffset(2018, 8, 13, 13, 41, 56, TimeSpan.Zero) } };
             json = "{\"resourceType\":\"Patient\",\"meta\":{\"lastUpdated\":\"2018-08-13T13:41:56+00:00\"}}";
             res = new FhirJsonParser().Parse<Patient>(json);
             Assert.IsTrue(patient.IsExactly(res), "2");
@@ -593,6 +592,29 @@ namespace Hl7.Fhir.Tests.Serialization
             var newPoco = fhirJsonParser.Parse<Patient>(reserialized);
 
             Assert.AreEqual(1, newPoco.Name.Count);
+        }
+
+        [TestMethod]
+        public void IncludeMandatoryInElementsSummaryTest()
+        {
+            Observation obs = new()
+            {
+                Status = ObservationStatus.Final,
+                Issued = DateTimeOffset.Now
+            };
+
+            // default behavior
+            var json = new FhirJsonSerializer().SerializeToDocument(obs, elements: new[] { "issued" });
+
+            Assert.IsTrue(json.ContainsKey("issued"));
+            Assert.IsFalse(json.ContainsKey("status"));
+
+            // Adding mandatory elements to the set of elements
+            json = new FhirJsonSerializer(new SerializerSettings() { IncludeMandatoryInElementsSummary = true })
+                .SerializeToDocument(obs, elements: new[] { "issued" });
+
+            Assert.IsTrue(json.ContainsKey("issued"));
+            Assert.IsTrue(json.ContainsKey("status"));
         }
     }
 }

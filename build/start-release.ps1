@@ -26,8 +26,8 @@ function Update-Version([string] $start_branch, [string] $release_branch, [strin
     Write-Host "Update-Version in release branch $release_branch"
 
     # Pull the lastest changes on start_branch
-    git fetch origin
-    git checkout $start_branch
+    git fetch origin --recurse-submodules
+    git checkout $start_branch --recurse-submodules
     git merge --ff-only origin/$start_branch
 
     # create a release branch

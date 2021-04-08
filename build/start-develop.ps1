@@ -16,8 +16,8 @@ function Update-Version([string] $develop_branch, [string] $propFile)
     Write-Host "Update-Version in develop branch with version $newVersion-$versionSuffix"
 
     # Pull the lastest changes on develop_branch
-    git fetch origin
-    git checkout $develop_branch
+    git fetch origin --recurse-submodules
+    git checkout $develop_branch --recurse-submodules
     git merge --ff-only origin/$develop_branch
 
     # update version number

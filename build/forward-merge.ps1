@@ -8,8 +8,8 @@ Param(
 function Get-Latest-Changes([string] $branch)
 {
     # Pull the lastest changes on branch
-    git fetch origin
-    git checkout $branch
+    git fetch origin --recurse-submodules
+    git checkout $branch --recurse-submodules
     git merge --ff-only origin/$branch
 }
 

@@ -37,26 +37,39 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+            if (parameters.TryGetDuplicates(out var duplicates))
+            {
+                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+            }
+
             if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
                                                                                     parameters.Parameter.Any(p => p.Name == _contextAttribute)))
             {
                 throw Error.Argument($"If a code is provided, a system or a context must be provided");
             }
+
+            if (string.IsNullOrEmpty(id))
+                return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-            {
-                if (string.IsNullOrEmpty(id))
-                    return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-                else
-                    return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-            }           
-        }
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                   
+        }           
+                   
+        
 
         public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+            if (parameters.TryGetDuplicates(out var duplicates))
+            {
+                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+            }
+            
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
                 return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
+           
+          
         }
 
         private Uri constructUri<T>(string id) =>
@@ -93,16 +106,21 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
-            validateSubsumptionParameters(parameters);            
-           
+            validateSubsumptionParameters(parameters);
+
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;       
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
         private void validateSubsumptionParameters(Parameters parameters)
         {
+            if (parameters.TryGetDuplicates(out var duplicates))
+            {
+                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+            }
+
             if (parameters.Parameter.Any(p => p.Name == _codeASubsumesAttribute))
             {
                 if (!parameters.Parameter.Any(p => p.Name == _codeBSubsumesAttribute))
