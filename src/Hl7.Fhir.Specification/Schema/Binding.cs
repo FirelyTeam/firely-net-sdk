@@ -136,13 +136,15 @@ namespace Hl7.Fhir.Specification.Schema
         {
             try
             {
+                var context = $"{canonical}#{location}";
                 var parameters = new ValidateCodeParameters()
                     .WithValueSet(canonical)
-                    .WithCode(code: code, system: system, display: display)
+                    .WithCode(code: code, system: system, display: display, context:context)
                     .WithCoding(coding)
                     .WithCodeableConcept(cc)
                     .WithAbstract(abstractAllowed)
                     .Build();
+
 
                 var outcome = (await svc.ValueSetValidateCode(parameters).ConfigureAwait(false)).ToOperationOutcome();
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
