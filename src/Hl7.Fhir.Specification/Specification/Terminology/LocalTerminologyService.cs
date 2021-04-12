@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var parameters = new ValidateCodeParameters()
                 .WithValueSet(url: canonical, context: context, valueSet: valueSet)
-                .WithCode(code: code, system: system, systemVersion: version, display: display, displayLanguage: displayLanguage)
+                .WithCode(code: code, system: system, systemVersion: version, display: display, displayLanguage: displayLanguage, context)
                 .WithCoding(coding)
                 .WithCodeableConcept(codeableConcept)
                 .WithDate(date)

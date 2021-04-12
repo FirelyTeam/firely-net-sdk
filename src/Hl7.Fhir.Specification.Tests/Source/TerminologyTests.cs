@@ -337,7 +337,6 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
-
             Assert.Equal("If a code is provided, a system or a context must be provided", ex.Message);
         }
 

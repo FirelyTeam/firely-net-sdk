@@ -55,13 +55,15 @@ namespace Hl7.Fhir.Specification.Schema
         public readonly BindingStrength Strength;
         public readonly string Description;
         public readonly bool AbstractAllowed;
+        public readonly string Context;
 
-        public Binding(string valueSetUri, BindingStrength strength, bool abstractAllowed = true, string description = null)
+        public Binding(string valueSetUri, BindingStrength strength, bool abstractAllowed = true, string description = null, string context = null)
         {
             ValueSetUri = valueSetUri ?? throw Error.ArgumentNull(nameof(valueSetUri));
             Strength = strength;
             Description = description;
             AbstractAllowed = abstractAllowed;
+            Context = context;
         }
 
         /// <summary>
@@ -111,13 +113,13 @@ namespace Hl7.Fhir.Specification.Schema
             switch (bindable)
             {
                 case Code co:
-                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, co?.Value, system: null, display: null, abstractAllowed: AbstractAllowed, context: Context).ConfigureAwait(false);
                     break;
                 case Coding cd:
-                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, coding: cd, abstractAllowed: AbstractAllowed, context: Context).ConfigureAwait(false);
                     break;
                 case CodeableConcept cc:
-                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed).ConfigureAwait(false);
+                    outcome = await callService(vc.TerminologyService, source.Location, ValueSetUri, cc: cc, abstractAllowed: AbstractAllowed, context: Context).ConfigureAwait(false);
                     break;
                 default:
                     throw Error.InvalidOperation($"Parsed bindable was of unexpected instance type '{bindable.TypeName}'.");
@@ -132,14 +134,13 @@ namespace Hl7.Fhir.Specification.Schema
         }
 
         private async Task<OperationOutcome> callService(ITerminologyService svc, string location, string canonical, string code = null, string system = null, string display = null,
-                Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null)
+                Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null, string context = null)
         {
             try
-            {
-                var context = $"{canonical}#{location}";
+            {                
                 var parameters = new ValidateCodeParameters()
                     .WithValueSet(canonical)
-                    .WithCode(code: code, system: system, display: display, context:context)
+                    .WithCode(code: code, system: system, display: display, context: context)
                     .WithCoding(coding)
                     .WithCodeableConcept(cc)
                     .WithAbstract(abstractAllowed)

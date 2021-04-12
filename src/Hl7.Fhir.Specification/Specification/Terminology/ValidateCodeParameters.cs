@@ -76,14 +76,11 @@ namespace Hl7.Fhir.Specification.Terminology
         public ValidateCodeParameters WithCode(string code = null, string system = null, string systemVersion = null, string display = null, string displayLanguage = null, string context = null)
         {
             if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
-
-            //If a code is provided, either a system or a context must be provided.
             if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
-            else if (!string.IsNullOrWhiteSpace(context)) Context = new FhirUri(context);
-
             if (!string.IsNullOrWhiteSpace(systemVersion)) SystemVersion = new FhirString(systemVersion);
             if (!string.IsNullOrWhiteSpace(display)) Display = new FhirString(display);
             if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
+            if (!string.IsNullOrWhiteSpace(context)) Context = new FhirUri(context);
             return this;
         }
 

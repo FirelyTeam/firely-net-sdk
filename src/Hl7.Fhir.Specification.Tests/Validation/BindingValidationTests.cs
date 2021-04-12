@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason")
             };
 
-            var validator = binding.ToValidatable();
+            var validator = binding.ToValidatable("http://example.org/fhir/StructureDefitition/fhir#text.path");
             var vc = new ValidationContext() { TerminologyService = _termService };
             // Non-bindeable things should succeed
             Element v = new FhirBoolean(true);
