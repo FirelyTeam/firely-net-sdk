@@ -392,6 +392,19 @@ namespace Hl7.Fhir.Specification.Tests
                     });
         }
 
+        [Fact]
+        public void TestOperationOutcomes()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+#pragma warning disable CS0618 // obsolete, but used for testing purposes
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", code: "test");
+#pragma warning restore CS0618 
+
+            Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
+
+        }
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceTranslateSimpleTranslate()
