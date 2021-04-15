@@ -336,8 +336,19 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
-            Assert.Equal("If a code is provided, a system or a context must be provided", ex.Message);
+            var result = await svc.ValueSetValidateCode(inParams);
+            Assert.Collection(result.Parameter,
+                     param =>
+                     {
+                         Assert.Equal("result", param.Name);
+                         Assert.False(((FhirBoolean)param.Value).Value);
+                         
+                     },
+                     param =>
+                     {
+                         Assert.Equal("message", param.Name);
+                         Assert.Equal("If a code is provided, a system or a context must be provided", ((FhirString)param.Value).Value);
+                     });
         }
 
 
@@ -367,9 +378,18 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };           
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
-
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+            var result =  await svc.ValueSetValidateCode(inParams);
+            Assert.Collection(result.Parameter,
+                    param =>
+                    {                        
+                        Assert.Equal("result", param.Name);                        
+                        Assert.False(((FhirBoolean)param.Value).Value);
+                    },
+                    param =>
+                    {                        
+                        Assert.Equal("message", param.Name);
+                        Assert.Equal("List of input parameters contains the following duplicates: code", ((FhirString)param.Value).Value);
+                    });
         }
 
 
@@ -866,45 +886,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
-        }
-
-        [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceDuplicatesTest()
-        {
-            var client = new FhirClient(_externalTerminologyServerEndpoint);
-            var svc = new ExternalTerminologyService(client);
-
-            var inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "code",
-                        Value = new Code("DE")
-                    },
-                     new Parameters.ParameterComponent
-                    {
-                        Name = "code",
-                        Value = new Code("DE")
-                    },
-                      new Parameters.ParameterComponent
-                    {
-                        Name = "url",
-                        Value = new FhirUri("urn:iso:std:iso:3166")
-                    },
-                }
-            };
-
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-
-            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-        }
+        }       
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
@@ -958,95 +940,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
 #pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
-        }
-
-        [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceCheckRules()
-        {
-            var client = new FhirClient(_externalTerminologyServerEndpoint);
-            var svc = new ExternalTerminologyService(client);
-
-            var inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "code",
-                        Value = new Code("DE")
-                    },
-                }
-            };
-
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Lookup(inParams));
-            Assert.Equal("If a code is provided, a system must be provided", ex.Message);
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
-            Assert.Equal("If a code is provided, a system or a context must be provided", ex.Message);
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Translate(inParams));
-            Assert.Equal("If a code is provided, a system must be provided", ex.Message);
-
-            inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "codeA",
-                        Value = new Code("DE")
-                    },
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "system",
-                        Value = new FhirString("http://example.org")
-                    }
-                }
-            };
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
-            Assert.Equal("If 'codeA' is provided, 'codeB' must be provided", ex.Message);
-
-            inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "codeA",
-                        Value = new Code("DE")
-                    },
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "codeB",
-                        Value = new Code("NL")
-                    }
-                }
-            };
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
-            Assert.Equal("If codes are provided, a system must be provided", ex.Message);
-
-
-            inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "codingA",
-                        Value = new Coding
-                        {
-                            System = "http://example.org",
-                            Code = "DE"
-                        }
-                    }
-                }
-            };
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
-            Assert.Equal("If 'codingA' is provided, 'codingB' must be provided", ex.Message);
-        }
+        }       
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {
