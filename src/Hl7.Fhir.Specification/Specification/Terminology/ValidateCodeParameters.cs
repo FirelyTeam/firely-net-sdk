@@ -30,18 +30,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly string _displayLanguageAttribute = "displayLanguage";
 
         public ValidateCodeParameters(Parameters parameters)
-        {
-
-            if (parameters.TryGetDuplicates(out var duplicates) == true)
-            {
-                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
-            }
-            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) || 
-                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
-            {
-                throw Error.Argument($"If a code is provided, a system or a context must be provided");
-            }
-         
+        {         
             Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
             Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
             ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
@@ -54,8 +43,7 @@ namespace Hl7.Fhir.Specification.Terminology
             CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
             Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
             Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
-            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);
-                            
+            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);                            
         }    
            
 

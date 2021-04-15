@@ -24,6 +24,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
+        
+        private readonly string _codeAttribute = "code";
+        private readonly string _systemAttribute = "system";
+        private readonly string _contextAttribute = "context";
 
         public LocalTerminologyService(IAsyncResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
@@ -42,13 +46,24 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+           
+            if (parameters.TryGetDuplicates(out var duplicates) == true)
+            {
+               return falseOutcome($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+            }
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
+                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
+            {
+                return falseOutcome($"If a code is provided, a system or a context must be provided");
+            }
+
             var validCodeParams = new ValidateCodeParameters(parameters);
 
             var valueSet = validCodeParams.ValueSet;
             if (valueSet is null)
             {
                 if (validCodeParams.Url is null)
-                    throw Error.Argument("Have to supply either a canonical url or a valueset.");
+                    return falseOutcome("Have to supply either a canonical url or a valueset.");
 
                 try
                 {
@@ -60,7 +75,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
 
                 if (valueSet is null)
-                    throw new ValueSetUnknownException($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
+                    return falseOutcome($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
             }
 
             if (validCodeParams.CodeableConcept is { })
@@ -126,6 +141,14 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var parms = TaskHelper.Await(() => ValueSetValidateCode(parameters));
             return parms.ToOperationOutcome();
+        }
+
+        private Parameters falseOutcome(string message)
+        {
+            var result = new Parameters();
+            result.Add("result", new FhirBoolean(false));
+            result.Add("message", new FhirString(message));
+            return result; 
         }
 
         private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
