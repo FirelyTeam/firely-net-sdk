@@ -12,7 +12,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
