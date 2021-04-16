@@ -319,7 +319,8 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
+            result = await svc.ValueSetValidateCode(inParams);
+            Assert.False(result.GetSingleValue<FhirBoolean>("result")?.Value);
         }       
 
         [Fact]
