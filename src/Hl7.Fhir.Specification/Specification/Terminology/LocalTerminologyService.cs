@@ -46,11 +46,13 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
-           
+
+            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.TryGetDuplicates(out var duplicates) == true)
             {
                return falseOutcome($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
             }
+            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
                                                                                     parameters.Parameter.Any(p => p.Name == _contextAttribute)))
             {
@@ -78,12 +80,20 @@ namespace Hl7.Fhir.Specification.Terminology
                     return falseOutcome($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
             }
 
-            if (validCodeParams.CodeableConcept is { })
-                return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-            else if (validCodeParams.Coding is { })
-                return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-            else
-                return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+            try
+            {
+                if (validCodeParams.CodeableConcept is { })
+                    return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+                else if (validCodeParams.Coding is { })
+                    return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+                else
+                    return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                return falseOutcome(e.Message);
+            }
+           
         }
 
         #region Not implemented methods
