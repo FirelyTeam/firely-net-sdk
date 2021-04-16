@@ -184,7 +184,8 @@ namespace Hl7.Fhir.Specification.Tests
                 system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
             Assert.True(result.Success);
 
-            Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
+            result =  svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct");
+            Assert.False(result.Success);
 
             var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
             result = svc.ValidateCode(vsUrl, coding: coding);
@@ -285,8 +286,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
-            Assert.Throws<ValueSetExpansionTooComplexException>(
-                () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
+            Assert.False(result.Success);
+
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
