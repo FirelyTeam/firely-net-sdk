@@ -1267,6 +1267,49 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ValidatePatternSlicingOnRepeatingElement()
+        {
+            var obs = new Observation();
+            obs.Meta = new Meta()
+            {
+                Profile = new List<string>()
+                {
+                    "http://example.org/fhir/StructureDefinition/MyObservation"
+                }
+            };
+            obs.Status = ObservationStatus.Final;
+            obs.Code = new CodeableConcept() { Text = "Test" };
+            obs.Component = new List<Observation.ComponentComponent>()
+            {
+                new Observation.ComponentComponent()
+                {
+                    Code = new CodeableConcept()
+                    {
+                        Coding = new List<Coding>()
+                        {
+                            new Coding()
+                            {
+                                System = "http://example.org/fhir/CodeSystem/test",
+                                Code = "test"
+                            },
+                            new Coding()
+                            {
+                                System = "http://example.org/fhir/CodeSystem/differentSystem",
+                                Code = "test2"
+                            }
+                        }
+                    }
+                }
+            };
+
+            var result = _validator.Validate(obs);
+
+            // Observation.component is sliced with a pattern slicing, expected that if *any* coding contains the corrrect pattern that it would match the slice
+            // If the slicing is done by a fixed value then the slice should be matched if and only if the coding from the fixedCoding is present
+            Assert.True(result.Success);
+        }
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;

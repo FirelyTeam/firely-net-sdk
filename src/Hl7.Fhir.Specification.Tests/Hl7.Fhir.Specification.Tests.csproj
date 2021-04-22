@@ -80,6 +80,7 @@
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
     <None Remove="TestData\CCDA_ANY.xml" />
+    <None Remove="TestData\validation\ObservationProfilePatternSlicingOnRepeatingElement.xml" />
   </ItemGroup>  
  
   <ItemGroup>
