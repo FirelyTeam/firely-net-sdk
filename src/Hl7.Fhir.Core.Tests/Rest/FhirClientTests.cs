@@ -46,6 +46,9 @@ namespace Hl7.Fhir.Tests.Rest
 
         public static Uri TerminologyEndpoint = new Uri("https://stu3.ontoserver.csiro.au/fhir");
 
+        private static string patientId = "pat1" + ModelInfo.Version;
+        private static string locationId = "loc1" + ModelInfo.Version;
+
 #if !NETCOREAPP2_1
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -87,7 +90,7 @@ namespace Hl7.Fhir.Tests.Rest
                         Family = "Donald",
                     }
                 },
-                Id = "pat1stu3",
+                Id = patientId,
                 Identifier = new List<Identifier>()
                 {
                     new Identifier()
@@ -104,7 +107,7 @@ namespace Hl7.Fhir.Tests.Rest
                 {
                     City = "Den Burg"
                 },
-                Id = "loc1stu3"
+                Id = locationId
             };
 
             // Create the patient
@@ -281,7 +284,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void ReadWrongResourceType()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
-            var loc = client.Read<Patient>("Location/loc1stu3");
+            var loc = client.Read<Patient>("Location/" + locationId);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -294,7 +297,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadWrongResourceType(BaseFhirClient client)
         {
-            var loc = client.Read<Patient>("Location/loc1stu3");
+            var loc = client.Read<Patient>("Location/" + locationId);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -315,14 +318,14 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadClient(BaseFhirClient client)
         {
-            var loc = client.Read<Location>("Location/loc1stu3");
+            var loc = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
-            Assert.AreEqual("1", loc.Id);
+            Assert.AreEqual(locationId, loc.Id);
             Assert.IsNotNull(loc.Meta.VersionId);
 
-            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "loc1stu3", loc.Meta.VersionId));
+            var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", locationId, loc.Meta.VersionId));
             Assert.IsNotNull(loc2);
             Assert.AreEqual(loc2.Id, loc.Id);
             Assert.AreEqual(loc2.Meta.VersionId, loc.Meta.VersionId);
@@ -338,7 +341,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.AreEqual("404", client.LastResult.Status);
             }
 
-            var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", "loc1stu3", loc.Meta.VersionId));
+            var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", locationId, loc.Meta.VersionId));
             Assert.IsNotNull(loc3);
             var jsonSer = new FhirJsonSerializer();
             Assert.AreEqual(jsonSer.SerializeToString(loc),
@@ -370,11 +373,11 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadRelative(BaseFhirClient client)
         {
-            var loc = client.Read<Location>(new Uri("Location/loc1stu3", UriKind.Relative));
+            var loc = client.Read<Location>(new Uri("Location/" + locationId, UriKind.Relative));
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
-            var ri = ResourceIdentity.Build(testEndpoint, "Location", "loc1stu3");
+            var ri = ResourceIdentity.Build(testEndpoint, "Location", locationId);
             loc = client.Read<Location>(ri);
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
@@ -399,11 +402,11 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testRelativeAsyncClient(BaseFhirClient client)
         {
-            var loc = client.ReadAsync<Location>(new Uri("Location/loc1stu3", UriKind.Relative)).Result;
+            var loc = client.ReadAsync<Location>(new Uri("Location/" + locationId, UriKind.Relative)).Result;
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
-            var ri = ResourceIdentity.Build(testEndpoint, "Location", "loc1stu3");
+            var ri = ResourceIdentity.Build(testEndpoint, "Location", locationId);
             loc = client.ReadAsync<Location>(ri).Result;
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
@@ -732,7 +735,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;       // which is also the default
 
-            var pat = client.Read<Patient>("Patient/pat1stu3");
+            var pat = client.Read<Patient>("Patient/" + patientId);
             ResourceIdentity ri = pat.ResourceIdentity().WithBase(client.Endpoint);
             pat.Id = null;
             pat.Identifier.Clear();
@@ -793,7 +796,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             // client.CompressRequestBody = true;
 
-            var pat = client.Read<Patient>("Patient/pat1stu3");
+            var pat = client.Read<Patient>("Patient/" + patientId);
             pat.Id = null;
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
@@ -1322,7 +1325,7 @@ namespace Hl7.Fhir.Tests.Rest
                 status = e.RawResponse.StatusCode;
             };
 
-            var pat = client.Read<Patient>("Patient/pat1stu3");
+            var pat = client.Read<Patient>("Patient/" + patientId);
             Assert.IsTrue(calledBefore);
             Assert.IsNotNull(status);
             Assert.IsNotNull(body);
@@ -1366,7 +1369,7 @@ namespace Hl7.Fhir.Tests.Rest
                     status = e.RawResponse.StatusCode;
                 };
 
-                var pat = client.Read<Patient>("Patient/pat1stu3");
+                var pat = client.Read<Patient>("Patient/" + patientId);
                 Assert.IsTrue(calledBefore);
                 Assert.IsNotNull(status);
                 Assert.IsNotNull(body);
@@ -1494,7 +1497,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void clientReadRefresh(BaseFhirClient client)
         {
-            var result = client.Read<Patient>("Patient/pat1stu3");
+            var result = client.Read<Patient>("Patient/" + patientId);
 
             var orig = result.Name[0].FamilyElement.Value;
 
@@ -1858,7 +1861,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             using var client = new FhirClient(testEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
-            var loc = client.Read<Location>("Location/loc1stu3");
+            var loc = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(testDegatingHandler.LastRequest);
             Assert.IsNotNull(testMessageHandler.LastResponse);
         }
