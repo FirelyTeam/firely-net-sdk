@@ -110,8 +110,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             c = new Coding("http://snomed.info/sct", "160244002");
             result = val2.Validate(c.ToTypedElement(), vc);
-            Assert.False(result.Success);
-            Assert.NotEmpty(result.Where(type: OperationOutcome.IssueType.CodeInvalid));
+            Assert.True(result.Success);
+            Assert.NotEmpty(result.Where(type: OperationOutcome.IssueType.Informational));
         }
 
         [Fact]

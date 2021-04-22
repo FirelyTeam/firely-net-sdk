@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
 
                 if (valueSet is null)
-                    return falseOutcome($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
+                    return warningOutcome($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
             }
 
             try
@@ -88,6 +88,10 @@ namespace Hl7.Fhir.Specification.Terminology
                     return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
                 else
                     return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+            }
+            catch (TerminologyServiceException e)
+            {
+                return warningOutcome(e.Message);
             }
             catch (Exception e)
             {
@@ -159,6 +163,14 @@ namespace Hl7.Fhir.Specification.Terminology
             result.Add("result", new FhirBoolean(false));
             result.Add("message", new FhirString(message));
             return result; 
+        }
+
+        private Parameters warningOutcome(string message)
+        {
+            var result = new Parameters();
+            result.Add("result", new FhirBoolean(true));
+            result.Add("message", new FhirString(message));
+            return result;
         }
 
         private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
