@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/";
+$server = "http://hl7.org/fhir/2021Mar/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -18,8 +18,8 @@ $allFiles = @("conceptmaps.xml",
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
 				"search-parameters.xml",
-				"v2-tables.xml",
-				"v3-codesystems.xml",
+				# "v2-tables.xml",
+				# "v3-codesystems.xml",
 				"valuesets.xml"
 				"fhir-all-xsd.zip"
 				);
@@ -170,14 +170,14 @@ CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-types.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v2-tables.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v3-codesystems.xml" "$srcdir\Hl7.Fhir.Specification\data"
+#CopySpecFile "v2-tables.xml" "$srcdir\Hl7.Fhir.Specification\data"
+#CopySpecFile "v3-codesystems.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "valuesets.xml" "$srcdir\Hl7.Fhir.Specification\data"
 
 # Add example files used for testing
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/v2/0717/v2-0717.vs.json"
+#PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/v2/0717/v2-0717.vs.json"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"

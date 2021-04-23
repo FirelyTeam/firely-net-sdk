@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="PlanDefinition" type="PlanDefinition">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="PlanDefinition">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -96,10 +116,11 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code or group definition that describes the intended subject of the plan definition.</xs:documentation>
+              <xs:documentation xml:lang="en">A code, group definition, or canonical reference that describes  or identifies the intended subject of the plan definition. Canonical references are allowed to support the definition of protocols for drug and substance quality specifications, and is allowed to reference a MedicinalProductDefinition, SubstanceDefinition, AdministrableProductDefinition, ManufacturedItemDefinition, or PackagedProductDefinition resource.</xs:documentation>
             </xs:annotation>
             <xs:element name="subjectCodeableConcept" type="CodeableConcept"/>
             <xs:element name="subjectReference" type="Reference"/>
+            <xs:element name="subjectCanonical" type="canonical"/>
           </xs:choice>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
@@ -198,12 +219,12 @@
           </xs:element>
           <xs:element name="goal" type="PlanDefinition.Goal" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Goals that describe what the activities within the plan are intended to achieve. For example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.</xs:documentation>
+              <xs:documentation xml:lang="en">A goal describes an expected outcome that activities within the plan are intended to achieve. For example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, meeting the acceptance criteria for a test as specified by a quality specification, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="action" type="PlanDefinition.Action" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">An action or group of actions to be taken as part of the plan.</xs:documentation>
+              <xs:documentation xml:lang="en">An action or group of actions to be taken as part of the plan. For example, in clinical care, an action would be to prescribe a particular indicated medication, or perform a particular test as appropriate. In pharmaceutical quality, an action would be the test that needs to be performed on a drug product as defined in the quality specification.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -212,7 +233,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.Goal">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -258,7 +279,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.Target">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -270,7 +291,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The target value of the measure to be achieved to signify fulfillment of the goal, e.g. 150 pounds or 7.0%. Either the high or low or both values of the range can be specified. When a low value is missing, it indicates that the goal is achieved at any value at or below the high value. Similarly, if the high value is missing, it indicates that the goal is achieved at any value at or above the low value.</xs:documentation>
+              <xs:documentation xml:lang="en">The target value of the measure to be achieved to signify fulfillment of the goal, e.g. 150 pounds or 7.0%, or in the case of pharmaceutical quality - NMT 0.6%, Clear solution, etc. Either the high or low or both values of the range can be specified. When a low value is missing, it indicates that the goal is achieved at any value at or below the high value. Similarly, if the high value is missing, it indicates that the goal is achieved at any value at or above the low value.</xs:documentation>
             </xs:annotation>
             <xs:element name="detailQuantity" type="Quantity"/>
             <xs:element name="detailRange" type="Range"/>
@@ -287,7 +308,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.Action">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -299,7 +320,7 @@
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The title of the action displayed to a user.</xs:documentation>
+              <xs:documentation xml:lang="en">The textual description of the action displayed to a user. For example, when the action is a test to be performed, the title would be the title of the test such as Assay by HPLC.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
@@ -319,7 +340,7 @@
           </xs:element>
           <xs:element name="code" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code that provides meaning for the action or action group. For example, a section may have a LOINC code for the section of a documentation template.</xs:documentation>
+              <xs:documentation xml:lang="en">A code that provides a meaning, grouping, or classification for the action or action group. For example, a section may have a LOINC code for the section of a documentation template. In pharmaceutical quality, an action (Test) such as pH could be classified as a physical property.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -334,15 +355,16 @@
           </xs:element>
           <xs:element name="goalId" minOccurs="0" maxOccurs="unbounded" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies goals that this action supports. The reference must be to a goal element defined within this plan definition.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies goals that this action supports. The reference must be to a goal element defined within this plan definition. In pharmaceutical quality, a goal represents acceptance criteria (Goal) for a given action (Test), so the goalId would be the unique id of a defined goal element establishing the acceptance criteria for the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A code or group definition that describes the intended subject of the action and its children, if any.</xs:documentation>
+              <xs:documentation xml:lang="en">A code, group definition, or canonical reference that describes the intended subject of the action and its children, if any. Canonical references are allowed to support the definition of protocols for drug and substance quality specifications, and is allowed to reference a MedicinalProductDefinition, SubstanceDefinition, AdministrableProductDefinition, ManufacturedItemDefinition, or PackagedProductDefinition resource.</xs:documentation>
             </xs:annotation>
             <xs:element name="subjectCodeableConcept" type="CodeableConcept"/>
             <xs:element name="subjectReference" type="Reference"/>
+            <xs:element name="subjectCanonical" type="canonical"/>
           </xs:choice>
           <xs:element name="trigger" minOccurs="0" maxOccurs="unbounded" type="TriggerDefinition">
             <xs:annotation>
@@ -443,7 +465,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.Condition">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -464,7 +486,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.RelatedAction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -492,7 +514,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.Participant">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -513,7 +535,7 @@
   </xs:complexType>
   <xs:complexType name="PlanDefinition.DynamicValue">
     <xs:annotation>
-      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical artifacts such as clinical decision support rules, order sets and protocols.</xs:documentation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -553,7 +575,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionRequiredBehavior">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines expectations around whether an action or action group is required.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -613,7 +635,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionRelationshipType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines the types of relationships between actions.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -643,7 +665,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionGroupingBehavior">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines organization behavior of a group.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -688,7 +710,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionSelectionBehavior">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines selection behavior of a group.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -713,7 +735,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionCardinalityBehavior">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines behavior for an action or a group for how many times that item may be repeated.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -738,7 +760,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionPrecheckBehavior">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines selection frequency behavior for an action or group.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -768,7 +790,7 @@
   </xs:simpleType>
   <xs:complexType name="ActionConditionKind">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines the kinds of conditions that can appear on actions.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

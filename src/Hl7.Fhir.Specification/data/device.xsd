@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -111,12 +131,12 @@
           </xs:element>
           <xs:element name="modelNumber" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The model number for the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The manufacturer's model number for the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="partNumber" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The part number of the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The part number or catalog number of the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -176,7 +196,7 @@
           </xs:element>
           <xs:element name="parent" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The parent device.</xs:documentation>
+              <xs:documentation xml:lang="en">The device that this device is attached to or is part of.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -241,7 +261,7 @@ http://hl7.org/fhir/NamingSystem/iccbba-other-di.</xs:documentation>
         <xs:sequence>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The name of the device.</xs:documentation>
+              <xs:documentation xml:lang="en">The name that identifies the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DeviceNameType">
@@ -284,7 +304,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
         <xs:sequence>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of the device version.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of the device version, e.g. manufacturer, approved, internal.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="component" minOccurs="0" maxOccurs="1" type="Identifier">
@@ -398,7 +418,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
   </xs:simpleType>
   <xs:complexType name="DeviceNameType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The type of name the device is referred by.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
