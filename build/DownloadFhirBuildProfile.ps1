@@ -139,9 +139,9 @@ function ExtractXsdZipFile($destPath)
 	$extractPath = Join-Path $tempDir "extracted"
 	expand-archive -path $zipPath -destinationpath $extractPath
 	
-	if ($server.EndsWith('2020Sep/') )
+	if ($server.EndsWith('2020Sep/') -or $server.EndsWith('2021Mar/') )
 	{
-		# In release 2020Sep is an error in the fhir-single.xsd.  
+		# In release 2020Sep and 2021Mar is an error in the fhir-single.xsd.  
 		Write-Host -ForegroundColor White ".. correct errors in fhir-single.xsd"
 		$xsdFile = Join-Path $extractPath "fhir-single.xsd"
 		RemoveIncorrectXsdElements $xsdFile
