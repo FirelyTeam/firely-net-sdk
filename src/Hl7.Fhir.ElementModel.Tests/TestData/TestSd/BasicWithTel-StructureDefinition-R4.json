@@ -5,7 +5,7 @@
   "name": "BasicWithTel",
   "status": "draft",
   "date": "2017-04-19T07:44:43+10:00",
-  "fhirVersion": "4.0.1",
+  "fhirVersion": "4.1.0",
   "kind": "logical",
   "abstract": false,
   "type": "BasicWithTel",

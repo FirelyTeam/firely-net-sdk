@@ -64,12 +64,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/example-extensional")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             await expander.ExpandAsync(testVs);
-            Assert.Equal(11, testVs.Expansion.Total);
+            Assert.Equal(4, testVs.Expansion.Total);
         }
 
 
@@ -180,8 +180,8 @@ namespace Hl7.Fhir.Specification.Tests
             //    display: "Not any Number");
             //Assert.True(result.Success);
 
-            result = svc.ValidateCode("http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+                system: "http://hl7.org/fhir/hacked");
             Assert.True(result.Success);
 
             Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
@@ -279,8 +279,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
 
             // This test is not always correctly done by the external services, so copied here instead
-            result = svc.ValidateCode("http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                    system: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", @abstract: false);
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+                   system: "http://hl7.org/fhir/hacked", @abstract: false);
             Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
@@ -304,9 +304,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
-                .WithValueSet(url: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode")
-                .WithCode(code: "_AcknowledgementDetailNotSupportedCode", system: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCodee")
-                .WithAbstract(false);
+                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/example-hierarchical")
+                 .WithCode(code: "invalid", system: "http://hl7.org/fhir/hacked")
+                 .WithAbstract(false);
 
             result = await svc.ValueSetValidateCode(inParams);
 
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task LocalTermServiceUsingDuplicateParameters()
         {
-            var svc = new LocalTerminologyService(_resolver);           
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
@@ -343,9 +343,9 @@ namespace Hl7.Fhir.Specification.Tests
                         Value = new FhirUri("urn:iso:std:iso:3166")
                     },
                 }
-            };           
+            };
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
 
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
         }
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Specification.Tests
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
-            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
             ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));

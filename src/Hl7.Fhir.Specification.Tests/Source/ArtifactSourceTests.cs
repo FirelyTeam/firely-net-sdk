@@ -16,8 +16,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using T = System.Threading.Tasks;
 using ssac = System.Security.AccessControl;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
 
-            using (var a = za.LoadArtifactByName("v3-codesystems.xml"))
+            using (var a = za.LoadArtifactByName("valuesets.xml"))
             {
                 Assert.IsNotNull(a);
             }
@@ -281,7 +281,6 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             && kvp.Value != "Resource"
                                                                             && kvp.Value != "DomainResource"
                                                                             && kvp.Value != "BackboneType"
-                                                                            && kvp.Value != "Base"
                                                                             && kvp.Value != "DataType"
                                                                             && kvp.Value != "PrimitiveType"
                                                                             )
@@ -358,11 +357,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                     // Abort unit test if we can't access file permissions
                     var fs = forbiddenFile.GetAccessControl();
-                    
+
                     // Revoke file read permissions for the current user
                     fs.AddAccessRule(rule);
                     Debug.Print($"Removing read permissions from file: '{forbiddenFile}' ...");
-                    
+
                     // Abort unit test if we can't modify file permissions
                     forbiddenFile.SetAccessControl(fs);
 
@@ -383,7 +382,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                         // [WMR 20170823] Also test ListResourceUris => prepareResources()
                         var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
-                        
+
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
                         Assert.IsFalse(urlList.Contains(profileUrl1));
