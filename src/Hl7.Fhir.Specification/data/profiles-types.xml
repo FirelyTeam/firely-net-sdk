@@ -95,7 +95,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -192,7 +192,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -322,7 +322,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -544,7 +544,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -602,7 +602,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="base64Binary" />
+                <valueUrl value="base64Binary" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="(\s*([0-9a-zA-Z\+/=]){4}\s*)+" />
@@ -633,7 +633,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="base64Binary" />
+                <valueUrl value="base64Binary" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="(\s*([0-9a-zA-Z\+/=]){4}\s*)+" />
@@ -719,7 +719,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -777,7 +777,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="boolean" />
+                <valueUrl value="boolean" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="true|false" />
@@ -807,7 +807,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="boolean" />
+                <valueUrl value="boolean" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="true|false" />
@@ -895,7 +895,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -953,7 +953,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -983,7 +983,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="canonical" />
+                <valueUrl value="canonical" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -1070,7 +1070,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -1128,7 +1128,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[^\s]+(\s[^\s]+)*" />
@@ -1157,7 +1157,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="code" />
+                <valueUrl value="code" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[^\s]+(\s[^\s]+)*" />
@@ -1243,7 +1243,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -1301,7 +1301,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="date" />
+                <valueUrl value="date" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?" />
@@ -1331,7 +1331,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="date" />
+                <valueUrl value="date" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1]))?)?" />
@@ -1417,7 +1417,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -1475,7 +1475,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="dateTime" />
+                <valueUrl value="dateTime" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?" />
@@ -1505,7 +1505,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="dateTime" />
+                <valueUrl value="dateTime" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?" />
@@ -1592,7 +1592,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -1650,7 +1650,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="decimal" />
+                <valueUrl value="decimal" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?" />
@@ -1681,7 +1681,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="decimal" />
+                <valueUrl value="decimal" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?" />
@@ -1769,7 +1769,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -1827,7 +1827,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[A-Za-z0-9\-\.]{1,64}" />
@@ -1857,7 +1857,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="id" />
+                <valueUrl value="id" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[A-Za-z0-9\-\.]{1,64}" />
@@ -1944,7 +1944,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2002,7 +2002,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="instant" />
+                <valueUrl value="instant" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))" />
@@ -2033,7 +2033,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="instant" />
+                <valueUrl value="instant" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))" />
@@ -2120,7 +2120,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2178,7 +2178,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="integer" />
+                <valueUrl value="integer" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?([0]|([1-9][0-9]*))" />
@@ -2211,7 +2211,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="integer" />
+                <valueUrl value="integer" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="-?([0]|([1-9][0-9]*))" />
@@ -2301,7 +2301,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2359,7 +2359,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2389,7 +2389,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="markdown" />
+                <valueUrl value="markdown" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2477,7 +2477,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2535,7 +2535,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:oid:[0-2](\.(0|[1-9][0-9]*))+" />
@@ -2565,7 +2565,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="oid" />
+                <valueUrl value="oid" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:oid:[0-2](\.(0|[1-9][0-9]*))+" />
@@ -2652,7 +2652,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2710,7 +2710,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[1-9][0-9]*" />
@@ -2739,7 +2739,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="positiveInt" />
+                <valueUrl value="positiveInt" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[1-9][0-9]*" />
@@ -2826,7 +2826,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -2884,7 +2884,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -2916,7 +2916,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[ \r\n\t\S]+" />
@@ -3003,7 +3003,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3061,7 +3061,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="time" />
+                <valueUrl value="time" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" />
@@ -3091,7 +3091,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="time" />
+                <valueUrl value="time" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\.[0-9]+)?" />
@@ -3178,7 +3178,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3236,7 +3236,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[0]|([1-9][0-9]*)" />
@@ -3265,7 +3265,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="unsignedInt" />
+                <valueUrl value="unsignedInt" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="[0]|([1-9][0-9]*)" />
@@ -3352,7 +3352,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3410,7 +3410,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (c) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="uri" />
+                <valueUrl value="uri" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -3441,7 +3441,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (b) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="uri" />
+                <valueUrl value="uri" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -3528,7 +3528,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3586,7 +3586,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -3615,7 +3615,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="url" />
+                <valueUrl value="url" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="\S*" />
@@ -3703,7 +3703,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (h) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3761,7 +3761,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (i) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" />
@@ -3791,7 +3791,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (g) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="uuid" />
+                <valueUrl value="uuid" />
               </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/regex">
                 <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}" />
@@ -3932,7 +3932,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (f) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -3963,7 +3963,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (e) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -4093,7 +4093,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -4184,9 +4184,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The use of an address." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AddressUse" />
               </extension>
@@ -4237,9 +4234,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of an address (physical / postal)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AddressType" />
               </extension>
@@ -4657,9 +4651,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old address etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The use of an address." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AddressUse" />
               </extension>
@@ -4696,9 +4687,6 @@
             </example>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of an address (physical / postal)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AddressType" />
               </extension>
@@ -5049,9 +5037,6 @@
             </constraint>
             <isModifier value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Age." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-time-units" />
               </extension>
@@ -5089,7 +5074,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -5211,9 +5196,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -5362,9 +5344,6 @@
               <source value="http://hl7.org/fhir/StructureDefinition/Age" />
             </constraint>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Age." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-time-units" />
               </extension>
@@ -5489,7 +5468,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -5863,7 +5842,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -5952,9 +5931,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -6004,9 +5980,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A human language." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-languages" />
               </extension>
@@ -6279,9 +6252,6 @@
             </example>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -6317,9 +6287,6 @@
             </example>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A human language." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-languages" />
               </extension>
@@ -6579,7 +6546,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -6896,7 +6863,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -7175,7 +7142,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -7691,7 +7658,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -7966,7 +7933,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -8051,9 +8018,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Telecommunications form for contact point." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContactPointSystem" />
               </extension>
@@ -8140,9 +8104,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old contact etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Use of contact point." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContactPointUse" />
               </extension>
@@ -8280,9 +8241,6 @@
             <condition value="cpt-2" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Telecommunications form for contact point." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContactPointSystem" />
               </extension>
@@ -8342,9 +8300,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old contact etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Use of contact point." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContactPointUse" />
               </extension>
@@ -8498,7 +8453,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -8582,9 +8537,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of contributor." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContributorType" />
               </extension>
@@ -8665,9 +8617,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of contributor." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ContributorType" />
               </extension>
@@ -8813,7 +8762,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -8935,9 +8884,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -9185,7 +9131,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -9269,9 +9215,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A list of all the concrete types defined in this version of the FHIR specification - Abstract Types, Data Types and Resource Types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRAllTypes" />
               </extension>
@@ -9339,9 +9282,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible types of subjects for a data requirement (E.g., Patient, Practitioner, Organization, Location, etc.)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SubjectType" />
               </extension>
@@ -9422,7 +9362,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -9631,7 +9571,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -9841,7 +9781,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -9950,9 +9890,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible sort directions, ascending or descending." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SortDirection" />
               </extension>
@@ -9983,9 +9920,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A list of all the concrete types defined in this version of the FHIR specification - Abstract Types, Data Types and Resource Types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRAllTypes" />
               </extension>
@@ -10025,9 +9959,6 @@
             <meaningWhenMissing value="Patient" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible types of subjects for a data requirement (E.g., Patient, Practitioner, Organization, Location, etc.)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SubjectType" />
               </extension>
@@ -10218,9 +10149,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible sort directions, ascending or descending." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SortDirection" />
               </extension>
@@ -10324,7 +10252,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -10494,9 +10422,6 @@
             </constraint>
             <isModifier value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Distance." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-distance-units" />
               </extension>
@@ -10534,7 +10459,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -10656,9 +10581,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -10807,9 +10729,6 @@
               <source value="http://hl7.org/fhir/StructureDefinition/Distance" />
             </constraint>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Distance." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-distance-units" />
               </extension>
@@ -10922,7 +10841,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -11119,9 +11038,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept identifying additional instructions such as &quot;take with water&quot; or &quot;avoid operating heavy machinery&quot;." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AdditionalInstruction" />
               </extension>
@@ -11230,9 +11146,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept identifying the precondition that should be met or evaluated prior to consuming or administering a medication dose.  For example &quot;pain&quot;, &quot;30 minutes prior to sexual intercourse&quot;, &quot;on flare-up&quot; etc." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAsNeededReason" />
               </extension>
@@ -11275,9 +11188,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the site location the medicine enters into or onto the body." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAdministrationSite" />
               </extension>
@@ -11319,9 +11229,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="RouteOfAdministration" />
               </extension>
@@ -11364,9 +11271,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the technique by which the medicine is administered." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAdministrationMethod" />
               </extension>
@@ -11426,7 +11330,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -11511,9 +11415,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The kind of dose or rate specified." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="DoseAndRateType" />
               </extension>
@@ -11773,9 +11674,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept identifying additional instructions such as &quot;take with water&quot; or &quot;avoid operating heavy machinery&quot;." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AdditionalInstruction" />
               </extension>
@@ -11842,9 +11740,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept identifying the precondition that should be met or evaluated prior to consuming or administering a medication dose.  For example &quot;pain&quot;, &quot;30 minutes prior to sexual intercourse&quot;, &quot;on flare-up&quot; etc." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAsNeededReason" />
               </extension>
@@ -11873,9 +11768,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the site location the medicine enters into or onto the body." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAdministrationSite" />
               </extension>
@@ -11903,9 +11795,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the route or physiological path of administration of a therapeutic agent into or onto the body of a subject." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="RouteOfAdministration" />
               </extension>
@@ -11934,9 +11823,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded concept describing the technique by which the medicine is administered." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MedicationAdministrationMethod" />
               </extension>
@@ -11979,9 +11865,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The kind of dose or rate specified." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="DoseAndRateType" />
               </extension>
@@ -12200,9 +12083,6 @@
             </constraint>
             <isModifier value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Duration." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-time-units" />
               </extension>
@@ -12240,7 +12120,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -12362,9 +12242,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -12516,9 +12393,6 @@
               <source value="http://hl7.org/fhir/StructureDefinition/Duration" />
             </constraint>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Appropriate units for Duration." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://hl7.org/fhir/ValueSet/all-time-units" />
               </extension>
@@ -12776,7 +12650,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -12941,9 +12815,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How a property is represented when serialized." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="PropertyRepresentation" />
               </extension>
@@ -13111,9 +12982,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Codes that indicate the meaning of a data element." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ElementDefinitionCode" />
               </extension>
@@ -13194,7 +13062,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -13302,7 +13170,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -13386,9 +13254,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How an element value is interpreted when discrimination is evaluated." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="DiscriminatorType" />
               </extension>
@@ -13532,9 +13397,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How slices are interpreted when evaluating an instance." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SlicingRules" />
               </extension>
@@ -13908,7 +13770,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -14180,7 +14042,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -14265,9 +14127,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Either a resource or a data type, including logical model types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRDefinedTypeExt" />
               </extension>
@@ -14392,9 +14251,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How resource references can be aggregated." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AggregationMode" />
               </extension>
@@ -14436,9 +14292,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Whether a reference needs to be version specific or version independent, or whether either can be used." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ReferenceVersionRules" />
               </extension>
@@ -15104,7 +14957,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -15614,7 +15467,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -15759,9 +15612,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="SHALL applications comply with this constraint?" />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ConstraintSeverity" />
               </extension>
@@ -16111,7 +15961,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -16198,9 +16048,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Indication of the degree of conformance expectations associated with a binding." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="BindingStrength" />
               </extension>
@@ -16360,7 +16207,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -16474,9 +16321,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -16733,9 +16577,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How a property is represented when serialized." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="PropertyRepresentation" />
               </extension>
@@ -16847,9 +16688,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Codes that indicate the meaning of a data element." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ElementDefinitionCode" />
               </extension>
@@ -16932,9 +16770,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How an element value is interpreted when discrimination is evaluated." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="DiscriminatorType" />
               </extension>
@@ -17022,9 +16857,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How slices are interpreted when evaluating an instance." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SlicingRules" />
               </extension>
@@ -17411,9 +17243,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Either a resource or a data type, including logical model types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRDefinedTypeExt" />
               </extension>
@@ -17496,9 +17325,6 @@
             <condition value="eld-4" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How resource references can be aggregated." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="AggregationMode" />
               </extension>
@@ -17526,9 +17352,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Whether a reference needs to be version specific or version independent, or whether either can be used." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ReferenceVersionRules" />
               </extension>
@@ -18477,9 +18300,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="SHALL applications comply with this constraint?" />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ConstraintSeverity" />
               </extension>
@@ -18702,9 +18522,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Indication of the degree of conformance expectations associated with a binding." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="BindingStrength" />
               </extension>
@@ -18834,9 +18651,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -18985,7 +18799,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -19119,9 +18933,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The media type of the expression language." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://www.rfc-editor.org/bcp/bcp13.txt" />
               </extension>
@@ -19236,9 +19047,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The media type of the expression language." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
                 <valueCanonical value="http://www.rfc-editor.org/bcp/bcp13.txt" />
               </extension>
@@ -19381,7 +19189,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -19456,7 +19264,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="uri" />
+                <valueUrl value="uri" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -19681,7 +19489,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="uri" />
+                <valueUrl value="uri" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -19971,7 +19779,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -20058,9 +19866,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The use of a human name." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="NameUse" />
               </extension>
@@ -20348,9 +20153,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary or old name etc.for a current/permanent one" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The use of a human name." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="NameUse" />
               </extension>
@@ -20630,7 +20432,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -20717,9 +20519,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one." />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Identifies the purpose for this identifier, if known ." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="IdentifierUse" />
               </extension>
@@ -20762,9 +20561,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="IdentifierType" />
               </extension>
@@ -20986,9 +20782,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because applications should not mistake a temporary id for a permanent one." />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Identifies the purpose for this identifier, if known ." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="IdentifierUse" />
               </extension>
@@ -21017,9 +20810,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A coded type for an identifier that can be used to determine which identifier to use for a specific purpose." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="IdentifierType" />
               </extension>
@@ -21241,7 +21031,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -21639,7 +21429,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -21829,9 +21619,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Security Labels from the Healthcare Privacy and Security Classification System." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SecurityLabels" />
               </extension>
@@ -21868,9 +21655,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="Tags" />
               </extension>
@@ -21958,9 +21742,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Security Labels from the Healthcare Privacy and Security Classification System." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SecurityLabels" />
               </extension>
@@ -21983,9 +21764,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Codes that represent various types of tags, commonly workflow-related; e.g. &quot;Needs review by Dr. Jones&quot;." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="Tags" />
               </extension>
@@ -22098,7 +21876,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -22214,9 +21992,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code indicating the currency, taken from ISO 4217." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="CurrencyCode" />
               </extension>
@@ -22279,9 +22054,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code indicating the currency, taken from ISO 4217." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="CurrencyCode" />
               </extension>
@@ -22396,7 +22168,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -22480,9 +22252,6 @@
             <isModifier value="false" />
             <isSummary value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The status of a resource narrative." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="NarrativeStatus" />
               </extension>
@@ -22569,9 +22338,6 @@
               <code value="code" />
             </type>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The status of a resource narrative." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="NarrativeStatus" />
               </extension>
@@ -22711,7 +22477,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -22969,7 +22735,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -23344,7 +23110,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -23456,9 +23222,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Whether the parameter is input or output." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ParameterUse" />
               </extension>
@@ -23566,9 +23329,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A list of all the concrete types defined in this version of the FHIR specification - Abstract Types, Data Types and Resource Types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRAllTypes" />
               </extension>
@@ -23642,9 +23402,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Whether the parameter is input or output." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="ParameterUse" />
               </extension>
@@ -23696,9 +23453,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A list of all the concrete types defined in this version of the FHIR specification - Abstract Types, Data Types and Resource Types." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRAllTypes" />
               </extension>
@@ -23839,7 +23593,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -24133,7 +23887,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -24495,7 +24249,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -25107,7 +24861,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -25458,7 +25212,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -25580,9 +25334,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -25779,9 +25530,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -25987,7 +25735,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -26309,7 +26057,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -26597,7 +26345,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -26713,9 +26461,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Aa resource (or, for logical models, the URI of the logical model)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRResourceTypeExt" />
               </extension>
@@ -26853,9 +26598,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Aa resource (or, for logical models, the URI of the logical model)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="FHIRResourceTypeExt" />
               </extension>
@@ -27000,7 +26742,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -27084,9 +26826,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of relationship to the related artifact." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="RelatedArtifactType" />
               </extension>
@@ -27272,9 +27011,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of relationship to the related artifact." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="RelatedArtifactType" />
               </extension>
@@ -27457,7 +27193,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -27950,7 +27686,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -28035,9 +27771,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="An indication of the reason that an entity signed the object." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SignatureType" />
               </extension>
@@ -28162,9 +27895,6 @@
             <isModifier value="false" />
             <isSummary value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -28201,9 +27931,6 @@
             <isModifier value="false" />
             <isSummary value="false" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -28270,9 +27997,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="An indication of the reason that an entity signed the object." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="SignatureType" />
               </extension>
@@ -28340,9 +28064,6 @@
               <code value="code" />
             </type>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -28364,9 +28085,6 @@
               <code value="code" />
             </type>
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The mime type of an attachment. Any valid mime type is allowed." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="MimeType" />
               </extension>
@@ -28478,7 +28196,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -28655,9 +28373,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of a specific statistic." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticType" />
               </extension>
@@ -28756,7 +28471,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -28980,7 +28695,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -29114,9 +28829,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Method of reporting variability of estimates, such as confidence intervals, interquartile range or standard deviation." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticAttributeEstimateType" />
               </extension>
@@ -29241,7 +28953,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -29375,9 +29087,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Method of reporting variability of estimates, such as confidence intervals, interquartile range or standard deviation." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticAttributeEstimateType" />
               </extension>
@@ -29501,7 +29210,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -29585,9 +29294,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Statistic Model Code." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticModelCode" />
               </extension>
@@ -29661,7 +29367,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -29772,9 +29478,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="EvidenceVariableHandling" />
               </extension>
@@ -29902,9 +29605,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of a specific statistic." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticType" />
               </extension>
@@ -30045,9 +29745,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Method of reporting variability of estimates, such as confidence intervals, interquartile range or standard deviation." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticAttributeEstimateType" />
               </extension>
@@ -30134,9 +29831,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Method of reporting variability of estimates, such as confidence intervals, interquartile range or standard deviation." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticAttributeEstimateType" />
               </extension>
@@ -30200,9 +29894,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Statistic Model Code." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="StatisticModelCode" />
               </extension>
@@ -30257,9 +29948,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="EvidenceVariableHandling" />
               </extension>
@@ -30410,7 +30098,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -30659,7 +30347,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -30900,9 +30588,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A unit of time (units from UCUM)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UnitsOfTime" />
               </extension>
@@ -31056,9 +30741,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A unit of time (units from UCUM)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UnitsOfTime" />
               </extension>
@@ -31164,9 +30846,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Real world event relating to the schedule." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="EventTiming" />
               </extension>
@@ -31233,9 +30912,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Code for a known / defined timing pattern." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="TimingAbbreviation" />
               </extension>
@@ -31473,9 +31149,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A unit of time (units from UCUM)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UnitsOfTime" />
               </extension>
@@ -31559,9 +31232,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A unit of time (units from UCUM)." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UnitsOfTime" />
               </extension>
@@ -31625,9 +31295,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Real world event relating to the schedule." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="EventTiming" />
               </extension>
@@ -31666,9 +31333,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="Code for a known / defined timing pattern." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="TimingAbbreviation" />
               </extension>
@@ -31795,7 +31459,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -31879,9 +31543,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of trigger." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="TriggerType" />
               </extension>
@@ -32051,9 +31712,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="The type of trigger." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="TriggerType" />
               </extension>
@@ -32210,7 +31868,7 @@
             <!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -32294,9 +31952,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code that specifies a type of context being specified by a usage context." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UsageContextType" />
               </extension>
@@ -32345,9 +32000,6 @@
             <isModifier value="false" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code that defines the specific value for the context being specified." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UsageContextValue" />
               </extension>
@@ -32381,9 +32033,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code that specifies a type of context being specified by a usage context." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UsageContextType" />
               </extension>
@@ -32418,9 +32067,6 @@
             </type>
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="A code that defines the specific value for the context being specified." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="UsageContextValue" />
               </extension>
@@ -32549,7 +32195,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -32671,9 +32317,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>
@@ -32937,7 +32580,7 @@
             </base>
             <type>
               <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
-                <valueUri value="string" />
+                <valueUrl value="string" />
               </extension>
               <code value="http://hl7.org/fhirpath/System.String" />
             </type>
@@ -33059,9 +32702,6 @@
             <isModifierReason value="This is labeled as &quot;Is Modifier&quot; because the comparator modifies the interpretation of the value significantly. If there is no comparator, then there is no modification of the value" />
             <isSummary value="true" />
             <binding>
-              <extension url="http://hl7.org/fhir/build/StructureDefinition/definition">
-                <valueString value="How the Quantity should be understood and represented." />
-              </extension>
               <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName">
                 <valueString value="QuantityComparator" />
               </extension>

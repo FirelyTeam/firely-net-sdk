@@ -18,8 +18,6 @@ $allFiles = @("conceptmaps.xml",
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
 				"search-parameters.xml",
-				# "v2-tables.xml",
-				# "v3-codesystems.xml",
 				"valuesets.xml"
 				"fhir-all-xsd.zip"
 				);
@@ -132,6 +130,55 @@ function RemoveNarrative($name)
 	$xml.Save($file)
 }
 
+function ChangeValueElement($name)
+{
+	# Correction for 4B:
+	# changes Element "valueUri" to "valueUrl" of extension `structuredefinition-fhir-type`
+
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		$valueElement = $extension.FirstChild
+		$correctedValueElement = $xml.CreateElement("valueUrl", $ns.LookupNamespace("ns"))
+		$correctedValueElement.SetAttribute("value", $valueElement.Value) | Out-null
+		$extension.ReplaceChild($correctedValueElement, $valueElement)  | Out-null
+	}
+
+    Write-Output "Changed 'valueUri' to 'valueUrl' for extension 'structuredefinition-fhir-type' from $file"
+	$xml.Save($filename)
+}
+
+function RemoveDefinitonExtension($name)
+{
+	# Correction for 4B:
+	# remove the extension http://hl7.org/fhir/build/StructureDefinition/definition
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/build/StructureDefinition/definition"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		[void]$extension.ParentNode.RemoveChild($extension)
+	}
+	
+	Write-Output "Removed the extension http://hl7.org/fhir/build/StructureDefinition/definition from $file"
+	
+	$xml.Save($filename)
+}
+
+
 function ExtractXsdZipFile($destPath)
 {
 	Write-Host -ForegroundColor White "Extract xsd zip file..."
@@ -156,6 +203,16 @@ foreach($file in $allFiles)
 	if ($file.EndsWith('.xml'))
 	{
 		RemoveNarrative $file
+	}
+	
+	# Corrections for 4B:
+	if ($server.EndsWith("2021Mar/"))
+	{
+		if ($file.EndsWith('.xml'))
+		{
+			RemoveDefinitonExtension $file
+			ChangeValueElement $file
+		}
 	}
 }
 

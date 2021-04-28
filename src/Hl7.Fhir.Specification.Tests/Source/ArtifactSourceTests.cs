@@ -281,6 +281,7 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             && kvp.Value != "Resource"
                                                                             && kvp.Value != "DomainResource"
                                                                             && kvp.Value != "BackboneType"
+                                                                            && kvp.Value != "Base"
                                                                             && kvp.Value != "DataType"
                                                                             && kvp.Value != "PrimitiveType"
                                                                             )
