@@ -306,8 +306,8 @@ namespace Hl7.Fhir.Specification.Tests
             // [MV 20200203] R4.0.1 (after reducing dataelements.xml)
             // [MV 20200911] use complete dataelements.xml again
             // [MV 20210423] R4.1.0 (R4B)
-            Assert.AreEqual(3612, summaries.Count); // STU3: 7941
-            Assert.AreEqual(643, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            Assert.AreEqual(3613, summaries.Count); // STU3: 7941
+            Assert.AreEqual(644, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 
