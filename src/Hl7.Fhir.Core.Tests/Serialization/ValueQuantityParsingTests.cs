@@ -3,6 +3,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -10,12 +11,12 @@ namespace Hl7.Fhir.Tests.Serialization
     public class ValueQuantityParsingTests
     {
         [TestMethod]
-        public void RoundtripValueQuantityXml() => RoundtripValueQuantity(true);
+        public async Tasks.Task RoundtripValueQuantityXml() => await RoundtripValueQuantity(true);
 
         [TestMethod]
-        public void RoundtripValueQuantityJson() => RoundtripValueQuantity(false);
+        public async Tasks.Task RoundtripValueQuantityJson() => await RoundtripValueQuantity(false);
 
-        static void RoundtripValueQuantity(bool xml)
+        static async Tasks.Task RoundtripValueQuantity(bool xml)
         {
             var resource = new StructureDefinition()
             {
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var orgExample = resource.Differential.Element[0].Example[0];
             Assert.AreEqual("Quantity", orgExample.Value.TypeName);
 
-            var parsed = xml ? XmlRoundTrip(resource) : JsonRoundTrip(resource);
+            var parsed = xml ? XmlRoundTrip(resource) : await JsonRoundTrip(resource);
 
             Assert.IsNotNull(parsed);
             Assert.IsNotNull(parsed.Differential?.Element);
@@ -77,7 +78,7 @@ namespace Hl7.Fhir.Tests.Serialization
             return parsed;
         }
 
-        static T JsonRoundTrip<T>(T resource) where T : Resource
+        static async Tasks.Task<T> JsonRoundTrip<T>(T resource) where T : Resource
         {
             var baseTestPath = CreateEmptyDir();
 
@@ -86,7 +87,7 @@ namespace Hl7.Fhir.Tests.Serialization
             File.WriteAllText(jsonFile, json);
 
             json = File.ReadAllText(jsonFile);
-            var parsed = new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).Parse<T>(json);
+            var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
 
             return parsed;
         }

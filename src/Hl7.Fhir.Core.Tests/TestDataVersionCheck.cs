@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests
 {
@@ -20,18 +20,18 @@ namespace Hl7.Fhir.Tests
     public class TestDataVersionCheck
     {
         [TestMethod]   // not everything parses correctly
-        public void VerifyAllTestData()
+        public async Tasks.Task VerifyAllTestData()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location) + "\\TestData";
             Console.WriteLine(path);
             StringBuilder issues = new StringBuilder();
-            ValidateFolder(path, path, issues);
+            await ValidateFolder(path, path, issues);
             Console.Write(issues.ToString());
             Assert.AreEqual("", issues.ToString());
         }
 
-        private void ValidateFolder(string basePath, string path, StringBuilder issues)
+        private async Tasks.Task ValidateFolder(string basePath, string path, StringBuilder issues)
         {
             var xmlParser = new Fhir.Serialization.FhirXmlParser();
             var jsonParser = new Fhir.Serialization.FhirJsonParser();
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Tests
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        jsonParser.Parse<Resource>(content);
+                        await jsonParser.ParseAsync<Resource>(content);
                     }
                     else
                     {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Tests
             }
             foreach (var item in Directory.EnumerateDirectories(path))
             {
-                ValidateFolder(basePath, item, issues);
+                await ValidateFolder(basePath, item, issues);
             }
         }
     }

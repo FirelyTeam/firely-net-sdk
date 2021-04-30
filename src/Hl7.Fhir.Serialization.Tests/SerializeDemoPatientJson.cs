@@ -8,21 +8,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public ITypedElement getJsonElement(string json, FhirJsonParsingSettings s = null) => 
-            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) => 
+            await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
-        public void CanSerializeThroughNavigatorAndCompare()
+        public async Tasks.Task CanSerializeThroughNavigatorAndCompare()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
+            var nav = await getJsonElement(json);
             var output = nav.ToJson();
 
             List<string> errors = new List<string>();
@@ -32,12 +33,12 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void TestPruneEmptyNodes()
+        public async Tasks.Task TestPruneEmptyNodes()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "test-empty-nodes.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "test-empty-nodes.json"));
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
+            var nav = await getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
 
             var output = nav.ToJson();
             var doc = JObject.Parse(output);
@@ -46,11 +47,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
        
         [TestMethod]
-        public void CanSerializeFromPoco()
+        public async Tasks.Task CanSerializeFromPoco()
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
-            var pat = pser.Parse<Patient>(tp);
+            var pat = await pser.ParseAsync<Patient>(tp);
 
             var output = pat.ToJson();
 
@@ -61,17 +62,17 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DoesPretty()
+        public async Tasks.Task DoesPretty()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
+            var nav = await getJsonElement(json);
             var output = nav.ToJson();
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
             var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
 
-            var p = (new FhirJsonParser()).Parse<Patient>(json);
+            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
             output = (new FhirJsonSerializer(new SerializerSettings { Pretty = false })).SerializeToString(p);
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
             pretty = (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
@@ -79,11 +80,11 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void TestAppendNewLine()
+        public async Tasks.Task TestAppendNewLine()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
+            var nav = await getJsonElement(json);
             var output = nav.ToJson();
             Assert.IsFalse(output.Contains('\n'));
             var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
@@ -91,7 +92,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var lastLine = pretty.Split('\n').Last();
             Assert.IsFalse(string.IsNullOrEmpty(lastLine));
 
-            var p = (new FhirJsonParser()).Parse<Patient>(json);
+            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
             output = (new FhirJsonSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToString(p);
             lastLine = output.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));

@@ -978,13 +978,13 @@ namespace Hl7.Fhir.Specification.Tests
             // var source = new DirectorySource(Path.Combine("TestData", "validation"));
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
-            var jsonPatient = File.ReadAllText(Path.Combine("TestData", "validation", "patient-ck.json"));
+            var jsonPatient = await File.ReadAllTextAsync(Path.Combine("TestData", "validation", "patient-ck.json"));
             var parser = new FhirJsonParser();
-            var patient = parser.Parse<Patient>(jsonPatient);
+            var patient = await parser.ParseAsync<Patient>(jsonPatient);
             Assert.NotNull(patient);
 
-            var jsonOrganization = File.ReadAllText(Path.Combine("TestData", "validation", "organization-ck.json"));
-            var organization = parser.Parse<Organization>(jsonOrganization);
+            var jsonOrganization = await File.ReadAllTextAsync(Path.Combine("TestData", "validation", "organization-ck.json"));
+            var organization = await parser.ParseAsync<Organization>(jsonOrganization);
             Assert.NotNull(organization);
 
             var resources = new Resource[] { patient, organization };

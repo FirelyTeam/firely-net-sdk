@@ -16,6 +16,7 @@ using Hl7.Fhir.Specification.Source;
 using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Tests;
+using Tasks = System.Threading.Tasks;
 #if NET40
 using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
@@ -28,51 +29,51 @@ namespace Hl7.Fhir.Serialization.Tests
     { 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlPoco()
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlPoco()
         {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
+            await FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
                 "Roundtripping xml->json->xml", usingPoco: true, provider:null);
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonPoco()
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonPoco()
         {
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+            await FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: true, provider: null);
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNavPocoProvider()
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavPocoProvider()
         {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+            await FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
                 "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProvider()
         {
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+            await FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNavSdProvider()
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavSdProvider()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+            await FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
                 "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
         }
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNavSdProvider()
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProvider()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+            await FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
         }
 
@@ -170,7 +171,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 #endif
 
-        public static void FullRoundtripOfAllExamples(string zipname, string dirname, string label, bool usingPoco, IStructureDefinitionSummaryProvider provider)
+        public static async Tasks.Task FullRoundtripOfAllExamples(string zipname, string dirname, string label, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             ZipArchive examples = ReadTestZip(zipname);
 
@@ -180,7 +181,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             Debug.WriteLine(label);
             createEmptyDir(baseTestPath);
-            doRoundTrip(examples, baseTestPath, usingPoco, provider);
+            await doRoundTrip(examples, baseTestPath, usingPoco, provider);
         }
 
 
@@ -210,7 +211,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Directory.CreateDirectory(baseTestPath);
         }
 
-        private static void doRoundTrip(ZipArchive examplesZip, string baseTestPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
+        private static async Tasks.Task doRoundTrip(ZipArchive examplesZip, string baseTestPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
             Directory.CreateDirectory(examplePath);
@@ -224,7 +225,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Debug.WriteLine("Converting files in {0} to {1}", baseTestPath, intermediate1Path);
             var sw = new Stopwatch();
             sw.Start();
-            int convertedFileCount = convertFiles(examplePath, intermediate1Path, usingPoco, provider, errors);
+            int convertedFileCount = await convertFiles(examplePath, intermediate1Path, usingPoco, provider, errors);
             sw.Stop();
             Debug.WriteLine("Conversion took {0} seconds", sw.ElapsedMilliseconds / 1000);
             sw.Reset();
@@ -232,7 +233,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(baseTestPath, "intermediate2");
             Debug.WriteLine("Re-converting files in {0} back to original format in {1}", intermediate1Path, intermediate2Path);
             sw.Start();
-            convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider, errors);
+            await convertFiles(intermediate1Path, intermediate2Path, usingPoco, provider, errors);
             sw.Stop();
             Console.WriteLine("Conversion of {1} files took {0} seconds", sw.ElapsedMilliseconds / 1000, convertedFileCount);
             sw.Reset();
@@ -272,7 +273,7 @@ namespace Hl7.Fhir.Serialization.Tests
             return false;
         }
 
-        private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
+        private static async Tasks.Task<int> convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
             var files = Directory.EnumerateFiles(inputPath);
@@ -296,9 +297,9 @@ namespace Hl7.Fhir.Serialization.Tests
                 try
                 {
                     if (usingPoco)
-                        convertResourcePoco(file, outputFile);
+                        await convertResourcePoco(file, outputFile);
                     else
-                        convertResourceNav(file, outputFile, provider);
+                        await convertResourceNav(file, outputFile, provider);
                 }
                 catch(Exception ex)
                 {
@@ -354,7 +355,7 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
 
-        private static void convertResourcePoco(string inputFile, string outputFile)
+        private static async Tasks.Task convertResourcePoco(string inputFile, string outputFile)
         {
             if (inputFile.EndsWith(".xml"))
             {
@@ -368,33 +369,33 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
                 var json = new FhirJsonSerializer().SerializeToString(resource);
-                File.WriteAllText(outputFile, json);
+                await File.WriteAllTextAsync(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var resource = new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).Parse<Resource>(json);
+                var resource = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<Resource>(json);
                 var xml = new FhirXmlSerializer().SerializeToString(resource);
-                File.WriteAllText(outputFile, xml);
+                await File.WriteAllTextAsync(outputFile, xml);
             }
         }
 
-        private static void convertResourceNav(string inputFile, string outputFile, IStructureDefinitionSummaryProvider provider)
+        private static async Tasks.Task convertResourceNav(string inputFile, string outputFile, IStructureDefinitionSummaryProvider provider)
         {
             if (inputFile.EndsWith(".xml"))
             {
-                var xml = File.ReadAllText(inputFile);
+                var xml = await File.ReadAllTextAsync(inputFile);
                 var nav = XmlParsingHelpers.ParseToTypedElement(xml, provider, new FhirXmlParsingSettings { PermissiveParsing = true });
                 var json = nav.ToJson();
-                File.WriteAllText(outputFile, json);
+                await File.WriteAllTextAsync(outputFile, json);
             }
             else
             {
-                var json = File.ReadAllText(inputFile);
-                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
+                var json = await File.ReadAllTextAsync(inputFile);
+                var nav = await JsonParsingHelpers.ParseToTypedElement(json, provider, 
                     settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
-                var xml = nav.ToXml();
-                File.WriteAllText(outputFile, xml);
+                var xml = await nav.ToXmlAsync();
+                await File.WriteAllTextAsync(outputFile, xml);
             }
         }
 

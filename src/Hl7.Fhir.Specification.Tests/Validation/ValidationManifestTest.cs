@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -42,17 +43,17 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         [DataTestMethod]
         [CustomDataSource]
-        public void TestValidationManifest(ValidationTestCase testCase)
+        public async Tasks.Task TestValidationManifest(ValidationTestCase testCase)
         {
-            RunTestCase(testCase);
+            await RunTestCase(testCase);
         } 
 
-        public static void RunTestCase(ValidationTestCase testCase)
+        public static async Tasks.Task RunTestCase(ValidationTestCase testCase)
         {            
-            var resourceText = File.ReadAllText(@$"TestData\validation-test-suite\{testCase.FileName}");
+            var resourceText = await File.ReadAllTextAsync(@$"TestData\validation-test-suite\{testCase.FileName}");
             var testResource = testCase.FileName.EndsWith(".xml") ?
                 new FhirXmlParser().Parse<Resource>(resourceText) :
-                new FhirJsonParser().Parse<Resource>(resourceText);
+                await new FhirJsonParser().ParseAsync<Resource>(resourceText);
             Assert.IsNotNull(testResource);
 
             var profileFilePath = testCase?.Profiles?.FirstOrDefault() ?? testCase?.ValidationProfile?.Source;
@@ -90,11 +91,11 @@ namespace Hl7.Fhir.Specification.Tests
       
         [Ignore]
         [TestMethod]
-        public void RunSingleTest()
+        public async Tasks.Task RunSingleTest()
         {
             var testCase = ValidatorManifestParser.Parse().Where(t => t.FileName == "questionnaireResponse-enableWhen-test3.xml").FirstOrDefault();
             Assert.IsNotNull(testCase);
-            RunTestCase(testCase);
+            await RunTestCase(testCase);
         }
 
     }

@@ -22,6 +22,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Specification.Source;
 using System.Threading.Tasks;
 using Hl7.Fhir.Specification.Snapshot;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -326,10 +327,10 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        public void CannotUseAbstractType()
+        public async Tasks.Task CannotUseAbstractType()
         {
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":[{\"fullUrl\":\"http://example.org/Patient/1\"}]}";
-            var bundle = FhirJsonNode.Parse(bundleJson);
+            var bundle = await FhirJsonNode.ParseAsync(bundleJson);
             var typedBundle = bundle.ToTypedElement(_provider, "Bundle");
 
             //Type of entry is BackboneElement, but you can't set that, see below.
@@ -346,7 +347,7 @@ namespace Hl7.FhirPath.Tests
             catch (ArgumentException)
             {
             }
-        }        
+        }
 
         [TestMethod]
         public void TestImportChild()

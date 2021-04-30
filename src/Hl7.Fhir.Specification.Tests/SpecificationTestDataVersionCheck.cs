@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -16,17 +17,17 @@ namespace Hl7.Fhir.Specification.Tests
     public class SpecificationTestDataVersionCheck
     {
         [TestMethod]
-        public void VerifyAllTestDataSpecification()
+        public async Tasks.Task VerifyAllTestDataSpecification()
         {
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location) + "\\TestData";
             Console.WriteLine(path);
             List <string> issues = new List<string>();
-            ValidateFolder(path, path, issues);
+            await ValidateFolder(path, path, issues);
             Assert.AreEqual(0, issues.Count);
         }
 
-        private void ValidateFolder(string basePath, string path, List<string> issues)
+        private async Tasks.Task ValidateFolder(string basePath, string path, List<string> issues)
         {
             if (path.Contains("grahame-validation-examples"))
                 return;
@@ -63,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
                     else if (new FileInfo(item).Extension == ".json")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = jsonParser.Parse<Resource>(content);
+                        resource = await jsonParser.ParseAsync<Resource>(content);
                     }
                     else
                     {
@@ -79,7 +80,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             foreach (var item in Directory.EnumerateDirectories(path))
             {
-                ValidateFolder(basePath, item, issues);
+                await ValidateFolder(basePath, item, issues);
             }
         }
 

@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Test
 {
@@ -345,7 +346,7 @@ namespace Hl7.Fhir.Test
         #region EntryResponse To TypedEntryResponse
 
         [TestMethod]
-        public void TestToTypedEntryResponse()
+        public async Tasks.Task TestToTypedEntryResponse()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
@@ -360,7 +361,7 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
+            var result = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
 
             var typedElementXml = result.TypedElement.ToXml();
             Assert.AreEqual(xml, typedElementXml);
@@ -379,7 +380,7 @@ namespace Hl7.Fhir.Test
         #region TypedEntryResponse To BundleEntryResponse
 
         [TestMethod]
-        public void TestTypedEntryResponseToBundle()
+        public async Tasks.Task TestTypedEntryResponseToBundle()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
@@ -393,7 +394,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
+            var typedresponse = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
 
             var settings = new ParserSettings
             {

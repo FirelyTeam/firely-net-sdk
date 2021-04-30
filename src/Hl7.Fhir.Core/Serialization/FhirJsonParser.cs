@@ -9,9 +9,7 @@
 using Hl7.Fhir.Model;
 using Newtonsoft.Json;
 using System;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Specification;
-
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -22,10 +20,18 @@ namespace Hl7.Fhir.Serialization
             //
         }
 
+        /// <inheritdoc cref="ParseAsync{T}(string)" />
+        [Obsolete("Use ParseAsync<T>(string) instead.")]
         public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
+        public async Tasks.Task<T> ParseAsync<T>(string json) where T : Base => (T)await ParseAsync(json, typeof(T)).ConfigureAwait(false);
+
+        /// <inheritdoc cref="ParseAsync{T}(JsonReader)" />
+        [Obsolete("Use ParseAsync<T>(JsonReader) instead.")]
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
-        
+
+        public async Tasks.Task<T> ParseAsync<T>(JsonReader reader) where T : Base => (T)await ParseAsync(reader, typeof(T)).ConfigureAwait(false);
+
         private static FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>
                 new FhirJsonParsingSettings
                 {
@@ -34,6 +40,8 @@ namespace Hl7.Fhir.Serialization
                     PermissiveParsing = settings.PermissiveParsing
                 };
 
+        /// <inheritdoc cref="ParseAsync(string, Type)" />
+        [Obsolete("Use ParseAsync(string, Type) instead.")]
         public Base Parse(string json, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
@@ -41,10 +49,26 @@ namespace Hl7.Fhir.Serialization
             return Parse(jsonReader, dataType);
         }
 
+        public async Tasks.Task<Base> ParseAsync(string json, Type dataType = null)
+        {
+            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var jsonReader = await FhirJsonNode.ParseAsync(json, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
+            return Parse(jsonReader, dataType);
+        }
+
+        /// <inheritdoc cref="ParseAsync(JsonReader, Type)" />
+        [Obsolete("Use ParseAsync(JsonReader, Type) instead.")]
         public Base Parse(JsonReader reader, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
             var jsonReader = FhirJsonNode.Read(reader, rootName, buildNodeSettings(Settings));
+            return Parse(jsonReader, dataType);
+        }
+
+        public async Tasks.Task<Base> ParseAsync(JsonReader reader, Type dataType = null)
+        {
+            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var jsonReader = await FhirJsonNode.ReadAsync(reader, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
             return Parse(jsonReader, dataType);
         }
     }

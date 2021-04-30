@@ -13,6 +13,7 @@ using System.IO;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using System.Collections.Generic;
+using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -158,18 +159,18 @@ namespace Hl7.Fhir.Tests.Serialization
         internal FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
 
         [TestMethod]
-        public void ParsePerfJson()
+        public async Tasks.Task ParsePerfJson()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var pser = new FhirJsonParser();
 
             // Assume that we can happily read the patient gender when enums are enforced
-            var p = pser.Parse<Patient>(json);
+            var p = await pser.ParseAsync<Patient>(json);
 
             var sw = new Stopwatch();
             sw.Start();
             for (var i = 0; i < 500; i++)
-                p = pser.Parse<Patient>(json);
+                p = await pser.ParseAsync<Patient>(json);
             sw.Stop();
             Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds/500.0*1000} micros");
         }
@@ -193,20 +194,20 @@ namespace Hl7.Fhir.Tests.Serialization
 
      
         [TestMethod]
-        public void AcceptUnknownEnums()
+        public async Tasks.Task AcceptUnknownEnums()
         {
             string json = TestDataHelper.ReadTestData("TestPatient.json");
             var pser = new FhirJsonParser();
 
             // Assume that we can happily read the patient gender when enums are enforced
-            var p = pser.Parse<Patient>(json);
+            var p = await pser.ParseAsync<Patient>(json);
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
             Assert.AreEqual(AdministrativeGender.Male, p.Gender.Value);
 
             // Verify that if we relax the restriction that everything still works
             pser.Settings.AllowUnrecognizedEnums = true;
-            p = pser.Parse<Patient>(json);
+            p = await pser.ParseAsync<Patient>(json);
 
             Assert.IsNotNull(p.Gender);
             Assert.AreEqual("male", p.GenderElement.ObjectValue);
@@ -220,7 +221,7 @@ namespace Hl7.Fhir.Tests.Serialization
             try
             {
                 pser.Settings.AllowUnrecognizedEnums = false;
-                p = pser.Parse<Patient>(xml2);
+                p = await pser.ParseAsync<Patient>(xml2);
                 Assert.Fail();
             }
             catch(FormatException)
@@ -230,7 +231,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             // Now, allow unknown enums and check support
             pser.Settings.AllowUnrecognizedEnums = true;
-            p = pser.Parse<Patient>(xml2);
+            p = await pser.ParseAsync<Patient>(xml2);
             Assert.IsNull(p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
@@ -239,22 +240,22 @@ namespace Hl7.Fhir.Tests.Serialization
         // JSON parser not handling large decimal values, so edit the file to skip the large decimal
         // and remove the Ignore here.
         [TestMethod]
-        public void EdgecaseRoundtrip()
+        public async Tasks.Task EdgecaseRoundtrip()
         {
             string json = TestDataHelper.ReadTestData("json-edge-cases.json");
             var tempPath = Path.GetTempPath();
 
-            var poco = FhirJsonParser.Parse<Resource>(json);
+            var poco = await FhirJsonParser.ParseAsync<Resource>(json);
             Assert.IsNotNull(poco);
             var xml = FhirXmlSerializer.SerializeToString(poco);
             Assert.IsNotNull(xml);
-            File.WriteAllText(Path.Combine(tempPath, "edgecase.xml"), xml);
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
             poco = FhirXmlParser.Parse<Resource>(xml);
             Assert.IsNotNull(poco);
             var json2 = FhirJsonSerializer.SerializeToString(poco);
             Assert.IsNotNull(json2);
-            File.WriteAllText(Path.Combine(tempPath, "edgecase.json"), json2);
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.json"), json2);
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame("edgecase.json", json, json2, errors);
@@ -281,7 +282,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public void EmptyRoundTrip()
+        public async Tasks.Task EmptyRoundTrip()
         {
             var patient = new Patient
             {
@@ -295,7 +296,7 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var json = FhirJsonSerializer.SerializeToString(patient);
-            var parsedPatient = FhirJsonParser.Parse<Patient>(json);
+            var parsedPatient = await FhirJsonParser.ParseAsync<Patient>(json);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
@@ -331,7 +332,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public void SerializeNarrativeWithQuotes()
+        public async Tasks.Task SerializeNarrativeWithQuotes()
         {
             var p = new Patient
             {
@@ -341,17 +342,17 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = FhirXmlSerializer.SerializeToString(p);
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
             var json = FhirJsonSerializer.SerializeToString(p);
-            Assert.IsNotNull(FhirJsonParser.Parse<Resource>(json));
+            Assert.IsNotNull(await FhirJsonParser.ParseAsync<Resource>(json));
         }
 
         [TestMethod]
-        public void NarrativeMustBeValidXml()
+        public async Tasks.Task NarrativeMustBeValidXml()
         {
             try
             {
                 var json =
                     "{\"resourceType\": \"Patient\", \"text\": {\"status\": \"generated\", \"div\": \"text without div\" } }";
-                var patient = new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).Parse<Patient>(json);
+                var patient = await new FhirJsonParser(new ParserSettings { PermissiveParsing = false }).ParseAsync<Patient>(json);
 
                 Assert.Fail("Should have thrown on invalid Div format");
             }

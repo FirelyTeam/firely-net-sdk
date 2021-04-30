@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Rest
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                typedEntryResponse = entryResponse.ToTypedEntryResponse(_provider);
+                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_provider).ConfigureAwait(false);
             }
             catch (UnsupportedBodyTypeException ex)
             {
