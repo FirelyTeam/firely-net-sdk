@@ -20945,6 +20945,1287 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+    <xs:simpleType name="ResourceType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="Account">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Account</xs:documentation>
+          <xs:documentation xml:lang="en">Account</xs:documentation>
+          <xs:documentation xml:lang="es">Cuenta</xs:documentation>
+          <xs:documentation xml:lang="zh">è´¦æˆ·</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ActivityDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneAttivita</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeActividad</xs:documentation>
+          <xs:documentation xml:lang="zh">æ´»åŠ¨å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AdministrableProductDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AdverseEvent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AdverseEvent</xs:documentation>
+          <xs:documentation xml:lang="en">AdverseEvent</xs:documentation>
+          <xs:documentation xml:lang="it">EventoAvverso</xs:documentation>
+          <xs:documentation xml:lang="es">EventoAdverso</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¸è‰¯äº‹ä»¶</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AllergyIntolerance">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AllergyIntolerance</xs:documentation>
+          <xs:documentation xml:lang="en">AllergyIntolerance</xs:documentation>
+          <xs:documentation xml:lang="it">AllergiaIntolleranza</xs:documentation>
+          <xs:documentation xml:lang="fr">IntolÃ©ranceAllergique</xs:documentation>
+          <xs:documentation xml:lang="es">AllergiaIntolerancia</xs:documentation>
+          <xs:documentation xml:lang="zh">å˜æ€ååº”ä¸Žä¸è€æ€§</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Appointment">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Appointment</xs:documentation>
+          <xs:documentation xml:lang="en">Appointment</xs:documentation>
+          <xs:documentation xml:lang="it">Appuntamento</xs:documentation>
+          <xs:documentation xml:lang="fr">RendezVous</xs:documentation>
+          <xs:documentation xml:lang="es">Cita</xs:documentation>
+          <xs:documentation xml:lang="zh">é¢„çº¦</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AppointmentResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AppointmentResponse</xs:documentation>
+          <xs:documentation xml:lang="en">AppointmentResponse</xs:documentation>
+          <xs:documentation xml:lang="it">RispostaAppuntamento</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©ponseRendezVous</xs:documentation>
+          <xs:documentation xml:lang="es">CitaRespuesta</xs:documentation>
+          <xs:documentation xml:lang="zh">é¢„çº¦å“åº”</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="AuditEvent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">AuditEvent</xs:documentation>
+          <xs:documentation xml:lang="en">AuditEvent</xs:documentation>
+          <xs:documentation xml:lang="fr">Ã‰vÃ¨nementSÃ©curitÃ©</xs:documentation>
+          <xs:documentation xml:lang="es">EventoSeguridad</xs:documentation>
+          <xs:documentation xml:lang="zh">å®¡è®¡äº‹ä»¶</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Basic">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Basic</xs:documentation>
+          <xs:documentation xml:lang="en">Basic</xs:documentation>
+          <xs:documentation xml:lang="fr">Basique</xs:documentation>
+          <xs:documentation xml:lang="es">Basico</xs:documentation>
+          <xs:documentation xml:lang="zh">åˆçº§èµ„æº</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Binary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Binary</xs:documentation>
+          <xs:documentation xml:lang="en">Binary</xs:documentation>
+          <xs:documentation xml:lang="it">Binario</xs:documentation>
+          <xs:documentation xml:lang="fr">Binaire</xs:documentation>
+          <xs:documentation xml:lang="es">Binario</xs:documentation>
+          <xs:documentation xml:lang="zh">äºŒè¿›åˆ¶èµ„æº</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BiologicallyDerivedProduct">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">BiologicallyDerivedProduct</xs:documentation>
+          <xs:documentation xml:lang="en">BiologicallyDerivedProduct</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BodyStructure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">BodyStructure</xs:documentation>
+          <xs:documentation xml:lang="en">BodyStructure</xs:documentation>
+          <xs:documentation xml:lang="it">StrutturaDelCorpo</xs:documentation>
+          <xs:documentation xml:lang="fr">MorphologieDeCorps</xs:documentation>
+          <xs:documentation xml:lang="es">EstructuraDelCuerpo</xs:documentation>
+          <xs:documentation xml:lang="zh">èº«ä½“ç»“æž„</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Bundle">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Bundle</xs:documentation>
+          <xs:documentation xml:lang="en">Bundle</xs:documentation>
+          <xs:documentation xml:lang="fr">Paquet</xs:documentation>
+          <xs:documentation xml:lang="es">Paquete</xs:documentation>
+          <xs:documentation xml:lang="zh">æ†æŸ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CapabilityStatement">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
+          <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
+          <xs:documentation xml:lang="es">DeclaracionDeCapacidad</xs:documentation>
+          <xs:documentation xml:lang="zh">èƒ½åŠ›å£°æ˜Ž</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CapabilityStatement2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CarePlan">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CarePlan</xs:documentation>
+          <xs:documentation xml:lang="en">CarePlan</xs:documentation>
+          <xs:documentation xml:lang="it">PianoDiCura</xs:documentation>
+          <xs:documentation xml:lang="fr">PlanDeSoins</xs:documentation>
+          <xs:documentation xml:lang="es">PlanDeCuidado</xs:documentation>
+          <xs:documentation xml:lang="zh">ç…§æŠ¤è®¡åˆ’</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CareTeam">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CareTeam</xs:documentation>
+          <xs:documentation xml:lang="en">CareTeam</xs:documentation>
+          <xs:documentation xml:lang="es">EquipoDeCuidado</xs:documentation>
+          <xs:documentation xml:lang="zh">ç…§æŠ¤å›¢é˜Ÿ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CatalogEntry">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
+          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
+          <xs:documentation xml:lang="es">EntradaDeCatalogo</xs:documentation>
+          <xs:documentation xml:lang="zh">æ¡ç›®å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ChargeItem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
+          <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
+          <xs:documentation xml:lang="es">CargoDeItem</xs:documentation>
+          <xs:documentation xml:lang="zh">æ”¶è´¹é¡¹ç›®</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ChargeItemDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Citation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Claim">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Claim</xs:documentation>
+          <xs:documentation xml:lang="en">Claim</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©clamation</xs:documentation>
+          <xs:documentation xml:lang="es">ReclamaciÃ³n / Factura</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ”å•</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClaimResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ClaimResponse</xs:documentation>
+          <xs:documentation xml:lang="en">ClaimResponse</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©ponseARÃ©clamation</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ”å•è¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClinicalImpression">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ClinicalImpression</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalImpression</xs:documentation>
+          <xs:documentation xml:lang="it">ImpressioneClinica</xs:documentation>
+          <xs:documentation xml:lang="fr">ImpressionClinique</xs:documentation>
+          <xs:documentation xml:lang="es">HallazgoClinico</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¸´åºŠå°è±¡</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ClinicalUseIssue">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CodeSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="it">SistemaDiCodifica</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeCodigos</xs:documentation>
+          <xs:documentation xml:lang="zh">ä»£ç ç³»ç»Ÿ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Communication">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Communication</xs:documentation>
+          <xs:documentation xml:lang="en">Communication</xs:documentation>
+          <xs:documentation xml:lang="it">Comunicazione</xs:documentation>
+          <xs:documentation xml:lang="fr">Communication</xs:documentation>
+          <xs:documentation xml:lang="es">ComunicaciÃ³n</xs:documentation>
+          <xs:documentation xml:lang="zh">é€šè®¯</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CommunicationRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CommunicationRequest</xs:documentation>
+          <xs:documentation xml:lang="en">CommunicationRequest</xs:documentation>
+          <xs:documentation xml:lang="it">RichiestaDiComunicazione</xs:documentation>
+          <xs:documentation xml:lang="fr">DemandeDeCommunication</xs:documentation>
+          <xs:documentation xml:lang="es">ComunicaciÃ³nRequerimiento</xs:documentation>
+          <xs:documentation xml:lang="zh">é€šè®¯è¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CompartmentDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeCompartimento</xs:documentation>
+          <xs:documentation xml:lang="zh">é€»è¾‘åŒºå—å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Composition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Composition</xs:documentation>
+          <xs:documentation xml:lang="en">Composition</xs:documentation>
+          <xs:documentation xml:lang="it">Composizione</xs:documentation>
+          <xs:documentation xml:lang="fr">Composition</xs:documentation>
+          <xs:documentation xml:lang="es">ComposiciÃ³n</xs:documentation>
+          <xs:documentation xml:lang="zh">ç»„åˆå¼æ–‡ä¹¦</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConceptMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="it">MappaDiConcetti</xs:documentation>
+          <xs:documentation xml:lang="fr">CarteDeConcepts</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeConceptos</xs:documentation>
+          <xs:documentation xml:lang="zh">æ¦‚å¿µæ˜ å°„</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Condition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Condition</xs:documentation>
+          <xs:documentation xml:lang="en">Condition</xs:documentation>
+          <xs:documentation xml:lang="it">Condizione</xs:documentation>
+          <xs:documentation xml:lang="fr">Condition</xs:documentation>
+          <xs:documentation xml:lang="es">CondiciÃ³n</xs:documentation>
+          <xs:documentation xml:lang="zh">æƒ…å†µ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConditionDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Consent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Consent</xs:documentation>
+          <xs:documentation xml:lang="en">Consent</xs:documentation>
+          <xs:documentation xml:lang="it">Consenso</xs:documentation>
+          <xs:documentation xml:lang="es">Consentimiento</xs:documentation>
+          <xs:documentation xml:lang="zh">åŒæ„ä¹¦</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Contract">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Contract</xs:documentation>
+          <xs:documentation xml:lang="en">Contract</xs:documentation>
+          <xs:documentation xml:lang="it">Contratto</xs:documentation>
+          <xs:documentation xml:lang="fr">Contrat</xs:documentation>
+          <xs:documentation xml:lang="es">Contato</xs:documentation>
+          <xs:documentation xml:lang="zh">åˆåŒ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Coverage">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Coverage</xs:documentation>
+          <xs:documentation xml:lang="en">Coverage</xs:documentation>
+          <xs:documentation xml:lang="it">Copertura</xs:documentation>
+          <xs:documentation xml:lang="fr">Couverture</xs:documentation>
+          <xs:documentation xml:lang="es">Cobertura</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¿é™©è´£ä»»</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CoverageEligibilityRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CoverageEligibilityRequest</xs:documentation>
+          <xs:documentation xml:lang="en">CoverageEligibilityRequest</xs:documentation>
+          <xs:documentation xml:lang="it">RichiestaEleggibilitaCopertura</xs:documentation>
+          <xs:documentation xml:lang="fr">CouvertureDemandeEligibilitÃ©</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ„æ ¼è¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CoverageEligibilityResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CoverageEligibilityResponse</xs:documentation>
+          <xs:documentation xml:lang="en">CoverageEligibilityResponse</xs:documentation>
+          <xs:documentation xml:lang="it">RispostaEleggibilitaCopertura</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©ponseEligibilitÃ©Couverture</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ„æ ¼å“åº”</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DetectedIssue">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DetectedIssue</xs:documentation>
+          <xs:documentation xml:lang="en">DetectedIssue</xs:documentation>
+          <xs:documentation xml:lang="it">ProblemaRilevato</xs:documentation>
+          <xs:documentation xml:lang="fr">ProblÃ¨me DÃ©tectÃ©</xs:documentation>
+          <xs:documentation xml:lang="es">Problema-Detectado /ProblemaDetectado</xs:documentation>
+          <xs:documentation xml:lang="zh">å·²å‘çŽ°é—®é¢˜</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Device">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Device</xs:documentation>
+          <xs:documentation xml:lang="en">Device</xs:documentation>
+          <xs:documentation xml:lang="it">Dispositivo</xs:documentation>
+          <xs:documentation xml:lang="fr">Dispositif</xs:documentation>
+          <xs:documentation xml:lang="es">Dispositivo</xs:documentation>
+          <xs:documentation xml:lang="zh">è£…ç½®</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DeviceDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceDefinition</xs:documentation>
+          <xs:documentation xml:lang="fr">DÃ©finitionDeDispositif</xs:documentation>
+          <xs:documentation xml:lang="es">DefiniciÃ³nDeDispositivo</xs:documentation>
+          <xs:documentation xml:lang="zh">è£…ç½®ç»„ä»¶</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DeviceMetric">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceMetric</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceMetric</xs:documentation>
+          <xs:documentation xml:lang="fr">MÃ©triqueDispositif</xs:documentation>
+          <xs:documentation xml:lang="es">MetricaDeDispositivo</xs:documentation>
+          <xs:documentation xml:lang="zh">è£…ç½®æŒ‡æ ‡</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DeviceRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceRequest</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceRequest</xs:documentation>
+          <xs:documentation xml:lang="it">RichiestaDispositivo</xs:documentation>
+          <xs:documentation xml:lang="fr">DemandeUtilisationDispositif</xs:documentation>
+          <xs:documentation xml:lang="es">SolicitudDeDispositivo</xs:documentation>
+          <xs:documentation xml:lang="zh">è£…ç½®è¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DeviceUseStatement">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="zh">è£…ç½®ä½¿ç”¨å£°æ˜Ž</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DiagnosticReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DiagnosticReport</xs:documentation>
+          <xs:documentation xml:lang="en">DiagnosticReport</xs:documentation>
+          <xs:documentation xml:lang="it">RefertoDiagnostico</xs:documentation>
+          <xs:documentation xml:lang="fr">RapportDiagnostique</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯Šæ–­æŠ¥å‘Š</xs:documentation>
+          <xs:documentation xml:lang="es">InformeDiagnostico</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DocumentManifest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DocumentManifest</xs:documentation>
+          <xs:documentation xml:lang="en">DocumentManifest</xs:documentation>
+          <xs:documentation xml:lang="fr">Manifeste</xs:documentation>
+          <xs:documentation xml:lang="zh">æ–‡æ¡£æ¸…å•</xs:documentation>
+          <xs:documentation xml:lang="es">ManifestoDocumento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DocumentReference">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DocumentReference</xs:documentation>
+          <xs:documentation xml:lang="en">DocumentReference</xs:documentation>
+          <xs:documentation xml:lang="it">RiferimentoDocumento</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©fÃ©renceDocument</xs:documentation>
+          <xs:documentation xml:lang="es">ReferenciaDocumento</xs:documentation>
+          <xs:documentation xml:lang="zh">æ–‡æ¡£å¼•ç”¨</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DomainResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
+          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
+          <xs:documentation xml:lang="es">RecursoDeDominio</xs:documentation>
+          <xs:documentation xml:lang="zh">é¢†åŸŸèµ„æº</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Encounter">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Encounter</xs:documentation>
+          <xs:documentation xml:lang="en">Encounter</xs:documentation>
+          <xs:documentation xml:lang="fr">Venue</xs:documentation>
+          <xs:documentation xml:lang="zh">å°±åŒ»è¿‡ç¨‹</xs:documentation>
+          <xs:documentation xml:lang="es">Encuentro</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Endpoint">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Endpoint</xs:documentation>
+          <xs:documentation xml:lang="en">Endpoint</xs:documentation>
+          <xs:documentation xml:lang="es">Endpoint</xs:documentation>
+          <xs:documentation xml:lang="zh">ç«¯ç‚¹</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EnrollmentRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EnrollmentRequest</xs:documentation>
+          <xs:documentation xml:lang="en">EnrollmentRequest</xs:documentation>
+          <xs:documentation xml:lang="it">RichiestaIscrizione</xs:documentation>
+          <xs:documentation xml:lang="fr">DemandeInscription</xs:documentation>
+          <xs:documentation xml:lang="es">SolicitudDeEnrolamiento</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¿é™©æ³¨å†Œè¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EnrollmentResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EnrollmentResponse</xs:documentation>
+          <xs:documentation xml:lang="en">EnrollmentResponse</xs:documentation>
+          <xs:documentation xml:lang="it">RispostaIscrizione</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©ponseInscription</xs:documentation>
+          <xs:documentation xml:lang="es">RespuestaDeEnrolamiento</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¿é™©æ³¨å†Œå“åº”</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EpisodeOfCare">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EpisodeOfCare</xs:documentation>
+          <xs:documentation xml:lang="en">EpisodeOfCare</xs:documentation>
+          <xs:documentation xml:lang="it">EpisodioDiCura</xs:documentation>
+          <xs:documentation xml:lang="fr">Ã‰pisodeDeSoins</xs:documentation>
+          <xs:documentation xml:lang="es">EpisodioDeCuidado</xs:documentation>
+          <xs:documentation xml:lang="zh">ç…§æŠ¤æœåŠ¡èŠ‚æ®µ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EventDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneEvento</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionDeEvento</xs:documentation>
+          <xs:documentation xml:lang="zh">äº‹ä»¶å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Evidence">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceVariable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExampleScenario">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="it">ScenarioDiEsempio</xs:documentation>
+          <xs:documentation xml:lang="es">EjemploDeEscenario</xs:documentation>
+          <xs:documentation xml:lang="zh">ç¤ºä¾‹åœºæ™¯</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExplanationOfBenefit">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ExplanationOfBenefit</xs:documentation>
+          <xs:documentation xml:lang="en">ExplanationOfBenefit</xs:documentation>
+          <xs:documentation xml:lang="fr">ExplicationDuBÃ©nÃ©fice</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ”ä»˜è¯´æ˜Ž</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FamilyMemberHistory">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">FamilyMemberHistory</xs:documentation>
+          <xs:documentation xml:lang="en">FamilyMemberHistory</xs:documentation>
+          <xs:documentation xml:lang="fr">HistoireMembreFamille</xs:documentation>
+          <xs:documentation xml:lang="es">HistorialMiembroFamiliar</xs:documentation>
+          <xs:documentation xml:lang="zh">å®¶æ—å²</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Flag">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Flag</xs:documentation>
+          <xs:documentation xml:lang="en">Flag</xs:documentation>
+          <xs:documentation xml:lang="fr">Drapeau</xs:documentation>
+          <xs:documentation xml:lang="es">Bandera</xs:documentation>
+          <xs:documentation xml:lang="zh">æ ‡è®°</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Goal">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Goal</xs:documentation>
+          <xs:documentation xml:lang="en">Goal</xs:documentation>
+          <xs:documentation xml:lang="fr">But</xs:documentation>
+          <xs:documentation xml:lang="es">Objetivo</xs:documentation>
+          <xs:documentation xml:lang="zh">ç›®æ ‡</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GraphDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionGrafico</xs:documentation>
+          <xs:documentation xml:lang="zh">å›¾å½¢å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Group">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Group</xs:documentation>
+          <xs:documentation xml:lang="en">Group</xs:documentation>
+          <xs:documentation xml:lang="it">Gruppo</xs:documentation>
+          <xs:documentation xml:lang="fr">Groupe</xs:documentation>
+          <xs:documentation xml:lang="es">Grupo</xs:documentation>
+          <xs:documentation xml:lang="zh">ç¾¤ç»„</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GuidanceResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">GuidanceResponse</xs:documentation>
+          <xs:documentation xml:lang="en">GuidanceResponse</xs:documentation>
+          <xs:documentation xml:lang="es">RespuestaDeOrientacion</xs:documentation>
+          <xs:documentation xml:lang="zh">æŒ‡å¯¼æ„è§å“åº”</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="HealthcareService">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">HealthcareService</xs:documentation>
+          <xs:documentation xml:lang="en">HealthcareService</xs:documentation>
+          <xs:documentation xml:lang="it">ServizioSanitario</xs:documentation>
+          <xs:documentation xml:lang="fr">ServiceDeSantÃ©</xs:documentation>
+          <xs:documentation xml:lang="es">ServicioDeCuidado</xs:documentation>
+          <xs:documentation xml:lang="zh">åŒ»ç–—ä¿å¥æœåŠ¡é¡¹ç›®</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImagingStudy">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImagingStudy</xs:documentation>
+          <xs:documentation xml:lang="en">ImagingStudy</xs:documentation>
+          <xs:documentation xml:lang="fr">EtudeImagerie</xs:documentation>
+          <xs:documentation xml:lang="es">EstudioImagen  / EstudioImagen</xs:documentation>
+          <xs:documentation xml:lang="zh">æˆåƒæ£€æŸ¥</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Immunization">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Immunization</xs:documentation>
+          <xs:documentation xml:lang="en">Immunization</xs:documentation>
+          <xs:documentation xml:lang="it">Immunizzazione</xs:documentation>
+          <xs:documentation xml:lang="fr">Immunisation</xs:documentation>
+          <xs:documentation xml:lang="zh">å…ç–«æŽ¥ç§</xs:documentation>
+          <xs:documentation xml:lang="es">InmunizaciÃ³n</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImmunizationEvaluation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImmunizationEvaluation</xs:documentation>
+          <xs:documentation xml:lang="en">ImmunizationEvaluation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImmunizationRecommendation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImmunizationRecommendation</xs:documentation>
+          <xs:documentation xml:lang="en">ImmunizationRecommendation</xs:documentation>
+          <xs:documentation xml:lang="fr">RecommendationImmunisation</xs:documentation>
+          <xs:documentation xml:lang="zh">å…ç–«æŽ¥ç§å»ºè®®</xs:documentation>
+          <xs:documentation xml:lang="es">RecomendaciÃ³nInmunizaciÃ³n /</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImplementationGuide">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="es">GuiaDeImplementacion</xs:documentation>
+          <xs:documentation xml:lang="zh">å®žæ–½æŒ‡å—</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Ingredient">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Ingredient</xs:documentation>
+          <xs:documentation xml:lang="en">Ingredient</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="InsurancePlan">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">InsurancePlan</xs:documentation>
+          <xs:documentation xml:lang="en">InsurancePlan</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Invoice">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Invoice</xs:documentation>
+          <xs:documentation xml:lang="en">Invoice</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Library">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="es">LibrerÃ­a</xs:documentation>
+          <xs:documentation xml:lang="zh">åº“</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Linkage">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Linkage</xs:documentation>
+          <xs:documentation xml:lang="en">Linkage</xs:documentation>
+          <xs:documentation xml:lang="es">Enlace / ConexiÃ³n / Vinculo / Acoplamiento </xs:documentation>
+          <xs:documentation xml:lang="zh">é“¾æŽ¥å…³ç³»</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="List">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">List</xs:documentation>
+          <xs:documentation xml:lang="en">List</xs:documentation>
+          <xs:documentation xml:lang="it">Lista</xs:documentation>
+          <xs:documentation xml:lang="fr">Liste</xs:documentation>
+          <xs:documentation xml:lang="zh">åˆ—è¡¨</xs:documentation>
+          <xs:documentation xml:lang="es">Lista</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Location">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Location</xs:documentation>
+          <xs:documentation xml:lang="en">Location</xs:documentation>
+          <xs:documentation xml:lang="fr">Localisation</xs:documentation>
+          <xs:documentation xml:lang="zh">ä½ç½®</xs:documentation>
+          <xs:documentation xml:lang="es">Locacion</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ManufacturedItemDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Measure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="it">Misura</xs:documentation>
+          <xs:documentation xml:lang="es">Medida</xs:documentation>
+          <xs:documentation xml:lang="zh">æŒ‡æ ‡</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MeasureReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
+          <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
+          <xs:documentation xml:lang="es">ReporteMedida</xs:documentation>
+          <xs:documentation xml:lang="zh">æŒ‡æ ‡æŠ¥å‘Š</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Medication">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Medication</xs:documentation>
+          <xs:documentation xml:lang="en">Medication</xs:documentation>
+          <xs:documentation xml:lang="fr">MÃ©dication</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯ç‰©</xs:documentation>
+          <xs:documentation xml:lang="es">MedicaciÃ³n /Medicamento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicationAdministration">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicationAdministration</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationAdministration</xs:documentation>
+          <xs:documentation xml:lang="fr">AdministrationMÃ©dicaments</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯ç‰©æ–½ç”¨</xs:documentation>
+          <xs:documentation xml:lang="es">AdministraciÃ³nMedicaciÃ³n / AdministracionMedicamento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicationDispense">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicationDispense</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationDispense</xs:documentation>
+          <xs:documentation xml:lang="fr">DispensationMÃ©dicaments</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯ç‰©é…å‘</xs:documentation>
+          <xs:documentation xml:lang="es">DispensaciÃ³nMedicaciÃ³n /DispensacionMedicamento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicationKnowledge">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicationKnowledge</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationKnowledge</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicationRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicationRequest</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationRequest</xs:documentation>
+          <xs:documentation xml:lang="fr">PrescriptionMÃ©dicamenteuseTODO</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯ç‰©è¯·æ±‚</xs:documentation>
+          <xs:documentation xml:lang="es">PrescripciÃ³nMedicaciÃ³nTODO  /PrescripcionMedicamento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicationUsage">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MedicinalProductDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MessageDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneMessaggio</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionMensaje</xs:documentation>
+          <xs:documentation xml:lang="zh">æ¶ˆæ¯å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MessageHeader">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MessageHeader</xs:documentation>
+          <xs:documentation xml:lang="en">MessageHeader</xs:documentation>
+          <xs:documentation xml:lang="fr">EntÃªteMessage</xs:documentation>
+          <xs:documentation xml:lang="zh">æ¶ˆæ¯æ ‡å¤´</xs:documentation>
+          <xs:documentation xml:lang="es">CabeceraMensaje</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MolecularSequence">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MolecularSequence</xs:documentation>
+          <xs:documentation xml:lang="en">MolecularSequence</xs:documentation>
+          <xs:documentation xml:lang="es">SecuenciaMolecular</xs:documentation>
+          <xs:documentation xml:lang="zh">åˆ†å­åºåˆ—</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NamingSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="fr">SystÃ¨meDeNommage</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeNombres</xs:documentation>
+          <xs:documentation xml:lang="zh">å‘½åç³»ç»Ÿ</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NutritionIntake">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NutritionOrder">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NutritionOrder</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionOrder</xs:documentation>
+          <xs:documentation xml:lang="fr">OrdreNutrition</xs:documentation>
+          <xs:documentation xml:lang="es">OrdenNutriciÃ³n</xs:documentation>
+          <xs:documentation xml:lang="zh">è¥å…»åŒ»å˜±</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NutritionProduct">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NutritionProduct</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionProduct</xs:documentation>
+          <xs:documentation xml:lang="fr">ProduitNutritionnel</xs:documentation>
+          <xs:documentation xml:lang="es">ProductoNutricional</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Observation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Observation</xs:documentation>
+          <xs:documentation xml:lang="en">Observation</xs:documentation>
+          <xs:documentation xml:lang="it">Osservazione</xs:documentation>
+          <xs:documentation xml:lang="fr">Observation</xs:documentation>
+          <xs:documentation xml:lang="zh">è§‚å¯Ÿ</xs:documentation>
+          <xs:documentation xml:lang="es">ObservaciÃ³n</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ObservationDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ObservationDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ObservationDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneOsservazione</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeEspecimen</xs:documentation>
+          <xs:documentation xml:lang="zh">è§‚å¯Ÿå®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OperationDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneOperazione</xs:documentation>
+          <xs:documentation xml:lang="fr">DÃ©finitionOpÃ©ration</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeOperacion</xs:documentation>
+          <xs:documentation xml:lang="zh">æ“ä½œå®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OperationOutcome">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OperationOutcome</xs:documentation>
+          <xs:documentation xml:lang="en">OperationOutcome</xs:documentation>
+          <xs:documentation xml:lang="it">RisultatoOperazione</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©sultatOpÃ©ration</xs:documentation>
+          <xs:documentation xml:lang="zh">æ“ä½œç»“å±€</xs:documentation>
+          <xs:documentation xml:lang="es">ResultadoOperaciÃ³n</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Organization">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Organization</xs:documentation>
+          <xs:documentation xml:lang="en">Organization</xs:documentation>
+          <xs:documentation xml:lang="it">Organizzazione</xs:documentation>
+          <xs:documentation xml:lang="fr">Organisation</xs:documentation>
+          <xs:documentation xml:lang="zh">ç»„ç»‡æœºæž„</xs:documentation>
+          <xs:documentation xml:lang="es">OrganizaciÃ³n</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OrganizationAffiliation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OrganizationAffiliation</xs:documentation>
+          <xs:documentation xml:lang="en">OrganizationAffiliation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PackagedProductDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PackagedProductDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">PackagedProductDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Parameters">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Parameters</xs:documentation>
+          <xs:documentation xml:lang="en">Parameters</xs:documentation>
+          <xs:documentation xml:lang="es">Parametros</xs:documentation>
+          <xs:documentation xml:lang="zh">å‚æ•°</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Patient">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Patient</xs:documentation>
+          <xs:documentation xml:lang="en">Patient</xs:documentation>
+          <xs:documentation xml:lang="it">Paziente</xs:documentation>
+          <xs:documentation xml:lang="fr">Patient</xs:documentation>
+          <xs:documentation xml:lang="zh">æ‚£è€…</xs:documentation>
+          <xs:documentation xml:lang="es">Paciente</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaymentNotice">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PaymentNotice</xs:documentation>
+          <xs:documentation xml:lang="en">PaymentNotice</xs:documentation>
+          <xs:documentation xml:lang="it">AvvisoDiPagamento</xs:documentation>
+          <xs:documentation xml:lang="fr">AvisPaiement</xs:documentation>
+          <xs:documentation xml:lang="es">AvisoDePago</xs:documentation>
+          <xs:documentation xml:lang="zh">ä»˜æ¬¾é€šçŸ¥</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PaymentReconciliation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PaymentReconciliation</xs:documentation>
+          <xs:documentation xml:lang="en">PaymentReconciliation</xs:documentation>
+          <xs:documentation xml:lang="it">RiconciliazionePagamento</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©conciliationPaiement</xs:documentation>
+          <xs:documentation xml:lang="es">ConciliacionDePago</xs:documentation>
+          <xs:documentation xml:lang="zh">ä»˜æ¬¾å¯¹è´¦</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Permission">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="fr">Permission</xs:documentation>
+          <xs:documentation xml:lang="es">Permiso</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Person">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Person</xs:documentation>
+          <xs:documentation xml:lang="en">Person</xs:documentation>
+          <xs:documentation xml:lang="it">Persona</xs:documentation>
+          <xs:documentation xml:lang="fr">Personne</xs:documentation>
+          <xs:documentation xml:lang="es">Persona</xs:documentation>
+          <xs:documentation xml:lang="zh">äººå‘˜</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PlanDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDePlan</xs:documentation>
+          <xs:documentation xml:lang="zh">è®¡åˆ’å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Practitioner">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Practitioner</xs:documentation>
+          <xs:documentation xml:lang="en">Practitioner</xs:documentation>
+          <xs:documentation xml:lang="fr">Praticien</xs:documentation>
+          <xs:documentation xml:lang="zh">æ‰§ä¸šäººå‘˜</xs:documentation>
+          <xs:documentation xml:lang="es">Practicante / Profesional</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PractitionerRole">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PractitionerRole</xs:documentation>
+          <xs:documentation xml:lang="en">PractitionerRole</xs:documentation>
+          <xs:documentation xml:lang="es">RolProfesional</xs:documentation>
+          <xs:documentation xml:lang="zh">æ‰§ä¸šäººå‘˜è§’è‰²</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Procedure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Procedure</xs:documentation>
+          <xs:documentation xml:lang="en">Procedure</xs:documentation>
+          <xs:documentation xml:lang="it">Procedura</xs:documentation>
+          <xs:documentation xml:lang="fr">ProcÃ©dure</xs:documentation>
+          <xs:documentation xml:lang="zh">æ“ä½œé¡¹ç›®</xs:documentation>
+          <xs:documentation xml:lang="es">Procedimiento</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Provenance">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Provenance</xs:documentation>
+          <xs:documentation xml:lang="en">Provenance</xs:documentation>
+          <xs:documentation xml:lang="it">Provenienza</xs:documentation>
+          <xs:documentation xml:lang="fr">Provenance</xs:documentation>
+          <xs:documentation xml:lang="zh">å‡ºå¤„</xs:documentation>
+          <xs:documentation xml:lang="es">Procedencia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Questionnaire">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="it">Questionario</xs:documentation>
+          <xs:documentation xml:lang="fr">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="zh">è°ƒæŸ¥é—®å·</xs:documentation>
+          <xs:documentation xml:lang="es">Cuestionario</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="QuestionnaireResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">QuestionnaireResponse</xs:documentation>
+          <xs:documentation xml:lang="en">QuestionnaireResponse</xs:documentation>
+          <xs:documentation xml:lang="it">RispostaQuestionario</xs:documentation>
+          <xs:documentation xml:lang="fr">RÃ©ponseQuestionnaire</xs:documentation>
+          <xs:documentation xml:lang="es">RespuestaAlCuestionario</xs:documentation>
+          <xs:documentation xml:lang="zh">è°ƒæŸ¥é—®å·ç­”å¤</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RegulatedAuthorization">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RegulatedAuthorization</xs:documentation>
+          <xs:documentation xml:lang="en">RegulatedAuthorization</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RelatedPerson">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RelatedPerson</xs:documentation>
+          <xs:documentation xml:lang="en">RelatedPerson</xs:documentation>
+          <xs:documentation xml:lang="it">PersonaCorrelata</xs:documentation>
+          <xs:documentation xml:lang="fr">PersonneEnRelation</xs:documentation>
+          <xs:documentation xml:lang="es">PersonaRelacionada</xs:documentation>
+          <xs:documentation xml:lang="zh">ç›¸å…³äººå‘˜</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RequestGroup">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RequestGroup</xs:documentation>
+          <xs:documentation xml:lang="en">RequestGroup</xs:documentation>
+          <xs:documentation xml:lang="it">GruppoDiRichieste</xs:documentation>
+          <xs:documentation xml:lang="es">GrupoDeSolicitudes</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯·æ±‚åˆ†ç»„</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ResearchStudy">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ResearchStudy</xs:documentation>
+          <xs:documentation xml:lang="en">ResearchStudy</xs:documentation>
+          <xs:documentation xml:lang="es">EstudioDeInvestigacion</xs:documentation>
+          <xs:documentation xml:lang="zh">è°ƒæŸ¥ç ”ç©¶</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ResearchSubject">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ResearchSubject</xs:documentation>
+          <xs:documentation xml:lang="en">ResearchSubject</xs:documentation>
+          <xs:documentation xml:lang="es">SujetoDeInvestigacion</xs:documentation>
+          <xs:documentation xml:lang="zh">ç ”ç©¶ä¸»é¢˜</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Resource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Resource</xs:documentation>
+          <xs:documentation xml:lang="en">Resource</xs:documentation>
+          <xs:documentation xml:lang="es">Recurso</xs:documentation>
+          <xs:documentation xml:lang="zh">èµ„æº</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="RiskAssessment">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RiskAssessment</xs:documentation>
+          <xs:documentation xml:lang="en">RiskAssessment</xs:documentation>
+          <xs:documentation xml:lang="fr">Ã‰valuationRisques</xs:documentation>
+          <xs:documentation xml:lang="es">EvaluacionDeRiesgo</xs:documentation>
+          <xs:documentation xml:lang="zh">é£Žé™©è¯„ä¼°</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Schedule">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Schedule</xs:documentation>
+          <xs:documentation xml:lang="en">Schedule</xs:documentation>
+          <xs:documentation xml:lang="es">Agenda</xs:documentation>
+          <xs:documentation xml:lang="zh">æ—¥ç¨‹å®‰æŽ’</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SearchParameter">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="it">ParametroDiRicerca</xs:documentation>
+          <xs:documentation xml:lang="fr">ParamÃ¨treRecherche</xs:documentation>
+          <xs:documentation xml:lang="es">ParametroDeBusqueda</xs:documentation>
+          <xs:documentation xml:lang="zh">æœç´¢å‚æ•°</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ServiceRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ServiceRequest</xs:documentation>
+          <xs:documentation xml:lang="en">ServiceRequest</xs:documentation>
+          <xs:documentation xml:lang="it">RichiestaDiServizio</xs:documentation>
+          <xs:documentation xml:lang="fr">DemandeService</xs:documentation>
+          <xs:documentation xml:lang="es">PeticiÃ³nServicio</xs:documentation>
+          <xs:documentation xml:lang="zh">æœåŠ¡é¡¹ç›®è¯·æ±‚</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Slot">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Slot</xs:documentation>
+          <xs:documentation xml:lang="en">Slot</xs:documentation>
+          <xs:documentation xml:lang="fr">Slot</xs:documentation>
+          <xs:documentation xml:lang="zh">æ§½ä½</xs:documentation>
+          <xs:documentation xml:lang="es">Hueco / Zocalo / Espacio</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Specimen">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Specimen</xs:documentation>
+          <xs:documentation xml:lang="en">Specimen</xs:documentation>
+          <xs:documentation xml:lang="it">Campione</xs:documentation>
+          <xs:documentation xml:lang="fr">SpÃ©cimen</xs:documentation>
+          <xs:documentation xml:lang="zh">æ ‡æœ¬</xs:documentation>
+          <xs:documentation xml:lang="es">Especimen</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SpecimenDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SpecimenDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">SpecimenDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneCampione</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeEspecimen</xs:documentation>
+          <xs:documentation xml:lang="zh">æ ‡æœ¬å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneStruttura</xs:documentation>
+          <xs:documentation xml:lang="fr">DÃ©finitionStructure</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">ç»“æž„å®šä¹‰</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">ç»“æž„æ˜ å°„</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Subscription">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Subscription</xs:documentation>
+          <xs:documentation xml:lang="en">Subscription</xs:documentation>
+          <xs:documentation xml:lang="it">Sottoscrizione</xs:documentation>
+          <xs:documentation xml:lang="fr">Souscription</xs:documentation>
+          <xs:documentation xml:lang="zh">è®¢é˜…</xs:documentation>
+          <xs:documentation xml:lang="es">SuscripciÃ³n</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubscriptionStatus">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubscriptionTopic">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="fr">Souscription Sujet</xs:documentation>
+          <xs:documentation xml:lang="es">Tema de SuscripciÃ³n</xs:documentation>
+          <xs:documentation xml:lang="zh">è¯é¢˜</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Substance">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Substance</xs:documentation>
+          <xs:documentation xml:lang="en">Substance</xs:documentation>
+          <xs:documentation xml:lang="it">Sostanza</xs:documentation>
+          <xs:documentation xml:lang="fr">Substance</xs:documentation>
+          <xs:documentation xml:lang="zh">ç‰©è´¨</xs:documentation>
+          <xs:documentation xml:lang="es">Sustancia</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceNucleicAcid">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstancePolymer">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceProtein">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceReferenceInformation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceSourceMaterial">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SupplyDelivery">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SupplyDelivery</xs:documentation>
+          <xs:documentation xml:lang="en">SupplyDelivery</xs:documentation>
+          <xs:documentation xml:lang="fr">Supply Livraison</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¾›åº”äº¤ä»˜</xs:documentation>
+          <xs:documentation xml:lang="es">Entrega de Suministro</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SupplyRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SupplyRequest</xs:documentation>
+          <xs:documentation xml:lang="en">SupplyRequest</xs:documentation>
+          <xs:documentation xml:lang="fr">Demande d'approvisionnement</xs:documentation>
+          <xs:documentation xml:lang="zh">ä¾›åº”è¯·æ±‚</xs:documentation>
+          <xs:documentation xml:lang="es">Solicitud de Suministro</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Task">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Task</xs:documentation>
+          <xs:documentation xml:lang="en">Task</xs:documentation>
+          <xs:documentation xml:lang="es">Tarea</xs:documentation>
+          <xs:documentation xml:lang="zh">ä»»åŠ¡</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TerminologyCapabilities">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="es">CapacidadTerminologica</xs:documentation>
+          <xs:documentation xml:lang="zh">æœ¯è¯­æœåŠ¡èƒ½åŠ›</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TestReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TestReport</xs:documentation>
+          <xs:documentation xml:lang="en">TestReport</xs:documentation>
+          <xs:documentation xml:lang="fr">RapportTest</xs:documentation>
+          <xs:documentation xml:lang="es">ReporteDePrueba</xs:documentation>
+          <xs:documentation xml:lang="zh">æµ‹è¯•æŠ¥å‘Š</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TestScript">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="fr">ScriptTest</xs:documentation>
+          <xs:documentation xml:lang="es">ScriptDePrueba</xs:documentation>
+          <xs:documentation xml:lang="zh">æµ‹è¯•è„šæœ¬</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ValueSet">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="fr">EnsembleValeurs</xs:documentation>
+          <xs:documentation xml:lang="zh">å–å€¼é›†åˆ</xs:documentation>
+          <xs:documentation xml:lang="es">ConjuntoValores / ConjuntoDeValores</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VerificationResult">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">VerificationResult</xs:documentation>
+          <xs:documentation xml:lang="en">VerificationResult</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="VisionPrescription">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">VisionPrescription</xs:documentation>
+          <xs:documentation xml:lang="en">VisionPrescription</xs:documentation>
+          <xs:documentation xml:lang="fr">PrescriptionVision</xs:documentation>
+          <xs:documentation xml:lang="es">PrescripcionDeVision</xs:documentation>
+          <xs:documentation xml:lang="zh">è§†åŠ›å¤„æ–¹</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:complexType name="ResourceType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The type of resource.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ResourceType-list" use="optional" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:element name="ExplanationOfBenefit" type="ExplanationOfBenefit">
     <xs:annotation>
       <xs:documentation xml:lang="en">This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.</xs:documentation>
