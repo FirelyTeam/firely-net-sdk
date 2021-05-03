@@ -155,10 +155,10 @@ namespace Hl7.Fhir.Test.Validation
             {
                 results = resourceModel.Select(index.Expression, new FhirEvaluationContext(resourceModel) { ElementResolver = mockResolver });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                System.Diagnostics.Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
-                throw ex;
+                Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
+                throw;
             }
             if (results.Count() > 0)
             {

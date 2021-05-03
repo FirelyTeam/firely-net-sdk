@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -252,16 +253,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestZipSourceMask()
         {
+            // In release 4B, the StructureDefinition for PrimitiveType was missing. That was manually added by MV on 2021-04-30 to specification.zip
+            // If this has been solved by Hl7, then the Mask can changed back to only profiles-types.xml again.
+
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
             var za = new ZipSource(zipFile)
             {
-                Mask = "profiles-types.xml"
+                Mask = "profiles-types.xml|StructureDefinition_PrimitiveType.xml"
             };
 
             var artifacts = za.ListArtifactNames().ToArray();
-            Assert.AreEqual(1, artifacts.Length);
-            Assert.AreEqual("profiles-types.xml", artifacts[0]);
+            artifacts.Should().BeEquivalentTo(new[] { "profiles-types.xml", "StructureDefinition_PrimitiveType.xml" });
 
             var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
@@ -281,16 +284,11 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             && kvp.Value != "DomainResource"
                                                                             )
                                                             .Select(kvp => kvp.Value);
-            var numCoreDataTypes = coreDataTypes.Count();
 
-            Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
-
-            // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
-            // Both arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
-            Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
-            Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
+
+            resourceIds.Should().Contain(coreTypeUris);
+            resourceIds.Should().BeEquivalentTo(coreTypeUris);
         }
 
         // [WMR 20170817] NEW

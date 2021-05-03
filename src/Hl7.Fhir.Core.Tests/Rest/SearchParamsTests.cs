@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams();
             var formatException = AssertThrows<FormatException>(() => q.Add("_sort", "-"));
-            Assert.AreEqual("Invalid _sort: one of the values is just a single '-', an element name must be provided", formatException.Message);            
+            Assert.AreEqual("Invalid _sort: one of the values is just a single '-', an element name must be provided", formatException.Message);
         }
 
 
@@ -482,6 +482,10 @@ namespace Hl7.Fhir.Test.Rest
             var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp12);
             Assert.IsFalse(sp12.Target.Contains(ResourceType.EpisodeOfCare));
+
+            var sp13 = ModelInfo.SearchParameters.Where(s => s.Resource == "DocumentReference" && s.Name == "encounter").FirstOrDefault();
+            Assert.IsNotNull(sp13);
+            Assert.IsTrue(sp13.Target.Contains(ResourceType.EpisodeOfCare));
         }
     }
 }

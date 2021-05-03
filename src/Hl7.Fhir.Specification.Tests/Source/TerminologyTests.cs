@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             // This test is not always correctly done by the external services, so copied here instead
             result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
-                    system: "http://hl7.org/fhir/hacked", @abstract: false);
+                   system: "http://hl7.org/fhir/hacked", @abstract: false);
             Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
@@ -305,9 +305,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
-                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/example-hierarchical")
-                .WithCode(code: "invalid", system: "http://hl7.org/fhir/hacked")
-                .WithAbstract(false);
+                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/example-hierarchical")
+                 .WithCode(code: "invalid", system: "http://hl7.org/fhir/hacked")
+                 .WithAbstract(false);
 
             result = await svc.ValueSetValidateCode(inParams);
 
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task LocalTermServiceUsingDuplicateParameters()
         {
-            var svc = new LocalTerminologyService(_resolver);           
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
@@ -344,11 +344,24 @@ namespace Hl7.Fhir.Specification.Tests
                         Value = new FhirUri("urn:iso:std:iso:3166")
                     },
                 }
-            };           
+            };
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
 
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+        }
+
+        [Fact]
+        public void TestOperationOutcomes()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+#pragma warning disable CS0618 // obsolete, but used for testing purposes
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", code: "test");
+#pragma warning restore CS0618 
+
+            Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
+
         }
 
 
@@ -589,7 +602,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -878,7 +891,7 @@ namespace Hl7.Fhir.Specification.Tests
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
-            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
             ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));

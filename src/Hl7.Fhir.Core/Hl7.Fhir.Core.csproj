@@ -14,6 +14,12 @@
     <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
     <PackageTags>HL7 FHIR REST parse serialize class model;Firely;SDK</PackageTags>
     <AssemblyName>Hl7.Fhir.R5.Core</AssemblyName>
+    <PackageId>Hl7.Fhir.R4B</PackageId>
+    <Title>HL7 FHIR Core support SDK for R4B</Title>	
+    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4B (4.1.0)</Summary>
+    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
+    <AssemblyName>Hl7.Fhir.R4B.Core</AssemblyName>
+    <PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
     <RootNamespace>Hl7.Fhir</RootNamespace>
   </PropertyGroup>
 

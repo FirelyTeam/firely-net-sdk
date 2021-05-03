@@ -7,7 +7,6 @@
  */
 
 using System;
-using System.Linq;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -146,7 +145,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return !string.IsNullOrEmpty(basePath)
                 && !string.IsNullOrEmpty(path)
                 && dot1 == -1 && dot2 == -1;
-                // && !ModelInfo.IsCoreModelType(baseElementPath);
+            // && !ModelInfo.IsCoreModelType(baseElementPath);
         }
 
 
@@ -221,6 +220,31 @@ namespace Hl7.Fhir.Specification.Navigation
                 && string.CompareOrdinal(sliceName, 0, baseSliceName, 0, baseSliceName.Length) == 0
                 && sliceName[baseSliceName.Length] == RESLICE_NAME_SEPARATOR_CHAR;
         }
+
+
+        /// <summary>
+        /// This detects whether a child slice name indicates the slicing is a one-level deeper (re)slicing
+        /// of the parent slice (or of an unsliced element):
+        /// 
+        /// IsResliceOf(null,null) == false, IsResliceOf("A",null) == true, IsResliceOf("A/B", null) == false,
+        /// IsResliceOf("A", "A") == false, IsResliceOf("B","A") == false, 
+        /// IsResliceOf("A/B","A") == true, IsResliceof("A/B/C", "A") == false, 
+        /// IsResliceOf("B/C", "A") == false, IsResliceOf("AA", "A") is false, IsResliceOf("A/BB", "A/B") == false
+        /// </summary>
+        /// <param name="parentSliceName"></param>
+        /// <param name="childSliceName"></param>
+        /// <returns></returns>
+        public static bool IsDirectSliceOf(string childSliceName, string parentSliceName)
+        {
+            if (childSliceName is null) return false;
+
+            var prefix = parentSliceName is null ? "" : parentSliceName + "/";
+            if (!childSliceName.StartsWith(prefix)) return false;
+
+            //return !childSliceName[prefix.Length..].Contains("/");
+            return !childSliceName.Substring(prefix.Length).Contains("/");
+        }
+
 
         /// <summary>Determines if the specified slice names represent sibling slices.</summary>
         /// <returns><c>true</c> if <paramref name="sliceName"/> represents a sibling slice of <paramref name="siblingSliceName"/>, or <c>false</c> otherwise.</returns>
