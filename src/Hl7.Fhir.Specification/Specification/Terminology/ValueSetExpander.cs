@@ -333,4 +333,5 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
     }
+    #pragma warning restore
 }
