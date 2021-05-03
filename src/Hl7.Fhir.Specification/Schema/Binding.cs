@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Specification.Schema
                     ? $"Terminology service failed while validating code '{code ?? coding?.Code ?? cc?.Coding[0]?.Code}' (system '{system ?? coding?.System ?? cc?.Coding[0]?.System}'): {tse.Message}"
                     : $"Terminology service failed while validating the codes: {tse.Message}";            
 
-                return Issue.TERMINOLOGY_OUTPUT_WARNING
+                return Issue.TERMINOLOGY_SERVICE_FAILED
                         .NewOutcomeWithIssue(message, location);
             }
         }
