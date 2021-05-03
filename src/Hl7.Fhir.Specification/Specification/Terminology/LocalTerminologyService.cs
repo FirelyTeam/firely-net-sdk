@@ -46,14 +46,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Validate that a coded value is in the set of codes allowed by a value set.
-        /// </summary>
-        /// <param name="parameters">Input parameters for the operation</param>
-        /// <param name="id">Id of a specific ValueSet which is used to validate against</param>
-        /// <param name="useGet"> Use the GET instead of POST Http method</param>
-        /// <returns>Output parameters containing the result of the operation</returns>
-        /// <exception cref="FhirOperationException">Thrown when the internal terminology service encounters an error</exception>
+        ///<inheritdoc />
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
 
