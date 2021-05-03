@@ -27,6 +27,7 @@ namespace Hl7.Fhir.Validation
             if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
             //Context is needed by some external validators in case a system is missing.
+            //See http://hl7.org/fhir/valueset-operation-validate-code.html
             var context = $"{root.StructureDefinition.Url}#{location}";
 
             var condition = walkToCondition(root, spec.Path, resolver);
