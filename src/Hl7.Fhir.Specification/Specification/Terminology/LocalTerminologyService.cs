@@ -7,11 +7,13 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using T = System.Threading.Tasks;
@@ -44,19 +46,29 @@ namespace Hl7.Fhir.Specification.Terminology
             return await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Validate that a coded value is in the set of codes allowed by a value set.
+        /// </summary>
+        /// <param name="parameters">Input parameters for the operation</param>
+        /// <param name="id">Id of a specific ValueSet which is used to validate against</param>
+        /// <param name="useGet"> Use the GET instead of POST Http method</param>
+        /// <returns>Output parameters containing the result of the operation</returns>
+        /// <exception cref="FhirOperationException">Thrown when the internal terminology service encounters an error</exception>
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
 
             //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.TryGetDuplicates(out var duplicates) == true)
             {
-               return falseOutcome($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
+                //422 Unproccesable Entity
+                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}",(HttpStatusCode)422);
             }
             //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
                                                                                     parameters.Parameter.Any(p => p.Name == _contextAttribute)))
             {
-                return falseOutcome($"If a code is provided, a system or a context must be provided");
+                //422 Unproccesable Entity
+                throw new FhirOperationException($"If a code is provided, a system or a context must be provided",(HttpStatusCode)422);
             }
 
             var validCodeParams = new ValidateCodeParameters(parameters);
@@ -65,7 +77,9 @@ namespace Hl7.Fhir.Specification.Terminology
             if (valueSet is null)
             {
                 if (validCodeParams.Url is null)
-                    return falseOutcome("Have to supply either a canonical url or a valueset.");
+
+                    //422 Unproccesable Entity
+                    throw new FhirOperationException("Have to supply either a canonical url or a valueset.", (HttpStatusCode)422);
 
                 try
                 {
@@ -77,7 +91,8 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
 
                 if (valueSet is null)
-                    return warningOutcome($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
+                    // 404 not found
+                    throw new FhirOperationException($"Cannot retrieve valueset '{validCodeParams.Url.Value}'", HttpStatusCode.NotFound);
             }
 
             try
@@ -89,13 +104,16 @@ namespace Hl7.Fhir.Specification.Terminology
                 else
                     return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
             }
+#pragma warning disable CS0618 // Only catched here to not change to public interface of ValueSetExpander
             catch (TerminologyServiceException e)
+#pragma warning restore CS0618 
             {
-                return warningOutcome(e.Message);
+                throw new FhirOperationException(e.Message, (HttpStatusCode)422);
             }
             catch (Exception e)
             {
-                return falseOutcome(e.Message);
+                //500 internal server error
+                throw new FhirOperationException(e.Message, (HttpStatusCode)500);
             }
            
         }
