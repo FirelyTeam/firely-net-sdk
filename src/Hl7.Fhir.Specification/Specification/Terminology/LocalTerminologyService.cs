@@ -175,22 +175,6 @@ namespace Hl7.Fhir.Specification.Terminology
             return parms.ToOperationOutcome();
         }
 
-        private Parameters falseOutcome(string message)
-        {
-            var result = new Parameters();
-            result.Add("result", new FhirBoolean(false));
-            result.Add("message", new FhirString(message));
-            return result; 
-        }
-
-        private Parameters warningOutcome(string message)
-        {
-            var result = new Parameters();
-            result.Add("result", new FhirBoolean(true));
-            result.Add("message", new FhirString(message));
-            return result;
-        }
-
         private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
         {
             var result = new Parameters();
