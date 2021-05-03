@@ -20,6 +20,10 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class ValueSetExpander
     {
+
+//ValueSetExpander keeps throwing TerminologyService Exceptions to not change the public interface.
+#pragma warning disable 0618
+
         public ValueSetExpanderSettings Settings { get; }
 
         public ValueSetExpander(ValueSetExpanderSettings settings)
