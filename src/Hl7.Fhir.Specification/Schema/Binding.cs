@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -151,13 +152,13 @@ namespace Hl7.Fhir.Specification.Schema
                 foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
                 return outcome;
             }
-            catch (TerminologyServiceException tse)
+            catch (FhirOperationException tse)
             {
                 string message = (cc?.Coding == null || cc.Coding.Count == 1) 
                     ? $"Terminology service failed while validating code '{code ?? coding?.Code ?? cc?.Coding[0]?.Code}' (system '{system ?? coding?.System ?? cc?.Coding[0]?.System}'): {tse.Message}"
                     : $"Terminology service failed while validating the codes: {tse.Message}";            
 
-                return Issue.TERMINOLOGY_SERVICE_FAILED
+                return Issue.TERMINOLOGY_OUTPUT_WARNING
                         .NewOutcomeWithIssue(message, location);
             }
         }
