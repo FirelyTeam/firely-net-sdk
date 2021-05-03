@@ -30,12 +30,12 @@
     <sch:rule context="f:Consent">
       <sch:assert test="not(parent::f:contained and f:contained)">dom-2: If the resource is contained in another resource, it SHALL NOT contain nested Resources</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))">dom-4: If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated</sch:assert>
-      <sch:assert test="not(exists(for $id in f:contained/*/f:id/@value return $contained[not(parent::*/descendant::f:reference/@value=concat('#', $contained/*/id/@value) or descendant::f:reference[@value='#'])]))">dom-3: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource</sch:assert>
+      <sch:assert test="not(exists(for $resource in . return (for $contained in $resource/f:contained return $contained[not(descendant::f:*/@value='#' or (exists(f:id) and $resource//f:*/@*=concat('#', $contained/*/f:id/@value)))])))">dom-3: If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource</sch:assert>
       <sch:assert test="not(exists(f:contained/*/f:meta/f:security))">dom-5: If a resource is contained in another resource, it SHALL NOT have a security label</sch:assert>
-      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr'])))">ppc-4: IF Scope=adr, there must be a patient</sch:assert>
-      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment'])))">ppc-5: IF Scope=treatment, there must be a patient</sch:assert>
-      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy'])))">ppc-2: IF Scope=privacy, there must be a patient</sch:assert>
-      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research'])))">ppc-3: IF Scope=research, there must be a patient</sch:assert>
+      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='adr']))">ppc-4: IF Scope=adr, there must be a patient</sch:assert>
+      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='treatment']))">ppc-5: IF Scope=treatment, there must be a patient</sch:assert>
+      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='patient-privacy']))">ppc-2: IF Scope=privacy, there must be a patient</sch:assert>
+      <sch:assert test="exists(f:patient) or not(exists(f:scope/f:coding[f:system/@value='something' and f:code/@value='research']))">ppc-3: IF Scope=research, there must be a patient</sch:assert>
       <sch:assert test="exists(f:policy) or exists(f:policyRule)">ppc-1: Either a Policy or PolicyRule</sch:assert>
     </sch:rule>
     <sch:rule context="f:Consent/f:text/h:div">

@@ -19,7 +19,7 @@
   <description value="A person who receives medical, psychological, paramedical or nursing care. In some care settings, the term client or participant is used instead of the term patient.&#xD;&#xA;Nationality is used as an indication of the country of citizenship. &#xD;&#xA;Marital status is a person’s formal position as defined by the Dutch civil code. There is a distinction between marriage and civil union."/>
   <purpose value="This Patient resource represents the Dutch zib ('Zorginformatiebouwsteen', i.e. Health and Care Information Model) [Patient v3.2 (2020)](https://zibs.nl/wiki/Patient-v3.2(2020EN)), [Nationality v3.0 (2020)](https://zibs.nl/wiki/Nationality-v3.0(2020EN)) and [MaritalStatus v3.1 (2020)](https://zibs.nl/wiki/MaritalStatus-v3.1(2020EN))."/>
   <copyright value="Copyright and related rights waived via CC0, https://creativecommons.org/publicdomain/zero/1.0/. This does not apply to information from third parties, for example a medical terminology system. The implementer alone is responsible for identifying and obtaining any necessary licenses or authorizations to utilize third party IP in connection with the specification or otherwise."/>
-  <fhirVersion value="4.0.1"/>
+  <fhirVersion value="4.1.0"/>
   <mapping>
     <identity value="zib-patient-v3.2-2020EN"/>
     <uri value="https://zibs.nl/wiki/Patient-v3.2(2020EN)"/>

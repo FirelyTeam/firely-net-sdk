@@ -6,9 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -37,15 +37,16 @@ namespace Hl7.Fhir.Specification.Tests
 
             var summaries = fa.ListSummaries();
 
-            var summary = summaries.ResolveByCanonicalUri("http://terminology.hl7.org/ValueSet/v2-0292");
+            // MV 2021-04-23: No longer part of the spec
+            // var summary = summaries.ResolveByCanonicalUri("http://terminology.hl7.org/ValueSet/v2-0292");
+            // Assert.IsNotNull(summary);
+            // var vs = fa.LoadBySummary(summary);
+            // Assert.IsTrue(vs is ValueSet);
+            // Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+
+            var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(summary);
             var vs = fa.LoadBySummary(summary);
-            Assert.IsTrue(vs is ValueSet);
-            Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
-
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
-            Assert.IsNotNull(summary);
-            vs = fa.LoadBySummary(summary);
             Assert.IsNotNull(vs);
             Assert.IsTrue(vs is ValueSet);
 
@@ -81,12 +82,13 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
+            // MV 2021-04-23: No longer part of the spec
             // Try to find an additional US profile (they are distributed with the spec for now)
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            Assert.IsNotNull(summary);
-            var us = fa.LoadBySummary(summary);
-            Assert.IsNotNull(us);
-            Assert.IsTrue(us is StructureDefinition);
+            // summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
+            // Assert.IsNotNull(summary);
+            // var us = fa.LoadBySummary(summary);
+            // Assert.IsNotNull(us);
+            // Assert.IsTrue(us is StructureDefinition);
         }
 
         [TestMethod]
@@ -136,7 +138,7 @@ namespace Hl7.Fhir.Specification.Tests
                 new DirectorySourceSettings { IncludeSubDirectories = true });
 
             var tasks = new Tasks.Task[threadCount];
-            var results = new(Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
+            var results = new (Resource resource, ArtifactSummary summary, int threadId, TimeSpan start, TimeSpan stop)[threadCount];
 
             var sw = new Stopwatch();
             sw.Start();

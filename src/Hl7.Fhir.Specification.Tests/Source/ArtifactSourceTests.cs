@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -16,8 +17,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using T = System.Threading.Tasks;
 using ssac = System.Security.AccessControl;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -221,7 +222,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -238,7 +239,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsNotNull(a);
             }
 
-            using (var a = za.LoadArtifactByName("v3-codesystems.xml"))
+            using (var a = za.LoadArtifactByName("valuesets.xml"))
             {
                 Assert.IsNotNull(a);
             }
@@ -252,16 +253,18 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestZipSourceMask()
         {
+            // In release 4B, the StructureDefinition for PrimitiveType was missing. That was manually added by MV on 2021-04-30 to specification.zip
+            // If this has been solved by Hl7, then the Mask can changed back to only profiles-types.xml again.
+
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
             var za = new ZipSource(zipFile)
             {
-                Mask = "profiles-types.xml"
+                Mask = "profiles-types.xml|StructureDefinition_PrimitiveType.xml"
             };
 
             var artifacts = za.ListArtifactNames().ToArray();
-            Assert.AreEqual(1, artifacts.Length);
-            Assert.AreEqual("profiles-types.xml", artifacts[0]);
+            artifacts.Should().BeEquivalentTo(new[] { "profiles-types.xml", "StructureDefinition_PrimitiveType.xml" });
 
             var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
@@ -274,7 +277,7 @@ namespace Hl7.Fhir.Specification.Tests
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
-            // - 4 for abstract R5 base types not present as R4 structuredefs
+            // - 2 for abstract R5 base types not present as R4B structuredefs
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
             var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
@@ -282,20 +285,13 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             && kvp.Value != "DomainResource"
                                                                             && kvp.Value != "BackboneType"
                                                                             && kvp.Value != "Base"
-                                                                            && kvp.Value != "DataType"
-                                                                            && kvp.Value != "PrimitiveType"
                                                                             )
                                                             .Select(kvp => kvp.Value);
-            var numCoreDataTypes = coreDataTypes.Count();
 
-            Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
-
-            // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
-            // Both arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
-            Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
-            Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
+
+            resourceIds.Should().Contain(coreTypeUris);
+            resourceIds.Should().BeEquivalentTo(coreTypeUris);
         }
 
         // [WMR 20170817] NEW
@@ -358,11 +354,11 @@ namespace Hl7.Fhir.Specification.Tests
 
                     // Abort unit test if we can't access file permissions
                     var fs = forbiddenFile.GetAccessControl();
-                    
+
                     // Revoke file read permissions for the current user
                     fs.AddAccessRule(rule);
                     Debug.Print($"Removing read permissions from file: '{forbiddenFile}' ...");
-                    
+
                     // Abort unit test if we can't modify file permissions
                     forbiddenFile.SetAccessControl(fs);
 
@@ -383,7 +379,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                         // [WMR 20170823] Also test ListResourceUris => prepareResources()
                         var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
-                        
+
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
                         Assert.IsFalse(urlList.Contains(profileUrl1));

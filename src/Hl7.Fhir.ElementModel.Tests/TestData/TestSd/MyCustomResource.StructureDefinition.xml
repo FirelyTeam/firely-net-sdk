@@ -2,7 +2,7 @@
     <url value="http://hl7.org/fhir/StructureDefinition/MyCustomResource" />
     <name value="MyCustomResource" />
     <status value="active" />
-    <fhirVersion value="4.0.1" />
+    <fhirVersion value="4.1.0" />
     <kind value="resource" />
     <abstract value="false" />
     <type value="MyCustomResource" />

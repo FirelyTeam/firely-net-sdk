@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/";
+$server = "http://hl7.org/fhir/2021Mar/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -18,8 +18,6 @@ $allFiles = @("conceptmaps.xml",
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
 				"search-parameters.xml",
-				"v2-tables.xml",
-				"v3-codesystems.xml",
 				"valuesets.xml"
 				"fhir-all-xsd.zip"
 				);
@@ -132,6 +130,55 @@ function RemoveNarrative($name)
 	$xml.Save($file)
 }
 
+function ChangeValueElement($name)
+{
+	# Correction for 4B:
+	# changes Element "valueUri" to "valueUrl" of extension `structuredefinition-fhir-type`
+
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		$valueElement = $extension.FirstChild
+		$correctedValueElement = $xml.CreateElement("valueUrl", $ns.LookupNamespace("ns"))
+		$correctedValueElement.SetAttribute("value", $valueElement.Value) | Out-null
+		$extension.ReplaceChild($correctedValueElement, $valueElement)  | Out-null
+	}
+
+    Write-Output "Changed 'valueUri' to 'valueUrl' for extension 'structuredefinition-fhir-type' from $file"
+	$xml.Save($filename)
+}
+
+function RemoveDefinitonExtension($name)
+{
+	# Correction for 4B:
+	# remove the extension http://hl7.org/fhir/build/StructureDefinition/definition
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/build/StructureDefinition/definition"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		[void]$extension.ParentNode.RemoveChild($extension)
+	}
+	
+	Write-Output "Removed the extension http://hl7.org/fhir/build/StructureDefinition/definition from $file"
+	
+	$xml.Save($filename)
+}
+
+
 function ExtractXsdZipFile($destPath)
 {
 	Write-Host -ForegroundColor White "Extract xsd zip file..."
@@ -139,9 +186,9 @@ function ExtractXsdZipFile($destPath)
 	$extractPath = Join-Path $tempDir "extracted"
 	expand-archive -path $zipPath -destinationpath $extractPath
 	
-	if ($server.EndsWith('2020Sep/') )
+	if ($server.EndsWith('2020Sep/') -or $server.EndsWith('2021Mar/') )
 	{
-		# In release 2020Sep is an error in the fhir-single.xsd.  
+		# In release 2020Sep and 2021Mar is an error in the fhir-single.xsd.  
 		Write-Host -ForegroundColor White ".. correct errors in fhir-single.xsd"
 		$xsdFile = Join-Path $extractPath "fhir-single.xsd"
 		RemoveIncorrectXsdElements $xsdFile
@@ -157,6 +204,16 @@ foreach($file in $allFiles)
 	{
 		RemoveNarrative $file
 	}
+	
+	# Corrections for 4B:
+	if ($server.EndsWith("2021Mar/"))
+	{
+		if ($file.EndsWith('.xml'))
+		{
+			RemoveDefinitonExtension $file
+			ChangeValueElement $file
+		}
+	}
 }
 
 Write-Host -ForegroundColor White "Copy files to project..."
@@ -170,14 +227,14 @@ CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-types.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v2-tables.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v3-codesystems.xml" "$srcdir\Hl7.Fhir.Specification\data"
+#CopySpecFile "v2-tables.xml" "$srcdir\Hl7.Fhir.Specification\data"
+#CopySpecFile "v3-codesystems.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "valuesets.xml" "$srcdir\Hl7.Fhir.Specification\data"
 
 # Add example files used for testing
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/v2/0717/v2-0717.vs.json"
+#PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/v2/0717/v2-0717.vs.json"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
