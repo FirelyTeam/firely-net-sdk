@@ -46,5 +46,4 @@ namespace Hl7.Fhir.Validation
             return desc;
         }
     }
-
 }
