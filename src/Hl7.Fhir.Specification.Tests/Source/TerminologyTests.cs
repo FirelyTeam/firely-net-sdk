@@ -184,9 +184,8 @@ namespace Hl7.Fhir.Specification.Tests
                 system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
             Assert.True(result.Success);
 
-            result =  svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct");
-            Assert.True(result.Success);
-
+            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
+            
             var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
             result = svc.ValidateCode(vsUrl, coding: coding);
             Assert.True(result.Success);
@@ -286,9 +285,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
-            Assert.True(result.Success);
-
+            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -319,8 +316,8 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            result = await svc.ValueSetValidateCode(inParams);
-            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+            await Assert.ThrowsAsync<FhirOperationException>( async () => await svc.ValueSetValidateCode(inParams));
+
         }       
 
         [Fact]
@@ -339,19 +336,8 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var result = await svc.ValueSetValidateCode(inParams);
-            Assert.Collection(result.Parameter,
-                     param =>
-                     {
-                         Assert.Equal("result", param.Name);
-                         Assert.False(((FhirBoolean)param.Value).Value);
-                         
-                     },
-                     param =>
-                     {
-                         Assert.Equal("message", param.Name);
-                         Assert.Equal("If a code is provided, a system or a context must be provided", ((FhirString)param.Value).Value);
-                     });
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            
         }
 
 
@@ -379,20 +365,9 @@ namespace Hl7.Fhir.Specification.Tests
                         Value = new FhirUri("urn:iso:std:iso:3166")
                     },
                 }
-            };           
+            };
 
-            var result =  await svc.ValueSetValidateCode(inParams);
-            Assert.Collection(result.Parameter,
-                    param =>
-                    {                        
-                        Assert.Equal("result", param.Name);                        
-                        Assert.False(((FhirBoolean)param.Value).Value);
-                    },
-                    param =>
-                    {                        
-                        Assert.Equal("message", param.Name);
-                        Assert.Equal("List of input parameters contains the following duplicates: code", ((FhirString)param.Value).Value);
-                    });
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
         }
 
         [Fact]
@@ -401,7 +376,7 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
 #pragma warning disable CS0618 // obsolete, but used for testing purposes
-            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", code: "test");
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context:"Partient.gender", code: "test");
 #pragma warning restore CS0618 
 
             Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
