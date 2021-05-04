@@ -27,7 +27,6 @@
   
 */
 
-using Hl7.Fhir.Introspection;
 using System;
 using System.Linq;
 
@@ -131,17 +130,40 @@ namespace Hl7.Fhir.Model
             set { throw new NotImplementedException(); }
         }
 
-        [Obsolete("This property is not a part of the official FHIR specification", true)]
         public bool? Experimental
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
-        [Obsolete("This property is not a part of the official FHIR specification", true)]
         public FhirBoolean ExperimentalElement
         {
             get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        /// <summary>
+        /// Will return the (first) preferred UniqueId, or the first UniqueId if there is no preferred UniqueId
+        /// </summary>
+        public string Url
+        {
+            get
+            {
+                var preferred = UniqueId.FirstOrDefault(id => id.Preferred == true)?.Value;
+                return preferred ?? UniqueId.FirstOrDefault()?.Value;
+            }
+            set { throw new NotImplementedException(); }
+        }
+
+        public FhirUri UrlElement
+        {
+            get
+            {
+                if (Url != null)
+                    return new FhirUri(Url);
+                else
+                    return null;
+            }
             set { throw new NotImplementedException(); }
         }
     }
