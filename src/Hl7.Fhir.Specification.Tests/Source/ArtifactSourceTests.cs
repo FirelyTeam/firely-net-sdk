@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -281,16 +282,11 @@ namespace Hl7.Fhir.Specification.Tests
                                                                             && kvp.Value != "DomainResource"
                                                                             )
                                                             .Select(kvp => kvp.Value);
-            var numCoreDataTypes = coreDataTypes.Count();
 
-            Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
-
-            // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
-            // Both arrays should contains same urls, possibly in different order
-            Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
-            Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
-            Assert.IsTrue(resourceIds.All(url => coreTypeUris.Contains(url)));
+
+            resourceIds.Should().Contain(coreTypeUris);
+            resourceIds.Should().BeEquivalentTo(coreTypeUris);
         }
 
         // [WMR 20170817] NEW
