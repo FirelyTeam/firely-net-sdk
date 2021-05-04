@@ -62,6 +62,13 @@ namespace Hl7.Fhir.Rest
                         {
                             result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement);
 
+                            //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
+                            // see also issue #1681
+                            if (result.Resource is OperationOutcome)
+                            {
+                                result.Response.Outcome = result.Resource;
+                            }
+
                             if (result.Response.Location != null)
                                 result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
                         }
