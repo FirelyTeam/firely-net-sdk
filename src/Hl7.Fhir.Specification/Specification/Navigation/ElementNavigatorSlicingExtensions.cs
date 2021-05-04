@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 
@@ -242,56 +243,33 @@ namespace Hl7.Fhir.Specification.Navigation
 
 
         /// <summary>
-        /// Enumerate any succeeding direct child slices of the specified element.
+        /// Enumerate any succeeding direct child slices of the current slice intro.
         /// Skip any intermediate child elements and re-slice elements.
         /// When finished, return the navigator to the initial position.
         /// </summary>
         /// <param name="intro"></param>
-        /// <param name="atRoot">Specify <c>true</c> for finding direct (simple) slices, or <c>false</c> for finding re-slices.</param>
-        /// <returns>A sequence of <see cref="Bookmark"/> instances.</returns>
-        internal static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro, bool atRoot)
+        /// <returns>A sequence of <see cref="Bookmark"/> instances for the positions of the child slices.</returns>
+        public static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro)
         {
+            if (!intro.IsSlicing()) throw new ArgumentException("Member slices can only be found relative to an intro slice.");
+
             var bm = intro.Bookmark();
 
-            var path = intro.Current.Path;
             var pathName = intro.PathName;
-            var name = intro.Current.SliceName;
+            var introSliceName = intro.Current.SliceName;
 
             while (intro.MoveToNext(pathName))
             {
-                var curName = intro.Current.SliceName;
-                if (atRoot)
+                var currentSliceName = intro.Current.SliceName;
+                if (ElementDefinitionNavigator.IsDirectSliceOf(currentSliceName, introSliceName))
                 {
-                    // Is this the slice-intro of the un-resliced original element? Then my name == null or
-                    // (in DSTU2) my name has no slicing separator (since name is used both for slicing and
-                    // re-use of constraints, e.g. Composition.section.name, just == null is not enough)
-                    // I am the root slice, my slices would be the unnamed slices (though this is strictly seen not correct, every slice needs a name)
-                    // and every slice with a non-resliced name
-                    if (curName == null)
-                    {
-                        yield return intro.Bookmark();
-                    }
-                    if (!ElementDefinitionNavigator.IsResliceName(curName))
-                    {
-                        yield return intro.Bookmark();
-                    }
+                    yield return intro.Bookmark();
                 }
-                else
-                {
-                    // Else, if I am a named slice, I am a slice myself, but also the intro to a nested re-sliced group,
-                    // so include only my children in my group...
-                    if (ElementDefinitionNavigator.IsResliceOf(curName, name))
-                    {
-                        yield return intro.Bookmark();
-                    }
-                }
-                
-                // Else...there might be something wrong, I need to add logic here to find slices that are out of 
-                // order, of have a resliced name that does not start with the last slice intro we found.
             }
 
             intro.ReturnToBookmark(bm);
         }
+
 
         /// <summary>Recursively clone the current element and all it's children and return a new navigator for the resulting subtree.</summary>
         /// <returns>A new <see cref="ElementDefinitionNavigator"/> instance that wraps the cloned element list.</returns>

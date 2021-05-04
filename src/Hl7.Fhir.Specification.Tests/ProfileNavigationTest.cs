@@ -6,13 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Collections.Generic;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -676,6 +676,24 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("D"));
             Assert.IsFalse(nav.MoveToNext());
         }
+
+
+        [DataTestMethod]
+        [DataRow(null, null, false)]
+        [DataRow("A", null, true)]
+        [DataRow("A/B", null, false)]
+        [DataRow("A", "A", false)]
+        [DataRow("B", "A", false)]
+        [DataRow("A/B", "A", true)]
+        [DataRow("A/B/C", "A", false)]
+        [DataRow("B/C", "A", false)]
+        [DataRow("AA", "A", false)]
+        [DataRow("A/BB", "A/B", false)]
+        public void DetectsResliceCorrectly(string child, string parent, bool result)
+        {
+            Assert.AreEqual(result, ElementDefinitionNavigator.IsDirectSliceOf(child, parent));
+        }
+
 
         [TestMethod]
         public void TestDistinctTypeCode()
