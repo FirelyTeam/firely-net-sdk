@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using Hl7.Fhir.Specification.Source;
+﻿using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
     [TestClass]
     public class RoundtripBinarySerialization
     {
@@ -17,9 +16,10 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var sd = await spec.FindStructureDefinitionForCoreTypeAsync("Patient");
 
-            BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new();
 
             var stream = new MemoryStream();
+
             formatter.Serialize(stream, sd);
             stream.Seek(0, SeekOrigin.Begin);
 
@@ -28,4 +28,5 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(sd.IsExactly(sd2));
         }
     }
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
 }
