@@ -365,6 +365,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("definingSubstance", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("SubstanceSpecification","Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType DefiningSubstance
@@ -1834,6 +1835,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("substance", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("SubstanceSpecification")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Substance

@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("chargeItem", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("ChargeItem")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

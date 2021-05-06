@@ -715,6 +715,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("indication", InSummary=true, Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("MedicinalProductIndication")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Indication
