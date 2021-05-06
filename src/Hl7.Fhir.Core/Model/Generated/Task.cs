@@ -636,6 +636,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=100, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("ActivityDefinition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Definition
