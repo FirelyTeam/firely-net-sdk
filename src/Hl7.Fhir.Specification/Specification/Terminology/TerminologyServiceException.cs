@@ -10,6 +10,8 @@ using System;
 
 namespace Hl7.Fhir.Specification.Terminology
 {
+    // MS: 2021-04-30
+    [Obsolete ("SDK will never throw this exception anymore, but it will raise a FhirOperationException instead")]
     public class TerminologyServiceException : Exception
     {
         public TerminologyServiceException(string message) : base(message)
@@ -17,13 +19,18 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 
+    // MS: 2021-04-30
+    [Obsolete("SDK will never throw this exception anymore, but it will raise a FhirOperationException instead")]
     public class ValueSetExpansionTooBigException : TerminologyServiceException
     {
+        //422 - too costly
         public ValueSetExpansionTooBigException(string message) : base(message)
         {
         }
     }
 
+    // MS: 2021-04-30
+    [Obsolete("SDK will never throw this exception anymore, but it will raise a FhirOperationException instead")]
     public class ValueSetExpansionTooComplexException : TerminologyServiceException
     {
         public ValueSetExpansionTooComplexException(string message) : base(message)
@@ -31,6 +38,8 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 
+    // MS: 2021-04-30
+    [Obsolete("SDK will never throw this exception anymore, but it will raise a FhirOperationException instead")]
     public class ValueSetUnknownException : TerminologyServiceException
     {
         public ValueSetUnknownException(string message) : base(message)

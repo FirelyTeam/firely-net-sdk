@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Specification.Tests
                 ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/data-absent-reason")
             };
 
-            var validator = binding.ToValidatable();
+            var validator = binding.ToValidatable("http://example.org/fhir/StructureDefitition/fhir#text.path");
             var vc = new ValidationContext() { TerminologyService = _termService };
             // Non-bindeable things should succeed
             Element v = new FhirBoolean(true);
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new ResourceReference("http://fhir.nl/fhir/NamingSystem/uzi-rolcode"),
+                ValueSet = new ResourceReference("http://hl7.org/fhir/ValueSet/address-type"),
                 Strength = BindingStrength.Required
             };
 
@@ -205,17 +205,20 @@ namespace Hl7.Fhir.Specification.Tests
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://non-existing.code.system", "01.015"));
           
-
             var result = val.Validate(cc.ToTypedElement(), vc);
-            Assert.True(result.Success);
+            Assert.False(result.Success);
             Assert.True(result.Issue.Count == 1);
-            Assert.StartsWith("Terminology service failed while validating code '01.015' (system 'http://non-existing.code.system')", result.Issue[0].Details.Text);
+            Assert.StartsWith("Code '01.015' from system 'http://non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'", result.Issue[0].Details.Text);
 
             cc.Coding.Add(new Coding("http://another-non-existing.code.system", "01.016"));
             result = val.Validate(cc.ToTypedElement(), vc);
-            Assert.True(result.Success);
+            Assert.False(result.Success);
             Assert.True(result.Issue.Count == 1);
-            Assert.StartsWith("Terminology service failed while validating the codes", result.Issue[0].Details.Text);
+            Assert.StartsWith("None of the Codings in the CodeableConcept were valid for the binding. Details follow.\r\n" +
+                              "Code '01.015' from system 'http://non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'\r\n\r\n" +
+                              "Code '01.016' from system 'http://another-non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'",
+                              result.Issue[0].Details.Text);
+
         }
     }
 }
