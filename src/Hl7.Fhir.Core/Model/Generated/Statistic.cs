@@ -423,13 +423,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("attributeEstimate", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Statistic.AttributeEstimateAttributeEstimateComponent> AttributeEstimate
+      public List<Hl7.Fhir.Model.Statistic.AttributeEstimateComponent> AttributeEstimate
       {
-        get { if(_AttributeEstimate==null) _AttributeEstimate = new List<Hl7.Fhir.Model.Statistic.AttributeEstimateAttributeEstimateComponent>(); return _AttributeEstimate; }
+        get { if(_AttributeEstimate==null) _AttributeEstimate = new List<Hl7.Fhir.Model.Statistic.AttributeEstimateComponent>(); return _AttributeEstimate; }
         set { _AttributeEstimate = value; OnPropertyChanged("AttributeEstimate"); }
       }
 
-      private List<Hl7.Fhir.Model.Statistic.AttributeEstimateAttributeEstimateComponent> _AttributeEstimate;
+      private List<Hl7.Fhir.Model.Statistic.AttributeEstimateComponent> _AttributeEstimate;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
         if(Quantity != null) dest.Quantity = (Hl7.Fhir.Model.Quantity)Quantity.DeepCopy();
         if(LevelElement != null) dest.LevelElement = (Hl7.Fhir.Model.FhirDecimal)LevelElement.DeepCopy();
         if(Range != null) dest.Range = (Hl7.Fhir.Model.Range)Range.DeepCopy();
-        if(AttributeEstimate != null) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Statistic.AttributeEstimateAttributeEstimateComponent>(AttributeEstimate.DeepCopy());
+        if(AttributeEstimate != null) dest.AttributeEstimate = new List<Hl7.Fhir.Model.Statistic.AttributeEstimateComponent>(AttributeEstimate.DeepCopy());
         return dest;
       }
 
@@ -529,13 +529,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Statistic#AttributeEstimateAttributeEstimate", IsNestedType=true)]
-    public partial class AttributeEstimateAttributeEstimateComponent : Hl7.Fhir.Model.Element
+    [FhirType("Statistic#AttributeEstimate", IsNestedType=true)]
+    public partial class AttributeEstimateComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Statistic#AttributeEstimateAttributeEstimate"; } }
+      public override string TypeName { get { return "Statistic#AttributeEstimate"; } }
 
       /// <summary>
       /// Textual description of the attribute estimate
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as AttributeEstimateAttributeEstimateComponent;
+        var dest = other as AttributeEstimateComponent;
 
         if (dest == null)
         {
@@ -673,12 +673,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new AttributeEstimateAttributeEstimateComponent());
+        return CopyTo(new AttributeEstimateComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as AttributeEstimateAttributeEstimateComponent;
+        var otherT = other as AttributeEstimateComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as AttributeEstimateAttributeEstimateComponent;
+        var otherT = other as AttributeEstimateComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
