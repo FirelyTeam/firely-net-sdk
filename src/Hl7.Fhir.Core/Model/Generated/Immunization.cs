@@ -1134,6 +1134,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("informationSource", Order=240, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType InformationSource
