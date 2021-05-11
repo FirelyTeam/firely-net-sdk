@@ -303,5 +303,36 @@ namespace Hl7.FhirPath.R4.Tests
             var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
             Assert.AreEqual(2, result.Count());
         }
-    }
+
+        [TestMethod]
+        public void TestFhirPathResolve()
+        {
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            var bundle = new Bundle
+            {
+                Entry = new List<Bundle.EntryComponent>
+        {
+            new Bundle.EntryComponent
+            {
+                FullUrl = $"urn:uuid:123456",
+                Resource = new Organization
+                {
+                    Id = "123456"
+                }
+            },
+            new Bundle.EntryComponent
+            {
+                FullUrl = $"urn:uuid:555",
+                Resource = new Patient
+                {
+                    ManagingOrganization = new ResourceReference($"urn:uuid:123456")
+                }
+            }
+        }
+            };
+
+            var result = bundle.Select("Bundle.entry.where(fullUrl = 'urn:uuid:555').resource.managingOrganization.resolve()");
+            Assert.IsTrue(result.Any());
+        }
+    }   
 }
