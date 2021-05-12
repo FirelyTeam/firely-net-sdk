@@ -142,6 +142,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Medication","Substance","Device")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Item
