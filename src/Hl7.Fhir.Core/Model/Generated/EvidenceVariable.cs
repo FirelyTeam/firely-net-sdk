@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Group")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.TriggerDefinition))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

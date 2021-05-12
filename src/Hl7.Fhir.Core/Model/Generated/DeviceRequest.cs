@@ -386,6 +386,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Device")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
