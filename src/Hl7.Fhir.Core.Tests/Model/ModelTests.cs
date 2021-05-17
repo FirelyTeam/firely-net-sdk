@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
+using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -64,6 +65,19 @@ namespace Hl7.Fhir.Tests.Model
             var stamp = new DateTimeOffset(1972, 11, 30, 15, 10, 0, TimeSpan.Zero);
             dt = new FhirDateTime(stamp);
             Assert.IsTrue(dt.Value.EndsWith("+00:00"));
+        }
+
+        //Added for issue #1498
+        [TestMethod]
+        public void FhirDateTimeConversionTimeZoneInformationLoss()
+        {
+            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));           
+            Assert.AreEqual("2021-03-18T12:22:35.999-04:00", fdt.Value);
+
+            var dto1 = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(fdt.Value);
+            var dto2 = fdt.ToDateTimeOffset();
+            Assert.AreEqual("2021-03-18T12:22:35.9990000-04:00", dto1.ToString("o"));
+            Assert.AreEqual("2021-03-18T12:22:35.9990000-04:00", dto2.ToString("o"));
         }
 
         [TestMethod]
