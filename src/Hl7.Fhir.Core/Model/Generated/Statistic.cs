@@ -787,13 +787,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("variable", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Statistic.VariableComponent> Variable
+      public List<Hl7.Fhir.Model.Statistic.ModelCharacteristicVariableComponent> Variable
       {
-        get { if(_Variable==null) _Variable = new List<Hl7.Fhir.Model.Statistic.VariableComponent>(); return _Variable; }
+        get { if(_Variable==null) _Variable = new List<Hl7.Fhir.Model.Statistic.ModelCharacteristicVariableComponent>(); return _Variable; }
         set { _Variable = value; OnPropertyChanged("Variable"); }
       }
 
-      private List<Hl7.Fhir.Model.Statistic.VariableComponent> _Variable;
+      private List<Hl7.Fhir.Model.Statistic.ModelCharacteristicVariableComponent> _Variable;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         if(Value != null) dest.Value = (Hl7.Fhir.Model.DataType)Value.DeepCopy();
-        if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.Statistic.VariableComponent>(Variable.DeepCopy());
+        if(Variable != null) dest.Variable = new List<Hl7.Fhir.Model.Statistic.ModelCharacteristicVariableComponent>(Variable.DeepCopy());
         return dest;
       }
 
@@ -873,13 +873,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Statistic#Variable", IsNestedType=true)]
-    public partial class VariableComponent : Hl7.Fhir.Model.Element
+    [FhirType("Statistic#ModelCharacteristicVariable", IsNestedType=true)]
+    public partial class ModelCharacteristicVariableComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Statistic#Variable"; } }
+      public override string TypeName { get { return "Statistic#ModelCharacteristicVariable"; } }
 
       /// <summary>
       /// Description of the variable
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as VariableComponent;
+        var dest = other as ModelCharacteristicVariableComponent;
 
         if (dest == null)
         {
@@ -990,12 +990,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new VariableComponent());
+        return CopyTo(new ModelCharacteristicVariableComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as VariableComponent;
+        var otherT = other as ModelCharacteristicVariableComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as VariableComponent;
+        var otherT = other as ModelCharacteristicVariableComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
