@@ -645,6 +645,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("product", Order=310, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Device","Medication","Substance")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Product

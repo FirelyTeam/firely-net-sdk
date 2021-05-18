@@ -1911,6 +1911,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("substanceDefinition", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("SubstanceDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [DataMember]
       public Hl7.Fhir.Model.DataType SubstanceDefinition

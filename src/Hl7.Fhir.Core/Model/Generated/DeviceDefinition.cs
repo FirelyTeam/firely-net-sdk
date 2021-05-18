@@ -958,6 +958,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("manufacturer", Order=110, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Manufacturer

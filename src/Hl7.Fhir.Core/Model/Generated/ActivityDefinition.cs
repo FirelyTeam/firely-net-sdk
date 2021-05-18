@@ -645,6 +645,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Subject
@@ -1237,6 +1238,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("product", Order=460, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Medication","Substance")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Product

@@ -332,6 +332,7 @@
 // CatalogEntry.cs
 // ChargeItem.cs
 // ChargeItemDefinition.cs
+// Citation.cs
 // Claim.cs
 // ClaimResponse.cs
 // ClinicalImpression.cs

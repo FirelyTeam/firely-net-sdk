@@ -3084,6 +3084,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Binary")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
