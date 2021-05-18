@@ -28,12 +28,13 @@
 
 */
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.Introspection;
 using System.Diagnostics;
-using Hl7.Fhir.Utility;
+using System.Linq;
 using System.Reflection;
 
 namespace Hl7.Fhir.Model
@@ -100,7 +101,7 @@ namespace Hl7.Fhir.Model
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="FHIRAllTypes"/> enum value, or <c>null</c>.</summary>
         public static FHIRAllTypes? FhirTypeNameToFhirType(string typeName)
-            => _fhirTypeNameToFhirType.TryGetValue(typeName, out var result) ? (FHIRAllTypes?)result : null;
+            => _fhirTypeNameToFhirType.TryGetValue(typeName, out var result) ? result : null;
 
         /// <summary>Returns the <see cref="FHIRAllTypes"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
         public static string FhirTypeToFhirTypeName(FHIRAllTypes type)
@@ -116,7 +117,7 @@ namespace Hl7.Fhir.Model
 
         /// <summary>Returns the FHIR type name represented by the specified <see cref="ResourceType"/> enum value, or <c>null</c>.</summary>
         public static ResourceType? FhirTypeNameToResourceType(string typeName)
-            => _fhirTypeNameToResourceType.TryGetValue(typeName, out var result) ? (ResourceType?)result : null;
+            => _fhirTypeNameToResourceType.TryGetValue(typeName, out var result) ? result : null;
 
         /// <summary>Returns the <see cref="ResourceType"/> enum value that represents the specified FHIR type name, or <c>null</c>.</summary>
         public static string ResourceTypeToFhirTypeName(ResourceType type)
@@ -246,7 +247,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <summary>Subset of <see cref="FHIRAllTypes"/> enumeration values for conformance resources.</summary>
-        public static readonly FHIRAllTypes[] ConformanceResources = 
+        public static readonly FHIRAllTypes[] ConformanceResources =
         {
             FHIRAllTypes.StructureDefinition,
             FHIRAllTypes.StructureMap,
@@ -316,9 +317,9 @@ namespace Hl7.Fhir.Model
         /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
         /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
         public static bool IsCoreModelType(string name) => FhirTypeToCsType.ContainsKey(name);
-            // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+        // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
 
-        
+
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 
         /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
@@ -329,7 +330,7 @@ namespace Hl7.Fhir.Model
             return uri != null
                 // [WMR 20181025] Issue #746
                 // Note: FhirCoreProfileBaseUri.IsBaseOf(new Uri("Dummy", UriKind.RelativeOrAbsolute)) = true...?!
-                && uri.IsAbsoluteUri 
+                && uri.IsAbsoluteUri
                 && FhirCoreProfileBaseUri.IsBaseOf(uri)
                 && IsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
         }
@@ -474,23 +475,8 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
-        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
-        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
-        private static readonly Lazy<ModelInspector> _versionedProvider
-            = new Lazy<ModelInspector>(createVersionedProvider);
-
-        private static ModelInspector createVersionedProvider()
-        {
-            var result = new ModelInspector(Specification.FhirRelease.STU3);
-
-            result.Import(typeof(Resource).GetTypeInfo().Assembly);
-            result.Import(typeof(ModelInfo).GetTypeInfo().Assembly);
-
-            return result;
-        }
-
-        internal static ModelInspector GetStructureDefinitionSummaryProvider() =>
-            _versionedProvider.Value;
+        internal static ModelInspector ModelInspector => TypedSerialization.GetInspectorForAssembly(
+            typeof(ModelInfo).GetTypeInfo().Assembly);
 
         public static readonly Type[] OpenTypes =
         {
