@@ -975,13 +975,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("entry", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.EntryComponent> Entry
+      public List<Hl7.Fhir.Model.Citation.ContributorshipEntryComponent> Entry
       {
-        get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Citation.EntryComponent>(); return _Entry; }
+        get { if(_Entry==null) _Entry = new List<Hl7.Fhir.Model.Citation.ContributorshipEntryComponent>(); return _Entry; }
         set { _Entry = value; OnPropertyChanged("Entry"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.EntryComponent> _Entry;
+      private List<Hl7.Fhir.Model.Citation.ContributorshipEntryComponent> _Entry;
 
       /// <summary>
       /// Used to record a display of the author/contributor list without separate coding for each list member
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(CompleteElement != null) dest.CompleteElement = (Hl7.Fhir.Model.FhirBoolean)CompleteElement.DeepCopy();
-        if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Citation.EntryComponent>(Entry.DeepCopy());
+        if(Entry != null) dest.Entry = new List<Hl7.Fhir.Model.Citation.ContributorshipEntryComponent>(Entry.DeepCopy());
         if(Summary != null) dest.Summary = new List<Hl7.Fhir.Model.Citation.ContributorshipSummaryComponent>(Summary.DeepCopy());
         return dest;
       }
@@ -1075,13 +1075,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#Entry", IsNestedType=true)]
-    public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#ContributorshipEntry", IsNestedType=true)]
+    public partial class ContributorshipEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#Entry"; } }
+      public override string TypeName { get { return "Citation#ContributorshipEntry"; } }
 
       /// <summary>
       /// A name associated with the person
@@ -1178,13 +1178,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("affiliationInfo", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.AffiliationInfoComponent> AffiliationInfo
+      public List<Hl7.Fhir.Model.Citation.ContributorshipEntryAffiliationInfoComponent> AffiliationInfo
       {
-        get { if(_AffiliationInfo==null) _AffiliationInfo = new List<Hl7.Fhir.Model.Citation.AffiliationInfoComponent>(); return _AffiliationInfo; }
+        get { if(_AffiliationInfo==null) _AffiliationInfo = new List<Hl7.Fhir.Model.Citation.ContributorshipEntryAffiliationInfoComponent>(); return _AffiliationInfo; }
         set { _AffiliationInfo = value; OnPropertyChanged("AffiliationInfo"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.AffiliationInfoComponent> _AffiliationInfo;
+      private List<Hl7.Fhir.Model.Citation.ContributorshipEntryAffiliationInfoComponent> _AffiliationInfo;
 
       /// <summary>
       /// Physical mailing address
@@ -1323,7 +1323,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as EntryComponent;
+        var dest = other as ContributorshipEntryComponent;
 
         if (dest == null)
         {
@@ -1335,7 +1335,7 @@ namespace Hl7.Fhir.Model
         if(InitialsElement != null) dest.InitialsElement = (Hl7.Fhir.Model.FhirString)InitialsElement.DeepCopy();
         if(CollectiveNameElement != null) dest.CollectiveNameElement = (Hl7.Fhir.Model.FhirString)CollectiveNameElement.DeepCopy();
         if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-        if(AffiliationInfo != null) dest.AffiliationInfo = new List<Hl7.Fhir.Model.Citation.AffiliationInfoComponent>(AffiliationInfo.DeepCopy());
+        if(AffiliationInfo != null) dest.AffiliationInfo = new List<Hl7.Fhir.Model.Citation.ContributorshipEntryAffiliationInfoComponent>(AffiliationInfo.DeepCopy());
         if(Address != null) dest.Address = new List<Hl7.Fhir.Model.Address>(Address.DeepCopy());
         if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
         if(Contribution != null) dest.Contribution = new List<Hl7.Fhir.Model.CodeableConcept>(Contribution.DeepCopy());
@@ -1347,12 +1347,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new EntryComponent());
+        return CopyTo(new ContributorshipEntryComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as EntryComponent;
+        var otherT = other as ContributorshipEntryComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as EntryComponent;
+        var otherT = other as ContributorshipEntryComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -1439,13 +1439,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#AffiliationInfo", IsNestedType=true)]
-    public partial class AffiliationInfoComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#ContributorshipEntryAffiliationInfo", IsNestedType=true)]
+    public partial class ContributorshipEntryAffiliationInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#AffiliationInfo"; } }
+      public override string TypeName { get { return "Citation#ContributorshipEntryAffiliationInfo"; } }
 
       /// <summary>
       /// Display for the organization
@@ -1525,7 +1525,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as AffiliationInfoComponent;
+        var dest = other as ContributorshipEntryAffiliationInfoComponent;
 
         if (dest == null)
         {
@@ -1541,12 +1541,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new AffiliationInfoComponent());
+        return CopyTo(new ContributorshipEntryAffiliationInfoComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as AffiliationInfoComponent;
+        var otherT = other as ContributorshipEntryAffiliationInfoComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as AffiliationInfoComponent;
+        var otherT = other as ContributorshipEntryAffiliationInfoComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -1771,13 +1771,13 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("publishedIn", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Citation.PublishedInComponent PublishedIn
+      public Hl7.Fhir.Model.Citation.PublicationFormPublishedInComponent PublishedIn
       {
         get { return _PublishedIn; }
         set { _PublishedIn = value; OnPropertyChanged("PublishedIn"); }
       }
 
-      private Hl7.Fhir.Model.Citation.PublishedInComponent _PublishedIn;
+      private Hl7.Fhir.Model.Citation.PublicationFormPublishedInComponent _PublishedIn;
 
       /// <summary>
       /// The specific issue in which the cited article resides
@@ -1785,13 +1785,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("periodicRelease", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.PeriodicReleaseComponent> PeriodicRelease
+      public List<Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseComponent> PeriodicRelease
       {
-        get { if(_PeriodicRelease==null) _PeriodicRelease = new List<Hl7.Fhir.Model.Citation.PeriodicReleaseComponent>(); return _PeriodicRelease; }
+        get { if(_PeriodicRelease==null) _PeriodicRelease = new List<Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseComponent>(); return _PeriodicRelease; }
         set { _PeriodicRelease = value; OnPropertyChanged("PeriodicRelease"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.PeriodicReleaseComponent> _PeriodicRelease;
+      private List<Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseComponent> _PeriodicRelease;
 
       /// <summary>
       /// The date the article was added to the database, or the date the article was released
@@ -2004,8 +2004,8 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(PublishingModel != null) dest.PublishingModel = (Hl7.Fhir.Model.CodeableConcept)PublishingModel.DeepCopy();
-        if(PublishedIn != null) dest.PublishedIn = (Hl7.Fhir.Model.Citation.PublishedInComponent)PublishedIn.DeepCopy();
-        if(PeriodicRelease != null) dest.PeriodicRelease = new List<Hl7.Fhir.Model.Citation.PeriodicReleaseComponent>(PeriodicRelease.DeepCopy());
+        if(PublishedIn != null) dest.PublishedIn = (Hl7.Fhir.Model.Citation.PublicationFormPublishedInComponent)PublishedIn.DeepCopy();
+        if(PeriodicRelease != null) dest.PeriodicRelease = new List<Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseComponent>(PeriodicRelease.DeepCopy());
         if(ArticleDateElement != null) dest.ArticleDateElement = (Hl7.Fhir.Model.FhirDateTime)ArticleDateElement.DeepCopy();
         if(RevisionDateElement != null) dest.RevisionDateElement = (Hl7.Fhir.Model.FhirDateTime)RevisionDateElement.DeepCopy();
         if(Language != null) dest.Language = new List<Hl7.Fhir.Model.CodeableConcept>(Language.DeepCopy());
@@ -2106,13 +2106,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#PublishedIn", IsNestedType=true)]
-    public partial class PublishedInComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#PublicationFormPublishedIn", IsNestedType=true)]
+    public partial class PublicationFormPublishedInComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#PublishedIn"; } }
+      public override string TypeName { get { return "Citation#PublicationFormPublishedIn"; } }
 
       /// <summary>
       /// Periodical, database, or book
@@ -2251,7 +2251,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as PublishedInComponent;
+        var dest = other as PublicationFormPublishedInComponent;
 
         if (dest == null)
         {
@@ -2270,12 +2270,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new PublishedInComponent());
+        return CopyTo(new PublicationFormPublishedInComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as PublishedInComponent;
+        var otherT = other as PublicationFormPublishedInComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -2291,7 +2291,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as PublishedInComponent;
+        var otherT = other as PublicationFormPublishedInComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -2342,13 +2342,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#PeriodicRelease", IsNestedType=true)]
-    public partial class PeriodicReleaseComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#PublicationFormPeriodicRelease", IsNestedType=true)]
+    public partial class PublicationFormPeriodicReleaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#PeriodicRelease"; } }
+      public override string TypeName { get { return "Citation#PublicationFormPeriodicRelease"; } }
 
       /// <summary>
       /// Internet or Print
@@ -2430,17 +2430,17 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("dateOfPublication", Order=70)]
       [DataMember]
-      public Hl7.Fhir.Model.Citation.DateOfPublicationComponent DateOfPublication
+      public Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseDateOfPublicationComponent DateOfPublication
       {
         get { return _DateOfPublication; }
         set { _DateOfPublication = value; OnPropertyChanged("DateOfPublication"); }
       }
 
-      private Hl7.Fhir.Model.Citation.DateOfPublicationComponent _DateOfPublication;
+      private Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseDateOfPublicationComponent _DateOfPublication;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as PeriodicReleaseComponent;
+        var dest = other as PublicationFormPeriodicReleaseComponent;
 
         if (dest == null)
         {
@@ -2451,18 +2451,18 @@ namespace Hl7.Fhir.Model
         if(CitedMedium != null) dest.CitedMedium = (Hl7.Fhir.Model.CodeableConcept)CitedMedium.DeepCopy();
         if(VolumeElement != null) dest.VolumeElement = (Hl7.Fhir.Model.FhirString)VolumeElement.DeepCopy();
         if(IssueElement != null) dest.IssueElement = (Hl7.Fhir.Model.FhirString)IssueElement.DeepCopy();
-        if(DateOfPublication != null) dest.DateOfPublication = (Hl7.Fhir.Model.Citation.DateOfPublicationComponent)DateOfPublication.DeepCopy();
+        if(DateOfPublication != null) dest.DateOfPublication = (Hl7.Fhir.Model.Citation.PublicationFormPeriodicReleaseDateOfPublicationComponent)DateOfPublication.DeepCopy();
         return dest;
       }
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new PeriodicReleaseComponent());
+        return CopyTo(new PublicationFormPeriodicReleaseComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as PeriodicReleaseComponent;
+        var otherT = other as PublicationFormPeriodicReleaseComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -2476,7 +2476,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as PeriodicReleaseComponent;
+        var otherT = other as PublicationFormPeriodicReleaseComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -2521,13 +2521,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#DateOfPublication", IsNestedType=true)]
-    public partial class DateOfPublicationComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#PublicationFormPeriodicReleaseDateOfPublication", IsNestedType=true)]
+    public partial class PublicationFormPeriodicReleaseDateOfPublicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#DateOfPublication"; } }
+      public override string TypeName { get { return "Citation#PublicationFormPeriodicReleaseDateOfPublication"; } }
 
       /// <summary>
       /// Date on which the issue of the journal was published
@@ -2717,7 +2717,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as DateOfPublicationComponent;
+        var dest = other as PublicationFormPeriodicReleaseDateOfPublicationComponent;
 
         if (dest == null)
         {
@@ -2736,12 +2736,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new DateOfPublicationComponent());
+        return CopyTo(new PublicationFormPeriodicReleaseDateOfPublicationComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as DateOfPublicationComponent;
+        var otherT = other as PublicationFormPeriodicReleaseDateOfPublicationComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -2757,7 +2757,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as DateOfPublicationComponent;
+        var otherT = other as PublicationFormPeriodicReleaseDateOfPublicationComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -2853,13 +2853,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("keyword", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.KeywordComponent> Keyword
+      public List<Hl7.Fhir.Model.Citation.KeywordListKeywordComponent> Keyword
       {
-        get { if(_Keyword==null) _Keyword = new List<Hl7.Fhir.Model.Citation.KeywordComponent>(); return _Keyword; }
+        get { if(_Keyword==null) _Keyword = new List<Hl7.Fhir.Model.Citation.KeywordListKeywordComponent>(); return _Keyword; }
         set { _Keyword = value; OnPropertyChanged("Keyword"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.KeywordComponent> _Keyword;
+      private List<Hl7.Fhir.Model.Citation.KeywordListKeywordComponent> _Keyword;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -2872,7 +2872,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(OwnerElement != null) dest.OwnerElement = (Hl7.Fhir.Model.FhirString)OwnerElement.DeepCopy();
-        if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.Citation.KeywordComponent>(Keyword.DeepCopy());
+        if(Keyword != null) dest.Keyword = new List<Hl7.Fhir.Model.Citation.KeywordListKeywordComponent>(Keyword.DeepCopy());
         return dest;
       }
 
@@ -2934,13 +2934,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#Keyword", IsNestedType=true)]
-    public partial class KeywordComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#KeywordListKeyword", IsNestedType=true)]
+    public partial class KeywordListKeywordComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#Keyword"; } }
+      public override string TypeName { get { return "Citation#KeywordListKeyword"; } }
 
       /// <summary>
       /// Whether or not it is a major topic
@@ -3007,7 +3007,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as KeywordComponent;
+        var dest = other as KeywordListKeywordComponent;
 
         if (dest == null)
         {
@@ -3022,12 +3022,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new KeywordComponent());
+        return CopyTo(new KeywordListKeywordComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as KeywordComponent;
+        var otherT = other as KeywordListKeywordComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -3039,7 +3039,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as KeywordComponent;
+        var otherT = other as KeywordListKeywordComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -3247,13 +3247,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("dateOnPubMed", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.DateOnPubMedComponent> DateOnPubMed
+      public List<Hl7.Fhir.Model.Citation.MedlineDateOnPubMedComponent> DateOnPubMed
       {
-        get { if(_DateOnPubMed==null) _DateOnPubMed = new List<Hl7.Fhir.Model.Citation.DateOnPubMedComponent>(); return _DateOnPubMed; }
+        get { if(_DateOnPubMed==null) _DateOnPubMed = new List<Hl7.Fhir.Model.Citation.MedlineDateOnPubMedComponent>(); return _DateOnPubMed; }
         set { _DateOnPubMed = value; OnPropertyChanged("DateOnPubMed"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.DateOnPubMedComponent> _DateOnPubMed;
+      private List<Hl7.Fhir.Model.Citation.MedlineDateOnPubMedComponent> _DateOnPubMed;
 
       /// <summary>
       /// received | accepted | epublish | ppublish | revised | aheadofprint | retracted | ecollection | pmc | pmcr | pubmed | pubmedr | premedline | medline | medliner | entrez | pmc-release
@@ -3292,13 +3292,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("relatedArticle", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.Citation.RelatedArticleComponent> RelatedArticle
+      public List<Hl7.Fhir.Model.Citation.MedlineRelatedArticleComponent> RelatedArticle
       {
-        get { if(_RelatedArticle==null) _RelatedArticle = new List<Hl7.Fhir.Model.Citation.RelatedArticleComponent>(); return _RelatedArticle; }
+        get { if(_RelatedArticle==null) _RelatedArticle = new List<Hl7.Fhir.Model.Citation.MedlineRelatedArticleComponent>(); return _RelatedArticle; }
         set { _RelatedArticle = value; OnPropertyChanged("RelatedArticle"); }
       }
 
-      private List<Hl7.Fhir.Model.Citation.RelatedArticleComponent> _RelatedArticle;
+      private List<Hl7.Fhir.Model.Citation.MedlineRelatedArticleComponent> _RelatedArticle;
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -3315,9 +3315,9 @@ namespace Hl7.Fhir.Model
         if(DateCreatedElement != null) dest.DateCreatedElement = (Hl7.Fhir.Model.Date)DateCreatedElement.DeepCopy();
         if(DateCompletedElement != null) dest.DateCompletedElement = (Hl7.Fhir.Model.Date)DateCompletedElement.DeepCopy();
         if(DateRevisedElement != null) dest.DateRevisedElement = (Hl7.Fhir.Model.Date)DateRevisedElement.DeepCopy();
-        if(DateOnPubMed != null) dest.DateOnPubMed = new List<Hl7.Fhir.Model.Citation.DateOnPubMedComponent>(DateOnPubMed.DeepCopy());
+        if(DateOnPubMed != null) dest.DateOnPubMed = new List<Hl7.Fhir.Model.Citation.MedlineDateOnPubMedComponent>(DateOnPubMed.DeepCopy());
         if(PublicationStateElement != null) dest.PublicationStateElement = (Code<Hl7.Fhir.Model.Citation.PubMedPubStatus>)PublicationStateElement.DeepCopy();
-        if(RelatedArticle != null) dest.RelatedArticle = new List<Hl7.Fhir.Model.Citation.RelatedArticleComponent>(RelatedArticle.DeepCopy());
+        if(RelatedArticle != null) dest.RelatedArticle = new List<Hl7.Fhir.Model.Citation.MedlineRelatedArticleComponent>(RelatedArticle.DeepCopy());
         return dest;
       }
 
@@ -3403,13 +3403,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#DateOnPubMed", IsNestedType=true)]
-    public partial class DateOnPubMedComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#MedlineDateOnPubMed", IsNestedType=true)]
+    public partial class MedlineDateOnPubMedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#DateOnPubMed"; } }
+      public override string TypeName { get { return "Citation#MedlineDateOnPubMed"; } }
 
       /// <summary>
       /// received | accepted | epublish | ppublish | revised | aheadofprint | retracted | ecollection | pmc | pmcr | pubmed | pubmedr | premedline | medline | medliner | entrez | pmc-release
@@ -3475,7 +3475,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as DateOnPubMedComponent;
+        var dest = other as MedlineDateOnPubMedComponent;
 
         if (dest == null)
         {
@@ -3490,12 +3490,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new DateOnPubMedComponent());
+        return CopyTo(new MedlineDateOnPubMedComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as DateOnPubMedComponent;
+        var otherT = other as MedlineDateOnPubMedComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -3507,7 +3507,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as DateOnPubMedComponent;
+        var otherT = other as MedlineDateOnPubMedComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -3546,13 +3546,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("Citation#RelatedArticle", IsNestedType=true)]
-    public partial class RelatedArticleComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("Citation#MedlineRelatedArticle", IsNestedType=true)]
+    public partial class MedlineRelatedArticleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "Citation#RelatedArticle"; } }
+      public override string TypeName { get { return "Citation#MedlineRelatedArticle"; } }
 
       /// <summary>
       /// Citation Resource for related article
@@ -3598,7 +3598,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as RelatedArticleComponent;
+        var dest = other as MedlineRelatedArticleComponent;
 
         if (dest == null)
         {
@@ -3614,12 +3614,12 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new RelatedArticleComponent());
+        return CopyTo(new MedlineRelatedArticleComponent());
       }
 
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as RelatedArticleComponent;
+        var otherT = other as MedlineRelatedArticleComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -3632,7 +3632,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as RelatedArticleComponent;
+        var otherT = other as MedlineRelatedArticleComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
