@@ -10,6 +10,10 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Specification
 {
+    /// <summary>
+    /// An implementation of <see cref="IStructureDefinitionSummaryProvider"/> that obtains
+    /// its metadata from the POCO assemblies for this release.
+    /// </summary>
     public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
         public IStructureDefinitionSummary Provide(string canonical) =>
