@@ -160,6 +160,7 @@ namespace Hl7.Fhir.Model
       /// male | female | other | unknown
       /// </summary>
       [FhirElement("gender", Order=80)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -593,6 +594,7 @@ namespace Hl7.Fhir.Model
       /// replaced-by | replaces | refer | seealso - type of link
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -766,6 +768,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

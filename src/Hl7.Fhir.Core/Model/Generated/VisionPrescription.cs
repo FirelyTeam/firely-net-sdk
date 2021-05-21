@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
       /// right | left
       /// </summary>
       [FhirElement("eye", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
       {
@@ -296,6 +297,7 @@ namespace Hl7.Fhir.Model
       /// up | down | in | out
       /// </summary>
       [FhirElement("base", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
       {
@@ -687,6 +689,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {

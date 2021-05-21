@@ -1166,6 +1166,7 @@ namespace Hl7.Fhir.Model
     /// proposed | draft | planned | requested | active | on-hold | completed | cancelled | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.NutritionOrder.NutritionOrderStatus> StatusElement
     {

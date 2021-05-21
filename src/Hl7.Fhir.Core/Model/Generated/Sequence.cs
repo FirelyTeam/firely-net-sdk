@@ -720,6 +720,7 @@ namespace Hl7.Fhir.Model
       /// indel | snp | unknown
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.qualityType> TypeElement
@@ -1242,6 +1243,7 @@ namespace Hl7.Fhir.Model
       /// directlink | openapi | login | oauth | other
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.repositoryType> TypeElement

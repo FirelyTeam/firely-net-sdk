@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     /// named-event | periodic | data-added | data-modified | data-removed | data-accessed | data-access-ended
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement

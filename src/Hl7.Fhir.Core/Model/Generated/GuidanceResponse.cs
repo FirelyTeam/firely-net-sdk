@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
     /// success | data-requested | data-required | in-progress | failure | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement

@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// required | optional | information-only
       /// </summary>
       [FhirElement("required", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
       {
@@ -218,6 +219,7 @@ namespace Hl7.Fhir.Model
       /// accepted | declined | tentative | needs-action
       /// </summary>
       [FhirElement("status", Order=70)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
@@ -342,6 +344,7 @@ namespace Hl7.Fhir.Model
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement

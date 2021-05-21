@@ -347,6 +347,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
     {
@@ -391,6 +392,7 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

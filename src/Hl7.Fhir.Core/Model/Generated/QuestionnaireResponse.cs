@@ -508,6 +508,7 @@ namespace Hl7.Fhir.Model
     /// in-progress | completed | amended | entered-in-error | stopped
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement

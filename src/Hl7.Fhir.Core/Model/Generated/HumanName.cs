@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     /// usual | official | temp | nickname | anonymous | old | maiden
     /// </summary>
     [FhirElement("use", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement
     {

@@ -180,6 +180,7 @@ namespace Hl7.Fhir.Model
     /// accepted | declined | tentative | in-process | completed | needs-action | entered-in-error
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement

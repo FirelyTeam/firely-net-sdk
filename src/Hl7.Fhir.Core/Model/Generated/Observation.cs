@@ -316,6 +316,7 @@ namespace Hl7.Fhir.Model
       /// has-member | derived-from | sequel-to | replaces | qualified-by | interfered-by
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
       {
@@ -626,6 +627,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
