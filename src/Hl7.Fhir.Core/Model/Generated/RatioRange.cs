@@ -43,47 +43,60 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Model
 {
   /// <summary>
-  /// Reference to a resource or a concept
+  /// Range of ratio values
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CodeableReference")]
-  public partial class CodeableReference : Hl7.Fhir.Model.DataType
+  [FhirType("RatioRange")]
+  public partial class RatioRange : Hl7.Fhir.Model.DataType
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "CodeableReference"; } }
+    public override string TypeName { get { return "RatioRange"; } }
 
     /// <summary>
-    /// Reference to a concept (by class)
+    /// Low Numerator limit
     /// </summary>
-    [FhirElement("concept", InSummary=true, Order=30)]
+    [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Concept
+    public Hl7.Fhir.Model.Quantity LowNumerator
     {
-      get { return _Concept; }
-      set { _Concept = value; OnPropertyChanged("Concept"); }
+      get { return _LowNumerator; }
+      set { _LowNumerator = value; OnPropertyChanged("LowNumerator"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _Concept;
+    private Hl7.Fhir.Model.Quantity _LowNumerator;
 
     /// <summary>
-    /// Reference to a resource (by instance)
+    /// High Numerator limit
     /// </summary>
-    [FhirElement("reference", InSummary=true, Order=40)]
+    [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Reference
+    public Hl7.Fhir.Model.Quantity HighNumerator
     {
-      get { return _Reference; }
-      set { _Reference = value; OnPropertyChanged("Reference"); }
+      get { return _HighNumerator; }
+      set { _HighNumerator = value; OnPropertyChanged("HighNumerator"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Reference;
+    private Hl7.Fhir.Model.Quantity _HighNumerator;
+
+    /// <summary>
+    /// Denominator value
+    /// </summary>
+    [FhirElement("denominator", InSummary=true, Order=50)]
+    [DataMember]
+    public Hl7.Fhir.Model.Quantity Denominator
+    {
+      get { return _Denominator; }
+      set { _Denominator = value; OnPropertyChanged("Denominator"); }
+    }
+
+    private Hl7.Fhir.Model.Quantity _Denominator;
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      var dest = other as CodeableReference;
+      var dest = other as RatioRange;
 
       if (dest == null)
       {
@@ -91,36 +104,39 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Concept != null) dest.Concept = (Hl7.Fhir.Model.CodeableConcept)Concept.DeepCopy();
-      if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
+      if(LowNumerator != null) dest.LowNumerator = (Hl7.Fhir.Model.Quantity)LowNumerator.DeepCopy();
+      if(HighNumerator != null) dest.HighNumerator = (Hl7.Fhir.Model.Quantity)HighNumerator.DeepCopy();
+      if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
       return dest;
     }
 
     public override IDeepCopyable DeepCopy()
     {
-      return CopyTo(new CodeableReference());
+      return CopyTo(new RatioRange());
     }
 
     public override bool Matches(IDeepComparable other)
     {
-      var otherT = other as CodeableReference;
+      var otherT = other as RatioRange;
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Concept, otherT.Concept)) return false;
-      if( !DeepComparable.Matches(Reference, otherT.Reference)) return false;
+      if( !DeepComparable.Matches(LowNumerator, otherT.LowNumerator)) return false;
+      if( !DeepComparable.Matches(HighNumerator, otherT.HighNumerator)) return false;
+      if( !DeepComparable.Matches(Denominator, otherT.Denominator)) return false;
 
       return true;
     }
 
     public override bool IsExactly(IDeepComparable other)
     {
-      var otherT = other as CodeableReference;
+      var otherT = other as RatioRange;
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Concept, otherT.Concept)) return false;
-      if( !DeepComparable.IsExactly(Reference, otherT.Reference)) return false;
+      if( !DeepComparable.IsExactly(LowNumerator, otherT.LowNumerator)) return false;
+      if( !DeepComparable.IsExactly(HighNumerator, otherT.HighNumerator)) return false;
+      if( !DeepComparable.IsExactly(Denominator, otherT.Denominator)) return false;
 
       return true;
     }
@@ -131,8 +147,9 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.Children) yield return item;
-        if (Concept != null) yield return Concept;
-        if (Reference != null) yield return Reference;
+        if (LowNumerator != null) yield return LowNumerator;
+        if (HighNumerator != null) yield return HighNumerator;
+        if (Denominator != null) yield return Denominator;
       }
     }
 
@@ -142,8 +159,9 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.NamedChildren) yield return item;
-        if (Concept != null) yield return new ElementValue("concept", Concept);
-        if (Reference != null) yield return new ElementValue("reference", Reference);
+        if (LowNumerator != null) yield return new ElementValue("lowNumerator", LowNumerator);
+        if (HighNumerator != null) yield return new ElementValue("highNumerator", HighNumerator);
+        if (Denominator != null) yield return new ElementValue("denominator", Denominator);
       }
     }
 
