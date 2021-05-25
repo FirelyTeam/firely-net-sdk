@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,9 +74,9 @@
               <xs:documentation xml:lang="en">Identifiers assigned to this research subject for a study.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="status" minOccurs="1" maxOccurs="1" type="ResearchSubjectStatus">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The current state of the subject.</xs:documentation>
+              <xs:documentation xml:lang="en">The publication state of the resource (not of the subject).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="progress" type="ResearchSubject.Progress" minOccurs="0" maxOccurs="unbounded">
@@ -94,9 +94,9 @@
               <xs:documentation xml:lang="en">Reference to the study the subject is participating in.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="individual" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The record of the person or animal who is involved in the study.</xs:documentation>
+              <xs:documentation xml:lang="en">The record of the person, animal or other entity involved in the study.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="assignedArm" minOccurs="0" maxOccurs="1" type="string">
@@ -130,7 +130,7 @@
               <xs:documentation xml:lang="en">Identifies the aspect of the subject's journey that the state refers to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="state" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="subjectState" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The current state of the subject.</xs:documentation>
            </xs:annotation>
@@ -145,92 +145,17 @@
               <xs:documentation xml:lang="en">The reason for the state change.  If coded it should follow the formal subject state model.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="startDate" minOccurs="1" maxOccurs="1" type="dateTime">
+          <xs:element name="startDate" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date when the change in status occurred.</xs:documentation>
+              <xs:documentation xml:lang="en">The date when the new status started.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="endDate" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date when the state ended.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ResearchSubjectStatus-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="candidate">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Candidate</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="eligible">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Eligible</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="follow-up">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Follow-up</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ineligible">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Ineligible</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="not-registered">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Not Registered</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="off-study">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Off-study</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="on-study">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">On-study</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="on-study-intervention">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">On-study-intervention</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="on-study-observation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">On-study-observation</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="pending-on-study">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Pending on-study</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="potential-candidate">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Potential Candidate</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="screening">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Screening</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="withdrawn">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Withdrawn</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ResearchSubjectStatus">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates the progression of a study subject through a study.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ResearchSubjectStatus-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

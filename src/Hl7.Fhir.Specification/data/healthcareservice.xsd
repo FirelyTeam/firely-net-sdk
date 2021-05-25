@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -307,7 +307,7 @@
   </xs:simpleType>
   <xs:complexType name="DaysOfWeek">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The days of the week.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

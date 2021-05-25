@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -81,7 +81,7 @@
           </xs:element>
           <xs:element name="verificationStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Assertion about certainty associated with the propensity, or potential risk, of a reaction to the identified substance (including pharmaceutical product).</xs:documentation>
+              <xs:documentation xml:lang="en">Assertion about certainty associated with the propensity, or potential risk, of a reaction to the identified substance (including pharmaceutical product).  The verification status pertains to the allergy or intolerance, itself, not to any specific AllergyIntolerance attribute.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="AllergyIntoleranceType">
@@ -170,7 +170,7 @@
               <xs:documentation xml:lang="en">Identification of the specific substance (or pharmaceutical product) considered to be responsible for the Adverse Reaction event. Note: the substance for a specific reaction may be different from the substance identified as the cause of the risk, but it must be consistent with it. For instance, it may be a more specific substance (e.g. a brand medication) or a composite product that includes the identified substance. It must be clinically safe to only process the 'code' and ignore the 'reaction.substance'.  If a receiving system is unable to confirm that AllergyIntolerance.reaction.substance falls within the semantic scope of AllergyIntolerance.code, then the receiving system should ignore AllergyIntolerance.reaction.substance.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="manifestation" minOccurs="1" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="manifestation" minOccurs="1" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Clinical symptoms and/or signs that are observed or associated with the adverse reaction event.</xs:documentation>
            </xs:annotation>
@@ -225,7 +225,7 @@
   </xs:simpleType>
   <xs:complexType name="AllergyIntoleranceCriticality">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Estimate of the potential clinical harm, or seriousness, of a reaction to an identified substance.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -250,7 +250,7 @@
   </xs:simpleType>
   <xs:complexType name="AllergyIntoleranceType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Identification of the underlying physiological mechanism for a Reaction Risk.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -285,7 +285,7 @@
   </xs:simpleType>
   <xs:complexType name="AllergyIntoleranceCategory">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Category of an identified substance associated with allergies or intolerances.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -315,7 +315,7 @@
   </xs:simpleType>
   <xs:complexType name="AllergyIntoleranceSeverity">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Clinical assessment of the severity of a reaction event as a whole, potentially considering multiple different manifestations.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
