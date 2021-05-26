@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Age")]
+  [FhirType("Age","http://hl7.org/fhir/StructureDefinition/Age")]
   public partial class Age : Quantity
   {
     /// <summary>

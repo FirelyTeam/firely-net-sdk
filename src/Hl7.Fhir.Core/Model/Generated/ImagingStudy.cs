@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ImagingStudy", IsResource=true)]
+  [FhirType("ImagingStudy","http://hl7.org/fhir/StructureDefinition/ImagingStudy", IsResource=true)]
   public partial class ImagingStudy : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DataRequirement")]
+  [FhirType("DataRequirement","http://hl7.org/fhir/StructureDefinition/DataRequirement")]
   public partial class DataRequirement : Hl7.Fhir.Model.DataType
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Bundle", IsResource=true)]
+  [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle", IsResource=true)]
   public partial class Bundle : Hl7.Fhir.Model.Resource
   {
     /// <summary>

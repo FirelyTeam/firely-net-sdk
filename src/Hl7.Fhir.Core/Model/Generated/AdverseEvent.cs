@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AdverseEvent", IsResource=true)]
+  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

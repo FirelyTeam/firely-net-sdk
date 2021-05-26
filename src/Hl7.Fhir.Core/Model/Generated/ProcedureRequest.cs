@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ProcedureRequest", IsResource=true)]
+  [FhirType("ProcedureRequest","http://hl7.org/fhir/StructureDefinition/ProcedureRequest", IsResource=true)]
   public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

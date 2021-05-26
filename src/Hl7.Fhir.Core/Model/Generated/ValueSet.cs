@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ValueSet", IsResource=true)]
+  [FhirType("ValueSet","http://hl7.org/fhir/StructureDefinition/ValueSet", IsResource=true)]
   public partial class ValueSet : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

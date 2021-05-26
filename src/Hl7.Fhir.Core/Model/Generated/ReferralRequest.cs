@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ReferralRequest", IsResource=true)]
+  [FhirType("ReferralRequest","http://hl7.org/fhir/StructureDefinition/ReferralRequest", IsResource=true)]
   public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

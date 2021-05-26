@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AppointmentResponse", IsResource=true)]
+  [FhirType("AppointmentResponse","http://hl7.org/fhir/StructureDefinition/AppointmentResponse", IsResource=true)]
   public partial class AppointmentResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

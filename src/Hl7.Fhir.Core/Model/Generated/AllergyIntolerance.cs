@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AllergyIntolerance", IsResource=true)]
+  [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance", IsResource=true)]
   public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

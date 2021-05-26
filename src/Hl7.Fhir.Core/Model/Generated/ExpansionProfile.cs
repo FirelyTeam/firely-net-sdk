@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ExpansionProfile", IsResource=true)]
+  [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile", IsResource=true)]
   public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

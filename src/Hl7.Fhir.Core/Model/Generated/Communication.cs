@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Communication", IsResource=true)]
+  [FhirType("Communication","http://hl7.org/fhir/StructureDefinition/Communication", IsResource=true)]
   public partial class Communication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

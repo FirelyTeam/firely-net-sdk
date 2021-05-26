@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ConceptMap", IsResource=true)]
+  [FhirType("ConceptMap","http://hl7.org/fhir/StructureDefinition/ConceptMap", IsResource=true)]
   public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

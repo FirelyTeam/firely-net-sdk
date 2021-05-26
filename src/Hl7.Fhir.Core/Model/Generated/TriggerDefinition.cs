@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("TriggerDefinition")]
+  [FhirType("TriggerDefinition","http://hl7.org/fhir/StructureDefinition/TriggerDefinition")]
   public partial class TriggerDefinition : Hl7.Fhir.Model.DataType
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Group", IsResource=true)]
+  [FhirType("Group","http://hl7.org/fhir/StructureDefinition/Group", IsResource=true)]
   public partial class Group : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

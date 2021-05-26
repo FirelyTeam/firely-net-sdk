@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("EpisodeOfCare", IsResource=true)]
+  [FhirType("EpisodeOfCare","http://hl7.org/fhir/StructureDefinition/EpisodeOfCare", IsResource=true)]
   public partial class EpisodeOfCare : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
