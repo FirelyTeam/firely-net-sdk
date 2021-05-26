@@ -2617,6 +2617,9 @@ namespace Hl7.Fhir.Specification.Tests
             // Generate snapshots for all core resources, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
             var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
+
+            // R5, version 4.6.0: StructureDefinition is not correct for Citation (Citation.summary should be BackboneElement)
+            coreResourceUrls = coreResourceUrls.Where(url => !url.EndsWith("Citation"));
             await testExpandResources(coreResourceUrls.ToArray());
         }
 
