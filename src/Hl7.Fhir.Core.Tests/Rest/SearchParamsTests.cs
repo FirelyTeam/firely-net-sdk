@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams();
             var formatException = AssertThrows<FormatException>(() => q.Add("_sort", "-"));
-            Assert.AreEqual("Invalid _sort: one of the values is just a single '-', an element name must be provided", formatException.Message);            
+            Assert.AreEqual("Invalid _sort: one of the values is just a single '-', an element name must be provided", formatException.Message);
         }
 
 
@@ -430,6 +430,7 @@ namespace Hl7.Fhir.Test.Rest
         }
 
         [TestMethod]
+        [Ignore("SearchParameters are not available: they are not present in the package hl7.fhir.r5.core-4.6.0")]
         public void CheckManualFixesOfTemplateModelInfo()
         {
             //Manualy removed target of EpisodeOfCare from searchparameter DiagnosticReport.encounter
