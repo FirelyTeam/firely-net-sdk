@@ -248,6 +248,7 @@ foreach($file in $allFiles)
 		if ($file.EndsWith('profiles-resources.xml'))
 		{
 			RemoveDoubleVersionsInValueSets $file
+			RemoveDefinitonExtension $file
 		}
 	}
 }

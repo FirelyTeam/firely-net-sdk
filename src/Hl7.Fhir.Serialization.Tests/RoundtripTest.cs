@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.Contains("conceptmaps."))  // version 4.6.0: identifier is not an array
                 return true;
-            if (file.EndsWith("-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
+            if (file.EndsWith("-questionnaire.json") && !file.EndsWith("operation-structuredefinition-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
                 return true; //
             return false;
         }
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 if (!File.Exists(actualFile))
                 {
 
-                    errors.Add($"File {exampleName}.{extension} was not converted and not found in {actualPath}");
+                    errors.Add($"File {exampleName}{extension} was not converted and not found in {actualPath}");
                     return;
                 }
 
