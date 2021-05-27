@@ -37,7 +37,7 @@
     <rule text="Mustsupport must be true on Patient.identifier.system" fhirpath="fixture('t8-output').snapshot.element.where(path = 'Patient.identifier.system').mustSupport"/>
   </test>
   <test gen="true" id="t9">
-    <rule text="Mustsupport must not be true on Patient.identifier" fhirpath="fixture('t9-output').snapshot.element.where(path = 'Patient.identifier').mustSupport.empty()"/>
+    <rule text="Mustsupport must not be true on Patient.identifier" fhirpath="fixture('t9-output').snapshot.element.where(path = 'Patient.identifier').mustSupport.not()"/>
     <rule text="Mustsupport must be true on Patient.identifier.system" fhirpath="fixture('t9-output').snapshot.element.where(path = 'Patient.identifier.system').mustSupport"/>
   </test>
   <test gen="true" id="t10">

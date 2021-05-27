@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -131,7 +131,7 @@
               <xs:documentation xml:lang="en">Captures the reason for the current status.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="expressedBy" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="source" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates whose goal this is - patient goal, practitioner goal, etc.</xs:documentation>
            </xs:annotation>
@@ -241,7 +241,7 @@
   </xs:simpleType>
   <xs:complexType name="GoalLifecycleStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Codes that reflect the current state of a goal and whether the goal is still being targeted.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

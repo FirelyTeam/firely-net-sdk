@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -84,6 +84,11 @@
               <xs:documentation xml:lang="en">The type of measure report. This may be an individual report, which provides the score for the measure for an individual member of the population; a subject-listing, which returns the list of members that meet the various criteria in the measure; a summary report, which returns a population count for each of the criteria in the measure; or a data-collection, which enables the MeasureReport to be used to exchange the data-of-interest for a quality measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="dataUpdateType" minOccurs="0" maxOccurs="1" type="SubmitDataUpdateType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates whether the data submitted in an data-exchange report represents a snapshot or incremental update. A snapshot update replaces all previously submitted data for the receiver, whereas an incremental update represents only updated and/or changed data and should be applied as a differential update to the existing submitted data for the receiver.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="measure" minOccurs="1" maxOccurs="1" type="canonical">
             <xs:annotation>
               <xs:documentation xml:lang="en">A reference to the Measure that was calculated to produce this report.</xs:documentation>
@@ -104,9 +109,19 @@
               <xs:documentation xml:lang="en">The individual, location, or organization that is reporting the data.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="reportingVendor" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to the vendor who queried the data, calculated results and/or generated the report. The ‘reporting vendor’ is intended to represent the submitting entity when it is not the same as the reporting entity. This extension is used when the Receiver is interested in getting vendor information in the report.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reporting period for which the report was calculated.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="scoring" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how the calculation is performed for the measure, including proportion, ratio, continuous-variable, and cohort. The value set is extensible, allowing additional measure scoring types to be represented. It is expected to be the same as the scoring element on the referenced Measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="improvementNotation" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -145,11 +160,17 @@
               <xs:documentation xml:lang="en">The populations that make up the population group, one for each type of population appropriate for the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="measureScore" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The measure score for this population group, calculated as appropriate for the measure type and scoring method, and based on the contents of the populations defined in the group.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="measureScoreQuantity" type="Quantity"/>
+            <xs:element name="measureScoreDateTime" type="dateTime"/>
+            <xs:element name="measureScoreCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="measureScorePeriod" type="Period"/>
+            <xs:element name="measureScoreRange" type="Range"/>
+            <xs:element name="measureScoreDuration" type="Duration"/>
+          </xs:choice>
           <xs:element name="stratifier" type="MeasureReport.Stratifier" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">When a measure includes multiple stratifiers, there will be a stratifier group for each stratifier defined by the measure.</xs:documentation>
@@ -213,11 +234,16 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="value" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The value for this stratum, expressed as a CodeableConcept. When defining stratifiers on complex values, the value must be rendered such that the value for each stratum within the stratifier is unique.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueReference" type="Reference"/>
+          </xs:choice>
           <xs:element name="component" type="MeasureReport.Component" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A stratifier component value.</xs:documentation>
@@ -228,11 +254,17 @@
               <xs:documentation xml:lang="en">The populations that make up the stratum, one for each type of population appropriate to the measure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="measureScore" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The measure score for this stratum, calculated as appropriate for the measure type and scoring method, and based on only the members of this stratum.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="measureScoreQuantity" type="Quantity"/>
+            <xs:element name="measureScoreDateTime" type="dateTime"/>
+            <xs:element name="measureScoreCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="measureScorePeriod" type="Period"/>
+            <xs:element name="measureScoreRange" type="Range"/>
+            <xs:element name="measureScoreDuration" type="Duration"/>
+          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -249,11 +281,16 @@
               <xs:documentation xml:lang="en">The code for the stratum component value.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="value" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The stratum component value.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+            </xs:annotation>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueReference" type="Reference"/>
+          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -281,6 +318,31 @@
            </xs:annotation>
           </xs:element>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SubmitDataUpdateType-list">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="incremental">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Incremental</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="snapshot">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Snapshot</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="SubmitDataUpdateType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="SubmitDataUpdateType-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

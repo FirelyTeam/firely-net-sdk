@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -306,7 +306,7 @@
   </xs:simpleType>
   <xs:complexType name="HTTPVerb">
     <xs:annotation>
-      <xs:documentation xml:lang="en">HTTP verbs (in the HTTP command line). See [HTTP rfc](https://tools.ietf.org/html/rfc7231) for details.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -371,7 +371,7 @@
   </xs:simpleType>
   <xs:complexType name="BundleType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates the purpose of a bundle - how it is intended to be used.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -401,7 +401,7 @@
   </xs:simpleType>
   <xs:complexType name="SearchEntryMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Why an entry is in the result set - whether it's included as a match or because of an _include requirement, or to convey information or warning information about the search process.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

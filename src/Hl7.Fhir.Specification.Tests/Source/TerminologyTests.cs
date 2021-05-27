@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(27, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced
+            Assert.Equal(28, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0
         }
 
         [Fact]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task LocalTermServiceUsingDuplicateParameters()
         {
-            var svc = new LocalTerminologyService(_resolver);           
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
@@ -344,9 +344,9 @@ namespace Hl7.Fhir.Specification.Tests
                         Value = new FhirUri("urn:iso:std:iso:3166")
                     },
                 }
-            };           
+            };
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
 
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
         }
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Specification.Tests
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
-            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
+            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
             Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
 
             ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));

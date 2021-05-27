@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -99,6 +99,11 @@
               <xs:documentation xml:lang="en">If the substance applies to only human or veterinary use.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="grade" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The quality standard, established benchmark, to which substance complies (e.g. USP/NF, Ph. Eur, JP, BP, Company Standard).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">Textual description of the substance.</xs:documentation>
@@ -111,7 +116,7 @@
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Textual comment about this record of a substance.</xs:documentation>
+              <xs:documentation xml:lang="en">Textual comment about the substance's catalogue or registry record.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="manufacturer" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -179,7 +184,7 @@
               <xs:documentation xml:lang="en">Data items specific to proteins.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="sourceMaterial" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="sourceMaterial" type="SubstanceDefinition.SourceMaterial" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Material or taxonomic/anatomical source for the substance.</xs:documentation>
            </xs:annotation>
@@ -582,7 +587,7 @@
           </xs:choice>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">For example &quot;salt to parent&quot;, &quot;active moiety&quot;, &quot;starting material&quot;, &quot;polymorph&quot;.</xs:documentation>
+              <xs:documentation xml:lang="en">For example &quot;salt to parent&quot;, &quot;active moiety&quot;, &quot;starting material&quot;, &quot;polymorph&quot;, &quot;impurity of&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="isDefining" minOccurs="0" maxOccurs="1" type="boolean">
@@ -612,6 +617,42 @@
           <xs:element name="source" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Supporting literature.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.SourceMaterial">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A classification that provides the origin of the raw material. Example: cat hair would be an Animal source type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="genus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The genus of an organism, typically referring to the Latin epithet of the genus element of the plant/animal scientific name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="species" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The species of an organism, typically referring to the Latin epithet of the species of the plant/animal.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="part" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An anatomical origin of the source material within an organism.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="countryOfOrigin" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The country or countries where the material is harvested.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

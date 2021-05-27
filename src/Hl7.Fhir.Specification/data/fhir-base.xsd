@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,7 +69,7 @@
   </xs:simpleType>
   <xs:complexType name="date">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A date or partial date (e.g. just year or year + month). There is no time zone. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.</xs:documentation>
+      <xs:documentation xml:lang="en">A date or partial date (e.g. just year or year + month). There is no UTC offset. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -88,7 +88,7 @@
   </xs:simpleType>
   <xs:complexType name="dateTime">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a time zone SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.</xs:documentation>
+      <xs:documentation xml:lang="en">A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a UTC offset SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -100,7 +100,7 @@
   <xs:simpleType name="code-primitive">
     <xs:restriction base="xs:token">
       <xs:minLength value="1"/>
-      <xs:pattern value="[^\s]+(\s[^\s]+)*"/>
+      <xs:pattern value="[^\s]+( [^\s]+)*"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="code">
@@ -261,7 +261,7 @@
   <xs:complexType name="instant">
     <xs:annotation>
       <xs:documentation xml:lang="en">An instant in time - known at least to the second</xs:documentation>
-      <xs:documentation xml:lang="en">Note: This is intended for where precisely observed times are required, typically system logs etc., and not human-reported times - for them, see date and dateTime (which can be as precise as instant, but is not required to be) below. Time zone is always required</xs:documentation>
+      <xs:documentation xml:lang="en">Note: This is intended for where precisely observed times are required, typically system logs etc., and not human-reported times - for them, see date and dateTime (which can be as precise as instant, but is not required to be) below. UTC offset is always required</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -288,7 +288,7 @@
   </xs:complexType>
   <xs:simpleType name="base64Binary-primitive">
     <xs:restriction base="xs:base64Binary">
-      <xs:pattern value="(\s*([0-9a-zA-Z\+/=]){4}\s*)+"/>
+      <xs:pattern value="(\s*([0-9a-zA-Z*\/*\+\=]){4}\s*)+"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="base64Binary">
@@ -449,7 +449,7 @@
       <xs:element ref="DeviceDefinition"/>
       <xs:element ref="DeviceMetric"/>
       <xs:element ref="DeviceRequest"/>
-      <xs:element ref="DeviceUseStatement"/>
+      <xs:element ref="DeviceUsage"/>
       <xs:element ref="DiagnosticReport"/>
       <xs:element ref="DocumentManifest"/>
       <xs:element ref="DocumentReference"/>
@@ -478,6 +478,7 @@
       <xs:element ref="ImplementationGuide"/>
       <xs:element ref="Ingredient"/>
       <xs:element ref="InsurancePlan"/>
+      <xs:element ref="InventoryReport"/>
       <xs:element ref="Invoice"/>
       <xs:element ref="Library"/>
       <xs:element ref="Linkage"/>
@@ -1735,6 +1736,33 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
        </xs:extension>
      </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="RatioRange">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A range of ratios expressed as a low and high numerator and a denominator.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DataType">
+        <xs:sequence>
+          <xs:element name="lowNumerator" type="Quantity" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The value of the low limit numerator.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="highNumerator" type="Quantity" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The value of the high limit numerator.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="denominator" type="Quantity" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The value of the denominator.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="Statistic">
     <xs:annotation>
       <xs:documentation xml:lang="en">A fact or piece of data from a  study of a large quantity of numerical data.  A mathematical or quantified characteristic of a group of observations.</xs:documentation>
@@ -1758,14 +1786,24 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
               <xs:documentation xml:lang="en">Type of statistic, eg relative risk.</xs:documentation>
             </xs:annotation>
           </xs:element>
+          <xs:element name="category" type="CodeableConcept" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">When the measured variable is handled categorically, the category element is used to define which category the statistic is reporting.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
           <xs:element name="quantity" type="Quantity" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Statistic value.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfEvents" type="integer" minOccurs="0" maxOccurs="1">
+          <xs:element name="numberOfEvents" type="unsignedInt" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The number of events associated with the statistic.</xs:documentation>
+              <xs:documentation xml:lang="en">The number of events associated with the statistic, where the unit of analysis is different from numberAffected, sampleSize.knownDataCount and sampleSize.numberOfParticipants.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="numberAffected" type="unsignedInt" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The number of participants affected where the unit of analysis is the same as sampleSize.knownDataCount and sampleSize.numberOfParticipants.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="sampleSize" type="Statistic.SampleSize" minOccurs="0" maxOccurs="1">
@@ -1795,20 +1833,16 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
     <xs:complexContent>
       <xs:extension base="BackboneType">
         <xs:sequence>
-          <xs:element name="code" type="CodeableConcept" minOccurs="0" maxOccurs="1">
+          <xs:element name="code" type="CodeableConcept" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Description of a component of the method to generate the statistic.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1">
+          <xs:element name="value" type="Quantity" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Further specification of a component of the method to generate the statistic.</xs:documentation>
+              <xs:documentation xml:lang="en">Further specification of the quantified value of the component of the method to generate the statistic.</xs:documentation>
             </xs:annotation>
-           <xs:element name="valueCodeableConcept" type="CodeableConcept"  maxOccurs="1"/>
-           <xs:element name="valueBoolean" type="boolean"  maxOccurs="1"/>
-           <xs:element name="valueQuantity" type="Quantity"  maxOccurs="1"/>
-           <xs:element name="valueRange" type="Range"  maxOccurs="1"/>
-          </xs:choice>
+          </xs:element>
           <xs:element name="variable" type="Statistic.Variable" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A variable adjusted for in the adjusted analysis.</xs:documentation>
@@ -1836,17 +1870,17 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
               <xs:documentation xml:lang="en">Footnote or explanatory note about the sample size.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfStudies" type="integer" minOccurs="0" maxOccurs="1">
+          <xs:element name="numberOfStudies" type="unsignedInt" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Number of participants in the population.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="numberOfParticipants" type="integer" minOccurs="0" maxOccurs="1">
+          <xs:element name="numberOfParticipants" type="unsignedInt" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">A human-readable string to clarify or explain concepts about the sample size.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="knownDataCount" type="integer" minOccurs="0" maxOccurs="1">
+          <xs:element name="knownDataCount" type="unsignedInt" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">Number of participants with known results for measured variables.</xs:documentation>
             </xs:annotation>
@@ -3303,6 +3337,11 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           <xs:documentation xml:lang="en">Greater than</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="ad">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Sufficient to achieve this total quantity</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="QuantityComparator">
@@ -3751,7 +3790,8 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="durationUnit" type="UnitsOfTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The units of time for the duration, in UCUM units.</xs:documentation>
+              <xs:documentation xml:lang="en">The units of time for the duration, in UCUM units
+Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="frequency" type="positiveInt" minOccurs="0" maxOccurs="1">
@@ -3776,7 +3816,8 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="periodUnit" type="UnitsOfTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The units of time for the period in UCUM units.</xs:documentation>
+              <xs:documentation xml:lang="en">The units of time for the period in UCUM units
+Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="dayOfWeek" type="code" minOccurs="0" maxOccurs="unbounded">
@@ -3913,6 +3954,11 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:enumeration value="PHS">
         <xs:annotation>
           <xs:documentation xml:lang="en">After Sleep</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="IMD">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Immediate</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="HS">
@@ -4492,7 +4538,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
        </xs:extension>
      </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="Event Or Request Resource Types-list">
+  <xs:simpleType name="EventOrRequestResourceTypes-list">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="ChargeItem">
         <xs:annotation>
@@ -4534,9 +4580,9 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
           <xs:documentation xml:lang="en">Coverage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="DiagnosticReport">
@@ -4741,14 +4787,14 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="Event Or Request Resource Types">
+  <xs:complexType name="EventOrRequestResourceTypes">
     <xs:annotation>
       <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
        <xs:extension base="Element">
-         <xs:attribute name="value" type="Event Or Request Resource Types-list" use="optional"/>
+         <xs:attribute name="value" type="EventOrRequestResourceTypes-list" use="optional"/>
        </xs:extension>
      </xs:complexContent>
   </xs:complexType>
@@ -4794,9 +4840,9 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
           <xs:documentation xml:lang="en">Coverage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="DiagnosticReport">
@@ -5169,6 +5215,11 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
           <xs:documentation xml:lang="en">4.5.0</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="4.6.0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.6.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="FHIRVersion">
@@ -5214,14 +5265,9 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
   </xs:complexType>
   <xs:simpleType name="RemittanceOutcome-list">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="queued">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Queued</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="complete">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Processing Complete</xs:documentation>
+          <xs:documentation xml:lang="en">Complete</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="error">
@@ -5231,7 +5277,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       </xs:enumeration>
       <xs:enumeration value="partial">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Partial Processing</xs:documentation>
+          <xs:documentation xml:lang="en">Partial</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

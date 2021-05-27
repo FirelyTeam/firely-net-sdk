@@ -2,7 +2,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
   <meta>
-    <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+    <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
   </meta>
   <type value="collection" />
   <entry>
@@ -17,11 +17,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v2.AdministrativeGender" />
         <title value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0001" />
@@ -78,11 +78,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.AdministrativeGender" />
         <title value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AdministrativeGender" />
@@ -133,11 +133,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.DataAbsentReason" />
         <title value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-NullFlavor" />
@@ -223,11 +223,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.DocumentReferenceStatus" />
         <title value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/document-reference-status" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
@@ -271,11 +271,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v2.NameUse" />
         <title value="v2 map for NameUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -363,11 +363,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.NameUse" />
         <title value="v3 map for NameUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -449,11 +449,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v2.AddressUse" />
         <title value="v2 map for AddressUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -522,11 +522,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.AddressUse" />
         <title value="v3 map for AddressUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -593,11 +593,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.AddressType" />
         <title value="v3 map for AddressType" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -644,11 +644,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v2.ContactPointSystem" />
         <title value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -718,11 +718,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v2.ContactPointUse" />
         <title value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -787,11 +787,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.ContactPointUse" />
         <title value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2021-04-15T12:25:09+10:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -865,22 +865,12 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.DetectedIssueSeverity" />
         <title value="v3 map for DetectedIssueSeverity" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2020-12-24T21:13:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-SeverityObservation" />
         <group>
@@ -923,22 +913,12 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="v3.CompositionStatus" />
         <title value="v3 map for CompositionStatus" />
         <status value="draft" />
-        <date value="2020-08-20T17:41:31+10:00" />
+        <date value="2020-12-24T21:13:15+00:00" />
         <publisher value="HL7 (FHIR Project)" />
-        <contact>
-          <telecom>
-            <system value="url" />
-            <value value="http://hl7.org/fhir" />
-          </telecom>
-          <telecom>
-            <system value="email" />
-            <value value="fhir@lists.hl7.org" />
-          </telecom>
-        </contact>
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/composition-status" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
         <group>
@@ -982,7 +962,7 @@
       <ConceptMap>
         <id value="101" />
         <meta>
-          <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+          <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
         </meta>
         <text>
           <status value="extensions" />
@@ -995,7 +975,7 @@
           <system value="urn:ietf:rfc:3986" />
           <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b" />
         </identifier>
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="FHIR-v3-Address-Use" />
         <title value="FHIR/v3 Address Use Mapping" />
         <status value="draft" />
@@ -1084,7 +1064,7 @@
       <ConceptMap>
         <id value="103" />
         <meta>
-          <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+          <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
         </meta>
         <text>
           <status value="extensions" />
@@ -1097,7 +1077,7 @@
           <system value="urn:ietf:rfc:3986" />
           <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b" />
         </identifier>
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="SNOMED CT to ICD-10-CM mappings for fracture of ulna" />
         <status value="draft" />
         <experimental value="true" />
@@ -1124,9 +1104,7 @@
         <targetCanonical value="http://hl7.org/fhir/sid/icd-10-us" />
         <group>
           <source value="http://snomed.info/sct" />
-          <sourceVersion value="March 2015 US Edition" />
           <target value="http://hl7.org/fhir/sid/icd-10-us" />
-          <targetVersion value="2015" />
           <element>
             <code value="263204007" />
             <target>
@@ -1152,7 +1130,7 @@
       <ConceptMap>
         <id value="102" />
         <meta>
-          <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+          <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
         </meta>
         <text>
           <status value="extensions" />
@@ -1161,7 +1139,7 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/102" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="Specimen mapping from v2 table 0487 to SNOMED CT" />
         <status value="draft" />
         <experimental value="false" />
@@ -3767,7 +3745,7 @@
       <ConceptMap>
         <id value="example2" />
         <meta>
-          <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+          <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
         </meta>
         <text>
           <status value="extensions" />
@@ -3776,7 +3754,7 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/example2" />
-        <version value="4.5.0" />
+        <version value="4.6.0" />
         <name value="FHIR-exanple-2" />
         <title value="FHIR Example 2" />
         <status value="draft" />
@@ -3826,7 +3804,7 @@
       <ConceptMap>
         <id value="cdshooks-indicator" />
         <meta>
-          <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+          <lastUpdated value="2021-04-15T12:25:09.461+10:00" />
         </meta>
         <text>
           <status value="extensions" />

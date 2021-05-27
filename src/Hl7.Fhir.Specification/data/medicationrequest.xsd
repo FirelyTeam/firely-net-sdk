@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -280,6 +280,16 @@
               <xs:documentation xml:lang="en">Indicates the intended performing Organization that will dispense the medication as specified by the prescriber.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="dispenserInstruction" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides additional information to the dispenser, for example, counselling to be provided to the patient.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="doseAdministrationAid" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides information about the type of adherence packaging to be supplied for the medication dispense.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -374,7 +384,7 @@
   </xs:simpleType>
   <xs:complexType name="medicationrequestStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A coded concept specifying the state of the prescribing event. Describes the lifecycle of the prescription.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -429,7 +439,7 @@
   </xs:simpleType>
   <xs:complexType name="medicationRequestIntent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The kind of medication order.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

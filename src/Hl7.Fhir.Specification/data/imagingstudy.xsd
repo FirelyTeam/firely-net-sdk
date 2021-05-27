@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0 
+  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -71,17 +71,17 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifiers for the ImagingStudy such as DICOM Study Instance UID, and Accession Number.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers for the ImagingStudy such as DICOM Study Instance UID.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ImagingStudyStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The current state of the ImagingStudy.</xs:documentation>
+              <xs:documentation xml:lang="en">The current state of the ImagingStudy resource. This is not the status of any ServiceRequest or Task resources associated with the ImagingStudy.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="modality" minOccurs="0" maxOccurs="unbounded" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A list of all the distinct values of series.modality. This may include both aquisition and non-aquisition modalities.</xs:documentation>
+              <xs:documentation xml:lang="en">A list of all the distinct values of series.modality. This may include both acquisition and non-acquisition modalities.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
@@ -200,7 +200,7 @@
           </xs:element>
           <xs:element name="modality" minOccurs="1" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The distinct modality for this series. This may include both aquisition and non-aquisition modalities.</xs:documentation>
+              <xs:documentation xml:lang="en">The distinct modality for this series. This may include both acquisition and non-acquisition modalities.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
@@ -335,7 +335,7 @@
   </xs:simpleType>
   <xs:complexType name="ImagingStudyStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The status of the ImagingStudy.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
