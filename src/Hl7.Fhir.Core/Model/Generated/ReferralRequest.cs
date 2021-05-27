@@ -246,6 +246,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -278,6 +279,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -323,6 +325,7 @@ namespace Hl7.Fhir.Model
     /// Urgency of referral / transfer of care request
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

@@ -462,6 +462,7 @@ namespace Hl7.Fhir.Model
     /// person | animal | practitioner | device | medication | substance
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement

@@ -172,6 +172,7 @@ namespace Hl7.Fhir.Model
       /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
       /// </summary>
       [FhirElement("status", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
@@ -938,6 +939,7 @@ namespace Hl7.Fhir.Model
       /// planned | active | reserved | completed
       /// </summary>
       [FhirElement("status", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
       {
@@ -1069,6 +1071,7 @@ namespace Hl7.Fhir.Model
     /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement

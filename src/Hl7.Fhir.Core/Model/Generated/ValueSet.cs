@@ -828,6 +828,7 @@ namespace Hl7.Fhir.Model
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
       /// </summary>
       [FhirElement("op", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.FilterOperator> OpElement
@@ -1811,6 +1812,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

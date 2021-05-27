@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
     /// author | editor | reviewer | endorser
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contributor.ContributorType> TypeElement

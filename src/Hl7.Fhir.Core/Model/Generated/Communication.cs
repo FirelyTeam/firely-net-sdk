@@ -214,6 +214,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement

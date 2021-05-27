@@ -246,6 +246,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -291,6 +292,7 @@ namespace Hl7.Fhir.Model
     /// high | moderate | low
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
     {

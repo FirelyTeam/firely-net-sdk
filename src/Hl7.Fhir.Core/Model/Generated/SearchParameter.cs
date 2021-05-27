@@ -457,6 +457,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -669,6 +670,7 @@ namespace Hl7.Fhir.Model
     /// The resource type(s) this search parameter applies to
     /// </summary>
     [FhirElement("base", InSummary=true, Order=210)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> BaseElement
@@ -701,6 +703,7 @@ namespace Hl7.Fhir.Model
     /// number | date | string | token | reference | composite | quantity | uri
     /// </summary>
     [FhirElement("type", InSummary=true, Order=220)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -840,6 +843,7 @@ namespace Hl7.Fhir.Model
     /// normal | phonetic | nearby | distance | other
     /// </summary>
     [FhirElement("xpathUsage", Order=270)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
     {
@@ -871,6 +875,7 @@ namespace Hl7.Fhir.Model
     /// Types of resource (if a resource reference)
     /// </summary>
     [FhirElement("target", Order=280)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
@@ -903,6 +908,7 @@ namespace Hl7.Fhir.Model
     /// eq | ne | gt | lt | ge | le | sa | eb | ap
     /// </summary>
     [FhirElement("comparator", Order=290)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> ComparatorElement
@@ -935,6 +941,7 @@ namespace Hl7.Fhir.Model
     /// missing | exact | contains | not | text | in | not-in | below | above | type
     /// </summary>
     [FhirElement("modifier", Order=300)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> ModifierElement

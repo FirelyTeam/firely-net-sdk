@@ -652,6 +652,7 @@ namespace Hl7.Fhir.Model
     /// available | unavailable | unsatisfactory | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {

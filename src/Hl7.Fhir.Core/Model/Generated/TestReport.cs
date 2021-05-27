@@ -208,6 +208,7 @@ namespace Hl7.Fhir.Model
       /// test-engine | client | server
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType> TypeElement
@@ -586,6 +587,7 @@ namespace Hl7.Fhir.Model
       /// pass | skip | fail | warning | error
       /// </summary>
       [FhirElement("result", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -748,6 +750,7 @@ namespace Hl7.Fhir.Model
       /// pass | skip | fail | warning | error
       /// </summary>
       [FhirElement("result", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -1390,6 +1393,7 @@ namespace Hl7.Fhir.Model
     /// completed | in-progress | waiting | stopped | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportStatus> StatusElement
@@ -1438,6 +1442,7 @@ namespace Hl7.Fhir.Model
     /// pass | fail | pending
     /// </summary>
     [FhirElement("result", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportResult> ResultElement
