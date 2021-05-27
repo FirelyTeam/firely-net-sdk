@@ -69,15 +69,28 @@ namespace Hl7.Fhir.Tests.Model
 
         //Added for issue #1498
         [TestMethod]
-        public void FhirDateTimeConversionTimeZoneInformationLoss()
+        public void TestTryToDateTimeOffset()
         {
             var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));           
             Assert.AreEqual("2021-03-18T12:22:35.999-04:00", fdt.Value);
 
-            var dto1 = PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(fdt.Value);
-            var dto2 = fdt.ToDateTimeOffset();
+            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto1));
             Assert.AreEqual("2021-03-18T12:22:35.9990000-04:00", dto1.ToString("o"));
-            Assert.AreEqual("2021-03-18T12:22:35.9990000-04:00", dto2.ToString("o"));
+
+            fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(4, 0, 0)));
+            Assert.AreEqual("2021-03-18T12:22:35.999+04:00", fdt.Value);
+
+            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto2));
+            Assert.AreEqual("2021-03-18T12:22:35.9990000+04:00", dto2.ToString("o"));
+
+            fdt = new FhirDateTime("2021-03-18T12:22:35.999Z");
+            Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto3));
+            Assert.AreEqual("2021-03-18T12:22:35.9990000+00:00", dto3.ToString("o"));
+
+            fdt = new FhirDateTime("2021-03-18T12:22:35.999");
+            Assert.AreEqual("2021-03-18T12:22:35.999", fdt.Value);
+            Assert.IsFalse(fdt.TryToDateTimeOffset(out var dto4));
+          
         }
 
         [TestMethod]
