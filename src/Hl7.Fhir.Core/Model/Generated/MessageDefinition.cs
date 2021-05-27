@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MessageDefinition", IsResource=true)]
+  [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition", IsResource=true)]
   public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -72,6 +72,7 @@ namespace Hl7.Fhir.Model
       /// Type of resource
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> CodeElement
@@ -506,6 +507,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -774,6 +776,7 @@ namespace Hl7.Fhir.Model
     /// Consequence | Currency | Notification
     /// </summary>
     [FhirElement("category", InSummary=true, Order=280)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
     {

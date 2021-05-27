@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("OperationDefinition", IsResource=true)]
+  [FhirType("OperationDefinition","http://hl7.org/fhir/StructureDefinition/OperationDefinition", IsResource=true)]
   public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -126,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// in | out
       /// </summary>
       [FhirElement("use", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.OperationParameterUse> UseElement
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// What type this parameter has
       /// </summary>
       [FhirElement("type", Order=90)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
       {
@@ -284,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// number | date | string | token | reference | composite | quantity | uri
       /// </summary>
       [FhirElement("searchType", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> SearchTypeElement
       {
@@ -478,6 +481,7 @@ namespace Hl7.Fhir.Model
       /// required | extensible | preferred | example
       /// </summary>
       [FhirElement("strength", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -833,6 +837,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -865,6 +870,7 @@ namespace Hl7.Fhir.Model
     /// operation | query
     /// </summary>
     [FhirElement("kind", Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.OperationDefinition.OperationKind> KindElement
@@ -1167,6 +1173,7 @@ namespace Hl7.Fhir.Model
     /// Types this operation applies to
     /// </summary>
     [FhirElement("resource", InSummary=true, Order=260)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> ResourceElement

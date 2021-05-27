@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ImagingManifest", IsResource=true)]
+  [FhirType("ImagingManifest","http://hl7.org/fhir/StructureDefinition/ImagingManifest", IsResource=true)]
   public partial class ImagingManifest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

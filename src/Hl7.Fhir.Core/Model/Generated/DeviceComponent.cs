@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceComponent", IsResource=true)]
+  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent", IsResource=true)]
   public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -394,6 +394,7 @@ namespace Hl7.Fhir.Model
     /// other | chemical | electrical | impedance | nuclear | optical | thermal | biological | mechanical | acoustical | manual+
     /// </summary>
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
     {

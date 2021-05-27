@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("FamilyMemberHistory", IsResource=true)]
+  [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", IsResource=true)]
   public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -270,6 +270,7 @@ namespace Hl7.Fhir.Model
     /// partial | completed | entered-in-error | health-unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -438,6 +439,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
