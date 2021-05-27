@@ -1267,6 +1267,14 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ValidateNonBreakingWhitespaceInMarkdown()
+        {
+            var value = new Markdown("Non-breaking" + '\u00A0' + "space");
+            var result = _validator.Validate(value);
+            Assert.True(result.Success);
+        }
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;
