@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Specimen", IsResource=true)]
+  [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen", IsResource=true)]
   public partial class Specimen : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

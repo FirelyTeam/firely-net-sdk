@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("RiskAssessment", IsResource=true)]
+  [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
   public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

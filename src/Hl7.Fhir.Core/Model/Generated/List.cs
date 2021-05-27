@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("List", IsResource=true)]
+  [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
   public partial class List : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

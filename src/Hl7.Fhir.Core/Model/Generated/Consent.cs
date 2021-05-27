@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Consent", IsResource=true)]
+  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
   public partial class Consent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

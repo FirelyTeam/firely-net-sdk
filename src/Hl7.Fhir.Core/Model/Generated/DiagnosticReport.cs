@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DiagnosticReport", IsResource=true)]
+  [FhirType("DiagnosticReport","http://hl7.org/fhir/StructureDefinition/DiagnosticReport", IsResource=true)]
   public partial class DiagnosticReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Media", IsResource=true)]
+  [FhirType("Media","http://hl7.org/fhir/StructureDefinition/Media", IsResource=true)]
   public partial class Media : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

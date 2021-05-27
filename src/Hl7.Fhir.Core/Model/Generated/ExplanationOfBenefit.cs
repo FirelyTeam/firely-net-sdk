@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ExplanationOfBenefit", IsResource=true)]
+  [FhirType("ExplanationOfBenefit","http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit", IsResource=true)]
   public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

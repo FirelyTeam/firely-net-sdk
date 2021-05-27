@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Account", IsResource=true)]
+  [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
   public partial class Account : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

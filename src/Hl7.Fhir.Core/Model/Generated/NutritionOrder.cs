@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionOrder", IsResource=true)]
+  [FhirType("NutritionOrder","http://hl7.org/fhir/StructureDefinition/NutritionOrder", IsResource=true)]
   public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceMetric", IsResource=true)]
+  [FhirType("DeviceMetric","http://hl7.org/fhir/StructureDefinition/DeviceMetric", IsResource=true)]
   public partial class DeviceMetric : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

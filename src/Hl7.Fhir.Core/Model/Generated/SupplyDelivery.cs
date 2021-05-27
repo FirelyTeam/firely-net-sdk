@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SupplyDelivery", IsResource=true)]
+  [FhirType("SupplyDelivery","http://hl7.org/fhir/StructureDefinition/SupplyDelivery", IsResource=true)]
   public partial class SupplyDelivery : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

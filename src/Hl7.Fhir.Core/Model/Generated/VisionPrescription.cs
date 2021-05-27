@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("VisionPrescription", IsResource=true)]
+  [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription", IsResource=true)]
   public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ElementDefinition")]
+  [FhirType("ElementDefinition","http://hl7.org/fhir/StructureDefinition/ElementDefinition")]
   public partial class ElementDefinition : Hl7.Fhir.Model.DataType
   {
     /// <summary>

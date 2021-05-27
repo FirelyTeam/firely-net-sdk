@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Contributor")]
+  [FhirType("Contributor","http://hl7.org/fhir/StructureDefinition/Contributor")]
   public partial class Contributor : Hl7.Fhir.Model.DataType
   {
     /// <summary>

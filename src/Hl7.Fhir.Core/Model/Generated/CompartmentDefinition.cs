@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CompartmentDefinition", IsResource=true)]
+  [FhirType("CompartmentDefinition","http://hl7.org/fhir/StructureDefinition/CompartmentDefinition", IsResource=true)]
   public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

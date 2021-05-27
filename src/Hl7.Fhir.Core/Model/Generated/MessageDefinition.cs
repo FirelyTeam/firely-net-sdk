@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MessageDefinition", IsResource=true)]
+  [FhirType("MessageDefinition","http://hl7.org/fhir/StructureDefinition/MessageDefinition", IsResource=true)]
   public partial class MessageDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

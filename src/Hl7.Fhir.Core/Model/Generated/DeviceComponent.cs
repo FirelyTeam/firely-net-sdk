@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceComponent", IsResource=true)]
+  [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent", IsResource=true)]
   public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

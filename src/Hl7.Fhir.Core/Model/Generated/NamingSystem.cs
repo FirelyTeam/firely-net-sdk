@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NamingSystem", IsResource=true)]
+  [FhirType("NamingSystem","http://hl7.org/fhir/StructureDefinition/NamingSystem", IsResource=true)]
   public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

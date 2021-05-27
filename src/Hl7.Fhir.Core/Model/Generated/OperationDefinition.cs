@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("OperationDefinition", IsResource=true)]
+  [FhirType("OperationDefinition","http://hl7.org/fhir/StructureDefinition/OperationDefinition", IsResource=true)]
   public partial class OperationDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

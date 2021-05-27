@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Composition", IsResource=true)]
+  [FhirType("Composition","http://hl7.org/fhir/StructureDefinition/Composition", IsResource=true)]
   public partial class Composition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

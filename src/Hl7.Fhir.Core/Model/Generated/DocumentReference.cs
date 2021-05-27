@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DocumentReference", IsResource=true)]
+  [FhirType("DocumentReference","http://hl7.org/fhir/StructureDefinition/DocumentReference", IsResource=true)]
   public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

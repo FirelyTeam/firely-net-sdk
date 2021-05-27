@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Address")]
+  [FhirType("Address","http://hl7.org/fhir/StructureDefinition/Address")]
   public partial class Address : Hl7.Fhir.Model.DataType
   {
     /// <summary>

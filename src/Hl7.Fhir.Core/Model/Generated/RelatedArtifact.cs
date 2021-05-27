@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("RelatedArtifact")]
+  [FhirType("RelatedArtifact","http://hl7.org/fhir/StructureDefinition/RelatedArtifact")]
   public partial class RelatedArtifact : Hl7.Fhir.Model.DataType
   {
     /// <summary>
