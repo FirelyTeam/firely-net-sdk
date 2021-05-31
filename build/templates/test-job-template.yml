@@ -7,24 +7,18 @@ parameters:
   default: 'Debug'
 - name: projects
 
-jobs:
-- job: 
-  timeoutInMinutes: 120
-  cancelTimeoutInMinutes: 1
-  displayName: ${{ parameters.testRunTitle }}
-
-  steps:
-  - checkout: none
-  - task: DownloadPipelineArtifact@2
-    inputs:
-      displayName: Download Build artifacts
-      artifact: 'TestBuild'
-      path: $(System.DefaultWorkingDirectory)/TestBuild
-      
-  - task: DotNetCoreCLI@2
-    displayName: Running unit tests
-    inputs:
-      command: test
-      projects: ${{ parameters.projects }}
-      arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
-      testRunTitle: ${{ parameters.testRunTitle }}
+steps:
+- checkout: none
+- task: DownloadPipelineArtifact@2
+  inputs:
+    displayName: Download Build artifacts
+    artifact: 'TestBuild'
+    path: $(System.DefaultWorkingDirectory)/TestBuild
+    
+- task: DotNetCoreCLI@2
+  displayName: Running unit tests
+  inputs:
+    command: test
+    projects: ${{ parameters.projects }}
+    arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
+    testRunTitle: ${{ parameters.testRunTitle }}
