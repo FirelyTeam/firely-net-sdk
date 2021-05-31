@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("GraphDefinition", IsResource=true)]
+  [FhirType("GraphDefinition","http://hl7.org/fhir/StructureDefinition/GraphDefinition", IsResource=true)]
   public partial class GraphDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -398,6 +398,7 @@ namespace Hl7.Fhir.Model
       /// Type of resource this link refers to
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -616,6 +617,7 @@ namespace Hl7.Fhir.Model
       /// condition | requirement
       /// </summary>
       [FhirElement("use", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse> UseElement
@@ -648,6 +650,7 @@ namespace Hl7.Fhir.Model
       /// Patient | Encounter | RelatedPerson | Practitioner | Device
       /// </summary>
       [FhirElement("code", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -680,6 +683,7 @@ namespace Hl7.Fhir.Model
       /// identical | matching | different | custom
       /// </summary>
       [FhirElement("rule", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -951,6 +955,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1144,6 +1149,7 @@ namespace Hl7.Fhir.Model
     /// Type of resource at which the graph starts
     /// </summary>
     [FhirElement("start", InSummary=true, Order=210)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> StartElement

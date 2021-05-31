@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceSourceMaterial", IsResource=true)]
+  [FhirType("SubstanceSourceMaterial","http://hl7.org/fhir/StructureDefinition/SubstanceSourceMaterial", IsResource=true)]
   public partial class SubstanceSourceMaterial : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

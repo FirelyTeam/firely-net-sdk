@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationKnowledge", IsResource=true)]
+  [FhirType("MedicationKnowledge","http://hl7.org/fhir/StructureDefinition/MedicationKnowledge", IsResource=true)]
   public partial class MedicationKnowledge : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2030,6 +2030,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
     {

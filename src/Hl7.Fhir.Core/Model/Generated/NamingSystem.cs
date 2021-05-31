@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NamingSystem", IsResource=true)]
+  [FhirType("NamingSystem","http://hl7.org/fhir/StructureDefinition/NamingSystem", IsResource=true)]
   public partial class NamingSystem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -134,6 +134,7 @@ namespace Hl7.Fhir.Model
       /// oid | uuid | uri | other
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -388,6 +389,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -420,6 +422,7 @@ namespace Hl7.Fhir.Model
     /// codesystem | identifier | root
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement

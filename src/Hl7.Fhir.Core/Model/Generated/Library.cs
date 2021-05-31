@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Library", IsResource=true)]
+  [FhirType("Library","http://hl7.org/fhir/StructureDefinition/Library", IsResource=true)]
   public partial class Library : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -228,6 +228,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

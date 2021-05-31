@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ProdCharacteristic")]
+  [FhirType("ProdCharacteristic","http://hl7.org/fhir/StructureDefinition/ProdCharacteristic")]
   public partial class ProdCharacteristic : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

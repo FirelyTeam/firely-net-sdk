@@ -20,6 +20,9 @@ namespace Hl7.Fhir.Serialization.Tests
         public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new PocoStructureDefinitionSummaryProvider());
 
         [TestMethod]
+        public void TestCanLocateTypesByCanonical() => SerializationInfoTestHelpers.TestCanLocateTypesByCanonical(new PocoStructureDefinitionSummaryProvider());
+
+        [TestMethod]
         public void TestCanGetElements() => SerializationInfoTestHelpers.TestCanGetElements(new PocoStructureDefinitionSummaryProvider());
 
         [TestMethod]

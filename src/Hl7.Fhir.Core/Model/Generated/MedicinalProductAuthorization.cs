@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductAuthorization", IsResource=true)]
+  [FhirType("MedicinalProductAuthorization","http://hl7.org/fhir/StructureDefinition/MedicinalProductAuthorization", IsResource=true)]
   public partial class MedicinalProductAuthorization : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

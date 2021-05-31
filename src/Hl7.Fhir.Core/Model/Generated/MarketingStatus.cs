@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MarketingStatus")]
+  [FhirType("MarketingStatus","http://hl7.org/fhir/StructureDefinition/MarketingStatus")]
   public partial class MarketingStatus : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionOrder", IsResource=true)]
+  [FhirType("NutritionOrder","http://hl7.org/fhir/StructureDefinition/NutritionOrder", IsResource=true)]
   public partial class NutritionOrder : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -1198,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -1230,6 +1231,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement

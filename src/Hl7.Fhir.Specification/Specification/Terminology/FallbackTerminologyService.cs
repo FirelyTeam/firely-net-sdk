@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
 using System;
 using System.Threading.Tasks;
@@ -31,14 +32,14 @@ namespace Hl7.Fhir.Specification.Terminology
                 // First, try the local service
                 return await _localService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
             }
-            catch (TerminologyServiceException)
+            catch (FhirOperationException)
             {
                 // If that fails, call the fallback
                 try
                 {
                     return await _fallbackService.ValueSetValidateCode(parameters, id, useGet).ConfigureAwait(false);
                 }
-                catch (ValueSetUnknownException vse)
+                catch (FhirOperationException vse) when (vse.Status == System.Net.HttpStatusCode.NotFound)
                 {
                     // The fall back service does not know the valueset. If our local service
                     // does, try get the VS from there, and retry by sending the vs inline
