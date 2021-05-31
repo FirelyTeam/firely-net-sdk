@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("HealthcareService", IsResource=true)]
+  [FhirType("HealthcareService","http://hl7.org/fhir/StructureDefinition/HealthcareService", IsResource=true)]
   public partial class HealthcareService : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -179,6 +179,7 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ClinicalUseIssue", IsResource=true)]
+  [FhirType("ClinicalUseIssue","http://hl7.org/fhir/StructureDefinition/ClinicalUseIssue", IsResource=true)]
   public partial class ClinicalUseIssue : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -970,6 +970,7 @@ namespace Hl7.Fhir.Model
     /// indication | contraindication | interaction | undesirable-effect | warning
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalUseIssue.ClinicalUseIssueType> TypeElement

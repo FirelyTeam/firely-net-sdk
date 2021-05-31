@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ClaimResponse", IsResource=true)]
+  [FhirType("ClaimResponse","http://hl7.org/fhir/StructureDefinition/ClaimResponse", IsResource=true)]
   public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2135,6 +2135,7 @@ namespace Hl7.Fhir.Model
       /// display | print | printoper
       /// </summary>
       [FhirElement("type", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -2723,6 +2724,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -2782,6 +2784,7 @@ namespace Hl7.Fhir.Model
     /// claim | preauthorization | predetermination
     /// </summary>
     [FhirElement("use", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Use> UseElement
@@ -2908,6 +2911,7 @@ namespace Hl7.Fhir.Model
     /// complete | error | partial
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=190)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement

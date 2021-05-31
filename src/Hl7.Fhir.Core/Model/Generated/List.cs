@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("List", IsResource=true)]
+  [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
   public partial class List : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -283,6 +283,7 @@ namespace Hl7.Fhir.Model
     /// current | retired | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
@@ -315,6 +316,7 @@ namespace Hl7.Fhir.Model
     /// working | snapshot | changes
     /// </summary>
     [FhirElement("mode", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ListMode> ModeElement

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Organization", IsResource=true)]
+  [FhirType("Organization","http://hl7.org/fhir/StructureDefinition/Organization", IsResource=true)]
   public partial class Organization : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

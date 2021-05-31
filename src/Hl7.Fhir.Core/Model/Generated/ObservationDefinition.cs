@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ObservationDefinition", IsResource=true)]
+  [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
   public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -355,6 +355,7 @@ namespace Hl7.Fhir.Model
       /// reference | critical | absolute
       /// </summary>
       [FhirElement("category", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> CategoryElement
       {
@@ -426,6 +427,7 @@ namespace Hl7.Fhir.Model
       /// male | female | other | unknown
       /// </summary>
       [FhirElement("gender", Order=80)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -654,6 +656,7 @@ namespace Hl7.Fhir.Model
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
     /// </summary>
     [FhirElement("permittedDataType", Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement

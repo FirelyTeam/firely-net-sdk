@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionProduct", IsResource=true)]
+  [FhirType("NutritionProduct","http://hl7.org/fhir/StructureDefinition/NutritionProduct", IsResource=true)]
   public partial class NutritionProduct : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -631,6 +631,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NutritionProduct.NutritionProductStatus> StatusElement

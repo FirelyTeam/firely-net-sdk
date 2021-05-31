@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("EnrollmentResponse", IsResource=true)]
+  [FhirType("EnrollmentResponse","http://hl7.org/fhir/StructureDefinition/EnrollmentResponse", IsResource=true)]
   public partial class EnrollmentResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -119,6 +120,7 @@ namespace Hl7.Fhir.Model
     /// complete | error | partial
     /// </summary>
     [FhirElement("outcome", Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
     {

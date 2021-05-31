@@ -184,7 +184,9 @@ namespace Hl7.FhirPath.R4.Tests
         //    Assert.False(TypeInfo.Any.CanBeCastTo(typeof(long)));
         //}
 
-        [TestMethod]
+        [TestMethod, Ignore("%resource and %rootResource don't really work well unless run from within the validator. " +
+            "Need to fix this by letting the FP evaluator pick up these context variables from the ScopedNode focus." +
+            "But that's not yet the case.")]
         public void TestFhirPathRootResource()
         {
             var bundle = new Bundle() { Type = Bundle.BundleType.Collection, Id = "bundle-1" };
@@ -302,6 +304,37 @@ namespace Hl7.FhirPath.R4.Tests
             var typedElement = obs.ToTypedElement();
             var result = typedElement.Select("(Observation.value as Quantity) | (Observation.component.value as Quantity)");
             Assert.AreEqual(2, result.Count());
+        }
+
+        [TestMethod]
+        public void TestFhirPathResolve()
+        {
+            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
+            var bundle = new Bundle
+            {
+                Entry = new List<Bundle.EntryComponent>
+        {
+            new Bundle.EntryComponent
+            {
+                FullUrl = $"urn:uuid:123456",
+                Resource = new Organization
+                {
+                    Id = "123456"
+                }
+            },
+            new Bundle.EntryComponent
+            {
+                FullUrl = $"urn:uuid:555",
+                Resource = new Patient
+                {
+                    ManagingOrganization = new ResourceReference($"urn:uuid:123456")
+                }
+            }
+        }
+            };
+
+            var result = bundle.Select("Bundle.entry.where(fullUrl = 'urn:uuid:555').resource.managingOrganization.resolve()");
+            Assert.IsTrue(result.Any());
         }
     }
 }

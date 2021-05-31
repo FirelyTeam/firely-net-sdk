@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Ingredient", IsResource=true)]
+  [FhirType("Ingredient","http://hl7.org/fhir/StructureDefinition/Ingredient", IsResource=true)]
   public partial class Ingredient : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ElementDefinition")]
+  [FhirType("ElementDefinition","http://hl7.org/fhir/StructureDefinition/ElementDefinition")]
   public partial class ElementDefinition : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -334,6 +334,7 @@ namespace Hl7.Fhir.Model
       /// closed | open | openAtEnd
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
@@ -457,6 +458,7 @@ namespace Hl7.Fhir.Model
       /// value | exists | pattern | type | profile
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType> TypeElement
@@ -880,6 +882,7 @@ namespace Hl7.Fhir.Model
       /// contained | referenced | bundled - how aggregated
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -912,6 +915,7 @@ namespace Hl7.Fhir.Model
       /// either | independent | specific
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
       {
@@ -1231,6 +1235,7 @@ namespace Hl7.Fhir.Model
       /// error | warning
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> SeverityElement
@@ -1494,6 +1499,7 @@ namespace Hl7.Fhir.Model
       /// required | extensible | preferred | example
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -1910,6 +1916,7 @@ namespace Hl7.Fhir.Model
     /// xmlAttr | xmlText | typeAttr | cdaText | xhtml
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=50)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement

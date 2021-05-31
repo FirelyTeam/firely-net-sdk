@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("BodyStructure", IsResource=true)]
+  [FhirType("BodyStructure","http://hl7.org/fhir/StructureDefinition/BodyStructure", IsResource=true)]
   public partial class BodyStructure : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

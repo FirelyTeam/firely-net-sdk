@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SampledData")]
+  [FhirType("SampledData","http://hl7.org/fhir/StructureDefinition/SampledData")]
   public partial class SampledData : Hl7.Fhir.Model.DataType
   {
     /// <summary>

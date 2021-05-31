@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Duration")]
+  [FhirType("Duration","http://hl7.org/fhir/StructureDefinition/Duration")]
   public partial class Duration : Quantity
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Flag", IsResource=true)]
+  [FhirType("Flag","http://hl7.org/fhir/StructureDefinition/Flag", IsResource=true)]
   public partial class Flag : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Flag.FlagStatus> StatusElement

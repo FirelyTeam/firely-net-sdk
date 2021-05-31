@@ -30,11 +30,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly string _displayLanguageAttribute = "displayLanguage";
 
         public ValidateCodeParameters(Parameters parameters)
-        {
-            if (parameters.TryGetDuplicates(out var duplicates) == true)
-            {
-                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
-            }
+        {         
             Url = parameters.GetSingleValue<FhirUri>(_urlAttribute);
             Context = parameters.GetSingleValue<FhirUri>(_contextAttribute);
             ValueSet = parameters.GetSingle(_valueSetAttribute)?.Resource as ValueSet;
@@ -47,8 +43,9 @@ namespace Hl7.Fhir.Specification.Terminology
             CodeableConcept = parameters.GetSingleValue<CodeableConcept>(_codeableConceptAttribute);
             Date = parameters.GetSingleValue<FhirDateTime>(_dateAttribute);
             Abstract = parameters.GetSingleValue<FhirBoolean>(_abstractAttribute);
-            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);                    
-        }
+            DisplayLanguage = parameters.GetSingleValue<Code>(_displayLanguageAttribute);                            
+        }    
+           
 
         public ValidateCodeParameters()
         {
@@ -64,13 +61,14 @@ namespace Hl7.Fhir.Specification.Terminology
             return this;
         }
 
-        public ValidateCodeParameters WithCode(string code = null, string system = null, string systemVersion = null, string display = null, string displayLanguage = null)
+        public ValidateCodeParameters WithCode(string code = null, string system = null, string systemVersion = null, string display = null, string displayLanguage = null, string context = null)
         {
             if (!string.IsNullOrWhiteSpace(code)) Code = new Code(code);
             if (!string.IsNullOrWhiteSpace(system)) System = new FhirUri(system);
             if (!string.IsNullOrWhiteSpace(systemVersion)) SystemVersion = new FhirString(systemVersion);
             if (!string.IsNullOrWhiteSpace(display)) Display = new FhirString(display);
             if (!string.IsNullOrWhiteSpace(displayLanguage)) DisplayLanguage = new Code(displayLanguage);
+            if (!string.IsNullOrWhiteSpace(context)) Context = new FhirUri(context);
             return this;
         }
 
@@ -91,6 +89,7 @@ namespace Hl7.Fhir.Specification.Terminology
             Date = date;
             return this;
         }
+
         public ValidateCodeParameters WithAbstract(bool? @abstract)
         {
             if (@abstract.HasValue) Abstract = new FhirBoolean(@abstract);

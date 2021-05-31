@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Citation", IsResource=true)]
+  [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
   public partial class Citation : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -3090,6 +3090,7 @@ namespace Hl7.Fhir.Model
       /// Completed | In-Process | PubMed-not-MEDLINE | In-Data-Review | Publisher | MEDLINE | OLDMEDLINE
       /// </summary>
       [FhirElement("state", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.MedlineCitationStatus> StateElement
       {
@@ -3121,6 +3122,7 @@ namespace Hl7.Fhir.Model
       /// NLM | NASA | PIP | KIE | HSR | HMD | SIS | NOTNLM
       /// </summary>
       [FhirElement("owner", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.MedlineCitationOwner> OwnerElement
       {
@@ -3259,6 +3261,7 @@ namespace Hl7.Fhir.Model
       /// received | accepted | epublish | ppublish | revised | aheadofprint | retracted | ecollection | pmc | pmcr | pubmed | pubmedr | premedline | medline | medliner | entrez | pmc-release
       /// </summary>
       [FhirElement("publicationState", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.PubMedPubStatus> PublicationStateElement
       {
@@ -3415,6 +3418,7 @@ namespace Hl7.Fhir.Model
       /// received | accepted | epublish | ppublish | revised | aheadofprint | retracted | ecollection | pmc | pmcr | pubmed | pubmedr | premedline | medline | medliner | entrez | pmc-release
       /// </summary>
       [FhirElement("publicationState", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.PubMedPubStatus> PublicationStateElement
       {
@@ -3825,6 +3829,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

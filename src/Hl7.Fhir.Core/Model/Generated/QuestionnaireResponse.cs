@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("QuestionnaireResponse", IsResource=true)]
+  [FhirType("QuestionnaireResponse","http://hl7.org/fhir/StructureDefinition/QuestionnaireResponse", IsResource=true)]
   public partial class QuestionnaireResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -504,6 +504,7 @@ namespace Hl7.Fhir.Model
     /// in-progress | completed | amended | entered-in-error | stopped
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement

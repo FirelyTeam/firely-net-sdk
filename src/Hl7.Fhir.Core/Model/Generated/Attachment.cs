@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Attachment")]
+  [FhirType("Attachment","http://hl7.org/fhir/StructureDefinition/Attachment")]
   public partial class Attachment : Hl7.Fhir.Model.DataType
   {
     /// <summary>
