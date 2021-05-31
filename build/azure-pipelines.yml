@@ -108,6 +108,8 @@ stages:
 - stage: test
   displayName: Test
   dependsOn: build
+  variables:
+    RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
   jobs:
   - template: templates/test-job-template.yml
     parameters:
@@ -115,7 +117,7 @@ stages:
       projects: |
         **/common/**/publish/Hl7.Fhir.Support.Tests.dll
         **/common/**/publish/HL7.FhirPath.Tests.dll
-  - ${{ if eq(stageDependencies.build.restoreAndBuild.outputs['restoreAndBuild.obtainFhirPathTest.RunFhirPathTests'], 'true') }}:
+  - ${{ if eq(variables.RunFhirPathTests, 'true') }}:
     - template: templates/test-job-template.yml
       parameters:
         testRunTitle: Tests FhirPath Core test project
@@ -127,7 +129,7 @@ stages:
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Specification test project
-      projects: '**/publish/Hl7.Fhir.Specification.Tests.dll'
+      projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests Core test project
