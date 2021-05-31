@@ -111,6 +111,9 @@ stages:
   variables:
     RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
   jobs:
+  - job: testVar
+    steps:
+      - script: echo $(RunFhirPathTests)
   - template: templates/test-job-template.yml
     parameters:
       testRunTitle: Tests common test projects
