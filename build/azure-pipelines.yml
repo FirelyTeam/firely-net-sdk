@@ -87,6 +87,7 @@ stages:
          [xml]$xml = Get-Content ./src/firely-net-sdk.props
          #Get the variable RunFhirPathTests
          [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
+         $RunFhirPathTests = $RunFhirPathTests.Trim()
          Write-Host "RunFhirPathTests: $RunFhirPathTests"
          Write-Host "##vso[task.setvariable variable=RunFhirPathTests;isOutput=true]$RunFhirPathTests"
       displayName: Extract variable RunFhirPathTests
