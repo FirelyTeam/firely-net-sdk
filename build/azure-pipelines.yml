@@ -111,36 +111,57 @@ stages:
   variables:
     RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
   jobs:
-  - job: testVar
+  - job:
+    displayName: Tests common test projects
     steps:
-      - script: echo $(RunFhirPathTests)
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests common test projects
-      projects: |
-        **/common/**/publish/Hl7.Fhir.Support.Tests.dll
-        **/common/**/publish/HL7.FhirPath.Tests.dll
-  - ${{ if eq(variables.RunFhirPathTests, 'true') }}:
-    - template: templates/test-job-template.yml
-      parameters:
-        testRunTitle: Tests FhirPath Core test project
-        projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-       testRunTitle: Tests Serialization test project
-       projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests Specification test project
-      projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests Core test project
-      projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests ElementModel test project
-      projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests common test projects
+          projects: |
+            **/common/**/publish/Hl7.Fhir.Support.Tests.dll
+            **/common/**/publish/HL7.FhirPath.Tests.dll
+  - job:
+    displayName: Tests FhirPath Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests FhirPath Core test project
+          projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
+    condition: and(succeeded(), eq(variables['RunFhirPathTests'], 'true'))
+  - job:
+    displayName: Tests Serialization test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization test project
+          projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
+  - job:
+    displayName: Tests Specification test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification test project
+          projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
+  - job:
+    displayName: Tests Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Core test project
+          projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
+  - job:
+    displayName: Tests ElementModel test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests ElementModel test project
+          projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
 
 - stage: deploy_myget
   displayName: Deploy to MyGet
