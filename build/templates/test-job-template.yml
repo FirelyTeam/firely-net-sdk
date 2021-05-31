@@ -8,7 +8,6 @@ parameters:
 - name: projects
 
 steps:
-- checkout: none
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts
