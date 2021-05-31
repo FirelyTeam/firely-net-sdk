@@ -475,8 +475,15 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
-        internal static ModelInspector ModelInspector => TypedSerialization.GetInspectorForAssembly(
-            typeof(ModelInfo).GetTypeInfo().Assembly);
+        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
+        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
+        private static readonly Lazy<ModelInspector> _versionedProvider
+            = new Lazy<ModelInspector>(createVersionedProvider);
+
+        private static ModelInspector createVersionedProvider() =>
+            ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+
+        internal static ModelInspector ModelInspector => _versionedProvider.Value;
 
         public static readonly Type[] OpenTypes =
         {

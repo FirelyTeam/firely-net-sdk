@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Provenance", IsResource=true)]
+  [FhirType("Provenance","http://hl7.org/fhir/StructureDefinition/Provenance", IsResource=true)]
   public partial class Provenance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -263,6 +263,7 @@ namespace Hl7.Fhir.Model
       /// derivation | revision | quotation | source | removal
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement

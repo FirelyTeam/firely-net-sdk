@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CommunicationRequest", IsResource=true)]
+  [FhirType("CommunicationRequest","http://hl7.org/fhir/StructureDefinition/CommunicationRequest", IsResource=true)]
   public partial class CommunicationRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -323,6 +323,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -369,6 +370,7 @@ namespace Hl7.Fhir.Model
     /// Message urgency
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

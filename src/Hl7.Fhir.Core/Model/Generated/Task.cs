@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Task", IsResource=true)]
+  [FhirType("Task","http://hl7.org/fhir/StructureDefinition/Task", IsResource=true)]
   public partial class Task : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -696,6 +696,7 @@ namespace Hl7.Fhir.Model
     /// draft | requested | received | accepted | +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
@@ -754,6 +755,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order +
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=170)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -786,6 +788,7 @@ namespace Hl7.Fhir.Model
     /// normal | urgent | asap | stat
     /// </summary>
     [FhirElement("priority", Order=180)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

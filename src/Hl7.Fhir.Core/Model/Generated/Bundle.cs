@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Bundle", IsResource=true)]
+  [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle", IsResource=true)]
   public partial class Bundle : Hl7.Fhir.Model.Resource
   {
     /// <summary>
@@ -543,6 +543,7 @@ namespace Hl7.Fhir.Model
       /// match | include | outcome - why this is in the result set
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
       {
@@ -686,6 +687,7 @@ namespace Hl7.Fhir.Model
       /// GET | POST | PUT | DELETE
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.HTTPVerb> MethodElement
@@ -1211,6 +1213,7 @@ namespace Hl7.Fhir.Model
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement

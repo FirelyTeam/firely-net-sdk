@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MeasureReport", IsResource=true)]
+  [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
   public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -889,6 +889,7 @@ namespace Hl7.Fhir.Model
     /// complete | pending | error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -921,6 +922,7 @@ namespace Hl7.Fhir.Model
     /// individual | patient-list | summary
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement

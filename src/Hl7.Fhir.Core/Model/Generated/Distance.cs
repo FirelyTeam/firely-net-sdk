@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Distance")]
+  [FhirType("Distance","http://hl7.org/fhir/StructureDefinition/Distance")]
   public partial class Distance : Quantity
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Procedure", IsResource=true)]
+  [FhirType("Procedure","http://hl7.org/fhir/StructureDefinition/Procedure", IsResource=true)]
   public partial class Procedure : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -361,6 +361,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceRequest", IsResource=true)]
+  [FhirType("DeviceRequest","http://hl7.org/fhir/StructureDefinition/DeviceRequest", IsResource=true)]
   public partial class DeviceRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -246,6 +246,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended | completed | entered-in-error | cancelled
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
     {
@@ -291,6 +292,7 @@ namespace Hl7.Fhir.Model
     /// Indicates how quickly the {{title}} should be addressed with respect to other requests
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

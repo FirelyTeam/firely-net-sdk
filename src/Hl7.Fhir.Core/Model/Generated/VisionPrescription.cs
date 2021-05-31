@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("VisionPrescription", IsResource=true)]
+  [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription", IsResource=true)]
   public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
       /// right | left
       /// </summary>
       [FhirElement("eye", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
       {
@@ -296,6 +297,7 @@ namespace Hl7.Fhir.Model
       /// up | down | in | out
       /// </summary>
       [FhirElement("base", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
       {
@@ -687,6 +689,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {

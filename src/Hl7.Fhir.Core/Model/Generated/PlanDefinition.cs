@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("PlanDefinition", IsResource=true)]
+  [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition", IsResource=true)]
   public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -710,6 +710,7 @@ namespace Hl7.Fhir.Model
       /// visual-group | logical-group | sentence-group
       /// </summary>
       [FhirElement("groupingBehavior", Order=200)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -741,6 +742,7 @@ namespace Hl7.Fhir.Model
       /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
       /// </summary>
       [FhirElement("selectionBehavior", Order=210)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -772,6 +774,7 @@ namespace Hl7.Fhir.Model
       /// must | could | must-unless-documented
       /// </summary>
       [FhirElement("requiredBehavior", Order=220)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -803,6 +806,7 @@ namespace Hl7.Fhir.Model
       /// yes | no
       /// </summary>
       [FhirElement("precheckBehavior", Order=230)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -834,6 +838,7 @@ namespace Hl7.Fhir.Model
       /// single | multiple
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=240)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -1119,6 +1124,7 @@ namespace Hl7.Fhir.Model
       /// applicability | start | stop
       /// </summary>
       [FhirElement("kind", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -1367,6 +1373,7 @@ namespace Hl7.Fhir.Model
       /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
       /// </summary>
       [FhirElement("relationship", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -1500,6 +1507,7 @@ namespace Hl7.Fhir.Model
       /// patient | practitioner | related-person
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
@@ -1979,6 +1987,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
