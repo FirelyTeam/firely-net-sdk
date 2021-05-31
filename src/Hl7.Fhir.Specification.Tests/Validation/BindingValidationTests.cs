@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var binding = new ElementDefinition.ElementDefinitionBindingComponent
             {
-                ValueSet = new Canonical("http://fhir.nl/fhir/NamingSystem/uzi-rolcode"),
+                ValueSet = new Canonical("http://hl7.org/fhir/ValueSet/address-type"),
                 Strength = BindingStrength.Required
             };
 
