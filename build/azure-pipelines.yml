@@ -87,11 +87,10 @@ stages:
          [xml]$xml = Get-Content ./src/firely-net-sdk.props
          #Get the variable RunFhirPathTests
          [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
-         # version
          Write-Host "RunFhirPathTests: $RunFhirPathTests"
-         $version=$pomXml.project.version
          Write-Host "##vso[task.setvariable variable=RunFhirPathTests]$RunFhirPathTests"
       displayName: Extract variable RunFhirPathTests
+      name: obtainFhirPathTest
     - task: DotNetCoreCLI@2
       displayName: Pack
       inputs:
@@ -116,7 +115,7 @@ stages:
       projects: |
         **/common/**/publish/Hl7.Fhir.Support.Tests.dll
         **/common/**/publish/HL7.FhirPath.Tests.dll
-  - ${{ if eq(variables.RunFhirPathTests, 'true') }}:
+  - ${{ if eq(stageDependencies.build.restoreAndBuild.outputs['restoreAndBuild.obtainFhirPathTest.RunFhirPathTests'], 'true') }}:
     - template: templates/test-job-template.yml
       parameters:
         testRunTitle: Tests FhirPath Core test project
