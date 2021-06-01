@@ -89,7 +89,7 @@ stages:
         publishWebProjects: false
         zipAfterPublish: false
         arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
-      condition: and(succeeded(), eq(variables['RunFhirPathTests'], 'true'))
+      condition: and(succeeded(), eq(variables['obtainFhirPathTest.RunFhirPathTests'], 'true'))
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
