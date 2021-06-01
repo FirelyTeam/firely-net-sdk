@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Measure", IsResource=true)]
+  [FhirType("Measure","http://hl7.org/fhir/StructureDefinition/Measure", IsResource=true)]
   public partial class Measure : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -130,6 +130,7 @@ namespace Hl7.Fhir.Model
       /// Population basis
       /// </summary>
       [FhirElement("basis", InSummary=true, Order=70)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes> BasisElement
       {
@@ -1167,6 +1168,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1246,6 +1248,7 @@ namespace Hl7.Fhir.Model
     /// Population basis
     /// </summary>
     [FhirElement("basis", InSummary=true, Order=180)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> BasisElement
     {

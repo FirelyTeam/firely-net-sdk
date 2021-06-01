@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Person", IsResource=true)]
+  [FhirType("Person","http://hl7.org/fhir/StructureDefinition/Person", IsResource=true)]
   public partial class Person : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -122,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// level1 | level2 | level3 | level4
       /// </summary>
       [FhirElement("assurance", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
       {
@@ -263,6 +264,7 @@ namespace Hl7.Fhir.Model
     /// male | female | other | unknown
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("EvidenceVariable", IsResource=true)]
+  [FhirType("EvidenceVariable","http://hl7.org/fhir/StructureDefinition/EvidenceVariable", IsResource=true)]
   public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -260,6 +260,7 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> GroupMeasure_Element
       {
@@ -873,6 +874,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=160)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1123,6 +1125,7 @@ namespace Hl7.Fhir.Model
     /// intersection | union
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination> CharacteristicCombination_Element
     {
@@ -1168,6 +1171,7 @@ namespace Hl7.Fhir.Model
     /// continuous | dichotomous | ordinal | polychotomous
     /// </summary>
     [FhirElement("handling", InSummary=true, Order=310)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
     {

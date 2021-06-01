@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubscriptionTopic", IsResource=true)]
+  [FhirType("SubscriptionTopic","http://hl7.org/fhir/StructureDefinition/SubscriptionTopic", IsResource=true)]
   public partial class SubscriptionTopic : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -184,6 +184,7 @@ namespace Hl7.Fhir.Model
       /// create | update | delete
       /// </summary>
       [FhirElement("methodCriteria", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> MethodCriteriaElement
@@ -407,6 +408,7 @@ namespace Hl7.Fhir.Model
       /// test-passes | test-fails
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForCreateElement
       {
@@ -469,6 +471,7 @@ namespace Hl7.Fhir.Model
       /// test-passes | test-fails
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForDeleteElement
       {
@@ -658,6 +661,7 @@ namespace Hl7.Fhir.Model
       /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type
       /// </summary>
       [FhirElement("searchModifier", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionSearchModifier>> SearchModifierElement
@@ -916,6 +920,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

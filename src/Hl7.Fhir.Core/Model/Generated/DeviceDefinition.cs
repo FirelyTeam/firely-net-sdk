@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceDefinition", IsResource=true)]
+  [FhirType("DeviceDefinition","http://hl7.org/fhir/StructureDefinition/DeviceDefinition", IsResource=true)]
   public partial class DeviceDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -286,6 +286,7 @@ namespace Hl7.Fhir.Model
       /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
       /// </summary>
       [FhirElement("type", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement

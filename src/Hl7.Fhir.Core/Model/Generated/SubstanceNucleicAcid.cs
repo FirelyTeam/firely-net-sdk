@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubstanceNucleicAcid", IsResource=true)]
+  [FhirType("SubstanceNucleicAcid","http://hl7.org/fhir/StructureDefinition/SubstanceNucleicAcid", IsResource=true)]
   public partial class SubstanceNucleicAcid : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

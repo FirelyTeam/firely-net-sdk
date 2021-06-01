@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Permission", IsResource=true)]
+  [FhirType("Permission","http://hl7.org/fhir/StructureDefinition/Permission", IsResource=true)]
   public partial class Permission : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -335,6 +335,7 @@ namespace Hl7.Fhir.Model
     /// active | entered-in-error | draft | rejected
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Permission.PermissionStatus> StatusElement

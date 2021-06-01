@@ -127,8 +127,8 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
-        private FhirXmlParser FhirXmlParser = new FhirXmlParser();
-        private FhirJsonParser FhirJsonParser = new FhirJsonParser();
+        private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        private readonly FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
 
         //[TestMethod]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestDerivedPoCoSerialization()
         {
-            ModelInfo.GetStructureDefinitionSummaryProvider().ImportType(typeof(CustomBundle));
+            ModelInfo.ModelInspector.ImportType(typeof(CustomBundle));
 
             var bundle = new CustomBundle()
             {

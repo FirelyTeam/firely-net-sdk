@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Statistic")]
+  [FhirType("Statistic","http://hl7.org/fhir/StructureDefinition/Statistic")]
   public partial class Statistic : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>
@@ -900,6 +900,7 @@ namespace Hl7.Fhir.Model
       /// continuous | dichotomous | ordinal | polychotomous
       /// </summary>
       [FhirElement("handling", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
       {

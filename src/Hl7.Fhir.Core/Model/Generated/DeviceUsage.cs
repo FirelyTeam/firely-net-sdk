@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DeviceUsage", IsResource=true)]
+  [FhirType("DeviceUsage","http://hl7.org/fhir/StructureDefinition/DeviceUsage", IsResource=true)]
   public partial class DeviceUsage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     /// active | completed | entered-in-error +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceUsage.DeviceUsageStatus> StatusElement

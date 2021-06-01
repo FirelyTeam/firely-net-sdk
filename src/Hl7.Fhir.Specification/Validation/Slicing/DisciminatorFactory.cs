@@ -26,6 +26,10 @@ namespace Hl7.Fhir.Validation
             if (spec?.Type == null) throw new ArgumentNullException(nameof(spec), "Encountered a discriminator component without a discriminator type.");
             if (resolver == null) throw Error.ArgumentNull(nameof(resolver));
 
+            //Context is needed by some external validators in case a system is missing.
+            //See http://hl7.org/fhir/valueset-operation-validate-code.html
+            var context = $"{root.StructureDefinition.Url}#{location}";
+
             var condition = walkToCondition(root, spec.Path, resolver);
 
             switch (spec.Type.Value)
@@ -37,9 +41,9 @@ namespace Hl7.Fhir.Validation
                 //    return buildPatternDiscriminator(condition, spec.Path, validator);
 
                 case ElementDefinition.DiscriminatorType.Value:
-                    return buildCombinedDiscriminator("value", condition, spec.Path, validator);
+                    return buildCombinedDiscriminator("value", condition, spec.Path, validator, context);
                 case ElementDefinition.DiscriminatorType.Pattern:
-                    return buildCombinedDiscriminator("pattern", condition, spec.Path, validator);
+                    return buildCombinedDiscriminator("pattern", condition, spec.Path, validator, context);
                 case ElementDefinition.DiscriminatorType.Type:
                     return buildTypeDiscriminator(condition, spec.Path, validator);
                 case ElementDefinition.DiscriminatorType.Profile:
@@ -65,7 +69,7 @@ namespace Hl7.Fhir.Validation
             return new ExistsDiscriminator(existsMode, path);
         }
 
-        private static IDiscriminator buildCombinedDiscriminator(string name, ElementDefinitionNavigator nav, string discriminator, Validator validator)
+        private static IDiscriminator buildCombinedDiscriminator(string name, ElementDefinitionNavigator nav, string discriminator, Validator validator, string context)
         {
             return new CombinedDiscriminator(listDiscriminators());
 
@@ -80,7 +84,7 @@ namespace Hl7.Fhir.Validation
                     yield return new ValueDiscriminator(spec.Fixed, discriminator, validator);
 
                 if (spec.Binding != null)
-                    yield return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator);
+                    yield return new BindingDiscriminator(spec.Binding, discriminator, spec.Path, validator, context);
 
                 if (spec.Pattern != null)
                     yield return new PatternDiscriminator(spec.Pattern, discriminator, validator);

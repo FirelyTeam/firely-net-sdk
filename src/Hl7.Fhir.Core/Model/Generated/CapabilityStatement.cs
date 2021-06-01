@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CapabilityStatement", IsResource=true)]
+  [FhirType("CapabilityStatement","http://hl7.org/fhir/StructureDefinition/CapabilityStatement", IsResource=true)]
   public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -590,6 +590,7 @@ namespace Hl7.Fhir.Model
       /// client | server
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.RestfulCapabilityMode> ModeElement
@@ -991,6 +992,7 @@ namespace Hl7.Fhir.Model
       /// A resource type that is supported
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -1113,6 +1115,7 @@ namespace Hl7.Fhir.Model
       /// no-version | versioned | versioned-update
       /// </summary>
       [FhirElement("versioning", Order=90)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ResourceVersionPolicy> VersioningElement
       {
@@ -1237,6 +1240,7 @@ namespace Hl7.Fhir.Model
       /// not-supported | modified-since | not-match | full-support
       /// </summary>
       [FhirElement("conditionalRead", Order=130)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalReadStatus> ConditionalReadElement
       {
@@ -1299,6 +1303,7 @@ namespace Hl7.Fhir.Model
       /// not-supported | single | multiple - how conditional delete is supported
       /// </summary>
       [FhirElement("conditionalDelete", Order=150)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalDeleteStatus> ConditionalDeleteElement
       {
@@ -1330,6 +1335,7 @@ namespace Hl7.Fhir.Model
       /// literal | logical | resolves | enforced | local
       /// </summary>
       [FhirElement("referencePolicy", Order=160)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
@@ -1610,6 +1616,7 @@ namespace Hl7.Fhir.Model
       /// read | vread | update | patch | delete | history-instance | history-type | create | search-type
       /// </summary>
       [FhirElement("code", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TypeRestfulInteraction> CodeElement
@@ -1799,6 +1806,7 @@ namespace Hl7.Fhir.Model
       /// number | date | string | token | reference | composite | quantity | uri | special
       /// </summary>
       [FhirElement("type", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -2098,6 +2106,7 @@ namespace Hl7.Fhir.Model
       /// transaction | batch | search-system | history-system
       /// </summary>
       [FhirElement("code", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SystemRestfulInteraction> CodeElement
@@ -2514,6 +2523,7 @@ namespace Hl7.Fhir.Model
       /// sender | receiver
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
@@ -2659,6 +2669,7 @@ namespace Hl7.Fhir.Model
       /// producer | consumer
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.DocumentMode> ModeElement
@@ -2933,6 +2944,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -3140,6 +3152,7 @@ namespace Hl7.Fhir.Model
     /// instance | capability | requirements
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -3262,6 +3275,7 @@ namespace Hl7.Fhir.Model
     /// FHIR Version the system supports
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=280)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement

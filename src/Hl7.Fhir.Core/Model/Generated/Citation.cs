@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Citation", IsResource=true)]
+  [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
   public partial class Citation : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -4336,6 +4336,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

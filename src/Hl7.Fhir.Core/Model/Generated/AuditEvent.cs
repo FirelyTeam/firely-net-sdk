@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AuditEvent", IsResource=true)]
+  [FhirType("AuditEvent","http://hl7.org/fhir/StructureDefinition/AuditEvent", IsResource=true)]
   public partial class AuditEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -590,6 +590,7 @@ namespace Hl7.Fhir.Model
       /// The type of network access point
       /// </summary>
       [FhirElement("type", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
       {
@@ -1248,6 +1249,7 @@ namespace Hl7.Fhir.Model
     /// Type of action performed during the event
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1279,6 +1281,7 @@ namespace Hl7.Fhir.Model
     /// emergency | alert | critical | error | warning | notice | informational | debug
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> SeverityElement
     {

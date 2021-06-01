@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CodeSystem", IsResource=true)]
+  [FhirType("CodeSystem","http://hl7.org/fhir/StructureDefinition/CodeSystem", IsResource=true)]
   public partial class CodeSystem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -261,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | child-of | descendent-leaf | exists
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
@@ -510,6 +511,7 @@ namespace Hl7.Fhir.Model
       /// code | Coding | string | integer | boolean | dateTime | decimal
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystem.PropertyType> TypeElement
@@ -1286,6 +1288,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1554,6 +1557,7 @@ namespace Hl7.Fhir.Model
     /// grouped-by | is-a | part-of | classified-with
     /// </summary>
     [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
     {
@@ -1647,6 +1651,7 @@ namespace Hl7.Fhir.Model
     /// not-present | example | fragment | complete | supplement
     /// </summary>
     [FhirElement("content", InSummary=true, Order=290)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode> ContentElement

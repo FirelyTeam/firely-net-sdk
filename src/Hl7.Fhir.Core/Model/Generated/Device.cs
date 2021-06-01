@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Device", IsResource=true)]
+  [FhirType("Device","http://hl7.org/fhir/StructureDefinition/Device", IsResource=true)]
   public partial class Device : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -313,6 +313,7 @@ namespace Hl7.Fhir.Model
       /// barcode | rfid | manual | card | self-reported | electronic-transmission | unknown
       /// </summary>
       [FhirElement("entryType", Order=90)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
       {
@@ -477,6 +478,7 @@ namespace Hl7.Fhir.Model
       /// udi-label-name | user-friendly-name | patient-reported-name | manufacturer-name | model-name | other
       /// </summary>
       [FhirElement("type", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -1247,6 +1249,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
     {

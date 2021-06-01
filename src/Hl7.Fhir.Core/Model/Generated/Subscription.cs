@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Subscription", IsResource=true)]
+  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -197,6 +197,7 @@ namespace Hl7.Fhir.Model
       /// = | eq | ne | gt | lt | ge | le | sa | eb | ap | above | below | in | not-in | of-type
       /// </summary>
       [FhirElement("searchModifier", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionSearchModifier> SearchModifierElement
       {
@@ -383,6 +384,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionState> StatusElement
@@ -707,6 +709,7 @@ namespace Hl7.Fhir.Model
     /// empty | id-only | full-resource
     /// </summary>
     [FhirElement("content", InSummary=true, Order=230)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionPayloadContent> ContentElement
     {
@@ -738,6 +741,7 @@ namespace Hl7.Fhir.Model
     /// none | full-url | request-response | all
     /// </summary>
     [FhirElement("notificationUrlLocation", InSummary=true, Order=240)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionUrlLocation> NotificationUrlLocationElement
     {

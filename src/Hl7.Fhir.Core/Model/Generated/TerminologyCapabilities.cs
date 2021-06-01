@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("TerminologyCapabilities", IsResource=true)]
+  [FhirType("TerminologyCapabilities","http://hl7.org/fhir/StructureDefinition/TerminologyCapabilities", IsResource=true)]
   public partial class TerminologyCapabilities : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -1769,6 +1769,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1976,6 +1977,7 @@ namespace Hl7.Fhir.Model
     /// instance | capability | requirements
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=240)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -2092,6 +2094,7 @@ namespace Hl7.Fhir.Model
     /// explicit | all
     /// </summary>
     [FhirElement("codeSearch", Order=300)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport> CodeSearchElement
     {

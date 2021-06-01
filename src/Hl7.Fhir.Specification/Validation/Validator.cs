@@ -238,13 +238,16 @@ namespace Hl7.Fhir.Validation
                 }
             }
 
+            //Context is needed by some external validators in case a system is missing.
+            var context = $"{definition.StructureDefinition.Url}#{elementConstraints.Path}";
+
             outcome.Add(this.ValidateFixed(elementConstraints, instance));
             outcome.Add(this.ValidatePattern(elementConstraints, instance));
             outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
             outcome.Add(ValidateMaxLength(elementConstraints, instance));
             outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
             outcome.Add(validateRegexExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
-            outcome.Add(this.ValidateBinding(elementConstraints, instance));
+            outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
 
             // If the report only has partial information, no use to show the hierarchy, so flatten it.
             if (Settings.Trace == false) outcome.Flatten();
@@ -260,8 +263,9 @@ namespace Hl7.Fhir.Validation
             if (pattern != null)
             {
                 // See issue https://github.com/FirelyTeam/firely-net-sdk/issues/1563 and https://hl7.org/fhir/datatypes.html#string 
-                // the regex provided by the Fhir standard is not sufficient enough. The regex [\r\n\t\u0020-\uFFFF]* is more recommended 
-                if (instance?.InstanceType == FHIRAllTypes.String.GetLiteral() && pattern == @"[ \r\n\t\S]+")
+                // the regex provided by the Fhir standard is not sufficient enough. The regex [\r\n\t\u0020-\uFFFF]* is more recommended
+                // The regex defined for string also applies to markdown
+                if ((instance?.InstanceType == FHIRAllTypes.String.GetLiteral() || instance?.InstanceType == FHIRAllTypes.Markdown.GetLiteral()) && pattern == @"[ \r\n\t\S]+")
                 {
                     pattern = @"[\r\n\t\u0020-\uFFFF]*";
                 }
@@ -301,10 +305,10 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance) =>
-            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path) : new OperationOutcome();
+        internal OperationOutcome ValidateBinding(ElementDefinition definition, ITypedElement instance, string context) =>
+            definition.Binding != null ? ValidateBinding(definition.Binding, instance, definition.Path, context) : new OperationOutcome();
 
-        internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath)
+        internal OperationOutcome ValidateBinding(ElementDefinition.ElementDefinitionBindingComponent binding, ITypedElement instance, string defPath, string context)
         {
             var outcome = new OperationOutcome();
 
@@ -327,7 +331,7 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                Binding b = binding.ToValidatable();
+                Binding b = binding.ToValidatable(context);
                 outcome.Add(b.Validate(instance, vc));
             }
             catch (IncorrectElementDefinitionException iede)

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AdverseEvent", IsResource=true)]
+  [FhirType("AdverseEvent","http://hl7.org/fhir/StructureDefinition/AdverseEvent", IsResource=true)]
   public partial class AdverseEvent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -849,6 +849,7 @@ namespace Hl7.Fhir.Model
     /// in-progress | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
@@ -881,6 +882,7 @@ namespace Hl7.Fhir.Model
     /// actual | potential
     /// </summary>
     [FhirElement("actuality", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
