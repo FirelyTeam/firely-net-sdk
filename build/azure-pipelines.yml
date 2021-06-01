@@ -42,6 +42,16 @@ stages:
     - template: templates/apply-signingkey-steps-template.yml
     - template: templates/apply-versioning-steps-template.yml
     
+    - powershell: |
+         [xml]$xml = Get-Content ./src/firely-net-sdk.props
+         #Get the variable RunFhirPathTests
+         [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
+         $RunFhirPathTests = $RunFhirPathTests.Trim()
+         Write-Host "RunFhirPathTests: $RunFhirPathTests"
+         Write-Host "##vso[task.setvariable variable=RunFhirPathTests;isOutput=true]$RunFhirPathTests"
+      displayName: Extract variable RunFhirPathTests
+      name: obtainFhirPathTest
+
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
       inputs:
@@ -64,10 +74,22 @@ stages:
       displayName: Create Test artifacts
       inputs:
         command: publish
-        projects: '**/Hl7.*Tests/*.csproj'
+        projects: |
+         **/Hl7.*Tests/*.csproj
+         !**/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
         zipAfterPublish: false
         arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+
+    - task: DotNetCoreCLI@2
+      displayName: Create Test artifacts for FhirPath R4
+      inputs:
+        command: publish
+        projects: '**/Hl7.FhirPath.R4.Tests/*.csproj'
+        publishWebProjects: false
+        zipAfterPublish: false
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+      condition: and(succeeded(), eq(variables['obtainFhirPathTest.RunFhirPathTests'], 'true'))
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
@@ -83,15 +105,6 @@ stages:
         targetPath: $(System.DefaultWorkingDirectory)/bin
         artifactName: TestBuild
     
-    - powershell: |
-         [xml]$xml = Get-Content ./src/firely-net-sdk.props
-         #Get the variable RunFhirPathTests
-         [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
-         # version
-         Write-Host "RunFhirPathTests: $RunFhirPathTests"
-         $version=$pomXml.project.version
-         Write-Host "##vso[task.setvariable variable=RunFhirPathTests]$RunFhirPathTests"
-      displayName: Extract variable RunFhirPathTests
     - task: DotNetCoreCLI@2
       displayName: Pack
       inputs:
@@ -109,34 +122,60 @@ stages:
 - stage: test
   displayName: Test
   dependsOn: build
+  variables:
+    RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
   jobs:
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests common test projects
-      projects: |
-        **/common/**/publish/Hl7.Fhir.Support.Tests.dll
-        **/common/**/publish/HL7.FhirPath.Tests.dll
-  - ${{ if eq(variables.RunFhirPathTests, 'true') }}:
-    - template: templates/test-job-template.yml
-      parameters:
-        testRunTitle: Tests FhirPath Core test project
-        projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-       testRunTitle: Tests Serialization test project
-       projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests Specification test project
-      projects: '**/publish/Hl7.Fhir.Specification.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests Core test project
-      projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
-  - template: templates/test-job-template.yml
-    parameters:
-      testRunTitle: Tests ElementModel test project
-      projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
+  - job:
+    displayName: Tests common test projects
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests common test projects
+          projects: |
+            **/common/**/publish/Hl7.Fhir.Support.Tests.dll
+            **/common/**/publish/HL7.FhirPath.Tests.dll
+  - job:
+    displayName: Tests FhirPath Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests FhirPath Core test project
+          projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
+    condition: and(succeeded(), eq(variables['RunFhirPathTests'], 'true'))
+  - job:
+    displayName: Tests Serialization test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization test project
+          projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
+  - job:
+    displayName: Tests Specification test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification test project
+          projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
+  - job:
+    displayName: Tests Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Core test project
+          projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
+  - job:
+    displayName: Tests ElementModel test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests ElementModel test project
+          projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
 
 - stage: deploy_myget
   displayName: Deploy to MyGet
