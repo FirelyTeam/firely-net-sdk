@@ -13,9 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
-using Hl7.Fhir.Serialization;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -71,7 +68,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestTryToDateTimeOffset()
         {
-            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));           
+            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));
             Assert.AreEqual("2021-03-18T12:22:35.999-04:00", fdt.Value);
 
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto1));
@@ -86,7 +83,7 @@ namespace Hl7.Fhir.Tests.Model
             fdt = new FhirDateTime("2021-03-18T12:22:35.999Z");
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto3));
             Assert.AreEqual("2021-03-18T12:22:35.9990000+00:00", dto3.ToString("o"));
-            
+
             fdt = new FhirDateTime("2021-03-18T12:22:35.1234+04:00");
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto4));
             Assert.AreEqual("2021-03-18T12:22:35.1234000+04:00", dto4.ToString("o"));
@@ -700,7 +697,7 @@ namespace Hl7.Fhir.Tests.Model
                 Assert.AreEqual(isReference, ModelInfo.IsReference(typeName));
             }
         }
-    
+
         [TestMethod]
         public void TestTypeHierarchy()
         {
