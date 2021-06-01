@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Linkage", IsResource=true)]
+  [FhirType("Linkage","http://hl7.org/fhir/StructureDefinition/Linkage", IsResource=true)]
   public partial class Linkage : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Model
       /// source | alternate | historical
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Linkage.LinkageType> TypeElement

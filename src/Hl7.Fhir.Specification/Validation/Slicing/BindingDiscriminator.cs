@@ -16,20 +16,22 @@ namespace Hl7.Fhir.Validation
 {
     internal class BindingDiscriminator : PathBasedDiscriminator
     {
-        public BindingDiscriminator(ElementDefinition.ElementDefinitionBindingComponent binding, string path, string errorLocation, Validator validator) : base(path)
+        public BindingDiscriminator(ElementDefinition.ElementDefinitionBindingComponent binding, string path, string errorLocation, Validator validator, string context = null) : base(path)
         {
             Validator = validator;
             ErrorLocation = errorLocation;
             Binding = binding;
+            Context = context;
         }
 
         public readonly string ErrorLocation;
         public readonly Validator Validator;
         public readonly ElementDefinition.ElementDefinitionBindingComponent Binding;
+        public readonly string Context;
 
         protected override bool MatchInternal(ITypedElement instance)
         {
-            var result = Validator.ValidateBinding(Binding, instance, ErrorLocation);
+            var result = Validator.ValidateBinding(Binding, instance, ErrorLocation, Context);
             return result.Success;
         }
     }

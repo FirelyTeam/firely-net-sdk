@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CompartmentDefinition", IsResource=true)]
+  [FhirType("CompartmentDefinition","http://hl7.org/fhir/StructureDefinition/CompartmentDefinition", IsResource=true)]
   public partial class CompartmentDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -72,6 +72,7 @@ namespace Hl7.Fhir.Model
       /// Name of resource type
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> CodeElement
@@ -335,6 +336,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -514,6 +516,7 @@ namespace Hl7.Fhir.Model
     /// Patient | Encounter | RelatedPerson | Practitioner | Device
     /// </summary>
     [FhirElement("code", InSummary=true, Order=200)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompartmentType> CodeElement

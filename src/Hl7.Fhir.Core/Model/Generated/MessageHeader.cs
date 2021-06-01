@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MessageHeader", IsResource=true)]
+  [FhirType("MessageHeader","http://hl7.org/fhir/StructureDefinition/MessageHeader", IsResource=true)]
   public partial class MessageHeader : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -550,6 +550,7 @@ namespace Hl7.Fhir.Model
       /// ok | transient-error | fatal-error
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement
