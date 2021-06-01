@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Validation
             }
 
             //Context is needed by some external validators in case a system is missing.
-            var context = $"{definition.StructureDefinition.Url}#{elementConstraints.Path}";
+            var context = $"{definition.StructureDefinition.Url}#{elementConstraints.Path}"; 
 
             outcome.Add(this.ValidateFixed(elementConstraints, instance));
             outcome.Add(this.ValidatePattern(elementConstraints, instance));
