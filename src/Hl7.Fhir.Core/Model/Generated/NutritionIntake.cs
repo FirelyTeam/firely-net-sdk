@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("NutritionIntake", IsResource=true)]
+  [FhirType("NutritionIntake","http://hl7.org/fhir/StructureDefinition/NutritionIntake", IsResource=true)]
   public partial class NutritionIntake : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -605,6 +605,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement

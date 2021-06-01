@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("OrderedDistribution")]
+  [FhirType("OrderedDistribution","http://hl7.org/fhir/StructureDefinition/OrderedDistribution")]
   public partial class OrderedDistribution : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("SubscriptionStatus", IsResource=true)]
+  [FhirType("SubscriptionStatus","http://hl7.org/fhir/StructureDefinition/SubscriptionStatus", IsResource=true)]
   public partial class SubscriptionStatus : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -93,6 +93,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionState> StatusElement
     {
@@ -124,6 +125,7 @@ namespace Hl7.Fhir.Model
     /// handshake | heartbeat | event-notification | query-status
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> TypeElement

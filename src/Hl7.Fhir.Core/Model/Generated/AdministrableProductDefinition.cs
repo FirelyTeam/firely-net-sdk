@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("AdministrableProductDefinition", IsResource=true)]
+  [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition", IsResource=true)]
   public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

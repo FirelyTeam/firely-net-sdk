@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("RequestGroup", IsResource=true)]
+  [FhirType("RequestGroup","http://hl7.org/fhir/StructureDefinition/RequestGroup", IsResource=true)]
   public partial class RequestGroup : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -196,6 +196,7 @@ namespace Hl7.Fhir.Model
       /// routine | urgent | asap | stat
       /// </summary>
       [FhirElement("priority", Order=80)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
       {
@@ -338,6 +339,7 @@ namespace Hl7.Fhir.Model
       /// visual-group | logical-group | sentence-group
       /// </summary>
       [FhirElement("groupingBehavior", Order=170)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -369,6 +371,7 @@ namespace Hl7.Fhir.Model
       /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
       /// </summary>
       [FhirElement("selectionBehavior", Order=180)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -400,6 +403,7 @@ namespace Hl7.Fhir.Model
       /// must | could | must-unless-documented
       /// </summary>
       [FhirElement("requiredBehavior", Order=190)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -431,6 +435,7 @@ namespace Hl7.Fhir.Model
       /// yes | no
       /// </summary>
       [FhirElement("precheckBehavior", Order=200)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -462,6 +467,7 @@ namespace Hl7.Fhir.Model
       /// single | multiple
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=210)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -693,6 +699,7 @@ namespace Hl7.Fhir.Model
       /// applicability | start | stop
       /// </summary>
       [FhirElement("kind", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -851,6 +858,7 @@ namespace Hl7.Fhir.Model
       /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
       /// </summary>
       [FhirElement("relationship", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -984,6 +992,7 @@ namespace Hl7.Fhir.Model
       /// careteam | device | group | healthcareservice | location | organization | patient | practitioner | practitionerrole | relatedperson
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -1277,6 +1286,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -1309,6 +1319,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=160)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -1341,6 +1352,7 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Validation
     {
         public static Binding.BindingStrength ToSchemaBindingStrength(this BindingStrength strength) => (Binding.BindingStrength)(int)strength;
 
-        public static Binding ToValidatable(this ElementDefinition.ElementDefinitionBindingComponent binding)
+        public static Binding ToValidatable(this ElementDefinition.ElementDefinitionBindingComponent binding, string context = null)
         {
             if (binding.Strength == null)
                 throw new IncorrectElementDefinitionException("Encountered a binding element without a binding strength.");
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Validation
             if (uri == null)
                 throw new IncorrectElementDefinitionException($"Encountered a binding element without either a ValueSet reference or uri");
 
-            return new Binding(uri, binding.Strength.Value.ToSchemaBindingStrength(), abstractAllowed: true, binding.Description);
+            return new Binding(uri, binding.Strength.Value.ToSchemaBindingStrength(), abstractAllowed: true, binding.Description, context);
         }
     }
 

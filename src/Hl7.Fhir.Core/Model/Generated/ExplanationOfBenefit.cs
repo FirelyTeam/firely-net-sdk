@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ExplanationOfBenefit", IsResource=true)]
+  [FhirType("ExplanationOfBenefit","http://hl7.org/fhir/StructureDefinition/ExplanationOfBenefit", IsResource=true)]
   public partial class ExplanationOfBenefit : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -4370,6 +4370,7 @@ namespace Hl7.Fhir.Model
       /// display | print | printoper
       /// </summary>
       [FhirElement("type", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -4938,6 +4939,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus> StatusElement
@@ -4997,6 +4999,7 @@ namespace Hl7.Fhir.Model
     /// claim | preauthorization | predetermination
     /// </summary>
     [FhirElement("use", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Use> UseElement
@@ -5293,6 +5296,7 @@ namespace Hl7.Fhir.Model
     /// queued | complete | error | partial
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=310)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement

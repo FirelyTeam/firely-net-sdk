@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Binary", IsResource=true)]
+  [FhirType("Binary","http://hl7.org/fhir/StructureDefinition/Binary", IsResource=true)]
   public partial class Binary : Hl7.Fhir.Model.Resource
   {
     /// <summary>

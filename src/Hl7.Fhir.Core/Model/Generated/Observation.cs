@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Observation", IsResource=true)]
+  [FhirType("Observation","http://hl7.org/fhir/StructureDefinition/Observation", IsResource=true)]
   public partial class Observation : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -485,6 +485,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement

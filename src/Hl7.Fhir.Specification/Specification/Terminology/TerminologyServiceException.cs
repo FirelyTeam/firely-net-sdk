@@ -19,6 +19,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
     public class ValueSetExpansionTooBigException : TerminologyServiceException
     {
+        //422 - too costly
         public ValueSetExpansionTooBigException(string message) : base(message)
         {
         }

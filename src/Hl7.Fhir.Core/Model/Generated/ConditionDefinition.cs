@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ConditionDefinition", IsResource=true)]
+  [FhirType("ConditionDefinition","http://hl7.org/fhir/StructureDefinition/ConditionDefinition", IsResource=true)]
   public partial class ConditionDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -336,6 +336,7 @@ namespace Hl7.Fhir.Model
       /// sensitive | specific
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionPreconditionType> TypeElement
@@ -483,6 +484,7 @@ namespace Hl7.Fhir.Model
       /// preadmit | diff-diagnosis | outcome
       /// </summary>
       [FhirElement("purpose", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionQuestionnairePurpose> PurposeElement
@@ -878,6 +880,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

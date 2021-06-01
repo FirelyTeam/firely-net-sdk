@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ObservationDefinition", IsResource=true)]
+  [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
   public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -382,6 +382,7 @@ namespace Hl7.Fhir.Model
       /// male | female | other | unknown
       /// </summary>
       [FhirElement("gender", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -470,6 +471,7 @@ namespace Hl7.Fhir.Model
       /// reference | critical | absolute
       /// </summary>
       [FhirElement("rangeCategory", Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> RangeCategoryElement
       {
@@ -783,6 +785,7 @@ namespace Hl7.Fhir.Model
       /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
       /// </summary>
       [FhirElement("permittedDataType", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
@@ -1057,6 +1060,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1440,6 +1444,7 @@ namespace Hl7.Fhir.Model
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
     /// </summary>
     [FhirElement("permittedDataType", Order=330)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement

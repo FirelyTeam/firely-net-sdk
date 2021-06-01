@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ConceptMap", IsResource=true)]
+  [FhirType("ConceptMap","http://hl7.org/fhir/StructureDefinition/ConceptMap", IsResource=true)]
   public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -580,6 +580,7 @@ namespace Hl7.Fhir.Model
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to
       /// </summary>
       [FhirElement("relationship", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
@@ -989,6 +990,7 @@ namespace Hl7.Fhir.Model
       /// provided | fixed | other-map
       /// </summary>
       [FhirElement("mode", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -1330,6 +1332,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

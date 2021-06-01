@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Immunization", IsResource=true)]
+  [FhirType("Immunization","http://hl7.org/fhir/StructureDefinition/Immunization", IsResource=true)]
   public partial class Immunization : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -888,6 +888,7 @@ namespace Hl7.Fhir.Model
     /// completed | entered-in-error | not-done
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> StatusElement

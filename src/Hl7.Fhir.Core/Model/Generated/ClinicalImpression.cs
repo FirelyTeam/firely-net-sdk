@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ClinicalImpression", IsResource=true)]
+  [FhirType("ClinicalImpression","http://hl7.org/fhir/StructureDefinition/ClinicalImpression", IsResource=true)]
   public partial class ClinicalImpression : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -198,6 +198,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement

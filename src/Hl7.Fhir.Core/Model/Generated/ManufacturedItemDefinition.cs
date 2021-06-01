@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ManufacturedItemDefinition", IsResource=true)]
+  [FhirType("ManufacturedItemDefinition","http://hl7.org/fhir/StructureDefinition/ManufacturedItemDefinition", IsResource=true)]
   public partial class ManufacturedItemDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

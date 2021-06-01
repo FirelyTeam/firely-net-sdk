@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("InsurancePlan", IsResource=true)]
+  [FhirType("InsurancePlan","http://hl7.org/fhir/StructureDefinition/InsurancePlan", IsResource=true)]
   public partial class InsurancePlan : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -1357,6 +1357,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

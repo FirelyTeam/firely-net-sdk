@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Address")]
+  [FhirType("Address","http://hl7.org/fhir/StructureDefinition/Address")]
   public partial class Address : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -127,6 +127,7 @@ namespace Hl7.Fhir.Model
     /// home | work | temp | old | billing - purpose of this address
     /// </summary>
     [FhirElement("use", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
     {
@@ -158,6 +159,7 @@ namespace Hl7.Fhir.Model
     /// postal | physical | both
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
     {

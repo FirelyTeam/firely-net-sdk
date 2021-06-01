@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Dosage")]
+  [FhirType("Dosage","http://hl7.org/fhir/StructureDefinition/Dosage")]
   public partial class Dosage : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Money")]
+  [FhirType("Money","http://hl7.org/fhir/StructureDefinition/Money")]
   public partial class Money : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -1192,6 +1192,7 @@ namespace Hl7.Fhir.Model
     /// ISO 4217 Currency Code
     /// </summary>
     [FhirElement("currency", InSummary=true, Order=40)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement
     {
