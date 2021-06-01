@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ChargeItem", IsResource=true)]
+  [FhirType("ChargeItem","http://hl7.org/fhir/StructureDefinition/ChargeItem", IsResource=true)]
   public partial class ChargeItem : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -299,6 +299,7 @@ namespace Hl7.Fhir.Model
     /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus> StatusElement

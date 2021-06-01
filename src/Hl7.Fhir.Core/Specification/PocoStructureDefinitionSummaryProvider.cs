@@ -6,21 +6,17 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
 
 namespace Hl7.Fhir.Specification
 {
+    /// <summary>
+    /// An implementation of <see cref="IStructureDefinitionSummaryProvider"/> that obtains
+    /// its metadata from the POCO assemblies for this release.
+    /// </summary>
     public class PocoStructureDefinitionSummaryProvider : IStructureDefinitionSummaryProvider
     {
         public IStructureDefinitionSummary Provide(string canonical) =>
-            ModelInfo.GetStructureDefinitionSummaryProvider().Provide(canonical);
+            ModelInfo.ModelInspector.Provide(canonical);
     }
 }

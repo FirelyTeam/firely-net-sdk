@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Media", IsResource=true)]
+  [FhirType("Media","http://hl7.org/fhir/StructureDefinition/Media", IsResource=true)]
   public partial class Media : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement

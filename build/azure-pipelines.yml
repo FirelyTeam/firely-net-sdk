@@ -235,6 +235,17 @@ stages:
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
                 includeSymbols: false  
+            
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R4B packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4B')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
 
             - task: NuGetCommand@2
               displayName: 'NuGet Push R5 packages only'

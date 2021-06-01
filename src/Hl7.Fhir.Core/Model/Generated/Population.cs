@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Population")]
+  [FhirType("Population","http://hl7.org/fhir/StructureDefinition/Population")]
   public partial class Population : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

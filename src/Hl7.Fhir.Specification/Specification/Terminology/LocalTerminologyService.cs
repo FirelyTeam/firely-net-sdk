@@ -7,11 +7,13 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using T = System.Threading.Tasks;
@@ -24,6 +26,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
+        
+        private readonly string _codeAttribute = "code";
+        private readonly string _systemAttribute = "system";
+        private readonly string _contextAttribute = "context";
 
         public LocalTerminologyService(IAsyncResourceResolver resolver, ValueSetExpanderSettings expanderSettings = null)
         {
@@ -40,15 +46,33 @@ namespace Hl7.Fhir.Specification.Terminology
             return await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
         }
 
+        ///<inheritdoc />
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
+
+            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
+            if (parameters.TryGetDuplicates(out var duplicates) == true)
+            {
+                //422 Unproccesable Entity
+                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}",(HttpStatusCode)422);
+            }
+            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
+            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
+                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
+            {
+                //422 Unproccesable Entity
+                throw new FhirOperationException($"If a code is provided, a system or a context must be provided",(HttpStatusCode)422);
+            }
+
             var validCodeParams = new ValidateCodeParameters(parameters);
 
             var valueSet = validCodeParams.ValueSet;
             if (valueSet is null)
             {
                 if (validCodeParams.Url is null)
-                    throw Error.Argument("Have to supply either a canonical url or a valueset.");
+
+                    //422 Unproccesable Entity
+                    throw new FhirOperationException("Have to supply either a canonical url or a valueset.", (HttpStatusCode)422);
 
                 try
                 {
@@ -60,15 +84,31 @@ namespace Hl7.Fhir.Specification.Terminology
                 }
 
                 if (valueSet is null)
-                    throw new ValueSetUnknownException($"Cannot retrieve valueset '{validCodeParams.Url.Value}'");
+                    // 404 not found
+                    throw new FhirOperationException($"Cannot retrieve valueset '{validCodeParams.Url.Value}'", HttpStatusCode.NotFound);
             }
 
-            if (validCodeParams.CodeableConcept is { })
-                return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-            else if (validCodeParams.Coding is { })
-                return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
-            else
-                return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+            try
+            {
+                if (validCodeParams.CodeableConcept is { })
+                    return await validateCodeVS(valueSet, validCodeParams.CodeableConcept, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+                else if (validCodeParams.Coding is { })
+                    return await validateCodeVS(valueSet, validCodeParams.Coding, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+                else
+                    return await validateCodeVS(valueSet, validCodeParams.Code?.Value, validCodeParams.System?.Value, validCodeParams.Display?.Value, validCodeParams.Abstract?.Value).ConfigureAwait(false);
+            }
+#pragma warning disable CS0618 // Only catched here to not change to public interface of ValueSetExpander
+            catch (TerminologyServiceException e)
+#pragma warning restore CS0618 
+            {
+                throw new FhirOperationException(e.Message, (HttpStatusCode)422);
+            }
+            catch (Exception e)
+            {
+                //500 internal server error
+                throw new FhirOperationException(e.Message, (HttpStatusCode)500);
+            }
+           
         }
 
         #region Not implemented methods
@@ -117,7 +157,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var parameters = new ValidateCodeParameters()
                 .WithValueSet(url: canonical, context: context, valueSet: valueSet)
-                .WithCode(code: code, system: system, systemVersion: version, display: display, displayLanguage: displayLanguage)
+                .WithCode(code: code, system: system, systemVersion: version, display: display, displayLanguage: displayLanguage, context)
                 .WithCoding(coding)
                 .WithCodeableConcept(codeableConcept)
                 .WithDate(date)

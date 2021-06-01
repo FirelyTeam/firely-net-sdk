@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationRequest", IsResource=true)]
+  [FhirType("MedicationRequest","http://hl7.org/fhir/StructureDefinition/MedicationRequest", IsResource=true)]
   public partial class MedicationRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -623,6 +623,7 @@ namespace Hl7.Fhir.Model
     /// active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus> StatusElement
@@ -668,6 +669,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent> IntentElement
@@ -714,6 +716,7 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

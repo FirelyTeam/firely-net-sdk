@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Subscription", IsResource=true)]
+  [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
   public partial class Subscription : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
       /// rest-hook | websocket | email | sms | message
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> TypeElement
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// requested | active | error | off
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("VerificationResult", IsResource=true)]
+  [FhirType("VerificationResult","http://hl7.org/fhir/StructureDefinition/VerificationResult", IsResource=true)]
   public partial class VerificationResult : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -805,6 +805,7 @@ namespace Hl7.Fhir.Model
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.VerificationResult.status> Status_Element

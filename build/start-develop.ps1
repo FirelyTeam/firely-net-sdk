@@ -5,7 +5,7 @@ Param(
     [string] $versionSuffix = "alpha"
 )
 
-$fhir_releases = @('stu3', 'r4', 'r5')
+$fhir_releases = @('stu3', 'r4', 'r4B', 'r5')
 
 # the root path of the repository
 $repo_root = "$PsScriptRoot\.."
@@ -21,7 +21,7 @@ function Update-Version([string] $develop_branch, [string] $propFile)
     git merge --ff-only origin/$develop_branch
 
     # update version number
-    & $PSScriptRoot\UpdateVersion.ps1 -propFile $propFile -newVersion $newVersion -suffix $versionSuffix
+    & $repo_root\build\UpdateVersion.ps1 -propFile $propFile -newVersion $newVersion -suffix $versionSuffix
 
     # commit and push changes
     git commit --all --message="Start new development phase: version $newVersion-$versionSuffix"

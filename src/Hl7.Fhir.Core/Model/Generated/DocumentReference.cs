@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DocumentReference", IsResource=true)]
+  [FhirType("DocumentReference","http://hl7.org/fhir/StructureDefinition/DocumentReference", IsResource=true)]
   public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -72,6 +72,7 @@ namespace Hl7.Fhir.Model
       /// replaces | transforms | signs | appends
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -529,6 +530,7 @@ namespace Hl7.Fhir.Model
     /// current | superseded | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DocumentReferenceStatus> StatusElement
@@ -561,6 +563,7 @@ namespace Hl7.Fhir.Model
     /// preliminary | final | amended | entered-in-error
     /// </summary>
     [FhirElement("docStatus", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
     {
