@@ -205,8 +205,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://non-existing.code.system", "01.015"));
-
-
+          
             var result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
             Assert.True(result.Issue.Count == 1);
