@@ -18,6 +18,40 @@ namespace Hl7.Fhir.Serialization.Tests
         //    Assert.IsFalse(ip.IsResource("Identifier"));
         //}
 
+        public static void TestCanLocateTypesByCanonical(IStructureDefinitionSummaryProvider provider)
+        {
+            // Try getting a resource
+            tryGetType("Patient");
+
+            // Try getting an abstract resource
+            tryGetType("DomainResource", isAbstract: true);
+            tryGetType("Resource", isAbstract: true);
+
+            // Try a complex datatype
+            tryGetType("HumanName");
+
+            // Try getting an abstract datatype
+            tryGetType("Element", isAbstract: true);
+
+            // Try a primitive
+            tryGetType("string");
+
+            // Try constrained quantities
+            tryGetType("Money", "Money");
+            tryGetType("Distance", "Distance");
+
+            // The weird xhtml datatype
+            tryGetType("xhtml");
+
+            void tryGetType(string typename, string baseTypeName = null, bool isAbstract = false)
+            {
+                var si = provider.Provide("http://hl7.org/fhir/StructureDefinition/" + typename);
+                Assert.IsNotNull(si, typename);
+                Assert.AreEqual(baseTypeName ?? typename, si.TypeName);
+                Assert.AreEqual(isAbstract, si.IsAbstract);
+            }
+        }
+
         public static void TestCanLocateTypes(IStructureDefinitionSummaryProvider provider)
         {
             // Try getting a resource
@@ -63,7 +97,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 _ = provider.Provide(sdWithoutSnapshot);
                 Assert.Fail();
             }
-            catch(ArgumentException e) 
+            catch (ArgumentException e)
             {
                 Assert.IsTrue(e.Message.Contains("has no snapshot component"));
             }

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ResearchElementDefinition", IsResource=true)]
+  [FhirType("ResearchElementDefinition","http://hl7.org/fhir/StructureDefinition/ResearchElementDefinition", IsResource=true)]
   public partial class ResearchElementDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -261,6 +261,7 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasure> StudyEffectiveGroupMeasureElement
       {
@@ -351,6 +352,7 @@ namespace Hl7.Fhir.Model
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasure> ParticipantEffectiveGroupMeasureElement
       {
@@ -700,6 +702,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=160)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1176,6 +1179,7 @@ namespace Hl7.Fhir.Model
     /// population | exposure | outcome
     /// </summary>
     [FhirElement("type", InSummary=true, Order=390)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType> TypeElement
@@ -1208,6 +1212,7 @@ namespace Hl7.Fhir.Model
     /// dichotomous | continuous | descriptive
     /// </summary>
     [FhirElement("variableType", Order=400)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableType> VariableType_Element
     {

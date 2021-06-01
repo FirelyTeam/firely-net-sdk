@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Substance", IsResource=true)]
+  [FhirType("Substance","http://hl7.org/fhir/StructureDefinition/Substance", IsResource=true)]
   public partial class Substance : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -244,6 +244,7 @@ namespace Hl7.Fhir.Model
     /// active | inactive | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
     {

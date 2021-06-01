@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DetectedIssue", IsResource=true)]
+  [FhirType("DetectedIssue","http://hl7.org/fhir/StructureDefinition/DetectedIssue", IsResource=true)]
   public partial class DetectedIssue : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -358,6 +358,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -403,6 +404,7 @@ namespace Hl7.Fhir.Model
     /// high | moderate | low
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
     {

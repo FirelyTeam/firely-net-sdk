@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("TestScript", IsResource=true)]
+  [FhirType("TestScript","http://hl7.org/fhir/StructureDefinition/TestScript", IsResource=true)]
   public partial class TestScript : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -1874,6 +1874,7 @@ namespace Hl7.Fhir.Model
       /// Resource type
       /// </summary>
       [FhirElement("resource", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -2092,6 +2093,7 @@ namespace Hl7.Fhir.Model
       /// delete | get | options | patch | post | put | head
       /// </summary>
       [FhirElement("method", Order=120)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> MethodElement
       {
@@ -2717,6 +2719,7 @@ namespace Hl7.Fhir.Model
       /// response | request
       /// </summary>
       [FhirElement("direction", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType> DirectionElement
       {
@@ -2996,6 +2999,7 @@ namespace Hl7.Fhir.Model
       /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval
       /// </summary>
       [FhirElement("operator", Order=150)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
       {
@@ -3058,6 +3062,7 @@ namespace Hl7.Fhir.Model
       /// delete | get | options | patch | post | put | head
       /// </summary>
       [FhirElement("requestMethod", Order=170)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
       {
@@ -3120,6 +3125,7 @@ namespace Hl7.Fhir.Model
       /// Resource type
       /// </summary>
       [FhirElement("resource", Order=190)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -3151,6 +3157,7 @@ namespace Hl7.Fhir.Model
       /// okay | created | noContent | notModified | bad | forbidden | notFound | methodNotAllowed | conflict | gone | preconditionFailed | unprocessable
       /// </summary>
       [FhirElement("response", Order=200)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
       {
@@ -4094,6 +4101,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

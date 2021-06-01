@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductDefinition", IsResource=true)]
+  [FhirType("MedicinalProductDefinition","http://hl7.org/fhir/StructureDefinition/MedicinalProductDefinition", IsResource=true)]
   public partial class MedicinalProductDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

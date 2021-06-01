@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Terminology
 {
     public class ExternalTerminologyService : ITerminologyService
-    {
+    {  
         public ExternalTerminologyService(BaseFhirClient client)
         {
             Endpoint = client;
@@ -25,38 +25,28 @@ namespace Hl7.Fhir.Specification.Terminology
 
         public BaseFhirClient Endpoint { get; set; }
 
+        ///<inheritdoc />
         public async Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
-        {
-            if (parameters.TryGetDuplicates(out var duplicates))
-            {
-                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
-            }
-           
+        { 
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-                   
+                return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;                   
         }
 
+        ///<inheritdoc />
         public async Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false)
-        {
-            if (parameters.TryGetDuplicates(out var duplicates))
-            {
-                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
-            }
-            
+        {            
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
-           
-          
+                return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;                    
         }
 
         private Uri constructUri<T>(string id) =>
             ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
 
+        ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
@@ -65,33 +55,31 @@ namespace Hl7.Fhir.Specification.Terminology
                 return await Endpoint.InstanceOperationAsync(constructUri<ValueSet>(id), RestOperation.EXPAND_VALUESET, parameters, useGet).ConfigureAwait(false);
         }
 
+        ///<inheritdoc />
         public async Task<Parameters> Lookup(Parameters parameters, bool useGet = false)
-        {
+        {           
             return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.CONCEPT_LOOKUP, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
+        ///<inheritdoc />
         public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
-        {
+        {          
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
                 return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
+        ///<inheritdoc />
         public async Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false)
         {
-            if(parameters.TryGetDuplicates(out var duplicates))
-            {
-                throw Error.Argument($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}");
-            }           
             if (string.IsNullOrEmpty(id))
                 return await Endpoint.TypeOperationAsync<CodeSystem>(RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
                 return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.SUBSUMES, parameters, useGet).ConfigureAwait(false) as Parameters;
-        
-         
         }
 
+        /// <inheritdoc />
         public async Task<Resource> Closure(Parameters parameters, bool useGet = false)
         {
             return await Endpoint.WholeSystemOperationAsync(RestOperation.CLOSURE, parameters, useGet).ConfigureAwait(false);

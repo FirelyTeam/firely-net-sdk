@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Ratio")]
+  [FhirType("Ratio","http://hl7.org/fhir/StructureDefinition/Ratio")]
   public partial class Ratio : Hl7.Fhir.Model.DataType
   {
     /// <summary>

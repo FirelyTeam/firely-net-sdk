@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("EvidenceReport", IsResource=true)]
+  [FhirType("EvidenceReport","http://hl7.org/fhir/StructureDefinition/EvidenceReport", IsResource=true)]
   public partial class EvidenceReport : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -405,6 +405,7 @@ namespace Hl7.Fhir.Model
       /// replaces | amends | appends | transforms | replacedWith | amendedWith | appendedWith | transformedWith
       /// </summary>
       [FhirElement("code", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType> CodeElement
@@ -623,6 +624,7 @@ namespace Hl7.Fhir.Model
       /// working | snapshot | changes
       /// </summary>
       [FhirElement("mode", Order=90)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
       {
@@ -887,6 +889,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

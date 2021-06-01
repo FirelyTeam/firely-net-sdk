@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CoverageEligibilityResponse", IsResource=true)]
+  [FhirType("CoverageEligibilityResponse","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityResponse", IsResource=true)]
   public partial class CoverageEligibilityResponse : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -910,6 +910,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -942,6 +943,7 @@ namespace Hl7.Fhir.Model
     /// auth-requirements | benefits | discovery | validation
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
@@ -1068,6 +1070,7 @@ namespace Hl7.Fhir.Model
     /// complete | error | partial
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=170)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement

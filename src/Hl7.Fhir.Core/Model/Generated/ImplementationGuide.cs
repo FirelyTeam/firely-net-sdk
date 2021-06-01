@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ImplementationGuide", IsResource=true)]
+  [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide", IsResource=true)]
   public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -2442,6 +2442,7 @@ namespace Hl7.Fhir.Model
       /// Type this profile applies to
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -2912,6 +2913,7 @@ namespace Hl7.Fhir.Model
       /// Versions this applies to (if different to IG)
       /// </summary>
       [FhirElement("fhirVersion", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
@@ -3202,6 +3204,7 @@ namespace Hl7.Fhir.Model
       /// html | markdown | xml | generated
       /// </summary>
       [FhirElement("generation", Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageGeneration> GenerationElement
@@ -3339,6 +3342,7 @@ namespace Hl7.Fhir.Model
       /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
       /// </summary>
       [FhirElement("code", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuideParameterCode> CodeElement
@@ -4326,6 +4330,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=130)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -4551,6 +4556,7 @@ namespace Hl7.Fhir.Model
     /// SPDX license code for this IG (or not-open-source)
     /// </summary>
     [FhirElement("license", InSummary=true, Order=230)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> LicenseElement
     {
@@ -4582,6 +4588,7 @@ namespace Hl7.Fhir.Model
     /// FHIR Version(s) this Implementation Guide targets
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=240)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement

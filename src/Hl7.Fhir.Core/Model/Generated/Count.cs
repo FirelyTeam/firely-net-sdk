@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Count")]
+  [FhirType("Count","http://hl7.org/fhir/StructureDefinition/Count")]
   public partial class Count : Quantity
   {
     /// <summary>

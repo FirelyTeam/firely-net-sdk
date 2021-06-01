@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MolecularSequence", IsResource=true)]
+  [FhirType("MolecularSequence","http://hl7.org/fhir/StructureDefinition/MolecularSequence", IsResource=true)]
   public partial class MolecularSequence : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -256,6 +256,7 @@ namespace Hl7.Fhir.Model
       /// sense | antisense
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.orientationType> OrientationElement
       {
@@ -346,6 +347,7 @@ namespace Hl7.Fhir.Model
       /// watson | crick
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.strandType> StrandElement
       {
@@ -826,6 +828,7 @@ namespace Hl7.Fhir.Model
       /// indel | snp | unknown
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.qualityType> TypeElement
@@ -1696,6 +1699,7 @@ namespace Hl7.Fhir.Model
       /// directlink | openapi | login | oauth | other
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.repositoryType> TypeElement
@@ -2468,6 +2472,7 @@ namespace Hl7.Fhir.Model
     /// aa | dna | rna
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.sequenceType> TypeElement
     {
