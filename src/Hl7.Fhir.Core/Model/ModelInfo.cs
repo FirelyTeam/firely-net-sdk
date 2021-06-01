@@ -320,6 +320,8 @@ namespace Hl7.Fhir.Model
 
         /// <summary>Determines if the specified value represents the type of a core Resource, Datatype or primitive.</summary>
         public static bool IsCoreModelType(Type type) => FhirCsTypeToString.ContainsKey(type);
+        // => IsKnownResource(name) || IsDataType(name) || IsPrimitive(name);
+
 
         public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
 

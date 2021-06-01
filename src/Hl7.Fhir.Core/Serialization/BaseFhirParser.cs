@@ -7,10 +7,8 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
-using System.Reflection;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -27,7 +25,10 @@ namespace Hl7.Fhir.Serialization
             new PocoBuilderSettings
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
-                IgnoreUnknownMembers = ps.AcceptUnknownMembers
+                IgnoreUnknownMembers = ps.AcceptUnknownMembers,
+#pragma warning disable CS0618 // Type or member is obsolete
+                TruncateDateTimeToDate = ps.TruncateDateTimeToDate
+#pragma warning restore CS0618 // Type or member is obsolete
             };
 
         public Base Parse(ITypedElement element) => element.ToPoco(buildPocoBuilderSettings(Settings));
