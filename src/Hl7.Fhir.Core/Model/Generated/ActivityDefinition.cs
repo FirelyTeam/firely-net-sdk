@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ActivityDefinition", IsResource=true)]
+  [FhirType("ActivityDefinition","http://hl7.org/fhir/StructureDefinition/ActivityDefinition", IsResource=true)]
   public partial class ActivityDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -172,6 +172,7 @@ namespace Hl7.Fhir.Model
       /// patient | practitioner | related-person | device
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
@@ -581,6 +582,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -645,6 +647,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Subject
@@ -1024,6 +1027,7 @@ namespace Hl7.Fhir.Model
     /// Kind of resource
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=370)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ActivityDefinition.RequestResourceType> KindElement
     {
@@ -1099,6 +1103,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
     [FhirElement("intent", Order=400)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
@@ -1130,6 +1135,7 @@ namespace Hl7.Fhir.Model
     /// routine | urgent | asap | stat
     /// </summary>
     [FhirElement("priority", Order=410)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -1237,6 +1243,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("product", Order=460, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Medication","Substance")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Product

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Specimen", IsResource=true)]
+  [FhirType("Specimen","http://hl7.org/fhir/StructureDefinition/Specimen", IsResource=true)]
   public partial class Specimen : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -560,6 +560,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("additive", Order=90, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Additive
@@ -689,6 +690,7 @@ namespace Hl7.Fhir.Model
     /// available | unavailable | unsatisfactory | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {

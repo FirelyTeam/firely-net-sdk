@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductContraindication", IsResource=true)]
+  [FhirType("MedicinalProductContraindication","http://hl7.org/fhir/StructureDefinition/MedicinalProductContraindication", IsResource=true)]
   public partial class MedicinalProductContraindication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("MedicinalProduct","Medication","Substance","SubstanceSpecification")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

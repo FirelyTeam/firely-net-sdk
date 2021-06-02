@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationAdministration", IsResource=true)]
+  [FhirType("MedicationAdministration","http://hl7.org/fhir/StructureDefinition/MedicationAdministration", IsResource=true)]
   public partial class MedicationAdministration : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -482,6 +482,7 @@ namespace Hl7.Fhir.Model
     /// in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes> StatusElement
@@ -542,6 +543,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

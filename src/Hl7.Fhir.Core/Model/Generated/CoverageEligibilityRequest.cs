@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CoverageEligibilityRequest", IsResource=true)]
+  [FhirType("CoverageEligibilityRequest","http://hl7.org/fhir/StructureDefinition/CoverageEligibilityRequest", IsResource=true)]
   public partial class CoverageEligibilityRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -715,6 +715,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("diagnosis", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Condition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Diagnosis
@@ -806,6 +807,7 @@ namespace Hl7.Fhir.Model
     /// active | cancelled | draft | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -851,6 +853,7 @@ namespace Hl7.Fhir.Model
     /// auth-requirements | benefits | discovery | validation
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement

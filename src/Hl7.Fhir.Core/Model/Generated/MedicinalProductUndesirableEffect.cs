@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductUndesirableEffect", IsResource=true)]
+  [FhirType("MedicinalProductUndesirableEffect","http://hl7.org/fhir/StructureDefinition/MedicinalProductUndesirableEffect", IsResource=true)]
   public partial class MedicinalProductUndesirableEffect : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>

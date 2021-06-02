@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicationDispense", IsResource=true)]
+  [FhirType("MedicationDispense","http://hl7.org/fhir/StructureDefinition/MedicationDispense", IsResource=true)]
   public partial class MedicationDispense : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -429,6 +429,7 @@ namespace Hl7.Fhir.Model
     /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes> StatusElement
@@ -462,6 +463,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("statusReason", Order=120, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("DetectedIssue")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType StatusReason
@@ -490,6 +492,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

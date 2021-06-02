@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Invoice", IsResource=true)]
+  [FhirType("Invoice","http://hl7.org/fhir/StructureDefinition/Invoice", IsResource=true)]
   public partial class Invoice : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("chargeItem", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("ChargeItem")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -369,6 +370,7 @@ namespace Hl7.Fhir.Model
       /// base | surcharge | deduction | discount | tax | informational
       /// </summary>
       [FhirElement("type", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.InvoicePriceComponentType> TypeElement
@@ -550,6 +552,7 @@ namespace Hl7.Fhir.Model
     /// draft | issued | balanced | cancelled | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> StatusElement

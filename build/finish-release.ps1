@@ -5,7 +5,7 @@ Param(
     [Parameter(Mandatory=$true, HelpMessage="Enter the type of release (release|hotfix).")] [string] $release_type
 )
 
-$fhir_releases = @('stu3', 'r4', 'r5')
+$fhir_releases = @('stu3', 'r4', 'r4B', 'r5')
 
 Push-Location $PsScriptRoot\..
 

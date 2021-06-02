@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ProductShelfLife")]
+  [FhirType("ProductShelfLife","http://hl7.org/fhir/StructureDefinition/ProductShelfLife")]
   public partial class ProductShelfLife : Hl7.Fhir.Model.BackboneType
   {
     /// <summary>

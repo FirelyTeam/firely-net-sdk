@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CatalogEntry", IsResource=true)]
+  [FhirType("CatalogEntry","http://hl7.org/fhir/StructureDefinition/CatalogEntry", IsResource=true)]
   public partial class CatalogEntry : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Model
       /// triggers | is-replaced-by
       /// </summary>
       [FhirElement("relationtype", Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType> RelationtypeElement
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

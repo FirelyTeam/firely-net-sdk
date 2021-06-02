@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("EffectEvidenceSynthesis", IsResource=true)]
+  [FhirType("EffectEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/EffectEvidenceSynthesis", IsResource=true)]
   public partial class EffectEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -304,6 +304,7 @@ namespace Hl7.Fhir.Model
       /// exposure | exposure-alternative
       /// </summary>
       [FhirElement("exposureState", Order=50)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState> ExposureState_Element
       {
@@ -1248,6 +1249,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

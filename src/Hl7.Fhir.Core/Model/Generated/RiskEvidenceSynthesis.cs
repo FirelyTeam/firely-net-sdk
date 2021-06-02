@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("RiskEvidenceSynthesis", IsResource=true)]
+  [FhirType("RiskEvidenceSynthesis","http://hl7.org/fhir/StructureDefinition/RiskEvidenceSynthesis", IsResource=true)]
   public partial class RiskEvidenceSynthesis : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -1098,6 +1098,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Consent", IsResource=true)]
+  [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
   public partial class Consent : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -481,6 +481,7 @@ namespace Hl7.Fhir.Model
       /// deny | permit
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
       {
@@ -887,6 +888,7 @@ namespace Hl7.Fhir.Model
       /// instance | related | dependents | authoredby
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -1017,6 +1019,7 @@ namespace Hl7.Fhir.Model
     /// draft | proposed | active | rejected | inactive | entered-in-error
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
@@ -1156,6 +1159,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Consent","DocumentReference","Contract","QuestionnaireResponse")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Source

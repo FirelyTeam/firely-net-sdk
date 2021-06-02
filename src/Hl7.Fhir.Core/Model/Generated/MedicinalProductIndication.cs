@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("MedicinalProductIndication", IsResource=true)]
+  [FhirType("MedicinalProductIndication","http://hl7.org/fhir/StructureDefinition/MedicinalProductIndication", IsResource=true)]
   public partial class MedicinalProductIndication : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -87,6 +87,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("medication", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("MedicinalProduct","Medication","Substance","SubstanceSpecification")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
