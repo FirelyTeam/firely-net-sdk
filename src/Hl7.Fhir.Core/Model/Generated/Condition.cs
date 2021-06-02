@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Condition", IsResource=true)]
+  [FhirType("Condition","http://hl7.org/fhir/StructureDefinition/Condition", IsResource=true)]
   public partial class Condition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -380,6 +380,7 @@ namespace Hl7.Fhir.Model
     /// active | recurrence | inactive | remission | resolved
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, Order=100)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
     {
@@ -411,6 +412,7 @@ namespace Hl7.Fhir.Model
     /// provisional | differential | confirmed | refuted | entered-in-error | unknown
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, Order=110)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
     {

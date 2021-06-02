@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("Timing")]
+  [FhirType("Timing","http://hl7.org/fhir/StructureDefinition/Timing")]
   public partial class Timing : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -396,6 +396,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM)
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitElement
       {
@@ -551,6 +552,7 @@ namespace Hl7.Fhir.Model
       /// s | min | h | d | wk | mo | a - unit of time (UCUM)
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
+      [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitElement
       {
@@ -582,6 +584,7 @@ namespace Hl7.Fhir.Model
       /// mon | tue | wed | thu | fri | sat | sun
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
@@ -646,6 +649,7 @@ namespace Hl7.Fhir.Model
       /// Regular life events the event is tied to
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement

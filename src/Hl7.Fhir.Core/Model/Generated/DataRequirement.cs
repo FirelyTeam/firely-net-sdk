@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("DataRequirement")]
+  [FhirType("DataRequirement","http://hl7.org/fhir/StructureDefinition/DataRequirement")]
   public partial class DataRequirement : Hl7.Fhir.Model.DataType
   {
     /// <summary>
@@ -105,6 +105,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("valueSet", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("ValueSet")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType ValueSet
@@ -390,6 +391,7 @@ namespace Hl7.Fhir.Model
     /// The type of the required data
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement

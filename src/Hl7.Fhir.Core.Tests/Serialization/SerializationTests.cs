@@ -127,8 +127,8 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
 
-        private FhirXmlParser FhirXmlParser = new FhirXmlParser();
-        private FhirJsonParser FhirJsonParser = new FhirJsonParser();
+        private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+        private readonly FhirJsonParser FhirJsonParser = new FhirJsonParser();
 
 
         //[TestMethod]
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void TestDerivedPoCoSerialization()
         {
-            ModelInfo.GetStructureDefinitionSummaryProvider().ImportType(typeof(CustomBundle));
+            ModelInfo.ModelInspector.ImportType(typeof(CustomBundle));
 
             var bundle = new CustomBundle()
             {
@@ -616,5 +616,21 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(json.ContainsKey("issued"));
             Assert.IsTrue(json.ContainsKey("status"));
         }
+
+        [TestMethod]
+        public void AllowParseDateWithDateTime()
+        {
+            var patientJson = "{ \"resourceType\": \"Patient\", \"birthDate\": \"1991-02-03T11:22:33Z\" }";
+            var parser = new FhirJsonParser();
+
+            //   Assert.ThrowsException<StructuralTypeException>(() => parser.Parse<Patient>(patientJson));
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            parser = new FhirJsonParser(new ParserSettings { TruncateDateTimeToDate = true });
+#pragma warning restore CS0618 // Type or member is obsolete
+            var patient = parser.Parse<Patient>(patientJson);
+            Assert.AreEqual("1991-02-03", patient.BirthDate.ToString());
+        }
+
     }
 }

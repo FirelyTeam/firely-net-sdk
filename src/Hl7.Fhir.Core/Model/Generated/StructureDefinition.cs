@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("StructureDefinition", IsResource=true)]
+  [FhirType("StructureDefinition","http://hl7.org/fhir/StructureDefinition/StructureDefinition", IsResource=true)]
   public partial class StructureDefinition : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -679,6 +679,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | retired | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -944,6 +945,7 @@ namespace Hl7.Fhir.Model
     /// primitive-type | complex-type | resource | logical
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=270)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> KindElement
@@ -1008,6 +1010,7 @@ namespace Hl7.Fhir.Model
     /// resource | datatype | extension
     /// </summary>
     [FhirElement("contextType", InSummary=true, Order=290)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext> ContextTypeElement
     {
@@ -1166,6 +1169,7 @@ namespace Hl7.Fhir.Model
     /// specialization | constraint - How relates to base definition
     /// </summary>
     [FhirElement("derivation", InSummary=true, Order=340)]
+    [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule> DerivationElement
     {

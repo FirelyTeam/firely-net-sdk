@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("RiskAssessment", IsResource=true)]
+  [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
   public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -322,6 +322,7 @@ namespace Hl7.Fhir.Model
     /// registered | preliminary | final | amended +
     /// </summary>
     [FhirElement("status", Order=120)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -456,6 +457,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("reason", Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
+    [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Reason

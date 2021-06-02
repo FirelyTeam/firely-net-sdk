@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Model
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("CarePlan", IsResource=true)]
+  [FhirType("CarePlan","http://hl7.org/fhir/StructureDefinition/CarePlan", IsResource=true)]
   public partial class CarePlan : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -466,6 +466,7 @@ namespace Hl7.Fhir.Model
       /// not-started | scheduled | in-progress | on-hold | completed | cancelled | unknown
       /// </summary>
       [FhirElement("status", InSummary=true, Order=100)]
+      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
@@ -607,6 +608,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("product", Order=160, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
+      [References("Medication","Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
       [DataMember]
       public Hl7.Fhir.Model.DataType Product
@@ -894,6 +896,7 @@ namespace Hl7.Fhir.Model
     /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, Order=140)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> StatusElement
@@ -926,6 +929,7 @@ namespace Hl7.Fhir.Model
     /// proposal | plan | order | option
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=150)]
+    [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement
