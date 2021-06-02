@@ -69,7 +69,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             await expander.ExpandAsync(testVs);
-            Assert.True(testVs.HasExpansion);
             Assert.Equal(4, testVs.Expansion.Total);
         }
 
@@ -87,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(27, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced
+            Assert.Equal(28, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0
         }
 
         [Fact]
@@ -185,7 +184,7 @@ namespace Hl7.Fhir.Specification.Tests
                 system: "http://hl7.org/fhir/hacked");
             Assert.True(result.Success);
 
-            Assert.Throws<ValueSetUnknownException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
+            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
             var coding = new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number");
             result = svc.ValidateCode(vsUrl, coding: coding);
@@ -285,8 +284,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
-            Assert.Throws<ValueSetExpansionTooComplexException>(
-                () => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
+            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
@@ -317,13 +315,35 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<ValueSetExpansionTooComplexException>(() => svc.ValueSetValidateCode(inParams));
+            await Assert.ThrowsAsync<FhirOperationException>( async () => await svc.ValueSetValidateCode(inParams));
+
+        }       
+
+        [Fact]
+        public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+            var inParams = new Parameters
+            {
+                Parameter = new List<Parameters.ParameterComponent>
+                {
+                    new Parameters.ParameterComponent
+                    {
+                        Name = "code",
+                        Value = new Code("DE")
+                    },                  
+                }
+            };
+
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+            
         }
+
 
         [Fact]
         public async T.Task LocalTermServiceUsingDuplicateParameters()
         {
-            var svc = new LocalTerminologyService(_resolver);           
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
@@ -344,11 +364,22 @@ namespace Hl7.Fhir.Specification.Tests
                         Value = new FhirUri("urn:iso:std:iso:3166")
                     },
                 }
-            };           
+            };
 
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams)); 
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+        }
 
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
+        [Fact]
+        public void TestOperationOutcomes()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+#pragma warning disable CS0618 // obsolete, but used for testing purposes
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context:"Partient.gender", code: "test");
+#pragma warning restore CS0618 
+
+            Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
+
         }
 
 
@@ -589,7 +620,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -845,45 +876,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
-        }
-
-        [Fact(), Trait("TestCategory", "IntegrationTest")]
-        public async void ExternalServiceDuplicatesTest()
-        {
-            var client = new FhirClient(_externalTerminologyServerEndpoint);
-            var svc = new ExternalTerminologyService(client);
-
-            var inParams = new Parameters
-            {
-                Parameter = new List<Parameters.ParameterComponent>
-                {
-                    new Parameters.ParameterComponent
-                    {
-                        Name = "code",
-                        Value = new Code("DE")
-                    },
-                     new Parameters.ParameterComponent
-                    {
-                        Name = "code",
-                        Value = new Code("DE")
-                    },
-                      new Parameters.ParameterComponent
-                    {
-                        Name = "url",
-                        Value = new FhirUri("urn:iso:std:iso:3166")
-                    },
-                }
-            };
-
-            var ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.ValueSetValidateCode(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-
-            ex  = await Assert.ThrowsAsync<ArgumentException>(() => svc.Subsumes(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-
-            ex = await Assert.ThrowsAsync<ArgumentException>(() => svc.CodeSystemValidateCode(inParams));
-            Assert.Equal("List of input parameters contains the following duplicates: code", ex.Message);
-        }
+        }       
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
@@ -937,7 +930,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
 #pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
-        }
+        }       
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {

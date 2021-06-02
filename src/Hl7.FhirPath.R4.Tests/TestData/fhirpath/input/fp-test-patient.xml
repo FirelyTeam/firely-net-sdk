@@ -89,7 +89,7 @@
             <code value="COMORB"/>
           </code>
           <prefix value="1"/>
-          <type value="choice"/>
+          <type value="coding"/>
           <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
           <item>
             <linkId value="1.1.1"/>
@@ -113,7 +113,7 @@
                 <code value="COMORBCAR"/>
               </code>
               <prefix value="1.1"/>
-              <type value="choice"/>
+              <type value="coding"/>
               <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
               <item>
                 <linkId value="1.1.1.1.1"/>
@@ -128,7 +128,7 @@
                   <display value="Angina (disorder)"/>
                 </code>
                 <prefix value="1.1.1"/>
-                <type value="choice"/>
+                <type value="coding"/>
                 <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
               </item>
               <item>
@@ -139,7 +139,7 @@
                   <display value="Myocardial infarction (disorder)"/>
                 </code>
                 <prefix value="1.1.2"/>
-                <type value="choice"/>
+                <type value="coding"/>
                 <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
               </item>
             </item>
@@ -150,7 +150,7 @@
                 <code value="COMORBVAS"/>
               </code>
               <prefix value="1.2"/>
-              <type value="choice"/>
+              <type value="coding"/>
               <answerValueSet value="http://hl7.org/fhir/ValueSet/yesnodontknow"/>
             </item>
           </item>
@@ -177,7 +177,7 @@
               <code value="STADPT"/>
               <display value="pT category"/>
             </code>
-            <type value="choice"/>
+            <type value="coding"/>
           </item>
         </item>
       </item>

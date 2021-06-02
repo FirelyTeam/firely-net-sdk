@@ -26,9 +26,9 @@ Copyright (c) 2011+, HL7, Inc
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  POSSIBILITY OF SUCH DAMAGE.
 
- Generated on Thu, Aug 20, 2020 17:41+1000 for FHIR v4.5.0
+ Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0
 -->
-<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="4.5.0">
+<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="4.6.0">
   <xs:include schemaLocation="account.xsd"/>
   <xs:include schemaLocation="activitydefinition.xsd"/>
   <xs:include schemaLocation="administrableproductdefinition.xsd"/>
@@ -72,7 +72,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="devicedefinition.xsd"/>
   <xs:include schemaLocation="devicemetric.xsd"/>
   <xs:include schemaLocation="devicerequest.xsd"/>
-  <xs:include schemaLocation="deviceusestatement.xsd"/>
+  <xs:include schemaLocation="deviceusage.xsd"/>
   <xs:include schemaLocation="diagnosticreport.xsd"/>
   <xs:include schemaLocation="documentmanifest.xsd"/>
   <xs:include schemaLocation="documentreference.xsd"/>
@@ -101,6 +101,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="implementationguide.xsd"/>
   <xs:include schemaLocation="ingredient.xsd"/>
   <xs:include schemaLocation="insuranceplan.xsd"/>
+  <xs:include schemaLocation="inventoryreport.xsd"/>
   <xs:include schemaLocation="invoice.xsd"/>
   <xs:include schemaLocation="library.xsd"/>
   <xs:include schemaLocation="linkage.xsd"/>

@@ -275,8 +275,13 @@ namespace Hl7.Fhir.Serialization.Tests
             if (file.Contains("v2-tables"))
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
-            if (file.Contains("citation-example"))
-                return true; // citation is not generated because of generation errors
+
+            if (file.Contains("subscriptiontopic-example-admission"))  // version 4.6.0: resourceType is not accepted in resourceTrigger
+                return true;
+            if (file.Contains("conceptmaps."))  // version 4.6.0: identifier is not an array
+                return true;
+            if (file.EndsWith("-questionnaire.json") && !file.EndsWith("operation-structuredefinition-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
+                return true; //
             return false;
         }
 
@@ -336,7 +341,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 if (!File.Exists(actualFile))
                 {
 
-                    errors.Add($"File {exampleName}.{extension} was not converted and not found in {actualPath}");
+                    errors.Add($"File {exampleName}{extension} was not converted and not found in {actualPath}");
                     return;
                 }
 

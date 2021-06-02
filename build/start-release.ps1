@@ -5,7 +5,7 @@ Param(
     [Parameter(Mandatory=$true, HelpMessage="Enter the type of release (release|hotfix).")] [string] $release_type
 )
 
-$fhir_releases = @('stu3', 'r4', 'r5')
+$fhir_releases = @('stu3', 'r4', 'r4B', 'r5')
 
 # the root path of the repository
 $repo_root = "$PsScriptRoot\.."
@@ -34,7 +34,7 @@ function Update-Version([string] $start_branch, [string] $release_branch, [strin
     git checkout -b $release_branch $start_branch
 
     # update version number
-    & $PSScriptRoot\UpdateVersion.ps1 -propFile $propFile -newVersion $version
+    & $repo_root\build\UpdateVersion.ps1 -propFile $propFile -newVersion $version
 
     # commit changes
     git commit --all --message="bumped version to $version"

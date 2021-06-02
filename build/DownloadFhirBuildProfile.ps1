@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/2020Sep/";
+$server = "http://hl7.org/fhir/2021May/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -129,6 +129,33 @@ function RemoveNarrative($name)
 	$xml.Save($file)
 }
 
+function RemoveDoubleVersionsInValueSets($name)
+{
+	if ($server.EndsWith('2021May/') )
+	{
+		# Correction for R5, 4.6.0:
+		# Removed double version '|4.6.0|4.6.0' from <valueSet> 
+		
+		$filename = Join-Path $tempDir $name
+		[xml]$xml = Get-Content $filename
+		
+		$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+		$ns.AddNamespace("ns", "http://hl7.org/fhir") 
+		
+		$valuesets = $xml.SelectNodes('//ns:valueSet[substring(@value,string-length(@value) - string-length("|4.6.0|4.6.0") + 1) = "|4.6.0|4.6.0"]', $ns)
+		
+		foreach ($valueset in $valuesets)
+		{
+			$valueAttribute = $valueset.GetAttribute('value')
+			$valueAttribute = $valueAttribute.Replace("|4.6.0|", "|");
+			$valueset.SetAttribute('value', $valueAttribute)  | Out-null
+		}
+		
+		Write-Output "Removed double version '|4.6.0|4.6.0' from '<valueSet> $file"
+		$xml.Save($filename)
+	}
+}
+
 function ChangeValueElement($name)
 {
 	# Correction for 4B:
@@ -137,8 +164,8 @@ function ChangeValueElement($name)
 	$filename = Join-Path $tempDir $name
 	[xml]$xml = Get-Content $filename
 	
-    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
-    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
 
 	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type"]', $ns)
 	
@@ -150,9 +177,10 @@ function ChangeValueElement($name)
 		$extension.ReplaceChild($correctedValueElement, $valueElement)  | Out-null
 	}
 
-    Write-Output "Changed 'valueUri' to 'valueUrl' for extension 'structuredefinition-fhir-type' from $file"
+	Write-Output "Changed 'valueUri' to 'valueUrl' for extension 'structuredefinition-fhir-type' from $file"
 	$xml.Save($filename)
 }
+
 
 function RemoveDefinitonExtension($name)
 {
@@ -162,8 +190,8 @@ function RemoveDefinitonExtension($name)
 	$filename = Join-Path $tempDir $name
 	[xml]$xml = Get-Content $filename
 	
-    $ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
-    $ns.AddNamespace("ns", "http://hl7.org/fhir")
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
 
 	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/build/StructureDefinition/definition"]', $ns)
 	
@@ -213,6 +241,16 @@ foreach($file in $allFiles)
 			ChangeValueElement $file
 		}
 	}
+	
+	# Corrections for R5 (4.6.0)
+	if ($server.EndsWith("2021May/"))
+	{
+		if ($file.EndsWith('profiles-resources.xml'))
+		{
+			RemoveDoubleVersionsInValueSets $file
+			RemoveDefinitonExtension $file
+		}
+	}
 }
 
 
@@ -238,7 +276,6 @@ PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/j
 PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
-
 
 # extract schemas and xsd from fhir-all.zip -> data
 ExtractXsdZipFile "$srcdir\Hl7.Fhir.Specification\data"
