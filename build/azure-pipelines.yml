@@ -275,11 +275,11 @@ stages:
               displayName: 'GitHub release notes (create)'  
               inputs:
                 gitHubConnection: 'GitHub Fhir-net-api'
-                repositoryName: '$(Build.Repository.Name)'
-                action: 'create'
-                target: '$(Build.SourceVersion)'
                 tagSource: userSpecifiedTag
                 tag: '$(Build.SourceBranchName)'
+                title: '$(release_title)'
                 isDraft: true
-                changeLogCompareToRelease: 'lastFullRelease'
-                changeLogType: 'issueBased'
+                changeLogCompareToRelease: lastNonDraftReleaseByTag
+                changeLogCompareToReleaseTag: '$(previous_tag)'
+                changeLogType: issueBased
+                changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
