@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Tests.Model
 
             var pattern = new Encounter();
 
-            Assert.IsTrue(encounter.Matches(pattern)); // FAILS
+            Assert.IsTrue(encounter.Matches(pattern)); 
         }
 
     }
