@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void MatchingParticipant_Fails()
+        public void MatchingEmptyRepeatingPattern()
         {
             var encounter = new Encounter
             {
