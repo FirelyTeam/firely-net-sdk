@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Serialization;
 using static Hl7.Fhir.Tests.TestDataHelper;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -66,6 +67,25 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.IsTrue(p2.Matches(p));
             Assert.IsTrue(p2.Matches(p));
+        }
+
+        [TestMethod]
+        public void MatchingEmptyRepeatingPattern()
+        {
+            var encounter = new Encounter
+            {
+                Participant = new List<Encounter.ParticipantComponent>
+                {
+                    new Encounter.ParticipantComponent
+                    {
+                    Individual = new ResourceReference("Practitioner/1234")
+                    }
+                }
+            };
+
+            var pattern = new Encounter();
+
+            Assert.IsTrue(encounter.Matches(pattern)); 
         }
 
     }
