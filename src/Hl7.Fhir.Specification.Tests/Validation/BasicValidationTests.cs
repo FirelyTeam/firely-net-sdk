@@ -757,19 +757,32 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void RunXsdValidation()
+        public void TestXsdValidation() => runXsdValidation(_validator);
+
+        [Fact]
+        public void TestXsdValidationExplicitSet()
+        {
+            var mySettings = _validator.Settings.Clone();
+            mySettings.XsdSchemaCollection = new SchemaCollection(ZipSource.CreateValidationSource());
+            var myValidator = new Validator(mySettings);
+
+            runXsdValidation(myValidator);
+        }
+
+
+        private static void runXsdValidation(Validator v)
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
-            var report = _validator.Validate(cpDoc.CreateReader());
+            var report = v.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
 
-            report = _validator.Validate(cpDoc.CreateReader());
+            report = v.Validate(cpDoc.CreateReader());
             Assert.False(report.Success);
             Assert.Contains(".NET Xsd validation", report.ToString());
         }
@@ -1219,7 +1232,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public InMemoryResourceResolver(IEnumerable<Resource> profiles)
         {
-            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r);
         }
 
         public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
