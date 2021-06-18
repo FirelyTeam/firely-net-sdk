@@ -7,6 +7,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Hl7.FhirPath;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -341,6 +342,31 @@ namespace Hl7.Fhir.Specification.Tests
             patient.MaritalStatus.Coding.RemoveAt(1);
             report = _validator.Validate(patient, patientSd);
             Assert.Equal(0, report.Errors);
+        }
+
+
+        [Fact]
+        public void CatchesTypeErrors()
+        {
+            var patJ = new JObject(
+                            new JProperty("resourceType", "Patient"),
+                            new JProperty("deceasedInteger", "4"),
+                            new JProperty("unknown", "bla"));
+            var patTE = FhirJsonNode.Create(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+
+            var report = _validator.Validate(patTE);
+            Assert.Contains("deceasedInteger", report.ToString());
+        }
+
+
+        [Fact]
+        public void CatchesSyntaxErrors()
+        {
+            var patJ = "{ \"resourceType\": \"Patient\", \"active\" : \"\" }";
+            var patTE = FhirJsonNode.Parse(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+
+            var report = _validator.Validate(patTE);
+            Assert.DoesNotContain("Internal logic", report.ToString());
         }
 
         [Fact]
@@ -1219,7 +1245,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public InMemoryResourceResolver(IEnumerable<Resource> profiles)
         {
-            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r);
         }
 
         public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
