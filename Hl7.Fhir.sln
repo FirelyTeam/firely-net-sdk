@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7.FhirPath.Tests", "commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath.R4.Tests", "src\Hl7.FhirPath.R4.Tests\Hl7.FhirPath.R4.Tests.csproj", "{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization.Poco", "src\Hl7.Fhir.Serialization.Poco\Hl7.Fhir.Serialization.Poco.csproj", "{0205BF9B-1350-41EB-88D3-022A87CFAFBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +138,12 @@ Global
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
