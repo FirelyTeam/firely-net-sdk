@@ -571,16 +571,16 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // WMR: Only expand common elements, i.e. .id | .extension | .modifierExtension
                 // Also verify that diff only specifies child constraints on common elements (.extension | .modifierExtension) ... ?
                 // Actually, we should determine the intersection of the specified type profiles... ouch
-
-                var distinctTypeCode = defn.CommonTypeCode();
-                if (distinctTypeCode != null)
-                {
-                    // Different profiles for common base type => expand the common base type (w/o custom profile)
-                    // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
-                    var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
-                    StructureDefinition typeStructure = await getStructureForTypeRef(defn, typeRef, true).ConfigureAwait(false);
-                    return await expandElementType(nav, typeStructure).ConfigureAwait(false);
-                }
+                
+                // [MS 20210614] When we can't find a CommonTypeCode assume "Element" for .id and .extension
+                var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();         
+               
+                // Different profiles for common base type => expand the common base type (w/o custom profile)
+                // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
+                var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
+                StructureDefinition typeStructure = await getStructureForTypeRef(defn, typeRef, true).ConfigureAwait(false);
+                return await expandElementType(nav, typeStructure).ConfigureAwait(false);
+                
                 // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
                 // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
