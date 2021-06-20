@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
-            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             #endregion
         }
 
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
-            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             //CK: This is failing with message "The declared type of the element (Resource) is incompatible with that of the instance ('CustomBasic')"},"location":["Bundle.entry[0].resource[0]"]". 
             //Cause: the implementation of ModelInfo.IsInstanceTypeFor, called from ProfileAssertion.Validate, line 248 (and 255).
             #endregion

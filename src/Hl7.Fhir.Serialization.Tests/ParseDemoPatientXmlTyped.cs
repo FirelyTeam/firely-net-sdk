@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
-            var json = navXml.ToJson();
+            var json = await navXml.ToJsonAsync();
 
             var navJson = await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider());
             var xml = await navJson.ToXmlAsync();

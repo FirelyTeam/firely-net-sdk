@@ -6,18 +6,26 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Rest
 {
     public static class BundleToEntryRequest
     {
-        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings)
+        /// <inheritdoc cref="ToEntryRequestAsync(Bundle.EntryComponent, FhirClientSettings)" />
+        [Obsolete("Use ToEntryRequestAsync(Bundle.EntryComponent, FhirClientSettings) instead.")]
+        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings) 
+            => TaskHelper.Await(() => ToEntryRequestAsync(entry, settings));
+
+            public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings)
         {
             var result = new EntryRequest
             {
@@ -45,7 +53,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                setBodyAndContentType(result, entry.Resource, settings.PreferredFormat, searchUsingPost);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost);
             }
 
             return result;
@@ -78,8 +86,8 @@ namespace Hl7.Fhir.Rest
                 }
             }
         }
-
-        private static void setBodyAndContentType(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
+        
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -116,8 +124,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 request.RequestBodyContent = format == ResourceFormat.Xml ?
-                    new FhirXmlSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
-                    new FhirJsonSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
+                    await new FhirXmlSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False) :
+                    await new FhirJsonSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed

@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
 
         [TestMethod]
-        public void RetainSpacesInAttribute()
+        public async Tasks.Task RetainSpacesInAttribute()
         {
             var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
 
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
-            var outp = FhirXmlSerializer.SerializeToString(basic);
+            var outp = await FhirXmlSerializer.SerializeToStringAsync(basic);
             Assert.IsTrue(outp.Contains("&#xA;"));
         }
 
@@ -247,13 +247,13 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var poco = await FhirJsonParser.ParseAsync<Resource>(json);
             Assert.IsNotNull(poco);
-            var xml = FhirXmlSerializer.SerializeToString(poco);
+            var xml = await FhirXmlSerializer.SerializeToStringAsync(poco);
             Assert.IsNotNull(xml);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
             poco = FhirXmlParser.Parse<Resource>(xml);
             Assert.IsNotNull(poco);
-            var json2 = FhirJsonSerializer.SerializeToString(poco);
+            var json2 = await FhirJsonSerializer.SerializeToStringAsync(poco);
             Assert.IsNotNull(json2);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.json"), json2);
 
@@ -264,19 +264,19 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void ContainedBaseIsNotAddedToId()
+        public async Tasks.Task ContainedBaseIsNotAddedToId()
         {
             var p = new Patient() { Id = "jaap" };
             var o = new Observation() { Subject = new ResourceReference() { Reference = "#" + p.Id } };
             o.Contained.Add(p);
             o.ResourceBase = new Uri("http://nu.nl/fhir");
 
-            var xml = FhirXmlSerializer.SerializeToString(o);
+            var xml = await FhirXmlSerializer.SerializeToStringAsync(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
             var o2 = FhirXmlParser.Parse<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
-            xml = FhirXmlSerializer.SerializeToString(o2);
+            xml = await FhirXmlSerializer.SerializeToStringAsync(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
         }
 
@@ -295,7 +295,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             };
 
-            var json = FhirJsonSerializer.SerializeToString(patient);
+            var json = await FhirJsonSerializer.SerializeToStringAsync(patient);
             var parsedPatient = await FhirJsonParser.ParseAsync<Patient>(json);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 }
             }
 
-            var xml = FhirXmlSerializer.SerializeToString(patient);
+            var xml = await FhirXmlSerializer.SerializeToStringAsync(patient);
             parsedPatient = FhirXmlParser.Parse<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
@@ -339,9 +339,9 @@ namespace Hl7.Fhir.Tests.Serialization
                 Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Nasty, a text with both \"double\" quotes and 'single' quotes</div>" }
             };
 
-            var xml = FhirXmlSerializer.SerializeToString(p);
+            var xml = await FhirXmlSerializer.SerializeToStringAsync(p);
             Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
-            var json = FhirJsonSerializer.SerializeToString(p);
+            var json = await FhirJsonSerializer.SerializeToStringAsync(p);
             Assert.IsNotNull(await FhirJsonParser.ParseAsync<Resource>(json));
         }
 

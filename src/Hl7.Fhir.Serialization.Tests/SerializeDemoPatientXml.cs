@@ -107,9 +107,9 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
             var p = (new FhirXmlParser()).Parse<Patient>(xml);
-            output = (new FhirXmlSerializer(new SerializerSettings { Pretty = false })).SerializeToString(p);
+            output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false })).SerializeToStringAsync(p);
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            pretty = (new FhirXmlSerializer(new SerializerSettings { Pretty = true })).SerializeToString(p);
+            pretty = await (new FhirXmlSerializer(new SerializerSettings { Pretty = true })).SerializeToStringAsync(p);
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
         }
 
@@ -127,10 +127,10 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsFalse(string.IsNullOrEmpty(lastLine));
 
             var p = (new FhirXmlParser()).Parse<Patient>(xml);
-            output = (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToString(p);
+            output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = output.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
-            pretty = (new FhirXmlSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
+            pretty = await (new FhirXmlSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = pretty.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
         }

@@ -63,13 +63,13 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void TryInvalidUntypedSource()
+        public async Task TryInvalidUntypedSource()
         {
             var xmlNav = FhirXmlNode.Parse("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
 
             try
             {
-                var output = xmlNav.ToJson();
+                var output = await xmlNav.ToJsonAsync();
                 Assert.Fail();
             }
             catch (NotSupportedException)

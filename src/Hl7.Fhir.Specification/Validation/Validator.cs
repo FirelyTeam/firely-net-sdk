@@ -506,7 +506,10 @@ namespace Hl7.Fhir.Validation
 #pragma warning restore CS0618 // Type or member is obsolete
 
 #if DEBUG
+#pragma warning disable 618 // Obsolete member or type
+                // TODO: Validation Async Support
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);
+#pragma warning restore 618 // Obsolete member or type
                 string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = Path.Combine(Path.GetTempPath(), "validation");
 

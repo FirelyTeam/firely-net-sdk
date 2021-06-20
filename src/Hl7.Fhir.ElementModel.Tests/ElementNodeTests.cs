@@ -164,7 +164,7 @@ namespace Hl7.FhirPath.Tests
         }
 
         [TestMethod]
-        public void SuccessfullyCreated()
+        public async Tasks.Task SuccessfullyCreated()
         {
             var patient = createPatient();
 
@@ -177,7 +177,7 @@ namespace Hl7.FhirPath.Tests
             pat.ActiveElement.SetStringExtension("urn:2", "world!");
             pat.Identifier.Add(new Identifier("http://nu.nl", "1234567"));
             pat.Identifier.Add(new Identifier("http://toen.nl", "7654321"));
-            XmlAssert.AreSame("in place", pat.ToXml(), patient.ToXml());
+            XmlAssert.AreSame("in place", await pat.ToXmlAsync(), await patient.ToXmlAsync());
         }
 
         [TestMethod]

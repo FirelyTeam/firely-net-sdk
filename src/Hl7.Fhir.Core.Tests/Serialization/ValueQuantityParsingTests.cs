@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var orgExample = resource.Differential.Element[0].Example[0];
             Assert.AreEqual("Quantity", orgExample.Value.TypeName);
 
-            var parsed = xml ? XmlRoundTrip(resource) : await JsonRoundTrip(resource);
+            var parsed = xml ? await XmlRoundTripAsync(resource) : await JsonRoundTrip(resource);
 
             Assert.IsNotNull(parsed);
             Assert.IsNotNull(parsed.Differential?.Element);
@@ -64,15 +64,15 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("Quantity", example.Value.TypeName);
         }
 
-        static T XmlRoundTrip<T>(T resource) where T : Resource
+        async static Tasks.Task<T> XmlRoundTripAsync<T>(T resource) where T : Resource
         {
             var baseTestPath = CreateEmptyDir();
 
             var xmlFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.xml");
-            var xml = new FhirXmlSerializer().SerializeToString(resource);
-            File.WriteAllText(xmlFile, xml);
+            var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
+            await File.WriteAllTextAsync(xmlFile, xml);
 
-            xml = File.ReadAllText(xmlFile);
+            xml = await File.ReadAllTextAsync(xmlFile);
             var parsed = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<T>(xml);
 
             return parsed;
@@ -83,10 +83,10 @@ namespace Hl7.Fhir.Tests.Serialization
             var baseTestPath = CreateEmptyDir();
 
             var jsonFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.json");
-            var json = new FhirJsonSerializer().SerializeToString(resource);
-            File.WriteAllText(jsonFile, json);
+            var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
+            await File.WriteAllTextAsync(jsonFile, json);
 
-            json = File.ReadAllText(jsonFile);
+            json = await File.ReadAllTextAsync(jsonFile);
             var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
 
             return parsed;

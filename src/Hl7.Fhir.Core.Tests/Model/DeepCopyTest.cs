@@ -12,12 +12,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Hl7.Fhir.Serialization;
 using System.Xml;
 using static Hl7.Fhir.Tests.TestDataHelper;
 using System.Diagnostics;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -25,24 +25,24 @@ namespace Hl7.Fhir.Tests.Model
     public class DeepCopyTest
     {
         [TestMethod]
-        public void CheckCopyAllFields()
+        public async Task CheckCopyAllFields()
         {
             string xml = ReadTestData("TestPatient.xml");
 
             var p = new FhirXmlParser().Parse<Patient>(xml);
             var p2 = (Patient)p.DeepCopy();
-            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
+            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
             XmlAssert.AreSame("TestPatient.xml", xml, xml2);
         }
 
         [TestMethod]
-        public void CheckCopyCarePlan()
+        public async Task CheckCopyCarePlan()
         {
             string xml = ReadTestData(@"careplan-example-f201-renal.xml");
 
             var p = new FhirXmlParser().Parse<CarePlan>(xml);
             var p2 = (CarePlan)p.DeepCopy();
-            var xml2 = new FhirXmlSerializer().SerializeToString(p2);
+            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
             XmlAssert.AreSame("careplan-example-f201-renal.xml", xml, xml2);
         }
 

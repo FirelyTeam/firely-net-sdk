@@ -368,14 +368,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.IsFalse(resource.Matches(null), "Serialization of " + inputFile + " matched null - Matches test");
                 Assert.IsFalse(resource.IsExactly(null), "Serialization of " + inputFile + " matched null - IsExactly test");
 
-                var json = new FhirJsonSerializer().SerializeToString(resource);
+                var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
                 await File.WriteAllTextAsync(outputFile, json);
             }
             else
             {
                 var json = File.ReadAllText(inputFile);
                 var resource = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<Resource>(json);
-                var xml = new FhirXmlSerializer().SerializeToString(resource);
+                var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
                 await File.WriteAllTextAsync(outputFile, xml);
             }
         }
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Serialization.Tests
             {
                 var xml = await File.ReadAllTextAsync(inputFile);
                 var nav = XmlParsingHelpers.ParseToTypedElement(xml, provider, new FhirXmlParsingSettings { PermissiveParsing = true });
-                var json = nav.ToJson();
+                var json = await nav.ToJsonAsync();
                 await File.WriteAllTextAsync(outputFile, json);
             }
             else

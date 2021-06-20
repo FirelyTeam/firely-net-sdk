@@ -20,6 +20,7 @@ using System.Text;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Rest;
 using System.IO;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
-        public void TestSummary()
+        public async T.Task TestSummary()
         {
             var p = new Patient
             {
@@ -39,12 +40,12 @@ namespace Hl7.Fhir.Tests.Serialization
                 Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
             };
 
-            var full = FhirXmlSerializer.SerializeToString(p);
+            var full = await FhirXmlSerializer.SerializeToStringAsync(p);
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
 
-            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var summ = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsNull(p.Meta, "Meta element should not be introduced here.");
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Tests.Serialization
             });
             
             Assert.IsNull(q.Meta, "Meta element has not been created.");
-            var qfull = FhirXmlSerializer.SerializeToString(q);
+            var qfull = await FhirXmlSerializer.SerializeToStringAsync(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
             Console.WriteLine("summary: Fhir.Rest.SummaryType.False");
             Console.WriteLine(qfull);
@@ -73,7 +74,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qfull.Contains("<text value=\"TEXT\""));
             Assert.IsTrue(qfull.Contains("<linkId value=\"linkid\""));
 
-            var qSum = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.True);
+            var qSum = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.True);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.True");
             Console.WriteLine(qSum);
             Assert.IsFalse(qSum.Contains("Test Questionnaire"));
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(qSum.Contains("<text value=\"TEXT\""));
             Assert.IsFalse(qSum.Contains("<linkId value=\"linkid\""));
 
-            var qData = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Data);
+            var qData = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.Data);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Data");
             Console.WriteLine(qData);
             Assert.IsFalse(qData.Contains("Test Questionnaire"));
@@ -95,7 +96,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(qData.Contains("<linkId value=\"linkid\""));
 
             q.Meta = new Meta { VersionId = "v2" };
-            var qText = FhirXmlSerializer.SerializeToString(q, summary: Fhir.Rest.SummaryType.Text);
+            var qText = await FhirXmlSerializer.SerializeToStringAsync(q, summary: Fhir.Rest.SummaryType.Text);
             Console.WriteLine("summary: Fhir.Rest.SummaryType.Text");
             Console.WriteLine(qText);
             Assert.IsTrue(qText.Contains("Test Questionnaire"));
@@ -116,13 +117,13 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void TestIncludeMandatory()
+        public async T.Task TestIncludeMandatory()
         {
             var l = new Library();
             l.Type = new CodeableConcept { TextElement = new FhirString("testMandatoryComplexType") };
             l.Id = "testId";
             l.Language = "testLang";
-            var summaryElements = FhirXmlSerializer.SerializeToString(l, Fhir.Rest.SummaryType.Count);
+            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(l, Fhir.Rest.SummaryType.Count);
             
             Assert.IsFalse(summaryElements.Contains("<language"));
             Assert.IsTrue(summaryElements.Contains("<type>"));
@@ -134,7 +135,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.All
             });
 
-            var result = customMaskingNode.ToXml(settings: new FhirXmlSerializationSettings());
+            var result = await customMaskingNode.ToXmlAsync(settings: new FhirXmlSerializationSettings());
 
             Assert.IsFalse(result.Contains("<language>"));
             Assert.IsTrue(result.Contains("<type>"));
@@ -156,14 +157,14 @@ namespace Hl7.Fhir.Tests.Serialization
                 PreserveBundle = MaskingNodeSettings.PreserveBundleMode.None
             });
 
-            result = customMaskingNodeForBundle.ToXml(settings: new FhirXmlSerializationSettings());
+            result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
             
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
 
         [TestMethod]
-        public void TestElements()
+        public async T.Task TestElements()
         {
             var p = new Patient
             {
@@ -172,41 +173,41 @@ namespace Hl7.Fhir.Tests.Serialization
             };
             var elements = new[] { "photo" };
             
-            var summaryElements = FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.False, elements: elements);
+            var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
 
-            var noSummarySpecified = FhirXmlSerializer.SerializeToString(p, elements: elements);
+            var noSummarySpecified = await FhirXmlSerializer.SerializeToStringAsync(p, elements: elements);
             Assert.IsFalse(noSummarySpecified.Contains("<birthDate"));
             Assert.IsTrue(noSummarySpecified.Contains("<photo"));
 
-            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.True, elements: elements));
-            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Count, elements: elements));
-            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Data, elements: elements));
-            ExceptionAssert.Throws<ArgumentException>(() => FhirXmlSerializer.SerializeToString(p, Fhir.Rest.SummaryType.Text, elements: elements));
+            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.True, elements: elements));
+            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Count, elements: elements));
+            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Data, elements: elements));
+            await ExceptionAssert.Throws<ArgumentException>(async () => await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.Text, elements: elements));
         }
 
         [TestMethod]
-        public void TestWithMetadata()
+        public async T.Task TestWithMetadata()
         {
             var p = new Patient
             {
                 BirthDate = "1972-11-30"
             };
 
-            var pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var pSum = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNull(p.Meta, "Meta should not be there");
 
             p.Meta = new Meta { VersionId = "v2" }; // introducing meta data ourselves. 
 
-            pSum = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            pSum = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNotNull(p.Meta, "Meta should still be there");
             Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
 
         [TestMethod]
-        public void TestBundleSummary()
+        public async T.Task TestBundleSummary()
         {
             var p = new Patient
             {
@@ -219,19 +220,19 @@ namespace Hl7.Fhir.Tests.Serialization
             b.Total = 1;
             b.Type = Bundle.BundleType.Searchset;
 
-            var full = FhirXmlSerializer.SerializeToString(b);
+            var full = await FhirXmlSerializer.SerializeToStringAsync(b);
             Assert.IsTrue(full.Contains("<entry"));
             Assert.IsTrue(full.Contains("<birthDate"));
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("<total"));
 
-            var summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.True);
+            var summ = await FhirXmlSerializer.SerializeToStringAsync(b, summary: Fhir.Rest.SummaryType.True);
             Assert.IsTrue(summ.Contains("<entry"));
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
             Assert.IsTrue(summ.Contains("<total"));
 
-            summ = FhirXmlSerializer.SerializeToString(b, summary: Fhir.Rest.SummaryType.Count);
+            summ = await FhirXmlSerializer.SerializeToStringAsync(b, summary: Fhir.Rest.SummaryType.Count);
             Assert.IsFalse(summ.Contains("<entry"));
             Assert.IsFalse(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
@@ -240,7 +241,7 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void TestBundleWithSummaryJson()
+        public async T.Task TestBundleWithSummaryJson()
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
@@ -296,15 +297,15 @@ namespace Hl7.Fhir.Tests.Serialization
                 };
 
                 bool inJson = Path.GetExtension(expectedFile) == ".json";
-                var actualData = inJson ? FhirJsonSerializer.SerializeToString(bundle, mode) :
-                                    FhirXmlSerializer.SerializeToString(bundle, mode);
+                var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(bundle, mode) :
+                                    await FhirXmlSerializer.SerializeToStringAsync(bundle, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
                 Assert.AreEqual(actualData, expectedData);
             }
         }
 
         [TestMethod]
-        public void TestResourceWithSummary()
+        public async T.Task TestResourceWithSummary()
         {
             Dictionary<string, SummaryType> data = new Dictionary<string, SummaryType>
             {
@@ -339,15 +340,15 @@ namespace Hl7.Fhir.Tests.Serialization
 
                 // Properties with IsSummary == true -> Id, Meta, Active, BirthDate, Gender, Name
                 bool inJson = Path.GetExtension(expectedFile) == ".json";
-                var actualData = inJson ? FhirJsonSerializer.SerializeToString(patientOne, mode) :
-                                    FhirXmlSerializer.SerializeToString(patientOne, mode);
+                var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(patientOne, mode) :
+                                    await FhirXmlSerializer.SerializeToStringAsync(patientOne, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
                 Assert.AreEqual(expectedData, actualData);
             }
         }
 
         [TestMethod]
-        public void TestIdInSummary()
+        public async T.Task TestIdInSummary()
         {
             var p = new Patient
             {
@@ -369,7 +370,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             p.AddExtension("http://example.org/ext", new FhirString("dud"));
 
-            var full = FhirXmlSerializer.SerializeToString(p);
+            var full = await FhirXmlSerializer.SerializeToStringAsync(p);
             Assert.IsTrue(full.Contains("narrative"));
             Assert.IsTrue(full.Contains("dud"));
             Assert.IsTrue(full.Contains("temp org"));
@@ -378,7 +379,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("text/plain"));
 
-            full = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.False);
+            full = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Hl7.Fhir.Rest.SummaryType.False);
             Assert.IsTrue(full.Contains("narrative"));
             Assert.IsTrue(full.Contains("dud"));
             Assert.IsTrue(full.Contains("temp org"));
@@ -388,7 +389,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(full.Contains("<photo"));
             Assert.IsTrue(full.Contains("text/plain"));
 
-            var summ = FhirXmlSerializer.SerializeToString(p, summary: Fhir.Rest.SummaryType.True);
+            var summ = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsFalse(summ.Contains("narrative"));
             Assert.IsFalse(summ.Contains("dud"));
             Assert.IsFalse(summ.Contains("contain"));
@@ -397,7 +398,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsTrue(summ.Contains("<birthDate"));
             Assert.IsFalse(summ.Contains("<photo"));
 
-            var data = FhirXmlSerializer.SerializeToString(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
+            var data = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Hl7.Fhir.Rest.SummaryType.Data);
             Assert.IsFalse(data.Contains("narrative"));
             Assert.IsTrue(data.Contains("contain"));
             Assert.IsTrue(data.Contains("dud"));

@@ -141,8 +141,10 @@ namespace Hl7.Fhir.Specification.Terminology
 
                     // Serialize the code or coding to json for display purposes in the issue
                     var jsonSer = new FhirJsonSerializer();
+#pragma warning disable 618 // Obsolete member or type
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
-                                            : jsonSer.SerializeToString(coding);
+                        : jsonSer.SerializeToString(coding);
+#pragma warning restore 618 // Obsolete member or type
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
                                 $"the terminology service at {Endpoint.Endpoint} did not provide further details.",

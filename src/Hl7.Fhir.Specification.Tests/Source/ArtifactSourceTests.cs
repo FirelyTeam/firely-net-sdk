@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Specification.Tests
         // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
-        public void OpenDuplicateFileNames()
+        public async T.Task OpenDuplicateFileNames()
         {
             var testPath = prepareExampleDirectory(out int _);
 
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Specification.Tests
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            _ = new FhirXmlSerializer().SerializeToString(res);
+            _ = await new FhirXmlSerializer().SerializeToStringAsync(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));
