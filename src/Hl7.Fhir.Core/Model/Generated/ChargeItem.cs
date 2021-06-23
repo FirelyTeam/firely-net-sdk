@@ -215,6 +215,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "function" => Function,
+          "actor" => Actor,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -887,6 +906,73 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "definitionUri" => DefinitionUriElement,
+        "definitionCanonical" => DefinitionCanonicalElement,
+        "status" => StatusElement,
+        "partOf" => PartOf,
+        "code" => Code,
+        "subject" => Subject,
+        "context" => Context,
+        "occurrence" => Occurrence,
+        "performer" => Performer,
+        "performingOrganization" => PerformingOrganization,
+        "requestingOrganization" => RequestingOrganization,
+        "costCenter" => CostCenter,
+        "quantity" => Quantity,
+        "bodysite" => Bodysite,
+        "factorOverride" => FactorOverrideElement,
+        "priceOverride" => PriceOverride,
+        "overrideReason" => OverrideReasonElement,
+        "enterer" => Enterer,
+        "enteredDate" => EnteredDateElement,
+        "reason" => Reason,
+        "service" => Service,
+        "product" => Product,
+        "account" => Account,
+        "note" => Note,
+        "supportingInformation" => SupportingInformation,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (DefinitionUriElement is not null) yield return new KeyValuePair<string,object>("definitionUri",DefinitionUriElement);
+      if (DefinitionCanonicalElement is not null) yield return new KeyValuePair<string,object>("definitionCanonical",DefinitionCanonicalElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (PerformingOrganization is not null) yield return new KeyValuePair<string,object>("performingOrganization",PerformingOrganization);
+      if (RequestingOrganization is not null) yield return new KeyValuePair<string,object>("requestingOrganization",RequestingOrganization);
+      if (CostCenter is not null) yield return new KeyValuePair<string,object>("costCenter",CostCenter);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Bodysite is not null) yield return new KeyValuePair<string,object>("bodysite",Bodysite);
+      if (FactorOverrideElement is not null) yield return new KeyValuePair<string,object>("factorOverride",FactorOverrideElement);
+      if (PriceOverride is not null) yield return new KeyValuePair<string,object>("priceOverride",PriceOverride);
+      if (OverrideReasonElement is not null) yield return new KeyValuePair<string,object>("overrideReason",OverrideReasonElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (EnteredDateElement is not null) yield return new KeyValuePair<string,object>("enteredDate",EnteredDateElement);
+      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Service is not null) yield return new KeyValuePair<string,object>("service",Service);
+      if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
     }
 
   }

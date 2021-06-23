@@ -387,6 +387,35 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "type" => TypeElement,
+        "label" => LabelElement,
+        "display" => DisplayElement,
+        "citation" => Citation,
+        "url" => UrlElement,
+        "document" => Document,
+        "resource" => ResourceElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
+      if (Citation is not null) yield return new KeyValuePair<string,object>("citation",Citation);
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
+      if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+    }
+
   }
 
 }

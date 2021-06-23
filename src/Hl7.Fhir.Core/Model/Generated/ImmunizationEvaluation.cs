@@ -457,6 +457,47 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "patient" => Patient,
+        "date" => DateElement,
+        "authority" => Authority,
+        "targetDisease" => TargetDisease,
+        "immunizationEvent" => ImmunizationEvent,
+        "doseStatus" => DoseStatus,
+        "doseStatusReason" => DoseStatusReason,
+        "description" => DescriptionElement,
+        "series" => SeriesElement,
+        "doseNumber" => DoseNumber,
+        "seriesDoses" => SeriesDoses,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+      if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+      if (ImmunizationEvent is not null) yield return new KeyValuePair<string,object>("immunizationEvent",ImmunizationEvent);
+      if (DoseStatus is not null) yield return new KeyValuePair<string,object>("doseStatus",DoseStatus);
+      if (DoseStatusReason is not null) yield return new KeyValuePair<string,object>("doseStatusReason",DoseStatusReason);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+      if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
+      if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+    }
+
   }
 
 }

@@ -412,6 +412,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "index" => IndexElement,
+          "profile" => Profile,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (IndexElement is not null) yield return new KeyValuePair<string,object>("index",IndexElement);
+        if (Profile is not null) yield return new KeyValuePair<string,object>("profile",Profile);
+      }
+
     }
 
     /// <summary>
@@ -539,6 +558,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "index" => IndexElement,
+          "profile" => Profile,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (IndexElement is not null) yield return new KeyValuePair<string,object>("index",IndexElement);
+        if (Profile is not null) yield return new KeyValuePair<string,object>("profile",Profile);
+      }
+
     }
 
     /// <summary>
@@ -646,6 +684,25 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
           foreach (var elem in Capability) { if (elem != null) yield return new ElementValue("capability", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "link" => Link,
+          "capability" => Capability,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+        if (Capability is not null) yield return new KeyValuePair<string,object>("capability",Capability);
       }
 
     }
@@ -790,6 +847,25 @@ namespace Hl7.Fhir.Model
           if (UrlElement != null) yield return new ElementValue("url", UrlElement);
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "url" => UrlElement,
+          "description" => DescriptionElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       }
 
     }
@@ -1120,6 +1196,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "required" => RequiredElement,
+          "validated" => ValidatedElement,
+          "description" => DescriptionElement,
+          "origin" => OriginElement,
+          "destination" => DestinationElement,
+          "link" => LinkElement,
+          "capabilities" => CapabilitiesElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
+        if (ValidatedElement is not null) yield return new KeyValuePair<string,object>("validated",ValidatedElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (OriginElement is not null) yield return new KeyValuePair<string,object>("origin",OriginElement);
+        if (DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",DestinationElement);
+        if (LinkElement is not null) yield return new KeyValuePair<string,object>("link",LinkElement);
+        if (CapabilitiesElement is not null) yield return new KeyValuePair<string,object>("capabilities",CapabilitiesElement);
+      }
+
     }
 
     /// <summary>
@@ -1283,6 +1388,27 @@ namespace Hl7.Fhir.Model
           if (AutodeleteElement != null) yield return new ElementValue("autodelete", AutodeleteElement);
           if (Resource != null) yield return new ElementValue("resource", Resource);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "autocreate" => AutocreateElement,
+          "autodelete" => AutodeleteElement,
+          "resource" => Resource,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AutocreateElement is not null) yield return new KeyValuePair<string,object>("autocreate",AutocreateElement);
+        if (AutodeleteElement is not null) yield return new KeyValuePair<string,object>("autodelete",AutodeleteElement);
+        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
       }
 
     }
@@ -1645,6 +1771,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "name" => NameElement,
+          "defaultValue" => DefaultValueElement,
+          "description" => DescriptionElement,
+          "expression" => ExpressionElement,
+          "headerField" => HeaderFieldElement,
+          "hint" => HintElement,
+          "path" => PathElement,
+          "sourceId" => SourceIdElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (DefaultValueElement is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValueElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+        if (HeaderFieldElement is not null) yield return new KeyValuePair<string,object>("headerField",HeaderFieldElement);
+        if (HintElement is not null) yield return new KeyValuePair<string,object>("hint",HintElement);
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",SourceIdElement);
+      }
+
     }
 
     /// <summary>
@@ -1733,6 +1890,23 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "action" => Action,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -1840,6 +2014,25 @@ namespace Hl7.Fhir.Model
           if (Operation != null) yield return new ElementValue("operation", Operation);
           if (Assert != null) yield return new ElementValue("assert", Assert);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "operation" => Operation,
+          "assert" => Assert,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
+        if (Assert is not null) yield return new KeyValuePair<string,object>("assert",Assert);
       }
 
     }
@@ -2493,6 +2686,55 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => Type,
+          "resource" => ResourceElement,
+          "label" => LabelElement,
+          "description" => DescriptionElement,
+          "accept" => AcceptElement,
+          "contentType" => ContentTypeElement,
+          "destination" => DestinationElement,
+          "encodeRequestUrl" => EncodeRequestUrlElement,
+          "method" => MethodElement,
+          "origin" => OriginElement,
+          "params" => ParamsElement,
+          "requestHeader" => RequestHeader,
+          "requestId" => RequestIdElement,
+          "responseId" => ResponseIdElement,
+          "sourceId" => SourceIdElement,
+          "targetId" => TargetIdElement,
+          "url" => UrlElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+        if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (AcceptElement is not null) yield return new KeyValuePair<string,object>("accept",AcceptElement);
+        if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+        if (DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",DestinationElement);
+        if (EncodeRequestUrlElement is not null) yield return new KeyValuePair<string,object>("encodeRequestUrl",EncodeRequestUrlElement);
+        if (MethodElement is not null) yield return new KeyValuePair<string,object>("method",MethodElement);
+        if (OriginElement is not null) yield return new KeyValuePair<string,object>("origin",OriginElement);
+        if (ParamsElement is not null) yield return new KeyValuePair<string,object>("params",ParamsElement);
+        if (RequestHeader is not null) yield return new KeyValuePair<string,object>("requestHeader",RequestHeader);
+        if (RequestIdElement is not null) yield return new KeyValuePair<string,object>("requestId",RequestIdElement);
+        if (ResponseIdElement is not null) yield return new KeyValuePair<string,object>("responseId",ResponseIdElement);
+        if (SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",SourceIdElement);
+        if (TargetIdElement is not null) yield return new KeyValuePair<string,object>("targetId",TargetIdElement);
+        if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      }
+
     }
 
     /// <summary>
@@ -2636,6 +2878,25 @@ namespace Hl7.Fhir.Model
           if (FieldElement != null) yield return new ElementValue("field", FieldElement);
           if (ValueElement != null) yield return new ElementValue("value", ValueElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "field" => FieldElement,
+          "value" => ValueElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (FieldElement is not null) yield return new KeyValuePair<string,object>("field",FieldElement);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
     }
@@ -3507,6 +3768,65 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "label" => LabelElement,
+          "description" => DescriptionElement,
+          "direction" => DirectionElement,
+          "compareToSourceId" => CompareToSourceIdElement,
+          "compareToSourceExpression" => CompareToSourceExpressionElement,
+          "compareToSourcePath" => CompareToSourcePathElement,
+          "contentType" => ContentTypeElement,
+          "expression" => ExpressionElement,
+          "headerField" => HeaderFieldElement,
+          "minimumId" => MinimumIdElement,
+          "navigationLinks" => NavigationLinksElement,
+          "operator" => OperatorElement,
+          "path" => PathElement,
+          "requestMethod" => RequestMethodElement,
+          "requestURL" => RequestURLElement,
+          "resource" => ResourceElement,
+          "response" => ResponseElement,
+          "responseCode" => ResponseCodeElement,
+          "sourceId" => SourceIdElement,
+          "validateProfileId" => ValidateProfileIdElement,
+          "value" => ValueElement,
+          "warningOnly" => WarningOnlyElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",DirectionElement);
+        if (CompareToSourceIdElement is not null) yield return new KeyValuePair<string,object>("compareToSourceId",CompareToSourceIdElement);
+        if (CompareToSourceExpressionElement is not null) yield return new KeyValuePair<string,object>("compareToSourceExpression",CompareToSourceExpressionElement);
+        if (CompareToSourcePathElement is not null) yield return new KeyValuePair<string,object>("compareToSourcePath",CompareToSourcePathElement);
+        if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+        if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+        if (HeaderFieldElement is not null) yield return new KeyValuePair<string,object>("headerField",HeaderFieldElement);
+        if (MinimumIdElement is not null) yield return new KeyValuePair<string,object>("minimumId",MinimumIdElement);
+        if (NavigationLinksElement is not null) yield return new KeyValuePair<string,object>("navigationLinks",NavigationLinksElement);
+        if (OperatorElement is not null) yield return new KeyValuePair<string,object>("operator",OperatorElement);
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (RequestMethodElement is not null) yield return new KeyValuePair<string,object>("requestMethod",RequestMethodElement);
+        if (RequestURLElement is not null) yield return new KeyValuePair<string,object>("requestURL",RequestURLElement);
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+        if (ResponseElement is not null) yield return new KeyValuePair<string,object>("response",ResponseElement);
+        if (ResponseCodeElement is not null) yield return new KeyValuePair<string,object>("responseCode",ResponseCodeElement);
+        if (SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",SourceIdElement);
+        if (ValidateProfileIdElement is not null) yield return new KeyValuePair<string,object>("validateProfileId",ValidateProfileIdElement);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if (WarningOnlyElement is not null) yield return new KeyValuePair<string,object>("warningOnly",WarningOnlyElement);
+      }
+
     }
 
     /// <summary>
@@ -3669,6 +3989,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "name" => NameElement,
+          "description" => DescriptionElement,
+          "action" => Action,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -3776,6 +4117,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "operation" => Operation,
+          "assert" => Assert,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
+        if (Assert is not null) yield return new KeyValuePair<string,object>("assert",Assert);
+      }
+
     }
 
     /// <summary>
@@ -3866,6 +4226,23 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "action" => Action,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -3954,6 +4331,23 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Operation != null) yield return new ElementValue("operation", Operation);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "operation" => Operation,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
       }
 
     }
@@ -4603,6 +4997,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Test) { if (elem != null) yield return new ElementValue("test", elem); }
         if (Teardown != null) yield return new ElementValue("teardown", Teardown);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "url" => UrlElement,
+        "identifier" => Identifier,
+        "version" => VersionElement,
+        "name" => NameElement,
+        "title" => TitleElement,
+        "status" => StatusElement,
+        "experimental" => ExperimentalElement,
+        "date" => DateElement,
+        "publisher" => PublisherElement,
+        "contact" => Contact,
+        "description" => Description,
+        "useContext" => UseContext,
+        "jurisdiction" => Jurisdiction,
+        "purpose" => Purpose,
+        "copyright" => Copyright,
+        "origin" => Origin,
+        "destination" => Destination,
+        "metadata" => Metadata,
+        "fixture" => Fixture,
+        "profile" => Profile,
+        "variable" => Variable,
+        "setup" => Setup,
+        "test" => Test,
+        "teardown" => Teardown,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
+      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Metadata is not null) yield return new KeyValuePair<string,object>("metadata",Metadata);
+      if (Fixture is not null) yield return new KeyValuePair<string,object>("fixture",Fixture);
+      if (Profile is not null) yield return new KeyValuePair<string,object>("profile",Profile);
+      if (Variable is not null) yield return new KeyValuePair<string,object>("variable",Variable);
+      if (Setup is not null) yield return new KeyValuePair<string,object>("setup",Setup);
+      if (Test is not null) yield return new KeyValuePair<string,object>("test",Test);
+      if (Teardown is not null) yield return new KeyValuePair<string,object>("teardown",Teardown);
     }
 
   }

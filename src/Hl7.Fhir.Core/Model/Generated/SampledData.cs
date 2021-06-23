@@ -348,6 +348,35 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "origin" => Origin,
+        "period" => PeriodElement,
+        "factor" => FactorElement,
+        "lowerLimit" => LowerLimitElement,
+        "upperLimit" => UpperLimitElement,
+        "dimensions" => DimensionsElement,
+        "data" => DataElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
+      if (PeriodElement is not null) yield return new KeyValuePair<string,object>("period",PeriodElement);
+      if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
+      if (LowerLimitElement is not null) yield return new KeyValuePair<string,object>("lowerLimit",LowerLimitElement);
+      if (UpperLimitElement is not null) yield return new KeyValuePair<string,object>("upperLimit",UpperLimitElement);
+      if (DimensionsElement is not null) yield return new KeyValuePair<string,object>("dimensions",DimensionsElement);
+      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
+    }
+
   }
 
 }

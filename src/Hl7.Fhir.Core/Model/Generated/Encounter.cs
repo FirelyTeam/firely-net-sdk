@@ -281,6 +281,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "status" => StatusElement,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -388,6 +407,25 @@ namespace Hl7.Fhir.Model
           if (Class != null) yield return new ElementValue("class", Class);
           if (Period != null) yield return new ElementValue("period", Period);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "class" => Class,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
     }
@@ -516,6 +554,27 @@ namespace Hl7.Fhir.Model
           if (Period != null) yield return new ElementValue("period", Period);
           if (Individual != null) yield return new ElementValue("individual", Individual);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => Type,
+          "period" => Period,
+          "individual" => Individual,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
       }
 
     }
@@ -662,6 +721,27 @@ namespace Hl7.Fhir.Model
           if (Use != null) yield return new ElementValue("use", Use);
           if (RankElement != null) yield return new ElementValue("rank", RankElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "condition" => Condition,
+          "use" => Use,
+          "rank" => RankElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+        if (Use is not null) yield return new KeyValuePair<string,object>("use",Use);
+        if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
       }
 
     }
@@ -904,6 +984,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "preAdmissionIdentifier" => PreAdmissionIdentifier,
+          "origin" => Origin,
+          "admitSource" => AdmitSource,
+          "reAdmission" => ReAdmission,
+          "dietPreference" => DietPreference,
+          "specialCourtesy" => SpecialCourtesy,
+          "specialArrangement" => SpecialArrangement,
+          "destination" => Destination,
+          "dischargeDisposition" => DischargeDisposition,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PreAdmissionIdentifier is not null) yield return new KeyValuePair<string,object>("preAdmissionIdentifier",PreAdmissionIdentifier);
+        if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
+        if (AdmitSource is not null) yield return new KeyValuePair<string,object>("admitSource",AdmitSource);
+        if (ReAdmission is not null) yield return new KeyValuePair<string,object>("reAdmission",ReAdmission);
+        if (DietPreference is not null) yield return new KeyValuePair<string,object>("dietPreference",DietPreference);
+        if (SpecialCourtesy is not null) yield return new KeyValuePair<string,object>("specialCourtesy",SpecialCourtesy);
+        if (SpecialArrangement is not null) yield return new KeyValuePair<string,object>("specialArrangement",SpecialArrangement);
+        if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+        if (DischargeDisposition is not null) yield return new KeyValuePair<string,object>("dischargeDisposition",DischargeDisposition);
+      }
+
     }
 
     /// <summary>
@@ -1067,6 +1180,29 @@ namespace Hl7.Fhir.Model
           if (PhysicalType != null) yield return new ElementValue("physicalType", PhysicalType);
           if (Period != null) yield return new ElementValue("period", Period);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "location" => Location,
+          "status" => StatusElement,
+          "physicalType" => PhysicalType,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (PhysicalType is not null) yield return new KeyValuePair<string,object>("physicalType",PhysicalType);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
     }
@@ -1589,6 +1725,67 @@ namespace Hl7.Fhir.Model
         if (ServiceProvider != null) yield return new ElementValue("serviceProvider", ServiceProvider);
         if (PartOf != null) yield return new ElementValue("partOf", PartOf);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "statusHistory" => StatusHistory,
+        "class" => Class,
+        "classHistory" => ClassHistory,
+        "type" => Type,
+        "serviceType" => ServiceType,
+        "priority" => Priority,
+        "subject" => Subject,
+        "episodeOfCare" => EpisodeOfCare,
+        "basedOn" => BasedOn,
+        "participant" => Participant,
+        "appointment" => Appointment,
+        "period" => Period,
+        "length" => Length,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "diagnosis" => Diagnosis,
+        "account" => Account,
+        "hospitalization" => Hospitalization,
+        "location" => Location,
+        "serviceProvider" => ServiceProvider,
+        "partOf" => PartOf,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusHistory is not null) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
+      if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
+      if (ClassHistory is not null) yield return new KeyValuePair<string,object>("classHistory",ClassHistory);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (EpisodeOfCare is not null) yield return new KeyValuePair<string,object>("episodeOfCare",EpisodeOfCare);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Appointment is not null) yield return new KeyValuePair<string,object>("appointment",Appointment);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Length is not null) yield return new KeyValuePair<string,object>("length",Length);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
+      if (Hospitalization is not null) yield return new KeyValuePair<string,object>("hospitalization",Hospitalization);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (ServiceProvider is not null) yield return new KeyValuePair<string,object>("serviceProvider",ServiceProvider);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
     }
 
   }

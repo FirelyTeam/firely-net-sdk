@@ -161,6 +161,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "outerPackaging" => OuterPackaging,
+          "immediatePackaging" => ImmediatePackaging,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",OuterPackaging);
+        if (ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",ImmediatePackaging);
+      }
+
     }
 
     /// <summary>
@@ -465,6 +484,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "identifier" => Identifier,
+          "type" => Type,
+          "quantity" => Quantity,
+          "material" => Material,
+          "alternateMaterial" => AlternateMaterial,
+          "device" => Device,
+          "manufacturedItem" => ManufacturedItem,
+          "packageItem" => PackageItem,
+          "physicalCharacteristics" => PhysicalCharacteristics,
+          "otherCharacteristics" => OtherCharacteristics,
+          "shelfLifeStorage" => ShelfLifeStorage,
+          "manufacturer" => Manufacturer,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Material is not null) yield return new KeyValuePair<string,object>("material",Material);
+        if (AlternateMaterial is not null) yield return new KeyValuePair<string,object>("alternateMaterial",AlternateMaterial);
+        if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+        if (ManufacturedItem is not null) yield return new KeyValuePair<string,object>("manufacturedItem",ManufacturedItem);
+        if (PackageItem is not null) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+        if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
+        if (OtherCharacteristics is not null) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+        if (ShelfLifeStorage is not null) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
+        if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      }
+
     }
 
     /// <summary>
@@ -713,6 +771,39 @@ namespace Hl7.Fhir.Model
         foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
         foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "subject" => Subject,
+        "description" => DescriptionElement,
+        "legalStatusOfSupply" => LegalStatusOfSupply,
+        "marketingStatus" => MarketingStatus,
+        "marketingAuthorization" => MarketingAuthorization,
+        "manufacturer" => Manufacturer,
+        "batchIdentifier" => BatchIdentifier,
+        "packageItem" => PackageItem,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
+      if (MarketingStatus is not null) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",MarketingAuthorization);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (BatchIdentifier is not null) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
+      if (PackageItem is not null) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
     }
 
   }

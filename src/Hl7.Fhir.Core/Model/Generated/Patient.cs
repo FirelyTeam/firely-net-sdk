@@ -307,6 +307,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "relationship" => Relationship,
+          "name" => Name,
+          "telecom" => Telecom,
+          "address" => Address,
+          "gender" => GenderElement,
+          "organization" => Organization,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+        if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+        if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+        if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+        if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -431,6 +460,25 @@ namespace Hl7.Fhir.Model
           if (Language != null) yield return new ElementValue("language", Language);
           if (PreferredElement != null) yield return new ElementValue("preferred", PreferredElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "language" => Language,
+          "preferred" => PreferredElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
+        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
       }
 
     }
@@ -561,6 +609,25 @@ namespace Hl7.Fhir.Model
           if (Other != null) yield return new ElementValue("other", Other);
           if (TypeElement != null) yield return new ElementValue("type", TypeElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "other" => Other,
+          "type" => TypeElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Other is not null) yield return new KeyValuePair<string,object>("other",Other);
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       }
 
     }
@@ -979,6 +1046,53 @@ namespace Hl7.Fhir.Model
         if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
         foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "active" => ActiveElement,
+        "name" => Name,
+        "telecom" => Telecom,
+        "gender" => GenderElement,
+        "birthDate" => BirthDateElement,
+        "deceased" => Deceased,
+        "address" => Address,
+        "maritalStatus" => MaritalStatus,
+        "multipleBirth" => MultipleBirth,
+        "photo" => Photo,
+        "contact" => Contact,
+        "communication" => Communication,
+        "generalPractitioner" => GeneralPractitioner,
+        "managingOrganization" => ManagingOrganization,
+        "link" => Link,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+      if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
+      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (MaritalStatus is not null) yield return new KeyValuePair<string,object>("maritalStatus",MaritalStatus);
+      if (MultipleBirth is not null) yield return new KeyValuePair<string,object>("multipleBirth",MultipleBirth);
+      if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Communication is not null) yield return new KeyValuePair<string,object>("communication",Communication);
+      if (GeneralPractitioner is not null) yield return new KeyValuePair<string,object>("generalPractitioner",GeneralPractitioner);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
     }
 
   }

@@ -451,6 +451,47 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "status" => StatusElement,
+        "subject" => Subject,
+        "derivedFrom" => DerivedFrom,
+        "timing" => Timing,
+        "recordedOn" => RecordedOnElement,
+        "source" => Source,
+        "device" => Device,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "bodySite" => BodySite,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+      if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
   }
 
 }

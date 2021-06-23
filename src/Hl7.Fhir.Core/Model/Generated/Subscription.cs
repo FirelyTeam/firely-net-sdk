@@ -345,6 +345,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => TypeElement,
+          "endpoint" => EndpointElement,
+          "payload" => PayloadElement,
+          "header" => HeaderElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+        if (PayloadElement is not null) yield return new KeyValuePair<string,object>("payload",PayloadElement);
+        if (HeaderElement is not null) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      }
+
     }
 
     /// <summary>
@@ -623,6 +646,35 @@ namespace Hl7.Fhir.Model
         if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
         if (Channel != null) yield return new ElementValue("channel", Channel);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "status" => StatusElement,
+        "contact" => Contact,
+        "end" => EndElement,
+        "reason" => ReasonElement,
+        "criteria" => CriteriaElement,
+        "error" => ErrorElement,
+        "channel" => Channel,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
+      if (CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",CriteriaElement);
+      if (ErrorElement is not null) yield return new KeyValuePair<string,object>("error",ErrorElement);
+      if (Channel is not null) yield return new KeyValuePair<string,object>("channel",Channel);
     }
 
   }

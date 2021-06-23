@@ -351,6 +351,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => TypeElement,
+          "value" => ValueElement,
+          "preferred" => PreferredElement,
+          "comment" => CommentElement,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
+        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -777,6 +802,47 @@ namespace Hl7.Fhir.Model
         if (UsageElement != null) yield return new ElementValue("usage", UsageElement);
         foreach (var elem in UniqueId) { if (elem != null) yield return new ElementValue("uniqueId", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "name" => NameElement,
+        "status" => StatusElement,
+        "kind" => KindElement,
+        "date" => DateElement,
+        "publisher" => PublisherElement,
+        "contact" => Contact,
+        "responsible" => ResponsibleElement,
+        "type" => Type,
+        "description" => Description,
+        "useContext" => UseContext,
+        "jurisdiction" => Jurisdiction,
+        "usage" => UsageElement,
+        "uniqueId" => UniqueId,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (ResponsibleElement is not null) yield return new KeyValuePair<string,object>("responsible",ResponsibleElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
+      if (UniqueId is not null) yield return new KeyValuePair<string,object>("uniqueId",UniqueId);
     }
 
   }

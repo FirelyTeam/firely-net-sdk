@@ -358,6 +358,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "subunit" => SubunitElement,
+          "sequence" => SequenceElement,
+          "length" => LengthElement,
+          "sequenceAttachment" => SequenceAttachment,
+          "nTerminalModificationId" => NTerminalModificationId,
+          "nTerminalModification" => NTerminalModificationElement,
+          "cTerminalModificationId" => CTerminalModificationId,
+          "cTerminalModification" => CTerminalModificationElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
+        if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
+        if (NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",NTerminalModificationId);
+        if (NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",NTerminalModificationElement);
+        if (CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",CTerminalModificationId);
+        if (CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",CTerminalModificationElement);
+      }
+
     }
 
     /// <summary>
@@ -524,6 +555,29 @@ namespace Hl7.Fhir.Model
         foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return new ElementValue("disulfideLinkage", elem); }
         foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "sequenceType" => SequenceType,
+        "numberOfSubunits" => NumberOfSubunitsElement,
+        "disulfideLinkage" => DisulfideLinkageElement,
+        "subunit" => Subunit,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
+      if (DisulfideLinkageElement is not null) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
+      if (Subunit is not null) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

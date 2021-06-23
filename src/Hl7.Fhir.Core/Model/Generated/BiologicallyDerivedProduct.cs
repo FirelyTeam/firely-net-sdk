@@ -274,6 +274,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "collector" => Collector,
+          "source" => Source,
+          "collected" => Collected,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
+        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
+      }
+
     }
 
     /// <summary>
@@ -439,6 +460,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "procedure" => Procedure,
+          "additive" => Additive,
+          "time" => Time,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
+        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
+      }
+
     }
 
     /// <summary>
@@ -564,6 +608,25 @@ namespace Hl7.Fhir.Model
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           if (Time != null) yield return new ElementValue("time", Time);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "time" => Time,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
       }
 
     }
@@ -762,6 +825,29 @@ namespace Hl7.Fhir.Model
           if (ScaleElement != null) yield return new ElementValue("scale", ScaleElement);
           if (Duration != null) yield return new ElementValue("duration", Duration);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "temperature" => TemperatureElement,
+          "scale" => ScaleElement,
+          "duration" => Duration,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (TemperatureElement is not null) yield return new KeyValuePair<string,object>("temperature",TemperatureElement);
+        if (ScaleElement is not null) yield return new KeyValuePair<string,object>("scale",ScaleElement);
+        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
       }
 
     }
@@ -1083,6 +1169,43 @@ namespace Hl7.Fhir.Model
         if (Manipulation != null) yield return new ElementValue("manipulation", Manipulation);
         foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "productCategory" => ProductCategoryElement,
+        "productCode" => ProductCode,
+        "status" => StatusElement,
+        "request" => Request,
+        "quantity" => QuantityElement,
+        "parent" => Parent,
+        "collection" => Collection,
+        "processing" => Processing,
+        "manipulation" => Manipulation,
+        "storage" => Storage,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ProductCategoryElement is not null) yield return new KeyValuePair<string,object>("productCategory",ProductCategoryElement);
+      if (ProductCode is not null) yield return new KeyValuePair<string,object>("productCode",ProductCode);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
+      if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
+      if (Processing is not null) yield return new KeyValuePair<string,object>("processing",Processing);
+      if (Manipulation is not null) yield return new KeyValuePair<string,object>("manipulation",Manipulation);
+      if (Storage is not null) yield return new KeyValuePair<string,object>("storage",Storage);
     }
 
   }

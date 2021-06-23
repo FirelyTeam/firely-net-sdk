@@ -377,6 +377,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "outcomeCodeableConcept" => OutcomeCodeableConcept,
+          "outcomeReference" => OutcomeReference,
+          "progress" => Progress,
+          "reference" => Reference,
+          "detail" => Detail,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (OutcomeCodeableConcept is not null) yield return new KeyValuePair<string,object>("outcomeCodeableConcept",OutcomeCodeableConcept);
+        if (OutcomeReference is not null) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+        if (Progress is not null) yield return new KeyValuePair<string,object>("progress",Progress);
+        if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -882,6 +907,55 @@ namespace Hl7.Fhir.Model
           if (Quantity != null) yield return new ElementValue("quantity", Quantity);
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "kind" => KindElement,
+          "instantiatesCanonical" => InstantiatesCanonicalElement,
+          "instantiatesUri" => InstantiatesUriElement,
+          "code" => Code,
+          "reasonCode" => ReasonCode,
+          "reasonReference" => ReasonReference,
+          "goal" => Goal,
+          "status" => StatusElement,
+          "statusReason" => StatusReason,
+          "doNotPerform" => DoNotPerformElement,
+          "scheduled" => Scheduled,
+          "location" => Location,
+          "performer" => Performer,
+          "product" => Product,
+          "dailyAmount" => DailyAmount,
+          "quantity" => Quantity,
+          "description" => DescriptionElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
+        if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+        if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+        if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+        if (Goal is not null) yield return new KeyValuePair<string,object>("goal",Goal);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+        if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
+        if (Scheduled is not null) yield return new KeyValuePair<string,object>("scheduled",Scheduled);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+        if (DailyAmount is not null) yield return new KeyValuePair<string,object>("dailyAmount",DailyAmount);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       }
 
     }
@@ -1521,6 +1595,67 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Activity) { if (elem != null) yield return new ElementValue("activity", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "instantiatesCanonical" => InstantiatesCanonicalElement,
+        "instantiatesUri" => InstantiatesUriElement,
+        "basedOn" => BasedOn,
+        "replaces" => Replaces,
+        "partOf" => PartOf,
+        "status" => StatusElement,
+        "intent" => IntentElement,
+        "category" => Category,
+        "title" => TitleElement,
+        "description" => DescriptionElement,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "period" => Period,
+        "created" => CreatedElement,
+        "author" => Author,
+        "contributor" => Contributor,
+        "careTeam" => CareTeam,
+        "addresses" => Addresses,
+        "supportingInfo" => SupportingInfo,
+        "goal" => Goal,
+        "activity" => Activity,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces is not null) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Contributor is not null) yield return new KeyValuePair<string,object>("contributor",Contributor);
+      if (CareTeam is not null) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
+      if (Addresses is not null) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Goal is not null) yield return new KeyValuePair<string,object>("goal",Goal);
+      if (Activity is not null) yield return new KeyValuePair<string,object>("activity",Activity);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

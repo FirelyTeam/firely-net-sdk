@@ -1,9 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -57,7 +55,7 @@ namespace Hl7.Fhir.Rest
 
             return new ValidateCodeResult
             {
-                Result = p["result"]?.Value as FhirBoolean,
+                Result = p.GetSingle("result")?.Value as FhirBoolean,
                 Message = p.Get("message").FirstOrDefault()?.Value as FhirString,
                 Display = p.Get("display").FirstOrDefault()?.Value as FhirString
             };
@@ -132,9 +130,9 @@ namespace Hl7.Fhir.Rest
 
         #region Concept Lookup
 
-        public static async Task<Parameters> ConceptLookupAsync(this BaseFhirClient client, 
-            Code code=null, FhirUri system = null, FhirString version = null, 
-            Coding coding=null, FhirDateTime date = null, Code displayLanguage=null, Code property=null)
+        public static async Task<Parameters> ConceptLookupAsync(this BaseFhirClient client,
+            Code code = null, FhirUri system = null, FhirString version = null,
+            Coding coding = null, FhirDateTime date = null, Code displayLanguage = null, Code property = null)
         {
             var par = new Parameters()
                 .Add(nameof(code), code)
@@ -161,11 +159,11 @@ namespace Hl7.Fhir.Rest
 
         #region Validate Code
 
-        public static async Task<ValidateCodeResult> ValidateCodeAsync(this BaseFhirClient client, String valueSetId, 
+        public static async Task<ValidateCodeResult> ValidateCodeAsync(this BaseFhirClient client, String valueSetId,
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
-                FhirUri system = null, FhirString version = null, FhirString display = null, 
+                FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
-                FhirBoolean @abstract = null, Code displayLanguage = null)   
+                FhirBoolean @abstract = null, Code displayLanguage = null)
         {
             if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
 
@@ -196,7 +194,7 @@ namespace Hl7.Fhir.Rest
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
-                FhirBoolean @abstract = null, Code displayLanguage=null)
+                FhirBoolean @abstract = null, Code displayLanguage = null)
         {
             return ValidateCodeAsync(client, valueSetId, url, context, valueSet, code, system, version, display,
                 coding, codeableConcept, date, @abstract, displayLanguage).WaitResult();
@@ -224,7 +222,7 @@ namespace Hl7.Fhir.Rest
 
             var result = await client.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
 
-            if(result != null)
+            if (result != null)
                 return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
             else
                 return null;

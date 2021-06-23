@@ -165,6 +165,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "therapyRelationshipType" => TherapyRelationshipType,
+          "medication" => Medication,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",TherapyRelationshipType);
+        if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      }
+
     }
 
     /// <summary>
@@ -356,6 +375,35 @@ namespace Hl7.Fhir.Model
         foreach (var elem in OtherTherapy) { if (elem != null) yield return new ElementValue("otherTherapy", elem); }
         foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "subject" => Subject,
+        "disease" => Disease,
+        "diseaseStatus" => DiseaseStatus,
+        "comorbidity" => Comorbidity,
+        "therapeuticIndication" => TherapeuticIndication,
+        "otherTherapy" => OtherTherapy,
+        "population" => Population,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Disease is not null) yield return new KeyValuePair<string,object>("disease",Disease);
+      if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
+      if (Comorbidity is not null) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
+      if (TherapeuticIndication is not null) yield return new KeyValuePair<string,object>("therapeuticIndication",TherapeuticIndication);
+      if (OtherTherapy is not null) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+      if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
     }
 
   }

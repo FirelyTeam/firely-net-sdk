@@ -127,7 +127,6 @@ namespace Hl7.Fhir.Serialization.Poco
                                 case DateTimeOffset dto: writer.WriteStringValue(ElementModel.Types.DateTime.FormatDateTimeOffset(dto)); break;
                                 case byte[] bytes: writer.WriteStringValue(Convert.ToBase64String(bytes)); break;
                                 default:
-                                    // TODO: Or just use ToString() ?
                                     throw new FormatException($"There is no know serialization for type {value.ObjectValue.GetType()} into Json.");
                             }
                         }

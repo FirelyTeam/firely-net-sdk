@@ -216,6 +216,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "identifier" => Identifier,
+          "country" => Country,
+          "jurisdiction" => Jurisdiction,
+          "legalStatusOfSupply" => LegalStatusOfSupply,
+          "validityPeriod" => ValidityPeriod,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
+        if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+        if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
+        if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+      }
+
     }
 
     /// <summary>
@@ -361,6 +386,29 @@ namespace Hl7.Fhir.Model
           if (Date != null) yield return new ElementValue("date", Date);
           foreach (var elem in Application) { if (elem != null) yield return new ElementValue("application", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "identifier" => Identifier,
+          "type" => Type,
+          "date" => Date,
+          "application" => Application,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
+        if (Application is not null) yield return new KeyValuePair<string,object>("application",Application);
       }
 
     }
@@ -789,6 +837,53 @@ namespace Hl7.Fhir.Model
         if (Regulator != null) yield return new ElementValue("regulator", Regulator);
         if (Procedure != null) yield return new ElementValue("procedure", Procedure);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "subject" => Subject,
+        "country" => Country,
+        "jurisdiction" => Jurisdiction,
+        "status" => Status,
+        "statusDate" => StatusDateElement,
+        "restoreDate" => RestoreDateElement,
+        "validityPeriod" => ValidityPeriod,
+        "dataExclusivityPeriod" => DataExclusivityPeriod,
+        "dateOfFirstAuthorization" => DateOfFirstAuthorizationElement,
+        "internationalBirthDate" => InternationalBirthDateElement,
+        "legalBasis" => LegalBasis,
+        "jurisdictionalAuthorization" => JurisdictionalAuthorization,
+        "holder" => Holder,
+        "regulator" => Regulator,
+        "procedure" => Procedure,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
+      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
+      if (RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",RestoreDateElement);
+      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+      if (DataExclusivityPeriod is not null) yield return new KeyValuePair<string,object>("dataExclusivityPeriod",DataExclusivityPeriod);
+      if (DateOfFirstAuthorizationElement is not null) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",DateOfFirstAuthorizationElement);
+      if (InternationalBirthDateElement is not null) yield return new KeyValuePair<string,object>("internationalBirthDate",InternationalBirthDateElement);
+      if (LegalBasis is not null) yield return new KeyValuePair<string,object>("legalBasis",LegalBasis);
+      if (JurisdictionalAuthorization is not null) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",JurisdictionalAuthorization);
+      if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
+      if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
+      if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
     }
 
   }

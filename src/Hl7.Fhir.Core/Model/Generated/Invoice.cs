@@ -203,6 +203,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "role" => Role,
+          "actor" => Actor,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -349,6 +368,27 @@ namespace Hl7.Fhir.Model
           if (ChargeItem != null) yield return new ElementValue("chargeItem", ChargeItem);
           foreach (var elem in PriceComponent) { if (elem != null) yield return new ElementValue("priceComponent", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "sequence" => SequenceElement,
+          "chargeItem" => ChargeItem,
+          "priceComponent" => PriceComponent,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (ChargeItem is not null) yield return new KeyValuePair<string,object>("chargeItem",ChargeItem);
+        if (PriceComponent is not null) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
       }
 
     }
@@ -530,6 +570,29 @@ namespace Hl7.Fhir.Model
           if (FactorElement != null) yield return new ElementValue("factor", FactorElement);
           if (Amount != null) yield return new ElementValue("amount", Amount);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => TypeElement,
+          "code" => Code,
+          "factor" => FactorElement,
+          "amount" => Amount,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
     }
@@ -945,6 +1008,53 @@ namespace Hl7.Fhir.Model
         if (PaymentTerms != null) yield return new ElementValue("paymentTerms", PaymentTerms);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "cancelledReason" => CancelledReasonElement,
+        "type" => Type,
+        "subject" => Subject,
+        "recipient" => Recipient,
+        "date" => DateElement,
+        "participant" => Participant,
+        "issuer" => Issuer,
+        "account" => Account,
+        "lineItem" => LineItem,
+        "totalPriceComponent" => TotalPriceComponent,
+        "totalNet" => TotalNet,
+        "totalGross" => TotalGross,
+        "paymentTerms" => PaymentTerms,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CancelledReasonElement is not null) yield return new KeyValuePair<string,object>("cancelledReason",CancelledReasonElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Issuer is not null) yield return new KeyValuePair<string,object>("issuer",Issuer);
+      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
+      if (LineItem is not null) yield return new KeyValuePair<string,object>("lineItem",LineItem);
+      if (TotalPriceComponent is not null) yield return new KeyValuePair<string,object>("totalPriceComponent",TotalPriceComponent);
+      if (TotalNet is not null) yield return new KeyValuePair<string,object>("totalNet",TotalNet);
+      if (TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",TotalGross);
+      if (PaymentTerms is not null) yield return new KeyValuePair<string,object>("paymentTerms",PaymentTerms);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

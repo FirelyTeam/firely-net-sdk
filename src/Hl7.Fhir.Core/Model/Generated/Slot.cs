@@ -450,6 +450,43 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "serviceCategory" => ServiceCategory,
+        "serviceType" => ServiceType,
+        "specialty" => Specialty,
+        "appointmentType" => AppointmentType,
+        "schedule" => Schedule,
+        "status" => StatusElement,
+        "start" => StartElement,
+        "end" => EndElement,
+        "overbooked" => OverbookedElement,
+        "comment" => CommentElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
+      if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (OverbookedElement is not null) yield return new KeyValuePair<string,object>("overbooked",OverbookedElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+    }
+
   }
 
 }

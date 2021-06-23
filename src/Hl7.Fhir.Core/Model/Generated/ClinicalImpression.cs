@@ -192,6 +192,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "item" => Item,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -335,6 +354,27 @@ namespace Hl7.Fhir.Model
           if (ItemReference != null) yield return new ElementValue("itemReference", ItemReference);
           if (BasisElement != null) yield return new ElementValue("basis", BasisElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "itemCodeableConcept" => ItemCodeableConcept,
+          "itemReference" => ItemReference,
+          "basis" => BasisElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ItemCodeableConcept is not null) yield return new KeyValuePair<string,object>("itemCodeableConcept",ItemCodeableConcept);
+        if (ItemReference is not null) yield return new KeyValuePair<string,object>("itemReference",ItemReference);
+        if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
       }
 
     }
@@ -871,6 +911,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "statusReason" => StatusReason,
+        "code" => Code,
+        "description" => DescriptionElement,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "effective" => Effective,
+        "date" => DateElement,
+        "assessor" => Assessor,
+        "previous" => Previous,
+        "problem" => Problem,
+        "investigation" => Investigation,
+        "protocol" => ProtocolElement,
+        "summary" => SummaryElement,
+        "finding" => Finding,
+        "prognosisCodeableConcept" => PrognosisCodeableConcept,
+        "prognosisReference" => PrognosisReference,
+        "supportingInfo" => SupportingInfo,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Assessor is not null) yield return new KeyValuePair<string,object>("assessor",Assessor);
+      if (Previous is not null) yield return new KeyValuePair<string,object>("previous",Previous);
+      if (Problem is not null) yield return new KeyValuePair<string,object>("problem",Problem);
+      if (Investigation is not null) yield return new KeyValuePair<string,object>("investigation",Investigation);
+      if (ProtocolElement is not null) yield return new KeyValuePair<string,object>("protocol",ProtocolElement);
+      if (SummaryElement is not null) yield return new KeyValuePair<string,object>("summary",SummaryElement);
+      if (Finding is not null) yield return new KeyValuePair<string,object>("finding",Finding);
+      if (PrognosisCodeableConcept is not null) yield return new KeyValuePair<string,object>("prognosisCodeableConcept",PrognosisCodeableConcept);
+      if (PrognosisReference is not null) yield return new KeyValuePair<string,object>("prognosisReference",PrognosisReference);
+      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

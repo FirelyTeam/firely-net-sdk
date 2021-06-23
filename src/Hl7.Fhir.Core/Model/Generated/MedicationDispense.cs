@@ -227,6 +227,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "function" => Function,
+          "actor" => Actor,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -391,6 +410,29 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
           foreach (var elem in ResponsibleParty) { if (elem != null) yield return new ElementValue("responsibleParty", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "wasSubstituted" => WasSubstitutedElement,
+          "type" => Type,
+          "reason" => Reason,
+          "responsibleParty" => ResponsibleParty,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (WasSubstitutedElement is not null) yield return new KeyValuePair<string,object>("wasSubstituted",WasSubstitutedElement);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (ResponsibleParty is not null) yield return new KeyValuePair<string,object>("responsibleParty",ResponsibleParty);
       }
 
     }
@@ -974,6 +1016,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
         foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "partOf" => PartOf,
+        "status" => StatusElement,
+        "statusReason" => StatusReason,
+        "category" => Category,
+        "medication" => Medication,
+        "subject" => Subject,
+        "context" => Context,
+        "supportingInformation" => SupportingInformation,
+        "performer" => Performer,
+        "location" => Location,
+        "authorizingPrescription" => AuthorizingPrescription,
+        "type" => Type,
+        "quantity" => Quantity,
+        "daysSupply" => DaysSupply,
+        "whenPrepared" => WhenPreparedElement,
+        "whenHandedOver" => WhenHandedOverElement,
+        "destination" => Destination,
+        "receiver" => Receiver,
+        "note" => Note,
+        "dosageInstruction" => DosageInstruction,
+        "substitution" => Substitution,
+        "detectedIssue" => DetectedIssue,
+        "eventHistory" => EventHistory,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (AuthorizingPrescription is not null) yield return new KeyValuePair<string,object>("authorizingPrescription",AuthorizingPrescription);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (DaysSupply is not null) yield return new KeyValuePair<string,object>("daysSupply",DaysSupply);
+      if (WhenPreparedElement is not null) yield return new KeyValuePair<string,object>("whenPrepared",WhenPreparedElement);
+      if (WhenHandedOverElement is not null) yield return new KeyValuePair<string,object>("whenHandedOver",WhenHandedOverElement);
+      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (DosageInstruction is not null) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
+      if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
+      if (DetectedIssue is not null) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
+      if (EventHistory is not null) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

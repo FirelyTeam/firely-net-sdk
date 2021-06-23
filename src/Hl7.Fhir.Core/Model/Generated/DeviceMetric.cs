@@ -428,6 +428,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => TypeElement,
+          "state" => StateElement,
+          "time" => TimeElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
+        if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+      }
+
     }
 
     /// <summary>
@@ -729,6 +750,41 @@ namespace Hl7.Fhir.Model
         if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", MeasurementPeriod);
         foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "type" => Type,
+        "unit" => Unit,
+        "source" => Source,
+        "parent" => Parent,
+        "operationalStatus" => OperationalStatusElement,
+        "color" => ColorElement,
+        "category" => CategoryElement,
+        "measurementPeriod" => MeasurementPeriod,
+        "calibration" => Calibration,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatusElement);
+      if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
+      if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+      if (MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",MeasurementPeriod);
+      if (Calibration is not null) yield return new KeyValuePair<string,object>("calibration",Calibration);
     }
 
   }

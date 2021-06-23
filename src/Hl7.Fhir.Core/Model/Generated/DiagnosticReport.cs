@@ -251,6 +251,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "comment" => CommentElement,
+          "link" => Link,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+      }
+
     }
 
     /// <summary>
@@ -717,6 +736,57 @@ namespace Hl7.Fhir.Model
         foreach (var elem in ConclusionCode) { if (elem != null) yield return new ElementValue("conclusionCode", elem); }
         foreach (var elem in PresentedForm) { if (elem != null) yield return new ElementValue("presentedForm", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "status" => StatusElement,
+        "category" => Category,
+        "code" => Code,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "effective" => Effective,
+        "issued" => IssuedElement,
+        "performer" => Performer,
+        "resultsInterpreter" => ResultsInterpreter,
+        "specimen" => Specimen,
+        "result" => Result,
+        "imagingStudy" => ImagingStudy,
+        "media" => Media,
+        "conclusion" => ConclusionElement,
+        "conclusionCode" => ConclusionCode,
+        "presentedForm" => PresentedForm,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ResultsInterpreter is not null) yield return new KeyValuePair<string,object>("resultsInterpreter",ResultsInterpreter);
+      if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
+      if (Result is not null) yield return new KeyValuePair<string,object>("result",Result);
+      if (ImagingStudy is not null) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
+      if (Media is not null) yield return new KeyValuePair<string,object>("media",Media);
+      if (ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",ConclusionElement);
+      if (ConclusionCode is not null) yield return new KeyValuePair<string,object>("conclusionCode",ConclusionCode);
+      if (PresentedForm is not null) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);
     }
 
   }

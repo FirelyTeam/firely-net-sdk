@@ -221,6 +221,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "coverage" => Coverage,
+          "priority" => PriorityElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+        if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      }
+
     }
 
     /// <summary>
@@ -365,6 +384,27 @@ namespace Hl7.Fhir.Model
           if (OnHoldElement != null) yield return new ElementValue("onHold", OnHoldElement);
           if (Period != null) yield return new ElementValue("period", Period);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "party" => Party,
+          "onHold" => OnHoldElement,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Party is not null) yield return new KeyValuePair<string,object>("party",Party);
+        if (OnHoldElement is not null) yield return new KeyValuePair<string,object>("onHold",OnHoldElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
     }
@@ -687,6 +727,43 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Guarantor) { if (elem != null) yield return new ElementValue("guarantor", elem); }
         if (PartOf != null) yield return new ElementValue("partOf", PartOf);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "type" => Type,
+        "name" => NameElement,
+        "subject" => Subject,
+        "servicePeriod" => ServicePeriod,
+        "coverage" => Coverage,
+        "owner" => Owner,
+        "description" => DescriptionElement,
+        "guarantor" => Guarantor,
+        "partOf" => PartOf,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (ServicePeriod is not null) yield return new KeyValuePair<string,object>("servicePeriod",ServicePeriod);
+      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Guarantor is not null) yield return new KeyValuePair<string,object>("guarantor",Guarantor);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
     }
 
   }

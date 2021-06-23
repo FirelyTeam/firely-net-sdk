@@ -185,6 +185,29 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "age" => Age,
+        "gender" => Gender,
+        "race" => Race,
+        "physiologicalCondition" => PhysiologicalCondition,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+      if (Gender is not null) yield return new KeyValuePair<string,object>("gender",Gender);
+      if (Race is not null) yield return new KeyValuePair<string,object>("race",Race);
+      if (PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",PhysiologicalCondition);
+    }
+
   }
 
 }

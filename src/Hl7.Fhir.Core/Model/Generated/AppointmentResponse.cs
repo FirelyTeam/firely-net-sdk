@@ -336,6 +336,37 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "appointment" => Appointment,
+        "start" => StartElement,
+        "end" => EndElement,
+        "participantType" => ParticipantType,
+        "actor" => Actor,
+        "participantStatus" => ParticipantStatusElement,
+        "comment" => CommentElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Appointment is not null) yield return new KeyValuePair<string,object>("appointment",Appointment);
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ParticipantType is not null) yield return new KeyValuePair<string,object>("participantType",ParticipantType);
+      if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",ParticipantStatusElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+    }
+
   }
 
 }

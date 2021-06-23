@@ -178,6 +178,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "fraction" => FractionElement,
+          "materialType" => MaterialType,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (FractionElement is not null) yield return new KeyValuePair<string,object>("fraction",FractionElement);
+        if (MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",MaterialType);
+      }
+
     }
 
     /// <summary>
@@ -412,6 +431,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "family" => Family,
+          "genus" => Genus,
+          "species" => Species,
+          "intraspecificType" => IntraspecificType,
+          "intraspecificDescription" => IntraspecificDescriptionElement,
+          "author" => Author,
+          "hybrid" => Hybrid,
+          "organismGeneral" => OrganismGeneral,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Family is not null) yield return new KeyValuePair<string,object>("family",Family);
+        if (Genus is not null) yield return new KeyValuePair<string,object>("genus",Genus);
+        if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
+        if (IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",IntraspecificType);
+        if (IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",IntraspecificDescriptionElement);
+        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+        if (Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",Hybrid);
+        if (OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",OrganismGeneral);
+      }
+
     }
 
     /// <summary>
@@ -535,6 +585,25 @@ namespace Hl7.Fhir.Model
           if (AuthorType != null) yield return new ElementValue("authorType", AuthorType);
           if (AuthorDescriptionElement != null) yield return new ElementValue("authorDescription", AuthorDescriptionElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "authorType" => AuthorType,
+          "authorDescription" => AuthorDescriptionElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",AuthorType);
+        if (AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",AuthorDescriptionElement);
       }
 
     }
@@ -770,6 +839,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "maternalOrganismId" => MaternalOrganismIdElement,
+          "maternalOrganismName" => MaternalOrganismNameElement,
+          "paternalOrganismId" => PaternalOrganismIdElement,
+          "paternalOrganismName" => PaternalOrganismNameElement,
+          "hybridType" => HybridType,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (MaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismId",MaternalOrganismIdElement);
+        if (MaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("maternalOrganismName",MaternalOrganismNameElement);
+        if (PaternalOrganismIdElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismId",PaternalOrganismIdElement);
+        if (PaternalOrganismNameElement is not null) yield return new KeyValuePair<string,object>("paternalOrganismName",PaternalOrganismNameElement);
+        if (HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",HybridType);
+      }
+
     }
 
     /// <summary>
@@ -913,6 +1007,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "kingdom" => Kingdom,
+          "phylum" => Phylum,
+          "class" => Class,
+          "order" => Order,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Kingdom is not null) yield return new KeyValuePair<string,object>("kingdom",Kingdom);
+        if (Phylum is not null) yield return new KeyValuePair<string,object>("phylum",Phylum);
+        if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
+        if (Order is not null) yield return new KeyValuePair<string,object>("order",Order);
+      }
+
     }
 
     /// <summary>
@@ -1018,6 +1135,25 @@ namespace Hl7.Fhir.Model
           if (Part != null) yield return new ElementValue("part", Part);
           if (PartLocation != null) yield return new ElementValue("partLocation", PartLocation);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "part" => Part,
+          "partLocation" => PartLocation,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Part is not null) yield return new KeyValuePair<string,object>("part",Part);
+        if (PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",PartLocation);
       }
 
     }
@@ -1370,6 +1506,47 @@ namespace Hl7.Fhir.Model
         if (Organism != null) yield return new ElementValue("organism", Organism);
         foreach (var elem in PartDescription) { if (elem != null) yield return new ElementValue("partDescription", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "sourceMaterialClass" => SourceMaterialClass,
+        "sourceMaterialType" => SourceMaterialType,
+        "sourceMaterialState" => SourceMaterialState,
+        "organismId" => OrganismId,
+        "organismName" => OrganismNameElement,
+        "parentSubstanceId" => ParentSubstanceId,
+        "parentSubstanceName" => ParentSubstanceNameElement,
+        "countryOfOrigin" => CountryOfOrigin,
+        "geographicalLocation" => GeographicalLocationElement,
+        "developmentStage" => DevelopmentStage,
+        "fractionDescription" => FractionDescription,
+        "organism" => Organism,
+        "partDescription" => PartDescription,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SourceMaterialClass is not null) yield return new KeyValuePair<string,object>("sourceMaterialClass",SourceMaterialClass);
+      if (SourceMaterialType is not null) yield return new KeyValuePair<string,object>("sourceMaterialType",SourceMaterialType);
+      if (SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",SourceMaterialState);
+      if (OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",OrganismId);
+      if (OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",OrganismNameElement);
+      if (ParentSubstanceId is not null) yield return new KeyValuePair<string,object>("parentSubstanceId",ParentSubstanceId);
+      if (ParentSubstanceNameElement is not null) yield return new KeyValuePair<string,object>("parentSubstanceName",ParentSubstanceNameElement);
+      if (CountryOfOrigin is not null) yield return new KeyValuePair<string,object>("countryOfOrigin",CountryOfOrigin);
+      if (GeographicalLocationElement is not null) yield return new KeyValuePair<string,object>("geographicalLocation",GeographicalLocationElement);
+      if (DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",DevelopmentStage);
+      if (FractionDescription is not null) yield return new KeyValuePair<string,object>("fractionDescription",FractionDescription);
+      if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
+      if (PartDescription is not null) yield return new KeyValuePair<string,object>("partDescription",PartDescription);
     }
 
   }

@@ -205,6 +205,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "relationtype" => RelationtypeElement,
+          "item" => Item,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RelationtypeElement is not null) yield return new KeyValuePair<string,object>("relationtype",RelationtypeElement);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -578,6 +597,47 @@ namespace Hl7.Fhir.Model
         foreach (var elem in AdditionalClassification) { if (elem != null) yield return new ElementValue("additionalClassification", elem); }
         foreach (var elem in RelatedEntry) { if (elem != null) yield return new ElementValue("relatedEntry", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "type" => Type,
+        "orderable" => OrderableElement,
+        "referencedItem" => ReferencedItem,
+        "additionalIdentifier" => AdditionalIdentifier,
+        "classification" => Classification,
+        "status" => StatusElement,
+        "validityPeriod" => ValidityPeriod,
+        "validTo" => ValidToElement,
+        "lastUpdated" => LastUpdatedElement,
+        "additionalCharacteristic" => AdditionalCharacteristic,
+        "additionalClassification" => AdditionalClassification,
+        "relatedEntry" => RelatedEntry,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (OrderableElement is not null) yield return new KeyValuePair<string,object>("orderable",OrderableElement);
+      if (ReferencedItem is not null) yield return new KeyValuePair<string,object>("referencedItem",ReferencedItem);
+      if (AdditionalIdentifier is not null) yield return new KeyValuePair<string,object>("additionalIdentifier",AdditionalIdentifier);
+      if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+      if (ValidToElement is not null) yield return new KeyValuePair<string,object>("validTo",ValidToElement);
+      if (LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",LastUpdatedElement);
+      if (AdditionalCharacteristic is not null) yield return new KeyValuePair<string,object>("additionalCharacteristic",AdditionalCharacteristic);
+      if (AdditionalClassification is not null) yield return new KeyValuePair<string,object>("additionalClassification",AdditionalClassification);
+      if (RelatedEntry is not null) yield return new KeyValuePair<string,object>("relatedEntry",RelatedEntry);
     }
 
   }

@@ -488,6 +488,51 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "requestIdentifier" => RequestIdentifier,
+        "identifier" => Identifier,
+        "module" => Module,
+        "status" => StatusElement,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "occurrenceDateTime" => OccurrenceDateTimeElement,
+        "performer" => Performer,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "note" => Note,
+        "evaluationMessage" => EvaluationMessage,
+        "outputParameters" => OutputParameters,
+        "result" => Result,
+        "dataRequirement" => DataRequirement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (RequestIdentifier is not null) yield return new KeyValuePair<string,object>("requestIdentifier",RequestIdentifier);
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Module is not null) yield return new KeyValuePair<string,object>("module",Module);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",OccurrenceDateTimeElement);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (EvaluationMessage is not null) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
+      if (OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",OutputParameters);
+      if (Result is not null) yield return new KeyValuePair<string,object>("result",Result);
+      if (DataRequirement is not null) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
+    }
+
   }
 
 }

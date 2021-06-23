@@ -246,6 +246,35 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "manufacturedDoseForm" => ManufacturedDoseForm,
+        "unitOfPresentation" => UnitOfPresentation,
+        "quantity" => Quantity,
+        "manufacturer" => Manufacturer,
+        "ingredient" => Ingredient,
+        "physicalCharacteristics" => PhysicalCharacteristics,
+        "otherCharacteristics" => OtherCharacteristics,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
+      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
+      if (OtherCharacteristics is not null) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+    }
+
   }
 
 }

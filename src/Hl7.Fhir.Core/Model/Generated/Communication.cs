@@ -146,6 +146,23 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "content" => Content,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+      }
+
     }
 
     /// <summary>
@@ -759,6 +776,67 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Payload) { if (elem != null) yield return new ElementValue("payload", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "instantiatesCanonical" => InstantiatesCanonicalElement,
+        "instantiatesUri" => InstantiatesUriElement,
+        "basedOn" => BasedOn,
+        "partOf" => PartOf,
+        "inResponseTo" => InResponseTo,
+        "status" => StatusElement,
+        "statusReason" => StatusReason,
+        "category" => Category,
+        "priority" => PriorityElement,
+        "medium" => Medium,
+        "subject" => Subject,
+        "topic" => Topic,
+        "about" => About,
+        "encounter" => Encounter,
+        "sent" => SentElement,
+        "received" => ReceivedElement,
+        "recipient" => Recipient,
+        "sender" => Sender,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "payload" => Payload,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (InResponseTo is not null) yield return new KeyValuePair<string,object>("inResponseTo",InResponseTo);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Medium is not null) yield return new KeyValuePair<string,object>("medium",Medium);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Topic is not null) yield return new KeyValuePair<string,object>("topic",Topic);
+      if (About is not null) yield return new KeyValuePair<string,object>("about",About);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (SentElement is not null) yield return new KeyValuePair<string,object>("sent",SentElement);
+      if (ReceivedElement is not null) yield return new KeyValuePair<string,object>("received",ReceivedElement);
+      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Payload is not null) yield return new KeyValuePair<string,object>("payload",Payload);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

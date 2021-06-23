@@ -147,6 +147,25 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "numerator" => Numerator,
+        "denominator" => Denominator,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Numerator is not null) yield return new KeyValuePair<string,object>("numerator",Numerator);
+      if (Denominator is not null) yield return new KeyValuePair<string,object>("denominator",Denominator);
+    }
+
   }
 
 }

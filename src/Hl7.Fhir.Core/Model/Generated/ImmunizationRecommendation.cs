@@ -391,6 +391,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "vaccineCode" => VaccineCode,
+          "targetDisease" => TargetDisease,
+          "contraindicatedVaccineCode" => ContraindicatedVaccineCode,
+          "forecastStatus" => ForecastStatus,
+          "forecastReason" => ForecastReason,
+          "dateCriterion" => DateCriterion,
+          "description" => DescriptionElement,
+          "series" => SeriesElement,
+          "doseNumber" => DoseNumber,
+          "seriesDoses" => SeriesDoses,
+          "supportingImmunization" => SupportingImmunization,
+          "supportingPatientInformation" => SupportingPatientInformation,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+        if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (ContraindicatedVaccineCode is not null) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
+        if (ForecastStatus is not null) yield return new KeyValuePair<string,object>("forecastStatus",ForecastStatus);
+        if (ForecastReason is not null) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
+        if (DateCriterion is not null) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
+        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+        if (SupportingImmunization is not null) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
+        if (SupportingPatientInformation is not null) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
+      }
+
     }
 
     /// <summary>
@@ -516,6 +555,25 @@ namespace Hl7.Fhir.Model
           if (Code != null) yield return new ElementValue("code", Code);
           if (ValueElement != null) yield return new ElementValue("value", ValueElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "value" => ValueElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
     }
@@ -690,6 +748,31 @@ namespace Hl7.Fhir.Model
         if (Authority != null) yield return new ElementValue("authority", Authority);
         foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "patient" => Patient,
+        "date" => DateElement,
+        "authority" => Authority,
+        "recommendation" => Recommendation,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+      if (Recommendation is not null) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
     }
 
   }

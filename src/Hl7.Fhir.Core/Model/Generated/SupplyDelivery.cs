@@ -219,6 +219,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "quantity" => Quantity,
+          "item" => Item,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -510,6 +529,43 @@ namespace Hl7.Fhir.Model
         if (Destination != null) yield return new ElementValue("destination", Destination);
         foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "partOf" => PartOf,
+        "status" => StatusElement,
+        "patient" => Patient,
+        "type" => Type,
+        "suppliedItem" => SuppliedItem,
+        "occurrence" => Occurrence,
+        "supplier" => Supplier,
+        "destination" => Destination,
+        "receiver" => Receiver,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (SuppliedItem is not null) yield return new KeyValuePair<string,object>("suppliedItem",SuppliedItem);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Supplier is not null) yield return new KeyValuePair<string,object>("supplier",Supplier);
+      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
     }
 
   }

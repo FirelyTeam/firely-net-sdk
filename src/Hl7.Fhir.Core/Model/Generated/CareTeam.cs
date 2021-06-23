@@ -241,6 +241,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "role" => Role,
+          "member" => Member,
+          "onBehalfOf" => OnBehalfOf,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Member is not null) yield return new KeyValuePair<string,object>("member",Member);
+        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -584,6 +607,47 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "category" => Category,
+        "name" => NameElement,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "period" => Period,
+        "participant" => Participant,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "managingOrganization" => ManagingOrganization,
+        "telecom" => Telecom,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

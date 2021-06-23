@@ -272,6 +272,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "outcome" => Outcome,
+          "probability" => Probability,
+          "qualitativeRisk" => QualitativeRisk,
+          "relativeRisk" => RelativeRiskElement,
+          "when" => When,
+          "rationale" => RationaleElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (Probability is not null) yield return new KeyValuePair<string,object>("probability",Probability);
+        if (QualitativeRisk is not null) yield return new KeyValuePair<string,object>("qualitativeRisk",QualitativeRisk);
+        if (RelativeRiskElement is not null) yield return new KeyValuePair<string,object>("relativeRisk",RelativeRiskElement);
+        if (When is not null) yield return new KeyValuePair<string,object>("when",When);
+        if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
+      }
+
     }
 
     /// <summary>
@@ -697,6 +724,55 @@ namespace Hl7.Fhir.Model
         if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "parent" => Parent,
+        "status" => StatusElement,
+        "method" => Method,
+        "code" => Code,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "occurrence" => Occurrence,
+        "condition" => Condition,
+        "performer" => Performer,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "basis" => Basis,
+        "prediction" => Prediction,
+        "mitigation" => MitigationElement,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Basis is not null) yield return new KeyValuePair<string,object>("basis",Basis);
+      if (Prediction is not null) yield return new KeyValuePair<string,object>("prediction",Prediction);
+      if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

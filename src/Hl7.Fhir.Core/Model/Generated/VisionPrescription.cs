@@ -617,6 +617,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "product" => Product,
+          "eye" => EyeElement,
+          "sphere" => SphereElement,
+          "cylinder" => CylinderElement,
+          "axis" => AxisElement,
+          "prism" => Prism,
+          "add" => AddElement,
+          "power" => PowerElement,
+          "backCurve" => BackCurveElement,
+          "diameter" => DiameterElement,
+          "duration" => Duration,
+          "color" => ColorElement,
+          "brand" => BrandElement,
+          "note" => Note,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+        if (EyeElement is not null) yield return new KeyValuePair<string,object>("eye",EyeElement);
+        if (SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",SphereElement);
+        if (CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",CylinderElement);
+        if (AxisElement is not null) yield return new KeyValuePair<string,object>("axis",AxisElement);
+        if (Prism is not null) yield return new KeyValuePair<string,object>("prism",Prism);
+        if (AddElement is not null) yield return new KeyValuePair<string,object>("add",AddElement);
+        if (PowerElement is not null) yield return new KeyValuePair<string,object>("power",PowerElement);
+        if (BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",BackCurveElement);
+        if (DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",DiameterElement);
+        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+        if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
+        if (BrandElement is not null) yield return new KeyValuePair<string,object>("brand",BrandElement);
+        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -761,6 +804,25 @@ namespace Hl7.Fhir.Model
           if (AmountElement != null) yield return new ElementValue("amount", AmountElement);
           if (BaseElement != null) yield return new ElementValue("base", BaseElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "amount" => AmountElement,
+          "base" => BaseElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
+        if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
       }
 
     }
@@ -1031,6 +1093,37 @@ namespace Hl7.Fhir.Model
         if (Prescriber != null) yield return new ElementValue("prescriber", Prescriber);
         foreach (var elem in LensSpecification) { if (elem != null) yield return new ElementValue("lensSpecification", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "created" => CreatedElement,
+        "patient" => Patient,
+        "encounter" => Encounter,
+        "dateWritten" => DateWrittenElement,
+        "prescriber" => Prescriber,
+        "lensSpecification" => LensSpecification,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
+      if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
+      if (LensSpecification is not null) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
     }
 
   }

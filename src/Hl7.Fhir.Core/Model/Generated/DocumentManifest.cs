@@ -162,6 +162,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "identifier" => Identifier,
+          "ref" => Ref,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Ref is not null) yield return new KeyValuePair<string,object>("ref",Ref);
+      }
+
     }
 
     /// <summary>
@@ -521,6 +540,45 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
         foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "masterIdentifier" => MasterIdentifier,
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "type" => Type,
+        "subject" => Subject,
+        "created" => CreatedElement,
+        "author" => Author,
+        "recipient" => Recipient,
+        "source" => SourceElement,
+        "description" => DescriptionElement,
+        "content" => Content,
+        "related" => Related,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (MasterIdentifier is not null) yield return new KeyValuePair<string,object>("masterIdentifier",MasterIdentifier);
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+      if (Related is not null) yield return new KeyValuePair<string,object>("related",Related);
     }
 
   }

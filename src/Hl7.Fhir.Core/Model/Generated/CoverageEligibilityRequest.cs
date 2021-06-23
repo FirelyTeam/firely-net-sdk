@@ -252,6 +252,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "sequence" => SequenceElement,
+          "information" => Information,
+          "appliesToAll" => AppliesToAllElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (Information is not null) yield return new KeyValuePair<string,object>("information",Information);
+        if (AppliesToAllElement is not null) yield return new KeyValuePair<string,object>("appliesToAll",AppliesToAllElement);
+      }
+
     }
 
     /// <summary>
@@ -414,6 +435,27 @@ namespace Hl7.Fhir.Model
           if (Coverage != null) yield return new ElementValue("coverage", Coverage);
           if (BusinessArrangementElement != null) yield return new ElementValue("businessArrangement", BusinessArrangementElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "focal" => FocalElement,
+          "coverage" => Coverage,
+          "businessArrangement" => BusinessArrangementElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (FocalElement is not null) yield return new KeyValuePair<string,object>("focal",FocalElement);
+        if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+        if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
       }
 
     }
@@ -695,6 +737,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "supportingInfoSequence" => SupportingInfoSequenceElement,
+          "category" => Category,
+          "productOrService" => ProductOrService,
+          "modifier" => Modifier,
+          "provider" => Provider,
+          "quantity" => Quantity,
+          "unitPrice" => UnitPrice,
+          "facility" => Facility,
+          "diagnosis" => Diagnosis,
+          "detail" => Detail,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SupportingInfoSequenceElement is not null) yield return new KeyValuePair<string,object>("supportingInfoSequence",SupportingInfoSequenceElement);
+        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+        if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
+        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
+        if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
+        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -785,6 +862,23 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Diagnosis != null) yield return new ElementValue("diagnosis", Diagnosis);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "diagnosis" => Diagnosis,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
       }
 
     }
@@ -1172,6 +1266,49 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Insurance) { if (elem != null) yield return new ElementValue("insurance", elem); }
         foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "priority" => Priority,
+        "purpose" => PurposeElement,
+        "patient" => Patient,
+        "serviced" => Serviced,
+        "created" => CreatedElement,
+        "enterer" => Enterer,
+        "provider" => Provider,
+        "insurer" => Insurer,
+        "facility" => Facility,
+        "supportingInfo" => SupportingInfo,
+        "insurance" => Insurance,
+        "item" => Item,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+      if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
+      if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
+      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

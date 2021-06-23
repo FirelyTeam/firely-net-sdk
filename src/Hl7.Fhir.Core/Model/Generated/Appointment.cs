@@ -355,6 +355,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => Type,
+          "actor" => Actor,
+          "required" => RequiredElement,
+          "status" => StatusElement,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -990,6 +1015,65 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
         foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "cancelationReason" => CancelationReason,
+        "serviceCategory" => ServiceCategory,
+        "serviceType" => ServiceType,
+        "specialty" => Specialty,
+        "appointmentType" => AppointmentType,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "priority" => PriorityElement,
+        "description" => DescriptionElement,
+        "supportingInformation" => SupportingInformation,
+        "start" => StartElement,
+        "end" => EndElement,
+        "minutesDuration" => MinutesDurationElement,
+        "slot" => Slot,
+        "created" => CreatedElement,
+        "comment" => CommentElement,
+        "patientInstruction" => PatientInstructionElement,
+        "basedOn" => BasedOn,
+        "participant" => Participant,
+        "requestedPeriod" => RequestedPeriod,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CancelationReason is not null) yield return new KeyValuePair<string,object>("cancelationReason",CancelationReason);
+      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",MinutesDurationElement);
+      if (Slot is not null) yield return new KeyValuePair<string,object>("slot",Slot);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (RequestedPeriod is not null) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
     }
 
   }

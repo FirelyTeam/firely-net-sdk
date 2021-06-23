@@ -655,6 +655,65 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "partOf" => PartOf,
+        "status" => StatusElement,
+        "type" => Type,
+        "modality" => Modality,
+        "view" => View,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "created" => Created,
+        "issued" => IssuedElement,
+        "operator" => Operator,
+        "reasonCode" => ReasonCode,
+        "bodySite" => BodySite,
+        "deviceName" => DeviceNameElement,
+        "device" => Device,
+        "height" => HeightElement,
+        "width" => WidthElement,
+        "frames" => FramesElement,
+        "duration" => DurationElement,
+        "content" => Content,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
+      if (View is not null) yield return new KeyValuePair<string,object>("view",View);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Created is not null) yield return new KeyValuePair<string,object>("created",Created);
+      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
+      if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (DeviceNameElement is not null) yield return new KeyValuePair<string,object>("deviceName",DeviceNameElement);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
+      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
+      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
+      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
+      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
   }
 
 }

@@ -251,6 +251,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "low" => Low,
+          "high" => High,
+          "type" => Type,
+          "appliesTo" => AppliesTo,
+          "age" => Age,
+          "text" => TextElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Low is not null) yield return new KeyValuePair<string,object>("low",Low);
+        if (High is not null) yield return new KeyValuePair<string,object>("high",High);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (AppliesTo is not null) yield return new KeyValuePair<string,object>("appliesTo",AppliesTo);
+        if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+        if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      }
+
     }
 
     /// <summary>
@@ -415,6 +442,31 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Interpretation) { if (elem != null) yield return new ElementValue("interpretation", elem); }
           foreach (var elem in ReferenceRange) { if (elem != null) yield return new ElementValue("referenceRange", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "value" => Value,
+          "dataAbsentReason" => DataAbsentReason,
+          "interpretation" => Interpretation,
+          "referenceRange" => ReferenceRange,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
+        if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
+        if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
       }
 
     }
@@ -980,6 +1032,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in DerivedFrom) { if (elem != null) yield return new ElementValue("derivedFrom", elem); }
         foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "basedOn" => BasedOn,
+        "partOf" => PartOf,
+        "status" => StatusElement,
+        "category" => Category,
+        "code" => Code,
+        "subject" => Subject,
+        "focus" => Focus,
+        "encounter" => Encounter,
+        "effective" => Effective,
+        "issued" => IssuedElement,
+        "performer" => Performer,
+        "value" => Value,
+        "dataAbsentReason" => DataAbsentReason,
+        "interpretation" => Interpretation,
+        "note" => Note,
+        "bodySite" => BodySite,
+        "method" => Method,
+        "specimen" => Specimen,
+        "device" => Device,
+        "referenceRange" => ReferenceRange,
+        "hasMember" => HasMember,
+        "derivedFrom" => DerivedFrom,
+        "component" => Component,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
+      if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+      if (HasMember is not null) yield return new KeyValuePair<string,object>("hasMember",HasMember);
+      if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Component is not null) yield return new KeyValuePair<string,object>("component",Component);
     }
 
   }

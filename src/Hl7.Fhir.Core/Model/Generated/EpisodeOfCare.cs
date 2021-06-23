@@ -233,6 +233,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "status" => StatusElement,
+          "period" => Period,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -377,6 +396,27 @@ namespace Hl7.Fhir.Model
           if (Role != null) yield return new ElementValue("role", Role);
           if (RankElement != null) yield return new ElementValue("rank", RankElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "condition" => Condition,
+          "role" => Role,
+          "rank" => RankElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
       }
 
     }
@@ -691,6 +731,45 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Team) { if (elem != null) yield return new ElementValue("team", elem); }
         foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "statusHistory" => StatusHistory,
+        "type" => Type,
+        "diagnosis" => Diagnosis,
+        "patient" => Patient,
+        "managingOrganization" => ManagingOrganization,
+        "period" => Period,
+        "referralRequest" => ReferralRequest,
+        "careManager" => CareManager,
+        "team" => Team,
+        "account" => Account,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusHistory is not null) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (ReferralRequest is not null) yield return new KeyValuePair<string,object>("referralRequest",ReferralRequest);
+      if (CareManager is not null) yield return new KeyValuePair<string,object>("careManager",CareManager);
+      if (Team is not null) yield return new KeyValuePair<string,object>("team",Team);
+      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
     }
 
   }

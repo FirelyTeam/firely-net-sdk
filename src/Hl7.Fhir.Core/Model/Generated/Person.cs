@@ -216,6 +216,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "target" => Target,
+          "assurance" => AssuranceElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (AssuranceElement is not null) yield return new KeyValuePair<string,object>("assurance",AssuranceElement);
+      }
+
     }
 
     /// <summary>
@@ -514,6 +533,41 @@ namespace Hl7.Fhir.Model
         if (ActiveElement != null) yield return new ElementValue("active", ActiveElement);
         foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "name" => Name,
+        "telecom" => Telecom,
+        "gender" => GenderElement,
+        "birthDate" => BirthDateElement,
+        "address" => Address,
+        "photo" => Photo,
+        "managingOrganization" => ManagingOrganization,
+        "active" => ActiveElement,
+        "link" => Link,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+      if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
+      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
     }
 
   }

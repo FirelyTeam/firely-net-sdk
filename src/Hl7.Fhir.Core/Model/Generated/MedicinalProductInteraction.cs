@@ -146,6 +146,23 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "item" => Item,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -350,6 +367,35 @@ namespace Hl7.Fhir.Model
         if (Incidence != null) yield return new ElementValue("incidence", Incidence);
         if (Management != null) yield return new ElementValue("management", Management);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "subject" => Subject,
+        "description" => DescriptionElement,
+        "interactant" => Interactant,
+        "type" => Type,
+        "effect" => Effect,
+        "incidence" => Incidence,
+        "management" => Management,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Interactant is not null) yield return new KeyValuePair<string,object>("interactant",Interactant);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
+      if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
+      if (Management is not null) yield return new KeyValuePair<string,object>("management",Management);
     }
 
   }

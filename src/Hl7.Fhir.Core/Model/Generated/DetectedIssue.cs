@@ -192,6 +192,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "detail" => Detail,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -336,6 +355,27 @@ namespace Hl7.Fhir.Model
           if (DateElement != null) yield return new ElementValue("date", DateElement);
           if (Author != null) yield return new ElementValue("author", Author);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "action" => Action,
+          "date" => DateElement,
+          "author" => Author,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       }
 
     }
@@ -697,6 +737,45 @@ namespace Hl7.Fhir.Model
         if (ReferenceElement != null) yield return new ElementValue("reference", ReferenceElement);
         foreach (var elem in Mitigation) { if (elem != null) yield return new ElementValue("mitigation", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "code" => Code,
+        "severity" => SeverityElement,
+        "patient" => Patient,
+        "identified" => Identified,
+        "author" => Author,
+        "implicated" => Implicated,
+        "evidence" => Evidence,
+        "detail" => DetailElement,
+        "reference" => ReferenceElement,
+        "mitigation" => Mitigation,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",SeverityElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Identified is not null) yield return new KeyValuePair<string,object>("identified",Identified);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Implicated is not null) yield return new KeyValuePair<string,object>("implicated",Implicated);
+      if (Evidence is not null) yield return new KeyValuePair<string,object>("evidence",Evidence);
+      if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
+      if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+      if (Mitigation is not null) yield return new KeyValuePair<string,object>("mitigation",Mitigation);
     }
 
   }

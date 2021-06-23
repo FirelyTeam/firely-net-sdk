@@ -270,6 +270,31 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "outcome" => Outcome,
+          "contributedToDeath" => ContributedToDeathElement,
+          "onset" => Onset,
+          "note" => Note,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (ContributedToDeathElement is not null) yield return new KeyValuePair<string,object>("contributedToDeath",ContributedToDeathElement);
+        if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
+        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -779,6 +804,57 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "instantiatesCanonical" => InstantiatesCanonicalElement,
+        "instantiatesUri" => InstantiatesUriElement,
+        "status" => StatusElement,
+        "dataAbsentReason" => DataAbsentReason,
+        "patient" => Patient,
+        "date" => DateElement,
+        "name" => NameElement,
+        "relationship" => Relationship,
+        "sex" => Sex,
+        "born" => Born,
+        "age" => Age,
+        "estimatedAge" => EstimatedAgeElement,
+        "deceased" => Deceased,
+        "reasonCode" => ReasonCode,
+        "reasonReference" => ReasonReference,
+        "note" => Note,
+        "condition" => Condition,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Sex is not null) yield return new KeyValuePair<string,object>("sex",Sex);
+      if (Born is not null) yield return new KeyValuePair<string,object>("born",Born);
+      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+      if (EstimatedAgeElement is not null) yield return new KeyValuePair<string,object>("estimatedAge",EstimatedAgeElement);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
     }
 
   }

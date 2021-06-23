@@ -316,6 +316,35 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "type" => Type,
+        "when" => WhenElement,
+        "who" => Who,
+        "onBehalfOf" => OnBehalfOf,
+        "targetFormat" => TargetFormatElement,
+        "sigFormat" => SigFormatElement,
+        "data" => DataElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (WhenElement is not null) yield return new KeyValuePair<string,object>("when",WhenElement);
+      if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
+      if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+      if (TargetFormatElement is not null) yield return new KeyValuePair<string,object>("targetFormat",TargetFormatElement);
+      if (SigFormatElement is not null) yield return new KeyValuePair<string,object>("sigFormat",SigFormatElement);
+      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
+    }
+
   }
 
 }

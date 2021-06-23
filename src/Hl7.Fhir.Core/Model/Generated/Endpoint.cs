@@ -456,6 +456,43 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "connectionType" => ConnectionType,
+        "name" => NameElement,
+        "managingOrganization" => ManagingOrganization,
+        "contact" => Contact,
+        "period" => Period,
+        "payloadType" => PayloadType,
+        "payloadMimeType" => PayloadMimeTypeElement,
+        "address" => AddressElement,
+        "header" => HeaderElement,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ConnectionType is not null) yield return new KeyValuePair<string,object>("connectionType",ConnectionType);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (PayloadType is not null) yield return new KeyValuePair<string,object>("payloadType",PayloadType);
+      if (PayloadMimeTypeElement is not null) yield return new KeyValuePair<string,object>("payloadMimeType",PayloadMimeTypeElement);
+      if (AddressElement is not null) yield return new KeyValuePair<string,object>("address",AddressElement);
+      if (HeaderElement is not null) yield return new KeyValuePair<string,object>("header",HeaderElement);
+    }
+
   }
 
 }

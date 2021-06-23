@@ -160,6 +160,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "lowLimit" => LowLimit,
+          "highLimit" => HighLimit,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LowLimit is not null) yield return new KeyValuePair<string,object>("lowLimit",LowLimit);
+        if (HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",HighLimit);
+      }
+
     }
 
     /// <summary>
@@ -308,6 +327,29 @@ namespace Hl7.Fhir.Model
         if (AmountTextElement != null) yield return new ElementValue("amountText", AmountTextElement);
         if (ReferenceRange != null) yield return new ElementValue("referenceRange", ReferenceRange);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "amount" => Amount,
+        "amountType" => AmountType,
+        "amountText" => AmountTextElement,
+        "referenceRange" => ReferenceRange,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
+      if (AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",AmountTextElement);
+      if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
     }
 
   }

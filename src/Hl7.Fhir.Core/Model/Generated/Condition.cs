@@ -273,6 +273,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "summary" => Summary,
+          "assessment" => Assessment,
+          "type" => Type,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Summary is not null) yield return new KeyValuePair<string,object>("summary",Summary);
+        if (Assessment is not null) yield return new KeyValuePair<string,object>("assessment",Assessment);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
     }
 
     /// <summary>
@@ -382,6 +403,25 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
           foreach (var elem in Detail) { if (elem != null) yield return new ElementValue("detail", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "code" => Code,
+          "detail" => Detail,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -783,6 +823,55 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "clinicalStatus" => ClinicalStatus,
+        "verificationStatus" => VerificationStatus,
+        "category" => Category,
+        "severity" => Severity,
+        "code" => Code,
+        "bodySite" => BodySite,
+        "subject" => Subject,
+        "encounter" => Encounter,
+        "onset" => Onset,
+        "abatement" => Abatement,
+        "recordedDate" => RecordedDateElement,
+        "recorder" => Recorder,
+        "asserter" => Asserter,
+        "stage" => Stage,
+        "evidence" => Evidence,
+        "note" => Note,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",ClinicalStatus);
+      if (VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",VerificationStatus);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Severity is not null) yield return new KeyValuePair<string,object>("severity",Severity);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
+      if (Abatement is not null) yield return new KeyValuePair<string,object>("abatement",Abatement);
+      if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
+      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
+      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
+      if (Stage is not null) yield return new KeyValuePair<string,object>("stage",Stage);
+      if (Evidence is not null) yield return new KeyValuePair<string,object>("evidence",Evidence);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

@@ -254,6 +254,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "numberOfStudies" => NumberOfStudiesElement,
+          "numberOfParticipants" => NumberOfParticipantsElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (NumberOfStudiesElement is not null) yield return new KeyValuePair<string,object>("numberOfStudies",NumberOfStudiesElement);
+        if (NumberOfParticipantsElement is not null) yield return new KeyValuePair<string,object>("numberOfParticipants",NumberOfParticipantsElement);
+      }
+
     }
 
     /// <summary>
@@ -435,6 +456,29 @@ namespace Hl7.Fhir.Model
           if (VariantState != null) yield return new ElementValue("variantState", VariantState);
           if (RiskEvidenceSynthesis != null) yield return new ElementValue("riskEvidenceSynthesis", RiskEvidenceSynthesis);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "exposureState" => ExposureState_Element,
+          "variantState" => VariantState,
+          "riskEvidenceSynthesis" => RiskEvidenceSynthesis,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (ExposureState_Element is not null) yield return new KeyValuePair<string,object>("exposureState",ExposureState_Element);
+        if (VariantState is not null) yield return new KeyValuePair<string,object>("variantState",VariantState);
+        if (RiskEvidenceSynthesis is not null) yield return new KeyValuePair<string,object>("riskEvidenceSynthesis",RiskEvidenceSynthesis);
       }
 
     }
@@ -653,6 +697,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "description" => DescriptionElement,
+          "type" => Type,
+          "variantState" => VariantState,
+          "value" => ValueElement,
+          "unitOfMeasure" => UnitOfMeasure,
+          "precisionEstimate" => PrecisionEstimate,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (VariantState is not null) yield return new KeyValuePair<string,object>("variantState",VariantState);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if (UnitOfMeasure is not null) yield return new KeyValuePair<string,object>("unitOfMeasure",UnitOfMeasure);
+        if (PrecisionEstimate is not null) yield return new KeyValuePair<string,object>("precisionEstimate",PrecisionEstimate);
+      }
+
     }
 
     /// <summary>
@@ -850,6 +921,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => Type,
+          "level" => LevelElement,
+          "from" => FromElement,
+          "to" => ToElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (LevelElement is not null) yield return new KeyValuePair<string,object>("level",LevelElement);
+        if (FromElement is not null) yield return new KeyValuePair<string,object>("from",FromElement);
+        if (ToElement is not null) yield return new KeyValuePair<string,object>("to",ToElement);
+      }
+
     }
 
     /// <summary>
@@ -978,6 +1072,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "rating" => Rating,
+          "note" => Note,
+          "certaintySubcomponent" => CertaintySubcomponent,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Rating is not null) yield return new KeyValuePair<string,object>("rating",Rating);
+        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+        if (CertaintySubcomponent is not null) yield return new KeyValuePair<string,object>("certaintySubcomponent",CertaintySubcomponent);
+      }
+
     }
 
     /// <summary>
@@ -1103,6 +1218,27 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Rating) { if (elem != null) yield return new ElementValue("rating", elem); }
           foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => Type,
+          "rating" => Rating,
+          "note" => Note,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Rating is not null) yield return new KeyValuePair<string,object>("rating",Rating);
+        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
       }
 
     }
@@ -1945,6 +2081,87 @@ namespace Hl7.Fhir.Model
         foreach (var elem in EffectEstimate) { if (elem != null) yield return new ElementValue("effectEstimate", elem); }
         foreach (var elem in Certainty) { if (elem != null) yield return new ElementValue("certainty", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "url" => UrlElement,
+        "identifier" => Identifier,
+        "version" => VersionElement,
+        "name" => NameElement,
+        "title" => TitleElement,
+        "status" => StatusElement,
+        "date" => DateElement,
+        "publisher" => PublisherElement,
+        "contact" => Contact,
+        "description" => Description,
+        "note" => Note,
+        "useContext" => UseContext,
+        "jurisdiction" => Jurisdiction,
+        "copyright" => Copyright,
+        "approvalDate" => ApprovalDateElement,
+        "lastReviewDate" => LastReviewDateElement,
+        "effectivePeriod" => EffectivePeriod,
+        "topic" => Topic,
+        "author" => Author,
+        "editor" => Editor,
+        "reviewer" => Reviewer,
+        "endorser" => Endorser,
+        "relatedArtifact" => RelatedArtifact,
+        "synthesisType" => SynthesisType,
+        "studyType" => StudyType,
+        "population" => Population,
+        "exposure" => Exposure,
+        "exposureAlternative" => ExposureAlternative,
+        "outcome" => Outcome,
+        "sampleSize" => SampleSize,
+        "resultsByExposure" => ResultsByExposure,
+        "effectEstimate" => EffectEstimate,
+        "certainty" => Certainty,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
+      if (Topic is not null) yield return new KeyValuePair<string,object>("topic",Topic);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Editor is not null) yield return new KeyValuePair<string,object>("editor",Editor);
+      if (Reviewer is not null) yield return new KeyValuePair<string,object>("reviewer",Reviewer);
+      if (Endorser is not null) yield return new KeyValuePair<string,object>("endorser",Endorser);
+      if (RelatedArtifact is not null) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (SynthesisType is not null) yield return new KeyValuePair<string,object>("synthesisType",SynthesisType);
+      if (StudyType is not null) yield return new KeyValuePair<string,object>("studyType",StudyType);
+      if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+      if (Exposure is not null) yield return new KeyValuePair<string,object>("exposure",Exposure);
+      if (ExposureAlternative is not null) yield return new KeyValuePair<string,object>("exposureAlternative",ExposureAlternative);
+      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (SampleSize is not null) yield return new KeyValuePair<string,object>("sampleSize",SampleSize);
+      if (ResultsByExposure is not null) yield return new KeyValuePair<string,object>("resultsByExposure",ResultsByExposure);
+      if (EffectEstimate is not null) yield return new KeyValuePair<string,object>("effectEstimate",EffectEstimate);
+      if (Certainty is not null) yield return new KeyValuePair<string,object>("certainty",Certainty);
     }
 
   }

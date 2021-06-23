@@ -228,6 +228,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "item" => Item,
+          "isActive" => IsActiveElement,
+          "strength" => Strength,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
+        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+      }
+
     }
 
     /// <summary>
@@ -369,6 +390,25 @@ namespace Hl7.Fhir.Model
           if (LotNumberElement != null) yield return new ElementValue("lotNumber", LotNumberElement);
           if (ExpirationDateElement != null) yield return new ElementValue("expirationDate", ExpirationDateElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "lotNumber" => LotNumberElement,
+          "expirationDate" => ExpirationDateElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+        if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
       }
 
     }
@@ -594,6 +634,37 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
         if (Batch != null) yield return new ElementValue("batch", Batch);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "code" => Code,
+        "status" => StatusElement,
+        "manufacturer" => Manufacturer,
+        "form" => Form,
+        "amount" => Amount,
+        "ingredient" => Ingredient,
+        "batch" => Batch,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
+      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Batch is not null) yield return new KeyValuePair<string,object>("batch",Batch);
     }
 
   }

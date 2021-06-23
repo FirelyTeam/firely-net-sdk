@@ -246,6 +246,27 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "measure" => Measure,
+          "detail" => Detail,
+          "due" => Due,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Due is not null) yield return new KeyValuePair<string,object>("due",Due);
+      }
+
     }
 
     /// <summary>
@@ -665,6 +686,53 @@ namespace Hl7.Fhir.Model
         foreach (var elem in OutcomeCode) { if (elem != null) yield return new ElementValue("outcomeCode", elem); }
         foreach (var elem in OutcomeReference) { if (elem != null) yield return new ElementValue("outcomeReference", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "lifecycleStatus" => LifecycleStatusElement,
+        "achievementStatus" => AchievementStatus,
+        "category" => Category,
+        "priority" => Priority,
+        "description" => Description,
+        "subject" => Subject,
+        "start" => Start,
+        "target" => Target,
+        "statusDate" => StatusDateElement,
+        "statusReason" => StatusReasonElement,
+        "expressedBy" => ExpressedBy,
+        "addresses" => Addresses,
+        "note" => Note,
+        "outcomeCode" => OutcomeCode,
+        "outcomeReference" => OutcomeReference,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (LifecycleStatusElement is not null) yield return new KeyValuePair<string,object>("lifecycleStatus",LifecycleStatusElement);
+      if (AchievementStatus is not null) yield return new KeyValuePair<string,object>("achievementStatus",AchievementStatus);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
+      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
+      if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
+      if (ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",ExpressedBy);
+      if (Addresses is not null) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (OutcomeCode is not null) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
+      if (OutcomeReference is not null) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
     }
 
   }

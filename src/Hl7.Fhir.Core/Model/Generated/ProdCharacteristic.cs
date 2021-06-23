@@ -366,6 +366,43 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "height" => Height,
+        "width" => Width,
+        "depth" => Depth,
+        "weight" => Weight,
+        "nominalVolume" => NominalVolume,
+        "externalDiameter" => ExternalDiameter,
+        "shape" => ShapeElement,
+        "color" => ColorElement,
+        "imprint" => ImprintElement,
+        "image" => Image,
+        "scoring" => Scoring,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Height is not null) yield return new KeyValuePair<string,object>("height",Height);
+      if (Width is not null) yield return new KeyValuePair<string,object>("width",Width);
+      if (Depth is not null) yield return new KeyValuePair<string,object>("depth",Depth);
+      if (Weight is not null) yield return new KeyValuePair<string,object>("weight",Weight);
+      if (NominalVolume is not null) yield return new KeyValuePair<string,object>("nominalVolume",NominalVolume);
+      if (ExternalDiameter is not null) yield return new KeyValuePair<string,object>("externalDiameter",ExternalDiameter);
+      if (ShapeElement is not null) yield return new KeyValuePair<string,object>("shape",ShapeElement);
+      if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
+      if (ImprintElement is not null) yield return new KeyValuePair<string,object>("imprint",ImprintElement);
+      if (Image is not null) yield return new KeyValuePair<string,object>("image",Image);
+      if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
+    }
+
   }
 
 }

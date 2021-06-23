@@ -324,6 +324,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "subunit" => SubunitElement,
+          "sequence" => SequenceElement,
+          "length" => LengthElement,
+          "sequenceAttachment" => SequenceAttachment,
+          "fivePrime" => FivePrime,
+          "threePrime" => ThreePrime,
+          "linkage" => Linkage,
+          "sugar" => Sugar,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
+        if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
+        if (FivePrime is not null) yield return new KeyValuePair<string,object>("fivePrime",FivePrime);
+        if (ThreePrime is not null) yield return new KeyValuePair<string,object>("threePrime",ThreePrime);
+        if (Linkage is not null) yield return new KeyValuePair<string,object>("linkage",Linkage);
+        if (Sugar is not null) yield return new KeyValuePair<string,object>("sugar",Sugar);
+      }
+
     }
 
     /// <summary>
@@ -521,6 +552,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "connectivity" => ConnectivityElement,
+          "identifier" => Identifier,
+          "name" => NameElement,
+          "residueSite" => ResidueSiteElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ConnectivityElement is not null) yield return new KeyValuePair<string,object>("connectivity",ConnectivityElement);
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
+      }
+
     }
 
     /// <summary>
@@ -680,6 +734,27 @@ namespace Hl7.Fhir.Model
           if (NameElement != null) yield return new ElementValue("name", NameElement);
           if (ResidueSiteElement != null) yield return new ElementValue("residueSite", ResidueSiteElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "identifier" => Identifier,
+          "name" => NameElement,
+          "residueSite" => ResidueSiteElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
       }
 
     }
@@ -865,6 +940,31 @@ namespace Hl7.Fhir.Model
         if (OligoNucleotideType != null) yield return new ElementValue("oligoNucleotideType", OligoNucleotideType);
         foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "sequenceType" => SequenceType,
+        "numberOfSubunits" => NumberOfSubunitsElement,
+        "areaOfHybridisation" => AreaOfHybridisationElement,
+        "oligoNucleotideType" => OligoNucleotideType,
+        "subunit" => Subunit,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
+      if (AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",AreaOfHybridisationElement);
+      if (OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",OligoNucleotideType);
+      if (Subunit is not null) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

@@ -365,6 +365,45 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "active" => ActiveElement,
+        "period" => Period,
+        "organization" => Organization,
+        "participatingOrganization" => ParticipatingOrganization,
+        "network" => Network,
+        "code" => Code,
+        "specialty" => Specialty,
+        "location" => Location,
+        "healthcareService" => HealthcareService,
+        "telecom" => Telecom,
+        "endpoint" => Endpoint,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+      if (ParticipatingOrganization is not null) yield return new KeyValuePair<string,object>("participatingOrganization",ParticipatingOrganization);
+      if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (HealthcareService is not null) yield return new KeyValuePair<string,object>("healthcareService",HealthcareService);
+      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
   }
 
 }

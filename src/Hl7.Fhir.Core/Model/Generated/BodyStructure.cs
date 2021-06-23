@@ -297,6 +297,37 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "active" => ActiveElement,
+        "morphology" => Morphology,
+        "location" => Location,
+        "locationQualifier" => LocationQualifier,
+        "description" => DescriptionElement,
+        "image" => Image,
+        "patient" => Patient,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (LocationQualifier is not null) yield return new KeyValuePair<string,object>("locationQualifier",LocationQualifier);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Image is not null) yield return new KeyValuePair<string,object>("image",Image);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+    }
+
   }
 
 }

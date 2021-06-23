@@ -336,6 +336,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "customaryUnit" => CustomaryUnit,
+          "unit" => Unit,
+          "conversionFactor" => ConversionFactorElement,
+          "decimalPrecision" => DecimalPrecisionElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CustomaryUnit is not null) yield return new KeyValuePair<string,object>("customaryUnit",CustomaryUnit);
+        if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
+        if (ConversionFactorElement is not null) yield return new KeyValuePair<string,object>("conversionFactor",ConversionFactorElement);
+        if (DecimalPrecisionElement is not null) yield return new KeyValuePair<string,object>("decimalPrecision",DecimalPrecisionElement);
+      }
+
     }
 
     /// <summary>
@@ -606,6 +629,37 @@ namespace Hl7.Fhir.Model
           if (GestationalAge != null) yield return new ElementValue("gestationalAge", GestationalAge);
           if (ConditionElement != null) yield return new ElementValue("condition", ConditionElement);
         }
+      }
+
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "category" => CategoryElement,
+          "range" => Range,
+          "context" => Context,
+          "appliesTo" => AppliesTo,
+          "gender" => GenderElement,
+          "age" => Age,
+          "gestationalAge" => GestationalAge,
+          "condition" => ConditionElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+        if (Range is not null) yield return new KeyValuePair<string,object>("range",Range);
+        if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+        if (AppliesTo is not null) yield return new KeyValuePair<string,object>("appliesTo",AppliesTo);
+        if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+        if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+        if (GestationalAge is not null) yield return new KeyValuePair<string,object>("gestationalAge",GestationalAge);
+        if (ConditionElement is not null) yield return new KeyValuePair<string,object>("condition",ConditionElement);
       }
 
     }
@@ -966,6 +1020,47 @@ namespace Hl7.Fhir.Model
         if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", AbnormalCodedValueSet);
         if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", CriticalCodedValueSet);
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "category" => Category,
+        "code" => Code,
+        "identifier" => Identifier,
+        "permittedDataType" => PermittedDataTypeElement,
+        "multipleResultsAllowed" => MultipleResultsAllowedElement,
+        "method" => Method,
+        "preferredReportName" => PreferredReportNameElement,
+        "quantitativeDetails" => QuantitativeDetails,
+        "qualifiedInterval" => QualifiedInterval,
+        "validCodedValueSet" => ValidCodedValueSet,
+        "normalCodedValueSet" => NormalCodedValueSet,
+        "abnormalCodedValueSet" => AbnormalCodedValueSet,
+        "criticalCodedValueSet" => CriticalCodedValueSet,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (PermittedDataTypeElement is not null) yield return new KeyValuePair<string,object>("permittedDataType",PermittedDataTypeElement);
+      if (MultipleResultsAllowedElement is not null) yield return new KeyValuePair<string,object>("multipleResultsAllowed",MultipleResultsAllowedElement);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (PreferredReportNameElement is not null) yield return new KeyValuePair<string,object>("preferredReportName",PreferredReportNameElement);
+      if (QuantitativeDetails is not null) yield return new KeyValuePair<string,object>("quantitativeDetails",QuantitativeDetails);
+      if (QualifiedInterval is not null) yield return new KeyValuePair<string,object>("qualifiedInterval",QualifiedInterval);
+      if (ValidCodedValueSet is not null) yield return new KeyValuePair<string,object>("validCodedValueSet",ValidCodedValueSet);
+      if (NormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("normalCodedValueSet",NormalCodedValueSet);
+      if (AbnormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("abnormalCodedValueSet",AbnormalCodedValueSet);
+      if (CriticalCodedValueSet is not null) yield return new KeyValuePair<string,object>("criticalCodedValueSet",CriticalCodedValueSet);
     }
 
   }

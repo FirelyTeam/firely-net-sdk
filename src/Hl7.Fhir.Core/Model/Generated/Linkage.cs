@@ -211,6 +211,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "type" => TypeElement,
+          "resource" => Resource,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+      }
+
     }
 
     /// <summary>
@@ -342,6 +361,27 @@ namespace Hl7.Fhir.Model
         if (Author != null) yield return new ElementValue("author", Author);
         foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "active" => ActiveElement,
+        "author" => Author,
+        "item" => Item,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

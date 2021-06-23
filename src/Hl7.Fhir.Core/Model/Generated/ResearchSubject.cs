@@ -410,6 +410,37 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "status" => StatusElement,
+        "period" => Period,
+        "study" => Study,
+        "individual" => Individual,
+        "assignedArm" => AssignedArmElement,
+        "actualArm" => ActualArmElement,
+        "consent" => Consent,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
+      if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
+      if (AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",AssignedArmElement);
+      if (ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",ActualArmElement);
+      if (Consent is not null) yield return new KeyValuePair<string,object>("consent",Consent);
+    }
+
   }
 
 }

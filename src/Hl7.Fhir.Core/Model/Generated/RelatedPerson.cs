@@ -179,6 +179,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      public override bool TryGetValue(string key, out object value)
+      {
+        value = key switch
+        {
+          "language" => Language,
+          "preferred" => PreferredElement,
+          _ => default
+        };
+
+        return value is not null || base.TryGetValue(key, out value);
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
+        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
+      }
+
     }
 
     /// <summary>
@@ -516,6 +535,45 @@ namespace Hl7.Fhir.Model
         if (Period != null) yield return new ElementValue("period", Period);
         foreach (var elem in Communication) { if (elem != null) yield return new ElementValue("communication", elem); }
       }
+    }
+
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "identifier" => Identifier,
+        "active" => ActiveElement,
+        "patient" => Patient,
+        "relationship" => Relationship,
+        "name" => Name,
+        "telecom" => Telecom,
+        "gender" => GenderElement,
+        "birthDate" => BirthDateElement,
+        "address" => Address,
+        "photo" => Photo,
+        "period" => Period,
+        "communication" => Communication,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+      if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
+      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Communication is not null) yield return new KeyValuePair<string,object>("communication",Communication);
     }
 
   }

@@ -205,6 +205,31 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    public override bool TryGetValue(string key, out object value)
+    {
+      value = key switch
+      {
+        "subject" => Subject,
+        "symptomConditionEffect" => SymptomConditionEffect,
+        "classification" => Classification,
+        "frequencyOfOccurrence" => FrequencyOfOccurrence,
+        "population" => Population,
+        _ => default
+      };
+
+      return value is not null || base.TryGetValue(key, out value);
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",SymptomConditionEffect);
+      if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",FrequencyOfOccurrence);
+      if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+    }
+
   }
 
 }
