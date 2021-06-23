@@ -53,29 +53,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: TriggerDefinition, Export: TriggerDefinition, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if (current.TypeElement != null)
-      {
-        if (current.TypeElement.Value != null)
-        {
-          writer.WriteString("type",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.TypeElement.Value));
-        }
-        if (current.TypeElement.HasExtensions() || (!string.IsNullOrEmpty(current.TypeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_type",false,current.TypeElement.Extension,current.TypeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("type",current.TypeElement,writer,options);
 
-      if (current.NameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.NameElement.Value))
-        {
-          writer.WriteString("name",current.NameElement.Value);
-        }
-        if (current.NameElement.HasExtensions() || (!string.IsNullOrEmpty(current.NameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_name",false,current.NameElement.Extension,current.NameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("name",current.NameElement,writer,options);
 
       if (current.Timing != null)
       {
@@ -90,49 +70,16 @@ namespace Hl7.Fhir.Serialization.Poco
             v_ResourceReference.SerializeJson(writer, options);
             break;
           case Hl7.Fhir.Model.Date v_Date:
-            if (v_Date != null)
-            {
-              if (!string.IsNullOrEmpty(v_Date.Value))
-              {
-                writer.WriteString("timingDate",v_Date.Value);
-              }
-              if (v_Date.HasExtensions() || (!string.IsNullOrEmpty(v_Date.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_timingDate",false,v_Date.Extension,v_Date.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("timingDate",v_Date,writer,options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
-            if (v_FhirDateTime != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirDateTime.Value))
-              {
-                writer.WriteString("timingDateTime",v_FhirDateTime.Value);
-              }
-              if (v_FhirDateTime.HasExtensions() || (!string.IsNullOrEmpty(v_FhirDateTime.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_timingDateTime",false,v_FhirDateTime.Extension,v_FhirDateTime.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("timingDateTime",v_FhirDateTime,writer,options);
             break;
         }
       }
-      if ((current.Data != null) && (current.Data.Count != 0))
-      {
-        writer.WritePropertyName("data");
-        writer.WriteStartArray();
-        foreach (DataRequirement val in current.Data)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("data", current.Data, writer, options);
 
-      if (current.Condition != null)
-      {
-        writer.WritePropertyName("condition");
-        current.Condition.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("condition", current.Condition, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

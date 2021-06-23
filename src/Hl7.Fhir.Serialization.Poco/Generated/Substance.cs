@@ -54,79 +54,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Substance, Export: Substance, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if ((current.Category != null) && (current.Category.Count != 0))
-      {
-        writer.WritePropertyName("category");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Category)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("category", current.Category, writer, options);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if ((current.Instance != null) && (current.Instance.Count != 0))
-      {
-        writer.WritePropertyName("instance");
-        writer.WriteStartArray();
-        foreach (Substance.InstanceComponent val in current.Instance)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("instance", current.Instance, writer, options);
 
-      if ((current.Ingredient != null) && (current.Ingredient.Count != 0))
-      {
-        writer.WritePropertyName("ingredient");
-        writer.WriteStartArray();
-        foreach (Substance.IngredientComponent val in current.Ingredient)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("ingredient", current.Ingredient, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -327,29 +267,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Substance#Instance, Export: InstanceComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ExpiryElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ExpiryElement.Value))
-        {
-          writer.WriteString("expiry",current.ExpiryElement.Value);
-        }
-        if (current.ExpiryElement.HasExtensions() || (!string.IsNullOrEmpty(current.ExpiryElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_expiry",false,current.ExpiryElement.Extension,current.ExpiryElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("expiry",current.ExpiryElement,writer,options);
 
-      if (current.Quantity != null)
-      {
-        writer.WritePropertyName("quantity");
-        current.Quantity.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("quantity", current.Quantity, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -430,11 +352,7 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Substance#Ingredient, Export: IngredientComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Quantity != null)
-      {
-        writer.WritePropertyName("quantity");
-        current.Quantity.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("quantity", current.Quantity, writer, options);
 
       if (current.Substance != null)
       {

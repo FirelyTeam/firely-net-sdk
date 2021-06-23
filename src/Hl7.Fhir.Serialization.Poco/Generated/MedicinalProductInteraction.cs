@@ -54,63 +54,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductInteraction, Export: MedicinalProductInteraction, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Subject != null) && (current.Subject.Count != 0))
-      {
-        writer.WritePropertyName("subject");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Subject)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if ((current.Interactant != null) && (current.Interactant.Count != 0))
-      {
-        writer.WritePropertyName("interactant");
-        writer.WriteStartArray();
-        foreach (MedicinalProductInteraction.InteractantComponent val in current.Interactant)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("interactant", current.Interactant, writer, options);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.Effect != null)
-      {
-        writer.WritePropertyName("effect");
-        current.Effect.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("effect", current.Effect, writer, options);
 
-      if (current.Incidence != null)
-      {
-        writer.WritePropertyName("incidence");
-        current.Incidence.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("incidence", current.Incidence, writer, options);
 
-      if (current.Management != null)
-      {
-        writer.WritePropertyName("management");
-        current.Management.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("management", current.Management, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

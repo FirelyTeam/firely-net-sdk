@@ -54,46 +54,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Basic, Export: Basic, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.Subject != null)
-      {
-        writer.WritePropertyName("subject");
-        current.Subject.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.CreatedElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CreatedElement.Value))
-        {
-          writer.WriteString("created",current.CreatedElement.Value);
-        }
-        if (current.CreatedElement.HasExtensions() || (!string.IsNullOrEmpty(current.CreatedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_created",false,current.CreatedElement.Extension,current.CreatedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("created",current.CreatedElement,writer,options);
 
-      if (current.Author != null)
-      {
-        writer.WritePropertyName("author");
-        current.Author.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("author", current.Author, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

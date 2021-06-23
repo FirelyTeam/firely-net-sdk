@@ -47,10 +47,127 @@ namespace Hl7.Fhir.Serialization.Poco
     /// <summary>
     /// Writes a specified Resource as JSON.
     /// </summary>
-    public static void DispatchSerializeJson(Utf8JsonWriter writer, Resource resource, JsonSerializerOptions options)
+    public static void DispatchSerializeJson(Utf8JsonWriter writer, Base data, JsonSerializerOptions options)
     {
-      switch (resource)
+      switch (data)
       {
+        case Hl7.Fhir.Model.Address typedAddress:
+          typedAddress.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Age typedAge:
+          typedAge.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Annotation typedAnnotation:
+          typedAnnotation.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Attachment typedAttachment:
+          typedAttachment.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeableConcept typedCodeableConcept:
+          typedCodeableConcept.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Coding typedCoding:
+          typedCoding.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ContactDetail typedContactDetail:
+          typedContactDetail.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ContactPoint typedContactPoint:
+          typedContactPoint.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contributor typedContributor:
+          typedContributor.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Count typedCount:
+          typedCount.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DataRequirement typedDataRequirement:
+          typedDataRequirement.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Distance typedDistance:
+          typedDistance.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Dosage typedDosage:
+          typedDosage.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Duration typedDuration:
+          typedDuration.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition typedElementDefinition:
+          typedElementDefinition.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Expression typedExpression:
+          typedExpression.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Extension typedExtension:
+          typedExtension.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.HumanName typedHumanName:
+          typedHumanName.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Identifier typedIdentifier:
+          typedIdentifier.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MarketingStatus typedMarketingStatus:
+          typedMarketingStatus.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Meta typedMeta:
+          typedMeta.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Money typedMoney:
+          typedMoney.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Narrative typedNarrative:
+          typedNarrative.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ParameterDefinition typedParameterDefinition:
+          typedParameterDefinition.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Period typedPeriod:
+          typedPeriod.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Population typedPopulation:
+          typedPopulation.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ProdCharacteristic typedProdCharacteristic:
+          typedProdCharacteristic.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ProductShelfLife typedProductShelfLife:
+          typedProductShelfLife.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Quantity typedQuantity:
+          typedQuantity.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Range typedRange:
+          typedRange.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Ratio typedRatio:
+          typedRatio.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ResourceReference typedResourceReference:
+          typedResourceReference.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RelatedArtifact typedRelatedArtifact:
+          typedRelatedArtifact.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SampledData typedSampledData:
+          typedSampledData.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Signature typedSignature:
+          typedSignature.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceAmount typedSubstanceAmount:
+          typedSubstanceAmount.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Timing typedTiming:
+          typedTiming.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TriggerDefinition typedTriggerDefinition:
+          typedTriggerDefinition.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.UsageContext typedUsageContext:
+          typedUsageContext.SerializeJson(writer, options, true);
+          break;
         case Hl7.Fhir.Model.Account typedAccount:
           typedAccount.SerializeJson(writer, options, true);
           break;
@@ -489,6 +606,1427 @@ namespace Hl7.Fhir.Serialization.Poco
         case Hl7.Fhir.Model.VisionPrescription typedVisionPrescription:
           typedVisionPrescription.SerializeJson(writer, options, true);
           break;
+        case Hl7.Fhir.Model.DataRequirement.CodeFilterComponent typedDataRequirementCodeFilterComponent:
+          typedDataRequirementCodeFilterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DataRequirement.DateFilterComponent typedDataRequirementDateFilterComponent:
+          typedDataRequirementDateFilterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DataRequirement.SortComponent typedDataRequirementSortComponent:
+          typedDataRequirementSortComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Dosage.DoseAndRateComponent typedDosageDoseAndRateComponent:
+          typedDosageDoseAndRateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.SlicingComponent typedElementDefinitionSlicingComponent:
+          typedElementDefinitionSlicingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent typedElementDefinitionDiscriminatorComponent:
+          typedElementDefinitionDiscriminatorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.BaseComponent typedElementDefinitionBaseComponent:
+          typedElementDefinitionBaseComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.TypeRefComponent typedElementDefinitionTypeRefComponent:
+          typedElementDefinitionTypeRefComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.ExampleComponent typedElementDefinitionExampleComponent:
+          typedElementDefinitionExampleComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.ConstraintComponent typedElementDefinitionConstraintComponent:
+          typedElementDefinitionConstraintComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.ElementDefinitionBindingComponent typedElementDefinitionElementDefinitionBindingComponent:
+          typedElementDefinitionElementDefinitionBindingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ElementDefinition.MappingComponent typedElementDefinitionMappingComponent:
+          typedElementDefinitionMappingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent typedSubstanceAmountReferenceRangeComponent:
+          typedSubstanceAmountReferenceRangeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Timing.RepeatComponent typedTimingRepeatComponent:
+          typedTimingRepeatComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Account.CoverageComponent typedAccountCoverageComponent:
+          typedAccountCoverageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Account.GuarantorComponent typedAccountGuarantorComponent:
+          typedAccountGuarantorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ActivityDefinition.ParticipantComponent typedActivityDefinitionParticipantComponent:
+          typedActivityDefinitionParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ActivityDefinition.DynamicValueComponent typedActivityDefinitionDynamicValueComponent:
+          typedActivityDefinitionDynamicValueComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AdverseEvent.SuspectEntityComponent typedAdverseEventSuspectEntityComponent:
+          typedAdverseEventSuspectEntityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AdverseEvent.CausalityComponent typedAdverseEventCausalityComponent:
+          typedAdverseEventCausalityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent typedAllergyIntoleranceReactionComponent:
+          typedAllergyIntoleranceReactionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Appointment.ParticipantComponent typedAppointmentParticipantComponent:
+          typedAppointmentParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AuditEvent.AgentComponent typedAuditEventAgentComponent:
+          typedAuditEventAgentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AuditEvent.NetworkComponent typedAuditEventNetworkComponent:
+          typedAuditEventNetworkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AuditEvent.SourceComponent typedAuditEventSourceComponent:
+          typedAuditEventSourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AuditEvent.EntityComponent typedAuditEventEntityComponent:
+          typedAuditEventEntityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.AuditEvent.DetailComponent typedAuditEventDetailComponent:
+          typedAuditEventDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent typedBiologicallyDerivedProductCollectionComponent:
+          typedBiologicallyDerivedProductCollectionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent typedBiologicallyDerivedProductProcessingComponent:
+          typedBiologicallyDerivedProductProcessingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent typedBiologicallyDerivedProductManipulationComponent:
+          typedBiologicallyDerivedProductManipulationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent typedBiologicallyDerivedProductStorageComponent:
+          typedBiologicallyDerivedProductStorageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Bundle.LinkComponent typedBundleLinkComponent:
+          typedBundleLinkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Bundle.EntryComponent typedBundleEntryComponent:
+          typedBundleEntryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Bundle.SearchComponent typedBundleSearchComponent:
+          typedBundleSearchComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Bundle.RequestComponent typedBundleRequestComponent:
+          typedBundleRequestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Bundle.ResponseComponent typedBundleResponseComponent:
+          typedBundleResponseComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.SoftwareComponent typedCapabilityStatementSoftwareComponent:
+          typedCapabilityStatementSoftwareComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.ImplementationComponent typedCapabilityStatementImplementationComponent:
+          typedCapabilityStatementImplementationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.RestComponent typedCapabilityStatementRestComponent:
+          typedCapabilityStatementRestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.SecurityComponent typedCapabilityStatementSecurityComponent:
+          typedCapabilityStatementSecurityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.ResourceComponent typedCapabilityStatementResourceComponent:
+          typedCapabilityStatementResourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.ResourceInteractionComponent typedCapabilityStatementResourceInteractionComponent:
+          typedCapabilityStatementResourceInteractionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.SearchParamComponent typedCapabilityStatementSearchParamComponent:
+          typedCapabilityStatementSearchParamComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.OperationComponent typedCapabilityStatementOperationComponent:
+          typedCapabilityStatementOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.SystemInteractionComponent typedCapabilityStatementSystemInteractionComponent:
+          typedCapabilityStatementSystemInteractionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.MessagingComponent typedCapabilityStatementMessagingComponent:
+          typedCapabilityStatementMessagingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.EndpointComponent typedCapabilityStatementEndpointComponent:
+          typedCapabilityStatementEndpointComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.SupportedMessageComponent typedCapabilityStatementSupportedMessageComponent:
+          typedCapabilityStatementSupportedMessageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CapabilityStatement.DocumentComponent typedCapabilityStatementDocumentComponent:
+          typedCapabilityStatementDocumentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CarePlan.ActivityComponent typedCarePlanActivityComponent:
+          typedCarePlanActivityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CarePlan.DetailComponent typedCarePlanDetailComponent:
+          typedCarePlanDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CareTeam.ParticipantComponent typedCareTeamParticipantComponent:
+          typedCareTeamParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CatalogEntry.RelatedEntryComponent typedCatalogEntryRelatedEntryComponent:
+          typedCatalogEntryRelatedEntryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ChargeItem.PerformerComponent typedChargeItemPerformerComponent:
+          typedChargeItemPerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ChargeItemDefinition.ApplicabilityComponent typedChargeItemDefinitionApplicabilityComponent:
+          typedChargeItemDefinitionApplicabilityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent typedChargeItemDefinitionPropertyGroupComponent:
+          typedChargeItemDefinitionPropertyGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ChargeItemDefinition.PriceComponentComponent typedChargeItemDefinitionPriceComponentComponent:
+          typedChargeItemDefinitionPriceComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.RelatedClaimComponent typedClaimRelatedClaimComponent:
+          typedClaimRelatedClaimComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.PayeeComponent typedClaimPayeeComponent:
+          typedClaimPayeeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.CareTeamComponent typedClaimCareTeamComponent:
+          typedClaimCareTeamComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.SupportingInformationComponent typedClaimSupportingInformationComponent:
+          typedClaimSupportingInformationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.DiagnosisComponent typedClaimDiagnosisComponent:
+          typedClaimDiagnosisComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.ProcedureComponent typedClaimProcedureComponent:
+          typedClaimProcedureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.InsuranceComponent typedClaimInsuranceComponent:
+          typedClaimInsuranceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.AccidentComponent typedClaimAccidentComponent:
+          typedClaimAccidentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.ItemComponent typedClaimItemComponent:
+          typedClaimItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.DetailComponent typedClaimDetailComponent:
+          typedClaimDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Claim.SubDetailComponent typedClaimSubDetailComponent:
+          typedClaimSubDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.ItemComponent typedClaimResponseItemComponent:
+          typedClaimResponseItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.AdjudicationComponent typedClaimResponseAdjudicationComponent:
+          typedClaimResponseAdjudicationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.ItemDetailComponent typedClaimResponseItemDetailComponent:
+          typedClaimResponseItemDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.SubDetailComponent typedClaimResponseSubDetailComponent:
+          typedClaimResponseSubDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.AddedItemComponent typedClaimResponseAddedItemComponent:
+          typedClaimResponseAddedItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.AddedItemDetailComponent typedClaimResponseAddedItemDetailComponent:
+          typedClaimResponseAddedItemDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.AddedItemSubDetailComponent typedClaimResponseAddedItemSubDetailComponent:
+          typedClaimResponseAddedItemSubDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.TotalComponent typedClaimResponseTotalComponent:
+          typedClaimResponseTotalComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.PaymentComponent typedClaimResponsePaymentComponent:
+          typedClaimResponsePaymentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.NoteComponent typedClaimResponseNoteComponent:
+          typedClaimResponseNoteComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.InsuranceComponent typedClaimResponseInsuranceComponent:
+          typedClaimResponseInsuranceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClaimResponse.ErrorComponent typedClaimResponseErrorComponent:
+          typedClaimResponseErrorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClinicalImpression.InvestigationComponent typedClinicalImpressionInvestigationComponent:
+          typedClinicalImpressionInvestigationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ClinicalImpression.FindingComponent typedClinicalImpressionFindingComponent:
+          typedClinicalImpressionFindingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeSystem.FilterComponent typedCodeSystemFilterComponent:
+          typedCodeSystemFilterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeSystem.PropertyComponent typedCodeSystemPropertyComponent:
+          typedCodeSystemPropertyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent typedCodeSystemConceptDefinitionComponent:
+          typedCodeSystemConceptDefinitionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeSystem.DesignationComponent typedCodeSystemDesignationComponent:
+          typedCodeSystemDesignationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent typedCodeSystemConceptPropertyComponent:
+          typedCodeSystemConceptPropertyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Communication.PayloadComponent typedCommunicationPayloadComponent:
+          typedCommunicationPayloadComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CommunicationRequest.PayloadComponent typedCommunicationRequestPayloadComponent:
+          typedCommunicationRequestPayloadComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CompartmentDefinition.ResourceComponent typedCompartmentDefinitionResourceComponent:
+          typedCompartmentDefinitionResourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Composition.AttesterComponent typedCompositionAttesterComponent:
+          typedCompositionAttesterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Composition.RelatesToComponent typedCompositionRelatesToComponent:
+          typedCompositionRelatesToComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Composition.EventComponent typedCompositionEventComponent:
+          typedCompositionEventComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Composition.SectionComponent typedCompositionSectionComponent:
+          typedCompositionSectionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ConceptMap.GroupComponent typedConceptMapGroupComponent:
+          typedConceptMapGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ConceptMap.SourceElementComponent typedConceptMapSourceElementComponent:
+          typedConceptMapSourceElementComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ConceptMap.TargetElementComponent typedConceptMapTargetElementComponent:
+          typedConceptMapTargetElementComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ConceptMap.OtherElementComponent typedConceptMapOtherElementComponent:
+          typedConceptMapOtherElementComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ConceptMap.UnmappedComponent typedConceptMapUnmappedComponent:
+          typedConceptMapUnmappedComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Condition.StageComponent typedConditionStageComponent:
+          typedConditionStageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Condition.EvidenceComponent typedConditionEvidenceComponent:
+          typedConditionEvidenceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Consent.PolicyComponent typedConsentPolicyComponent:
+          typedConsentPolicyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Consent.VerificationComponent typedConsentVerificationComponent:
+          typedConsentVerificationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Consent.provisionComponent typedConsentprovisionComponent:
+          typedConsentprovisionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Consent.provisionActorComponent typedConsentprovisionActorComponent:
+          typedConsentprovisionActorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Consent.provisionDataComponent typedConsentprovisionDataComponent:
+          typedConsentprovisionDataComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ContentDefinitionComponent typedContractContentDefinitionComponent:
+          typedContractContentDefinitionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.TermComponent typedContractTermComponent:
+          typedContractTermComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.SecurityLabelComponent typedContractSecurityLabelComponent:
+          typedContractSecurityLabelComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ContractOfferComponent typedContractContractOfferComponent:
+          typedContractContractOfferComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ContractPartyComponent typedContractContractPartyComponent:
+          typedContractContractPartyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.AnswerComponent typedContractAnswerComponent:
+          typedContractAnswerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ContractAssetComponent typedContractContractAssetComponent:
+          typedContractContractAssetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.AssetContextComponent typedContractAssetContextComponent:
+          typedContractAssetContextComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ValuedItemComponent typedContractValuedItemComponent:
+          typedContractValuedItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ActionComponent typedContractActionComponent:
+          typedContractActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ActionSubjectComponent typedContractActionSubjectComponent:
+          typedContractActionSubjectComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.SignatoryComponent typedContractSignatoryComponent:
+          typedContractSignatoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.FriendlyLanguageComponent typedContractFriendlyLanguageComponent:
+          typedContractFriendlyLanguageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.LegalLanguageComponent typedContractLegalLanguageComponent:
+          typedContractLegalLanguageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Contract.ComputableLanguageComponent typedContractComputableLanguageComponent:
+          typedContractComputableLanguageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Coverage.ClassComponent typedCoverageClassComponent:
+          typedCoverageClassComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Coverage.CostToBeneficiaryComponent typedCoverageCostToBeneficiaryComponent:
+          typedCoverageCostToBeneficiaryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Coverage.ExemptionComponent typedCoverageExemptionComponent:
+          typedCoverageExemptionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityRequest.SupportingInformationComponent typedCoverageEligibilityRequestSupportingInformationComponent:
+          typedCoverageEligibilityRequestSupportingInformationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityRequest.InsuranceComponent typedCoverageEligibilityRequestInsuranceComponent:
+          typedCoverageEligibilityRequestInsuranceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityRequest.DetailsComponent typedCoverageEligibilityRequestDetailsComponent:
+          typedCoverageEligibilityRequestDetailsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityRequest.DiagnosisComponent typedCoverageEligibilityRequestDiagnosisComponent:
+          typedCoverageEligibilityRequestDiagnosisComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent typedCoverageEligibilityResponseInsuranceComponent:
+          typedCoverageEligibilityResponseInsuranceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent typedCoverageEligibilityResponseItemsComponent:
+          typedCoverageEligibilityResponseItemsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent typedCoverageEligibilityResponseBenefitComponent:
+          typedCoverageEligibilityResponseBenefitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent typedCoverageEligibilityResponseErrorsComponent:
+          typedCoverageEligibilityResponseErrorsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DetectedIssue.EvidenceComponent typedDetectedIssueEvidenceComponent:
+          typedDetectedIssueEvidenceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DetectedIssue.MitigationComponent typedDetectedIssueMitigationComponent:
+          typedDetectedIssueMitigationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Device.UdiCarrierComponent typedDeviceUdiCarrierComponent:
+          typedDeviceUdiCarrierComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Device.DeviceNameComponent typedDeviceDeviceNameComponent:
+          typedDeviceDeviceNameComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Device.SpecializationComponent typedDeviceSpecializationComponent:
+          typedDeviceSpecializationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Device.VersionComponent typedDeviceVersionComponent:
+          typedDeviceVersionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Device.PropertyComponent typedDevicePropertyComponent:
+          typedDevicePropertyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent typedDeviceDefinitionUdiDeviceIdentifierComponent:
+          typedDeviceDefinitionUdiDeviceIdentifierComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.DeviceNameComponent typedDeviceDefinitionDeviceNameComponent:
+          typedDeviceDefinitionDeviceNameComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.SpecializationComponent typedDeviceDefinitionSpecializationComponent:
+          typedDeviceDefinitionSpecializationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.CapabilityComponent typedDeviceDefinitionCapabilityComponent:
+          typedDeviceDefinitionCapabilityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.PropertyComponent typedDeviceDefinitionPropertyComponent:
+          typedDeviceDefinitionPropertyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceDefinition.MaterialComponent typedDeviceDefinitionMaterialComponent:
+          typedDeviceDefinitionMaterialComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceMetric.CalibrationComponent typedDeviceMetricCalibrationComponent:
+          typedDeviceMetricCalibrationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DeviceRequest.ParameterComponent typedDeviceRequestParameterComponent:
+          typedDeviceRequestParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DiagnosticReport.MediaComponent typedDiagnosticReportMediaComponent:
+          typedDiagnosticReportMediaComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DocumentManifest.RelatedComponent typedDocumentManifestRelatedComponent:
+          typedDocumentManifestRelatedComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DocumentReference.RelatesToComponent typedDocumentReferenceRelatesToComponent:
+          typedDocumentReferenceRelatesToComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DocumentReference.ContentComponent typedDocumentReferenceContentComponent:
+          typedDocumentReferenceContentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.DocumentReference.ContextComponent typedDocumentReferenceContextComponent:
+          typedDocumentReferenceContextComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.SampleSizeComponent typedEffectEvidenceSynthesisSampleSizeComponent:
+          typedEffectEvidenceSynthesisSampleSizeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.ResultsByExposureComponent typedEffectEvidenceSynthesisResultsByExposureComponent:
+          typedEffectEvidenceSynthesisResultsByExposureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.EffectEstimateComponent typedEffectEvidenceSynthesisEffectEstimateComponent:
+          typedEffectEvidenceSynthesisEffectEstimateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.PrecisionEstimateComponent typedEffectEvidenceSynthesisPrecisionEstimateComponent:
+          typedEffectEvidenceSynthesisPrecisionEstimateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.CertaintyComponent typedEffectEvidenceSynthesisCertaintyComponent:
+          typedEffectEvidenceSynthesisCertaintyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EffectEvidenceSynthesis.CertaintySubcomponentComponent typedEffectEvidenceSynthesisCertaintySubcomponentComponent:
+          typedEffectEvidenceSynthesisCertaintySubcomponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.StatusHistoryComponent typedEncounterStatusHistoryComponent:
+          typedEncounterStatusHistoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.ClassHistoryComponent typedEncounterClassHistoryComponent:
+          typedEncounterClassHistoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.ParticipantComponent typedEncounterParticipantComponent:
+          typedEncounterParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.DiagnosisComponent typedEncounterDiagnosisComponent:
+          typedEncounterDiagnosisComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.HospitalizationComponent typedEncounterHospitalizationComponent:
+          typedEncounterHospitalizationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Encounter.LocationComponent typedEncounterLocationComponent:
+          typedEncounterLocationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent typedEpisodeOfCareStatusHistoryComponent:
+          typedEpisodeOfCareStatusHistoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent typedEpisodeOfCareDiagnosisComponent:
+          typedEpisodeOfCareDiagnosisComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent typedEvidenceVariableCharacteristicComponent:
+          typedEvidenceVariableCharacteristicComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.ActorComponent typedExampleScenarioActorComponent:
+          typedExampleScenarioActorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.InstanceComponent typedExampleScenarioInstanceComponent:
+          typedExampleScenarioInstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.VersionComponent typedExampleScenarioVersionComponent:
+          typedExampleScenarioVersionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.ContainedInstanceComponent typedExampleScenarioContainedInstanceComponent:
+          typedExampleScenarioContainedInstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.ProcessComponent typedExampleScenarioProcessComponent:
+          typedExampleScenarioProcessComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.StepComponent typedExampleScenarioStepComponent:
+          typedExampleScenarioStepComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.OperationComponent typedExampleScenarioOperationComponent:
+          typedExampleScenarioOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExampleScenario.AlternativeComponent typedExampleScenarioAlternativeComponent:
+          typedExampleScenarioAlternativeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.RelatedClaimComponent typedExplanationOfBenefitRelatedClaimComponent:
+          typedExplanationOfBenefitRelatedClaimComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.PayeeComponent typedExplanationOfBenefitPayeeComponent:
+          typedExplanationOfBenefitPayeeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.CareTeamComponent typedExplanationOfBenefitCareTeamComponent:
+          typedExplanationOfBenefitCareTeamComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.SupportingInformationComponent typedExplanationOfBenefitSupportingInformationComponent:
+          typedExplanationOfBenefitSupportingInformationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.DiagnosisComponent typedExplanationOfBenefitDiagnosisComponent:
+          typedExplanationOfBenefitDiagnosisComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.ProcedureComponent typedExplanationOfBenefitProcedureComponent:
+          typedExplanationOfBenefitProcedureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.InsuranceComponent typedExplanationOfBenefitInsuranceComponent:
+          typedExplanationOfBenefitInsuranceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.AccidentComponent typedExplanationOfBenefitAccidentComponent:
+          typedExplanationOfBenefitAccidentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.ItemComponent typedExplanationOfBenefitItemComponent:
+          typedExplanationOfBenefitItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.AdjudicationComponent typedExplanationOfBenefitAdjudicationComponent:
+          typedExplanationOfBenefitAdjudicationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.DetailComponent typedExplanationOfBenefitDetailComponent:
+          typedExplanationOfBenefitDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.SubDetailComponent typedExplanationOfBenefitSubDetailComponent:
+          typedExplanationOfBenefitSubDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemComponent typedExplanationOfBenefitAddedItemComponent:
+          typedExplanationOfBenefitAddedItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailComponent typedExplanationOfBenefitAddedItemDetailComponent:
+          typedExplanationOfBenefitAddedItemDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.AddedItemDetailSubDetailComponent typedExplanationOfBenefitAddedItemDetailSubDetailComponent:
+          typedExplanationOfBenefitAddedItemDetailSubDetailComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.TotalComponent typedExplanationOfBenefitTotalComponent:
+          typedExplanationOfBenefitTotalComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.PaymentComponent typedExplanationOfBenefitPaymentComponent:
+          typedExplanationOfBenefitPaymentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.NoteComponent typedExplanationOfBenefitNoteComponent:
+          typedExplanationOfBenefitNoteComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.BenefitBalanceComponent typedExplanationOfBenefitBenefitBalanceComponent:
+          typedExplanationOfBenefitBenefitBalanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ExplanationOfBenefit.BenefitComponent typedExplanationOfBenefitBenefitComponent:
+          typedExplanationOfBenefitBenefitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent typedFamilyMemberHistoryConditionComponent:
+          typedFamilyMemberHistoryConditionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Goal.TargetComponent typedGoalTargetComponent:
+          typedGoalTargetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.GraphDefinition.LinkComponent typedGraphDefinitionLinkComponent:
+          typedGraphDefinitionLinkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.GraphDefinition.TargetComponent typedGraphDefinitionTargetComponent:
+          typedGraphDefinitionTargetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.GraphDefinition.CompartmentComponent typedGraphDefinitionCompartmentComponent:
+          typedGraphDefinitionCompartmentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Group.CharacteristicComponent typedGroupCharacteristicComponent:
+          typedGroupCharacteristicComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Group.MemberComponent typedGroupMemberComponent:
+          typedGroupMemberComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.HealthcareService.EligibilityComponent typedHealthcareServiceEligibilityComponent:
+          typedHealthcareServiceEligibilityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent typedHealthcareServiceAvailableTimeComponent:
+          typedHealthcareServiceAvailableTimeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.HealthcareService.NotAvailableComponent typedHealthcareServiceNotAvailableComponent:
+          typedHealthcareServiceNotAvailableComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImagingStudy.SeriesComponent typedImagingStudySeriesComponent:
+          typedImagingStudySeriesComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImagingStudy.PerformerComponent typedImagingStudyPerformerComponent:
+          typedImagingStudyPerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImagingStudy.InstanceComponent typedImagingStudyInstanceComponent:
+          typedImagingStudyInstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Immunization.PerformerComponent typedImmunizationPerformerComponent:
+          typedImmunizationPerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Immunization.EducationComponent typedImmunizationEducationComponent:
+          typedImmunizationEducationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Immunization.ReactionComponent typedImmunizationReactionComponent:
+          typedImmunizationReactionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Immunization.ProtocolAppliedComponent typedImmunizationProtocolAppliedComponent:
+          typedImmunizationProtocolAppliedComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImmunizationRecommendation.RecommendationComponent typedImmunizationRecommendationRecommendationComponent:
+          typedImmunizationRecommendationRecommendationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImmunizationRecommendation.DateCriterionComponent typedImmunizationRecommendationDateCriterionComponent:
+          typedImmunizationRecommendationDateCriterionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent typedImplementationGuideDependsOnComponent:
+          typedImplementationGuideDependsOnComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.GlobalComponent typedImplementationGuideGlobalComponent:
+          typedImplementationGuideGlobalComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.DefinitionComponent typedImplementationGuideDefinitionComponent:
+          typedImplementationGuideDefinitionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.GroupingComponent typedImplementationGuideGroupingComponent:
+          typedImplementationGuideGroupingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.ResourceComponent typedImplementationGuideResourceComponent:
+          typedImplementationGuideResourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.PageComponent typedImplementationGuidePageComponent:
+          typedImplementationGuidePageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.ParameterComponent typedImplementationGuideParameterComponent:
+          typedImplementationGuideParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.TemplateComponent typedImplementationGuideTemplateComponent:
+          typedImplementationGuideTemplateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.ManifestComponent typedImplementationGuideManifestComponent:
+          typedImplementationGuideManifestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.ManifestResourceComponent typedImplementationGuideManifestResourceComponent:
+          typedImplementationGuideManifestResourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ImplementationGuide.ManifestPageComponent typedImplementationGuideManifestPageComponent:
+          typedImplementationGuideManifestPageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.ContactComponent typedInsurancePlanContactComponent:
+          typedInsurancePlanContactComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.CoverageComponent typedInsurancePlanCoverageComponent:
+          typedInsurancePlanCoverageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.CoverageBenefitComponent typedInsurancePlanCoverageBenefitComponent:
+          typedInsurancePlanCoverageBenefitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.LimitComponent typedInsurancePlanLimitComponent:
+          typedInsurancePlanLimitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.PlanComponent typedInsurancePlanPlanComponent:
+          typedInsurancePlanPlanComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.GeneralCostComponent typedInsurancePlanGeneralCostComponent:
+          typedInsurancePlanGeneralCostComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.SpecificCostComponent typedInsurancePlanSpecificCostComponent:
+          typedInsurancePlanSpecificCostComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.PlanBenefitComponent typedInsurancePlanPlanBenefitComponent:
+          typedInsurancePlanPlanBenefitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.InsurancePlan.CostComponent typedInsurancePlanCostComponent:
+          typedInsurancePlanCostComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Invoice.ParticipantComponent typedInvoiceParticipantComponent:
+          typedInvoiceParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Invoice.LineItemComponent typedInvoiceLineItemComponent:
+          typedInvoiceLineItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Invoice.PriceComponentComponent typedInvoicePriceComponentComponent:
+          typedInvoicePriceComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Linkage.ItemComponent typedLinkageItemComponent:
+          typedLinkageItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.List.EntryComponent typedListEntryComponent:
+          typedListEntryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Location.PositionComponent typedLocationPositionComponent:
+          typedLocationPositionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Location.HoursOfOperationComponent typedLocationHoursOfOperationComponent:
+          typedLocationHoursOfOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Measure.GroupComponent typedMeasureGroupComponent:
+          typedMeasureGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Measure.PopulationComponent typedMeasurePopulationComponent:
+          typedMeasurePopulationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Measure.StratifierComponent typedMeasureStratifierComponent:
+          typedMeasureStratifierComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Measure.ComponentComponent typedMeasureComponentComponent:
+          typedMeasureComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Measure.SupplementalDataComponent typedMeasureSupplementalDataComponent:
+          typedMeasureSupplementalDataComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.GroupComponent typedMeasureReportGroupComponent:
+          typedMeasureReportGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.PopulationComponent typedMeasureReportPopulationComponent:
+          typedMeasureReportPopulationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.StratifierComponent typedMeasureReportStratifierComponent:
+          typedMeasureReportStratifierComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.StratifierGroupComponent typedMeasureReportStratifierGroupComponent:
+          typedMeasureReportStratifierGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.ComponentComponent typedMeasureReportComponentComponent:
+          typedMeasureReportComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MeasureReport.StratifierGroupPopulationComponent typedMeasureReportStratifierGroupPopulationComponent:
+          typedMeasureReportStratifierGroupPopulationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Medication.IngredientComponent typedMedicationIngredientComponent:
+          typedMedicationIngredientComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Medication.BatchComponent typedMedicationBatchComponent:
+          typedMedicationBatchComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationAdministration.PerformerComponent typedMedicationAdministrationPerformerComponent:
+          typedMedicationAdministrationPerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationAdministration.DosageComponent typedMedicationAdministrationDosageComponent:
+          typedMedicationAdministrationDosageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationDispense.PerformerComponent typedMedicationDispensePerformerComponent:
+          typedMedicationDispensePerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationDispense.SubstitutionComponent typedMedicationDispenseSubstitutionComponent:
+          typedMedicationDispenseSubstitutionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.RelatedMedicationKnowledgeComponent typedMedicationKnowledgeRelatedMedicationKnowledgeComponent:
+          typedMedicationKnowledgeRelatedMedicationKnowledgeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.MonographComponent typedMedicationKnowledgeMonographComponent:
+          typedMedicationKnowledgeMonographComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.IngredientComponent typedMedicationKnowledgeIngredientComponent:
+          typedMedicationKnowledgeIngredientComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.CostComponent typedMedicationKnowledgeCostComponent:
+          typedMedicationKnowledgeCostComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.MonitoringProgramComponent typedMedicationKnowledgeMonitoringProgramComponent:
+          typedMedicationKnowledgeMonitoringProgramComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.AdministrationGuidelinesComponent typedMedicationKnowledgeAdministrationGuidelinesComponent:
+          typedMedicationKnowledgeAdministrationGuidelinesComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.DosageComponent typedMedicationKnowledgeDosageComponent:
+          typedMedicationKnowledgeDosageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.PatientCharacteristicsComponent typedMedicationKnowledgePatientCharacteristicsComponent:
+          typedMedicationKnowledgePatientCharacteristicsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.MedicineClassificationComponent typedMedicationKnowledgeMedicineClassificationComponent:
+          typedMedicationKnowledgeMedicineClassificationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.PackagingComponent typedMedicationKnowledgePackagingComponent:
+          typedMedicationKnowledgePackagingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.DrugCharacteristicComponent typedMedicationKnowledgeDrugCharacteristicComponent:
+          typedMedicationKnowledgeDrugCharacteristicComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.RegulatoryComponent typedMedicationKnowledgeRegulatoryComponent:
+          typedMedicationKnowledgeRegulatoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.SubstitutionComponent typedMedicationKnowledgeSubstitutionComponent:
+          typedMedicationKnowledgeSubstitutionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.ScheduleComponent typedMedicationKnowledgeScheduleComponent:
+          typedMedicationKnowledgeScheduleComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.MaxDispenseComponent typedMedicationKnowledgeMaxDispenseComponent:
+          typedMedicationKnowledgeMaxDispenseComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationKnowledge.KineticsComponent typedMedicationKnowledgeKineticsComponent:
+          typedMedicationKnowledgeKineticsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationRequest.DispenseRequestComponent typedMedicationRequestDispenseRequestComponent:
+          typedMedicationRequestDispenseRequestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationRequest.InitialFillComponent typedMedicationRequestInitialFillComponent:
+          typedMedicationRequestInitialFillComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicationRequest.SubstitutionComponent typedMedicationRequestSubstitutionComponent:
+          typedMedicationRequestSubstitutionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProduct.NameComponent typedMedicinalProductNameComponent:
+          typedMedicinalProductNameComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProduct.NamePartComponent typedMedicinalProductNamePartComponent:
+          typedMedicinalProductNamePartComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProduct.CountryLanguageComponent typedMedicinalProductCountryLanguageComponent:
+          typedMedicinalProductCountryLanguageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProduct.ManufacturingBusinessOperationComponent typedMedicinalProductManufacturingBusinessOperationComponent:
+          typedMedicinalProductManufacturingBusinessOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProduct.SpecialDesignationComponent typedMedicinalProductSpecialDesignationComponent:
+          typedMedicinalProductSpecialDesignationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductAuthorization.JurisdictionalAuthorizationComponent typedMedicinalProductAuthorizationJurisdictionalAuthorizationComponent:
+          typedMedicinalProductAuthorizationJurisdictionalAuthorizationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductAuthorization.ProcedureComponent typedMedicinalProductAuthorizationProcedureComponent:
+          typedMedicinalProductAuthorizationProcedureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductContraindication.OtherTherapyComponent typedMedicinalProductContraindicationOtherTherapyComponent:
+          typedMedicinalProductContraindicationOtherTherapyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductIndication.OtherTherapyComponent typedMedicinalProductIndicationOtherTherapyComponent:
+          typedMedicinalProductIndicationOtherTherapyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductIngredient.SpecifiedSubstanceComponent typedMedicinalProductIngredientSpecifiedSubstanceComponent:
+          typedMedicinalProductIngredientSpecifiedSubstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductIngredient.StrengthComponent typedMedicinalProductIngredientStrengthComponent:
+          typedMedicinalProductIngredientStrengthComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductIngredient.ReferenceStrengthComponent typedMedicinalProductIngredientReferenceStrengthComponent:
+          typedMedicinalProductIngredientReferenceStrengthComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductIngredient.SubstanceComponent typedMedicinalProductIngredientSubstanceComponent:
+          typedMedicinalProductIngredientSubstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductInteraction.InteractantComponent typedMedicinalProductInteractionInteractantComponent:
+          typedMedicinalProductInteractionInteractantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPackaged.BatchIdentifierComponent typedMedicinalProductPackagedBatchIdentifierComponent:
+          typedMedicinalProductPackagedBatchIdentifierComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPackaged.PackageItemComponent typedMedicinalProductPackagedPackageItemComponent:
+          typedMedicinalProductPackagedPackageItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPharmaceutical.CharacteristicsComponent typedMedicinalProductPharmaceuticalCharacteristicsComponent:
+          typedMedicinalProductPharmaceuticalCharacteristicsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPharmaceutical.RouteOfAdministrationComponent typedMedicinalProductPharmaceuticalRouteOfAdministrationComponent:
+          typedMedicinalProductPharmaceuticalRouteOfAdministrationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPharmaceutical.TargetSpeciesComponent typedMedicinalProductPharmaceuticalTargetSpeciesComponent:
+          typedMedicinalProductPharmaceuticalTargetSpeciesComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MedicinalProductPharmaceutical.WithdrawalPeriodComponent typedMedicinalProductPharmaceuticalWithdrawalPeriodComponent:
+          typedMedicinalProductPharmaceuticalWithdrawalPeriodComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MessageDefinition.FocusComponent typedMessageDefinitionFocusComponent:
+          typedMessageDefinitionFocusComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent typedMessageDefinitionAllowedResponseComponent:
+          typedMessageDefinitionAllowedResponseComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent typedMessageHeaderMessageDestinationComponent:
+          typedMessageHeaderMessageDestinationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MessageHeader.MessageSourceComponent typedMessageHeaderMessageSourceComponent:
+          typedMessageHeaderMessageSourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MessageHeader.ResponseComponent typedMessageHeaderResponseComponent:
+          typedMessageHeaderResponseComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.ReferenceSeqComponent typedMolecularSequenceReferenceSeqComponent:
+          typedMolecularSequenceReferenceSeqComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.VariantComponent typedMolecularSequenceVariantComponent:
+          typedMolecularSequenceVariantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.QualityComponent typedMolecularSequenceQualityComponent:
+          typedMolecularSequenceQualityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.RocComponent typedMolecularSequenceRocComponent:
+          typedMolecularSequenceRocComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.RepositoryComponent typedMolecularSequenceRepositoryComponent:
+          typedMolecularSequenceRepositoryComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.StructureVariantComponent typedMolecularSequenceStructureVariantComponent:
+          typedMolecularSequenceStructureVariantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.OuterComponent typedMolecularSequenceOuterComponent:
+          typedMolecularSequenceOuterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.MolecularSequence.InnerComponent typedMolecularSequenceInnerComponent:
+          typedMolecularSequenceInnerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NamingSystem.UniqueIdComponent typedNamingSystemUniqueIdComponent:
+          typedNamingSystemUniqueIdComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.OralDietComponent typedNutritionOrderOralDietComponent:
+          typedNutritionOrderOralDietComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.NutrientComponent typedNutritionOrderNutrientComponent:
+          typedNutritionOrderNutrientComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.TextureComponent typedNutritionOrderTextureComponent:
+          typedNutritionOrderTextureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.SupplementComponent typedNutritionOrderSupplementComponent:
+          typedNutritionOrderSupplementComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.EnteralFormulaComponent typedNutritionOrderEnteralFormulaComponent:
+          typedNutritionOrderEnteralFormulaComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.NutritionOrder.AdministrationComponent typedNutritionOrderAdministrationComponent:
+          typedNutritionOrderAdministrationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Observation.ReferenceRangeComponent typedObservationReferenceRangeComponent:
+          typedObservationReferenceRangeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Observation.ComponentComponent typedObservationComponentComponent:
+          typedObservationComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ObservationDefinition.QuantitativeDetailsComponent typedObservationDefinitionQuantitativeDetailsComponent:
+          typedObservationDefinitionQuantitativeDetailsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ObservationDefinition.QualifiedIntervalComponent typedObservationDefinitionQualifiedIntervalComponent:
+          typedObservationDefinitionQualifiedIntervalComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.OperationDefinition.ParameterComponent typedOperationDefinitionParameterComponent:
+          typedOperationDefinitionParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.OperationDefinition.BindingComponent typedOperationDefinitionBindingComponent:
+          typedOperationDefinitionBindingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.OperationDefinition.ReferencedFromComponent typedOperationDefinitionReferencedFromComponent:
+          typedOperationDefinitionReferencedFromComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.OperationDefinition.OverloadComponent typedOperationDefinitionOverloadComponent:
+          typedOperationDefinitionOverloadComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.OperationOutcome.IssueComponent typedOperationOutcomeIssueComponent:
+          typedOperationOutcomeIssueComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Organization.ContactComponent typedOrganizationContactComponent:
+          typedOrganizationContactComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Parameters.ParameterComponent typedParametersParameterComponent:
+          typedParametersParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Patient.ContactComponent typedPatientContactComponent:
+          typedPatientContactComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Patient.CommunicationComponent typedPatientCommunicationComponent:
+          typedPatientCommunicationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Patient.LinkComponent typedPatientLinkComponent:
+          typedPatientLinkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PaymentReconciliation.DetailsComponent typedPaymentReconciliationDetailsComponent:
+          typedPaymentReconciliationDetailsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PaymentReconciliation.NotesComponent typedPaymentReconciliationNotesComponent:
+          typedPaymentReconciliationNotesComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Person.LinkComponent typedPersonLinkComponent:
+          typedPersonLinkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.GoalComponent typedPlanDefinitionGoalComponent:
+          typedPlanDefinitionGoalComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.TargetComponent typedPlanDefinitionTargetComponent:
+          typedPlanDefinitionTargetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.ActionComponent typedPlanDefinitionActionComponent:
+          typedPlanDefinitionActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.ConditionComponent typedPlanDefinitionConditionComponent:
+          typedPlanDefinitionConditionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.RelatedActionComponent typedPlanDefinitionRelatedActionComponent:
+          typedPlanDefinitionRelatedActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.ParticipantComponent typedPlanDefinitionParticipantComponent:
+          typedPlanDefinitionParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PlanDefinition.DynamicValueComponent typedPlanDefinitionDynamicValueComponent:
+          typedPlanDefinitionDynamicValueComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Practitioner.QualificationComponent typedPractitionerQualificationComponent:
+          typedPractitionerQualificationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PractitionerRole.AvailableTimeComponent typedPractitionerRoleAvailableTimeComponent:
+          typedPractitionerRoleAvailableTimeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.PractitionerRole.NotAvailableComponent typedPractitionerRoleNotAvailableComponent:
+          typedPractitionerRoleNotAvailableComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Procedure.PerformerComponent typedProcedurePerformerComponent:
+          typedProcedurePerformerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Procedure.FocalDeviceComponent typedProcedureFocalDeviceComponent:
+          typedProcedureFocalDeviceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Provenance.AgentComponent typedProvenanceAgentComponent:
+          typedProvenanceAgentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Provenance.EntityComponent typedProvenanceEntityComponent:
+          typedProvenanceEntityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Questionnaire.ItemComponent typedQuestionnaireItemComponent:
+          typedQuestionnaireItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Questionnaire.EnableWhenComponent typedQuestionnaireEnableWhenComponent:
+          typedQuestionnaireEnableWhenComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Questionnaire.AnswerOptionComponent typedQuestionnaireAnswerOptionComponent:
+          typedQuestionnaireAnswerOptionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Questionnaire.InitialComponent typedQuestionnaireInitialComponent:
+          typedQuestionnaireInitialComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent typedQuestionnaireResponseItemComponent:
+          typedQuestionnaireResponseItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent typedQuestionnaireResponseAnswerComponent:
+          typedQuestionnaireResponseAnswerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RelatedPerson.CommunicationComponent typedRelatedPersonCommunicationComponent:
+          typedRelatedPersonCommunicationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RequestGroup.ActionComponent typedRequestGroupActionComponent:
+          typedRequestGroupActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RequestGroup.ConditionComponent typedRequestGroupConditionComponent:
+          typedRequestGroupConditionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RequestGroup.RelatedActionComponent typedRequestGroupRelatedActionComponent:
+          typedRequestGroupRelatedActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent typedResearchElementDefinitionCharacteristicComponent:
+          typedResearchElementDefinitionCharacteristicComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ResearchStudy.ArmComponent typedResearchStudyArmComponent:
+          typedResearchStudyArmComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent typedResearchStudyObjectiveComponent:
+          typedResearchStudyObjectiveComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskAssessment.PredictionComponent typedRiskAssessmentPredictionComponent:
+          typedRiskAssessmentPredictionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskEvidenceSynthesis.SampleSizeComponent typedRiskEvidenceSynthesisSampleSizeComponent:
+          typedRiskEvidenceSynthesisSampleSizeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskEvidenceSynthesis.RiskEstimateComponent typedRiskEvidenceSynthesisRiskEstimateComponent:
+          typedRiskEvidenceSynthesisRiskEstimateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskEvidenceSynthesis.PrecisionEstimateComponent typedRiskEvidenceSynthesisPrecisionEstimateComponent:
+          typedRiskEvidenceSynthesisPrecisionEstimateComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskEvidenceSynthesis.CertaintyComponent typedRiskEvidenceSynthesisCertaintyComponent:
+          typedRiskEvidenceSynthesisCertaintyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.RiskEvidenceSynthesis.CertaintySubcomponentComponent typedRiskEvidenceSynthesisCertaintySubcomponentComponent:
+          typedRiskEvidenceSynthesisCertaintySubcomponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SearchParameter.ComponentComponent typedSearchParameterComponentComponent:
+          typedSearchParameterComponentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Specimen.CollectionComponent typedSpecimenCollectionComponent:
+          typedSpecimenCollectionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Specimen.ProcessingComponent typedSpecimenProcessingComponent:
+          typedSpecimenProcessingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Specimen.ContainerComponent typedSpecimenContainerComponent:
+          typedSpecimenContainerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent typedSpecimenDefinitionTypeTestedComponent:
+          typedSpecimenDefinitionTypeTestedComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent typedSpecimenDefinitionContainerComponent:
+          typedSpecimenDefinitionContainerComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent typedSpecimenDefinitionAdditiveComponent:
+          typedSpecimenDefinitionAdditiveComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent typedSpecimenDefinitionHandlingComponent:
+          typedSpecimenDefinitionHandlingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureDefinition.MappingComponent typedStructureDefinitionMappingComponent:
+          typedStructureDefinitionMappingComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureDefinition.ContextComponent typedStructureDefinitionContextComponent:
+          typedStructureDefinitionContextComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureDefinition.SnapshotComponent typedStructureDefinitionSnapshotComponent:
+          typedStructureDefinitionSnapshotComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureDefinition.DifferentialComponent typedStructureDefinitionDifferentialComponent:
+          typedStructureDefinitionDifferentialComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.StructureComponent typedStructureMapStructureComponent:
+          typedStructureMapStructureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.GroupComponent typedStructureMapGroupComponent:
+          typedStructureMapGroupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.InputComponent typedStructureMapInputComponent:
+          typedStructureMapInputComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.RuleComponent typedStructureMapRuleComponent:
+          typedStructureMapRuleComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.SourceComponent typedStructureMapSourceComponent:
+          typedStructureMapSourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.TargetComponent typedStructureMapTargetComponent:
+          typedStructureMapTargetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.ParameterComponent typedStructureMapParameterComponent:
+          typedStructureMapParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.StructureMap.DependentComponent typedStructureMapDependentComponent:
+          typedStructureMapDependentComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Subscription.ChannelComponent typedSubscriptionChannelComponent:
+          typedSubscriptionChannelComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Substance.InstanceComponent typedSubstanceInstanceComponent:
+          typedSubstanceInstanceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Substance.IngredientComponent typedSubstanceIngredientComponent:
+          typedSubstanceIngredientComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceNucleicAcid.SubunitComponent typedSubstanceNucleicAcidSubunitComponent:
+          typedSubstanceNucleicAcidSubunitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceNucleicAcid.LinkageComponent typedSubstanceNucleicAcidLinkageComponent:
+          typedSubstanceNucleicAcidLinkageComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceNucleicAcid.SugarComponent typedSubstanceNucleicAcidSugarComponent:
+          typedSubstanceNucleicAcidSugarComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent typedSubstancePolymerMonomerSetComponent:
+          typedSubstancePolymerMonomerSetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent typedSubstancePolymerStartingMaterialComponent:
+          typedSubstancePolymerStartingMaterialComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.RepeatComponent typedSubstancePolymerRepeatComponent:
+          typedSubstancePolymerRepeatComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent typedSubstancePolymerRepeatUnitComponent:
+          typedSubstancePolymerRepeatUnitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent typedSubstancePolymerDegreeOfPolymerisationComponent:
+          typedSubstancePolymerDegreeOfPolymerisationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent typedSubstancePolymerStructuralRepresentationComponent:
+          typedSubstancePolymerStructuralRepresentationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceProtein.SubunitComponent typedSubstanceProteinSubunitComponent:
+          typedSubstanceProteinSubunitComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceReferenceInformation.GeneComponent typedSubstanceReferenceInformationGeneComponent:
+          typedSubstanceReferenceInformationGeneComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceReferenceInformation.GeneElementComponent typedSubstanceReferenceInformationGeneElementComponent:
+          typedSubstanceReferenceInformationGeneElementComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceReferenceInformation.ClassificationComponent typedSubstanceReferenceInformationClassificationComponent:
+          typedSubstanceReferenceInformationClassificationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceReferenceInformation.TargetComponent typedSubstanceReferenceInformationTargetComponent:
+          typedSubstanceReferenceInformationTargetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent typedSubstanceSourceMaterialFractionDescriptionComponent:
+          typedSubstanceSourceMaterialFractionDescriptionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent typedSubstanceSourceMaterialOrganismComponent:
+          typedSubstanceSourceMaterialOrganismComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent typedSubstanceSourceMaterialAuthorComponent:
+          typedSubstanceSourceMaterialAuthorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent typedSubstanceSourceMaterialHybridComponent:
+          typedSubstanceSourceMaterialHybridComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent typedSubstanceSourceMaterialOrganismGeneralComponent:
+          typedSubstanceSourceMaterialOrganismGeneralComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent typedSubstanceSourceMaterialPartDescriptionComponent:
+          typedSubstanceSourceMaterialPartDescriptionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.MoietyComponent typedSubstanceSpecificationMoietyComponent:
+          typedSubstanceSpecificationMoietyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.PropertyComponent typedSubstanceSpecificationPropertyComponent:
+          typedSubstanceSpecificationPropertyComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.StructureComponent typedSubstanceSpecificationStructureComponent:
+          typedSubstanceSpecificationStructureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.IsotopeComponent typedSubstanceSpecificationIsotopeComponent:
+          typedSubstanceSpecificationIsotopeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.MolecularWeightComponent typedSubstanceSpecificationMolecularWeightComponent:
+          typedSubstanceSpecificationMolecularWeightComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.RepresentationComponent typedSubstanceSpecificationRepresentationComponent:
+          typedSubstanceSpecificationRepresentationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.CodeComponent typedSubstanceSpecificationCodeComponent:
+          typedSubstanceSpecificationCodeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.NameComponent typedSubstanceSpecificationNameComponent:
+          typedSubstanceSpecificationNameComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.OfficialComponent typedSubstanceSpecificationOfficialComponent:
+          typedSubstanceSpecificationOfficialComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SubstanceSpecification.RelationshipComponent typedSubstanceSpecificationRelationshipComponent:
+          typedSubstanceSpecificationRelationshipComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent typedSupplyDeliverySuppliedItemComponent:
+          typedSupplyDeliverySuppliedItemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.SupplyRequest.ParameterComponent typedSupplyRequestParameterComponent:
+          typedSupplyRequestParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Task.RestrictionComponent typedTaskRestrictionComponent:
+          typedTaskRestrictionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Task.ParameterComponent typedTaskParameterComponent:
+          typedTaskParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.Task.OutputComponent typedTaskOutputComponent:
+          typedTaskOutputComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.SoftwareComponent typedTerminologyCapabilitiesSoftwareComponent:
+          typedTerminologyCapabilitiesSoftwareComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.ImplementationComponent typedTerminologyCapabilitiesImplementationComponent:
+          typedTerminologyCapabilitiesImplementationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.CodeSystemComponent typedTerminologyCapabilitiesCodeSystemComponent:
+          typedTerminologyCapabilitiesCodeSystemComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.VersionComponent typedTerminologyCapabilitiesVersionComponent:
+          typedTerminologyCapabilitiesVersionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.FilterComponent typedTerminologyCapabilitiesFilterComponent:
+          typedTerminologyCapabilitiesFilterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.ExpansionComponent typedTerminologyCapabilitiesExpansionComponent:
+          typedTerminologyCapabilitiesExpansionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.ParameterComponent typedTerminologyCapabilitiesParameterComponent:
+          typedTerminologyCapabilitiesParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.ValidateCodeComponent typedTerminologyCapabilitiesValidateCodeComponent:
+          typedTerminologyCapabilitiesValidateCodeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.TranslationComponent typedTerminologyCapabilitiesTranslationComponent:
+          typedTerminologyCapabilitiesTranslationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TerminologyCapabilities.ClosureComponent typedTerminologyCapabilitiesClosureComponent:
+          typedTerminologyCapabilitiesClosureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.ParticipantComponent typedTestReportParticipantComponent:
+          typedTestReportParticipantComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.SetupComponent typedTestReportSetupComponent:
+          typedTestReportSetupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.SetupActionComponent typedTestReportSetupActionComponent:
+          typedTestReportSetupActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.OperationComponent typedTestReportOperationComponent:
+          typedTestReportOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.AssertComponent typedTestReportAssertComponent:
+          typedTestReportAssertComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.TestComponent typedTestReportTestComponent:
+          typedTestReportTestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.TestActionComponent typedTestReportTestActionComponent:
+          typedTestReportTestActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.TeardownComponent typedTestReportTeardownComponent:
+          typedTestReportTeardownComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestReport.TeardownActionComponent typedTestReportTeardownActionComponent:
+          typedTestReportTeardownActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.OriginComponent typedTestScriptOriginComponent:
+          typedTestScriptOriginComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.DestinationComponent typedTestScriptDestinationComponent:
+          typedTestScriptDestinationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.MetadataComponent typedTestScriptMetadataComponent:
+          typedTestScriptMetadataComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.LinkComponent typedTestScriptLinkComponent:
+          typedTestScriptLinkComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.CapabilityComponent typedTestScriptCapabilityComponent:
+          typedTestScriptCapabilityComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.FixtureComponent typedTestScriptFixtureComponent:
+          typedTestScriptFixtureComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.VariableComponent typedTestScriptVariableComponent:
+          typedTestScriptVariableComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.SetupComponent typedTestScriptSetupComponent:
+          typedTestScriptSetupComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.SetupActionComponent typedTestScriptSetupActionComponent:
+          typedTestScriptSetupActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.OperationComponent typedTestScriptOperationComponent:
+          typedTestScriptOperationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.RequestHeaderComponent typedTestScriptRequestHeaderComponent:
+          typedTestScriptRequestHeaderComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.AssertComponent typedTestScriptAssertComponent:
+          typedTestScriptAssertComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.TestComponent typedTestScriptTestComponent:
+          typedTestScriptTestComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.TestActionComponent typedTestScriptTestActionComponent:
+          typedTestScriptTestActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.TeardownComponent typedTestScriptTeardownComponent:
+          typedTestScriptTeardownComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.TestScript.TeardownActionComponent typedTestScriptTeardownActionComponent:
+          typedTestScriptTeardownActionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ComposeComponent typedValueSetComposeComponent:
+          typedValueSetComposeComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ConceptSetComponent typedValueSetConceptSetComponent:
+          typedValueSetConceptSetComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ConceptReferenceComponent typedValueSetConceptReferenceComponent:
+          typedValueSetConceptReferenceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.DesignationComponent typedValueSetDesignationComponent:
+          typedValueSetDesignationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.FilterComponent typedValueSetFilterComponent:
+          typedValueSetFilterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ExpansionComponent typedValueSetExpansionComponent:
+          typedValueSetExpansionComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ParameterComponent typedValueSetParameterComponent:
+          typedValueSetParameterComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.ValueSet.ContainsComponent typedValueSetContainsComponent:
+          typedValueSetContainsComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.VerificationResult.PrimarySourceComponent typedVerificationResultPrimarySourceComponent:
+          typedVerificationResultPrimarySourceComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.VerificationResult.AttestationComponent typedVerificationResultAttestationComponent:
+          typedVerificationResultAttestationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.VerificationResult.ValidatorComponent typedVerificationResultValidatorComponent:
+          typedVerificationResultValidatorComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent typedVisionPrescriptionLensSpecificationComponent:
+          typedVisionPrescriptionLensSpecificationComponent.SerializeJson(writer, options, true);
+          break;
+        case Hl7.Fhir.Model.VisionPrescription.PrismComponent typedVisionPrescriptionPrismComponent:
+          typedVisionPrescriptionPrismComponent.SerializeJson(writer, options, true);
+          break;
+        default:
+          throw new FormatException($"Cannot serialize unknown resource type: {data.GetType()}");
       }
 
       writer.Flush();
@@ -1087,7 +2625,7 @@ namespace Hl7.Fhir.Serialization.Poco
           ((Hl7.Fhir.Model.VisionPrescription)target).DeserializeJson(ref reader, options);
           break;
         default:
-          throw new Exception($"Cannot parse resource type: {resourceType}");
+          throw new FormatException($"Cannot parse unknown resource type: {resourceType}");
       }
 
       return (Resource)target;

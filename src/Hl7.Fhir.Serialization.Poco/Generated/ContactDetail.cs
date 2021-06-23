@@ -53,28 +53,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ContactDetail, Export: ContactDetail, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if (current.NameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.NameElement.Value))
-        {
-          writer.WriteString("name",current.NameElement.Value);
-        }
-        if (current.NameElement.HasExtensions() || (!string.IsNullOrEmpty(current.NameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_name",false,current.NameElement.Extension,current.NameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("name",current.NameElement,writer,options);
 
-      if ((current.Telecom != null) && (current.Telecom.Count != 0))
-      {
-        writer.WritePropertyName("telecom");
-        writer.WriteStartArray();
-        foreach (ContactPoint val in current.Telecom)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("telecom", current.Telecom, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

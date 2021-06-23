@@ -55,16 +55,7 @@ namespace Hl7.Fhir.Serialization.Poco
         writer.WriteString("id",current.ElementId.Trim());
       }
 
-      if ((current.Extension != null) && (current.Extension.Count != 0))
-      {
-        writer.WritePropertyName("extension");
-        writer.WriteStartArray();
-        foreach (Extension val in current.Extension)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("extension", current.Extension, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

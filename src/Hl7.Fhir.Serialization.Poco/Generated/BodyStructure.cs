@@ -54,80 +54,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: BodyStructure, Export: BodyStructure, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ActiveElement != null)
-      {
-        if (current.ActiveElement.Value != null)
-        {
-          writer.WriteBoolean("active",(bool)current.ActiveElement.Value);
-        }
-        if (current.ActiveElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActiveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_active",false,current.ActiveElement.Extension,current.ActiveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("active",current.ActiveElement,writer,options);
 
-      if (current.Morphology != null)
-      {
-        writer.WritePropertyName("morphology");
-        current.Morphology.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("morphology", current.Morphology, writer, options);
 
-      if (current.Location != null)
-      {
-        writer.WritePropertyName("location");
-        current.Location.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("location", current.Location, writer, options);
 
-      if ((current.LocationQualifier != null) && (current.LocationQualifier.Count != 0))
-      {
-        writer.WritePropertyName("locationQualifier");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.LocationQualifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("locationQualifier", current.LocationQualifier, writer, options);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if ((current.Image != null) && (current.Image.Count != 0))
-      {
-        writer.WritePropertyName("image");
-        writer.WriteStartArray();
-        foreach (Attachment val in current.Image)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("image", current.Image, writer, options);
 
-      if (current.Patient != null)
-      {
-        writer.WritePropertyName("patient");
-        current.Patient.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("patient", current.Patient, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

@@ -50,47 +50,13 @@ namespace Hl7.Fhir.Serialization.Poco
     public static void SerializeJson(this Hl7.Fhir.Model.Resource current, Utf8JsonWriter writer, JsonSerializerOptions options, bool includeStartObject = true)
     {
       if (includeStartObject) { writer.WriteStartObject(); }
-      if (current.IdElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.IdElement.Value))
-        {
-          writer.WriteString("id",current.IdElement.Value);
-        }
-        if (current.IdElement.HasExtensions() || (!string.IsNullOrEmpty(current.IdElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_id",false,current.IdElement.Extension,current.IdElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("id",current.IdElement,writer,options);
 
-      if (current.Meta != null)
-      {
-        writer.WritePropertyName("meta");
-        current.Meta.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("meta", current.Meta, writer, options);
 
-      if (current.ImplicitRulesElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ImplicitRulesElement.Value))
-        {
-          writer.WriteString("implicitRules",current.ImplicitRulesElement.Value);
-        }
-        if (current.ImplicitRulesElement.HasExtensions() || (!string.IsNullOrEmpty(current.ImplicitRulesElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_implicitRules",false,current.ImplicitRulesElement.Extension,current.ImplicitRulesElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("implicitRules",current.ImplicitRulesElement,writer,options);
 
-      if (current.LanguageElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.LanguageElement.Value))
-        {
-          writer.WriteString("language",current.LanguageElement.Value.Trim());
-        }
-        if (current.LanguageElement.HasExtensions() || (!string.IsNullOrEmpty(current.LanguageElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_language",false,current.LanguageElement.Extension,current.LanguageElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("language",current.LanguageElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

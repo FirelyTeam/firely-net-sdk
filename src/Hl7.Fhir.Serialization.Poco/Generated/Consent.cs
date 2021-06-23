@@ -54,85 +54,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Consent, Export: Consent, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.Scope != null)
-      {
-        writer.WritePropertyName("scope");
-        current.Scope.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("scope", current.Scope, writer, options);
 
-      if ((current.Category != null) && (current.Category.Count != 0))
-      {
-        writer.WritePropertyName("category");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Category)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("category", current.Category, writer, options);
 
-      if (current.Patient != null)
-      {
-        writer.WritePropertyName("patient");
-        current.Patient.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("patient", current.Patient, writer, options);
 
-      if (current.DateTimeElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateTimeElement.Value))
-        {
-          writer.WriteString("dateTime",current.DateTimeElement.Value);
-        }
-        if (current.DateTimeElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateTimeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_dateTime",false,current.DateTimeElement.Extension,current.DateTimeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("dateTime",current.DateTimeElement,writer,options);
 
-      if ((current.Performer != null) && (current.Performer.Count != 0))
-      {
-        writer.WritePropertyName("performer");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Performer)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("performer", current.Performer, writer, options);
 
-      if ((current.Organization != null) && (current.Organization.Count != 0))
-      {
-        writer.WritePropertyName("organization");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Organization)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organization", current.Organization, writer, options);
 
       if (current.Source != null)
       {
@@ -148,39 +84,13 @@ namespace Hl7.Fhir.Serialization.Poco
             break;
         }
       }
-      if ((current.Policy != null) && (current.Policy.Count != 0))
-      {
-        writer.WritePropertyName("policy");
-        writer.WriteStartArray();
-        foreach (Consent.PolicyComponent val in current.Policy)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("policy", current.Policy, writer, options);
 
-      if (current.PolicyRule != null)
-      {
-        writer.WritePropertyName("policyRule");
-        current.PolicyRule.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("policyRule", current.PolicyRule, writer, options);
 
-      if ((current.Verification != null) && (current.Verification.Count != 0))
-      {
-        writer.WritePropertyName("verification");
-        writer.WriteStartArray();
-        foreach (Consent.VerificationComponent val in current.Verification)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("verification", current.Verification, writer, options);
 
-      if (current.Provision != null)
-      {
-        writer.WritePropertyName("provision");
-        current.Provision.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("provision", current.Provision, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -460,29 +370,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Consent#Policy, Export: PolicyComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.AuthorityElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AuthorityElement.Value))
-        {
-          writer.WriteString("authority",current.AuthorityElement.Value);
-        }
-        if (current.AuthorityElement.HasExtensions() || (!string.IsNullOrEmpty(current.AuthorityElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_authority",false,current.AuthorityElement.Extension,current.AuthorityElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("authority",current.AuthorityElement,writer,options);
 
-      if (current.UriElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.UriElement.Value))
-        {
-          writer.WriteString("uri",current.UriElement.Value);
-        }
-        if (current.UriElement.HasExtensions() || (!string.IsNullOrEmpty(current.UriElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_uri",false,current.UriElement.Extension,current.UriElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("uri",current.UriElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -570,35 +460,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Consent#Verification, Export: VerificationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.VerifiedElement != null)
-      {
-        if (current.VerifiedElement.Value != null)
-        {
-          writer.WriteBoolean("verified",(bool)current.VerifiedElement.Value);
-        }
-        if (current.VerifiedElement.HasExtensions() || (!string.IsNullOrEmpty(current.VerifiedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_verified",false,current.VerifiedElement.Extension,current.VerifiedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("verified",current.VerifiedElement,writer,options);
 
-      if (current.VerifiedWith != null)
-      {
-        writer.WritePropertyName("verifiedWith");
-        current.VerifiedWith.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("verifiedWith", current.VerifiedWith, writer, options);
 
-      if (current.VerificationDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.VerificationDateElement.Value))
-        {
-          writer.WriteString("verificationDate",current.VerificationDateElement.Value);
-        }
-        if (current.VerificationDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.VerificationDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_verificationDate",false,current.VerificationDateElement.Extension,current.VerificationDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("verificationDate",current.VerificationDateElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -691,117 +557,27 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Consent#provision, Export: provisionComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.TypeElement != null)
-      {
-        if (current.TypeElement.Value != null)
-        {
-          writer.WriteString("type",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.TypeElement.Value));
-        }
-        if (current.TypeElement.HasExtensions() || (!string.IsNullOrEmpty(current.TypeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_type",false,current.TypeElement.Extension,current.TypeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("type",current.TypeElement,writer,options);
 
-      if (current.Period != null)
-      {
-        writer.WritePropertyName("period");
-        current.Period.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("period", current.Period, writer, options);
 
-      if ((current.Actor != null) && (current.Actor.Count != 0))
-      {
-        writer.WritePropertyName("actor");
-        writer.WriteStartArray();
-        foreach (Consent.provisionActorComponent val in current.Actor)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("actor", current.Actor, writer, options);
 
-      if ((current.Action != null) && (current.Action.Count != 0))
-      {
-        writer.WritePropertyName("action");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Action)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("action", current.Action, writer, options);
 
-      if ((current.SecurityLabel != null) && (current.SecurityLabel.Count != 0))
-      {
-        writer.WritePropertyName("securityLabel");
-        writer.WriteStartArray();
-        foreach (Coding val in current.SecurityLabel)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("securityLabel", current.SecurityLabel, writer, options);
 
-      if ((current.Purpose != null) && (current.Purpose.Count != 0))
-      {
-        writer.WritePropertyName("purpose");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Purpose)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("purpose", current.Purpose, writer, options);
 
-      if ((current.Class != null) && (current.Class.Count != 0))
-      {
-        writer.WritePropertyName("class");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Class)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("class", current.Class, writer, options);
 
-      if ((current.Code != null) && (current.Code.Count != 0))
-      {
-        writer.WritePropertyName("code");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Code)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.DataPeriod != null)
-      {
-        writer.WritePropertyName("dataPeriod");
-        current.DataPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("dataPeriod", current.DataPeriod, writer, options);
 
-      if ((current.Data != null) && (current.Data.Count != 0))
-      {
-        writer.WritePropertyName("data");
-        writer.WriteStartArray();
-        foreach (Consent.provisionDataComponent val in current.Data)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("data", current.Data, writer, options);
 
-      if ((current.Provision != null) && (current.Provision.Count != 0))
-      {
-        writer.WritePropertyName("provision");
-        writer.WriteStartArray();
-        foreach (Consent.provisionComponent val in current.Provision)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("provision", current.Provision, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1098,17 +874,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Consent#provisionActor, Export: provisionActorComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Role != null)
-      {
-        writer.WritePropertyName("role");
-        current.Role.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("role", current.Role, writer, options);
 
-      if (current.Reference != null)
-      {
-        writer.WritePropertyName("reference");
-        current.Reference.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("reference", current.Reference, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1172,23 +940,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Consent#provisionData, Export: provisionDataComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.MeaningElement != null)
-      {
-        if (current.MeaningElement.Value != null)
-        {
-          writer.WriteString("meaning",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.MeaningElement.Value));
-        }
-        if (current.MeaningElement.HasExtensions() || (!string.IsNullOrEmpty(current.MeaningElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_meaning",false,current.MeaningElement.Extension,current.MeaningElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("meaning",current.MeaningElement,writer,options);
 
-      if (current.Reference != null)
-      {
-        writer.WritePropertyName("reference");
-        current.Reference.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("reference", current.Reference, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

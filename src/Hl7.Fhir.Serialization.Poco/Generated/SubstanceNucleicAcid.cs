@@ -54,52 +54,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: SubstanceNucleicAcid, Export: SubstanceNucleicAcid, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.SequenceType != null)
-      {
-        writer.WritePropertyName("sequenceType");
-        current.SequenceType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sequenceType", current.SequenceType, writer, options);
 
-      if (current.NumberOfSubunitsElement != null)
-      {
-        if (current.NumberOfSubunitsElement.Value != null)
-        {
-          writer.WriteNumber("numberOfSubunits",(int)current.NumberOfSubunitsElement.Value);
-        }
-        if (current.NumberOfSubunitsElement.HasExtensions() || (!string.IsNullOrEmpty(current.NumberOfSubunitsElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_numberOfSubunits",false,current.NumberOfSubunitsElement.Extension,current.NumberOfSubunitsElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("numberOfSubunits",current.NumberOfSubunitsElement,writer,options);
 
-      if (current.AreaOfHybridisationElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AreaOfHybridisationElement.Value))
-        {
-          writer.WriteString("areaOfHybridisation",current.AreaOfHybridisationElement.Value);
-        }
-        if (current.AreaOfHybridisationElement.HasExtensions() || (!string.IsNullOrEmpty(current.AreaOfHybridisationElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_areaOfHybridisation",false,current.AreaOfHybridisationElement.Extension,current.AreaOfHybridisationElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("areaOfHybridisation",current.AreaOfHybridisationElement,writer,options);
 
-      if (current.OligoNucleotideType != null)
-      {
-        writer.WritePropertyName("oligoNucleotideType");
-        current.OligoNucleotideType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("oligoNucleotideType", current.OligoNucleotideType, writer, options);
 
-      if ((current.Subunit != null) && (current.Subunit.Count != 0))
-      {
-        writer.WritePropertyName("subunit");
-        writer.WriteStartArray();
-        foreach (SubstanceNucleicAcid.SubunitComponent val in current.Subunit)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subunit", current.Subunit, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -224,81 +187,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceNucleicAcid#Subunit, Export: SubunitComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.SubunitElement != null)
-      {
-        if (current.SubunitElement.Value != null)
-        {
-          writer.WriteNumber("subunit",(int)current.SubunitElement.Value);
-        }
-        if (current.SubunitElement.HasExtensions() || (!string.IsNullOrEmpty(current.SubunitElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_subunit",false,current.SubunitElement.Extension,current.SubunitElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("subunit",current.SubunitElement,writer,options);
 
-      if (current.SequenceElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SequenceElement.Value))
-        {
-          writer.WriteString("sequence",current.SequenceElement.Value);
-        }
-        if (current.SequenceElement.HasExtensions() || (!string.IsNullOrEmpty(current.SequenceElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_sequence",false,current.SequenceElement.Extension,current.SequenceElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("sequence",current.SequenceElement,writer,options);
 
-      if (current.LengthElement != null)
-      {
-        if (current.LengthElement.Value != null)
-        {
-          writer.WriteNumber("length",(int)current.LengthElement.Value);
-        }
-        if (current.LengthElement.HasExtensions() || (!string.IsNullOrEmpty(current.LengthElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_length",false,current.LengthElement.Extension,current.LengthElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("length",current.LengthElement,writer,options);
 
-      if (current.SequenceAttachment != null)
-      {
-        writer.WritePropertyName("sequenceAttachment");
-        current.SequenceAttachment.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sequenceAttachment", current.SequenceAttachment, writer, options);
 
-      if (current.FivePrime != null)
-      {
-        writer.WritePropertyName("fivePrime");
-        current.FivePrime.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("fivePrime", current.FivePrime, writer, options);
 
-      if (current.ThreePrime != null)
-      {
-        writer.WritePropertyName("threePrime");
-        current.ThreePrime.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("threePrime", current.ThreePrime, writer, options);
 
-      if ((current.Linkage != null) && (current.Linkage.Count != 0))
-      {
-        writer.WritePropertyName("linkage");
-        writer.WriteStartArray();
-        foreach (SubstanceNucleicAcid.LinkageComponent val in current.Linkage)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("linkage", current.Linkage, writer, options);
 
-      if ((current.Sugar != null) && (current.Sugar.Count != 0))
-      {
-        writer.WritePropertyName("sugar");
-        writer.WriteStartArray();
-        foreach (SubstanceNucleicAcid.SugarComponent val in current.Sugar)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sugar", current.Sugar, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -472,47 +375,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceNucleicAcid#Linkage, Export: LinkageComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.ConnectivityElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ConnectivityElement.Value))
-        {
-          writer.WriteString("connectivity",current.ConnectivityElement.Value);
-        }
-        if (current.ConnectivityElement.HasExtensions() || (!string.IsNullOrEmpty(current.ConnectivityElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_connectivity",false,current.ConnectivityElement.Extension,current.ConnectivityElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("connectivity",current.ConnectivityElement,writer,options);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.NameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.NameElement.Value))
-        {
-          writer.WriteString("name",current.NameElement.Value);
-        }
-        if (current.NameElement.HasExtensions() || (!string.IsNullOrEmpty(current.NameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_name",false,current.NameElement.Extension,current.NameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("name",current.NameElement,writer,options);
 
-      if (current.ResidueSiteElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ResidueSiteElement.Value))
-        {
-          writer.WriteString("residueSite",current.ResidueSiteElement.Value);
-        }
-        if (current.ResidueSiteElement.HasExtensions() || (!string.IsNullOrEmpty(current.ResidueSiteElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_residueSite",false,current.ResidueSiteElement.Extension,current.ResidueSiteElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("residueSite",current.ResidueSiteElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -622,35 +491,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceNucleicAcid#Sugar, Export: SugarComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.NameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.NameElement.Value))
-        {
-          writer.WriteString("name",current.NameElement.Value);
-        }
-        if (current.NameElement.HasExtensions() || (!string.IsNullOrEmpty(current.NameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_name",false,current.NameElement.Extension,current.NameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("name",current.NameElement,writer,options);
 
-      if (current.ResidueSiteElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ResidueSiteElement.Value))
-        {
-          writer.WriteString("residueSite",current.ResidueSiteElement.Value);
-        }
-        if (current.ResidueSiteElement.HasExtensions() || (!string.IsNullOrEmpty(current.ResidueSiteElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_residueSite",false,current.ResidueSiteElement.Extension,current.ResidueSiteElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("residueSite",current.ResidueSiteElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

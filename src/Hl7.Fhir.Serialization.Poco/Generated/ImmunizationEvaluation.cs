@@ -54,135 +54,37 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ImmunizationEvaluation, Export: ImmunizationEvaluation, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.Patient != null)
-      {
-        writer.WritePropertyName("patient");
-        current.Patient.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("patient", current.Patient, writer, options);
 
-      if (current.DateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateElement.Value))
-        {
-          writer.WriteString("date",current.DateElement.Value);
-        }
-        if (current.DateElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_date",false,current.DateElement.Extension,current.DateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("date",current.DateElement,writer,options);
 
-      if (current.Authority != null)
-      {
-        writer.WritePropertyName("authority");
-        current.Authority.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("authority", current.Authority, writer, options);
 
-      if (current.TargetDisease != null)
-      {
-        writer.WritePropertyName("targetDisease");
-        current.TargetDisease.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("targetDisease", current.TargetDisease, writer, options);
 
-      if (current.ImmunizationEvent != null)
-      {
-        writer.WritePropertyName("immunizationEvent");
-        current.ImmunizationEvent.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("immunizationEvent", current.ImmunizationEvent, writer, options);
 
-      if (current.DoseStatus != null)
-      {
-        writer.WritePropertyName("doseStatus");
-        current.DoseStatus.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("doseStatus", current.DoseStatus, writer, options);
 
-      if ((current.DoseStatusReason != null) && (current.DoseStatusReason.Count != 0))
-      {
-        writer.WritePropertyName("doseStatusReason");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.DoseStatusReason)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("doseStatusReason", current.DoseStatusReason, writer, options);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if (current.SeriesElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SeriesElement.Value))
-        {
-          writer.WriteString("series",current.SeriesElement.Value);
-        }
-        if (current.SeriesElement.HasExtensions() || (!string.IsNullOrEmpty(current.SeriesElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_series",false,current.SeriesElement.Extension,current.SeriesElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("series",current.SeriesElement,writer,options);
 
       if (current.DoseNumber != null)
       {
         switch (current.DoseNumber)
         {
           case Hl7.Fhir.Model.PositiveInt v_PositiveInt:
-            if (v_PositiveInt != null)
-            {
-              if (v_PositiveInt.Value != null)
-              {
-                writer.WriteNumber("doseNumberPositiveInt",(int)v_PositiveInt.Value);
-              }
-              if (v_PositiveInt.HasExtensions() || (!string.IsNullOrEmpty(v_PositiveInt.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_doseNumberPositiveInt",false,v_PositiveInt.Extension,v_PositiveInt.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("doseNumberPositiveInt",v_PositiveInt,writer,options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
-            if (v_FhirString != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirString.Value))
-              {
-                writer.WriteString("doseNumberString",v_FhirString.Value);
-              }
-              if (v_FhirString.HasExtensions() || (!string.IsNullOrEmpty(v_FhirString.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_doseNumberString",false,v_FhirString.Extension,v_FhirString.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("doseNumberString",v_FhirString,writer,options);
             break;
         }
       }
@@ -191,30 +93,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.SeriesDoses)
         {
           case Hl7.Fhir.Model.PositiveInt v_PositiveInt:
-            if (v_PositiveInt != null)
-            {
-              if (v_PositiveInt.Value != null)
-              {
-                writer.WriteNumber("seriesDosesPositiveInt",(int)v_PositiveInt.Value);
-              }
-              if (v_PositiveInt.HasExtensions() || (!string.IsNullOrEmpty(v_PositiveInt.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_seriesDosesPositiveInt",false,v_PositiveInt.Extension,v_PositiveInt.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("seriesDosesPositiveInt",v_PositiveInt,writer,options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
-            if (v_FhirString != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirString.Value))
-              {
-                writer.WriteString("seriesDosesString",v_FhirString.Value);
-              }
-              if (v_FhirString.HasExtensions() || (!string.IsNullOrEmpty(v_FhirString.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_seriesDosesString",false,v_FhirString.Extension,v_FhirString.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("seriesDosesString",v_FhirString,writer,options);
             break;
         }
       }

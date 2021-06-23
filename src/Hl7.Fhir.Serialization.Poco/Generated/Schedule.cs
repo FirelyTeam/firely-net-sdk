@@ -54,90 +54,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Schedule, Export: Schedule, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ActiveElement != null)
-      {
-        if (current.ActiveElement.Value != null)
-        {
-          writer.WriteBoolean("active",(bool)current.ActiveElement.Value);
-        }
-        if (current.ActiveElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActiveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_active",false,current.ActiveElement.Extension,current.ActiveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("active",current.ActiveElement,writer,options);
 
-      if ((current.ServiceCategory != null) && (current.ServiceCategory.Count != 0))
-      {
-        writer.WritePropertyName("serviceCategory");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ServiceCategory)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("serviceCategory", current.ServiceCategory, writer, options);
 
-      if ((current.ServiceType != null) && (current.ServiceType.Count != 0))
-      {
-        writer.WritePropertyName("serviceType");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ServiceType)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("serviceType", current.ServiceType, writer, options);
 
-      if ((current.Specialty != null) && (current.Specialty.Count != 0))
-      {
-        writer.WritePropertyName("specialty");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Specialty)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("specialty", current.Specialty, writer, options);
 
-      if ((current.Actor != null) && (current.Actor.Count != 0))
-      {
-        writer.WritePropertyName("actor");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Actor)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("actor", current.Actor, writer, options);
 
-      if (current.PlanningHorizon != null)
-      {
-        writer.WritePropertyName("planningHorizon");
-        current.PlanningHorizon.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("planningHorizon", current.PlanningHorizon, writer, options);
 
-      if (current.CommentElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CommentElement.Value))
-        {
-          writer.WriteString("comment",current.CommentElement.Value);
-        }
-        if (current.CommentElement.HasExtensions() || (!string.IsNullOrEmpty(current.CommentElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_comment",false,current.CommentElement.Extension,current.CommentElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("comment",current.CommentElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

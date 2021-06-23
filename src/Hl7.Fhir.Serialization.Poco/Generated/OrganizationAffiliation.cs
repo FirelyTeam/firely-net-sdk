@@ -54,123 +54,29 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: OrganizationAffiliation, Export: OrganizationAffiliation, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ActiveElement != null)
-      {
-        if (current.ActiveElement.Value != null)
-        {
-          writer.WriteBoolean("active",(bool)current.ActiveElement.Value);
-        }
-        if (current.ActiveElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActiveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_active",false,current.ActiveElement.Extension,current.ActiveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("active",current.ActiveElement,writer,options);
 
-      if (current.Period != null)
-      {
-        writer.WritePropertyName("period");
-        current.Period.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("period", current.Period, writer, options);
 
-      if (current.Organization != null)
-      {
-        writer.WritePropertyName("organization");
-        current.Organization.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organization", current.Organization, writer, options);
 
-      if (current.ParticipatingOrganization != null)
-      {
-        writer.WritePropertyName("participatingOrganization");
-        current.ParticipatingOrganization.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("participatingOrganization", current.ParticipatingOrganization, writer, options);
 
-      if ((current.Network != null) && (current.Network.Count != 0))
-      {
-        writer.WritePropertyName("network");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Network)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("network", current.Network, writer, options);
 
-      if ((current.Code != null) && (current.Code.Count != 0))
-      {
-        writer.WritePropertyName("code");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Code)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.Specialty != null) && (current.Specialty.Count != 0))
-      {
-        writer.WritePropertyName("specialty");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Specialty)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("specialty", current.Specialty, writer, options);
 
-      if ((current.Location != null) && (current.Location.Count != 0))
-      {
-        writer.WritePropertyName("location");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Location)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("location", current.Location, writer, options);
 
-      if ((current.HealthcareService != null) && (current.HealthcareService.Count != 0))
-      {
-        writer.WritePropertyName("healthcareService");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.HealthcareService)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("healthcareService", current.HealthcareService, writer, options);
 
-      if ((current.Telecom != null) && (current.Telecom.Count != 0))
-      {
-        writer.WritePropertyName("telecom");
-        writer.WriteStartArray();
-        foreach (ContactPoint val in current.Telecom)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("telecom", current.Telecom, writer, options);
 
-      if ((current.Endpoint != null) && (current.Endpoint.Count != 0))
-      {
-        writer.WritePropertyName("endpoint");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Endpoint)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("endpoint", current.Endpoint, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

@@ -53,170 +53,27 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ProdCharacteristic, Export: ProdCharacteristic, Base: BackboneElement (BackboneType)
       ((Hl7.Fhir.Model.BackboneType)current).SerializeJson(writer, options, false);
 
-      if (current.Height != null)
-      {
-        writer.WritePropertyName("height");
-        current.Height.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("height", current.Height, writer, options);
 
-      if (current.Width != null)
-      {
-        writer.WritePropertyName("width");
-        current.Width.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("width", current.Width, writer, options);
 
-      if (current.Depth != null)
-      {
-        writer.WritePropertyName("depth");
-        current.Depth.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("depth", current.Depth, writer, options);
 
-      if (current.Weight != null)
-      {
-        writer.WritePropertyName("weight");
-        current.Weight.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("weight", current.Weight, writer, options);
 
-      if (current.NominalVolume != null)
-      {
-        writer.WritePropertyName("nominalVolume");
-        current.NominalVolume.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("nominalVolume", current.NominalVolume, writer, options);
 
-      if (current.ExternalDiameter != null)
-      {
-        writer.WritePropertyName("externalDiameter");
-        current.ExternalDiameter.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("externalDiameter", current.ExternalDiameter, writer, options);
 
-      if (current.ShapeElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ShapeElement.Value))
-        {
-          writer.WriteString("shape",current.ShapeElement.Value);
-        }
-        if (current.ShapeElement.HasExtensions() || (!string.IsNullOrEmpty(current.ShapeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_shape",false,current.ShapeElement.Extension,current.ShapeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("shape",current.ShapeElement,writer,options);
 
-      if ((current.ColorElement != null) && (current.ColorElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirString val in current.ColorElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("color",current.ColorElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("color");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ColorElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
+      JsonStreamUtilities.SerializePrimitiveProperty("imprint",current.ImprintElement,writer,options);
 
-          writer.WriteEndArray();
-        }
+      JsonStreamUtilities.SerializeComplexProperty("image", current.Image, writer, options);
 
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_color");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ColorElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if ((current.ImprintElement != null) && (current.ImprintElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirString val in current.ImprintElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
-
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("imprint");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ImprintElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
-
-          writer.WriteEndArray();
-        }
-
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_imprint");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ImprintElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if ((current.Image != null) && (current.Image.Count != 0))
-      {
-        writer.WritePropertyName("image");
-        writer.WriteStartArray();
-        foreach (Attachment val in current.Image)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if (current.Scoring != null)
-      {
-        writer.WritePropertyName("scoring");
-        current.Scoring.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("scoring", current.Scoring, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

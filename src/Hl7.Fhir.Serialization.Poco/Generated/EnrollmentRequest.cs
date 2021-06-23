@@ -54,64 +54,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: EnrollmentRequest, Export: EnrollmentRequest, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.CreatedElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CreatedElement.Value))
-        {
-          writer.WriteString("created",current.CreatedElement.Value);
-        }
-        if (current.CreatedElement.HasExtensions() || (!string.IsNullOrEmpty(current.CreatedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_created",false,current.CreatedElement.Extension,current.CreatedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("created",current.CreatedElement,writer,options);
 
-      if (current.Insurer != null)
-      {
-        writer.WritePropertyName("insurer");
-        current.Insurer.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("insurer", current.Insurer, writer, options);
 
-      if (current.Provider != null)
-      {
-        writer.WritePropertyName("provider");
-        current.Provider.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("provider", current.Provider, writer, options);
 
-      if (current.Candidate != null)
-      {
-        writer.WritePropertyName("candidate");
-        current.Candidate.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("candidate", current.Candidate, writer, options);
 
-      if (current.Coverage != null)
-      {
-        writer.WritePropertyName("coverage");
-        current.Coverage.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("coverage", current.Coverage, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

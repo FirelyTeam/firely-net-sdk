@@ -54,56 +54,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: DeviceUseStatement, Export: DeviceUseStatement, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if ((current.BasedOn != null) && (current.BasedOn.Count != 0))
-      {
-        writer.WritePropertyName("basedOn");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.BasedOn)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("basedOn", current.BasedOn, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.Subject != null)
-      {
-        writer.WritePropertyName("subject");
-        current.Subject.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if ((current.DerivedFrom != null) && (current.DerivedFrom.Count != 0))
-      {
-        writer.WritePropertyName("derivedFrom");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.DerivedFrom)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("derivedFrom", current.DerivedFrom, writer, options);
 
       if (current.Timing != null)
       {
@@ -118,82 +77,23 @@ namespace Hl7.Fhir.Serialization.Poco
             v_Period.SerializeJson(writer, options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
-            if (v_FhirDateTime != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirDateTime.Value))
-              {
-                writer.WriteString("timingDateTime",v_FhirDateTime.Value);
-              }
-              if (v_FhirDateTime.HasExtensions() || (!string.IsNullOrEmpty(v_FhirDateTime.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_timingDateTime",false,v_FhirDateTime.Extension,v_FhirDateTime.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("timingDateTime",v_FhirDateTime,writer,options);
             break;
         }
       }
-      if (current.RecordedOnElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.RecordedOnElement.Value))
-        {
-          writer.WriteString("recordedOn",current.RecordedOnElement.Value);
-        }
-        if (current.RecordedOnElement.HasExtensions() || (!string.IsNullOrEmpty(current.RecordedOnElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_recordedOn",false,current.RecordedOnElement.Extension,current.RecordedOnElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("recordedOn",current.RecordedOnElement,writer,options);
 
-      if (current.Source != null)
-      {
-        writer.WritePropertyName("source");
-        current.Source.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("source", current.Source, writer, options);
 
-      if (current.Device != null)
-      {
-        writer.WritePropertyName("device");
-        current.Device.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("device", current.Device, writer, options);
 
-      if ((current.ReasonCode != null) && (current.ReasonCode.Count != 0))
-      {
-        writer.WritePropertyName("reasonCode");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ReasonCode)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("reasonCode", current.ReasonCode, writer, options);
 
-      if ((current.ReasonReference != null) && (current.ReasonReference.Count != 0))
-      {
-        writer.WritePropertyName("reasonReference");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.ReasonReference)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("reasonReference", current.ReasonReference, writer, options);
 
-      if (current.BodySite != null)
-      {
-        writer.WritePropertyName("bodySite");
-        current.BodySite.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("bodySite", current.BodySite, writer, options);
 
-      if ((current.Note != null) && (current.Note.Count != 0))
-      {
-        writer.WritePropertyName("note");
-        writer.WriteStartArray();
-        foreach (Annotation val in current.Note)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("note", current.Note, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

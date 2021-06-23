@@ -54,265 +54,53 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: HealthcareService, Export: HealthcareService, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ActiveElement != null)
-      {
-        if (current.ActiveElement.Value != null)
-        {
-          writer.WriteBoolean("active",(bool)current.ActiveElement.Value);
-        }
-        if (current.ActiveElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActiveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_active",false,current.ActiveElement.Extension,current.ActiveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("active",current.ActiveElement,writer,options);
 
-      if (current.ProvidedBy != null)
-      {
-        writer.WritePropertyName("providedBy");
-        current.ProvidedBy.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("providedBy", current.ProvidedBy, writer, options);
 
-      if ((current.Category != null) && (current.Category.Count != 0))
-      {
-        writer.WritePropertyName("category");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Category)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("category", current.Category, writer, options);
 
-      if ((current.Type != null) && (current.Type.Count != 0))
-      {
-        writer.WritePropertyName("type");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Type)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if ((current.Specialty != null) && (current.Specialty.Count != 0))
-      {
-        writer.WritePropertyName("specialty");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Specialty)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("specialty", current.Specialty, writer, options);
 
-      if ((current.Location != null) && (current.Location.Count != 0))
-      {
-        writer.WritePropertyName("location");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Location)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("location", current.Location, writer, options);
 
-      if (current.NameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.NameElement.Value))
-        {
-          writer.WriteString("name",current.NameElement.Value);
-        }
-        if (current.NameElement.HasExtensions() || (!string.IsNullOrEmpty(current.NameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_name",false,current.NameElement.Extension,current.NameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("name",current.NameElement,writer,options);
 
-      if (current.CommentElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CommentElement.Value))
-        {
-          writer.WriteString("comment",current.CommentElement.Value);
-        }
-        if (current.CommentElement.HasExtensions() || (!string.IsNullOrEmpty(current.CommentElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_comment",false,current.CommentElement.Extension,current.CommentElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("comment",current.CommentElement,writer,options);
 
-      if (current.ExtraDetails != null)
-      {
-        if (!string.IsNullOrEmpty(current.ExtraDetails.Value))
-        {
-          writer.WriteString("extraDetails",current.ExtraDetails.Value);
-        }
-        if (current.ExtraDetails.HasExtensions() || (!string.IsNullOrEmpty(current.ExtraDetails.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_extraDetails",false,current.ExtraDetails.Extension,current.ExtraDetails.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("extraDetails",current.ExtraDetails,writer,options);
 
-      if (current.Photo != null)
-      {
-        writer.WritePropertyName("photo");
-        current.Photo.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("photo", current.Photo, writer, options);
 
-      if ((current.Telecom != null) && (current.Telecom.Count != 0))
-      {
-        writer.WritePropertyName("telecom");
-        writer.WriteStartArray();
-        foreach (ContactPoint val in current.Telecom)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("telecom", current.Telecom, writer, options);
 
-      if ((current.CoverageArea != null) && (current.CoverageArea.Count != 0))
-      {
-        writer.WritePropertyName("coverageArea");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.CoverageArea)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("coverageArea", current.CoverageArea, writer, options);
 
-      if ((current.ServiceProvisionCode != null) && (current.ServiceProvisionCode.Count != 0))
-      {
-        writer.WritePropertyName("serviceProvisionCode");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ServiceProvisionCode)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("serviceProvisionCode", current.ServiceProvisionCode, writer, options);
 
-      if ((current.Eligibility != null) && (current.Eligibility.Count != 0))
-      {
-        writer.WritePropertyName("eligibility");
-        writer.WriteStartArray();
-        foreach (HealthcareService.EligibilityComponent val in current.Eligibility)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("eligibility", current.Eligibility, writer, options);
 
-      if ((current.Program != null) && (current.Program.Count != 0))
-      {
-        writer.WritePropertyName("program");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Program)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("program", current.Program, writer, options);
 
-      if ((current.Characteristic != null) && (current.Characteristic.Count != 0))
-      {
-        writer.WritePropertyName("characteristic");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Characteristic)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("characteristic", current.Characteristic, writer, options);
 
-      if ((current.Communication != null) && (current.Communication.Count != 0))
-      {
-        writer.WritePropertyName("communication");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Communication)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("communication", current.Communication, writer, options);
 
-      if ((current.ReferralMethod != null) && (current.ReferralMethod.Count != 0))
-      {
-        writer.WritePropertyName("referralMethod");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ReferralMethod)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("referralMethod", current.ReferralMethod, writer, options);
 
-      if (current.AppointmentRequiredElement != null)
-      {
-        if (current.AppointmentRequiredElement.Value != null)
-        {
-          writer.WriteBoolean("appointmentRequired",(bool)current.AppointmentRequiredElement.Value);
-        }
-        if (current.AppointmentRequiredElement.HasExtensions() || (!string.IsNullOrEmpty(current.AppointmentRequiredElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_appointmentRequired",false,current.AppointmentRequiredElement.Extension,current.AppointmentRequiredElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("appointmentRequired",current.AppointmentRequiredElement,writer,options);
 
-      if ((current.AvailableTime != null) && (current.AvailableTime.Count != 0))
-      {
-        writer.WritePropertyName("availableTime");
-        writer.WriteStartArray();
-        foreach (HealthcareService.AvailableTimeComponent val in current.AvailableTime)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("availableTime", current.AvailableTime, writer, options);
 
-      if ((current.NotAvailable != null) && (current.NotAvailable.Count != 0))
-      {
-        writer.WritePropertyName("notAvailable");
-        writer.WriteStartArray();
-        foreach (HealthcareService.NotAvailableComponent val in current.NotAvailable)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("notAvailable", current.NotAvailable, writer, options);
 
-      if (current.AvailabilityExceptionsElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AvailabilityExceptionsElement.Value))
-        {
-          writer.WriteString("availabilityExceptions",current.AvailabilityExceptionsElement.Value);
-        }
-        if (current.AvailabilityExceptionsElement.HasExtensions() || (!string.IsNullOrEmpty(current.AvailabilityExceptionsElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_availabilityExceptions",false,current.AvailabilityExceptionsElement.Extension,current.AvailabilityExceptionsElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("availabilityExceptions",current.AvailabilityExceptionsElement,writer,options);
 
-      if ((current.Endpoint != null) && (current.Endpoint.Count != 0))
-      {
-        writer.WritePropertyName("endpoint");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Endpoint)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("endpoint", current.Endpoint, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -910,23 +698,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: HealthcareService#Eligibility, Export: EligibilityComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.Comment != null)
-      {
-        if (!string.IsNullOrEmpty(current.Comment.Value))
-        {
-          writer.WriteString("comment",current.Comment.Value);
-        }
-        if (current.Comment.HasExtensions() || (!string.IsNullOrEmpty(current.Comment.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_comment",false,current.Comment.Extension,current.Comment.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("comment",current.Comment,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1002,91 +776,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: HealthcareService#AvailableTime, Export: AvailableTimeComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if ((current.DaysOfWeekElement != null) && (current.DaysOfWeekElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (Code<Hl7.Fhir.Model.DaysOfWeek> val in current.DaysOfWeekElement)
-        {
-          if (val.Value != null) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("daysOfWeek",current.DaysOfWeekElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("daysOfWeek");
-          writer.WriteStartArray();
-          foreach (Code<Hl7.Fhir.Model.DaysOfWeek> val in current.DaysOfWeekElement)
-          {
-            if (val.Value == null)
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(Hl7.Fhir.Utility.EnumUtility.GetLiteral(val.Value));
-            }
-          }
+      JsonStreamUtilities.SerializePrimitiveProperty("allDay",current.AllDayElement,writer,options);
 
-          writer.WriteEndArray();
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("availableStartTime",current.AvailableStartTimeElement,writer,options);
 
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_daysOfWeek");
-          writer.WriteStartArray();
-          foreach (Code<Hl7.Fhir.Model.DaysOfWeek> val in current.DaysOfWeekElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if (current.AllDayElement != null)
-      {
-        if (current.AllDayElement.Value != null)
-        {
-          writer.WriteBoolean("allDay",(bool)current.AllDayElement.Value);
-        }
-        if (current.AllDayElement.HasExtensions() || (!string.IsNullOrEmpty(current.AllDayElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_allDay",false,current.AllDayElement.Extension,current.AllDayElement.ElementId);
-        }
-      }
-
-      if (current.AvailableStartTimeElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AvailableStartTimeElement.Value))
-        {
-          writer.WriteString("availableStartTime",current.AvailableStartTimeElement.Value);
-        }
-        if (current.AvailableStartTimeElement.HasExtensions() || (!string.IsNullOrEmpty(current.AvailableStartTimeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_availableStartTime",false,current.AvailableStartTimeElement.Extension,current.AvailableStartTimeElement.ElementId);
-        }
-      }
-
-      if (current.AvailableEndTimeElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AvailableEndTimeElement.Value))
-        {
-          writer.WriteString("availableEndTime",current.AvailableEndTimeElement.Value);
-        }
-        if (current.AvailableEndTimeElement.HasExtensions() || (!string.IsNullOrEmpty(current.AvailableEndTimeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_availableEndTime",false,current.AvailableEndTimeElement.Extension,current.AvailableEndTimeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("availableEndTime",current.AvailableEndTimeElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1255,23 +951,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: HealthcareService#NotAvailable, Export: NotAvailableComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if (current.During != null)
-      {
-        writer.WritePropertyName("during");
-        current.During.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("during", current.During, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

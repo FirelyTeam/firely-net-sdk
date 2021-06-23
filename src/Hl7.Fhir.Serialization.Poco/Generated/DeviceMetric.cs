@@ -54,93 +54,25 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: DeviceMetric, Export: DeviceMetric, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.Unit != null)
-      {
-        writer.WritePropertyName("unit");
-        current.Unit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("unit", current.Unit, writer, options);
 
-      if (current.Source != null)
-      {
-        writer.WritePropertyName("source");
-        current.Source.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("source", current.Source, writer, options);
 
-      if (current.Parent != null)
-      {
-        writer.WritePropertyName("parent");
-        current.Parent.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("parent", current.Parent, writer, options);
 
-      if (current.OperationalStatusElement != null)
-      {
-        if (current.OperationalStatusElement.Value != null)
-        {
-          writer.WriteString("operationalStatus",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.OperationalStatusElement.Value));
-        }
-        if (current.OperationalStatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.OperationalStatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_operationalStatus",false,current.OperationalStatusElement.Extension,current.OperationalStatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("operationalStatus",current.OperationalStatusElement,writer,options);
 
-      if (current.ColorElement != null)
-      {
-        if (current.ColorElement.Value != null)
-        {
-          writer.WriteString("color",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.ColorElement.Value));
-        }
-        if (current.ColorElement.HasExtensions() || (!string.IsNullOrEmpty(current.ColorElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_color",false,current.ColorElement.Extension,current.ColorElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("color",current.ColorElement,writer,options);
 
-      if (current.CategoryElement != null)
-      {
-        if (current.CategoryElement.Value != null)
-        {
-          writer.WriteString("category",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.CategoryElement.Value));
-        }
-        if (current.CategoryElement.HasExtensions() || (!string.IsNullOrEmpty(current.CategoryElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_category",false,current.CategoryElement.Extension,current.CategoryElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("category",current.CategoryElement,writer,options);
 
-      if (current.MeasurementPeriod != null)
-      {
-        writer.WritePropertyName("measurementPeriod");
-        current.MeasurementPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("measurementPeriod", current.MeasurementPeriod, writer, options);
 
-      if ((current.Calibration != null) && (current.Calibration.Count != 0))
-      {
-        writer.WritePropertyName("calibration");
-        writer.WriteStartArray();
-        foreach (DeviceMetric.CalibrationComponent val in current.Calibration)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("calibration", current.Calibration, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -324,41 +256,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: DeviceMetric#Calibration, Export: CalibrationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.TypeElement != null)
-      {
-        if (current.TypeElement.Value != null)
-        {
-          writer.WriteString("type",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.TypeElement.Value));
-        }
-        if (current.TypeElement.HasExtensions() || (!string.IsNullOrEmpty(current.TypeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_type",false,current.TypeElement.Extension,current.TypeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("type",current.TypeElement,writer,options);
 
-      if (current.StateElement != null)
-      {
-        if (current.StateElement.Value != null)
-        {
-          writer.WriteString("state",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StateElement.Value));
-        }
-        if (current.StateElement.HasExtensions() || (!string.IsNullOrEmpty(current.StateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_state",false,current.StateElement.Extension,current.StateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("state",current.StateElement,writer,options);
 
-      if (current.TimeElement != null)
-      {
-        if (current.TimeElement.Value != null)
-        {
-          writer.WriteString("time",((DateTimeOffset)current.TimeElement.Value).ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK",System.Globalization.CultureInfo.InvariantCulture));
-        }
-        if (current.TimeElement.HasExtensions() || (!string.IsNullOrEmpty(current.TimeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_time",false,current.TimeElement.Extension,current.TimeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("time",current.TimeElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

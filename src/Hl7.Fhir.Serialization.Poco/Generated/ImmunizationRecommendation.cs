@@ -54,51 +54,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ImmunizationRecommendation, Export: ImmunizationRecommendation, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Patient != null)
-      {
-        writer.WritePropertyName("patient");
-        current.Patient.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("patient", current.Patient, writer, options);
 
-      if (current.DateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateElement.Value))
-        {
-          writer.WriteString("date",current.DateElement.Value);
-        }
-        if (current.DateElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_date",false,current.DateElement.Extension,current.DateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("date",current.DateElement,writer,options);
 
-      if (current.Authority != null)
-      {
-        writer.WritePropertyName("authority");
-        current.Authority.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("authority", current.Authority, writer, options);
 
-      if ((current.Recommendation != null) && (current.Recommendation.Count != 0))
-      {
-        writer.WritePropertyName("recommendation");
-        writer.WriteStartArray();
-        foreach (ImmunizationRecommendation.RecommendationComponent val in current.Recommendation)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("recommendation", current.Recommendation, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -233,115 +197,31 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: ImmunizationRecommendation#Recommendation, Export: RecommendationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if ((current.VaccineCode != null) && (current.VaccineCode.Count != 0))
-      {
-        writer.WritePropertyName("vaccineCode");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.VaccineCode)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("vaccineCode", current.VaccineCode, writer, options);
 
-      if (current.TargetDisease != null)
-      {
-        writer.WritePropertyName("targetDisease");
-        current.TargetDisease.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("targetDisease", current.TargetDisease, writer, options);
 
-      if ((current.ContraindicatedVaccineCode != null) && (current.ContraindicatedVaccineCode.Count != 0))
-      {
-        writer.WritePropertyName("contraindicatedVaccineCode");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ContraindicatedVaccineCode)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("contraindicatedVaccineCode", current.ContraindicatedVaccineCode, writer, options);
 
-      if (current.ForecastStatus != null)
-      {
-        writer.WritePropertyName("forecastStatus");
-        current.ForecastStatus.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("forecastStatus", current.ForecastStatus, writer, options);
 
-      if ((current.ForecastReason != null) && (current.ForecastReason.Count != 0))
-      {
-        writer.WritePropertyName("forecastReason");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.ForecastReason)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("forecastReason", current.ForecastReason, writer, options);
 
-      if ((current.DateCriterion != null) && (current.DateCriterion.Count != 0))
-      {
-        writer.WritePropertyName("dateCriterion");
-        writer.WriteStartArray();
-        foreach (ImmunizationRecommendation.DateCriterionComponent val in current.DateCriterion)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("dateCriterion", current.DateCriterion, writer, options);
 
-      if (current.DescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DescriptionElement.Value))
-        {
-          writer.WriteString("description",current.DescriptionElement.Value);
-        }
-        if (current.DescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_description",false,current.DescriptionElement.Extension,current.DescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("description",current.DescriptionElement,writer,options);
 
-      if (current.SeriesElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SeriesElement.Value))
-        {
-          writer.WriteString("series",current.SeriesElement.Value);
-        }
-        if (current.SeriesElement.HasExtensions() || (!string.IsNullOrEmpty(current.SeriesElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_series",false,current.SeriesElement.Extension,current.SeriesElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("series",current.SeriesElement,writer,options);
 
       if (current.DoseNumber != null)
       {
         switch (current.DoseNumber)
         {
           case Hl7.Fhir.Model.PositiveInt v_PositiveInt:
-            if (v_PositiveInt != null)
-            {
-              if (v_PositiveInt.Value != null)
-              {
-                writer.WriteNumber("doseNumberPositiveInt",(int)v_PositiveInt.Value);
-              }
-              if (v_PositiveInt.HasExtensions() || (!string.IsNullOrEmpty(v_PositiveInt.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_doseNumberPositiveInt",false,v_PositiveInt.Extension,v_PositiveInt.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("doseNumberPositiveInt",v_PositiveInt,writer,options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
-            if (v_FhirString != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirString.Value))
-              {
-                writer.WriteString("doseNumberString",v_FhirString.Value);
-              }
-              if (v_FhirString.HasExtensions() || (!string.IsNullOrEmpty(v_FhirString.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_doseNumberString",false,v_FhirString.Extension,v_FhirString.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("doseNumberString",v_FhirString,writer,options);
             break;
         }
       }
@@ -350,54 +230,16 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.SeriesDoses)
         {
           case Hl7.Fhir.Model.PositiveInt v_PositiveInt:
-            if (v_PositiveInt != null)
-            {
-              if (v_PositiveInt.Value != null)
-              {
-                writer.WriteNumber("seriesDosesPositiveInt",(int)v_PositiveInt.Value);
-              }
-              if (v_PositiveInt.HasExtensions() || (!string.IsNullOrEmpty(v_PositiveInt.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_seriesDosesPositiveInt",false,v_PositiveInt.Extension,v_PositiveInt.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("seriesDosesPositiveInt",v_PositiveInt,writer,options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
-            if (v_FhirString != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirString.Value))
-              {
-                writer.WriteString("seriesDosesString",v_FhirString.Value);
-              }
-              if (v_FhirString.HasExtensions() || (!string.IsNullOrEmpty(v_FhirString.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_seriesDosesString",false,v_FhirString.Extension,v_FhirString.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("seriesDosesString",v_FhirString,writer,options);
             break;
         }
       }
-      if ((current.SupportingImmunization != null) && (current.SupportingImmunization.Count != 0))
-      {
-        writer.WritePropertyName("supportingImmunization");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.SupportingImmunization)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("supportingImmunization", current.SupportingImmunization, writer, options);
 
-      if ((current.SupportingPatientInformation != null) && (current.SupportingPatientInformation.Count != 0))
-      {
-        writer.WritePropertyName("supportingPatientInformation");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.SupportingPatientInformation)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("supportingPatientInformation", current.SupportingPatientInformation, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -725,23 +567,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: ImmunizationRecommendation#DateCriterion, Export: DateCriterionComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.ValueElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ValueElement.Value))
-        {
-          writer.WriteString("value",current.ValueElement.Value);
-        }
-        if (current.ValueElement.HasExtensions() || (!string.IsNullOrEmpty(current.ValueElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_value",false,current.ValueElement.Extension,current.ValueElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("value",current.ValueElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

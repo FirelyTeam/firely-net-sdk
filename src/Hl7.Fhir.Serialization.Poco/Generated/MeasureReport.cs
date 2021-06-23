@@ -54,110 +54,27 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MeasureReport, Export: MeasureReport, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.TypeElement != null)
-      {
-        if (current.TypeElement.Value != null)
-        {
-          writer.WriteString("type",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.TypeElement.Value));
-        }
-        if (current.TypeElement.HasExtensions() || (!string.IsNullOrEmpty(current.TypeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_type",false,current.TypeElement.Extension,current.TypeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("type",current.TypeElement,writer,options);
 
-      if (current.MeasureElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.MeasureElement.Value))
-        {
-          writer.WriteString("measure",current.MeasureElement.Value);
-        }
-        if (current.MeasureElement.HasExtensions() || (!string.IsNullOrEmpty(current.MeasureElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_measure",false,current.MeasureElement.Extension,current.MeasureElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("measure",current.MeasureElement,writer,options);
 
-      if (current.Subject != null)
-      {
-        writer.WritePropertyName("subject");
-        current.Subject.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.DateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateElement.Value))
-        {
-          writer.WriteString("date",current.DateElement.Value);
-        }
-        if (current.DateElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_date",false,current.DateElement.Extension,current.DateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("date",current.DateElement,writer,options);
 
-      if (current.Reporter != null)
-      {
-        writer.WritePropertyName("reporter");
-        current.Reporter.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("reporter", current.Reporter, writer, options);
 
-      if (current.Period != null)
-      {
-        writer.WritePropertyName("period");
-        current.Period.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("period", current.Period, writer, options);
 
-      if (current.ImprovementNotation != null)
-      {
-        writer.WritePropertyName("improvementNotation");
-        current.ImprovementNotation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("improvementNotation", current.ImprovementNotation, writer, options);
 
-      if ((current.Group != null) && (current.Group.Count != 0))
-      {
-        writer.WritePropertyName("group");
-        writer.WriteStartArray();
-        foreach (MeasureReport.GroupComponent val in current.Group)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("group", current.Group, writer, options);
 
-      if ((current.EvaluatedResource != null) && (current.EvaluatedResource.Count != 0))
-      {
-        writer.WritePropertyName("evaluatedResource");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.EvaluatedResource)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("evaluatedResource", current.EvaluatedResource, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -380,39 +297,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#Group, Export: GroupComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.Population != null) && (current.Population.Count != 0))
-      {
-        writer.WritePropertyName("population");
-        writer.WriteStartArray();
-        foreach (MeasureReport.PopulationComponent val in current.Population)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("population", current.Population, writer, options);
 
-      if (current.MeasureScore != null)
-      {
-        writer.WritePropertyName("measureScore");
-        current.MeasureScore.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("measureScore", current.MeasureScore, writer, options);
 
-      if ((current.Stratifier != null) && (current.Stratifier.Count != 0))
-      {
-        writer.WritePropertyName("stratifier");
-        writer.WriteStartArray();
-        foreach (MeasureReport.StratifierComponent val in current.Stratifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("stratifier", current.Stratifier, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -530,29 +421,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#Population, Export: PopulationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.CountElement != null)
-      {
-        if (current.CountElement.Value != null)
-        {
-          writer.WriteNumber("count",(int)current.CountElement.Value);
-        }
-        if (current.CountElement.HasExtensions() || (!string.IsNullOrEmpty(current.CountElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_count",false,current.CountElement.Extension,current.CountElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("count",current.CountElement,writer,options);
 
-      if (current.SubjectResults != null)
-      {
-        writer.WritePropertyName("subjectResults");
-        current.SubjectResults.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subjectResults", current.SubjectResults, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -633,27 +506,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#Stratifier, Export: StratifierComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if ((current.Code != null) && (current.Code.Count != 0))
-      {
-        writer.WritePropertyName("code");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Code)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.Stratum != null) && (current.Stratum.Count != 0))
-      {
-        writer.WritePropertyName("stratum");
-        writer.WriteStartArray();
-        foreach (MeasureReport.StratifierGroupComponent val in current.Stratum)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("stratum", current.Stratum, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -761,39 +616,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#StratifierGroup, Export: StratifierGroupComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Value != null)
-      {
-        writer.WritePropertyName("value");
-        current.Value.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("value", current.Value, writer, options);
 
-      if ((current.Component != null) && (current.Component.Count != 0))
-      {
-        writer.WritePropertyName("component");
-        writer.WriteStartArray();
-        foreach (MeasureReport.ComponentComponent val in current.Component)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("component", current.Component, writer, options);
 
-      if ((current.Population != null) && (current.Population.Count != 0))
-      {
-        writer.WritePropertyName("population");
-        writer.WriteStartArray();
-        foreach (MeasureReport.StratifierGroupPopulationComponent val in current.Population)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("population", current.Population, writer, options);
 
-      if (current.MeasureScore != null)
-      {
-        writer.WritePropertyName("measureScore");
-        current.MeasureScore.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("measureScore", current.MeasureScore, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -911,17 +740,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#Component, Export: ComponentComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.Value != null)
-      {
-        writer.WritePropertyName("value");
-        current.Value.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("value", current.Value, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -985,29 +806,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MeasureReport#StratifierGroupPopulation, Export: StratifierGroupPopulationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.CountElement != null)
-      {
-        if (current.CountElement.Value != null)
-        {
-          writer.WriteNumber("count",(int)current.CountElement.Value);
-        }
-        if (current.CountElement.HasExtensions() || (!string.IsNullOrEmpty(current.CountElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_count",false,current.CountElement.Extension,current.CountElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("count",current.CountElement,writer,options);
 
-      if (current.SubjectResults != null)
-      {
-        writer.WritePropertyName("subjectResults");
-        current.SubjectResults.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subjectResults", current.SubjectResults, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

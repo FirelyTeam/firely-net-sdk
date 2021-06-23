@@ -52,6 +52,22 @@ namespace Hl7.Fhir.Serialization.Tests
                 "Roundtripping json->xml->json", ParserType.Generated, provider: null);
         }
 
+        [TestMethod]
+        public void EdgecaseRoundtrip()
+        {
+            var json = File.ReadAllText(Path.Combine("TestData", "json-edge-cases-temp.json"));
+
+            var options = new JsonSerializerOptions();
+            options.Converters.Add(new JsonStreamResourceConverter());
+
+            var poco = JsonSerializer.Deserialize<Resource>(json, options);
+            var json2 = JsonSerializer.Serialize(poco, options);
+
+            var errors = new List<string>();
+            JsonAssert.AreSame("edgecases", json, json2, errors);
+            Console.WriteLine(String.Join("\r\n", errors));
+            Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+        }
 
         [TestMethod]
         [TestCategory("LongRunner")]

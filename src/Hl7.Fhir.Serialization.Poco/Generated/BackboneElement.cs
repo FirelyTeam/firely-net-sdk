@@ -53,16 +53,7 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: BackboneElement, Export: BackboneElement, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if ((current.ModifierExtension != null) && (current.ModifierExtension.Count != 0))
-      {
-        writer.WritePropertyName("modifierExtension");
-        writer.WriteStartArray();
-        foreach (Extension val in current.ModifierExtension)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("modifierExtension", current.ModifierExtension, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

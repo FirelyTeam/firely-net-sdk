@@ -54,45 +54,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductUndesirableEffect, Export: MedicinalProductUndesirableEffect, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Subject != null) && (current.Subject.Count != 0))
-      {
-        writer.WritePropertyName("subject");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Subject)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.SymptomConditionEffect != null)
-      {
-        writer.WritePropertyName("symptomConditionEffect");
-        current.SymptomConditionEffect.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("symptomConditionEffect", current.SymptomConditionEffect, writer, options);
 
-      if (current.Classification != null)
-      {
-        writer.WritePropertyName("classification");
-        current.Classification.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("classification", current.Classification, writer, options);
 
-      if (current.FrequencyOfOccurrence != null)
-      {
-        writer.WritePropertyName("frequencyOfOccurrence");
-        current.FrequencyOfOccurrence.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("frequencyOfOccurrence", current.FrequencyOfOccurrence, writer, options);
 
-      if ((current.Population != null) && (current.Population.Count != 0))
-      {
-        writer.WritePropertyName("population");
-        writer.WriteStartArray();
-        foreach (Population val in current.Population)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("population", current.Population, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

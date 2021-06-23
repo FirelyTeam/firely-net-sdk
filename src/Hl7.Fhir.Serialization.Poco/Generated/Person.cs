@@ -54,108 +54,25 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Person, Export: Person, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if ((current.Name != null) && (current.Name.Count != 0))
-      {
-        writer.WritePropertyName("name");
-        writer.WriteStartArray();
-        foreach (HumanName val in current.Name)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("name", current.Name, writer, options);
 
-      if ((current.Telecom != null) && (current.Telecom.Count != 0))
-      {
-        writer.WritePropertyName("telecom");
-        writer.WriteStartArray();
-        foreach (ContactPoint val in current.Telecom)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("telecom", current.Telecom, writer, options);
 
-      if (current.GenderElement != null)
-      {
-        if (current.GenderElement.Value != null)
-        {
-          writer.WriteString("gender",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.GenderElement.Value));
-        }
-        if (current.GenderElement.HasExtensions() || (!string.IsNullOrEmpty(current.GenderElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_gender",false,current.GenderElement.Extension,current.GenderElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("gender",current.GenderElement,writer,options);
 
-      if (current.BirthDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.BirthDateElement.Value))
-        {
-          writer.WriteString("birthDate",current.BirthDateElement.Value);
-        }
-        if (current.BirthDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.BirthDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_birthDate",false,current.BirthDateElement.Extension,current.BirthDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("birthDate",current.BirthDateElement,writer,options);
 
-      if ((current.Address != null) && (current.Address.Count != 0))
-      {
-        writer.WritePropertyName("address");
-        writer.WriteStartArray();
-        foreach (Address val in current.Address)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("address", current.Address, writer, options);
 
-      if (current.Photo != null)
-      {
-        writer.WritePropertyName("photo");
-        current.Photo.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("photo", current.Photo, writer, options);
 
-      if (current.ManagingOrganization != null)
-      {
-        writer.WritePropertyName("managingOrganization");
-        current.ManagingOrganization.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("managingOrganization", current.ManagingOrganization, writer, options);
 
-      if (current.ActiveElement != null)
-      {
-        if (current.ActiveElement.Value != null)
-        {
-          writer.WriteBoolean("active",(bool)current.ActiveElement.Value);
-        }
-        if (current.ActiveElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActiveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_active",false,current.ActiveElement.Extension,current.ActiveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("active",current.ActiveElement,writer,options);
 
-      if ((current.Link != null) && (current.Link.Count != 0))
-      {
-        writer.WritePropertyName("link");
-        writer.WriteStartArray();
-        foreach (Person.LinkComponent val in current.Link)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("link", current.Link, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -405,23 +322,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: Person#Link, Export: LinkComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Target != null)
-      {
-        writer.WritePropertyName("target");
-        current.Target.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("target", current.Target, writer, options);
 
-      if (current.AssuranceElement != null)
-      {
-        if (current.AssuranceElement.Value != null)
-        {
-          writer.WriteString("assurance",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.AssuranceElement.Value));
-        }
-        if (current.AssuranceElement.HasExtensions() || (!string.IsNullOrEmpty(current.AssuranceElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_assurance",false,current.AssuranceElement.Extension,current.AssuranceElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("assurance",current.AssuranceElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

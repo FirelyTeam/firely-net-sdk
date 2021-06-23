@@ -54,145 +54,37 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductAuthorization, Export: MedicinalProductAuthorization, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Subject != null)
-      {
-        writer.WritePropertyName("subject");
-        current.Subject.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if ((current.Country != null) && (current.Country.Count != 0))
-      {
-        writer.WritePropertyName("country");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Country)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("country", current.Country, writer, options);
 
-      if ((current.Jurisdiction != null) && (current.Jurisdiction.Count != 0))
-      {
-        writer.WritePropertyName("jurisdiction");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Jurisdiction)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("jurisdiction", current.Jurisdiction, writer, options);
 
-      if (current.Status != null)
-      {
-        writer.WritePropertyName("status");
-        current.Status.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("status", current.Status, writer, options);
 
-      if (current.StatusDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.StatusDateElement.Value))
-        {
-          writer.WriteString("statusDate",current.StatusDateElement.Value);
-        }
-        if (current.StatusDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_statusDate",false,current.StatusDateElement.Extension,current.StatusDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("statusDate",current.StatusDateElement,writer,options);
 
-      if (current.RestoreDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.RestoreDateElement.Value))
-        {
-          writer.WriteString("restoreDate",current.RestoreDateElement.Value);
-        }
-        if (current.RestoreDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.RestoreDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_restoreDate",false,current.RestoreDateElement.Extension,current.RestoreDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("restoreDate",current.RestoreDateElement,writer,options);
 
-      if (current.ValidityPeriod != null)
-      {
-        writer.WritePropertyName("validityPeriod");
-        current.ValidityPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("validityPeriod", current.ValidityPeriod, writer, options);
 
-      if (current.DataExclusivityPeriod != null)
-      {
-        writer.WritePropertyName("dataExclusivityPeriod");
-        current.DataExclusivityPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("dataExclusivityPeriod", current.DataExclusivityPeriod, writer, options);
 
-      if (current.DateOfFirstAuthorizationElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateOfFirstAuthorizationElement.Value))
-        {
-          writer.WriteString("dateOfFirstAuthorization",current.DateOfFirstAuthorizationElement.Value);
-        }
-        if (current.DateOfFirstAuthorizationElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateOfFirstAuthorizationElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_dateOfFirstAuthorization",false,current.DateOfFirstAuthorizationElement.Extension,current.DateOfFirstAuthorizationElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("dateOfFirstAuthorization",current.DateOfFirstAuthorizationElement,writer,options);
 
-      if (current.InternationalBirthDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.InternationalBirthDateElement.Value))
-        {
-          writer.WriteString("internationalBirthDate",current.InternationalBirthDateElement.Value);
-        }
-        if (current.InternationalBirthDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.InternationalBirthDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_internationalBirthDate",false,current.InternationalBirthDateElement.Extension,current.InternationalBirthDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("internationalBirthDate",current.InternationalBirthDateElement,writer,options);
 
-      if (current.LegalBasis != null)
-      {
-        writer.WritePropertyName("legalBasis");
-        current.LegalBasis.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("legalBasis", current.LegalBasis, writer, options);
 
-      if ((current.JurisdictionalAuthorization != null) && (current.JurisdictionalAuthorization.Count != 0))
-      {
-        writer.WritePropertyName("jurisdictionalAuthorization");
-        writer.WriteStartArray();
-        foreach (MedicinalProductAuthorization.JurisdictionalAuthorizationComponent val in current.JurisdictionalAuthorization)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("jurisdictionalAuthorization", current.JurisdictionalAuthorization, writer, options);
 
-      if (current.Holder != null)
-      {
-        writer.WritePropertyName("holder");
-        current.Holder.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("holder", current.Holder, writer, options);
 
-      if (current.Regulator != null)
-      {
-        writer.WritePropertyName("regulator");
-        current.Regulator.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("regulator", current.Regulator, writer, options);
 
-      if (current.Procedure != null)
-      {
-        writer.WritePropertyName("procedure");
-        current.Procedure.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("procedure", current.Procedure, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -462,45 +354,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductAuthorization#JurisdictionalAuthorization, Export: JurisdictionalAuthorizationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Country != null)
-      {
-        writer.WritePropertyName("country");
-        current.Country.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("country", current.Country, writer, options);
 
-      if ((current.Jurisdiction != null) && (current.Jurisdiction.Count != 0))
-      {
-        writer.WritePropertyName("jurisdiction");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Jurisdiction)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("jurisdiction", current.Jurisdiction, writer, options);
 
-      if (current.LegalStatusOfSupply != null)
-      {
-        writer.WritePropertyName("legalStatusOfSupply");
-        current.LegalStatusOfSupply.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("legalStatusOfSupply", current.LegalStatusOfSupply, writer, options);
 
-      if (current.ValidityPeriod != null)
-      {
-        writer.WritePropertyName("validityPeriod");
-        current.ValidityPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("validityPeriod", current.ValidityPeriod, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -623,17 +485,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductAuthorization#Procedure, Export: ProcedureComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
       if (current.Date != null)
       {
@@ -644,30 +498,11 @@ namespace Hl7.Fhir.Serialization.Poco
             v_Period.SerializeJson(writer, options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
-            if (v_FhirDateTime != null)
-            {
-              if (!string.IsNullOrEmpty(v_FhirDateTime.Value))
-              {
-                writer.WriteString("dateDateTime",v_FhirDateTime.Value);
-              }
-              if (v_FhirDateTime.HasExtensions() || (!string.IsNullOrEmpty(v_FhirDateTime.ElementId)))
-              {
-                JsonStreamUtilities.SerializeExtensionList(writer,options,"_dateDateTime",false,v_FhirDateTime.Extension,v_FhirDateTime.ElementId);
-              }
-            }
+            JsonStreamUtilities.SerializePrimitiveProperty("dateDateTime",v_FhirDateTime,writer,options);
             break;
         }
       }
-      if ((current.Application != null) && (current.Application.Count != 0))
-      {
-        writer.WritePropertyName("application");
-        writer.WriteStartArray();
-        foreach (MedicinalProductAuthorization.ProcedureComponent val in current.Application)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("application", current.Application, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

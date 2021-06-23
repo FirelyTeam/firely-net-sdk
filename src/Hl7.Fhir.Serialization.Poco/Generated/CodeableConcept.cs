@@ -53,28 +53,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: CodeableConcept, Export: CodeableConcept, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if ((current.Coding != null) && (current.Coding.Count != 0))
-      {
-        writer.WritePropertyName("coding");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Coding)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("coding", current.Coding, writer, options);
 
-      if (current.TextElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.TextElement.Value))
-        {
-          writer.WriteString("text",current.TextElement.Value);
-        }
-        if (current.TextElement.HasExtensions() || (!string.IsNullOrEmpty(current.TextElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_text",false,current.TextElement.Extension,current.TextElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("text",current.TextElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

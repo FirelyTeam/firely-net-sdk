@@ -54,197 +54,31 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: SubstanceSourceMaterial, Export: SubstanceSourceMaterial, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.SourceMaterialClass != null)
-      {
-        writer.WritePropertyName("sourceMaterialClass");
-        current.SourceMaterialClass.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sourceMaterialClass", current.SourceMaterialClass, writer, options);
 
-      if (current.SourceMaterialType != null)
-      {
-        writer.WritePropertyName("sourceMaterialType");
-        current.SourceMaterialType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sourceMaterialType", current.SourceMaterialType, writer, options);
 
-      if (current.SourceMaterialState != null)
-      {
-        writer.WritePropertyName("sourceMaterialState");
-        current.SourceMaterialState.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("sourceMaterialState", current.SourceMaterialState, writer, options);
 
-      if (current.OrganismId != null)
-      {
-        writer.WritePropertyName("organismId");
-        current.OrganismId.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organismId", current.OrganismId, writer, options);
 
-      if (current.OrganismNameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.OrganismNameElement.Value))
-        {
-          writer.WriteString("organismName",current.OrganismNameElement.Value);
-        }
-        if (current.OrganismNameElement.HasExtensions() || (!string.IsNullOrEmpty(current.OrganismNameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_organismName",false,current.OrganismNameElement.Extension,current.OrganismNameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("organismName",current.OrganismNameElement,writer,options);
 
-      if ((current.ParentSubstanceId != null) && (current.ParentSubstanceId.Count != 0))
-      {
-        writer.WritePropertyName("parentSubstanceId");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.ParentSubstanceId)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("parentSubstanceId", current.ParentSubstanceId, writer, options);
 
-      if ((current.ParentSubstanceNameElement != null) && (current.ParentSubstanceNameElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirString val in current.ParentSubstanceNameElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("parentSubstanceName",current.ParentSubstanceNameElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("parentSubstanceName");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ParentSubstanceNameElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
+      JsonStreamUtilities.SerializeComplexProperty("countryOfOrigin", current.CountryOfOrigin, writer, options);
 
-          writer.WriteEndArray();
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("geographicalLocation",current.GeographicalLocationElement,writer,options);
 
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_parentSubstanceName");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ParentSubstanceNameElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
+      JsonStreamUtilities.SerializeComplexProperty("developmentStage", current.DevelopmentStage, writer, options);
 
-          }
+      JsonStreamUtilities.SerializeComplexProperty("fractionDescription", current.FractionDescription, writer, options);
 
-          writer.WriteEndArray();
-        }
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organism", current.Organism, writer, options);
 
-      if ((current.CountryOfOrigin != null) && (current.CountryOfOrigin.Count != 0))
-      {
-        writer.WritePropertyName("countryOfOrigin");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.CountryOfOrigin)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if ((current.GeographicalLocationElement != null) && (current.GeographicalLocationElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirString val in current.GeographicalLocationElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
-
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("geographicalLocation");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.GeographicalLocationElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
-
-          writer.WriteEndArray();
-        }
-
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_geographicalLocation");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.GeographicalLocationElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if (current.DevelopmentStage != null)
-      {
-        writer.WritePropertyName("developmentStage");
-        current.DevelopmentStage.SerializeJson(writer, options);
-      }
-
-      if ((current.FractionDescription != null) && (current.FractionDescription.Count != 0))
-      {
-        writer.WritePropertyName("fractionDescription");
-        writer.WriteStartArray();
-        foreach (SubstanceSourceMaterial.FractionDescriptionComponent val in current.FractionDescription)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if (current.Organism != null)
-      {
-        writer.WritePropertyName("organism");
-        current.Organism.SerializeJson(writer, options);
-      }
-
-      if ((current.PartDescription != null) && (current.PartDescription.Count != 0))
-      {
-        writer.WritePropertyName("partDescription");
-        writer.WriteStartArray();
-        foreach (SubstanceSourceMaterial.PartDescriptionComponent val in current.PartDescription)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("partDescription", current.PartDescription, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -581,23 +415,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#FractionDescription, Export: FractionDescriptionComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.FractionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.FractionElement.Value))
-        {
-          writer.WriteString("fraction",current.FractionElement.Value);
-        }
-        if (current.FractionElement.HasExtensions() || (!string.IsNullOrEmpty(current.FractionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_fraction",false,current.FractionElement.Extension,current.FractionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("fraction",current.FractionElement,writer,options);
 
-      if (current.MaterialType != null)
-      {
-        writer.WritePropertyName("materialType");
-        current.MaterialType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("materialType", current.MaterialType, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -673,64 +493,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#Organism, Export: OrganismComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Family != null)
-      {
-        writer.WritePropertyName("family");
-        current.Family.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("family", current.Family, writer, options);
 
-      if (current.Genus != null)
-      {
-        writer.WritePropertyName("genus");
-        current.Genus.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("genus", current.Genus, writer, options);
 
-      if (current.Species != null)
-      {
-        writer.WritePropertyName("species");
-        current.Species.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("species", current.Species, writer, options);
 
-      if (current.IntraspecificType != null)
-      {
-        writer.WritePropertyName("intraspecificType");
-        current.IntraspecificType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("intraspecificType", current.IntraspecificType, writer, options);
 
-      if (current.IntraspecificDescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.IntraspecificDescriptionElement.Value))
-        {
-          writer.WriteString("intraspecificDescription",current.IntraspecificDescriptionElement.Value);
-        }
-        if (current.IntraspecificDescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.IntraspecificDescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_intraspecificDescription",false,current.IntraspecificDescriptionElement.Extension,current.IntraspecificDescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("intraspecificDescription",current.IntraspecificDescriptionElement,writer,options);
 
-      if ((current.Author != null) && (current.Author.Count != 0))
-      {
-        writer.WritePropertyName("author");
-        writer.WriteStartArray();
-        foreach (SubstanceSourceMaterial.AuthorComponent val in current.Author)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("author", current.Author, writer, options);
 
-      if (current.Hybrid != null)
-      {
-        writer.WritePropertyName("hybrid");
-        current.Hybrid.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("hybrid", current.Hybrid, writer, options);
 
-      if (current.OrganismGeneral != null)
-      {
-        writer.WritePropertyName("organismGeneral");
-        current.OrganismGeneral.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organismGeneral", current.OrganismGeneral, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -858,23 +635,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#Author, Export: AuthorComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.AuthorType != null)
-      {
-        writer.WritePropertyName("authorType");
-        current.AuthorType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("authorType", current.AuthorType, writer, options);
 
-      if (current.AuthorDescriptionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AuthorDescriptionElement.Value))
-        {
-          writer.WriteString("authorDescription",current.AuthorDescriptionElement.Value);
-        }
-        if (current.AuthorDescriptionElement.HasExtensions() || (!string.IsNullOrEmpty(current.AuthorDescriptionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_authorDescription",false,current.AuthorDescriptionElement.Extension,current.AuthorDescriptionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("authorDescription",current.AuthorDescriptionElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -950,59 +713,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#Hybrid, Export: HybridComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.MaternalOrganismIdElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.MaternalOrganismIdElement.Value))
-        {
-          writer.WriteString("maternalOrganismId",current.MaternalOrganismIdElement.Value);
-        }
-        if (current.MaternalOrganismIdElement.HasExtensions() || (!string.IsNullOrEmpty(current.MaternalOrganismIdElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_maternalOrganismId",false,current.MaternalOrganismIdElement.Extension,current.MaternalOrganismIdElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("maternalOrganismId",current.MaternalOrganismIdElement,writer,options);
 
-      if (current.MaternalOrganismNameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.MaternalOrganismNameElement.Value))
-        {
-          writer.WriteString("maternalOrganismName",current.MaternalOrganismNameElement.Value);
-        }
-        if (current.MaternalOrganismNameElement.HasExtensions() || (!string.IsNullOrEmpty(current.MaternalOrganismNameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_maternalOrganismName",false,current.MaternalOrganismNameElement.Extension,current.MaternalOrganismNameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("maternalOrganismName",current.MaternalOrganismNameElement,writer,options);
 
-      if (current.PaternalOrganismIdElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.PaternalOrganismIdElement.Value))
-        {
-          writer.WriteString("paternalOrganismId",current.PaternalOrganismIdElement.Value);
-        }
-        if (current.PaternalOrganismIdElement.HasExtensions() || (!string.IsNullOrEmpty(current.PaternalOrganismIdElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_paternalOrganismId",false,current.PaternalOrganismIdElement.Extension,current.PaternalOrganismIdElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("paternalOrganismId",current.PaternalOrganismIdElement,writer,options);
 
-      if (current.PaternalOrganismNameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.PaternalOrganismNameElement.Value))
-        {
-          writer.WriteString("paternalOrganismName",current.PaternalOrganismNameElement.Value);
-        }
-        if (current.PaternalOrganismNameElement.HasExtensions() || (!string.IsNullOrEmpty(current.PaternalOrganismNameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_paternalOrganismName",false,current.PaternalOrganismNameElement.Extension,current.PaternalOrganismNameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("paternalOrganismName",current.PaternalOrganismNameElement,writer,options);
 
-      if (current.HybridType != null)
-      {
-        writer.WritePropertyName("hybridType");
-        current.HybridType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("hybridType", current.HybridType, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1129,29 +848,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#OrganismGeneral, Export: OrganismGeneralComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Kingdom != null)
-      {
-        writer.WritePropertyName("kingdom");
-        current.Kingdom.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("kingdom", current.Kingdom, writer, options);
 
-      if (current.Phylum != null)
-      {
-        writer.WritePropertyName("phylum");
-        current.Phylum.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("phylum", current.Phylum, writer, options);
 
-      if (current.Class != null)
-      {
-        writer.WritePropertyName("class");
-        current.Class.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("class", current.Class, writer, options);
 
-      if (current.Order != null)
-      {
-        writer.WritePropertyName("order");
-        current.Order.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("order", current.Order, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -1225,17 +928,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstanceSourceMaterial#PartDescription, Export: PartDescriptionComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Part != null)
-      {
-        writer.WritePropertyName("part");
-        current.Part.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("part", current.Part, writer, options);
 
-      if (current.PartLocation != null)
-      {
-        writer.WritePropertyName("partLocation");
-        current.PartLocation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("partLocation", current.PartLocation, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

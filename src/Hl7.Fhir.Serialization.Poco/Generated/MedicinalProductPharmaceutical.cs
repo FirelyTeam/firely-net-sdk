@@ -54,72 +54,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductPharmaceutical, Export: MedicinalProductPharmaceutical, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.AdministrableDoseForm != null)
-      {
-        writer.WritePropertyName("administrableDoseForm");
-        current.AdministrableDoseForm.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("administrableDoseForm", current.AdministrableDoseForm, writer, options);
 
-      if (current.UnitOfPresentation != null)
-      {
-        writer.WritePropertyName("unitOfPresentation");
-        current.UnitOfPresentation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("unitOfPresentation", current.UnitOfPresentation, writer, options);
 
-      if ((current.Ingredient != null) && (current.Ingredient.Count != 0))
-      {
-        writer.WritePropertyName("ingredient");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Ingredient)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("ingredient", current.Ingredient, writer, options);
 
-      if ((current.Device != null) && (current.Device.Count != 0))
-      {
-        writer.WritePropertyName("device");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Device)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("device", current.Device, writer, options);
 
-      if ((current.Characteristics != null) && (current.Characteristics.Count != 0))
-      {
-        writer.WritePropertyName("characteristics");
-        writer.WriteStartArray();
-        foreach (MedicinalProductPharmaceutical.CharacteristicsComponent val in current.Characteristics)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("characteristics", current.Characteristics, writer, options);
 
-      if ((current.RouteOfAdministration != null) && (current.RouteOfAdministration.Count != 0))
-      {
-        writer.WritePropertyName("routeOfAdministration");
-        writer.WriteStartArray();
-        foreach (MedicinalProductPharmaceutical.RouteOfAdministrationComponent val in current.RouteOfAdministration)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("routeOfAdministration", current.RouteOfAdministration, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -318,17 +265,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductPharmaceutical#Characteristics, Export: CharacteristicsComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.Status != null)
-      {
-        writer.WritePropertyName("status");
-        current.Status.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("status", current.Status, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -392,52 +331,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductPharmaceutical#RouteOfAdministration, Export: RouteOfAdministrationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.FirstDose != null)
-      {
-        writer.WritePropertyName("firstDose");
-        current.FirstDose.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("firstDose", current.FirstDose, writer, options);
 
-      if (current.MaxSingleDose != null)
-      {
-        writer.WritePropertyName("maxSingleDose");
-        current.MaxSingleDose.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("maxSingleDose", current.MaxSingleDose, writer, options);
 
-      if (current.MaxDosePerDay != null)
-      {
-        writer.WritePropertyName("maxDosePerDay");
-        current.MaxDosePerDay.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("maxDosePerDay", current.MaxDosePerDay, writer, options);
 
-      if (current.MaxDosePerTreatmentPeriod != null)
-      {
-        writer.WritePropertyName("maxDosePerTreatmentPeriod");
-        current.MaxDosePerTreatmentPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("maxDosePerTreatmentPeriod", current.MaxDosePerTreatmentPeriod, writer, options);
 
-      if (current.MaxTreatmentPeriod != null)
-      {
-        writer.WritePropertyName("maxTreatmentPeriod");
-        current.MaxTreatmentPeriod.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("maxTreatmentPeriod", current.MaxTreatmentPeriod, writer, options);
 
-      if ((current.TargetSpecies != null) && (current.TargetSpecies.Count != 0))
-      {
-        writer.WritePropertyName("targetSpecies");
-        writer.WriteStartArray();
-        foreach (MedicinalProductPharmaceutical.TargetSpeciesComponent val in current.TargetSpecies)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("targetSpecies", current.TargetSpecies, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -548,22 +454,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductPharmaceutical#TargetSpecies, Export: TargetSpeciesComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.WithdrawalPeriod != null) && (current.WithdrawalPeriod.Count != 0))
-      {
-        writer.WritePropertyName("withdrawalPeriod");
-        writer.WriteStartArray();
-        foreach (MedicinalProductPharmaceutical.WithdrawalPeriodComponent val in current.WithdrawalPeriod)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("withdrawalPeriod", current.WithdrawalPeriod, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -649,29 +542,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductPharmaceutical#WithdrawalPeriod, Export: WithdrawalPeriodComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Tissue != null)
-      {
-        writer.WritePropertyName("tissue");
-        current.Tissue.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("tissue", current.Tissue, writer, options);
 
-      if (current.Value != null)
-      {
-        writer.WritePropertyName("value");
-        current.Value.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("value", current.Value, writer, options);
 
-      if (current.SupportingInformationElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SupportingInformationElement.Value))
-        {
-          writer.WriteString("supportingInformation",current.SupportingInformationElement.Value);
-        }
-        if (current.SupportingInformationElement.HasExtensions() || (!string.IsNullOrEmpty(current.SupportingInformationElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_supportingInformation",false,current.SupportingInformationElement.Extension,current.SupportingInformationElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("supportingInformation",current.SupportingInformationElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

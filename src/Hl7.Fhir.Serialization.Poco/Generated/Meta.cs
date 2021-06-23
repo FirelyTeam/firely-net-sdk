@@ -53,113 +53,17 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Meta, Export: Meta, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if (current.VersionIdElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.VersionIdElement.Value))
-        {
-          writer.WriteString("versionId",current.VersionIdElement.Value);
-        }
-        if (current.VersionIdElement.HasExtensions() || (!string.IsNullOrEmpty(current.VersionIdElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_versionId",false,current.VersionIdElement.Extension,current.VersionIdElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("versionId",current.VersionIdElement,writer,options);
 
-      if (current.LastUpdatedElement != null)
-      {
-        if (current.LastUpdatedElement.Value != null)
-        {
-          writer.WriteString("lastUpdated",((DateTimeOffset)current.LastUpdatedElement.Value).ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK",System.Globalization.CultureInfo.InvariantCulture));
-        }
-        if (current.LastUpdatedElement.HasExtensions() || (!string.IsNullOrEmpty(current.LastUpdatedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_lastUpdated",false,current.LastUpdatedElement.Extension,current.LastUpdatedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("lastUpdated",current.LastUpdatedElement,writer,options);
 
-      if (current.SourceElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SourceElement.Value))
-        {
-          writer.WriteString("source",current.SourceElement.Value);
-        }
-        if (current.SourceElement.HasExtensions() || (!string.IsNullOrEmpty(current.SourceElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_source",false,current.SourceElement.Extension,current.SourceElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("source",current.SourceElement,writer,options);
 
-      if ((current.ProfileElement != null) && (current.ProfileElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirUri val in current.ProfileElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("profile",current.ProfileElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("profile");
-          writer.WriteStartArray();
-          foreach (FhirUri val in current.ProfileElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
+      JsonStreamUtilities.SerializeComplexProperty("security", current.Security, writer, options);
 
-          writer.WriteEndArray();
-        }
-
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_profile");
-          writer.WriteStartArray();
-          foreach (FhirUri val in current.ProfileElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if ((current.Security != null) && (current.Security.Count != 0))
-      {
-        writer.WritePropertyName("security");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Security)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if ((current.Tag != null) && (current.Tag.Count != 0))
-      {
-        writer.WritePropertyName("tag");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Tag)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("tag", current.Tag, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

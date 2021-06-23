@@ -54,81 +54,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: VisionPrescription, Export: VisionPrescription, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.CreatedElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CreatedElement.Value))
-        {
-          writer.WriteString("created",current.CreatedElement.Value);
-        }
-        if (current.CreatedElement.HasExtensions() || (!string.IsNullOrEmpty(current.CreatedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_created",false,current.CreatedElement.Extension,current.CreatedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("created",current.CreatedElement,writer,options);
 
-      if (current.Patient != null)
-      {
-        writer.WritePropertyName("patient");
-        current.Patient.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("patient", current.Patient, writer, options);
 
-      if (current.Encounter != null)
-      {
-        writer.WritePropertyName("encounter");
-        current.Encounter.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("encounter", current.Encounter, writer, options);
 
-      if (current.DateWrittenElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateWrittenElement.Value))
-        {
-          writer.WriteString("dateWritten",current.DateWrittenElement.Value);
-        }
-        if (current.DateWrittenElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateWrittenElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_dateWritten",false,current.DateWrittenElement.Extension,current.DateWrittenElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("dateWritten",current.DateWrittenElement,writer,options);
 
-      if (current.Prescriber != null)
-      {
-        writer.WritePropertyName("prescriber");
-        current.Prescriber.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("prescriber", current.Prescriber, writer, options);
 
-      if ((current.LensSpecification != null) && (current.LensSpecification.Count != 0))
-      {
-        writer.WritePropertyName("lensSpecification");
-        writer.WriteStartArray();
-        foreach (VisionPrescription.LensSpecificationComponent val in current.LensSpecification)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("lensSpecification", current.LensSpecification, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -302,159 +242,33 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: VisionPrescription#LensSpecification, Export: LensSpecificationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Product != null)
-      {
-        writer.WritePropertyName("product");
-        current.Product.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("product", current.Product, writer, options);
 
-      if (current.EyeElement != null)
-      {
-        if (current.EyeElement.Value != null)
-        {
-          writer.WriteString("eye",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.EyeElement.Value));
-        }
-        if (current.EyeElement.HasExtensions() || (!string.IsNullOrEmpty(current.EyeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_eye",false,current.EyeElement.Extension,current.EyeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("eye",current.EyeElement,writer,options);
 
-      if (current.SphereElement != null)
-      {
-        if (current.SphereElement.Value != null)
-        {
-          writer.WriteNumber("sphere",(decimal)current.SphereElement.Value);
-        }
-        if (current.SphereElement.HasExtensions() || (!string.IsNullOrEmpty(current.SphereElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_sphere",false,current.SphereElement.Extension,current.SphereElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("sphere",current.SphereElement,writer,options);
 
-      if (current.CylinderElement != null)
-      {
-        if (current.CylinderElement.Value != null)
-        {
-          writer.WriteNumber("cylinder",(decimal)current.CylinderElement.Value);
-        }
-        if (current.CylinderElement.HasExtensions() || (!string.IsNullOrEmpty(current.CylinderElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_cylinder",false,current.CylinderElement.Extension,current.CylinderElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("cylinder",current.CylinderElement,writer,options);
 
-      if (current.AxisElement != null)
-      {
-        if (current.AxisElement.Value != null)
-        {
-          writer.WriteNumber("axis",(int)current.AxisElement.Value);
-        }
-        if (current.AxisElement.HasExtensions() || (!string.IsNullOrEmpty(current.AxisElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_axis",false,current.AxisElement.Extension,current.AxisElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("axis",current.AxisElement,writer,options);
 
-      if ((current.Prism != null) && (current.Prism.Count != 0))
-      {
-        writer.WritePropertyName("prism");
-        writer.WriteStartArray();
-        foreach (VisionPrescription.PrismComponent val in current.Prism)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("prism", current.Prism, writer, options);
 
-      if (current.AddElement != null)
-      {
-        if (current.AddElement.Value != null)
-        {
-          writer.WriteNumber("add",(decimal)current.AddElement.Value);
-        }
-        if (current.AddElement.HasExtensions() || (!string.IsNullOrEmpty(current.AddElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_add",false,current.AddElement.Extension,current.AddElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("add",current.AddElement,writer,options);
 
-      if (current.PowerElement != null)
-      {
-        if (current.PowerElement.Value != null)
-        {
-          writer.WriteNumber("power",(decimal)current.PowerElement.Value);
-        }
-        if (current.PowerElement.HasExtensions() || (!string.IsNullOrEmpty(current.PowerElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_power",false,current.PowerElement.Extension,current.PowerElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("power",current.PowerElement,writer,options);
 
-      if (current.BackCurveElement != null)
-      {
-        if (current.BackCurveElement.Value != null)
-        {
-          writer.WriteNumber("backCurve",(decimal)current.BackCurveElement.Value);
-        }
-        if (current.BackCurveElement.HasExtensions() || (!string.IsNullOrEmpty(current.BackCurveElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_backCurve",false,current.BackCurveElement.Extension,current.BackCurveElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("backCurve",current.BackCurveElement,writer,options);
 
-      if (current.DiameterElement != null)
-      {
-        if (current.DiameterElement.Value != null)
-        {
-          writer.WriteNumber("diameter",(decimal)current.DiameterElement.Value);
-        }
-        if (current.DiameterElement.HasExtensions() || (!string.IsNullOrEmpty(current.DiameterElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_diameter",false,current.DiameterElement.Extension,current.DiameterElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("diameter",current.DiameterElement,writer,options);
 
-      if (current.Duration != null)
-      {
-        writer.WritePropertyName("duration");
-        current.Duration.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("duration", current.Duration, writer, options);
 
-      if (current.ColorElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ColorElement.Value))
-        {
-          writer.WriteString("color",current.ColorElement.Value);
-        }
-        if (current.ColorElement.HasExtensions() || (!string.IsNullOrEmpty(current.ColorElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_color",false,current.ColorElement.Extension,current.ColorElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("color",current.ColorElement,writer,options);
 
-      if (current.BrandElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.BrandElement.Value))
-        {
-          writer.WriteString("brand",current.BrandElement.Value);
-        }
-        if (current.BrandElement.HasExtensions() || (!string.IsNullOrEmpty(current.BrandElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_brand",false,current.BrandElement.Extension,current.BrandElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("brand",current.BrandElement,writer,options);
 
-      if ((current.Note != null) && (current.Note.Count != 0))
-      {
-        writer.WritePropertyName("note");
-        writer.WriteStartArray();
-        foreach (Annotation val in current.Note)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("note", current.Note, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -742,29 +556,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: VisionPrescription#Prism, Export: PrismComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.AmountElement != null)
-      {
-        if (current.AmountElement.Value != null)
-        {
-          writer.WriteNumber("amount",(decimal)current.AmountElement.Value);
-        }
-        if (current.AmountElement.HasExtensions() || (!string.IsNullOrEmpty(current.AmountElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_amount",false,current.AmountElement.Extension,current.AmountElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("amount",current.AmountElement,writer,options);
 
-      if (current.BaseElement != null)
-      {
-        if (current.BaseElement.Value != null)
-        {
-          writer.WriteString("base",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.BaseElement.Value));
-        }
-        if (current.BaseElement.HasExtensions() || (!string.IsNullOrEmpty(current.BaseElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_base",false,current.BaseElement.Extension,current.BaseElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("base",current.BaseElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

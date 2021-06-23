@@ -53,34 +53,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ProductShelfLife, Export: ProductShelfLife, Base: BackboneElement (BackboneType)
       ((Hl7.Fhir.Model.BackboneType)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.Period != null)
-      {
-        writer.WritePropertyName("period");
-        current.Period.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("period", current.Period, writer, options);
 
-      if ((current.SpecialPrecautionsForStorage != null) && (current.SpecialPrecautionsForStorage.Count != 0))
-      {
-        writer.WritePropertyName("specialPrecautionsForStorage");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.SpecialPrecautionsForStorage)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("specialPrecautionsForStorage", current.SpecialPrecautionsForStorage, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

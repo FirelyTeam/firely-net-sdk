@@ -54,154 +54,31 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: ObservationDefinition, Export: ObservationDefinition, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Category != null) && (current.Category.Count != 0))
-      {
-        writer.WritePropertyName("category");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Category)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("category", current.Category, writer, options);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if ((current.PermittedDataTypeElement != null) && (current.PermittedDataTypeElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType> val in current.PermittedDataTypeElement)
-        {
-          if (val.Value != null) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("permittedDataType",current.PermittedDataTypeElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("permittedDataType");
-          writer.WriteStartArray();
-          foreach (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType> val in current.PermittedDataTypeElement)
-          {
-            if (val.Value == null)
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(Hl7.Fhir.Utility.EnumUtility.GetLiteral(val.Value));
-            }
-          }
+      JsonStreamUtilities.SerializePrimitiveProperty("multipleResultsAllowed",current.MultipleResultsAllowedElement,writer,options);
 
-          writer.WriteEndArray();
-        }
+      JsonStreamUtilities.SerializeComplexProperty("method", current.Method, writer, options);
 
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_permittedDataType");
-          writer.WriteStartArray();
-          foreach (Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType> val in current.PermittedDataTypeElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
+      JsonStreamUtilities.SerializePrimitiveProperty("preferredReportName",current.PreferredReportNameElement,writer,options);
 
-          }
+      JsonStreamUtilities.SerializeComplexProperty("quantitativeDetails", current.QuantitativeDetails, writer, options);
 
-          writer.WriteEndArray();
-        }
-      }
+      JsonStreamUtilities.SerializeComplexProperty("qualifiedInterval", current.QualifiedInterval, writer, options);
 
-      if (current.MultipleResultsAllowedElement != null)
-      {
-        if (current.MultipleResultsAllowedElement.Value != null)
-        {
-          writer.WriteBoolean("multipleResultsAllowed",(bool)current.MultipleResultsAllowedElement.Value);
-        }
-        if (current.MultipleResultsAllowedElement.HasExtensions() || (!string.IsNullOrEmpty(current.MultipleResultsAllowedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_multipleResultsAllowed",false,current.MultipleResultsAllowedElement.Extension,current.MultipleResultsAllowedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializeComplexProperty("validCodedValueSet", current.ValidCodedValueSet, writer, options);
 
-      if (current.Method != null)
-      {
-        writer.WritePropertyName("method");
-        current.Method.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("normalCodedValueSet", current.NormalCodedValueSet, writer, options);
 
-      if (current.PreferredReportNameElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.PreferredReportNameElement.Value))
-        {
-          writer.WriteString("preferredReportName",current.PreferredReportNameElement.Value);
-        }
-        if (current.PreferredReportNameElement.HasExtensions() || (!string.IsNullOrEmpty(current.PreferredReportNameElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_preferredReportName",false,current.PreferredReportNameElement.Extension,current.PreferredReportNameElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializeComplexProperty("abnormalCodedValueSet", current.AbnormalCodedValueSet, writer, options);
 
-      if (current.QuantitativeDetails != null)
-      {
-        writer.WritePropertyName("quantitativeDetails");
-        current.QuantitativeDetails.SerializeJson(writer, options);
-      }
-
-      if ((current.QualifiedInterval != null) && (current.QualifiedInterval.Count != 0))
-      {
-        writer.WritePropertyName("qualifiedInterval");
-        writer.WriteStartArray();
-        foreach (ObservationDefinition.QualifiedIntervalComponent val in current.QualifiedInterval)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if (current.ValidCodedValueSet != null)
-      {
-        writer.WritePropertyName("validCodedValueSet");
-        current.ValidCodedValueSet.SerializeJson(writer, options);
-      }
-
-      if (current.NormalCodedValueSet != null)
-      {
-        writer.WritePropertyName("normalCodedValueSet");
-        current.NormalCodedValueSet.SerializeJson(writer, options);
-      }
-
-      if (current.AbnormalCodedValueSet != null)
-      {
-        writer.WritePropertyName("abnormalCodedValueSet");
-        current.AbnormalCodedValueSet.SerializeJson(writer, options);
-      }
-
-      if (current.CriticalCodedValueSet != null)
-      {
-        writer.WritePropertyName("criticalCodedValueSet");
-        current.CriticalCodedValueSet.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("criticalCodedValueSet", current.CriticalCodedValueSet, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -469,41 +346,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: ObservationDefinition#QuantitativeDetails, Export: QuantitativeDetailsComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.CustomaryUnit != null)
-      {
-        writer.WritePropertyName("customaryUnit");
-        current.CustomaryUnit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("customaryUnit", current.CustomaryUnit, writer, options);
 
-      if (current.Unit != null)
-      {
-        writer.WritePropertyName("unit");
-        current.Unit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("unit", current.Unit, writer, options);
 
-      if (current.ConversionFactorElement != null)
-      {
-        if (current.ConversionFactorElement.Value != null)
-        {
-          writer.WriteNumber("conversionFactor",(decimal)current.ConversionFactorElement.Value);
-        }
-        if (current.ConversionFactorElement.HasExtensions() || (!string.IsNullOrEmpty(current.ConversionFactorElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_conversionFactor",false,current.ConversionFactorElement.Extension,current.ConversionFactorElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("conversionFactor",current.ConversionFactorElement,writer,options);
 
-      if (current.DecimalPrecisionElement != null)
-      {
-        if (current.DecimalPrecisionElement.Value != null)
-        {
-          writer.WriteNumber("decimalPrecision",(int)current.DecimalPrecisionElement.Value);
-        }
-        if (current.DecimalPrecisionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DecimalPrecisionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_decimalPrecision",false,current.DecimalPrecisionElement.Extension,current.DecimalPrecisionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("decimalPrecision",current.DecimalPrecisionElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -601,76 +450,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: ObservationDefinition#QualifiedInterval, Export: QualifiedIntervalComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.CategoryElement != null)
-      {
-        if (current.CategoryElement.Value != null)
-        {
-          writer.WriteString("category",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.CategoryElement.Value));
-        }
-        if (current.CategoryElement.HasExtensions() || (!string.IsNullOrEmpty(current.CategoryElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_category",false,current.CategoryElement.Extension,current.CategoryElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("category",current.CategoryElement,writer,options);
 
-      if (current.Range != null)
-      {
-        writer.WritePropertyName("range");
-        current.Range.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("range", current.Range, writer, options);
 
-      if (current.Context != null)
-      {
-        writer.WritePropertyName("context");
-        current.Context.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("context", current.Context, writer, options);
 
-      if ((current.AppliesTo != null) && (current.AppliesTo.Count != 0))
-      {
-        writer.WritePropertyName("appliesTo");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.AppliesTo)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("appliesTo", current.AppliesTo, writer, options);
 
-      if (current.GenderElement != null)
-      {
-        if (current.GenderElement.Value != null)
-        {
-          writer.WriteString("gender",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.GenderElement.Value));
-        }
-        if (current.GenderElement.HasExtensions() || (!string.IsNullOrEmpty(current.GenderElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_gender",false,current.GenderElement.Extension,current.GenderElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("gender",current.GenderElement,writer,options);
 
-      if (current.Age != null)
-      {
-        writer.WritePropertyName("age");
-        current.Age.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("age", current.Age, writer, options);
 
-      if (current.GestationalAge != null)
-      {
-        writer.WritePropertyName("gestationalAge");
-        current.GestationalAge.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("gestationalAge", current.GestationalAge, writer, options);
 
-      if (current.ConditionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ConditionElement.Value))
-        {
-          writer.WriteString("condition",current.ConditionElement.Value);
-        }
-        if (current.ConditionElement.HasExtensions() || (!string.IsNullOrEmpty(current.ConditionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_condition",false,current.ConditionElement.Extension,current.ConditionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("condition",current.ConditionElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

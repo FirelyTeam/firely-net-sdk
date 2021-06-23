@@ -53,76 +53,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Signature, Export: Signature, Base: Element (Element)
       ((Hl7.Fhir.Model.Element)current).SerializeJson(writer, options, false);
 
-      if ((current.Type != null) && (current.Type.Count != 0))
-      {
-        writer.WritePropertyName("type");
-        writer.WriteStartArray();
-        foreach (Coding val in current.Type)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.WhenElement != null)
-      {
-        if (current.WhenElement.Value != null)
-        {
-          writer.WriteString("when",((DateTimeOffset)current.WhenElement.Value).ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK",System.Globalization.CultureInfo.InvariantCulture));
-        }
-        if (current.WhenElement.HasExtensions() || (!string.IsNullOrEmpty(current.WhenElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_when",false,current.WhenElement.Extension,current.WhenElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("when",current.WhenElement,writer,options);
 
-      if (current.Who != null)
-      {
-        writer.WritePropertyName("who");
-        current.Who.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("who", current.Who, writer, options);
 
-      if (current.OnBehalfOf != null)
-      {
-        writer.WritePropertyName("onBehalfOf");
-        current.OnBehalfOf.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("onBehalfOf", current.OnBehalfOf, writer, options);
 
-      if (current.TargetFormatElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.TargetFormatElement.Value))
-        {
-          writer.WriteString("targetFormat",current.TargetFormatElement.Value.Trim());
-        }
-        if (current.TargetFormatElement.HasExtensions() || (!string.IsNullOrEmpty(current.TargetFormatElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_targetFormat",false,current.TargetFormatElement.Extension,current.TargetFormatElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("targetFormat",current.TargetFormatElement,writer,options);
 
-      if (current.SigFormatElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.SigFormatElement.Value))
-        {
-          writer.WriteString("sigFormat",current.SigFormatElement.Value.Trim());
-        }
-        if (current.SigFormatElement.HasExtensions() || (!string.IsNullOrEmpty(current.SigFormatElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_sigFormat",false,current.SigFormatElement.Extension,current.SigFormatElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("sigFormat",current.SigFormatElement,writer,options);
 
-      if (current.DataElement != null)
-      {
-        if (current.DataElement.Value != null)
-        {
-          writer.WriteString("data",System.Convert.ToBase64String(current.DataElement.Value));
-        }
-        if (current.DataElement.HasExtensions() || (!string.IsNullOrEmpty(current.DataElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_data",false,current.DataElement.Extension,current.DataElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("data",current.DataElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

@@ -54,62 +54,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductManufactured, Export: MedicinalProductManufactured, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.ManufacturedDoseForm != null)
-      {
-        writer.WritePropertyName("manufacturedDoseForm");
-        current.ManufacturedDoseForm.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("manufacturedDoseForm", current.ManufacturedDoseForm, writer, options);
 
-      if (current.UnitOfPresentation != null)
-      {
-        writer.WritePropertyName("unitOfPresentation");
-        current.UnitOfPresentation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("unitOfPresentation", current.UnitOfPresentation, writer, options);
 
-      if (current.Quantity != null)
-      {
-        writer.WritePropertyName("quantity");
-        current.Quantity.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("quantity", current.Quantity, writer, options);
 
-      if ((current.Manufacturer != null) && (current.Manufacturer.Count != 0))
-      {
-        writer.WritePropertyName("manufacturer");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Manufacturer)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("manufacturer", current.Manufacturer, writer, options);
 
-      if ((current.Ingredient != null) && (current.Ingredient.Count != 0))
-      {
-        writer.WritePropertyName("ingredient");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Ingredient)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("ingredient", current.Ingredient, writer, options);
 
-      if (current.PhysicalCharacteristics != null)
-      {
-        writer.WritePropertyName("physicalCharacteristics");
-        current.PhysicalCharacteristics.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("physicalCharacteristics", current.PhysicalCharacteristics, writer, options);
 
-      if ((current.OtherCharacteristics != null) && (current.OtherCharacteristics.Count != 0))
-      {
-        writer.WritePropertyName("otherCharacteristics");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.OtherCharacteristics)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("otherCharacteristics", current.OtherCharacteristics, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

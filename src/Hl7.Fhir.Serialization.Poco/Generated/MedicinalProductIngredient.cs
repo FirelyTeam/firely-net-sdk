@@ -54,57 +54,17 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductIngredient, Export: MedicinalProductIngredient, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.Role != null)
-      {
-        writer.WritePropertyName("role");
-        current.Role.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("role", current.Role, writer, options);
 
-      if (current.AllergenicIndicatorElement != null)
-      {
-        if (current.AllergenicIndicatorElement.Value != null)
-        {
-          writer.WriteBoolean("allergenicIndicator",(bool)current.AllergenicIndicatorElement.Value);
-        }
-        if (current.AllergenicIndicatorElement.HasExtensions() || (!string.IsNullOrEmpty(current.AllergenicIndicatorElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_allergenicIndicator",false,current.AllergenicIndicatorElement.Extension,current.AllergenicIndicatorElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("allergenicIndicator",current.AllergenicIndicatorElement,writer,options);
 
-      if ((current.Manufacturer != null) && (current.Manufacturer.Count != 0))
-      {
-        writer.WritePropertyName("manufacturer");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Manufacturer)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("manufacturer", current.Manufacturer, writer, options);
 
-      if ((current.SpecifiedSubstance != null) && (current.SpecifiedSubstance.Count != 0))
-      {
-        writer.WritePropertyName("specifiedSubstance");
-        writer.WriteStartArray();
-        foreach (MedicinalProductIngredient.SpecifiedSubstanceComponent val in current.SpecifiedSubstance)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("specifiedSubstance", current.SpecifiedSubstance, writer, options);
 
-      if (current.Substance != null)
-      {
-        writer.WritePropertyName("substance");
-        current.Substance.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("substance", current.Substance, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -244,34 +204,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductIngredient#SpecifiedSubstance, Export: SpecifiedSubstanceComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if (current.Group != null)
-      {
-        writer.WritePropertyName("group");
-        current.Group.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("group", current.Group, writer, options);
 
-      if (current.Confidentiality != null)
-      {
-        writer.WritePropertyName("confidentiality");
-        current.Confidentiality.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("confidentiality", current.Confidentiality, writer, options);
 
-      if ((current.Strength != null) && (current.Strength.Count != 0))
-      {
-        writer.WritePropertyName("strength");
-        writer.WriteStartArray();
-        foreach (MedicinalProductIngredient.StrengthComponent val in current.Strength)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("strength", current.Strength, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -367,63 +306,19 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductIngredient#Strength, Export: StrengthComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Presentation != null)
-      {
-        writer.WritePropertyName("presentation");
-        current.Presentation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("presentation", current.Presentation, writer, options);
 
-      if (current.PresentationLowLimit != null)
-      {
-        writer.WritePropertyName("presentationLowLimit");
-        current.PresentationLowLimit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("presentationLowLimit", current.PresentationLowLimit, writer, options);
 
-      if (current.Concentration != null)
-      {
-        writer.WritePropertyName("concentration");
-        current.Concentration.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("concentration", current.Concentration, writer, options);
 
-      if (current.ConcentrationLowLimit != null)
-      {
-        writer.WritePropertyName("concentrationLowLimit");
-        current.ConcentrationLowLimit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("concentrationLowLimit", current.ConcentrationLowLimit, writer, options);
 
-      if (current.MeasurementPointElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.MeasurementPointElement.Value))
-        {
-          writer.WriteString("measurementPoint",current.MeasurementPointElement.Value);
-        }
-        if (current.MeasurementPointElement.HasExtensions() || (!string.IsNullOrEmpty(current.MeasurementPointElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_measurementPoint",false,current.MeasurementPointElement.Extension,current.MeasurementPointElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("measurementPoint",current.MeasurementPointElement,writer,options);
 
-      if ((current.Country != null) && (current.Country.Count != 0))
-      {
-        writer.WritePropertyName("country");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Country)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("country", current.Country, writer, options);
 
-      if ((current.ReferenceStrength != null) && (current.ReferenceStrength.Count != 0))
-      {
-        writer.WritePropertyName("referenceStrength");
-        writer.WriteStartArray();
-        foreach (MedicinalProductIngredient.ReferenceStrengthComponent val in current.ReferenceStrength)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("referenceStrength", current.ReferenceStrength, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -568,46 +463,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductIngredient#ReferenceStrength, Export: ReferenceStrengthComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Substance != null)
-      {
-        writer.WritePropertyName("substance");
-        current.Substance.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("substance", current.Substance, writer, options);
 
-      if (current.Strength != null)
-      {
-        writer.WritePropertyName("strength");
-        current.Strength.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("strength", current.Strength, writer, options);
 
-      if (current.StrengthLowLimit != null)
-      {
-        writer.WritePropertyName("strengthLowLimit");
-        current.StrengthLowLimit.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("strengthLowLimit", current.StrengthLowLimit, writer, options);
 
-      if (current.MeasurementPointElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.MeasurementPointElement.Value))
-        {
-          writer.WriteString("measurementPoint",current.MeasurementPointElement.Value);
-        }
-        if (current.MeasurementPointElement.HasExtensions() || (!string.IsNullOrEmpty(current.MeasurementPointElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_measurementPoint",false,current.MeasurementPointElement.Extension,current.MeasurementPointElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("measurementPoint",current.MeasurementPointElement,writer,options);
 
-      if ((current.Country != null) && (current.Country.Count != 0))
-      {
-        writer.WritePropertyName("country");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Country)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("country", current.Country, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -720,22 +584,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductIngredient#Substance, Export: SubstanceComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Code != null)
-      {
-        writer.WritePropertyName("code");
-        current.Code.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("code", current.Code, writer, options);
 
-      if ((current.Strength != null) && (current.Strength.Count != 0))
-      {
-        writer.WritePropertyName("strength");
-        writer.WriteStartArray();
-        foreach (MedicinalProductIngredient.StrengthComponent val in current.Strength)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("strength", current.Strength, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

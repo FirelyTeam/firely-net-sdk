@@ -54,35 +54,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: Binary, Export: Binary, Base: Resource (Resource)
       ((Hl7.Fhir.Model.Resource)current).SerializeJson(writer, options, false);
 
-      if (current.ContentTypeElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ContentTypeElement.Value))
-        {
-          writer.WriteString("contentType",current.ContentTypeElement.Value.Trim());
-        }
-        if (current.ContentTypeElement.HasExtensions() || (!string.IsNullOrEmpty(current.ContentTypeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_contentType",false,current.ContentTypeElement.Extension,current.ContentTypeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("contentType",current.ContentTypeElement,writer,options);
 
-      if (current.SecurityContext != null)
-      {
-        writer.WritePropertyName("securityContext");
-        current.SecurityContext.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("securityContext", current.SecurityContext, writer, options);
 
-      if (current.DataElement != null)
-      {
-        if (current.DataElement.Value != null)
-        {
-          writer.WriteString("data",System.Convert.ToBase64String(current.DataElement.Value));
-        }
-        if (current.DataElement.HasExtensions() || (!string.IsNullOrEmpty(current.DataElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_data",false,current.DataElement.Extension,current.DataElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("data",current.DataElement,writer,options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

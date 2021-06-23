@@ -54,82 +54,21 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: EnrollmentResponse, Export: EnrollmentResponse, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Identifier != null) && (current.Identifier.Count != 0))
-      {
-        writer.WritePropertyName("identifier");
-        writer.WriteStartArray();
-        foreach (Identifier val in current.Identifier)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.StatusElement != null)
-      {
-        if (current.StatusElement.Value != null)
-        {
-          writer.WriteString("status",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.StatusElement.Value));
-        }
-        if (current.StatusElement.HasExtensions() || (!string.IsNullOrEmpty(current.StatusElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_status",false,current.StatusElement.Extension,current.StatusElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("status",current.StatusElement,writer,options);
 
-      if (current.Request != null)
-      {
-        writer.WritePropertyName("request");
-        current.Request.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("request", current.Request, writer, options);
 
-      if (current.OutcomeElement != null)
-      {
-        if (current.OutcomeElement.Value != null)
-        {
-          writer.WriteString("outcome",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.OutcomeElement.Value));
-        }
-        if (current.OutcomeElement.HasExtensions() || (!string.IsNullOrEmpty(current.OutcomeElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_outcome",false,current.OutcomeElement.Extension,current.OutcomeElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("outcome",current.OutcomeElement,writer,options);
 
-      if (current.DispositionElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DispositionElement.Value))
-        {
-          writer.WriteString("disposition",current.DispositionElement.Value);
-        }
-        if (current.DispositionElement.HasExtensions() || (!string.IsNullOrEmpty(current.DispositionElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_disposition",false,current.DispositionElement.Extension,current.DispositionElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("disposition",current.DispositionElement,writer,options);
 
-      if (current.CreatedElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.CreatedElement.Value))
-        {
-          writer.WriteString("created",current.CreatedElement.Value);
-        }
-        if (current.CreatedElement.HasExtensions() || (!string.IsNullOrEmpty(current.CreatedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_created",false,current.CreatedElement.Extension,current.CreatedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("created",current.CreatedElement,writer,options);
 
-      if (current.Organization != null)
-      {
-        writer.WritePropertyName("organization");
-        current.Organization.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("organization", current.Organization, writer, options);
 
-      if (current.RequestProvider != null)
-      {
-        writer.WritePropertyName("requestProvider");
-        current.RequestProvider.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("requestProvider", current.RequestProvider, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

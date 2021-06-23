@@ -54,184 +54,45 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: AdverseEvent, Export: AdverseEvent, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.Identifier != null)
-      {
-        writer.WritePropertyName("identifier");
-        current.Identifier.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("identifier", current.Identifier, writer, options);
 
-      if (current.ActualityElement != null)
-      {
-        if (current.ActualityElement.Value != null)
-        {
-          writer.WriteString("actuality",Hl7.Fhir.Utility.EnumUtility.GetLiteral(current.ActualityElement.Value));
-        }
-        if (current.ActualityElement.HasExtensions() || (!string.IsNullOrEmpty(current.ActualityElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_actuality",false,current.ActualityElement.Extension,current.ActualityElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("actuality",current.ActualityElement,writer,options);
 
-      if ((current.Category != null) && (current.Category.Count != 0))
-      {
-        writer.WritePropertyName("category");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Category)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("category", current.Category, writer, options);
 
-      if (current.Event != null)
-      {
-        writer.WritePropertyName("event");
-        current.Event.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("event", current.Event, writer, options);
 
-      if (current.Subject != null)
-      {
-        writer.WritePropertyName("subject");
-        current.Subject.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.Encounter != null)
-      {
-        writer.WritePropertyName("encounter");
-        current.Encounter.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("encounter", current.Encounter, writer, options);
 
-      if (current.DateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DateElement.Value))
-        {
-          writer.WriteString("date",current.DateElement.Value);
-        }
-        if (current.DateElement.HasExtensions() || (!string.IsNullOrEmpty(current.DateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_date",false,current.DateElement.Extension,current.DateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("date",current.DateElement,writer,options);
 
-      if (current.DetectedElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.DetectedElement.Value))
-        {
-          writer.WriteString("detected",current.DetectedElement.Value);
-        }
-        if (current.DetectedElement.HasExtensions() || (!string.IsNullOrEmpty(current.DetectedElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_detected",false,current.DetectedElement.Extension,current.DetectedElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("detected",current.DetectedElement,writer,options);
 
-      if (current.RecordedDateElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.RecordedDateElement.Value))
-        {
-          writer.WriteString("recordedDate",current.RecordedDateElement.Value);
-        }
-        if (current.RecordedDateElement.HasExtensions() || (!string.IsNullOrEmpty(current.RecordedDateElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_recordedDate",false,current.RecordedDateElement.Extension,current.RecordedDateElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("recordedDate",current.RecordedDateElement,writer,options);
 
-      if ((current.ResultingCondition != null) && (current.ResultingCondition.Count != 0))
-      {
-        writer.WritePropertyName("resultingCondition");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.ResultingCondition)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("resultingCondition", current.ResultingCondition, writer, options);
 
-      if (current.Location != null)
-      {
-        writer.WritePropertyName("location");
-        current.Location.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("location", current.Location, writer, options);
 
-      if (current.Seriousness != null)
-      {
-        writer.WritePropertyName("seriousness");
-        current.Seriousness.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("seriousness", current.Seriousness, writer, options);
 
-      if (current.Severity != null)
-      {
-        writer.WritePropertyName("severity");
-        current.Severity.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("severity", current.Severity, writer, options);
 
-      if (current.Outcome != null)
-      {
-        writer.WritePropertyName("outcome");
-        current.Outcome.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("outcome", current.Outcome, writer, options);
 
-      if (current.Recorder != null)
-      {
-        writer.WritePropertyName("recorder");
-        current.Recorder.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("recorder", current.Recorder, writer, options);
 
-      if ((current.Contributor != null) && (current.Contributor.Count != 0))
-      {
-        writer.WritePropertyName("contributor");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Contributor)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("contributor", current.Contributor, writer, options);
 
-      if ((current.SuspectEntity != null) && (current.SuspectEntity.Count != 0))
-      {
-        writer.WritePropertyName("suspectEntity");
-        writer.WriteStartArray();
-        foreach (AdverseEvent.SuspectEntityComponent val in current.SuspectEntity)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("suspectEntity", current.SuspectEntity, writer, options);
 
-      if ((current.SubjectMedicalHistory != null) && (current.SubjectMedicalHistory.Count != 0))
-      {
-        writer.WritePropertyName("subjectMedicalHistory");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.SubjectMedicalHistory)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subjectMedicalHistory", current.SubjectMedicalHistory, writer, options);
 
-      if ((current.ReferenceDocument != null) && (current.ReferenceDocument.Count != 0))
-      {
-        writer.WritePropertyName("referenceDocument");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.ReferenceDocument)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("referenceDocument", current.ReferenceDocument, writer, options);
 
-      if ((current.Study != null) && (current.Study.Count != 0))
-      {
-        writer.WritePropertyName("study");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Study)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("study", current.Study, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -587,22 +448,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: AdverseEvent#SuspectEntity, Export: SuspectEntityComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Instance != null)
-      {
-        writer.WritePropertyName("instance");
-        current.Instance.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("instance", current.Instance, writer, options);
 
-      if ((current.Causality != null) && (current.Causality.Count != 0))
-      {
-        writer.WritePropertyName("causality");
-        writer.WriteStartArray();
-        foreach (AdverseEvent.CausalityComponent val in current.Causality)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("causality", current.Causality, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -688,35 +536,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: AdverseEvent#Causality, Export: CausalityComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Assessment != null)
-      {
-        writer.WritePropertyName("assessment");
-        current.Assessment.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("assessment", current.Assessment, writer, options);
 
-      if (current.ProductRelatednessElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.ProductRelatednessElement.Value))
-        {
-          writer.WriteString("productRelatedness",current.ProductRelatednessElement.Value);
-        }
-        if (current.ProductRelatednessElement.HasExtensions() || (!string.IsNullOrEmpty(current.ProductRelatednessElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_productRelatedness",false,current.ProductRelatednessElement.Extension,current.ProductRelatednessElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("productRelatedness",current.ProductRelatednessElement,writer,options);
 
-      if (current.Author != null)
-      {
-        writer.WritePropertyName("author");
-        current.Author.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("author", current.Author, writer, options);
 
-      if (current.Method != null)
-      {
-        writer.WritePropertyName("method");
-        current.Method.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("method", current.Method, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

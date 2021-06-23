@@ -53,44 +53,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: DomainResource, Export: DomainResource, Base: Resource (Resource)
       ((Hl7.Fhir.Model.Resource)current).SerializeJson(writer, options, false);
 
-      if (current.Text != null)
-      {
-        writer.WritePropertyName("text");
-        current.Text.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("text", current.Text, writer, options);
 
-      if ((current.Contained != null) && (current.Contained.Count != 0))
-      {
-        writer.WritePropertyName("contained");
-        writer.WriteStartArray();
-        foreach (dynamic resource in current.Contained)
-        {
-          JsonStreamResourceConverter.WriteResource(writer, resource, options);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("contained", current.Contained, writer, options);
 
-      if ((current.Extension != null) && (current.Extension.Count != 0))
-      {
-        writer.WritePropertyName("extension");
-        writer.WriteStartArray();
-        foreach (Extension val in current.Extension)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("extension", current.Extension, writer, options);
 
-      if ((current.ModifierExtension != null) && (current.ModifierExtension.Count != 0))
-      {
-        writer.WritePropertyName("modifierExtension");
-        writer.WriteStartArray();
-        foreach (Extension val in current.ModifierExtension)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("modifierExtension", current.ModifierExtension, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

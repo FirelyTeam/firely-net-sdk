@@ -54,100 +54,17 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: SubstancePolymer, Export: SubstancePolymer, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if (current.Class != null)
-      {
-        writer.WritePropertyName("class");
-        current.Class.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("class", current.Class, writer, options);
 
-      if (current.Geometry != null)
-      {
-        writer.WritePropertyName("geometry");
-        current.Geometry.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("geometry", current.Geometry, writer, options);
 
-      if ((current.CopolymerConnectivity != null) && (current.CopolymerConnectivity.Count != 0))
-      {
-        writer.WritePropertyName("copolymerConnectivity");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.CopolymerConnectivity)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("copolymerConnectivity", current.CopolymerConnectivity, writer, options);
 
-      if ((current.ModificationElement != null) && (current.ModificationElement.Count != 0))
-      {
-        int valueCount = 0;
-        int extensionCount = 0;
-        foreach (FhirString val in current.ModificationElement)
-        {
-          if (!string.IsNullOrEmpty(val.Value)) { valueCount++; }
-          if (val.HasExtensions()) { extensionCount++; }
-        }
+      JsonStreamUtilities.SerializePrimitiveProperty("modification",current.ModificationElement,writer,options);
 
-        if (valueCount > 0)
-        {
-          writer.WritePropertyName("modification");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ModificationElement)
-          {
-            if (string.IsNullOrEmpty(val.Value))
-            {
-              writer.WriteNullValue();
-            }
-            else
-            {
-              writer.WriteStringValue(val.Value);
-            }
-          }
+      JsonStreamUtilities.SerializeComplexProperty("monomerSet", current.MonomerSet, writer, options);
 
-          writer.WriteEndArray();
-        }
-
-        if (extensionCount > 0)
-        {
-          writer.WritePropertyName("_modification");
-          writer.WriteStartArray();
-          foreach (FhirString val in current.ModificationElement)
-          {
-            if (val.HasExtensions() || (!string.IsNullOrEmpty(val.ElementId)))
-            {
-              JsonStreamUtilities.SerializeExtensionList(writer,options,string.Empty,true,val.Extension,val.ElementId);
-            }
-            else
-            {
-              writer.WriteNullValue();
-            }
-
-          }
-
-          writer.WriteEndArray();
-        }
-      }
-
-      if ((current.MonomerSet != null) && (current.MonomerSet.Count != 0))
-      {
-        writer.WritePropertyName("monomerSet");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.MonomerSetComponent val in current.MonomerSet)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
-
-      if ((current.Repeat != null) && (current.Repeat.Count != 0))
-      {
-        writer.WritePropertyName("repeat");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.RepeatComponent val in current.Repeat)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("repeat", current.Repeat, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -356,22 +273,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#MonomerSet, Export: MonomerSetComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.RatioType != null)
-      {
-        writer.WritePropertyName("ratioType");
-        current.RatioType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("ratioType", current.RatioType, writer, options);
 
-      if ((current.StartingMaterial != null) && (current.StartingMaterial.Count != 0))
-      {
-        writer.WritePropertyName("startingMaterial");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.StartingMaterialComponent val in current.StartingMaterial)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("startingMaterial", current.StartingMaterial, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -457,35 +361,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#StartingMaterial, Export: StartingMaterialComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Material != null)
-      {
-        writer.WritePropertyName("material");
-        current.Material.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("material", current.Material, writer, options);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.IsDefiningElement != null)
-      {
-        if (current.IsDefiningElement.Value != null)
-        {
-          writer.WriteBoolean("isDefining",(bool)current.IsDefiningElement.Value);
-        }
-        if (current.IsDefiningElement.HasExtensions() || (!string.IsNullOrEmpty(current.IsDefiningElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_isDefining",false,current.IsDefiningElement.Extension,current.IsDefiningElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("isDefining",current.IsDefiningElement,writer,options);
 
-      if (current.Amount != null)
-      {
-        writer.WritePropertyName("amount");
-        current.Amount.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("amount", current.Amount, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -571,46 +453,13 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#Repeat, Export: RepeatComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.NumberOfUnitsElement != null)
-      {
-        if (current.NumberOfUnitsElement.Value != null)
-        {
-          writer.WriteNumber("numberOfUnits",(int)current.NumberOfUnitsElement.Value);
-        }
-        if (current.NumberOfUnitsElement.HasExtensions() || (!string.IsNullOrEmpty(current.NumberOfUnitsElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_numberOfUnits",false,current.NumberOfUnitsElement.Extension,current.NumberOfUnitsElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("numberOfUnits",current.NumberOfUnitsElement,writer,options);
 
-      if (current.AverageMolecularFormulaElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.AverageMolecularFormulaElement.Value))
-        {
-          writer.WriteString("averageMolecularFormula",current.AverageMolecularFormulaElement.Value);
-        }
-        if (current.AverageMolecularFormulaElement.HasExtensions() || (!string.IsNullOrEmpty(current.AverageMolecularFormulaElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_averageMolecularFormula",false,current.AverageMolecularFormulaElement.Extension,current.AverageMolecularFormulaElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("averageMolecularFormula",current.AverageMolecularFormulaElement,writer,options);
 
-      if (current.RepeatUnitAmountType != null)
-      {
-        writer.WritePropertyName("repeatUnitAmountType");
-        current.RepeatUnitAmountType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("repeatUnitAmountType", current.RepeatUnitAmountType, writer, options);
 
-      if ((current.RepeatUnit != null) && (current.RepeatUnit.Count != 0))
-      {
-        writer.WritePropertyName("repeatUnit");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.RepeatUnitComponent val in current.RepeatUnit)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("repeatUnit", current.RepeatUnit, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -730,51 +579,15 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#RepeatUnit, Export: RepeatUnitComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.OrientationOfPolymerisation != null)
-      {
-        writer.WritePropertyName("orientationOfPolymerisation");
-        current.OrientationOfPolymerisation.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("orientationOfPolymerisation", current.OrientationOfPolymerisation, writer, options);
 
-      if (current.RepeatUnitElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.RepeatUnitElement.Value))
-        {
-          writer.WriteString("repeatUnit",current.RepeatUnitElement.Value);
-        }
-        if (current.RepeatUnitElement.HasExtensions() || (!string.IsNullOrEmpty(current.RepeatUnitElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_repeatUnit",false,current.RepeatUnitElement.Extension,current.RepeatUnitElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("repeatUnit",current.RepeatUnitElement,writer,options);
 
-      if (current.Amount != null)
-      {
-        writer.WritePropertyName("amount");
-        current.Amount.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("amount", current.Amount, writer, options);
 
-      if ((current.DegreeOfPolymerisation != null) && (current.DegreeOfPolymerisation.Count != 0))
-      {
-        writer.WritePropertyName("degreeOfPolymerisation");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.DegreeOfPolymerisationComponent val in current.DegreeOfPolymerisation)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("degreeOfPolymerisation", current.DegreeOfPolymerisation, writer, options);
 
-      if ((current.StructuralRepresentation != null) && (current.StructuralRepresentation.Count != 0))
-      {
-        writer.WritePropertyName("structuralRepresentation");
-        writer.WriteStartArray();
-        foreach (SubstancePolymer.StructuralRepresentationComponent val in current.StructuralRepresentation)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("structuralRepresentation", current.StructuralRepresentation, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -909,17 +722,9 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#DegreeOfPolymerisation, Export: DegreeOfPolymerisationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Degree != null)
-      {
-        writer.WritePropertyName("degree");
-        current.Degree.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("degree", current.Degree, writer, options);
 
-      if (current.Amount != null)
-      {
-        writer.WritePropertyName("amount");
-        current.Amount.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("amount", current.Amount, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -983,29 +788,11 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: SubstancePolymer#StructuralRepresentation, Export: StructuralRepresentationComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.Type != null)
-      {
-        writer.WritePropertyName("type");
-        current.Type.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("type", current.Type, writer, options);
 
-      if (current.RepresentationElement != null)
-      {
-        if (!string.IsNullOrEmpty(current.RepresentationElement.Value))
-        {
-          writer.WriteString("representation",current.RepresentationElement.Value);
-        }
-        if (current.RepresentationElement.HasExtensions() || (!string.IsNullOrEmpty(current.RepresentationElement.ElementId)))
-        {
-          JsonStreamUtilities.SerializeExtensionList(writer,options,"_representation",false,current.RepresentationElement.Extension,current.RepresentationElement.ElementId);
-        }
-      }
+      JsonStreamUtilities.SerializePrimitiveProperty("representation",current.RepresentationElement,writer,options);
 
-      if (current.Attachment != null)
-      {
-        writer.WritePropertyName("attachment");
-        current.Attachment.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("attachment", current.Attachment, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }

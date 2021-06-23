@@ -54,84 +54,23 @@ namespace Hl7.Fhir.Serialization.Poco
       // Complex: MedicinalProductIndication, Export: MedicinalProductIndication, Base: DomainResource (DomainResource)
       ((Hl7.Fhir.Model.DomainResource)current).SerializeJson(writer, options, false);
 
-      if ((current.Subject != null) && (current.Subject.Count != 0))
-      {
-        writer.WritePropertyName("subject");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.Subject)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("subject", current.Subject, writer, options);
 
-      if (current.DiseaseSymptomProcedure != null)
-      {
-        writer.WritePropertyName("diseaseSymptomProcedure");
-        current.DiseaseSymptomProcedure.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("diseaseSymptomProcedure", current.DiseaseSymptomProcedure, writer, options);
 
-      if (current.DiseaseStatus != null)
-      {
-        writer.WritePropertyName("diseaseStatus");
-        current.DiseaseStatus.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("diseaseStatus", current.DiseaseStatus, writer, options);
 
-      if ((current.Comorbidity != null) && (current.Comorbidity.Count != 0))
-      {
-        writer.WritePropertyName("comorbidity");
-        writer.WriteStartArray();
-        foreach (CodeableConcept val in current.Comorbidity)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("comorbidity", current.Comorbidity, writer, options);
 
-      if (current.IntendedEffect != null)
-      {
-        writer.WritePropertyName("intendedEffect");
-        current.IntendedEffect.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("intendedEffect", current.IntendedEffect, writer, options);
 
-      if (current.Duration != null)
-      {
-        writer.WritePropertyName("duration");
-        current.Duration.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("duration", current.Duration, writer, options);
 
-      if ((current.OtherTherapy != null) && (current.OtherTherapy.Count != 0))
-      {
-        writer.WritePropertyName("otherTherapy");
-        writer.WriteStartArray();
-        foreach (MedicinalProductIndication.OtherTherapyComponent val in current.OtherTherapy)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("otherTherapy", current.OtherTherapy, writer, options);
 
-      if ((current.UndesirableEffect != null) && (current.UndesirableEffect.Count != 0))
-      {
-        writer.WritePropertyName("undesirableEffect");
-        writer.WriteStartArray();
-        foreach (ResourceReference val in current.UndesirableEffect)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("undesirableEffect", current.UndesirableEffect, writer, options);
 
-      if ((current.Population != null) && (current.Population.Count != 0))
-      {
-        writer.WritePropertyName("population");
-        writer.WriteStartArray();
-        foreach (Population val in current.Population)
-        {
-          val.SerializeJson(writer, options, true);
-        }
-        writer.WriteEndArray();
-      }
+      JsonStreamUtilities.SerializeComplexProperty("population", current.Population, writer, options);
 
       if (includeStartObject) { writer.WriteEndObject(); }
     }
@@ -340,11 +279,7 @@ namespace Hl7.Fhir.Serialization.Poco
       // Component: MedicinalProductIndication#OtherTherapy, Export: OtherTherapyComponent, Base: BackboneElement (BackboneElement)
       ((Hl7.Fhir.Model.BackboneElement)current).SerializeJson(writer, options, false);
 
-      if (current.TherapyRelationshipType != null)
-      {
-        writer.WritePropertyName("therapyRelationshipType");
-        current.TherapyRelationshipType.SerializeJson(writer, options);
-      }
+      JsonStreamUtilities.SerializeComplexProperty("therapyRelationshipType", current.TherapyRelationshipType, writer, options);
 
       if (current.Medication != null)
       {
