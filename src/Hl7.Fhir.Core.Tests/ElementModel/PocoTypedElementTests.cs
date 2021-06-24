@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             var pocoP = poco.ToTypedElement();
             var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
-            var xmlP = FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+            var xmlP = (await FhirXmlNode.ParseAsync(xml)).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");

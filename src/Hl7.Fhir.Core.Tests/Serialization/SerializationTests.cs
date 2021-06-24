@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public async Tasks.Task ParseMetaXml()
         {
-            var poco = (Meta)(new FhirXmlParser().Parse(metaXml, typeof(Meta)));
+            var poco = (Meta)(await new FhirXmlParser().ParseAsync(metaXml, typeof(Meta)));
             var xml = await new FhirXmlSerializer().SerializeToStringAsync(poco, root: "meta");
 
             Assert.IsTrue(poco.IsExactly(metaPoco));
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             string xml = TestDataHelper.ReadTestData("TestPatient.xml");
             var pser = new FhirXmlParser();
-            var p = pser.Parse<Patient>(xml);
+            var p = await pser.ParseAsync<Patient>(xml);
             string outp = await FhirXmlSerializer.SerializeToStringAsync(p);
             Assert.IsTrue(outp.Contains("\"male\""));
 
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = await FhirXmlSerializer.SerializeToStringAsync(p);
 
-            var p2 = (new FhirXmlParser()).Parse<Patient>(xml);
+            var p2 = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
             Assert.AreEqual(1, p2.Extension.Count);
             Assert.AreEqual(1, p2.Contact.Count);
         }

@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
-            var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
+            var careplan =  await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);

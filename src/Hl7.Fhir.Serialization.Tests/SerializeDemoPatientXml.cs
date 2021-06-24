@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
-            var pat = pser.Parse<Patient>(tpXml);
+            var pat = await pser.ParseAsync<Patient>(tpXml);
 
             var nav = pat.ToTypedElement();
             var output = await nav.ToXmlAsync();
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Serialization.Tests
             // If on a Unix platform replace \\r\\n in json strings to \\n.
             if(Environment.NewLine == "\n")
                 tpJson = tpJson.Replace(@"\r\n", @"\n");
-            var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
+            var pat = await (new FhirXmlParser()).ParseAsync<Patient>(tpXml);
 
             var navXml = getXmlElement(tpXml);
             var navJson = await getJsonElement(tpJson);
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var pretty = await nav.ToXmlAsync(new FhirXmlSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
-            var p = (new FhirXmlParser()).Parse<Patient>(xml);
+            var p = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
             output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false })).SerializeToStringAsync(p);
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
             pretty = await (new FhirXmlSerializer(new SerializerSettings { Pretty = true })).SerializeToStringAsync(p);
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var lastLine = pretty.Split('\n').Last();
             Assert.IsFalse(string.IsNullOrEmpty(lastLine));
 
-            var p = (new FhirXmlParser()).Parse<Patient>(xml);
+            var p = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
             output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = output.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));

@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization.Tests
             // If on a Unix platform replace \\r\\n in json strings to \\n.
             if(Environment.NewLine == "\n")
                 tpJson = tpJson.Replace(@"\r\n", @"\n");
-            var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
+            var pat = await (new FhirXmlParser()).ParseAsync<Patient>(tpXml);
 
             // Should work on the parent resource
             var navXml = getXmlNode(tpXml);

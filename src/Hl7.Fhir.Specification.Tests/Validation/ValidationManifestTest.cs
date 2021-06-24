@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Tests
         {            
             var resourceText = await File.ReadAllTextAsync(@$"TestData\validation-test-suite\{testCase.FileName}");
             var testResource = testCase.FileName.EndsWith(".xml") ?
-                new FhirXmlParser().Parse<Resource>(resourceText) :
+                await new FhirXmlParser().ParseAsync<Resource>(resourceText) :
                 await new FhirJsonParser().ParseAsync<Resource>(resourceText);
             Assert.IsNotNull(testResource);
 

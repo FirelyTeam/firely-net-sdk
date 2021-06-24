@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             var xml = "<Basic xmlns='http://hl7.org/fhir'><extension url='http://blabla.nl'><valueString value='Daar gaat ie dan" + "&#xA;" + "verdwijnt dit?' /></extension></Basic>";
 
-            var basic = FhirXmlParser.Parse<DomainResource>(xml);
+            var basic = await FhirXmlParser.ParseAsync<DomainResource>(xml);
 
             Assert.IsTrue(basic.GetStringExtension("http://blabla.nl").Contains("\n"));
 
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(xml);
             await File.WriteAllTextAsync(Path.Combine(tempPath, "edgecase.xml"), xml);
 
-            poco = FhirXmlParser.Parse<Resource>(xml);
+            poco = await FhirXmlParser.ParseAsync<Resource>(xml);
             Assert.IsNotNull(poco);
             var json2 = await FhirJsonSerializer.SerializeToStringAsync(poco);
             Assert.IsNotNull(json2);
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = await FhirXmlSerializer.SerializeToStringAsync(o);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
 
-            var o2 = FhirXmlParser.Parse<Observation>(xml);
+            var o2 = await FhirXmlParser.ParseAsync<Observation>(xml);
             o2.ResourceBase = new Uri("http://nu.nl/fhir");
             xml = await FhirXmlSerializer.SerializeToStringAsync(o2);
             Assert.IsTrue(xml.Contains("value=\"#jaap\""));
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             var xml = await FhirXmlSerializer.SerializeToStringAsync(patient);
-            parsedPatient = FhirXmlParser.Parse<Patient>(xml);
+            parsedPatient = await FhirXmlParser.ParseAsync<Patient>(xml);
 
             Assert.AreEqual(patient.Identifier.Count, parsedPatient.Identifier.Count);
             for (var i = 0; i < patient.Identifier.Count; i++)
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Tests.Serialization
             };
 
             var xml = await FhirXmlSerializer.SerializeToStringAsync(p);
-            Assert.IsNotNull(FhirXmlParser.Parse<Resource>(xml));
+            Assert.IsNotNull(await FhirXmlParser.ParseAsync<Resource>(xml));
             var json = await FhirJsonSerializer.SerializeToStringAsync(p);
             Assert.IsNotNull(await FhirJsonParser.ParseAsync<Resource>(json));
         }

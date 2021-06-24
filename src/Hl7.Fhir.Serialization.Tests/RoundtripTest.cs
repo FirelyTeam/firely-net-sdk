@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (inputFile.EndsWith(".xml"))
             {
                 var xml = File.ReadAllText(inputFile);
-                var resource = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<Resource>(xml);
+                var resource = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<Resource>(xml);
 
                 var r2 = resource.DeepCopy();
                 Assert.IsTrue(resource.Matches(r2 as Resource), "Serialization of " + inputFile + " did not match output - Matches test");

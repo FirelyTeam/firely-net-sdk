@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Specification.Tests
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");
-                        resource = xmlParser.Parse<Resource>(content);
+                        resource = await xmlParser.ParseAsync<Resource>(content);
                     }
                     else if (new FileInfo(item).Extension == ".json")
                     {

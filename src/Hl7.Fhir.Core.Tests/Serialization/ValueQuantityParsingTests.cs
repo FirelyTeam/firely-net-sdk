@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Tests.Serialization
             await File.WriteAllTextAsync(xmlFile, xml);
 
             xml = await File.ReadAllTextAsync(xmlFile);
-            var parsed = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<T>(xml);
+            var parsed = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(xml);
 
             return parsed;
         }
