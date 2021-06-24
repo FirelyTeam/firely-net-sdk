@@ -26,7 +26,6 @@ namespace Hl7.Fhir.Serialization
             new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
 
         /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string, string[])" />
-        [Obsolete("Use SerializeToStringAsync(Base, SummaryType, string, string[]) instead.")]
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
@@ -35,10 +34,10 @@ namespace Hl7.Fhir.Serialization
         public async Tasks.Task<string> SerializeToStringAsync(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)
-                .ToXmlAsync(settings: buildFhirXmlWriterSettings());
+                .ToXmlAsync(settings: buildFhirXmlWriterSettings())
+                .ConfigureAwait(false);
 
         /// <inheritdoc cref="SerializeToBytesAsync(Base, SummaryType, string, string[])" />
-        [Obsolete("Use SerializeToBytesAsync(Base, SummaryType, string, string[]) instead.")]
         public byte[] SerializeToBytes(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
@@ -47,7 +46,8 @@ namespace Hl7.Fhir.Serialization
         public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)
-                .ToXmlBytesAsync(settings: buildFhirXmlWriterSettings());
+                .ToXmlBytesAsync(settings: buildFhirXmlWriterSettings())
+                .ConfigureAwait(false);
 
         public XDocument SerializeToDocument(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
            MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
@@ -55,7 +55,6 @@ namespace Hl7.Fhir.Serialization
             .ToXDocument(buildFhirXmlWriterSettings()).Rename(root);
 
         /// <inheritdoc cref="SerializeAsync(Base, XmlWriter, SummaryType, string, string[])" />
-        [Obsolete("Use SerializeAsync(Base, SummaryType, string, string[]) instead.")]
         public void Serialize(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
@@ -64,6 +63,7 @@ namespace Hl7.Fhir.Serialization
         public async Tasks.Task SerializeAsync(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)
-                .WriteToAsync(writer, settings: buildFhirXmlWriterSettings());
+                .WriteToAsync(writer, settings: buildFhirXmlWriterSettings())
+                .ConfigureAwait(false);
     }
 }

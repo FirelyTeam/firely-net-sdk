@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings);
+            var entryRequest = await request.ToEntryRequestAsync(Settings).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
