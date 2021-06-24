@@ -1,14 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
+  <Import Project="..\firely-net-sdk-tests.props"/>
 
   <PropertyGroup>
-    <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>
-    <ContainsTests>true</ContainsTests>
+    <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>   
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,23 +14,12 @@
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
-
-  
-  <ItemGroup>
-      <PackageReference Include="FluentAssertions" Version="5.10.3" />
-      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-      <PackageReference Include="MSTest.TestAdapter" Version="2.2.4" />
-      <PackageReference Include="MSTest.TestFramework" Version="2.2.4" />
-      <PackageReference Include="Moq" Version="4.16.1" />
+	
+  <ItemGroup>         
       <PackageReference Include="System.IO.Compression" Version="4.3.0" />
       <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="5.0.0" />
       <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-      <PackageReference Include="xunit" Version="2.4.1" />
-      <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
       <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
 

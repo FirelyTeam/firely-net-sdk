@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-  </PropertyGroup>
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Core.Tests</AssemblyName>
-    <ContainsTests>true</ContainsTests>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,25 +14,14 @@
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.2.4" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.2.4" />
+  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">   
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />  
     <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\lib\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
-    </Reference>
     <PackageReference Include="SharpZipLib" Version="0.86.0" />
   </ItemGroup>
 
@@ -52,10 +38,6 @@
     <Content Include="TestData\fhir-logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Moq" Version="4.16.1" />
   </ItemGroup>
 
   <ItemGroup>
