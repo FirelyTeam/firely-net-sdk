@@ -64,10 +64,7 @@ namespace Hl7.Fhir.Validation
             if (value is PrimitiveType)
                 return value.ToString();
             else
-#pragma warning disable CS0618 // Obsolete member or type
-                // TODO: Validation Async Support
                 return new FhirJsonSerializer().SerializeToString(value);
-#pragma warning restore CS0618 // Obsolete member or type
         }
 
         public static bool IsExactlyEqualTo(this ITypedElement left, ITypedElement right)
