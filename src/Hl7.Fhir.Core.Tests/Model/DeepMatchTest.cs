@@ -67,26 +67,7 @@ namespace Hl7.Fhir.Tests.Model
 
             Assert.IsTrue(p2.Matches(p));
             Assert.IsTrue(p2.Matches(p));
-        }
-
-        [TestMethod]
-        public void MatchingEmptyRepeatingPattern()
-        {
-            var encounter = new Encounter
-            {
-                Participant = new List<Encounter.ParticipantComponent>
-                {
-                    new Encounter.ParticipantComponent
-                    {
-                    Individual = new ResourceReference("Practitioner/1234")
-                    }
-                }
-            };
-
-            var pattern = new Encounter();
-
-            Assert.IsTrue(encounter.Matches(pattern)); 
-        }
+        }       
 
     }
 }
