@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
         public async Tasks.Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings s = null) =>
-            await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+            await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
         public void DeterminePocoInstanceTypeWithRedirect()
@@ -94,8 +94,17 @@ namespace Hl7.Fhir.Serialization.Tests
 
     internal static class JsonParsingHelpers
     {
-        internal static async Tasks.Task<ITypedElement> ParseToTypedElement(string json, IStructureDefinitionSummaryProvider provider, string rootName = null,
-    FhirJsonParsingSettings settings = null, TypedElementSettings tnSettings = null)
+        internal static ITypedElement ParseToTypedElement(string json, IStructureDefinitionSummaryProvider provider, string rootName = null,
+            FhirJsonParsingSettings settings = null, TypedElementSettings tnSettings = null)
+        {
+            if (json == null) throw Error.ArgumentNull(nameof(json));
+            if (provider == null) throw Error.ArgumentNull(nameof(provider));
+
+            return FhirJsonNode.Parse(json, rootName, settings).ToTypedElement(provider, null, tnSettings);
+        }
+        
+        internal static async Tasks.Task<ITypedElement> ParseToTypedElementAsync(string json, IStructureDefinitionSummaryProvider provider, string rootName = null,
+            FhirJsonParsingSettings settings = null, TypedElementSettings tnSettings = null)
         {
             if (json == null) throw Error.ArgumentNull(nameof(json));
             if (provider == null) throw Error.ArgumentNull(nameof(provider));

@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if(Environment.NewLine == "\n")
                 tpJson = tpJson.Replace(@"\r\n", @"\n");
             var navXml = getXmlNode(tpXml);
-            var navJson = await JsonParsingHelpers.ParseToTypedElement(tpJson, new PocoStructureDefinitionSummaryProvider());
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
             var json = await navXml.ToJsonAsync();
 
-            var navJson = await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider());
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider());
             var xml = await navJson.ToXmlAsync();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);

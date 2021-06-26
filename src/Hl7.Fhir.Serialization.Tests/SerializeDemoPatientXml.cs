@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public ITypedElement getXmlElement(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
         public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) =>
-            await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+            await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
         [TestMethod]

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
     public class SerializeDemoPatientJson
     {
         public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) => 
-            await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+            await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
         public async Tasks.Task CanSerializeThroughNavigatorAndCompare()

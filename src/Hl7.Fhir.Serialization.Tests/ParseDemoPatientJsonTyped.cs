@@ -14,13 +14,13 @@ namespace Hl7.Fhir.Serialization.Tests
     public class ParseDemoPatientJsonTyped
     {
         public async Task<ITypedElement> getJsonNode(string json, FhirJsonParsingSettings settings = null) 
-            => await JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
+            => await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: settings);
 
         // This test should resurface once you read this through a validating reader navigator (or somesuch)
         [TestMethod]
         public async Task CanReadThroughTypedNavigator()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNode(tp);
             ParseDemoPatient.CanReadThroughTypedElement(nav, typed: true);
         }
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Task ElementNavPerformanceTypedJson()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNode(tp);
             ParseDemoPatient.ElementNavPerformance(nav.ToSourceNode());
         }
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Task ProducesCorrectTypedLocations()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var patient = await getJsonNode(tp);
             ParseDemoPatient.ProducedCorrectTypedLocations(patient);
         }
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Task HasLineNumbersTypedJson()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             var nav = await getJsonNode(tp);
             ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav.ToSourceNode());
         }
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Task CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.json"));
+            var bundle = await File.ReadAllTextAsync(Path.Combine("TestData", "BundleWithOneEntry.json"));
             var nav = await getJsonNode(bundle);
             ParseDemoPatient.CheckBundleEntryNavigation(nav);
         }
@@ -78,9 +78,9 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async Task PingpongJson()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             // will allow whitespace and comments to come through      
-            var navJson = await JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
             var xml = await navJson.ToXmlAsync();
 
             var navXml = XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider());
@@ -109,13 +109,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             // First, use a simple value where a complex type was expected
             var tp = "{ 'resourceType' : 'Patient', 'maritalStatus' : 'UNK' }";
-            var navJson = await JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
             var errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
 
             // then, use a simple value where an array (of a complex type) was expected
             tp = "{ 'resourceType' : 'Patient', 'name' : ['Ewout'] }";
-            navJson = await JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
+            navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider());
             errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("it cannot have a value"));
         }
@@ -125,13 +125,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             // Use a single element where an array was expected
             var tp = "{ 'resourceType' : 'Patient', 'identifier' :  { 'value': 'AB60001' }}";
-            var navJson = await JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             var errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must be used here"));
 
             // Use an array where a single value was expected
             tp = "{ 'resourceType' : 'Patient', 'active' : [true,false] }";
-            navJson = await JsonParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
+            navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tp, new PocoStructureDefinitionSummaryProvider(), null, new FhirJsonParsingSettings() { PermissiveParsing = false });
             errors = navJson.VisitAndCatch();
             Assert.IsTrue(errors.Single().Message.Contains("an array must not be used here"));
         }
