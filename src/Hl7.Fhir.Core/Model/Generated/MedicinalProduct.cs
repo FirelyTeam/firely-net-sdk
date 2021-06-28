@@ -204,8 +204,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "productName" => ProductNameElement,
-          "namePart" => NamePart,
-          "countryLanguage" => CountryLanguage,
+          "namePart" => NamePart?.Any() == true ? NamePart : null,
+          "countryLanguage" => CountryLanguage?.Any() == true ? CountryLanguage : null,
           _ => default
         };
 
@@ -216,8 +216,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
-        if (NamePart is not null) yield return new KeyValuePair<string,object>("namePart",NamePart);
-        if (CountryLanguage is not null) yield return new KeyValuePair<string,object>("countryLanguage",CountryLanguage);
+        if (NamePart?.Any() == true) yield return new KeyValuePair<string,object>("namePart",NamePart);
+        if (CountryLanguage?.Any() == true) yield return new KeyValuePair<string,object>("countryLanguage",CountryLanguage);
       }
 
     }
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
           "authorisationReferenceNumber" => AuthorisationReferenceNumber,
           "effectiveDate" => EffectiveDateElement,
           "confidentialityIndicator" => ConfidentialityIndicator,
-          "manufacturer" => Manufacturer,
+          "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
           "regulator" => Regulator,
           _ => default
         };
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
         if (AuthorisationReferenceNumber is not null) yield return new KeyValuePair<string,object>("authorisationReferenceNumber",AuthorisationReferenceNumber);
         if (EffectiveDateElement is not null) yield return new KeyValuePair<string,object>("effectiveDate",EffectiveDateElement);
         if (ConfidentialityIndicator is not null) yield return new KeyValuePair<string,object>("confidentialityIndicator",ConfidentialityIndicator);
-        if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+        if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
         if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
       }
 
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "identifier" => Identifier,
+          "identifier" => Identifier?.Any() == true ? Identifier : null,
           "type" => Type,
           "intendedUse" => IntendedUse,
           "indication" => Indication,
@@ -982,10 +982,10 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",IntendedUse);
-        if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+        if (Indication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("indication", Indication),Indication);
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
@@ -1457,26 +1457,26 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "type" => Type,
         "domain" => Domain,
         "combinedPharmaceuticalDoseForm" => CombinedPharmaceuticalDoseForm,
         "legalStatusOfSupply" => LegalStatusOfSupply,
         "additionalMonitoringIndicator" => AdditionalMonitoringIndicator,
-        "specialMeasures" => SpecialMeasuresElement,
+        "specialMeasures" => SpecialMeasuresElement?.Any() == true ? SpecialMeasuresElement : null,
         "paediatricUseIndicator" => PaediatricUseIndicator,
-        "productClassification" => ProductClassification,
-        "marketingStatus" => MarketingStatus,
-        "pharmaceuticalProduct" => PharmaceuticalProduct,
-        "packagedMedicinalProduct" => PackagedMedicinalProduct,
-        "attachedDocument" => AttachedDocument,
-        "masterFile" => MasterFile,
-        "contact" => Contact,
-        "clinicalTrial" => ClinicalTrial,
-        "name" => Name,
-        "crossReference" => CrossReference,
-        "manufacturingBusinessOperation" => ManufacturingBusinessOperation,
-        "specialDesignation" => SpecialDesignation,
+        "productClassification" => ProductClassification?.Any() == true ? ProductClassification : null,
+        "marketingStatus" => MarketingStatus?.Any() == true ? MarketingStatus : null,
+        "pharmaceuticalProduct" => PharmaceuticalProduct?.Any() == true ? PharmaceuticalProduct : null,
+        "packagedMedicinalProduct" => PackagedMedicinalProduct?.Any() == true ? PackagedMedicinalProduct : null,
+        "attachedDocument" => AttachedDocument?.Any() == true ? AttachedDocument : null,
+        "masterFile" => MasterFile?.Any() == true ? MasterFile : null,
+        "contact" => Contact?.Any() == true ? Contact : null,
+        "clinicalTrial" => ClinicalTrial?.Any() == true ? ClinicalTrial : null,
+        "name" => Name?.Any() == true ? Name : null,
+        "crossReference" => CrossReference?.Any() == true ? CrossReference : null,
+        "manufacturingBusinessOperation" => ManufacturingBusinessOperation?.Any() == true ? ManufacturingBusinessOperation : null,
+        "specialDesignation" => SpecialDesignation?.Any() == true ? SpecialDesignation : null,
         _ => default
       };
 
@@ -1486,26 +1486,26 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
       if (CombinedPharmaceuticalDoseForm is not null) yield return new KeyValuePair<string,object>("combinedPharmaceuticalDoseForm",CombinedPharmaceuticalDoseForm);
       if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
       if (AdditionalMonitoringIndicator is not null) yield return new KeyValuePair<string,object>("additionalMonitoringIndicator",AdditionalMonitoringIndicator);
-      if (SpecialMeasuresElement is not null) yield return new KeyValuePair<string,object>("specialMeasures",SpecialMeasuresElement);
+      if (SpecialMeasuresElement?.Any() == true) yield return new KeyValuePair<string,object>("specialMeasures",SpecialMeasuresElement);
       if (PaediatricUseIndicator is not null) yield return new KeyValuePair<string,object>("paediatricUseIndicator",PaediatricUseIndicator);
-      if (ProductClassification is not null) yield return new KeyValuePair<string,object>("productClassification",ProductClassification);
-      if (MarketingStatus is not null) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
-      if (PharmaceuticalProduct is not null) yield return new KeyValuePair<string,object>("pharmaceuticalProduct",PharmaceuticalProduct);
-      if (PackagedMedicinalProduct is not null) yield return new KeyValuePair<string,object>("packagedMedicinalProduct",PackagedMedicinalProduct);
-      if (AttachedDocument is not null) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
-      if (MasterFile is not null) yield return new KeyValuePair<string,object>("masterFile",MasterFile);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (ClinicalTrial is not null) yield return new KeyValuePair<string,object>("clinicalTrial",ClinicalTrial);
-      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-      if (CrossReference is not null) yield return new KeyValuePair<string,object>("crossReference",CrossReference);
-      if (ManufacturingBusinessOperation is not null) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",ManufacturingBusinessOperation);
-      if (SpecialDesignation is not null) yield return new KeyValuePair<string,object>("specialDesignation",SpecialDesignation);
+      if (ProductClassification?.Any() == true) yield return new KeyValuePair<string,object>("productClassification",ProductClassification);
+      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (PharmaceuticalProduct?.Any() == true) yield return new KeyValuePair<string,object>("pharmaceuticalProduct",PharmaceuticalProduct);
+      if (PackagedMedicinalProduct?.Any() == true) yield return new KeyValuePair<string,object>("packagedMedicinalProduct",PackagedMedicinalProduct);
+      if (AttachedDocument?.Any() == true) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
+      if (MasterFile?.Any() == true) yield return new KeyValuePair<string,object>("masterFile",MasterFile);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (ClinicalTrial?.Any() == true) yield return new KeyValuePair<string,object>("clinicalTrial",ClinicalTrial);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (CrossReference?.Any() == true) yield return new KeyValuePair<string,object>("crossReference",CrossReference);
+      if (ManufacturingBusinessOperation?.Any() == true) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",ManufacturingBusinessOperation);
+      if (SpecialDesignation?.Any() == true) yield return new KeyValuePair<string,object>("specialDesignation",SpecialDesignation);
     }
 
   }

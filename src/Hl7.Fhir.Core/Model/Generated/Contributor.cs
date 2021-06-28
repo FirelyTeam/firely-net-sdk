@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
       {
         "type" => TypeElement,
         "name" => NameElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         _ => default
       };
 
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
     }
 
   }

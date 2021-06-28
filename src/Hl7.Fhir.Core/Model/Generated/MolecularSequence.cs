@@ -1789,13 +1789,13 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "score" => ScoreElement,
-          "numTP" => NumTPElement,
-          "numFP" => NumFPElement,
-          "numFN" => NumFNElement,
-          "precision" => PrecisionElement,
-          "sensitivity" => SensitivityElement,
-          "fMeasure" => FMeasureElement,
+          "score" => ScoreElement?.Any() == true ? ScoreElement : null,
+          "numTP" => NumTPElement?.Any() == true ? NumTPElement : null,
+          "numFP" => NumFPElement?.Any() == true ? NumFPElement : null,
+          "numFN" => NumFNElement?.Any() == true ? NumFNElement : null,
+          "precision" => PrecisionElement?.Any() == true ? PrecisionElement : null,
+          "sensitivity" => SensitivityElement?.Any() == true ? SensitivityElement : null,
+          "fMeasure" => FMeasureElement?.Any() == true ? FMeasureElement : null,
           _ => default
         };
 
@@ -1805,13 +1805,13 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (ScoreElement is not null) yield return new KeyValuePair<string,object>("score",ScoreElement);
-        if (NumTPElement is not null) yield return new KeyValuePair<string,object>("numTP",NumTPElement);
-        if (NumFPElement is not null) yield return new KeyValuePair<string,object>("numFP",NumFPElement);
-        if (NumFNElement is not null) yield return new KeyValuePair<string,object>("numFN",NumFNElement);
-        if (PrecisionElement is not null) yield return new KeyValuePair<string,object>("precision",PrecisionElement);
-        if (SensitivityElement is not null) yield return new KeyValuePair<string,object>("sensitivity",SensitivityElement);
-        if (FMeasureElement is not null) yield return new KeyValuePair<string,object>("fMeasure",FMeasureElement);
+        if (ScoreElement?.Any() == true) yield return new KeyValuePair<string,object>("score",ScoreElement);
+        if (NumTPElement?.Any() == true) yield return new KeyValuePair<string,object>("numTP",NumTPElement);
+        if (NumFPElement?.Any() == true) yield return new KeyValuePair<string,object>("numFP",NumFPElement);
+        if (NumFNElement?.Any() == true) yield return new KeyValuePair<string,object>("numFN",NumFNElement);
+        if (PrecisionElement?.Any() == true) yield return new KeyValuePair<string,object>("precision",PrecisionElement);
+        if (SensitivityElement?.Any() == true) yield return new KeyValuePair<string,object>("sensitivity",SensitivityElement);
+        if (FMeasureElement?.Any() == true) yield return new KeyValuePair<string,object>("fMeasure",FMeasureElement);
       }
 
     }
@@ -3116,7 +3116,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "type" => TypeElement,
         "coordinateSystem" => CoordinateSystemElement,
         "patient" => Patient,
@@ -3125,13 +3125,13 @@ namespace Hl7.Fhir.Model
         "performer" => Performer,
         "quantity" => Quantity,
         "referenceSeq" => ReferenceSeq,
-        "variant" => Variant,
+        "variant" => Variant?.Any() == true ? Variant : null,
         "observedSeq" => ObservedSeqElement,
-        "quality" => Quality,
+        "quality" => Quality?.Any() == true ? Quality : null,
         "readCoverage" => ReadCoverageElement,
-        "repository" => Repository,
-        "pointer" => Pointer,
-        "structureVariant" => StructureVariant,
+        "repository" => Repository?.Any() == true ? Repository : null,
+        "pointer" => Pointer?.Any() == true ? Pointer : null,
+        "structureVariant" => StructureVariant?.Any() == true ? StructureVariant : null,
         _ => default
       };
 
@@ -3141,7 +3141,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (CoordinateSystemElement is not null) yield return new KeyValuePair<string,object>("coordinateSystem",CoordinateSystemElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
@@ -3150,13 +3150,13 @@ namespace Hl7.Fhir.Model
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       if (ReferenceSeq is not null) yield return new KeyValuePair<string,object>("referenceSeq",ReferenceSeq);
-      if (Variant is not null) yield return new KeyValuePair<string,object>("variant",Variant);
+      if (Variant?.Any() == true) yield return new KeyValuePair<string,object>("variant",Variant);
       if (ObservedSeqElement is not null) yield return new KeyValuePair<string,object>("observedSeq",ObservedSeqElement);
-      if (Quality is not null) yield return new KeyValuePair<string,object>("quality",Quality);
+      if (Quality?.Any() == true) yield return new KeyValuePair<string,object>("quality",Quality);
       if (ReadCoverageElement is not null) yield return new KeyValuePair<string,object>("readCoverage",ReadCoverageElement);
-      if (Repository is not null) yield return new KeyValuePair<string,object>("repository",Repository);
-      if (Pointer is not null) yield return new KeyValuePair<string,object>("pointer",Pointer);
-      if (StructureVariant is not null) yield return new KeyValuePair<string,object>("structureVariant",StructureVariant);
+      if (Repository?.Any() == true) yield return new KeyValuePair<string,object>("repository",Repository);
+      if (Pointer?.Any() == true) yield return new KeyValuePair<string,object>("pointer",Pointer);
+      if (StructureVariant?.Any() == true) yield return new KeyValuePair<string,object>("structureVariant",StructureVariant);
     }
 
   }

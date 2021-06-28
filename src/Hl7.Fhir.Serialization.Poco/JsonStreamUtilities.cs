@@ -37,6 +37,8 @@ using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization.Poco
 {
+
+
     /// <summary>
     /// Common utilties for JSON Stream functionality.
     /// </summary>
@@ -47,6 +49,7 @@ namespace Hl7.Fhir.Serialization.Poco
             {
                 null => false,
                 string s => !string.IsNullOrWhiteSpace(s),
+                byte[] bs => bs.Length > 0,
                 _ => true
             };
 

@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "period" => Period,
         "study" => Study,
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);

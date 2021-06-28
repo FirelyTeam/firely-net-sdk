@@ -449,12 +449,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.ChargeItem)
         {
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("chargeItemReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("chargeItemReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("chargeItemCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("chargeItemCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }

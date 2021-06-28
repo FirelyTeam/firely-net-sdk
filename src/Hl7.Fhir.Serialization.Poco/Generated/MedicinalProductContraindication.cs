@@ -272,12 +272,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Medication)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("medicationCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("medicationCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("medicationReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("medicationReference", v_ResourceReference, writer, options);
             break;
         }
       }

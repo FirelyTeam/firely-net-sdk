@@ -742,24 +742,24 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "basedOn" => BasedOn,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
         "status" => StatusElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "code" => Code,
         "subject" => Subject,
         "encounter" => Encounter,
         "effective" => Effective,
         "issued" => IssuedElement,
-        "performer" => Performer,
-        "resultsInterpreter" => ResultsInterpreter,
-        "specimen" => Specimen,
-        "result" => Result,
-        "imagingStudy" => ImagingStudy,
-        "media" => Media,
+        "performer" => Performer?.Any() == true ? Performer : null,
+        "resultsInterpreter" => ResultsInterpreter?.Any() == true ? ResultsInterpreter : null,
+        "specimen" => Specimen?.Any() == true ? Specimen : null,
+        "result" => Result?.Any() == true ? Result : null,
+        "imagingStudy" => ImagingStudy?.Any() == true ? ImagingStudy : null,
+        "media" => Media?.Any() == true ? Media : null,
         "conclusion" => ConclusionElement,
-        "conclusionCode" => ConclusionCode,
-        "presentedForm" => PresentedForm,
+        "conclusionCode" => ConclusionCode?.Any() == true ? ConclusionCode : null,
+        "presentedForm" => PresentedForm?.Any() == true ? PresentedForm : null,
         _ => default
       };
 
@@ -769,24 +769,24 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ResultsInterpreter is not null) yield return new KeyValuePair<string,object>("resultsInterpreter",ResultsInterpreter);
-      if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
-      if (Result is not null) yield return new KeyValuePair<string,object>("result",Result);
-      if (ImagingStudy is not null) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
-      if (Media is not null) yield return new KeyValuePair<string,object>("media",Media);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ResultsInterpreter?.Any() == true) yield return new KeyValuePair<string,object>("resultsInterpreter",ResultsInterpreter);
+      if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
+      if (Result?.Any() == true) yield return new KeyValuePair<string,object>("result",Result);
+      if (ImagingStudy?.Any() == true) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
+      if (Media?.Any() == true) yield return new KeyValuePair<string,object>("media",Media);
       if (ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",ConclusionElement);
-      if (ConclusionCode is not null) yield return new KeyValuePair<string,object>("conclusionCode",ConclusionCode);
-      if (PresentedForm is not null) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);
+      if (ConclusionCode?.Any() == true) yield return new KeyValuePair<string,object>("conclusionCode",ConclusionCode);
+      if (PresentedForm?.Any() == true) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);
     }
 
   }

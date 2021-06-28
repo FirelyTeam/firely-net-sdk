@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "description" => Description,
+          "description" => Description?.Any() == true ? Description : null,
           _ => default
         };
 
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (Description?.Any() == true) yield return new KeyValuePair<string,object>("description",Description);
       }
 
     }
@@ -845,8 +845,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "valueQuantity" => ValueQuantity,
-          "valueCode" => ValueCode,
+          "valueQuantity" => ValueQuantity?.Any() == true ? ValueQuantity : null,
+          "valueCode" => ValueCode?.Any() == true ? ValueCode : null,
           _ => default
         };
 
@@ -857,8 +857,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (ValueQuantity is not null) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
-        if (ValueCode is not null) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
+        if (ValueQuantity?.Any() == true) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
+        if (ValueCode?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
       }
 
     }
@@ -1594,28 +1594,28 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "udiDeviceIdentifier" => UdiDeviceIdentifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "udiDeviceIdentifier" => UdiDeviceIdentifier?.Any() == true ? UdiDeviceIdentifier : null,
         "manufacturer" => Manufacturer,
-        "deviceName" => DeviceName,
+        "deviceName" => DeviceName?.Any() == true ? DeviceName : null,
         "modelNumber" => ModelNumberElement,
         "type" => Type,
-        "specialization" => Specialization,
-        "version" => VersionElement,
-        "safety" => Safety,
-        "shelfLifeStorage" => ShelfLifeStorage,
+        "specialization" => Specialization?.Any() == true ? Specialization : null,
+        "version" => VersionElement?.Any() == true ? VersionElement : null,
+        "safety" => Safety?.Any() == true ? Safety : null,
+        "shelfLifeStorage" => ShelfLifeStorage?.Any() == true ? ShelfLifeStorage : null,
         "physicalCharacteristics" => PhysicalCharacteristics,
-        "languageCode" => LanguageCode,
-        "capability" => Capability,
-        "property" => Property,
+        "languageCode" => LanguageCode?.Any() == true ? LanguageCode : null,
+        "capability" => Capability?.Any() == true ? Capability : null,
+        "property" => Property?.Any() == true ? Property : null,
         "owner" => Owner,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "url" => UrlElement,
         "onlineInformation" => OnlineInformationElement,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         "quantity" => Quantity,
         "parentDevice" => ParentDevice,
-        "material" => Material,
+        "material" => Material?.Any() == true ? Material : null,
         _ => default
       };
 
@@ -1625,28 +1625,28 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (UdiDeviceIdentifier is not null) yield return new KeyValuePair<string,object>("udiDeviceIdentifier",UdiDeviceIdentifier);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (DeviceName is not null) yield return new KeyValuePair<string,object>("deviceName",DeviceName);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (UdiDeviceIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("udiDeviceIdentifier",UdiDeviceIdentifier);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("manufacturer", Manufacturer),Manufacturer);
+      if (DeviceName?.Any() == true) yield return new KeyValuePair<string,object>("deviceName",DeviceName);
       if (ModelNumberElement is not null) yield return new KeyValuePair<string,object>("modelNumber",ModelNumberElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Specialization is not null) yield return new KeyValuePair<string,object>("specialization",Specialization);
-      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
-      if (Safety is not null) yield return new KeyValuePair<string,object>("safety",Safety);
-      if (ShelfLifeStorage is not null) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
+      if (Specialization?.Any() == true) yield return new KeyValuePair<string,object>("specialization",Specialization);
+      if (VersionElement?.Any() == true) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",Safety);
+      if (ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
       if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
-      if (LanguageCode is not null) yield return new KeyValuePair<string,object>("languageCode",LanguageCode);
-      if (Capability is not null) yield return new KeyValuePair<string,object>("capability",Capability);
-      if (Property is not null) yield return new KeyValuePair<string,object>("property",Property);
+      if (LanguageCode?.Any() == true) yield return new KeyValuePair<string,object>("languageCode",LanguageCode);
+      if (Capability?.Any() == true) yield return new KeyValuePair<string,object>("capability",Capability);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
       if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (OnlineInformationElement is not null) yield return new KeyValuePair<string,object>("onlineInformation",OnlineInformationElement);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       if (ParentDevice is not null) yield return new KeyValuePair<string,object>("parentDevice",ParentDevice);
-      if (Material is not null) yield return new KeyValuePair<string,object>("material",Material);
+      if (Material?.Any() == true) yield return new KeyValuePair<string,object>("material",Material);
     }
 
   }

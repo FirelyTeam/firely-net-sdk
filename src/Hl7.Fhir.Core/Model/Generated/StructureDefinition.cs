@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "element" => Element,
+          "element" => Element?.Any() == true ? Element : null,
           _ => default
         };
 
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Element is not null) yield return new KeyValuePair<string,object>("element",Element);
+        if (Element?.Any() == true) yield return new KeyValuePair<string,object>("element",Element);
       }
 
     }
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "element" => Element,
+          "element" => Element?.Any() == true ? Element : null,
           _ => default
         };
 
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Element is not null) yield return new KeyValuePair<string,object>("element",Element);
+        if (Element?.Any() == true) yield return new KeyValuePair<string,object>("element",Element);
       }
 
     }
@@ -1592,7 +1592,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
@@ -1600,19 +1600,19 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
-        "keyword" => Keyword,
+        "keyword" => Keyword?.Any() == true ? Keyword : null,
         "fhirVersion" => FhirVersionElement,
-        "mapping" => Mapping,
+        "mapping" => Mapping?.Any() == true ? Mapping : null,
         "kind" => KindElement,
         "abstract" => AbstractElement,
-        "context" => Context,
-        "contextInvariant" => ContextInvariantElement,
+        "context" => Context?.Any() == true ? Context : null,
+        "contextInvariant" => ContextInvariantElement?.Any() == true ? ContextInvariantElement : null,
         "type" => TypeElement,
         "baseDefinition" => BaseDefinitionElement,
         "derivation" => DerivationElement,
@@ -1628,7 +1628,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -1636,19 +1636,19 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
-      if (Keyword is not null) yield return new KeyValuePair<string,object>("keyword",Keyword);
+      if (Keyword?.Any() == true) yield return new KeyValuePair<string,object>("keyword",Keyword);
       if (FhirVersionElement is not null) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
-      if (Mapping is not null) yield return new KeyValuePair<string,object>("mapping",Mapping);
+      if (Mapping?.Any() == true) yield return new KeyValuePair<string,object>("mapping",Mapping);
       if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
       if (AbstractElement is not null) yield return new KeyValuePair<string,object>("abstract",AbstractElement);
-      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (ContextInvariantElement is not null) yield return new KeyValuePair<string,object>("contextInvariant",ContextInvariantElement);
+      if (Context?.Any() == true) yield return new KeyValuePair<string,object>("context",Context);
+      if (ContextInvariantElement?.Any() == true) yield return new KeyValuePair<string,object>("contextInvariant",ContextInvariantElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (BaseDefinitionElement is not null) yield return new KeyValuePair<string,object>("baseDefinition",BaseDefinitionElement);
       if (DerivationElement is not null) yield return new KeyValuePair<string,object>("derivation",DerivationElement);

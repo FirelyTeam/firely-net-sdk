@@ -488,18 +488,18 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "identifier" => Identifier,
+          "identifier" => Identifier?.Any() == true ? Identifier : null,
           "type" => Type,
           "quantity" => Quantity,
-          "material" => Material,
-          "alternateMaterial" => AlternateMaterial,
-          "device" => Device,
-          "manufacturedItem" => ManufacturedItem,
-          "packageItem" => PackageItem,
+          "material" => Material?.Any() == true ? Material : null,
+          "alternateMaterial" => AlternateMaterial?.Any() == true ? AlternateMaterial : null,
+          "device" => Device?.Any() == true ? Device : null,
+          "manufacturedItem" => ManufacturedItem?.Any() == true ? ManufacturedItem : null,
+          "packageItem" => PackageItem?.Any() == true ? PackageItem : null,
           "physicalCharacteristics" => PhysicalCharacteristics,
-          "otherCharacteristics" => OtherCharacteristics,
-          "shelfLifeStorage" => ShelfLifeStorage,
-          "manufacturer" => Manufacturer,
+          "otherCharacteristics" => OtherCharacteristics?.Any() == true ? OtherCharacteristics : null,
+          "shelfLifeStorage" => ShelfLifeStorage?.Any() == true ? ShelfLifeStorage : null,
+          "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
           _ => default
         };
 
@@ -509,18 +509,18 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Material is not null) yield return new KeyValuePair<string,object>("material",Material);
-        if (AlternateMaterial is not null) yield return new KeyValuePair<string,object>("alternateMaterial",AlternateMaterial);
-        if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-        if (ManufacturedItem is not null) yield return new KeyValuePair<string,object>("manufacturedItem",ManufacturedItem);
-        if (PackageItem is not null) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+        if (Material?.Any() == true) yield return new KeyValuePair<string,object>("material",Material);
+        if (AlternateMaterial?.Any() == true) yield return new KeyValuePair<string,object>("alternateMaterial",AlternateMaterial);
+        if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
+        if (ManufacturedItem?.Any() == true) yield return new KeyValuePair<string,object>("manufacturedItem",ManufacturedItem);
+        if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
         if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
-        if (OtherCharacteristics is not null) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
-        if (ShelfLifeStorage is not null) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
-        if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+        if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+        if (ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
+        if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       }
 
     }
@@ -777,15 +777,15 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "subject" => Subject,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "subject" => Subject?.Any() == true ? Subject : null,
         "description" => DescriptionElement,
         "legalStatusOfSupply" => LegalStatusOfSupply,
-        "marketingStatus" => MarketingStatus,
+        "marketingStatus" => MarketingStatus?.Any() == true ? MarketingStatus : null,
         "marketingAuthorization" => MarketingAuthorization,
-        "manufacturer" => Manufacturer,
-        "batchIdentifier" => BatchIdentifier,
-        "packageItem" => PackageItem,
+        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
+        "batchIdentifier" => BatchIdentifier?.Any() == true ? BatchIdentifier : null,
+        "packageItem" => PackageItem?.Any() == true ? PackageItem : null,
         _ => default
       };
 
@@ -795,15 +795,15 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
-      if (MarketingStatus is not null) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
       if (MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",MarketingAuthorization);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (BatchIdentifier is not null) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
-      if (PackageItem is not null) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
+      if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
     }
 
   }

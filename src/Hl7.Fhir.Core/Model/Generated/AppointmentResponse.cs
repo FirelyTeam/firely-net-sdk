@@ -340,11 +340,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "appointment" => Appointment,
         "start" => StartElement,
         "end" => EndElement,
-        "participantType" => ParticipantType,
+        "participantType" => ParticipantType?.Any() == true ? ParticipantType : null,
         "actor" => Actor,
         "participantStatus" => ParticipantStatusElement,
         "comment" => CommentElement,
@@ -357,11 +357,11 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Appointment is not null) yield return new KeyValuePair<string,object>("appointment",Appointment);
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
       if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
-      if (ParticipantType is not null) yield return new KeyValuePair<string,object>("participantType",ParticipantType);
+      if (ParticipantType?.Any() == true) yield return new KeyValuePair<string,object>("participantType",ParticipantType);
       if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       if (ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",ParticipantStatusElement);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);

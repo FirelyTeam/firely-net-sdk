@@ -80,16 +80,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("onsetDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("onsetAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("onsetPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("onsetRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("onsetString",v_FhirString,writer,options);
@@ -104,16 +101,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("abatementDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("abatementAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("abatementAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("abatementPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("abatementPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("abatementRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("abatementRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("abatementString",v_FhirString,writer,options);

@@ -897,9 +897,9 @@ namespace Hl7.Fhir.Model
           "period" => PeriodElement,
           "periodMax" => PeriodMaxElement,
           "periodUnit" => PeriodUnitElement,
-          "dayOfWeek" => DayOfWeekElement,
-          "timeOfDay" => TimeOfDayElement,
-          "when" => WhenElement,
+          "dayOfWeek" => DayOfWeekElement?.Any() == true ? DayOfWeekElement : null,
+          "timeOfDay" => TimeOfDayElement?.Any() == true ? TimeOfDayElement : null,
+          "when" => WhenElement?.Any() == true ? WhenElement : null,
           "offset" => OffsetElement,
           _ => default
         };
@@ -910,7 +910,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Bounds is not null) yield return new KeyValuePair<string,object>("bounds",Bounds);
+        if (Bounds is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("bounds", Bounds),Bounds);
         if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
         if (CountMaxElement is not null) yield return new KeyValuePair<string,object>("countMax",CountMaxElement);
         if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
@@ -921,9 +921,9 @@ namespace Hl7.Fhir.Model
         if (PeriodElement is not null) yield return new KeyValuePair<string,object>("period",PeriodElement);
         if (PeriodMaxElement is not null) yield return new KeyValuePair<string,object>("periodMax",PeriodMaxElement);
         if (PeriodUnitElement is not null) yield return new KeyValuePair<string,object>("periodUnit",PeriodUnitElement);
-        if (DayOfWeekElement is not null) yield return new KeyValuePair<string,object>("dayOfWeek",DayOfWeekElement);
-        if (TimeOfDayElement is not null) yield return new KeyValuePair<string,object>("timeOfDay",TimeOfDayElement);
-        if (WhenElement is not null) yield return new KeyValuePair<string,object>("when",WhenElement);
+        if (DayOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("dayOfWeek",DayOfWeekElement);
+        if (TimeOfDayElement?.Any() == true) yield return new KeyValuePair<string,object>("timeOfDay",TimeOfDayElement);
+        if (WhenElement?.Any() == true) yield return new KeyValuePair<string,object>("when",WhenElement);
         if (OffsetElement is not null) yield return new KeyValuePair<string,object>("offset",OffsetElement);
       }
 
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "event" => EventElement,
+        "event" => EventElement?.Any() == true ? EventElement : null,
         "repeat" => Repeat,
         "code" => Code,
         _ => default
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (EventElement is not null) yield return new KeyValuePair<string,object>("event",EventElement);
+      if (EventElement?.Any() == true) yield return new KeyValuePair<string,object>("event",EventElement);
       if (Repeat is not null) yield return new KeyValuePair<string,object>("repeat",Repeat);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
     }

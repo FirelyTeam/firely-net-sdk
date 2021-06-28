@@ -79,8 +79,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Born)
         {
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("bornPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("bornPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Date v_Date:
             JsonStreamUtilities.SerializePrimitiveProperty("bornDate",v_Date,writer,options);
@@ -95,12 +94,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Age)
         {
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("ageAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("ageAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("ageRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("ageRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("ageString",v_FhirString,writer,options);
@@ -117,12 +114,10 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("deceasedBoolean",v_FhirBoolean,writer,options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("deceasedAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("deceasedAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("deceasedRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("deceasedRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Date v_Date:
             JsonStreamUtilities.SerializePrimitiveProperty("deceasedDate",v_Date,writer,options);
@@ -681,16 +676,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Onset)
         {
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("onsetAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("onsetRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("onsetPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("onsetPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("onsetString",v_FhirString,writer,options);

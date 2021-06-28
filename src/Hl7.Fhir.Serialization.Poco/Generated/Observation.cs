@@ -80,12 +80,10 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("effectiveDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("effectivePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("effectivePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("effectiveTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("effectiveTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.Instant v_Instant:
             JsonStreamUtilities.SerializePrimitiveProperty("effectiveInstant",v_Instant,writer,options);
@@ -101,12 +99,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Value)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("valueCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("valueString",v_FhirString,writer,options);
@@ -118,16 +114,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueInteger",v_Integer,writer,options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("valueRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("valueRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("valueSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Time v_Time:
             JsonStreamUtilities.SerializePrimitiveProperty("valueTime",v_Time,writer,options);
@@ -136,8 +129,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("valuePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valuePeriod", v_Period, writer, options);
             break;
         }
       }
@@ -907,12 +899,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Value)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("valueCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("valueString",v_FhirString,writer,options);
@@ -924,16 +914,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueInteger",v_Integer,writer,options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("valueRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("valueRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("valueSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Time v_Time:
             JsonStreamUtilities.SerializePrimitiveProperty("valueTime",v_Time,writer,options);
@@ -942,8 +929,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("valuePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valuePeriod", v_Period, writer, options);
             break;
         }
       }

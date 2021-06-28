@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Allowed is not null) yield return new KeyValuePair<string,object>("allowed",Allowed);
+        if (Allowed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       }
 
@@ -1484,38 +1484,38 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "statusReason" => StatusReason,
         "intent" => IntentElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "priority" => PriorityElement,
         "doNotPerform" => DoNotPerformElement,
         "reported" => Reported,
         "medication" => Medication,
         "subject" => Subject,
         "encounter" => Encounter,
-        "supportingInformation" => SupportingInformation,
+        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
         "authoredOn" => AuthoredOnElement,
         "requester" => Requester,
         "performer" => Performer,
         "performerType" => PerformerType,
         "recorder" => Recorder,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "instantiatesCanonical" => InstantiatesCanonicalElement,
-        "instantiatesUri" => InstantiatesUriElement,
-        "basedOn" => BasedOn,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
+        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
         "groupIdentifier" => GroupIdentifier,
         "courseOfTherapyType" => CourseOfTherapyType,
-        "insurance" => Insurance,
-        "note" => Note,
-        "dosageInstruction" => DosageInstruction,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "dosageInstruction" => DosageInstruction?.Any() == true ? DosageInstruction : null,
         "dispenseRequest" => DispenseRequest,
         "substitution" => Substitution,
         "priorPrescription" => PriorPrescription,
-        "detectedIssue" => DetectedIssue,
-        "eventHistory" => EventHistory,
+        "detectedIssue" => DetectedIssue?.Any() == true ? DetectedIssue : null,
+        "eventHistory" => EventHistory?.Any() == true ? EventHistory : null,
         _ => default
       };
 
@@ -1525,38 +1525,38 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
-      if (Reported is not null) yield return new KeyValuePair<string,object>("reported",Reported);
-      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      if (Reported is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("reported", Reported),Reported);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
-      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
       if (CourseOfTherapyType is not null) yield return new KeyValuePair<string,object>("courseOfTherapyType",CourseOfTherapyType);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (DosageInstruction is not null) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (DosageInstruction?.Any() == true) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
       if (DispenseRequest is not null) yield return new KeyValuePair<string,object>("dispenseRequest",DispenseRequest);
       if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
       if (PriorPrescription is not null) yield return new KeyValuePair<string,object>("priorPrescription",PriorPrescription);
-      if (DetectedIssue is not null) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
-      if (EventHistory is not null) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+      if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
+      if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

@@ -481,20 +481,16 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueUri",v_FhirUri,writer,options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("valueAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("valueCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("valueReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueReference", v_ResourceReference, writer, options);
             break;
         }
       }

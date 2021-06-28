@@ -259,11 +259,11 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "type" => Type,
-          "schedule" => Schedule,
-          "nutrient" => Nutrient,
-          "texture" => Texture,
-          "fluidConsistencyType" => FluidConsistencyType,
+          "type" => Type?.Any() == true ? Type : null,
+          "schedule" => Schedule?.Any() == true ? Schedule : null,
+          "nutrient" => Nutrient?.Any() == true ? Nutrient : null,
+          "texture" => Texture?.Any() == true ? Texture : null,
+          "fluidConsistencyType" => FluidConsistencyType?.Any() == true ? FluidConsistencyType : null,
           "instruction" => InstructionElement,
           _ => default
         };
@@ -274,11 +274,11 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
-        if (Nutrient is not null) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
-        if (Texture is not null) yield return new KeyValuePair<string,object>("texture",Texture);
-        if (FluidConsistencyType is not null) yield return new KeyValuePair<string,object>("fluidConsistencyType",FluidConsistencyType);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
+        if (Texture?.Any() == true) yield return new KeyValuePair<string,object>("texture",Texture);
+        if (FluidConsistencyType?.Any() == true) yield return new KeyValuePair<string,object>("fluidConsistencyType",FluidConsistencyType);
         if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
       }
 
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
         {
           "type" => Type,
           "productName" => ProductNameElement,
-          "schedule" => Schedule,
+          "schedule" => Schedule?.Any() == true ? Schedule : null,
           "quantity" => Quantity,
           "instruction" => InstructionElement,
           _ => default
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
       }
@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
           "additiveProductName" => AdditiveProductNameElement,
           "caloricDensity" => CaloricDensity,
           "routeofAdministration" => RouteofAdministration,
-          "administration" => Administration,
+          "administration" => Administration?.Any() == true ? Administration : null,
           "maxVolumeToDeliver" => MaxVolumeToDeliver,
           "administrationInstruction" => AdministrationInstructionElement,
           _ => default
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
         if (AdditiveProductNameElement is not null) yield return new KeyValuePair<string,object>("additiveProductName",AdditiveProductNameElement);
         if (CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",CaloricDensity);
         if (RouteofAdministration is not null) yield return new KeyValuePair<string,object>("routeofAdministration",RouteofAdministration);
-        if (Administration is not null) yield return new KeyValuePair<string,object>("administration",Administration);
+        if (Administration?.Any() == true) yield return new KeyValuePair<string,object>("administration",Administration);
         if (MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",MaxVolumeToDeliver);
         if (AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",AdministrationInstructionElement);
       }
@@ -1223,7 +1223,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
     }
@@ -1725,23 +1725,23 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "instantiatesCanonical" => InstantiatesCanonicalElement,
-        "instantiatesUri" => InstantiatesUriElement,
-        "instantiates" => InstantiatesElement,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
+        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
+        "instantiates" => InstantiatesElement?.Any() == true ? InstantiatesElement : null,
         "status" => StatusElement,
         "intent" => IntentElement,
         "patient" => Patient,
         "encounter" => Encounter,
         "dateTime" => DateTimeElement,
         "orderer" => Orderer,
-        "allergyIntolerance" => AllergyIntolerance,
-        "foodPreferenceModifier" => FoodPreferenceModifier,
-        "excludeFoodModifier" => ExcludeFoodModifier,
+        "allergyIntolerance" => AllergyIntolerance?.Any() == true ? AllergyIntolerance : null,
+        "foodPreferenceModifier" => FoodPreferenceModifier?.Any() == true ? FoodPreferenceModifier : null,
+        "excludeFoodModifier" => ExcludeFoodModifier?.Any() == true ? ExcludeFoodModifier : null,
         "oralDiet" => OralDiet,
-        "supplement" => Supplement,
+        "supplement" => Supplement?.Any() == true ? Supplement : null,
         "enteralFormula" => EnteralFormula,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -1751,23 +1751,23 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
-      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
-      if (InstantiatesElement is not null) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",DateTimeElement);
       if (Orderer is not null) yield return new KeyValuePair<string,object>("orderer",Orderer);
-      if (AllergyIntolerance is not null) yield return new KeyValuePair<string,object>("allergyIntolerance",AllergyIntolerance);
-      if (FoodPreferenceModifier is not null) yield return new KeyValuePair<string,object>("foodPreferenceModifier",FoodPreferenceModifier);
-      if (ExcludeFoodModifier is not null) yield return new KeyValuePair<string,object>("excludeFoodModifier",ExcludeFoodModifier);
+      if (AllergyIntolerance?.Any() == true) yield return new KeyValuePair<string,object>("allergyIntolerance",AllergyIntolerance);
+      if (FoodPreferenceModifier?.Any() == true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",FoodPreferenceModifier);
+      if (ExcludeFoodModifier?.Any() == true) yield return new KeyValuePair<string,object>("excludeFoodModifier",ExcludeFoodModifier);
       if (OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",OralDiet);
-      if (Supplement is not null) yield return new KeyValuePair<string,object>("supplement",Supplement);
+      if (Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",Supplement);
       if (EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",EnteralFormula);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

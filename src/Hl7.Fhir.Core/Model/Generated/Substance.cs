@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
+        if (Substance is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("substance", Substance),Substance);
       }
 
     }
@@ -605,13 +605,13 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "code" => Code,
         "description" => DescriptionElement,
-        "instance" => Instance,
-        "ingredient" => Ingredient,
+        "instance" => Instance?.Any() == true ? Instance : null,
+        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
         _ => default
       };
 
@@ -621,13 +621,13 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
-      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
     }
 
   }

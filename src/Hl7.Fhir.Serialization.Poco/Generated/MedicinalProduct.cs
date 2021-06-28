@@ -1010,12 +1010,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Indication)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("indicationCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("indicationCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("indicationReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("indicationReference", v_ResourceReference, writer, options);
             break;
         }
       }

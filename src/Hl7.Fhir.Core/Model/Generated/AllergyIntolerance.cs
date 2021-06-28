@@ -486,12 +486,12 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "substance" => Substance,
-          "manifestation" => Manifestation,
+          "manifestation" => Manifestation?.Any() == true ? Manifestation : null,
           "description" => DescriptionElement,
           "onset" => OnsetElement,
           "severity" => SeverityElement,
           "exposureRoute" => ExposureRoute,
-          "note" => Note,
+          "note" => Note?.Any() == true ? Note : null,
           _ => default
         };
 
@@ -502,12 +502,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
-        if (Manifestation is not null) yield return new KeyValuePair<string,object>("manifestation",Manifestation);
+        if (Manifestation?.Any() == true) yield return new KeyValuePair<string,object>("manifestation",Manifestation);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (OnsetElement is not null) yield return new KeyValuePair<string,object>("onset",OnsetElement);
         if (SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",SeverityElement);
         if (ExposureRoute is not null) yield return new KeyValuePair<string,object>("exposureRoute",ExposureRoute);
-        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
     }
@@ -968,11 +968,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "clinicalStatus" => ClinicalStatus,
         "verificationStatus" => VerificationStatus,
         "type" => TypeElement,
-        "category" => CategoryElement,
+        "category" => CategoryElement?.Any() == true ? CategoryElement : null,
         "criticality" => CriticalityElement,
         "code" => Code,
         "patient" => Patient,
@@ -982,8 +982,8 @@ namespace Hl7.Fhir.Model
         "recorder" => Recorder,
         "asserter" => Asserter,
         "lastOccurrence" => LastOccurrenceElement,
-        "note" => Note,
-        "reaction" => Reaction,
+        "note" => Note?.Any() == true ? Note : null,
+        "reaction" => Reaction?.Any() == true ? Reaction : null,
         _ => default
       };
 
@@ -993,22 +993,22 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",ClinicalStatus);
       if (VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",VerificationStatus);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+      if (CategoryElement?.Any() == true) yield return new KeyValuePair<string,object>("category",CategoryElement);
       if (CriticalityElement is not null) yield return new KeyValuePair<string,object>("criticality",CriticalityElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
+      if (Onset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
       if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
       if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
       if (LastOccurrenceElement is not null) yield return new KeyValuePair<string,object>("lastOccurrence",LastOccurrenceElement);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Reaction is not null) yield return new KeyValuePair<string,object>("reaction",Reaction);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
     }
 
   }

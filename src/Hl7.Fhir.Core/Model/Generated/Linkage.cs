@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
       {
         "active" => ActiveElement,
         "author" => Author,
-        "item" => Item,
+        "item" => Item?.Any() == true ? Item : null,
         _ => default
       };
 
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

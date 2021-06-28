@@ -70,8 +70,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("servicedDate",v_Date,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("servicedPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("servicedPeriod", v_Period, writer, options);
             break;
         }
       }
@@ -827,8 +826,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("allowedString",v_FhirString,writer,options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("allowedMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("allowedMoney", v_Money, writer, options);
             break;
         }
       }
@@ -843,8 +841,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("usedString",v_FhirString,writer,options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("usedMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("usedMoney", v_Money, writer, options);
             break;
         }
       }

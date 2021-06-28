@@ -494,8 +494,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Date)
         {
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("datePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("datePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
             JsonStreamUtilities.SerializePrimitiveProperty("dateDateTime",v_FhirDateTime,writer,options);

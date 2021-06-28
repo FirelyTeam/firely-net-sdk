@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
           "code" => Code,
           "group" => Group,
           "confidentiality" => Confidentiality,
-          "strength" => Strength,
+          "strength" => Strength?.Any() == true ? Strength : null,
           _ => default
         };
 
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
         if (Confidentiality is not null) yield return new KeyValuePair<string,object>("confidentiality",Confidentiality);
-        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
     }
@@ -449,8 +449,8 @@ namespace Hl7.Fhir.Model
           "concentration" => Concentration,
           "concentrationLowLimit" => ConcentrationLowLimit,
           "measurementPoint" => MeasurementPointElement,
-          "country" => Country,
-          "referenceStrength" => ReferenceStrength,
+          "country" => Country?.Any() == true ? Country : null,
+          "referenceStrength" => ReferenceStrength?.Any() == true ? ReferenceStrength : null,
           _ => default
         };
 
@@ -465,8 +465,8 @@ namespace Hl7.Fhir.Model
         if (Concentration is not null) yield return new KeyValuePair<string,object>("concentration",Concentration);
         if (ConcentrationLowLimit is not null) yield return new KeyValuePair<string,object>("concentrationLowLimit",ConcentrationLowLimit);
         if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
-        if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
-        if (ReferenceStrength is not null) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
+        if (ReferenceStrength?.Any() == true) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
       }
 
     }
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
           "strength" => Strength,
           "strengthLowLimit" => StrengthLowLimit,
           "measurementPoint" => MeasurementPointElement,
-          "country" => Country,
+          "country" => Country?.Any() == true ? Country : null,
           _ => default
         };
 
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
         if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
         if (StrengthLowLimit is not null) yield return new KeyValuePair<string,object>("strengthLowLimit",StrengthLowLimit);
         if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
-        if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
       }
 
     }
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "code" => Code,
-          "strength" => Strength,
+          "strength" => Strength?.Any() == true ? Strength : null,
           _ => default
         };
 
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
     }
@@ -999,8 +999,8 @@ namespace Hl7.Fhir.Model
         "identifier" => Identifier,
         "role" => Role,
         "allergenicIndicator" => AllergenicIndicatorElement,
-        "manufacturer" => Manufacturer,
-        "specifiedSubstance" => SpecifiedSubstance,
+        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
+        "specifiedSubstance" => SpecifiedSubstance?.Any() == true ? SpecifiedSubstance : null,
         "substance" => Substance,
         _ => default
       };
@@ -1014,8 +1014,8 @@ namespace Hl7.Fhir.Model
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
       if (AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",AllergenicIndicatorElement);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (SpecifiedSubstance is not null) yield return new KeyValuePair<string,object>("specifiedSubstance",SpecifiedSubstance);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (SpecifiedSubstance?.Any() == true) yield return new KeyValuePair<string,object>("specifiedSubstance",SpecifiedSubstance);
       if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
     }
 

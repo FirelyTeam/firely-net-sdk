@@ -395,18 +395,18 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "vaccineCode" => VaccineCode,
+          "vaccineCode" => VaccineCode?.Any() == true ? VaccineCode : null,
           "targetDisease" => TargetDisease,
-          "contraindicatedVaccineCode" => ContraindicatedVaccineCode,
+          "contraindicatedVaccineCode" => ContraindicatedVaccineCode?.Any() == true ? ContraindicatedVaccineCode : null,
           "forecastStatus" => ForecastStatus,
-          "forecastReason" => ForecastReason,
-          "dateCriterion" => DateCriterion,
+          "forecastReason" => ForecastReason?.Any() == true ? ForecastReason : null,
+          "dateCriterion" => DateCriterion?.Any() == true ? DateCriterion : null,
           "description" => DescriptionElement,
           "series" => SeriesElement,
           "doseNumber" => DoseNumber,
           "seriesDoses" => SeriesDoses,
-          "supportingImmunization" => SupportingImmunization,
-          "supportingPatientInformation" => SupportingPatientInformation,
+          "supportingImmunization" => SupportingImmunization?.Any() == true ? SupportingImmunization : null,
+          "supportingPatientInformation" => SupportingPatientInformation?.Any() == true ? SupportingPatientInformation : null,
           _ => default
         };
 
@@ -416,18 +416,18 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+        if (VaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
         if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
-        if (ContraindicatedVaccineCode is not null) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
+        if (ContraindicatedVaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
         if (ForecastStatus is not null) yield return new KeyValuePair<string,object>("forecastStatus",ForecastStatus);
-        if (ForecastReason is not null) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
-        if (DateCriterion is not null) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
+        if (ForecastReason?.Any() == true) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
+        if (DateCriterion?.Any() == true) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
-        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
-        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
-        if (SupportingImmunization is not null) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
-        if (SupportingPatientInformation is not null) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
+        if (DoseNumber is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("doseNumber", DoseNumber),DoseNumber);
+        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("seriesDoses", SeriesDoses),SeriesDoses);
+        if (SupportingImmunization?.Any() == true) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
+        if (SupportingPatientInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
       }
 
     }
@@ -754,11 +754,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "patient" => Patient,
         "date" => DateElement,
         "authority" => Authority,
-        "recommendation" => Recommendation,
+        "recommendation" => Recommendation?.Any() == true ? Recommendation : null,
         _ => default
       };
 
@@ -768,11 +768,11 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
-      if (Recommendation is not null) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
+      if (Recommendation?.Any() == true) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
     }
 
   }

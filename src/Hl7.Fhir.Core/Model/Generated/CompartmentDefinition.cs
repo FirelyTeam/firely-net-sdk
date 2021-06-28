@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "code" => CodeElement,
-          "param" => ParamElement,
+          "param" => ParamElement?.Any() == true ? ParamElement : null,
           "documentation" => DocumentationElement,
           _ => default
         };
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
-        if (ParamElement is not null) yield return new KeyValuePair<string,object>("param",ParamElement);
+        if (ParamElement?.Any() == true) yield return new KeyValuePair<string,object>("param",ParamElement);
         if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
       }
 
@@ -749,13 +749,13 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
         "purpose" => Purpose,
         "code" => CodeElement,
         "search" => SearchElement,
-        "resource" => Resource,
+        "resource" => Resource?.Any() == true ? Resource : null,
         _ => default
       };
 
@@ -772,13 +772,13 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
       if (SearchElement is not null) yield return new KeyValuePair<string,object>("search",SearchElement);
-      if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+      if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
     }
 
   }

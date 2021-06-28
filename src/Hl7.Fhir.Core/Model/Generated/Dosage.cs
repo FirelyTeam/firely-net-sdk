@@ -199,8 +199,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Dose is not null) yield return new KeyValuePair<string,object>("dose",Dose);
-        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (Dose is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("dose", Dose),Dose);
+        if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
     }
@@ -559,14 +559,14 @@ namespace Hl7.Fhir.Model
       {
         "sequence" => SequenceElement,
         "text" => TextElement,
-        "additionalInstruction" => AdditionalInstruction,
+        "additionalInstruction" => AdditionalInstruction?.Any() == true ? AdditionalInstruction : null,
         "patientInstruction" => PatientInstructionElement,
         "timing" => Timing,
         "asNeeded" => AsNeeded,
         "site" => Site,
         "route" => Route,
         "method" => Method,
-        "doseAndRate" => DoseAndRate,
+        "doseAndRate" => DoseAndRate?.Any() == true ? DoseAndRate : null,
         "maxDosePerPeriod" => MaxDosePerPeriod,
         "maxDosePerAdministration" => MaxDosePerAdministration,
         "maxDosePerLifetime" => MaxDosePerLifetime,
@@ -581,14 +581,14 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-      if (AdditionalInstruction is not null) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);
+      if (AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);
       if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
       if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (AsNeeded is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeeded);
+      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
       if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
       if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
       if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
-      if (DoseAndRate is not null) yield return new KeyValuePair<string,object>("doseAndRate",DoseAndRate);
+      if (DoseAndRate?.Any() == true) yield return new KeyValuePair<string,object>("doseAndRate",DoseAndRate);
       if (MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",MaxDosePerPeriod);
       if (MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",MaxDosePerAdministration);
       if (MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",MaxDosePerLifetime);

@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "link" => Link,
+          "link" => Link?.Any() == true ? Link : null,
           "fullUrl" => FullUrlElement,
           "resource" => Resource,
           "search" => Search,
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+        if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
         if (FullUrlElement is not null) yield return new KeyValuePair<string,object>("fullUrl",FullUrlElement);
         if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
         if (Search is not null) yield return new KeyValuePair<string,object>("search",Search);
@@ -1573,8 +1573,8 @@ namespace Hl7.Fhir.Model
         "type" => TypeElement,
         "timestamp" => TimestampElement,
         "total" => TotalElement,
-        "link" => Link,
-        "entry" => Entry,
+        "link" => Link?.Any() == true ? Link : null,
+        "entry" => Entry?.Any() == true ? Entry : null,
         "signature" => Signature,
         _ => default
       };
@@ -1589,8 +1589,8 @@ namespace Hl7.Fhir.Model
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",TimestampElement);
       if (TotalElement is not null) yield return new KeyValuePair<string,object>("total",TotalElement);
-      if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
-      if (Entry is not null) yield return new KeyValuePair<string,object>("entry",Entry);
+      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+      if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
       if (Signature is not null) yield return new KeyValuePair<string,object>("signature",Signature);
     }
 

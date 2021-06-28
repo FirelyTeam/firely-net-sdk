@@ -733,16 +733,16 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => Type,
         "name" => NameElement,
-        "subject" => Subject,
+        "subject" => Subject?.Any() == true ? Subject : null,
         "servicePeriod" => ServicePeriod,
-        "coverage" => Coverage,
+        "coverage" => Coverage?.Any() == true ? Coverage : null,
         "owner" => Owner,
         "description" => DescriptionElement,
-        "guarantor" => Guarantor,
+        "guarantor" => Guarantor?.Any() == true ? Guarantor : null,
         "partOf" => PartOf,
         _ => default
       };
@@ -753,16 +753,16 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (ServicePeriod is not null) yield return new KeyValuePair<string,object>("servicePeriod",ServicePeriod);
-      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (Coverage?.Any() == true) yield return new KeyValuePair<string,object>("coverage",Coverage);
       if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Guarantor is not null) yield return new KeyValuePair<string,object>("guarantor",Guarantor);
+      if (Guarantor?.Any() == true) yield return new KeyValuePair<string,object>("guarantor",Guarantor);
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
     }
 

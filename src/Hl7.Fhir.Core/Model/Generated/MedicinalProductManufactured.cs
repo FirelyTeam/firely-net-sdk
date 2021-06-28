@@ -253,10 +253,10 @@ namespace Hl7.Fhir.Model
         "manufacturedDoseForm" => ManufacturedDoseForm,
         "unitOfPresentation" => UnitOfPresentation,
         "quantity" => Quantity,
-        "manufacturer" => Manufacturer,
-        "ingredient" => Ingredient,
+        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
+        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
         "physicalCharacteristics" => PhysicalCharacteristics,
-        "otherCharacteristics" => OtherCharacteristics,
+        "otherCharacteristics" => OtherCharacteristics?.Any() == true ? OtherCharacteristics : null,
         _ => default
       };
 
@@ -269,10 +269,10 @@ namespace Hl7.Fhir.Model
       if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
       if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
       if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
-      if (OtherCharacteristics is not null) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+      if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
     }
 
   }

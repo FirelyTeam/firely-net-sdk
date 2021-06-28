@@ -850,8 +850,8 @@ namespace Hl7.Fhir.Model
           "extends" => ExtendsElement,
           "typeMode" => TypeModeElement,
           "documentation" => DocumentationElement,
-          "input" => Input,
-          "rule" => Rule,
+          "input" => Input?.Any() == true ? Input : null,
+          "rule" => Rule?.Any() == true ? Rule : null,
           _ => default
         };
 
@@ -865,8 +865,8 @@ namespace Hl7.Fhir.Model
         if (ExtendsElement is not null) yield return new KeyValuePair<string,object>("extends",ExtendsElement);
         if (TypeModeElement is not null) yield return new KeyValuePair<string,object>("typeMode",TypeModeElement);
         if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
-        if (Input is not null) yield return new KeyValuePair<string,object>("input",Input);
-        if (Rule is not null) yield return new KeyValuePair<string,object>("rule",Rule);
+        if (Input?.Any() == true) yield return new KeyValuePair<string,object>("input",Input);
+        if (Rule?.Any() == true) yield return new KeyValuePair<string,object>("rule",Rule);
       }
 
     }
@@ -1335,10 +1335,10 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "name" => NameElement,
-          "source" => Source,
-          "target" => Target,
-          "rule" => Rule,
-          "dependent" => Dependent,
+          "source" => Source?.Any() == true ? Source : null,
+          "target" => Target?.Any() == true ? Target : null,
+          "rule" => Rule?.Any() == true ? Rule : null,
+          "dependent" => Dependent?.Any() == true ? Dependent : null,
           "documentation" => DocumentationElement,
           _ => default
         };
@@ -1350,10 +1350,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
-        if (Rule is not null) yield return new KeyValuePair<string,object>("rule",Rule);
-        if (Dependent is not null) yield return new KeyValuePair<string,object>("dependent",Dependent);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
+        if (Rule?.Any() == true) yield return new KeyValuePair<string,object>("rule",Rule);
+        if (Dependent?.Any() == true) yield return new KeyValuePair<string,object>("dependent",Dependent);
         if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
       }
 
@@ -1838,7 +1838,7 @@ namespace Hl7.Fhir.Model
         if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (DefaultValue is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValue);
+        if (DefaultValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("defaultValue", DefaultValue),DefaultValue);
         if (ElementElement is not null) yield return new KeyValuePair<string,object>("element",ElementElement);
         if (ListModeElement is not null) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
         if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
@@ -2201,10 +2201,10 @@ namespace Hl7.Fhir.Model
           "contextType" => ContextTypeElement,
           "element" => ElementElement,
           "variable" => VariableElement,
-          "listMode" => ListModeElement,
+          "listMode" => ListModeElement?.Any() == true ? ListModeElement : null,
           "listRuleId" => ListRuleIdElement,
           "transform" => TransformElement,
-          "parameter" => Parameter,
+          "parameter" => Parameter?.Any() == true ? Parameter : null,
           _ => default
         };
 
@@ -2218,10 +2218,10 @@ namespace Hl7.Fhir.Model
         if (ContextTypeElement is not null) yield return new KeyValuePair<string,object>("contextType",ContextTypeElement);
         if (ElementElement is not null) yield return new KeyValuePair<string,object>("element",ElementElement);
         if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
-        if (ListModeElement is not null) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
+        if (ListModeElement?.Any() == true) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
         if (ListRuleIdElement is not null) yield return new KeyValuePair<string,object>("listRuleId",ListRuleIdElement);
         if (TransformElement is not null) yield return new KeyValuePair<string,object>("transform",TransformElement);
-        if (Parameter is not null) yield return new KeyValuePair<string,object>("parameter",Parameter);
+        if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
       }
 
     }
@@ -2330,7 +2330,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -2483,7 +2483,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "name" => NameElement,
-          "variable" => VariableElement,
+          "variable" => VariableElement?.Any() == true ? VariableElement : null,
           _ => default
         };
 
@@ -2494,7 +2494,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
+        if (VariableElement?.Any() == true) yield return new KeyValuePair<string,object>("variable",VariableElement);
       }
 
     }
@@ -3057,7 +3057,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
@@ -3065,15 +3065,15 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
-        "structure" => Structure,
-        "import" => ImportElement,
-        "group" => Group,
+        "structure" => Structure?.Any() == true ? Structure : null,
+        "import" => ImportElement?.Any() == true ? ImportElement : null,
+        "group" => Group?.Any() == true ? Group : null,
         _ => default
       };
 
@@ -3084,7 +3084,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -3092,15 +3092,15 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
-      if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
-      if (ImportElement is not null) yield return new KeyValuePair<string,object>("import",ImportElement);
-      if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
+      if (Structure?.Any() == true) yield return new KeyValuePair<string,object>("structure",Structure);
+      if (ImportElement?.Any() == true) yield return new KeyValuePair<string,object>("import",ImportElement);
+      if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
     }
 
   }

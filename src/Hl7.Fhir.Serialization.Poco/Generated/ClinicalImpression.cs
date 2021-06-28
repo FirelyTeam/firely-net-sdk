@@ -76,8 +76,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("effectiveDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("effectivePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("effectivePeriod", v_Period, writer, options);
             break;
         }
       }

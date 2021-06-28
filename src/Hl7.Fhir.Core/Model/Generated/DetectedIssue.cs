@@ -196,8 +196,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "code" => Code,
-          "detail" => Detail,
+          "code" => Code?.Any() == true ? Code : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -207,8 +207,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -743,18 +743,18 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "code" => Code,
         "severity" => SeverityElement,
         "patient" => Patient,
         "identified" => Identified,
         "author" => Author,
-        "implicated" => Implicated,
-        "evidence" => Evidence,
+        "implicated" => Implicated?.Any() == true ? Implicated : null,
+        "evidence" => Evidence?.Any() == true ? Evidence : null,
         "detail" => DetailElement,
         "reference" => ReferenceElement,
-        "mitigation" => Mitigation,
+        "mitigation" => Mitigation?.Any() == true ? Mitigation : null,
         _ => default
       };
 
@@ -764,18 +764,18 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",SeverityElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Identified is not null) yield return new KeyValuePair<string,object>("identified",Identified);
+      if (Identified is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("identified", Identified),Identified);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (Implicated is not null) yield return new KeyValuePair<string,object>("implicated",Implicated);
-      if (Evidence is not null) yield return new KeyValuePair<string,object>("evidence",Evidence);
+      if (Implicated?.Any() == true) yield return new KeyValuePair<string,object>("implicated",Implicated);
+      if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
       if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
       if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
-      if (Mitigation is not null) yield return new KeyValuePair<string,object>("mitigation",Mitigation);
+      if (Mitigation?.Any() == true) yield return new KeyValuePair<string,object>("mitigation",Mitigation);
     }
 
   }

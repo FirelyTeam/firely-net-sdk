@@ -85,16 +85,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Quantity)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("quantityQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("quantityQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("quantityRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("quantityRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("quantityRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("quantityRange", v_Range, writer, options);
             break;
         }
       }
@@ -110,12 +107,10 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("occurrenceDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("occurrencePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurrencePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("occurrenceTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurrenceTiming", v_Timing, writer, options);
             break;
         }
       }
@@ -127,8 +122,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("asNeededBoolean",v_FhirBoolean,writer,options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("asNeededCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("asNeededCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }

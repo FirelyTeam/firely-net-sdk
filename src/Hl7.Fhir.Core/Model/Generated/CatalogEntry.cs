@@ -603,19 +603,19 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "type" => Type,
         "orderable" => OrderableElement,
         "referencedItem" => ReferencedItem,
-        "additionalIdentifier" => AdditionalIdentifier,
-        "classification" => Classification,
+        "additionalIdentifier" => AdditionalIdentifier?.Any() == true ? AdditionalIdentifier : null,
+        "classification" => Classification?.Any() == true ? Classification : null,
         "status" => StatusElement,
         "validityPeriod" => ValidityPeriod,
         "validTo" => ValidToElement,
         "lastUpdated" => LastUpdatedElement,
-        "additionalCharacteristic" => AdditionalCharacteristic,
-        "additionalClassification" => AdditionalClassification,
-        "relatedEntry" => RelatedEntry,
+        "additionalCharacteristic" => AdditionalCharacteristic?.Any() == true ? AdditionalCharacteristic : null,
+        "additionalClassification" => AdditionalClassification?.Any() == true ? AdditionalClassification : null,
+        "relatedEntry" => RelatedEntry?.Any() == true ? RelatedEntry : null,
         _ => default
       };
 
@@ -625,19 +625,19 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (OrderableElement is not null) yield return new KeyValuePair<string,object>("orderable",OrderableElement);
       if (ReferencedItem is not null) yield return new KeyValuePair<string,object>("referencedItem",ReferencedItem);
-      if (AdditionalIdentifier is not null) yield return new KeyValuePair<string,object>("additionalIdentifier",AdditionalIdentifier);
-      if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (AdditionalIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("additionalIdentifier",AdditionalIdentifier);
+      if (Classification?.Any() == true) yield return new KeyValuePair<string,object>("classification",Classification);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
       if (ValidToElement is not null) yield return new KeyValuePair<string,object>("validTo",ValidToElement);
       if (LastUpdatedElement is not null) yield return new KeyValuePair<string,object>("lastUpdated",LastUpdatedElement);
-      if (AdditionalCharacteristic is not null) yield return new KeyValuePair<string,object>("additionalCharacteristic",AdditionalCharacteristic);
-      if (AdditionalClassification is not null) yield return new KeyValuePair<string,object>("additionalClassification",AdditionalClassification);
-      if (RelatedEntry is not null) yield return new KeyValuePair<string,object>("relatedEntry",RelatedEntry);
+      if (AdditionalCharacteristic?.Any() == true) yield return new KeyValuePair<string,object>("additionalCharacteristic",AdditionalCharacteristic);
+      if (AdditionalClassification?.Any() == true) yield return new KeyValuePair<string,object>("additionalClassification",AdditionalClassification);
+      if (RelatedEntry?.Any() == true) yield return new KeyValuePair<string,object>("relatedEntry",RelatedEntry);
     }
 
   }

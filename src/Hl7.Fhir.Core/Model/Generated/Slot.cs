@@ -454,10 +454,10 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "serviceCategory" => ServiceCategory,
-        "serviceType" => ServiceType,
-        "specialty" => Specialty,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "serviceCategory" => ServiceCategory?.Any() == true ? ServiceCategory : null,
+        "serviceType" => ServiceType?.Any() == true ? ServiceType : null,
+        "specialty" => Specialty?.Any() == true ? Specialty : null,
         "appointmentType" => AppointmentType,
         "schedule" => Schedule,
         "status" => StatusElement,
@@ -474,10 +474,10 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
-      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
       if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
       if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);

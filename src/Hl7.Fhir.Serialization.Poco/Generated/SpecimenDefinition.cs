@@ -429,8 +429,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.MinimumVolume)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("minimumVolumeQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("minimumVolumeQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("minimumVolumeString",v_FhirString,writer,options);
@@ -601,12 +600,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Additive)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("additiveCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("additiveCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("additiveReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("additiveReference", v_ResourceReference, writer, options);
             break;
         }
       }

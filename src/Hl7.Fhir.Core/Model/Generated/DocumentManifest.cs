@@ -547,17 +547,17 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "masterIdentifier" => MasterIdentifier,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => Type,
         "subject" => Subject,
         "created" => CreatedElement,
-        "author" => Author,
-        "recipient" => Recipient,
+        "author" => Author?.Any() == true ? Author : null,
+        "recipient" => Recipient?.Any() == true ? Recipient : null,
         "source" => SourceElement,
         "description" => DescriptionElement,
-        "content" => Content,
-        "related" => Related,
+        "content" => Content?.Any() == true ? Content : null,
+        "related" => Related?.Any() == true ? Related : null,
         _ => default
       };
 
@@ -568,17 +568,17 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (MasterIdentifier is not null) yield return new KeyValuePair<string,object>("masterIdentifier",MasterIdentifier);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
+      if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
       if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
-      if (Related is not null) yield return new KeyValuePair<string,object>("related",Related);
+      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
+      if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
     }
 
   }

@@ -77,12 +77,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Subject)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("subjectCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("subjectCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("subjectReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("subjectReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -935,19 +933,16 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Definition)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("definitionCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("definitionCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Canonical v_Canonical:
             JsonStreamUtilities.SerializePrimitiveProperty("definitionCanonical",v_Canonical,writer,options);
             break;
           case Hl7.Fhir.Model.Expression v_Expression:
-            writer.WritePropertyName("definitionExpression");
-            v_Expression.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("definitionExpression", v_Expression, writer, options);
             break;
           case Hl7.Fhir.Model.DataRequirement v_DataRequirement:
-            writer.WritePropertyName("definitionDataRequirement");
-            v_DataRequirement.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("definitionDataRequirement", v_DataRequirement, writer, options);
             break;
         }
       }
@@ -967,16 +962,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("studyEffectiveDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("studyEffectivePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("studyEffectivePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("studyEffectiveDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("studyEffectiveDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("studyEffectiveTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("studyEffectiveTiming", v_Timing, writer, options);
             break;
         }
       }
@@ -994,16 +986,13 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("participantEffectiveDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("participantEffectivePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("participantEffectivePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("participantEffectiveDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("participantEffectiveDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("participantEffectiveTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("participantEffectiveTiming", v_Timing, writer, options);
             break;
         }
       }

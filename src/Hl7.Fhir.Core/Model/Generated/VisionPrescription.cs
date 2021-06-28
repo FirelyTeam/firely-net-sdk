@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
           "sphere" => SphereElement,
           "cylinder" => CylinderElement,
           "axis" => AxisElement,
-          "prism" => Prism,
+          "prism" => Prism?.Any() == true ? Prism : null,
           "add" => AddElement,
           "power" => PowerElement,
           "backCurve" => BackCurveElement,
@@ -634,7 +634,7 @@ namespace Hl7.Fhir.Model
           "duration" => Duration,
           "color" => ColorElement,
           "brand" => BrandElement,
-          "note" => Note,
+          "note" => Note?.Any() == true ? Note : null,
           _ => default
         };
 
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
         if (SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",SphereElement);
         if (CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",CylinderElement);
         if (AxisElement is not null) yield return new KeyValuePair<string,object>("axis",AxisElement);
-        if (Prism is not null) yield return new KeyValuePair<string,object>("prism",Prism);
+        if (Prism?.Any() == true) yield return new KeyValuePair<string,object>("prism",Prism);
         if (AddElement is not null) yield return new KeyValuePair<string,object>("add",AddElement);
         if (PowerElement is not null) yield return new KeyValuePair<string,object>("power",PowerElement);
         if (BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",BackCurveElement);
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
         if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
         if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
         if (BrandElement is not null) yield return new KeyValuePair<string,object>("brand",BrandElement);
-        if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
     }
@@ -1099,14 +1099,14 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "created" => CreatedElement,
         "patient" => Patient,
         "encounter" => Encounter,
         "dateWritten" => DateWrittenElement,
         "prescriber" => Prescriber,
-        "lensSpecification" => LensSpecification,
+        "lensSpecification" => LensSpecification?.Any() == true ? LensSpecification : null,
         _ => default
       };
 
@@ -1116,14 +1116,14 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
       if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
-      if (LensSpecification is not null) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
+      if (LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
     }
 
   }

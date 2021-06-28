@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
         if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
+        if (Collected is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
       }
 
     }
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
         if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
-        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
+        if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
     }
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
+        if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
     }
@@ -1175,17 +1175,17 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "productCategory" => ProductCategoryElement,
         "productCode" => ProductCode,
         "status" => StatusElement,
-        "request" => Request,
+        "request" => Request?.Any() == true ? Request : null,
         "quantity" => QuantityElement,
-        "parent" => Parent,
+        "parent" => Parent?.Any() == true ? Parent : null,
         "collection" => Collection,
-        "processing" => Processing,
+        "processing" => Processing?.Any() == true ? Processing : null,
         "manipulation" => Manipulation,
-        "storage" => Storage,
+        "storage" => Storage?.Any() == true ? Storage : null,
         _ => default
       };
 
@@ -1195,17 +1195,17 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ProductCategoryElement is not null) yield return new KeyValuePair<string,object>("productCategory",ProductCategoryElement);
       if (ProductCode is not null) yield return new KeyValuePair<string,object>("productCode",ProductCode);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
+      if (Request?.Any() == true) yield return new KeyValuePair<string,object>("request",Request);
       if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
-      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (Parent?.Any() == true) yield return new KeyValuePair<string,object>("parent",Parent);
       if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
-      if (Processing is not null) yield return new KeyValuePair<string,object>("processing",Processing);
+      if (Processing?.Any() == true) yield return new KeyValuePair<string,object>("processing",Processing);
       if (Manipulation is not null) yield return new KeyValuePair<string,object>("manipulation",Manipulation);
-      if (Storage is not null) yield return new KeyValuePair<string,object>("storage",Storage);
+      if (Storage?.Any() == true) yield return new KeyValuePair<string,object>("storage",Storage);
     }
 
   }

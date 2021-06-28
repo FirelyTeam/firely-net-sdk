@@ -544,8 +544,8 @@ namespace Hl7.Fhir.Model
           "resourceType" => ResourceTypeElement,
           "name" => NameElement,
           "description" => Description,
-          "version" => Version,
-          "containedInstance" => ContainedInstance,
+          "version" => Version?.Any() == true ? Version : null,
+          "containedInstance" => ContainedInstance?.Any() == true ? ContainedInstance : null,
           _ => default
         };
 
@@ -559,8 +559,8 @@ namespace Hl7.Fhir.Model
         if (ResourceTypeElement is not null) yield return new KeyValuePair<string,object>("resourceType",ResourceTypeElement);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-        if (Version is not null) yield return new KeyValuePair<string,object>("version",Version);
-        if (ContainedInstance is not null) yield return new KeyValuePair<string,object>("containedInstance",ContainedInstance);
+        if (Version?.Any() == true) yield return new KeyValuePair<string,object>("version",Version);
+        if (ContainedInstance?.Any() == true) yield return new KeyValuePair<string,object>("containedInstance",ContainedInstance);
       }
 
     }
@@ -1061,7 +1061,7 @@ namespace Hl7.Fhir.Model
           "description" => Description,
           "preConditions" => PreConditions,
           "postConditions" => PostConditions,
-          "step" => Step,
+          "step" => Step?.Any() == true ? Step : null,
           _ => default
         };
 
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
         if (PreConditions is not null) yield return new KeyValuePair<string,object>("preConditions",PreConditions);
         if (PostConditions is not null) yield return new KeyValuePair<string,object>("postConditions",PostConditions);
-        if (Step is not null) yield return new KeyValuePair<string,object>("step",Step);
+        if (Step?.Any() == true) yield return new KeyValuePair<string,object>("step",Step);
       }
 
     }
@@ -1245,10 +1245,10 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "process" => Process,
+          "process" => Process?.Any() == true ? Process : null,
           "pause" => PauseElement,
           "operation" => Operation,
-          "alternative" => Alternative,
+          "alternative" => Alternative?.Any() == true ? Alternative : null,
           _ => default
         };
 
@@ -1258,10 +1258,10 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Process is not null) yield return new KeyValuePair<string,object>("process",Process);
+        if (Process?.Any() == true) yield return new KeyValuePair<string,object>("process",Process);
         if (PauseElement is not null) yield return new KeyValuePair<string,object>("pause",PauseElement);
         if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
-        if (Alternative is not null) yield return new KeyValuePair<string,object>("alternative",Alternative);
+        if (Alternative?.Any() == true) yield return new KeyValuePair<string,object>("alternative",Alternative);
       }
 
     }
@@ -1828,7 +1828,7 @@ namespace Hl7.Fhir.Model
         {
           "title" => TitleElement,
           "description" => Description,
-          "step" => Step,
+          "step" => Step?.Any() == true ? Step : null,
           _ => default
         };
 
@@ -1840,7 +1840,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-        if (Step is not null) yield return new KeyValuePair<string,object>("step",Step);
+        if (Step?.Any() == true) yield return new KeyValuePair<string,object>("step",Step);
       }
 
     }
@@ -2366,22 +2366,22 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "status" => StatusElement,
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "contact" => Contact?.Any() == true ? Contact : null,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "copyright" => Copyright,
         "purpose" => Purpose,
-        "actor" => Actor,
-        "instance" => Instance,
-        "process" => Process,
-        "workflow" => WorkflowElement,
+        "actor" => Actor?.Any() == true ? Actor : null,
+        "instance" => Instance?.Any() == true ? Instance : null,
+        "process" => Process?.Any() == true ? Process : null,
+        "workflow" => WorkflowElement?.Any() == true ? WorkflowElement : null,
         _ => default
       };
 
@@ -2392,22 +2392,22 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
-      if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
-      if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
-      if (Process is not null) yield return new KeyValuePair<string,object>("process",Process);
-      if (WorkflowElement is not null) yield return new KeyValuePair<string,object>("workflow",WorkflowElement);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      if (Process?.Any() == true) yield return new KeyValuePair<string,object>("process",Process);
+      if (WorkflowElement?.Any() == true) yield return new KeyValuePair<string,object>("workflow",WorkflowElement);
     }
 
   }

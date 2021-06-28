@@ -511,12 +511,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Value)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("valueMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueMoney", v_Money, writer, options);
             break;
         }
       }

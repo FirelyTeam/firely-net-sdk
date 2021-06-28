@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "ratioType" => RatioType,
-          "startingMaterial" => StartingMaterial,
+          "startingMaterial" => StartingMaterial?.Any() == true ? StartingMaterial : null,
           _ => default
         };
 
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (RatioType is not null) yield return new KeyValuePair<string,object>("ratioType",RatioType);
-        if (StartingMaterial is not null) yield return new KeyValuePair<string,object>("startingMaterial",StartingMaterial);
+        if (StartingMaterial?.Any() == true) yield return new KeyValuePair<string,object>("startingMaterial",StartingMaterial);
       }
 
     }
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
           "numberOfUnits" => NumberOfUnitsElement,
           "averageMolecularFormula" => AverageMolecularFormulaElement,
           "repeatUnitAmountType" => RepeatUnitAmountType,
-          "repeatUnit" => RepeatUnit,
+          "repeatUnit" => RepeatUnit?.Any() == true ? RepeatUnit : null,
           _ => default
         };
 
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
         if (NumberOfUnitsElement is not null) yield return new KeyValuePair<string,object>("numberOfUnits",NumberOfUnitsElement);
         if (AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",AverageMolecularFormulaElement);
         if (RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",RepeatUnitAmountType);
-        if (RepeatUnit is not null) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnit);
+        if (RepeatUnit?.Any() == true) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnit);
       }
 
     }
@@ -755,8 +755,8 @@ namespace Hl7.Fhir.Model
           "orientationOfPolymerisation" => OrientationOfPolymerisation,
           "repeatUnit" => RepeatUnitElement,
           "amount" => Amount,
-          "degreeOfPolymerisation" => DegreeOfPolymerisation,
-          "structuralRepresentation" => StructuralRepresentation,
+          "degreeOfPolymerisation" => DegreeOfPolymerisation?.Any() == true ? DegreeOfPolymerisation : null,
+          "structuralRepresentation" => StructuralRepresentation?.Any() == true ? StructuralRepresentation : null,
           _ => default
         };
 
@@ -769,8 +769,8 @@ namespace Hl7.Fhir.Model
         if (OrientationOfPolymerisation is not null) yield return new KeyValuePair<string,object>("orientationOfPolymerisation",OrientationOfPolymerisation);
         if (RepeatUnitElement is not null) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnitElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-        if (DegreeOfPolymerisation is not null) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",DegreeOfPolymerisation);
-        if (StructuralRepresentation is not null) yield return new KeyValuePair<string,object>("structuralRepresentation",StructuralRepresentation);
+        if (DegreeOfPolymerisation?.Any() == true) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",DegreeOfPolymerisation);
+        if (StructuralRepresentation?.Any() == true) yield return new KeyValuePair<string,object>("structuralRepresentation",StructuralRepresentation);
       }
 
     }
@@ -1257,10 +1257,10 @@ namespace Hl7.Fhir.Model
       {
         "class" => Class,
         "geometry" => Geometry,
-        "copolymerConnectivity" => CopolymerConnectivity,
-        "modification" => ModificationElement,
-        "monomerSet" => MonomerSet,
-        "repeat" => Repeat,
+        "copolymerConnectivity" => CopolymerConnectivity?.Any() == true ? CopolymerConnectivity : null,
+        "modification" => ModificationElement?.Any() == true ? ModificationElement : null,
+        "monomerSet" => MonomerSet?.Any() == true ? MonomerSet : null,
+        "repeat" => Repeat?.Any() == true ? Repeat : null,
         _ => default
       };
 
@@ -1272,10 +1272,10 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
       if (Geometry is not null) yield return new KeyValuePair<string,object>("geometry",Geometry);
-      if (CopolymerConnectivity is not null) yield return new KeyValuePair<string,object>("copolymerConnectivity",CopolymerConnectivity);
-      if (ModificationElement is not null) yield return new KeyValuePair<string,object>("modification",ModificationElement);
-      if (MonomerSet is not null) yield return new KeyValuePair<string,object>("monomerSet",MonomerSet);
-      if (Repeat is not null) yield return new KeyValuePair<string,object>("repeat",Repeat);
+      if (CopolymerConnectivity?.Any() == true) yield return new KeyValuePair<string,object>("copolymerConnectivity",CopolymerConnectivity);
+      if (ModificationElement?.Any() == true) yield return new KeyValuePair<string,object>("modification",ModificationElement);
+      if (MonomerSet?.Any() == true) yield return new KeyValuePair<string,object>("monomerSet",MonomerSet);
+      if (Repeat?.Any() == true) yield return new KeyValuePair<string,object>("repeat",Repeat);
     }
 
   }

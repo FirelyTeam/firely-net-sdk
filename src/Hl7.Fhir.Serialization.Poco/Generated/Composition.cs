@@ -495,12 +495,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Target)
         {
           case Hl7.Fhir.Model.Identifier v_Identifier:
-            writer.WritePropertyName("targetIdentifier");
-            v_Identifier.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("targetIdentifier", v_Identifier, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("targetReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("targetReference", v_ResourceReference, writer, options);
             break;
         }
       }

@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
         {
           "geneSequenceOrigin" => GeneSequenceOrigin,
           "gene" => Gene,
-          "source" => Source,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (GeneSequenceOrigin is not null) yield return new KeyValuePair<string,object>("geneSequenceOrigin",GeneSequenceOrigin);
         if (Gene is not null) yield return new KeyValuePair<string,object>("gene",Gene);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
         {
           "type" => Type,
           "element" => Element,
-          "source" => Source,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Element is not null) yield return new KeyValuePair<string,object>("element",Element);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -504,8 +504,8 @@ namespace Hl7.Fhir.Model
         {
           "domain" => Domain,
           "classification" => Classification,
-          "subtype" => Subtype,
-          "source" => Source,
+          "subtype" => Subtype?.Any() == true ? Subtype : null,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -517,8 +517,8 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
         if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
-        if (Subtype is not null) yield return new KeyValuePair<string,object>("subtype",Subtype);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Subtype?.Any() == true) yield return new KeyValuePair<string,object>("subtype",Subtype);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Model
           "organismType" => OrganismType,
           "amount" => Amount,
           "amountType" => AmountType,
-          "source" => Source,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -767,9 +767,9 @@ namespace Hl7.Fhir.Model
         if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
         if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
         if (OrganismType is not null) yield return new KeyValuePair<string,object>("organismType",OrganismType);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
         if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -947,10 +947,10 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "comment" => CommentElement,
-        "gene" => Gene,
-        "geneElement" => GeneElement,
-        "classification" => Classification,
-        "target" => Target,
+        "gene" => Gene?.Any() == true ? Gene : null,
+        "geneElement" => GeneElement?.Any() == true ? GeneElement : null,
+        "classification" => Classification?.Any() == true ? Classification : null,
+        "target" => Target?.Any() == true ? Target : null,
         _ => default
       };
 
@@ -961,10 +961,10 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (Gene is not null) yield return new KeyValuePair<string,object>("gene",Gene);
-      if (GeneElement is not null) yield return new KeyValuePair<string,object>("geneElement",GeneElement);
-      if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
-      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+      if (Gene?.Any() == true) yield return new KeyValuePair<string,object>("gene",Gene);
+      if (GeneElement?.Any() == true) yield return new KeyValuePair<string,object>("geneElement",GeneElement);
+      if (Classification?.Any() == true) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
     }
 
   }

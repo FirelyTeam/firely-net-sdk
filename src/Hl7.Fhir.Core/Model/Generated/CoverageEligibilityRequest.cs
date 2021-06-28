@@ -741,16 +741,16 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "supportingInfoSequence" => SupportingInfoSequenceElement,
+          "supportingInfoSequence" => SupportingInfoSequenceElement?.Any() == true ? SupportingInfoSequenceElement : null,
           "category" => Category,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
           "provider" => Provider,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "facility" => Facility,
-          "diagnosis" => Diagnosis,
-          "detail" => Detail,
+          "diagnosis" => Diagnosis?.Any() == true ? Diagnosis : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -760,16 +760,16 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (SupportingInfoSequenceElement is not null) yield return new KeyValuePair<string,object>("supportingInfoSequence",SupportingInfoSequenceElement);
+        if (SupportingInfoSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfoSequence",SupportingInfoSequenceElement);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+        if (Diagnosis is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("diagnosis", Diagnosis),Diagnosis);
       }
 
     }
@@ -1272,10 +1272,10 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "priority" => Priority,
-        "purpose" => PurposeElement,
+        "purpose" => PurposeElement?.Any() == true ? PurposeElement : null,
         "patient" => Patient,
         "serviced" => Serviced,
         "created" => CreatedElement,
@@ -1283,9 +1283,9 @@ namespace Hl7.Fhir.Model
         "provider" => Provider,
         "insurer" => Insurer,
         "facility" => Facility,
-        "supportingInfo" => SupportingInfo,
-        "insurance" => Insurance,
-        "item" => Item,
+        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
+        "item" => Item?.Any() == true ? Item : null,
         _ => default
       };
 
@@ -1295,20 +1295,20 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
-      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
+      if (PurposeElement?.Any() == true) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
       if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
       if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
       if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
       if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

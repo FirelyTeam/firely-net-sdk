@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
-        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (Target is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("target", Target),Target);
       }
 
     }
@@ -653,9 +653,9 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "code" => Code,
+          "code" => Code?.Any() == true ? Code : null,
           "period" => Period,
-          "detail" => Detail,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -665,9 +665,9 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -973,14 +973,14 @@ namespace Hl7.Fhir.Model
         {
           "title" => TitleElement,
           "code" => Code,
-          "author" => Author,
+          "author" => Author?.Any() == true ? Author : null,
           "focus" => Focus,
           "text" => Text,
           "mode" => ModeElement,
           "orderedBy" => OrderedBy,
-          "entry" => Entry,
+          "entry" => Entry?.Any() == true ? Entry : null,
           "emptyReason" => EmptyReason,
-          "section" => Section,
+          "section" => Section?.Any() == true ? Section : null,
           _ => default
         };
 
@@ -992,14 +992,14 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+        if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
         if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
         if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
         if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
         if (OrderedBy is not null) yield return new KeyValuePair<string,object>("orderedBy",OrderedBy);
-        if (Entry is not null) yield return new KeyValuePair<string,object>("entry",Entry);
+        if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
         if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
-        if (Section is not null) yield return new KeyValuePair<string,object>("section",Section);
+        if (Section?.Any() == true) yield return new KeyValuePair<string,object>("section",Section);
       }
 
     }
@@ -1429,18 +1429,18 @@ namespace Hl7.Fhir.Model
         "identifier" => Identifier,
         "status" => StatusElement,
         "type" => Type,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "subject" => Subject,
         "encounter" => Encounter,
         "date" => DateElement,
-        "author" => Author,
+        "author" => Author?.Any() == true ? Author : null,
         "title" => TitleElement,
         "confidentiality" => ConfidentialityElement,
-        "attester" => Attester,
+        "attester" => Attester?.Any() == true ? Attester : null,
         "custodian" => Custodian,
-        "relatesTo" => RelatesTo,
-        "event" => Event,
-        "section" => Section,
+        "relatesTo" => RelatesTo?.Any() == true ? RelatesTo : null,
+        "event" => Event?.Any() == true ? Event : null,
+        "section" => Section?.Any() == true ? Section : null,
         _ => default
       };
 
@@ -1453,18 +1453,18 @@ namespace Hl7.Fhir.Model
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
       if (ConfidentialityElement is not null) yield return new KeyValuePair<string,object>("confidentiality",ConfidentialityElement);
-      if (Attester is not null) yield return new KeyValuePair<string,object>("attester",Attester);
+      if (Attester?.Any() == true) yield return new KeyValuePair<string,object>("attester",Attester);
       if (Custodian is not null) yield return new KeyValuePair<string,object>("custodian",Custodian);
-      if (RelatesTo is not null) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);
-      if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
-      if (Section is not null) yield return new KeyValuePair<string,object>("section",Section);
+      if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);
+      if (Event?.Any() == true) yield return new KeyValuePair<string,object>("event",Event);
+      if (Section?.Any() == true) yield return new KeyValuePair<string,object>("section",Section);
     }
 
   }

@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -1161,7 +1161,7 @@ namespace Hl7.Fhir.Model
         {
           "name" => NameElement,
           "description" => DescriptionElement,
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -1919,9 +1919,9 @@ namespace Hl7.Fhir.Model
         "score" => ScoreElement,
         "tester" => TesterElement,
         "issued" => IssuedElement,
-        "participant" => Participant,
+        "participant" => Participant?.Any() == true ? Participant : null,
         "setup" => Setup,
-        "test" => Test,
+        "test" => Test?.Any() == true ? Test : null,
         "teardown" => Teardown,
         _ => default
       };
@@ -1940,9 +1940,9 @@ namespace Hl7.Fhir.Model
       if (ScoreElement is not null) yield return new KeyValuePair<string,object>("score",ScoreElement);
       if (TesterElement is not null) yield return new KeyValuePair<string,object>("tester",TesterElement);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
-      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (Setup is not null) yield return new KeyValuePair<string,object>("setup",Setup);
-      if (Test is not null) yield return new KeyValuePair<string,object>("test",Test);
+      if (Test?.Any() == true) yield return new KeyValuePair<string,object>("test",Test);
       if (Teardown is not null) yield return new KeyValuePair<string,object>("teardown",Teardown);
     }
 

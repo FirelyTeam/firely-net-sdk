@@ -547,11 +547,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "basedOn" => BasedOn,
-        "partOf" => PartOf,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
-        "statusReason" => StatusReason,
+        "statusReason" => StatusReason?.Any() == true ? StatusReason : null,
         "category" => Category,
         "medication" => Medication,
         "subject" => Subject,
@@ -559,11 +559,11 @@ namespace Hl7.Fhir.Model
         "effective" => Effective,
         "dateAsserted" => DateAssertedElement,
         "informationSource" => InformationSource,
-        "derivedFrom" => DerivedFrom,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "note" => Note,
-        "dosage" => Dosage,
+        "derivedFrom" => DerivedFrom?.Any() == true ? DerivedFrom : null,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "dosage" => Dosage?.Any() == true ? Dosage : null,
         _ => default
       };
 
@@ -573,23 +573,23 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
       if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
       if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
-      if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Dosage is not null) yield return new KeyValuePair<string,object>("dosage",Dosage);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
     }
 
   }

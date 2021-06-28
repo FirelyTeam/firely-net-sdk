@@ -408,9 +408,9 @@ namespace Hl7.Fhir.Model
         "use" => UseElement,
         "text" => TextElement,
         "family" => FamilyElement,
-        "given" => GivenElement,
-        "prefix" => PrefixElement,
-        "suffix" => SuffixElement,
+        "given" => GivenElement?.Any() == true ? GivenElement : null,
+        "prefix" => PrefixElement?.Any() == true ? PrefixElement : null,
+        "suffix" => SuffixElement?.Any() == true ? SuffixElement : null,
         "period" => Period,
         _ => default
       };
@@ -424,9 +424,9 @@ namespace Hl7.Fhir.Model
       if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
       if (FamilyElement is not null) yield return new KeyValuePair<string,object>("family",FamilyElement);
-      if (GivenElement is not null) yield return new KeyValuePair<string,object>("given",GivenElement);
-      if (PrefixElement is not null) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
-      if (SuffixElement is not null) yield return new KeyValuePair<string,object>("suffix",SuffixElement);
+      if (GivenElement?.Any() == true) yield return new KeyValuePair<string,object>("given",GivenElement);
+      if (PrefixElement?.Any() == true) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
+      if (SuffixElement?.Any() == true) yield return new KeyValuePair<string,object>("suffix",SuffixElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
     }
 

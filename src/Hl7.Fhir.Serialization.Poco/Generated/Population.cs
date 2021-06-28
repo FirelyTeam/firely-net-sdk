@@ -58,12 +58,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Age)
         {
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("ageRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("ageRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("ageCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("ageCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }

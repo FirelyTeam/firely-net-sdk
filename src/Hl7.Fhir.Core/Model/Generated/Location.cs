@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "daysOfWeek" => DaysOfWeekElement,
+          "daysOfWeek" => DaysOfWeekElement?.Any() == true ? DaysOfWeekElement : null,
           "allDay" => AllDayElement,
           "openingTime" => OpeningTimeElement,
           "closingTime" => ClosingTimeElement,
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (DaysOfWeekElement is not null) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
+        if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
         if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
         if (OpeningTimeElement is not null) yield return new KeyValuePair<string,object>("openingTime",OpeningTimeElement);
         if (ClosingTimeElement is not null) yield return new KeyValuePair<string,object>("closingTime",ClosingTimeElement);
@@ -1035,23 +1035,23 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "operationalStatus" => OperationalStatus,
         "name" => NameElement,
-        "alias" => AliasElement,
+        "alias" => AliasElement?.Any() == true ? AliasElement : null,
         "description" => DescriptionElement,
         "mode" => ModeElement,
-        "type" => Type,
-        "telecom" => Telecom,
+        "type" => Type?.Any() == true ? Type : null,
+        "telecom" => Telecom?.Any() == true ? Telecom : null,
         "address" => Address,
         "physicalType" => PhysicalType,
         "position" => Position,
         "managingOrganization" => ManagingOrganization,
         "partOf" => PartOf,
-        "hoursOfOperation" => HoursOfOperation,
+        "hoursOfOperation" => HoursOfOperation?.Any() == true ? HoursOfOperation : null,
         "availabilityExceptions" => AvailabilityExceptionsElement,
-        "endpoint" => Endpoint,
+        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
         _ => default
       };
 
@@ -1061,23 +1061,23 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (OperationalStatus is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatus);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (AliasElement is not null) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
       if (PhysicalType is not null) yield return new KeyValuePair<string,object>("physicalType",PhysicalType);
       if (Position is not null) yield return new KeyValuePair<string,object>("position",Position);
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
-      if (HoursOfOperation is not null) yield return new KeyValuePair<string,object>("hoursOfOperation",HoursOfOperation);
+      if (HoursOfOperation?.Any() == true) yield return new KeyValuePair<string,object>("hoursOfOperation",HoursOfOperation);
       if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
-      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
     }
 
   }

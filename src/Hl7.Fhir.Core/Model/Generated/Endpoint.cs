@@ -460,17 +460,17 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "connectionType" => ConnectionType,
         "name" => NameElement,
         "managingOrganization" => ManagingOrganization,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "period" => Period,
-        "payloadType" => PayloadType,
-        "payloadMimeType" => PayloadMimeTypeElement,
+        "payloadType" => PayloadType?.Any() == true ? PayloadType : null,
+        "payloadMimeType" => PayloadMimeTypeElement?.Any() == true ? PayloadMimeTypeElement : null,
         "address" => AddressElement,
-        "header" => HeaderElement,
+        "header" => HeaderElement?.Any() == true ? HeaderElement : null,
         _ => default
       };
 
@@ -480,17 +480,17 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ConnectionType is not null) yield return new KeyValuePair<string,object>("connectionType",ConnectionType);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (PayloadType is not null) yield return new KeyValuePair<string,object>("payloadType",PayloadType);
-      if (PayloadMimeTypeElement is not null) yield return new KeyValuePair<string,object>("payloadMimeType",PayloadMimeTypeElement);
+      if (PayloadType?.Any() == true) yield return new KeyValuePair<string,object>("payloadType",PayloadType);
+      if (PayloadMimeTypeElement?.Any() == true) yield return new KeyValuePair<string,object>("payloadMimeType",PayloadMimeTypeElement);
       if (AddressElement is not null) yield return new KeyValuePair<string,object>("address",AddressElement);
-      if (HeaderElement is not null) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
     }
 
   }

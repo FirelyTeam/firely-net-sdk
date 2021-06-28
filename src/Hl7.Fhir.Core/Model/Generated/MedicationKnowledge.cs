@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "reference" => Reference,
+          "reference" => Reference?.Any() == true ? Reference : null,
           _ => default
         };
 
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+        if (Reference?.Any() == true) yield return new KeyValuePair<string,object>("reference",Reference);
       }
 
     }
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
         if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
         if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
       }
@@ -951,9 +951,9 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "dosage" => Dosage,
+          "dosage" => Dosage?.Any() == true ? Dosage : null,
           "indication" => Indication,
-          "patientCharacteristics" => PatientCharacteristics,
+          "patientCharacteristics" => PatientCharacteristics?.Any() == true ? PatientCharacteristics : null,
           _ => default
         };
 
@@ -963,9 +963,9 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Dosage is not null) yield return new KeyValuePair<string,object>("dosage",Dosage);
-        if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
-        if (PatientCharacteristics is not null) yield return new KeyValuePair<string,object>("patientCharacteristics",PatientCharacteristics);
+        if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
+        if (Indication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("indication", Indication),Indication);
+        if (PatientCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("patientCharacteristics",PatientCharacteristics);
       }
 
     }
@@ -1082,7 +1082,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "dosage" => Dosage,
+          "dosage" => Dosage?.Any() == true ? Dosage : null,
           _ => default
         };
 
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Dosage is not null) yield return new KeyValuePair<string,object>("dosage",Dosage);
+        if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
       }
 
     }
@@ -1230,7 +1230,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "characteristic" => Characteristic,
-          "value" => ValueElement,
+          "value" => ValueElement?.Any() == true ? ValueElement : null,
           _ => default
         };
 
@@ -1240,8 +1240,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Characteristic is not null) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
-        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if (Characteristic is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("characteristic", Characteristic),Characteristic);
+        if (ValueElement?.Any() == true) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
     }
@@ -1358,7 +1358,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "classification" => Classification,
+          "classification" => Classification?.Any() == true ? Classification : null,
           _ => default
         };
 
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+        if (Classification?.Any() == true) yield return new KeyValuePair<string,object>("classification",Classification);
       }
 
     }
@@ -1623,7 +1623,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -1779,8 +1779,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "regulatoryAuthority" => RegulatoryAuthority,
-          "substitution" => Substitution,
-          "schedule" => Schedule,
+          "substitution" => Substitution?.Any() == true ? Substitution : null,
+          "schedule" => Schedule?.Any() == true ? Schedule : null,
           "maxDispense" => MaxDispense,
           _ => default
         };
@@ -1792,8 +1792,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (RegulatoryAuthority is not null) yield return new KeyValuePair<string,object>("regulatoryAuthority",RegulatoryAuthority);
-        if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
-        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Substitution?.Any() == true) yield return new KeyValuePair<string,object>("substitution",Substitution);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (MaxDispense is not null) yield return new KeyValuePair<string,object>("maxDispense",MaxDispense);
       }
 
@@ -2308,8 +2308,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "areaUnderCurve" => AreaUnderCurve,
-          "lethalDose50" => LethalDose50,
+          "areaUnderCurve" => AreaUnderCurve?.Any() == true ? AreaUnderCurve : null,
+          "lethalDose50" => LethalDose50?.Any() == true ? LethalDose50 : null,
           "halfLifePeriod" => HalfLifePeriod,
           _ => default
         };
@@ -2320,8 +2320,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (AreaUnderCurve is not null) yield return new KeyValuePair<string,object>("areaUnderCurve",AreaUnderCurve);
-        if (LethalDose50 is not null) yield return new KeyValuePair<string,object>("lethalDose50",LethalDose50);
+        if (AreaUnderCurve?.Any() == true) yield return new KeyValuePair<string,object>("areaUnderCurve",AreaUnderCurve);
+        if (LethalDose50?.Any() == true) yield return new KeyValuePair<string,object>("lethalDose50",LethalDose50);
         if (HalfLifePeriod is not null) yield return new KeyValuePair<string,object>("halfLifePeriod",HalfLifePeriod);
       }
 
@@ -2846,23 +2846,23 @@ namespace Hl7.Fhir.Model
         "manufacturer" => Manufacturer,
         "doseForm" => DoseForm,
         "amount" => Amount,
-        "synonym" => SynonymElement,
-        "relatedMedicationKnowledge" => RelatedMedicationKnowledge,
-        "associatedMedication" => AssociatedMedication,
-        "productType" => ProductType,
-        "monograph" => Monograph,
-        "ingredient" => Ingredient,
+        "synonym" => SynonymElement?.Any() == true ? SynonymElement : null,
+        "relatedMedicationKnowledge" => RelatedMedicationKnowledge?.Any() == true ? RelatedMedicationKnowledge : null,
+        "associatedMedication" => AssociatedMedication?.Any() == true ? AssociatedMedication : null,
+        "productType" => ProductType?.Any() == true ? ProductType : null,
+        "monograph" => Monograph?.Any() == true ? Monograph : null,
+        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
         "preparationInstruction" => PreparationInstruction,
-        "intendedRoute" => IntendedRoute,
-        "cost" => Cost,
-        "monitoringProgram" => MonitoringProgram,
-        "administrationGuidelines" => AdministrationGuidelines,
-        "medicineClassification" => MedicineClassification,
+        "intendedRoute" => IntendedRoute?.Any() == true ? IntendedRoute : null,
+        "cost" => Cost?.Any() == true ? Cost : null,
+        "monitoringProgram" => MonitoringProgram?.Any() == true ? MonitoringProgram : null,
+        "administrationGuidelines" => AdministrationGuidelines?.Any() == true ? AdministrationGuidelines : null,
+        "medicineClassification" => MedicineClassification?.Any() == true ? MedicineClassification : null,
         "packaging" => Packaging,
-        "drugCharacteristic" => DrugCharacteristic,
-        "contraindication" => Contraindication,
-        "regulatory" => Regulatory,
-        "kinetics" => Kinetics,
+        "drugCharacteristic" => DrugCharacteristic?.Any() == true ? DrugCharacteristic : null,
+        "contraindication" => Contraindication?.Any() == true ? Contraindication : null,
+        "regulatory" => Regulatory?.Any() == true ? Regulatory : null,
+        "kinetics" => Kinetics?.Any() == true ? Kinetics : null,
         _ => default
       };
 
@@ -2877,23 +2877,23 @@ namespace Hl7.Fhir.Model
       if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       if (DoseForm is not null) yield return new KeyValuePair<string,object>("doseForm",DoseForm);
       if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-      if (SynonymElement is not null) yield return new KeyValuePair<string,object>("synonym",SynonymElement);
-      if (RelatedMedicationKnowledge is not null) yield return new KeyValuePair<string,object>("relatedMedicationKnowledge",RelatedMedicationKnowledge);
-      if (AssociatedMedication is not null) yield return new KeyValuePair<string,object>("associatedMedication",AssociatedMedication);
-      if (ProductType is not null) yield return new KeyValuePair<string,object>("productType",ProductType);
-      if (Monograph is not null) yield return new KeyValuePair<string,object>("monograph",Monograph);
-      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (SynonymElement?.Any() == true) yield return new KeyValuePair<string,object>("synonym",SynonymElement);
+      if (RelatedMedicationKnowledge?.Any() == true) yield return new KeyValuePair<string,object>("relatedMedicationKnowledge",RelatedMedicationKnowledge);
+      if (AssociatedMedication?.Any() == true) yield return new KeyValuePair<string,object>("associatedMedication",AssociatedMedication);
+      if (ProductType?.Any() == true) yield return new KeyValuePair<string,object>("productType",ProductType);
+      if (Monograph?.Any() == true) yield return new KeyValuePair<string,object>("monograph",Monograph);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
       if (PreparationInstruction is not null) yield return new KeyValuePair<string,object>("preparationInstruction",PreparationInstruction);
-      if (IntendedRoute is not null) yield return new KeyValuePair<string,object>("intendedRoute",IntendedRoute);
-      if (Cost is not null) yield return new KeyValuePair<string,object>("cost",Cost);
-      if (MonitoringProgram is not null) yield return new KeyValuePair<string,object>("monitoringProgram",MonitoringProgram);
-      if (AdministrationGuidelines is not null) yield return new KeyValuePair<string,object>("administrationGuidelines",AdministrationGuidelines);
-      if (MedicineClassification is not null) yield return new KeyValuePair<string,object>("medicineClassification",MedicineClassification);
+      if (IntendedRoute?.Any() == true) yield return new KeyValuePair<string,object>("intendedRoute",IntendedRoute);
+      if (Cost?.Any() == true) yield return new KeyValuePair<string,object>("cost",Cost);
+      if (MonitoringProgram?.Any() == true) yield return new KeyValuePair<string,object>("monitoringProgram",MonitoringProgram);
+      if (AdministrationGuidelines?.Any() == true) yield return new KeyValuePair<string,object>("administrationGuidelines",AdministrationGuidelines);
+      if (MedicineClassification?.Any() == true) yield return new KeyValuePair<string,object>("medicineClassification",MedicineClassification);
       if (Packaging is not null) yield return new KeyValuePair<string,object>("packaging",Packaging);
-      if (DrugCharacteristic is not null) yield return new KeyValuePair<string,object>("drugCharacteristic",DrugCharacteristic);
-      if (Contraindication is not null) yield return new KeyValuePair<string,object>("contraindication",Contraindication);
-      if (Regulatory is not null) yield return new KeyValuePair<string,object>("regulatory",Regulatory);
-      if (Kinetics is not null) yield return new KeyValuePair<string,object>("kinetics",Kinetics);
+      if (DrugCharacteristic?.Any() == true) yield return new KeyValuePair<string,object>("drugCharacteristic",DrugCharacteristic);
+      if (Contraindication?.Any() == true) yield return new KeyValuePair<string,object>("contraindication",Contraindication);
+      if (Regulatory?.Any() == true) yield return new KeyValuePair<string,object>("regulatory",Regulatory);
+      if (Kinetics?.Any() == true) yield return new KeyValuePair<string,object>("kinetics",Kinetics);
     }
 
   }

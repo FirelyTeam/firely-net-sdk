@@ -71,8 +71,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("asNeededBoolean",v_FhirBoolean,writer,options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("asNeededCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("asNeededCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }
@@ -311,12 +310,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Dose)
         {
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("doseRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("doseRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("doseQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("doseQuantity", v_Quantity, writer, options);
             break;
         }
       }
@@ -325,16 +322,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Rate)
         {
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("rateRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("rateRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("rateRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("rateRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("rateQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("rateQuantity", v_Quantity, writer, options);
             break;
         }
       }

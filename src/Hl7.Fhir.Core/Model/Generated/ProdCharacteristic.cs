@@ -377,9 +377,9 @@ namespace Hl7.Fhir.Model
         "nominalVolume" => NominalVolume,
         "externalDiameter" => ExternalDiameter,
         "shape" => ShapeElement,
-        "color" => ColorElement,
-        "imprint" => ImprintElement,
-        "image" => Image,
+        "color" => ColorElement?.Any() == true ? ColorElement : null,
+        "imprint" => ImprintElement?.Any() == true ? ImprintElement : null,
+        "image" => Image?.Any() == true ? Image : null,
         "scoring" => Scoring,
         _ => default
       };
@@ -397,9 +397,9 @@ namespace Hl7.Fhir.Model
       if (NominalVolume is not null) yield return new KeyValuePair<string,object>("nominalVolume",NominalVolume);
       if (ExternalDiameter is not null) yield return new KeyValuePair<string,object>("externalDiameter",ExternalDiameter);
       if (ShapeElement is not null) yield return new KeyValuePair<string,object>("shape",ShapeElement);
-      if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
-      if (ImprintElement is not null) yield return new KeyValuePair<string,object>("imprint",ImprintElement);
-      if (Image is not null) yield return new KeyValuePair<string,object>("image",Image);
+      if (ColorElement?.Any() == true) yield return new KeyValuePair<string,object>("color",ColorElement);
+      if (ImprintElement?.Any() == true) yield return new KeyValuePair<string,object>("imprint",ImprintElement);
+      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
       if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
     }
 

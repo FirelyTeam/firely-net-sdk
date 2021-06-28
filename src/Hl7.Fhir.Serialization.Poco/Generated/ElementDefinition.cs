@@ -149,128 +149,97 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("defaultValueUuid",v_Uuid,writer,options);
             break;
           case Hl7.Fhir.Model.Address v_Address:
-            writer.WritePropertyName("defaultValueAddress");
-            v_Address.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueAddress", v_Address, writer, options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("defaultValueAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Annotation v_Annotation:
-            writer.WritePropertyName("defaultValueAnnotation");
-            v_Annotation.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueAnnotation", v_Annotation, writer, options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("defaultValueAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("defaultValueCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("defaultValueCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.ContactPoint v_ContactPoint:
-            writer.WritePropertyName("defaultValueContactPoint");
-            v_ContactPoint.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueContactPoint", v_ContactPoint, writer, options);
             break;
           case Hl7.Fhir.Model.Count v_Count:
-            writer.WritePropertyName("defaultValueCount");
-            v_Count.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueCount", v_Count, writer, options);
             break;
           case Hl7.Fhir.Model.Distance v_Distance:
-            writer.WritePropertyName("defaultValueDistance");
-            v_Distance.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueDistance", v_Distance, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("defaultValueDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.HumanName v_HumanName:
-            writer.WritePropertyName("defaultValueHumanName");
-            v_HumanName.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueHumanName", v_HumanName, writer, options);
             break;
           case Hl7.Fhir.Model.Identifier v_Identifier:
-            writer.WritePropertyName("defaultValueIdentifier");
-            v_Identifier.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueIdentifier", v_Identifier, writer, options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("defaultValueMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueMoney", v_Money, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("defaultValuePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValuePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("defaultValueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("defaultValueRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("defaultValueRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("defaultValueReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("defaultValueSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Signature v_Signature:
-            writer.WritePropertyName("defaultValueSignature");
-            v_Signature.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueSignature", v_Signature, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("defaultValueTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.ContactDetail v_ContactDetail:
-            writer.WritePropertyName("defaultValueContactDetail");
-            v_ContactDetail.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueContactDetail", v_ContactDetail, writer, options);
             break;
           case Hl7.Fhir.Model.Contributor v_Contributor:
-            writer.WritePropertyName("defaultValueContributor");
-            v_Contributor.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueContributor", v_Contributor, writer, options);
             break;
           case Hl7.Fhir.Model.DataRequirement v_DataRequirement:
-            writer.WritePropertyName("defaultValueDataRequirement");
-            v_DataRequirement.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueDataRequirement", v_DataRequirement, writer, options);
             break;
           case Hl7.Fhir.Model.Expression v_Expression:
-            writer.WritePropertyName("defaultValueExpression");
-            v_Expression.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueExpression", v_Expression, writer, options);
             break;
           case Hl7.Fhir.Model.ParameterDefinition v_ParameterDefinition:
-            writer.WritePropertyName("defaultValueParameterDefinition");
-            v_ParameterDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueParameterDefinition", v_ParameterDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.RelatedArtifact v_RelatedArtifact:
-            writer.WritePropertyName("defaultValueRelatedArtifact");
-            v_RelatedArtifact.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueRelatedArtifact", v_RelatedArtifact, writer, options);
             break;
           case Hl7.Fhir.Model.TriggerDefinition v_TriggerDefinition:
-            writer.WritePropertyName("defaultValueTriggerDefinition");
-            v_TriggerDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueTriggerDefinition", v_TriggerDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.UsageContext v_UsageContext:
-            writer.WritePropertyName("defaultValueUsageContext");
-            v_UsageContext.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueUsageContext", v_UsageContext, writer, options);
             break;
           case Hl7.Fhir.Model.Dosage v_Dosage:
-            writer.WritePropertyName("defaultValueDosage");
-            v_Dosage.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueDosage", v_Dosage, writer, options);
             break;
           case Hl7.Fhir.Model.Meta v_Meta:
-            writer.WritePropertyName("defaultValueMeta");
-            v_Meta.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("defaultValueMeta", v_Meta, writer, options);
             break;
         }
       }
@@ -340,128 +309,97 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("fixedUuid",v_Uuid,writer,options);
             break;
           case Hl7.Fhir.Model.Address v_Address:
-            writer.WritePropertyName("fixedAddress");
-            v_Address.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedAddress", v_Address, writer, options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("fixedAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Annotation v_Annotation:
-            writer.WritePropertyName("fixedAnnotation");
-            v_Annotation.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedAnnotation", v_Annotation, writer, options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("fixedAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("fixedCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("fixedCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.ContactPoint v_ContactPoint:
-            writer.WritePropertyName("fixedContactPoint");
-            v_ContactPoint.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedContactPoint", v_ContactPoint, writer, options);
             break;
           case Hl7.Fhir.Model.Count v_Count:
-            writer.WritePropertyName("fixedCount");
-            v_Count.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedCount", v_Count, writer, options);
             break;
           case Hl7.Fhir.Model.Distance v_Distance:
-            writer.WritePropertyName("fixedDistance");
-            v_Distance.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedDistance", v_Distance, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("fixedDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.HumanName v_HumanName:
-            writer.WritePropertyName("fixedHumanName");
-            v_HumanName.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedHumanName", v_HumanName, writer, options);
             break;
           case Hl7.Fhir.Model.Identifier v_Identifier:
-            writer.WritePropertyName("fixedIdentifier");
-            v_Identifier.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedIdentifier", v_Identifier, writer, options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("fixedMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedMoney", v_Money, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("fixedPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("fixedQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("fixedRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("fixedRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("fixedReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("fixedSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Signature v_Signature:
-            writer.WritePropertyName("fixedSignature");
-            v_Signature.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedSignature", v_Signature, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("fixedTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.ContactDetail v_ContactDetail:
-            writer.WritePropertyName("fixedContactDetail");
-            v_ContactDetail.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedContactDetail", v_ContactDetail, writer, options);
             break;
           case Hl7.Fhir.Model.Contributor v_Contributor:
-            writer.WritePropertyName("fixedContributor");
-            v_Contributor.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedContributor", v_Contributor, writer, options);
             break;
           case Hl7.Fhir.Model.DataRequirement v_DataRequirement:
-            writer.WritePropertyName("fixedDataRequirement");
-            v_DataRequirement.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedDataRequirement", v_DataRequirement, writer, options);
             break;
           case Hl7.Fhir.Model.Expression v_Expression:
-            writer.WritePropertyName("fixedExpression");
-            v_Expression.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedExpression", v_Expression, writer, options);
             break;
           case Hl7.Fhir.Model.ParameterDefinition v_ParameterDefinition:
-            writer.WritePropertyName("fixedParameterDefinition");
-            v_ParameterDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedParameterDefinition", v_ParameterDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.RelatedArtifact v_RelatedArtifact:
-            writer.WritePropertyName("fixedRelatedArtifact");
-            v_RelatedArtifact.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedRelatedArtifact", v_RelatedArtifact, writer, options);
             break;
           case Hl7.Fhir.Model.TriggerDefinition v_TriggerDefinition:
-            writer.WritePropertyName("fixedTriggerDefinition");
-            v_TriggerDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedTriggerDefinition", v_TriggerDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.UsageContext v_UsageContext:
-            writer.WritePropertyName("fixedUsageContext");
-            v_UsageContext.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedUsageContext", v_UsageContext, writer, options);
             break;
           case Hl7.Fhir.Model.Dosage v_Dosage:
-            writer.WritePropertyName("fixedDosage");
-            v_Dosage.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedDosage", v_Dosage, writer, options);
             break;
           case Hl7.Fhir.Model.Meta v_Meta:
-            writer.WritePropertyName("fixedMeta");
-            v_Meta.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fixedMeta", v_Meta, writer, options);
             break;
         }
       }
@@ -527,128 +465,97 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("patternUuid",v_Uuid,writer,options);
             break;
           case Hl7.Fhir.Model.Address v_Address:
-            writer.WritePropertyName("patternAddress");
-            v_Address.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternAddress", v_Address, writer, options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("patternAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Annotation v_Annotation:
-            writer.WritePropertyName("patternAnnotation");
-            v_Annotation.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternAnnotation", v_Annotation, writer, options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("patternAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("patternCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("patternCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.ContactPoint v_ContactPoint:
-            writer.WritePropertyName("patternContactPoint");
-            v_ContactPoint.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternContactPoint", v_ContactPoint, writer, options);
             break;
           case Hl7.Fhir.Model.Count v_Count:
-            writer.WritePropertyName("patternCount");
-            v_Count.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternCount", v_Count, writer, options);
             break;
           case Hl7.Fhir.Model.Distance v_Distance:
-            writer.WritePropertyName("patternDistance");
-            v_Distance.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternDistance", v_Distance, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("patternDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.HumanName v_HumanName:
-            writer.WritePropertyName("patternHumanName");
-            v_HumanName.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternHumanName", v_HumanName, writer, options);
             break;
           case Hl7.Fhir.Model.Identifier v_Identifier:
-            writer.WritePropertyName("patternIdentifier");
-            v_Identifier.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternIdentifier", v_Identifier, writer, options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("patternMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternMoney", v_Money, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("patternPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("patternQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("patternRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("patternRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("patternReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("patternSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Signature v_Signature:
-            writer.WritePropertyName("patternSignature");
-            v_Signature.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternSignature", v_Signature, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("patternTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.ContactDetail v_ContactDetail:
-            writer.WritePropertyName("patternContactDetail");
-            v_ContactDetail.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternContactDetail", v_ContactDetail, writer, options);
             break;
           case Hl7.Fhir.Model.Contributor v_Contributor:
-            writer.WritePropertyName("patternContributor");
-            v_Contributor.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternContributor", v_Contributor, writer, options);
             break;
           case Hl7.Fhir.Model.DataRequirement v_DataRequirement:
-            writer.WritePropertyName("patternDataRequirement");
-            v_DataRequirement.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternDataRequirement", v_DataRequirement, writer, options);
             break;
           case Hl7.Fhir.Model.Expression v_Expression:
-            writer.WritePropertyName("patternExpression");
-            v_Expression.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternExpression", v_Expression, writer, options);
             break;
           case Hl7.Fhir.Model.ParameterDefinition v_ParameterDefinition:
-            writer.WritePropertyName("patternParameterDefinition");
-            v_ParameterDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternParameterDefinition", v_ParameterDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.RelatedArtifact v_RelatedArtifact:
-            writer.WritePropertyName("patternRelatedArtifact");
-            v_RelatedArtifact.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternRelatedArtifact", v_RelatedArtifact, writer, options);
             break;
           case Hl7.Fhir.Model.TriggerDefinition v_TriggerDefinition:
-            writer.WritePropertyName("patternTriggerDefinition");
-            v_TriggerDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternTriggerDefinition", v_TriggerDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.UsageContext v_UsageContext:
-            writer.WritePropertyName("patternUsageContext");
-            v_UsageContext.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternUsageContext", v_UsageContext, writer, options);
             break;
           case Hl7.Fhir.Model.Dosage v_Dosage:
-            writer.WritePropertyName("patternDosage");
-            v_Dosage.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternDosage", v_Dosage, writer, options);
             break;
           case Hl7.Fhir.Model.Meta v_Meta:
-            writer.WritePropertyName("patternMeta");
-            v_Meta.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("patternMeta", v_Meta, writer, options);
             break;
         }
       }
@@ -683,8 +590,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("minValueUnsignedInt",v_UnsignedInt,writer,options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("minValueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("minValueQuantity", v_Quantity, writer, options);
             break;
         }
       }
@@ -717,8 +623,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("maxValueUnsignedInt",v_UnsignedInt,writer,options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("maxValueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("maxValueQuantity", v_Quantity, writer, options);
             break;
         }
       }
@@ -3845,128 +3750,97 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueUuid",v_Uuid,writer,options);
             break;
           case Hl7.Fhir.Model.Address v_Address:
-            writer.WritePropertyName("valueAddress");
-            v_Address.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAddress", v_Address, writer, options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("valueAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Annotation v_Annotation:
-            writer.WritePropertyName("valueAnnotation");
-            v_Annotation.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAnnotation", v_Annotation, writer, options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("valueAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("valueCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("valueCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.ContactPoint v_ContactPoint:
-            writer.WritePropertyName("valueContactPoint");
-            v_ContactPoint.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueContactPoint", v_ContactPoint, writer, options);
             break;
           case Hl7.Fhir.Model.Count v_Count:
-            writer.WritePropertyName("valueCount");
-            v_Count.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCount", v_Count, writer, options);
             break;
           case Hl7.Fhir.Model.Distance v_Distance:
-            writer.WritePropertyName("valueDistance");
-            v_Distance.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueDistance", v_Distance, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("valueDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.HumanName v_HumanName:
-            writer.WritePropertyName("valueHumanName");
-            v_HumanName.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueHumanName", v_HumanName, writer, options);
             break;
           case Hl7.Fhir.Model.Identifier v_Identifier:
-            writer.WritePropertyName("valueIdentifier");
-            v_Identifier.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueIdentifier", v_Identifier, writer, options);
             break;
           case Hl7.Fhir.Model.Money v_Money:
-            writer.WritePropertyName("valueMoney");
-            v_Money.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueMoney", v_Money, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("valuePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valuePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("valueRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("valueRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("valueReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.SampledData v_SampledData:
-            writer.WritePropertyName("valueSampledData");
-            v_SampledData.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueSampledData", v_SampledData, writer, options);
             break;
           case Hl7.Fhir.Model.Signature v_Signature:
-            writer.WritePropertyName("valueSignature");
-            v_Signature.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueSignature", v_Signature, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("valueTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.ContactDetail v_ContactDetail:
-            writer.WritePropertyName("valueContactDetail");
-            v_ContactDetail.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueContactDetail", v_ContactDetail, writer, options);
             break;
           case Hl7.Fhir.Model.Contributor v_Contributor:
-            writer.WritePropertyName("valueContributor");
-            v_Contributor.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueContributor", v_Contributor, writer, options);
             break;
           case Hl7.Fhir.Model.DataRequirement v_DataRequirement:
-            writer.WritePropertyName("valueDataRequirement");
-            v_DataRequirement.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueDataRequirement", v_DataRequirement, writer, options);
             break;
           case Hl7.Fhir.Model.Expression v_Expression:
-            writer.WritePropertyName("valueExpression");
-            v_Expression.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueExpression", v_Expression, writer, options);
             break;
           case Hl7.Fhir.Model.ParameterDefinition v_ParameterDefinition:
-            writer.WritePropertyName("valueParameterDefinition");
-            v_ParameterDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueParameterDefinition", v_ParameterDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.RelatedArtifact v_RelatedArtifact:
-            writer.WritePropertyName("valueRelatedArtifact");
-            v_RelatedArtifact.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueRelatedArtifact", v_RelatedArtifact, writer, options);
             break;
           case Hl7.Fhir.Model.TriggerDefinition v_TriggerDefinition:
-            writer.WritePropertyName("valueTriggerDefinition");
-            v_TriggerDefinition.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueTriggerDefinition", v_TriggerDefinition, writer, options);
             break;
           case Hl7.Fhir.Model.UsageContext v_UsageContext:
-            writer.WritePropertyName("valueUsageContext");
-            v_UsageContext.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueUsageContext", v_UsageContext, writer, options);
             break;
           case Hl7.Fhir.Model.Dosage v_Dosage:
-            writer.WritePropertyName("valueDosage");
-            v_Dosage.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueDosage", v_Dosage, writer, options);
             break;
           case Hl7.Fhir.Model.Meta v_Meta:
-            writer.WritePropertyName("valueMeta");
-            v_Meta.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueMeta", v_Meta, writer, options);
             break;
         }
       }

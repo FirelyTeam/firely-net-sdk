@@ -1231,29 +1231,29 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
-        "replaces" => ReplacesElement,
+        "replaces" => ReplacesElement?.Any() == true ? ReplacesElement : null,
         "status" => StatusElement,
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
         "base" => BaseElement,
-        "parent" => ParentElement,
+        "parent" => ParentElement?.Any() == true ? ParentElement : null,
         "event" => Event,
         "category" => CategoryElement,
-        "focus" => Focus,
+        "focus" => Focus?.Any() == true ? Focus : null,
         "responseRequired" => ResponseRequiredElement,
-        "allowedResponse" => AllowedResponse,
-        "graph" => GraphElement,
+        "allowedResponse" => AllowedResponse?.Any() == true ? AllowedResponse : null,
+        "graph" => GraphElement?.Any() == true ? GraphElement : null,
         _ => default
       };
 
@@ -1264,29 +1264,29 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (ReplacesElement is not null) yield return new KeyValuePair<string,object>("replaces",ReplacesElement);
+      if (ReplacesElement?.Any() == true) yield return new KeyValuePair<string,object>("replaces",ReplacesElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
-      if (ParentElement is not null) yield return new KeyValuePair<string,object>("parent",ParentElement);
-      if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
+      if (ParentElement?.Any() == true) yield return new KeyValuePair<string,object>("parent",ParentElement);
+      if (Event is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("event", Event),Event);
       if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
-      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
       if (ResponseRequiredElement is not null) yield return new KeyValuePair<string,object>("responseRequired",ResponseRequiredElement);
-      if (AllowedResponse is not null) yield return new KeyValuePair<string,object>("allowedResponse",AllowedResponse);
-      if (GraphElement is not null) yield return new KeyValuePair<string,object>("graph",GraphElement);
+      if (AllowedResponse?.Any() == true) yield return new KeyValuePair<string,object>("allowedResponse",AllowedResponse);
+      if (GraphElement?.Any() == true) yield return new KeyValuePair<string,object>("graph",GraphElement);
     }
 
   }

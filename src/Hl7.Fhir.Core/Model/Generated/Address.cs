@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
         "use" => UseElement,
         "type" => TypeElement,
         "text" => TextElement,
-        "line" => LineElement,
+        "line" => LineElement?.Any() == true ? LineElement : null,
         "city" => CityElement,
         "district" => DistrictElement,
         "state" => StateElement,
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-      if (LineElement is not null) yield return new KeyValuePair<string,object>("line",LineElement);
+      if (LineElement?.Any() == true) yield return new KeyValuePair<string,object>("line",LineElement);
       if (CityElement is not null) yield return new KeyValuePair<string,object>("city",CityElement);
       if (DistrictElement is not null) yield return new KeyValuePair<string,object>("district",DistrictElement);
       if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);

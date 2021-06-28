@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
           "path" => PathElement,
           "searchParam" => SearchParamElement,
           "valueSet" => ValueSetElement,
-          "code" => Code,
+          "code" => Code?.Any() == true ? Code : null,
           _ => default
         };
 
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
         if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
         if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       }
 
     }
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
         if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -934,13 +934,13 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "type" => TypeElement,
-        "profile" => ProfileElement,
+        "profile" => ProfileElement?.Any() == true ? ProfileElement : null,
         "subject" => Subject,
-        "mustSupport" => MustSupportElement,
-        "codeFilter" => CodeFilter,
-        "dateFilter" => DateFilter,
+        "mustSupport" => MustSupportElement?.Any() == true ? MustSupportElement : null,
+        "codeFilter" => CodeFilter?.Any() == true ? CodeFilter : null,
+        "dateFilter" => DateFilter?.Any() == true ? DateFilter : null,
         "limit" => LimitElement,
-        "sort" => Sort,
+        "sort" => Sort?.Any() == true ? Sort : null,
         _ => default
       };
 
@@ -951,13 +951,13 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (MustSupportElement is not null) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
-      if (CodeFilter is not null) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
-      if (DateFilter is not null) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
+      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
+      if (CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
+      if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
       if (LimitElement is not null) yield return new KeyValuePair<string,object>("limit",LimitElement);
-      if (Sort is not null) yield return new KeyValuePair<string,object>("sort",Sort);
+      if (Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",Sort);
     }
 
   }

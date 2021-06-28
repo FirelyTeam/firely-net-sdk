@@ -782,8 +782,8 @@ namespace Hl7.Fhir.Model
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       }
 
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
         {
           "sequence" => SequenceElement,
           "diagnosis" => Diagnosis,
-          "type" => Type,
+          "type" => Type?.Any() == true ? Type : null,
           "onAdmission" => OnAdmission,
           "packageCode" => PackageCode,
           _ => default
@@ -991,8 +991,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Diagnosis is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("diagnosis", Diagnosis),Diagnosis);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (OnAdmission is not null) yield return new KeyValuePair<string,object>("onAdmission",OnAdmission);
         if (PackageCode is not null) yield return new KeyValuePair<string,object>("packageCode",PackageCode);
       }
@@ -1208,10 +1208,10 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "sequence" => SequenceElement,
-          "type" => Type,
+          "type" => Type?.Any() == true ? Type : null,
           "date" => DateElement,
           "procedure" => Procedure,
-          "udi" => Udi,
+          "udi" => Udi?.Any() == true ? Udi : null,
           _ => default
         };
 
@@ -1222,10 +1222,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
-        if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
+        if (Procedure is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("procedure", Procedure),Procedure);
+        if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
       }
 
     }
@@ -1514,7 +1514,7 @@ namespace Hl7.Fhir.Model
           "identifier" => Identifier,
           "coverage" => Coverage,
           "businessArrangement" => BusinessArrangementElement,
-          "preAuthRef" => PreAuthRefElement,
+          "preAuthRef" => PreAuthRefElement?.Any() == true ? PreAuthRefElement : null,
           "claimResponse" => ClaimResponse,
           _ => default
         };
@@ -1530,7 +1530,7 @@ namespace Hl7.Fhir.Model
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
         if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
-        if (PreAuthRefElement is not null) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
+        if (PreAuthRefElement?.Any() == true) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
         if (ClaimResponse is not null) yield return new KeyValuePair<string,object>("claimResponse",ClaimResponse);
       }
 
@@ -1699,7 +1699,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Location is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
       }
 
     }
@@ -2285,26 +2285,26 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "sequence" => SequenceElement,
-          "careTeamSequence" => CareTeamSequenceElement,
-          "diagnosisSequence" => DiagnosisSequenceElement,
-          "procedureSequence" => ProcedureSequenceElement,
-          "informationSequence" => InformationSequenceElement,
+          "careTeamSequence" => CareTeamSequenceElement?.Any() == true ? CareTeamSequenceElement : null,
+          "diagnosisSequence" => DiagnosisSequenceElement?.Any() == true ? DiagnosisSequenceElement : null,
+          "procedureSequence" => ProcedureSequenceElement?.Any() == true ? ProcedureSequenceElement : null,
+          "informationSequence" => InformationSequenceElement?.Any() == true ? InformationSequenceElement : null,
           "revenue" => Revenue,
           "category" => Category,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
-          "programCode" => ProgramCode,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
+          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
           "serviced" => Serviced,
           "location" => Location,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "factor" => FactorElement,
           "net" => Net,
-          "udi" => Udi,
+          "udi" => Udi?.Any() == true ? Udi : null,
           "bodySite" => BodySite,
-          "subSite" => SubSite,
-          "encounter" => Encounter,
-          "detail" => Detail,
+          "subSite" => SubSite?.Any() == true ? SubSite : null,
+          "encounter" => Encounter?.Any() == true ? Encounter : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -2315,26 +2315,26 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (CareTeamSequenceElement is not null) yield return new KeyValuePair<string,object>("careTeamSequence",CareTeamSequenceElement);
-        if (DiagnosisSequenceElement is not null) yield return new KeyValuePair<string,object>("diagnosisSequence",DiagnosisSequenceElement);
-        if (ProcedureSequenceElement is not null) yield return new KeyValuePair<string,object>("procedureSequence",ProcedureSequenceElement);
-        if (InformationSequenceElement is not null) yield return new KeyValuePair<string,object>("informationSequence",InformationSequenceElement);
+        if (CareTeamSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("careTeamSequence",CareTeamSequenceElement);
+        if (DiagnosisSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("diagnosisSequence",DiagnosisSequenceElement);
+        if (ProcedureSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("procedureSequence",ProcedureSequenceElement);
+        if (InformationSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("informationSequence",InformationSequenceElement);
         if (Revenue is not null) yield return new KeyValuePair<string,object>("revenue",Revenue);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (ProgramCode is not null) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
-        if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (ProgramCode?.Any() == true) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
+        if (Serviced is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
+        if (Location is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
-        if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
+        if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-        if (SubSite is not null) yield return new KeyValuePair<string,object>("subSite",SubSite);
-        if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (SubSite?.Any() == true) yield return new KeyValuePair<string,object>("subSite",SubSite);
+        if (Encounter?.Any() == true) yield return new KeyValuePair<string,object>("encounter",Encounter);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -2676,14 +2676,14 @@ namespace Hl7.Fhir.Model
           "revenue" => Revenue,
           "category" => Category,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
-          "programCode" => ProgramCode,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
+          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "factor" => FactorElement,
           "net" => Net,
-          "udi" => Udi,
-          "subDetail" => SubDetail,
+          "udi" => Udi?.Any() == true ? Udi : null,
+          "subDetail" => SubDetail?.Any() == true ? SubDetail : null,
           _ => default
         };
 
@@ -2697,14 +2697,14 @@ namespace Hl7.Fhir.Model
         if (Revenue is not null) yield return new KeyValuePair<string,object>("revenue",Revenue);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (ProgramCode is not null) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (ProgramCode?.Any() == true) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
-        if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
-        if (SubDetail is not null) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
+        if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
+        if (SubDetail?.Any() == true) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
       }
 
     }
@@ -3027,13 +3027,13 @@ namespace Hl7.Fhir.Model
           "revenue" => Revenue,
           "category" => Category,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
-          "programCode" => ProgramCode,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
+          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "factor" => FactorElement,
           "net" => Net,
-          "udi" => Udi,
+          "udi" => Udi?.Any() == true ? Udi : null,
           _ => default
         };
 
@@ -3047,13 +3047,13 @@ namespace Hl7.Fhir.Model
         if (Revenue is not null) yield return new KeyValuePair<string,object>("revenue",Revenue);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (ProgramCode is not null) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (ProgramCode?.Any() == true) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
-        if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
+        if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
       }
 
     }
@@ -3691,7 +3691,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => Type,
         "subType" => SubType,
@@ -3704,19 +3704,19 @@ namespace Hl7.Fhir.Model
         "provider" => Provider,
         "priority" => Priority,
         "fundsReserve" => FundsReserve,
-        "related" => Related,
+        "related" => Related?.Any() == true ? Related : null,
         "prescription" => Prescription,
         "originalPrescription" => OriginalPrescription,
         "payee" => Payee,
         "referral" => Referral,
         "facility" => Facility,
-        "careTeam" => CareTeam,
-        "supportingInfo" => SupportingInfo,
-        "diagnosis" => Diagnosis,
-        "procedure" => Procedure,
-        "insurance" => Insurance,
+        "careTeam" => CareTeam?.Any() == true ? CareTeam : null,
+        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
+        "diagnosis" => Diagnosis?.Any() == true ? Diagnosis : null,
+        "procedure" => Procedure?.Any() == true ? Procedure : null,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
         "accident" => Accident,
-        "item" => Item,
+        "item" => Item?.Any() == true ? Item : null,
         "total" => Total,
         _ => default
       };
@@ -3727,7 +3727,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (SubType is not null) yield return new KeyValuePair<string,object>("subType",SubType);
@@ -3740,19 +3740,19 @@ namespace Hl7.Fhir.Model
       if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (FundsReserve is not null) yield return new KeyValuePair<string,object>("fundsReserve",FundsReserve);
-      if (Related is not null) yield return new KeyValuePair<string,object>("related",Related);
+      if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
       if (Prescription is not null) yield return new KeyValuePair<string,object>("prescription",Prescription);
       if (OriginalPrescription is not null) yield return new KeyValuePair<string,object>("originalPrescription",OriginalPrescription);
       if (Payee is not null) yield return new KeyValuePair<string,object>("payee",Payee);
       if (Referral is not null) yield return new KeyValuePair<string,object>("referral",Referral);
       if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
-      if (CareTeam is not null) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
-      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
-      if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (CareTeam?.Any() == true) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+      if (Procedure?.Any() == true) yield return new KeyValuePair<string,object>("procedure",Procedure);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
       if (Accident is not null) yield return new KeyValuePair<string,object>("accident",Accident);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       if (Total is not null) yield return new KeyValuePair<string,object>("total",Total);
     }
 

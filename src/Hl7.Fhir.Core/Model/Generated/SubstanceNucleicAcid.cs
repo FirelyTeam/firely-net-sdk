@@ -334,8 +334,8 @@ namespace Hl7.Fhir.Model
           "sequenceAttachment" => SequenceAttachment,
           "fivePrime" => FivePrime,
           "threePrime" => ThreePrime,
-          "linkage" => Linkage,
-          "sugar" => Sugar,
+          "linkage" => Linkage?.Any() == true ? Linkage : null,
+          "sugar" => Sugar?.Any() == true ? Sugar : null,
           _ => default
         };
 
@@ -351,8 +351,8 @@ namespace Hl7.Fhir.Model
         if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
         if (FivePrime is not null) yield return new KeyValuePair<string,object>("fivePrime",FivePrime);
         if (ThreePrime is not null) yield return new KeyValuePair<string,object>("threePrime",ThreePrime);
-        if (Linkage is not null) yield return new KeyValuePair<string,object>("linkage",Linkage);
-        if (Sugar is not null) yield return new KeyValuePair<string,object>("sugar",Sugar);
+        if (Linkage?.Any() == true) yield return new KeyValuePair<string,object>("linkage",Linkage);
+        if (Sugar?.Any() == true) yield return new KeyValuePair<string,object>("sugar",Sugar);
       }
 
     }
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
         "numberOfSubunits" => NumberOfSubunitsElement,
         "areaOfHybridisation" => AreaOfHybridisationElement,
         "oligoNucleotideType" => OligoNucleotideType,
-        "subunit" => Subunit,
+        "subunit" => Subunit?.Any() == true ? Subunit : null,
         _ => default
       };
 
@@ -964,7 +964,7 @@ namespace Hl7.Fhir.Model
       if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
       if (AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",AreaOfHybridisationElement);
       if (OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",OligoNucleotideType);
-      if (Subunit is not null) yield return new KeyValuePair<string,object>("subunit",Subunit);
+      if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

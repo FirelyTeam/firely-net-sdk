@@ -1323,24 +1323,24 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "code" => CodeElement,
-        "base" => BaseElement,
+        "base" => BaseElement?.Any() == true ? BaseElement : null,
         "type" => TypeElement,
         "expression" => ExpressionElement,
         "xpath" => XpathElement,
         "xpathUsage" => XpathUsageElement,
-        "target" => TargetElement,
+        "target" => TargetElement?.Any() == true ? TargetElement : null,
         "multipleOr" => MultipleOrElement,
         "multipleAnd" => MultipleAndElement,
-        "comparator" => ComparatorElement,
-        "modifier" => ModifierElement,
-        "chain" => ChainElement,
-        "component" => Component,
+        "comparator" => ComparatorElement?.Any() == true ? ComparatorElement : null,
+        "modifier" => ModifierElement?.Any() == true ? ModifierElement : null,
+        "chain" => ChainElement?.Any() == true ? ChainElement : null,
+        "component" => Component?.Any() == true ? Component : null,
         _ => default
       };
 
@@ -1358,24 +1358,24 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
-      if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
+      if (BaseElement?.Any() == true) yield return new KeyValuePair<string,object>("base",BaseElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
       if (XpathElement is not null) yield return new KeyValuePair<string,object>("xpath",XpathElement);
       if (XpathUsageElement is not null) yield return new KeyValuePair<string,object>("xpathUsage",XpathUsageElement);
-      if (TargetElement is not null) yield return new KeyValuePair<string,object>("target",TargetElement);
+      if (TargetElement?.Any() == true) yield return new KeyValuePair<string,object>("target",TargetElement);
       if (MultipleOrElement is not null) yield return new KeyValuePair<string,object>("multipleOr",MultipleOrElement);
       if (MultipleAndElement is not null) yield return new KeyValuePair<string,object>("multipleAnd",MultipleAndElement);
-      if (ComparatorElement is not null) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
-      if (ModifierElement is not null) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
-      if (ChainElement is not null) yield return new KeyValuePair<string,object>("chain",ChainElement);
-      if (Component is not null) yield return new KeyValuePair<string,object>("component",Component);
+      if (ComparatorElement?.Any() == true) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
+      if (ModifierElement?.Any() == true) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
+      if (ChainElement?.Any() == true) yield return new KeyValuePair<string,object>("chain",ChainElement);
+      if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
     }
 
   }

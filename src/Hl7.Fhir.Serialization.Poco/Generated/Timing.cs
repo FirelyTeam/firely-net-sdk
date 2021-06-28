@@ -190,16 +190,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Bounds)
         {
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("boundsDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("boundsDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("boundsRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("boundsRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("boundsPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("boundsPeriod", v_Period, writer, options);
             break;
         }
       }

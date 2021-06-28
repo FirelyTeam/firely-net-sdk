@@ -311,12 +311,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
-        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
+        if (Collected is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
         if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-        if (FastingStatus is not null) yield return new KeyValuePair<string,object>("fastingStatus",FastingStatus);
+        if (FastingStatus is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("fastingStatus", FastingStatus),FastingStatus);
       }
 
     }
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
         {
           "description" => DescriptionElement,
           "procedure" => Procedure,
-          "additive" => Additive,
+          "additive" => Additive?.Any() == true ? Additive : null,
           "time" => Time,
           _ => default
         };
@@ -504,8 +504,8 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
-        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
-        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
+        if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
     }
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "identifier" => Identifier,
+          "identifier" => Identifier?.Any() == true ? Identifier : null,
           "description" => DescriptionElement,
           "type" => Type,
           "capacity" => Capacity,
@@ -728,12 +728,12 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
         if (SpecimenQuantity is not null) yield return new KeyValuePair<string,object>("specimenQuantity",SpecimenQuantity);
-        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (Additive is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
       }
 
     }
@@ -1082,19 +1082,19 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "accessionIdentifier" => AccessionIdentifier,
         "status" => StatusElement,
         "type" => Type,
         "subject" => Subject,
         "receivedTime" => ReceivedTimeElement,
-        "parent" => Parent,
-        "request" => Request,
+        "parent" => Parent?.Any() == true ? Parent : null,
+        "request" => Request?.Any() == true ? Request : null,
         "collection" => Collection,
-        "processing" => Processing,
-        "container" => Container,
-        "condition" => Condition,
-        "note" => Note,
+        "processing" => Processing?.Any() == true ? Processing : null,
+        "container" => Container?.Any() == true ? Container : null,
+        "condition" => Condition?.Any() == true ? Condition : null,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -1104,19 +1104,19 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (AccessionIdentifier is not null) yield return new KeyValuePair<string,object>("accessionIdentifier",AccessionIdentifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (ReceivedTimeElement is not null) yield return new KeyValuePair<string,object>("receivedTime",ReceivedTimeElement);
-      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
-      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
+      if (Parent?.Any() == true) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (Request?.Any() == true) yield return new KeyValuePair<string,object>("request",Request);
       if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
-      if (Processing is not null) yield return new KeyValuePair<string,object>("processing",Processing);
-      if (Container is not null) yield return new KeyValuePair<string,object>("container",Container);
-      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Processing?.Any() == true) yield return new KeyValuePair<string,object>("processing",Processing);
+      if (Container?.Any() == true) yield return new KeyValuePair<string,object>("container",Container);
+      if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

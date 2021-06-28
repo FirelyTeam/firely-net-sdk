@@ -659,9 +659,9 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "basedOn" => BasedOn,
-        "partOf" => PartOf,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
         "type" => Type,
         "modality" => Modality,
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
         "created" => Created,
         "issued" => IssuedElement,
         "operator" => Operator,
-        "reasonCode" => ReasonCode,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
         "bodySite" => BodySite,
         "deviceName" => DeviceNameElement,
         "device" => Device,
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
         "frames" => FramesElement,
         "duration" => DurationElement,
         "content" => Content,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -690,19 +690,19 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
       if (View is not null) yield return new KeyValuePair<string,object>("view",View);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Created is not null) yield return new KeyValuePair<string,object>("created",Created);
+      if (Created is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("created", Created),Created);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
       if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
       if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (DeviceNameElement is not null) yield return new KeyValuePair<string,object>("deviceName",DeviceNameElement);
       if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
       if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
       if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
       if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

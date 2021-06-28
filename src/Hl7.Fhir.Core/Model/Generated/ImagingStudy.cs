@@ -489,13 +489,13 @@ namespace Hl7.Fhir.Model
           "modality" => Modality,
           "description" => DescriptionElement,
           "numberOfInstances" => NumberOfInstancesElement,
-          "endpoint" => Endpoint,
+          "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
           "bodySite" => BodySite,
           "laterality" => Laterality,
-          "specimen" => Specimen,
+          "specimen" => Specimen?.Any() == true ? Specimen : null,
           "started" => StartedElement,
-          "performer" => Performer,
-          "instance" => Instance,
+          "performer" => Performer?.Any() == true ? Performer : null,
+          "instance" => Instance?.Any() == true ? Instance : null,
           _ => default
         };
 
@@ -510,13 +510,13 @@ namespace Hl7.Fhir.Model
         if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",NumberOfInstancesElement);
-        if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+        if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
         if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
-        if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
+        if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
         if (StartedElement is not null) yield return new KeyValuePair<string,object>("started",StartedElement);
-        if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-        if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
+        if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+        if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       }
 
     }
@@ -1413,26 +1413,26 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
-        "modality" => Modality,
+        "modality" => Modality?.Any() == true ? Modality : null,
         "subject" => Subject,
         "encounter" => Encounter,
         "started" => StartedElement,
-        "basedOn" => BasedOn,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
         "referrer" => Referrer,
-        "interpreter" => Interpreter,
-        "endpoint" => Endpoint,
+        "interpreter" => Interpreter?.Any() == true ? Interpreter : null,
+        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
         "numberOfSeries" => NumberOfSeriesElement,
         "numberOfInstances" => NumberOfInstancesElement,
         "procedureReference" => ProcedureReference,
-        "procedureCode" => ProcedureCode,
+        "procedureCode" => ProcedureCode?.Any() == true ? ProcedureCode : null,
         "location" => Location,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "note" => Note,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "note" => Note?.Any() == true ? Note : null,
         "description" => DescriptionElement,
-        "series" => Series,
+        "series" => Series?.Any() == true ? Series : null,
         _ => default
       };
 
@@ -1442,26 +1442,26 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
+      if (Modality?.Any() == true) yield return new KeyValuePair<string,object>("modality",Modality);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (StartedElement is not null) yield return new KeyValuePair<string,object>("started",StartedElement);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Referrer is not null) yield return new KeyValuePair<string,object>("referrer",Referrer);
-      if (Interpreter is not null) yield return new KeyValuePair<string,object>("interpreter",Interpreter);
-      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Interpreter?.Any() == true) yield return new KeyValuePair<string,object>("interpreter",Interpreter);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
       if (NumberOfSeriesElement is not null) yield return new KeyValuePair<string,object>("numberOfSeries",NumberOfSeriesElement);
       if (NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",NumberOfInstancesElement);
       if (ProcedureReference is not null) yield return new KeyValuePair<string,object>("procedureReference",ProcedureReference);
-      if (ProcedureCode is not null) yield return new KeyValuePair<string,object>("procedureCode",ProcedureCode);
+      if (ProcedureCode?.Any() == true) yield return new KeyValuePair<string,object>("procedureCode",ProcedureCode);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Series is not null) yield return new KeyValuePair<string,object>("series",Series);
+      if (Series?.Any() == true) yield return new KeyValuePair<string,object>("series",Series);
     }
 
   }

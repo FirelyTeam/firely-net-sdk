@@ -385,8 +385,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("collectedDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("collectedPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("collectedPeriod", v_Period, writer, options);
             break;
         }
       }
@@ -403,12 +402,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.FastingStatus)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("fastingStatusCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fastingStatusCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("fastingStatusDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("fastingStatusDuration", v_Duration, writer, options);
             break;
         }
       }
@@ -535,8 +532,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("timeDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("timePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timePeriod", v_Period, writer, options);
             break;
         }
       }
@@ -678,12 +674,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Additive)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("additiveCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("additiveCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("additiveReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("additiveReference", v_ResourceReference, writer, options);
             break;
         }
       }

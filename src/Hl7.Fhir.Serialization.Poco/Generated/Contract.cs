@@ -101,12 +101,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Topic)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("topicCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("topicCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("topicReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("topicReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -135,12 +133,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.LegallyBinding)
         {
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("legallyBindingAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("legallyBindingAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("legallyBindingReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("legallyBindingReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -953,12 +949,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Topic)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("topicCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("topicCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("topicReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("topicReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -1847,20 +1841,16 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("valueUri",v_FhirUri,writer,options);
             break;
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("valueAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("valueCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("valueQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("valueReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("valueReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -2681,12 +2671,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Entity)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("entityCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("entityCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("entityReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("entityReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -3045,12 +3033,10 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("occurrenceDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("occurrencePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurrencePeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("occurrenceTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurrenceTiming", v_Timing, writer, options);
             break;
         }
       }
@@ -4002,12 +3988,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Content)
         {
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("contentAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("contentReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -4078,12 +4062,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Content)
         {
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("contentAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("contentReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -4154,12 +4136,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Content)
         {
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("contentAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("contentReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("contentReference", v_ResourceReference, writer, options);
             break;
         }
       }

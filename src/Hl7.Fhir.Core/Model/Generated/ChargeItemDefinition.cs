@@ -366,8 +366,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "applicability" => Applicability,
-          "priceComponent" => PriceComponent,
+          "applicability" => Applicability?.Any() == true ? Applicability : null,
+          "priceComponent" => PriceComponent?.Any() == true ? PriceComponent : null,
           _ => default
         };
 
@@ -377,8 +377,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
-        if (PriceComponent is not null) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
+        if (Applicability?.Any() == true) yield return new KeyValuePair<string,object>("applicability",Applicability);
+        if (PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
       }
 
     }
@@ -1293,28 +1293,28 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "title" => TitleElement,
-        "derivedFromUri" => DerivedFromUriElement,
-        "partOf" => PartOfElement,
-        "replaces" => ReplacesElement,
+        "derivedFromUri" => DerivedFromUriElement?.Any() == true ? DerivedFromUriElement : null,
+        "partOf" => PartOfElement?.Any() == true ? PartOfElement : null,
+        "replaces" => ReplacesElement?.Any() == true ? ReplacesElement : null,
         "status" => StatusElement,
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "copyright" => Copyright,
         "approvalDate" => ApprovalDateElement,
         "lastReviewDate" => LastReviewDateElement,
         "effectivePeriod" => EffectivePeriod,
         "code" => Code,
-        "instance" => Instance,
-        "applicability" => Applicability,
-        "propertyGroup" => PropertyGroup,
+        "instance" => Instance?.Any() == true ? Instance : null,
+        "applicability" => Applicability?.Any() == true ? Applicability : null,
+        "propertyGroup" => PropertyGroup?.Any() == true ? PropertyGroup : null,
         _ => default
       };
 
@@ -1325,28 +1325,28 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (DerivedFromUriElement is not null) yield return new KeyValuePair<string,object>("derivedFromUri",DerivedFromUriElement);
-      if (PartOfElement is not null) yield return new KeyValuePair<string,object>("partOf",PartOfElement);
-      if (ReplacesElement is not null) yield return new KeyValuePair<string,object>("replaces",ReplacesElement);
+      if (DerivedFromUriElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFromUri",DerivedFromUriElement);
+      if (PartOfElement?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOfElement);
+      if (ReplacesElement?.Any() == true) yield return new KeyValuePair<string,object>("replaces",ReplacesElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
       if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
       if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
-      if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
-      if (PropertyGroup is not null) yield return new KeyValuePair<string,object>("propertyGroup",PropertyGroup);
+      if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      if (Applicability?.Any() == true) yield return new KeyValuePair<string,object>("applicability",Applicability);
+      if (PropertyGroup?.Any() == true) yield return new KeyValuePair<string,object>("propertyGroup",PropertyGroup);
     }
 
   }

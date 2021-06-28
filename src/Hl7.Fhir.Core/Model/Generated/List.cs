@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "mode" => ModeElement,
         "title" => TitleElement,
@@ -677,8 +677,8 @@ namespace Hl7.Fhir.Model
         "date" => DateElement,
         "source" => Source,
         "orderedBy" => OrderedBy,
-        "note" => Note,
-        "entry" => Entry,
+        "note" => Note?.Any() == true ? Note : null,
+        "entry" => Entry?.Any() == true ? Entry : null,
         "emptyReason" => EmptyReason,
         _ => default
       };
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -699,8 +699,8 @@ namespace Hl7.Fhir.Model
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
       if (OrderedBy is not null) yield return new KeyValuePair<string,object>("orderedBy",OrderedBy);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Entry is not null) yield return new KeyValuePair<string,object>("entry",Entry);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
       if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
     }
 

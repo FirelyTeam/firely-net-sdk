@@ -324,12 +324,12 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "who" => Who,
-          "type" => Type,
-          "communicationMethod" => CommunicationMethod,
+          "type" => Type?.Any() == true ? Type : null,
+          "communicationMethod" => CommunicationMethod?.Any() == true ? CommunicationMethod : null,
           "validationStatus" => ValidationStatus,
           "validationDate" => ValidationDateElement,
           "canPushUpdates" => CanPushUpdates,
-          "pushTypeAvailable" => PushTypeAvailable,
+          "pushTypeAvailable" => PushTypeAvailable?.Any() == true ? PushTypeAvailable : null,
           _ => default
         };
 
@@ -340,12 +340,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (CommunicationMethod is not null) yield return new KeyValuePair<string,object>("communicationMethod",CommunicationMethod);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (CommunicationMethod?.Any() == true) yield return new KeyValuePair<string,object>("communicationMethod",CommunicationMethod);
         if (ValidationStatus is not null) yield return new KeyValuePair<string,object>("validationStatus",ValidationStatus);
         if (ValidationDateElement is not null) yield return new KeyValuePair<string,object>("validationDate",ValidationDateElement);
         if (CanPushUpdates is not null) yield return new KeyValuePair<string,object>("canPushUpdates",CanPushUpdates);
-        if (PushTypeAvailable is not null) yield return new KeyValuePair<string,object>("pushTypeAvailable",PushTypeAvailable);
+        if (PushTypeAvailable?.Any() == true) yield return new KeyValuePair<string,object>("pushTypeAvailable",PushTypeAvailable);
       }
 
     }
@@ -1232,20 +1232,20 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "target" => Target,
-        "targetLocation" => TargetLocationElement,
+        "target" => Target?.Any() == true ? Target : null,
+        "targetLocation" => TargetLocationElement?.Any() == true ? TargetLocationElement : null,
         "need" => Need,
         "status" => Status_Element,
         "statusDate" => StatusDateElement,
         "validationType" => ValidationType,
-        "validationProcess" => ValidationProcess,
+        "validationProcess" => ValidationProcess?.Any() == true ? ValidationProcess : null,
         "frequency" => Frequency,
         "lastPerformed" => LastPerformedElement,
         "nextScheduled" => NextScheduledElement,
         "failureAction" => FailureAction,
-        "primarySource" => PrimarySource,
+        "primarySource" => PrimarySource?.Any() == true ? PrimarySource : null,
         "attestation" => Attestation,
-        "validator" => Validator,
+        "validator" => Validator?.Any() == true ? Validator : null,
         _ => default
       };
 
@@ -1255,20 +1255,20 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
-      if (TargetLocationElement is not null) yield return new KeyValuePair<string,object>("targetLocation",TargetLocationElement);
+      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
+      if (TargetLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("targetLocation",TargetLocationElement);
       if (Need is not null) yield return new KeyValuePair<string,object>("need",Need);
       if (Status_Element is not null) yield return new KeyValuePair<string,object>("status",Status_Element);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (ValidationType is not null) yield return new KeyValuePair<string,object>("validationType",ValidationType);
-      if (ValidationProcess is not null) yield return new KeyValuePair<string,object>("validationProcess",ValidationProcess);
+      if (ValidationProcess?.Any() == true) yield return new KeyValuePair<string,object>("validationProcess",ValidationProcess);
       if (Frequency is not null) yield return new KeyValuePair<string,object>("frequency",Frequency);
       if (LastPerformedElement is not null) yield return new KeyValuePair<string,object>("lastPerformed",LastPerformedElement);
       if (NextScheduledElement is not null) yield return new KeyValuePair<string,object>("nextScheduled",NextScheduledElement);
       if (FailureAction is not null) yield return new KeyValuePair<string,object>("failureAction",FailureAction);
-      if (PrimarySource is not null) yield return new KeyValuePair<string,object>("primarySource",PrimarySource);
+      if (PrimarySource?.Any() == true) yield return new KeyValuePair<string,object>("primarySource",PrimarySource);
       if (Attestation is not null) yield return new KeyValuePair<string,object>("attestation",Attestation);
-      if (Validator is not null) yield return new KeyValuePair<string,object>("validator",Validator);
+      if (Validator?.Any() == true) yield return new KeyValuePair<string,object>("validator",Validator);
     }
 
   }

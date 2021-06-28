@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "type" => Type,
+        "type" => Type?.Any() == true ? Type : null,
         "when" => WhenElement,
         "who" => Who,
         "onBehalfOf" => OnBehalfOf,
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (WhenElement is not null) yield return new KeyValuePair<string,object>("when",WhenElement);
       if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
       if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);

@@ -563,8 +563,8 @@ namespace Hl7.Fhir.Model
       {
         "sequenceType" => SequenceType,
         "numberOfSubunits" => NumberOfSubunitsElement,
-        "disulfideLinkage" => DisulfideLinkageElement,
-        "subunit" => Subunit,
+        "disulfideLinkage" => DisulfideLinkageElement?.Any() == true ? DisulfideLinkageElement : null,
+        "subunit" => Subunit?.Any() == true ? Subunit : null,
         _ => default
       };
 
@@ -576,8 +576,8 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
       if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
-      if (DisulfideLinkageElement is not null) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
-      if (Subunit is not null) yield return new KeyValuePair<string,object>("subunit",Subunit);
+      if (DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
+      if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

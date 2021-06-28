@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
         if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
         if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
       }
@@ -640,13 +640,13 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "code" => Code,
         "status" => StatusElement,
         "manufacturer" => Manufacturer,
         "form" => Form,
         "amount" => Amount,
-        "ingredient" => Ingredient,
+        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
         "batch" => Batch,
         _ => default
       };
@@ -657,13 +657,13 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
       if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
-      if (Ingredient is not null) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
       if (Batch is not null) yield return new KeyValuePair<string,object>("batch",Batch);
     }
 

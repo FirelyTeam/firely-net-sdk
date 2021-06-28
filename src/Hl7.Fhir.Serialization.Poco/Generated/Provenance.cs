@@ -61,8 +61,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Occurred)
         {
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("occurredPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurredPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
             JsonStreamUtilities.SerializePrimitiveProperty("occurredDateTime",v_FhirDateTime,writer,options);

@@ -95,8 +95,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Event)
         {
           case Hl7.Fhir.Model.Coding v_Coding:
-            writer.WritePropertyName("eventCoding");
-            v_Coding.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("eventCoding", v_Coding, writer, options);
             break;
           case Hl7.Fhir.Model.FhirUri v_FhirUri:
             JsonStreamUtilities.SerializePrimitiveProperty("eventUri",v_FhirUri,writer,options);

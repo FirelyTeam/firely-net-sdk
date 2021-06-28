@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "instance" => Instance,
-          "causality" => Causality,
+          "causality" => Causality?.Any() == true ? Causality : null,
           _ => default
         };
 
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
-        if (Causality is not null) yield return new KeyValuePair<string,object>("causality",Causality);
+        if (Causality?.Any() == true) yield return new KeyValuePair<string,object>("causality",Causality);
       }
 
     }
@@ -989,24 +989,24 @@ namespace Hl7.Fhir.Model
       {
         "identifier" => Identifier,
         "actuality" => ActualityElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "event" => Event,
         "subject" => Subject,
         "encounter" => Encounter,
         "date" => DateElement,
         "detected" => DetectedElement,
         "recordedDate" => RecordedDateElement,
-        "resultingCondition" => ResultingCondition,
+        "resultingCondition" => ResultingCondition?.Any() == true ? ResultingCondition : null,
         "location" => Location,
         "seriousness" => Seriousness,
         "severity" => Severity,
         "outcome" => Outcome,
         "recorder" => Recorder,
-        "contributor" => Contributor,
-        "suspectEntity" => SuspectEntity,
-        "subjectMedicalHistory" => SubjectMedicalHistory,
-        "referenceDocument" => ReferenceDocument,
-        "study" => Study,
+        "contributor" => Contributor?.Any() == true ? Contributor : null,
+        "suspectEntity" => SuspectEntity?.Any() == true ? SuspectEntity : null,
+        "subjectMedicalHistory" => SubjectMedicalHistory?.Any() == true ? SubjectMedicalHistory : null,
+        "referenceDocument" => ReferenceDocument?.Any() == true ? ReferenceDocument : null,
+        "study" => Study?.Any() == true ? Study : null,
         _ => default
       };
 
@@ -1018,24 +1018,24 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActualityElement is not null) yield return new KeyValuePair<string,object>("actuality",ActualityElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (DetectedElement is not null) yield return new KeyValuePair<string,object>("detected",DetectedElement);
       if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
-      if (ResultingCondition is not null) yield return new KeyValuePair<string,object>("resultingCondition",ResultingCondition);
+      if (ResultingCondition?.Any() == true) yield return new KeyValuePair<string,object>("resultingCondition",ResultingCondition);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
       if (Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",Seriousness);
       if (Severity is not null) yield return new KeyValuePair<string,object>("severity",Severity);
       if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
-      if (Contributor is not null) yield return new KeyValuePair<string,object>("contributor",Contributor);
-      if (SuspectEntity is not null) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
-      if (SubjectMedicalHistory is not null) yield return new KeyValuePair<string,object>("subjectMedicalHistory",SubjectMedicalHistory);
-      if (ReferenceDocument is not null) yield return new KeyValuePair<string,object>("referenceDocument",ReferenceDocument);
-      if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
+      if (Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",Contributor);
+      if (SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
+      if (SubjectMedicalHistory?.Any() == true) yield return new KeyValuePair<string,object>("subjectMedicalHistory",SubjectMedicalHistory);
+      if (ReferenceDocument?.Any() == true) yield return new KeyValuePair<string,object>("referenceDocument",ReferenceDocument);
+      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
     }
 
   }

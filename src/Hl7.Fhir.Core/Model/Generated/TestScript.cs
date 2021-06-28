@@ -690,8 +690,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "link" => Link,
-          "capability" => Capability,
+          "link" => Link?.Any() == true ? Link : null,
+          "capability" => Capability?.Any() == true ? Capability : null,
           _ => default
         };
 
@@ -701,8 +701,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
-        if (Capability is not null) yield return new KeyValuePair<string,object>("capability",Capability);
+        if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+        if (Capability?.Any() == true) yield return new KeyValuePair<string,object>("capability",Capability);
       }
 
     }
@@ -1203,9 +1203,9 @@ namespace Hl7.Fhir.Model
           "required" => RequiredElement,
           "validated" => ValidatedElement,
           "description" => DescriptionElement,
-          "origin" => OriginElement,
+          "origin" => OriginElement?.Any() == true ? OriginElement : null,
           "destination" => DestinationElement,
-          "link" => LinkElement,
+          "link" => LinkElement?.Any() == true ? LinkElement : null,
           "capabilities" => CapabilitiesElement,
           _ => default
         };
@@ -1219,9 +1219,9 @@ namespace Hl7.Fhir.Model
         if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
         if (ValidatedElement is not null) yield return new KeyValuePair<string,object>("validated",ValidatedElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (OriginElement is not null) yield return new KeyValuePair<string,object>("origin",OriginElement);
+        if (OriginElement?.Any() == true) yield return new KeyValuePair<string,object>("origin",OriginElement);
         if (DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",DestinationElement);
-        if (LinkElement is not null) yield return new KeyValuePair<string,object>("link",LinkElement);
+        if (LinkElement?.Any() == true) yield return new KeyValuePair<string,object>("link",LinkElement);
         if (CapabilitiesElement is not null) yield return new KeyValuePair<string,object>("capabilities",CapabilitiesElement);
       }
 
@@ -1896,7 +1896,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -1906,7 +1906,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -2701,7 +2701,7 @@ namespace Hl7.Fhir.Model
           "method" => MethodElement,
           "origin" => OriginElement,
           "params" => ParamsElement,
-          "requestHeader" => RequestHeader,
+          "requestHeader" => RequestHeader?.Any() == true ? RequestHeader : null,
           "requestId" => RequestIdElement,
           "responseId" => ResponseIdElement,
           "sourceId" => SourceIdElement,
@@ -2727,7 +2727,7 @@ namespace Hl7.Fhir.Model
         if (MethodElement is not null) yield return new KeyValuePair<string,object>("method",MethodElement);
         if (OriginElement is not null) yield return new KeyValuePair<string,object>("origin",OriginElement);
         if (ParamsElement is not null) yield return new KeyValuePair<string,object>("params",ParamsElement);
-        if (RequestHeader is not null) yield return new KeyValuePair<string,object>("requestHeader",RequestHeader);
+        if (RequestHeader?.Any() == true) yield return new KeyValuePair<string,object>("requestHeader",RequestHeader);
         if (RequestIdElement is not null) yield return new KeyValuePair<string,object>("requestId",RequestIdElement);
         if (ResponseIdElement is not null) yield return new KeyValuePair<string,object>("responseId",ResponseIdElement);
         if (SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",SourceIdElement);
@@ -3995,7 +3995,7 @@ namespace Hl7.Fhir.Model
         {
           "name" => NameElement,
           "description" => DescriptionElement,
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -4007,7 +4007,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -4230,7 +4230,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -4240,7 +4240,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -5012,20 +5012,20 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
-        "origin" => Origin,
-        "destination" => Destination,
+        "origin" => Origin?.Any() == true ? Origin : null,
+        "destination" => Destination?.Any() == true ? Destination : null,
         "metadata" => Metadata,
-        "fixture" => Fixture,
-        "profile" => Profile,
-        "variable" => Variable,
+        "fixture" => Fixture?.Any() == true ? Fixture : null,
+        "profile" => Profile?.Any() == true ? Profile : null,
+        "variable" => Variable?.Any() == true ? Variable : null,
         "setup" => Setup,
-        "test" => Test,
+        "test" => Test?.Any() == true ? Test : null,
         "teardown" => Teardown,
         _ => default
       };
@@ -5045,20 +5045,20 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
-      if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
-      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Origin?.Any() == true) yield return new KeyValuePair<string,object>("origin",Origin);
+      if (Destination?.Any() == true) yield return new KeyValuePair<string,object>("destination",Destination);
       if (Metadata is not null) yield return new KeyValuePair<string,object>("metadata",Metadata);
-      if (Fixture is not null) yield return new KeyValuePair<string,object>("fixture",Fixture);
-      if (Profile is not null) yield return new KeyValuePair<string,object>("profile",Profile);
-      if (Variable is not null) yield return new KeyValuePair<string,object>("variable",Variable);
+      if (Fixture?.Any() == true) yield return new KeyValuePair<string,object>("fixture",Fixture);
+      if (Profile?.Any() == true) yield return new KeyValuePair<string,object>("profile",Profile);
+      if (Variable?.Any() == true) yield return new KeyValuePair<string,object>("variable",Variable);
       if (Setup is not null) yield return new KeyValuePair<string,object>("setup",Setup);
-      if (Test is not null) yield return new KeyValuePair<string,object>("test",Test);
+      if (Test?.Any() == true) yield return new KeyValuePair<string,object>("test",Test);
       if (Teardown is not null) yield return new KeyValuePair<string,object>("teardown",Teardown);
     }
 

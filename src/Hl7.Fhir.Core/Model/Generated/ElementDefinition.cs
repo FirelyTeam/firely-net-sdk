@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "discriminator" => Discriminator,
+          "discriminator" => Discriminator?.Any() == true ? Discriminator : null,
           "description" => DescriptionElement,
           "ordered" => OrderedElement,
           "rules" => RulesElement,
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Discriminator is not null) yield return new KeyValuePair<string,object>("discriminator",Discriminator);
+        if (Discriminator?.Any() == true) yield return new KeyValuePair<string,object>("discriminator",Discriminator);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (OrderedElement is not null) yield return new KeyValuePair<string,object>("ordered",OrderedElement);
         if (RulesElement is not null) yield return new KeyValuePair<string,object>("rules",RulesElement);
@@ -1092,9 +1092,9 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "code" => CodeElement,
-          "profile" => ProfileElement,
-          "targetProfile" => TargetProfileElement,
-          "aggregation" => AggregationElement,
+          "profile" => ProfileElement?.Any() == true ? ProfileElement : null,
+          "targetProfile" => TargetProfileElement?.Any() == true ? TargetProfileElement : null,
+          "aggregation" => AggregationElement?.Any() == true ? AggregationElement : null,
           "versioning" => VersioningElement,
           _ => default
         };
@@ -1106,9 +1106,9 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
-        if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-        if (TargetProfileElement is not null) yield return new KeyValuePair<string,object>("targetProfile",TargetProfileElement);
-        if (AggregationElement is not null) yield return new KeyValuePair<string,object>("aggregation",AggregationElement);
+        if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
+        if (TargetProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("targetProfile",TargetProfileElement);
+        if (AggregationElement?.Any() == true) yield return new KeyValuePair<string,object>("aggregation",AggregationElement);
         if (VersioningElement is not null) yield return new KeyValuePair<string,object>("versioning",VersioningElement);
       }
 
@@ -1257,7 +1257,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -3059,39 +3059,39 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "path" => PathElement,
-        "representation" => RepresentationElement,
+        "representation" => RepresentationElement?.Any() == true ? RepresentationElement : null,
         "sliceName" => SliceNameElement,
         "sliceIsConstraining" => SliceIsConstrainingElement,
         "label" => LabelElement,
-        "code" => Code,
+        "code" => Code?.Any() == true ? Code : null,
         "slicing" => Slicing,
         "short" => ShortElement,
         "definition" => Definition,
         "comment" => Comment,
         "requirements" => Requirements,
-        "alias" => AliasElement,
+        "alias" => AliasElement?.Any() == true ? AliasElement : null,
         "min" => MinElement,
         "max" => MaxElement,
         "base" => Base,
         "contentReference" => ContentReferenceElement,
-        "type" => Type,
+        "type" => Type?.Any() == true ? Type : null,
         "defaultValue" => DefaultValue,
         "meaningWhenMissing" => MeaningWhenMissing,
         "orderMeaning" => OrderMeaningElement,
         "fixed" => Fixed,
         "pattern" => Pattern,
-        "example" => Example,
+        "example" => Example?.Any() == true ? Example : null,
         "minValue" => MinValue,
         "maxValue" => MaxValue,
         "maxLength" => MaxLengthElement,
-        "condition" => ConditionElement,
-        "constraint" => Constraint,
+        "condition" => ConditionElement?.Any() == true ? ConditionElement : null,
+        "constraint" => Constraint?.Any() == true ? Constraint : null,
         "mustSupport" => MustSupportElement,
         "isModifier" => IsModifierElement,
         "isModifierReason" => IsModifierReasonElement,
         "isSummary" => IsSummaryElement,
         "binding" => Binding,
-        "mapping" => Mapping,
+        "mapping" => Mapping?.Any() == true ? Mapping : null,
         _ => default
       };
 
@@ -3102,39 +3102,39 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-      if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
+      if (RepresentationElement?.Any() == true) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
       if (SliceNameElement is not null) yield return new KeyValuePair<string,object>("sliceName",SliceNameElement);
       if (SliceIsConstrainingElement is not null) yield return new KeyValuePair<string,object>("sliceIsConstraining",SliceIsConstrainingElement);
       if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       if (Slicing is not null) yield return new KeyValuePair<string,object>("slicing",Slicing);
       if (ShortElement is not null) yield return new KeyValuePair<string,object>("short",ShortElement);
       if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
       if (Comment is not null) yield return new KeyValuePair<string,object>("comment",Comment);
       if (Requirements is not null) yield return new KeyValuePair<string,object>("requirements",Requirements);
-      if (AliasElement is not null) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
       if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
       if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
       if (Base is not null) yield return new KeyValuePair<string,object>("base",Base);
       if (ContentReferenceElement is not null) yield return new KeyValuePair<string,object>("contentReference",ContentReferenceElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (DefaultValue is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValue);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (DefaultValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("defaultValue", DefaultValue),DefaultValue);
       if (MeaningWhenMissing is not null) yield return new KeyValuePair<string,object>("meaningWhenMissing",MeaningWhenMissing);
       if (OrderMeaningElement is not null) yield return new KeyValuePair<string,object>("orderMeaning",OrderMeaningElement);
-      if (Fixed is not null) yield return new KeyValuePair<string,object>("fixed",Fixed);
-      if (Pattern is not null) yield return new KeyValuePair<string,object>("pattern",Pattern);
-      if (Example is not null) yield return new KeyValuePair<string,object>("example",Example);
-      if (MinValue is not null) yield return new KeyValuePair<string,object>("minValue",MinValue);
-      if (MaxValue is not null) yield return new KeyValuePair<string,object>("maxValue",MaxValue);
+      if (Fixed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("fixed", Fixed),Fixed);
+      if (Pattern is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("pattern", Pattern),Pattern);
+      if (Example?.Any() == true) yield return new KeyValuePair<string,object>("example",Example);
+      if (MinValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("minValue", MinValue),MinValue);
+      if (MaxValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("maxValue", MaxValue),MaxValue);
       if (MaxLengthElement is not null) yield return new KeyValuePair<string,object>("maxLength",MaxLengthElement);
-      if (ConditionElement is not null) yield return new KeyValuePair<string,object>("condition",ConditionElement);
-      if (Constraint is not null) yield return new KeyValuePair<string,object>("constraint",Constraint);
+      if (ConditionElement?.Any() == true) yield return new KeyValuePair<string,object>("condition",ConditionElement);
+      if (Constraint?.Any() == true) yield return new KeyValuePair<string,object>("constraint",Constraint);
       if (MustSupportElement is not null) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
       if (IsModifierElement is not null) yield return new KeyValuePair<string,object>("isModifier",IsModifierElement);
       if (IsModifierReasonElement is not null) yield return new KeyValuePair<string,object>("isModifierReason",IsModifierReasonElement);
       if (IsSummaryElement is not null) yield return new KeyValuePair<string,object>("isSummary",IsSummaryElement);
       if (Binding is not null) yield return new KeyValuePair<string,object>("binding",Binding);
-      if (Mapping is not null) yield return new KeyValuePair<string,object>("mapping",Mapping);
+      if (Mapping?.Any() == true) yield return new KeyValuePair<string,object>("mapping",Mapping);
     }
 
   }

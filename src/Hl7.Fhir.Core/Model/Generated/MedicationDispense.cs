@@ -418,8 +418,8 @@ namespace Hl7.Fhir.Model
         {
           "wasSubstituted" => WasSubstitutedElement,
           "type" => Type,
-          "reason" => Reason,
-          "responsibleParty" => ResponsibleParty,
+          "reason" => Reason?.Any() == true ? Reason : null,
+          "responsibleParty" => ResponsibleParty?.Any() == true ? ResponsibleParty : null,
           _ => default
         };
 
@@ -431,8 +431,8 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (WasSubstitutedElement is not null) yield return new KeyValuePair<string,object>("wasSubstituted",WasSubstitutedElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
-        if (ResponsibleParty is not null) yield return new KeyValuePair<string,object>("responsibleParty",ResponsibleParty);
+        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (ResponsibleParty?.Any() == true) yield return new KeyValuePair<string,object>("responsibleParty",ResponsibleParty);
       }
 
     }
@@ -1022,30 +1022,30 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "partOf" => PartOf,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
         "statusReason" => StatusReason,
         "category" => Category,
         "medication" => Medication,
         "subject" => Subject,
         "context" => Context,
-        "supportingInformation" => SupportingInformation,
-        "performer" => Performer,
+        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
+        "performer" => Performer?.Any() == true ? Performer : null,
         "location" => Location,
-        "authorizingPrescription" => AuthorizingPrescription,
+        "authorizingPrescription" => AuthorizingPrescription?.Any() == true ? AuthorizingPrescription : null,
         "type" => Type,
         "quantity" => Quantity,
         "daysSupply" => DaysSupply,
         "whenPrepared" => WhenPreparedElement,
         "whenHandedOver" => WhenHandedOverElement,
         "destination" => Destination,
-        "receiver" => Receiver,
-        "note" => Note,
-        "dosageInstruction" => DosageInstruction,
+        "receiver" => Receiver?.Any() == true ? Receiver : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "dosageInstruction" => DosageInstruction?.Any() == true ? DosageInstruction : null,
         "substitution" => Substitution,
-        "detectedIssue" => DetectedIssue,
-        "eventHistory" => EventHistory,
+        "detectedIssue" => DetectedIssue?.Any() == true ? DetectedIssue : null,
+        "eventHistory" => EventHistory?.Any() == true ? EventHistory : null,
         _ => default
       };
 
@@ -1055,30 +1055,30 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("statusReason", StatusReason),StatusReason);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (AuthorizingPrescription is not null) yield return new KeyValuePair<string,object>("authorizingPrescription",AuthorizingPrescription);
+      if (AuthorizingPrescription?.Any() == true) yield return new KeyValuePair<string,object>("authorizingPrescription",AuthorizingPrescription);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       if (DaysSupply is not null) yield return new KeyValuePair<string,object>("daysSupply",DaysSupply);
       if (WhenPreparedElement is not null) yield return new KeyValuePair<string,object>("whenPrepared",WhenPreparedElement);
       if (WhenHandedOverElement is not null) yield return new KeyValuePair<string,object>("whenHandedOver",WhenHandedOverElement);
       if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
-      if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (DosageInstruction is not null) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
+      if (Receiver?.Any() == true) yield return new KeyValuePair<string,object>("receiver",Receiver);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (DosageInstruction?.Any() == true) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
       if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
-      if (DetectedIssue is not null) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
-      if (EventHistory is not null) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+      if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
+      if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

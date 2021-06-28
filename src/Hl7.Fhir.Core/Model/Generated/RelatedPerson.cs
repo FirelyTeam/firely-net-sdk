@@ -541,18 +541,18 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
         "patient" => Patient,
-        "relationship" => Relationship,
-        "name" => Name,
-        "telecom" => Telecom,
+        "relationship" => Relationship?.Any() == true ? Relationship : null,
+        "name" => Name?.Any() == true ? Name : null,
+        "telecom" => Telecom?.Any() == true ? Telecom : null,
         "gender" => GenderElement,
         "birthDate" => BirthDateElement,
-        "address" => Address,
-        "photo" => Photo,
+        "address" => Address?.Any() == true ? Address : null,
+        "photo" => Photo?.Any() == true ? Photo : null,
         "period" => Period,
-        "communication" => Communication,
+        "communication" => Communication?.Any() == true ? Communication : null,
         _ => default
       };
 
@@ -562,18 +562,18 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
-      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
       if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
-      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
-      if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
+      if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
+      if (Photo?.Any() == true) yield return new KeyValuePair<string,object>("photo",Photo);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Communication is not null) yield return new KeyValuePair<string,object>("communication",Communication);
+      if (Communication?.Any() == true) yield return new KeyValuePair<string,object>("communication",Communication);
     }
 
   }

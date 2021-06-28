@@ -907,19 +907,19 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "instantiatesCanonical" => InstantiatesCanonicalElement,
-        "instantiatesUri" => InstantiatesUriElement,
-        "basedOn" => BasedOn,
-        "replaces" => Replaces,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
+        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "replaces" => Replaces?.Any() == true ? Replaces : null,
         "requisition" => Requisition,
         "status" => StatusElement,
         "intent" => IntentElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "priority" => PriorityElement,
         "doNotPerform" => DoNotPerformElement,
         "code" => Code,
-        "orderDetail" => OrderDetail,
+        "orderDetail" => OrderDetail?.Any() == true ? OrderDetail : null,
         "quantity" => Quantity,
         "subject" => Subject,
         "encounter" => Encounter,
@@ -928,18 +928,18 @@ namespace Hl7.Fhir.Model
         "authoredOn" => AuthoredOnElement,
         "requester" => Requester,
         "performerType" => PerformerType,
-        "performer" => Performer,
-        "locationCode" => LocationCode,
-        "locationReference" => LocationReference,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "insurance" => Insurance,
-        "supportingInfo" => SupportingInfo,
-        "specimen" => Specimen,
-        "bodySite" => BodySite,
-        "note" => Note,
+        "performer" => Performer?.Any() == true ? Performer : null,
+        "locationCode" => LocationCode?.Any() == true ? LocationCode : null,
+        "locationReference" => LocationReference?.Any() == true ? LocationReference : null,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
+        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
+        "specimen" => Specimen?.Any() == true ? Specimen : null,
+        "bodySite" => BodySite?.Any() == true ? BodySite : null,
+        "note" => Note?.Any() == true ? Note : null,
         "patientInstruction" => PatientInstructionElement,
-        "relevantHistory" => RelevantHistory,
+        "relevantHistory" => RelevantHistory?.Any() == true ? RelevantHistory : null,
         _ => default
       };
 
@@ -949,39 +949,39 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
-      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Replaces is not null) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
       if (Requisition is not null) yield return new KeyValuePair<string,object>("requisition",Requisition);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (OrderDetail is not null) yield return new KeyValuePair<string,object>("orderDetail",OrderDetail);
-      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (OrderDetail?.Any() == true) yield return new KeyValuePair<string,object>("orderDetail",OrderDetail);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("quantity", Quantity),Quantity);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (AsNeeded is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeeded);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (LocationCode is not null) yield return new KeyValuePair<string,object>("locationCode",LocationCode);
-      if (LocationReference is not null) yield return new KeyValuePair<string,object>("locationReference",LocationReference);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
-      if (SupportingInfo is not null) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (LocationCode?.Any() == true) yield return new KeyValuePair<string,object>("locationCode",LocationCode);
+      if (LocationReference?.Any() == true) yield return new KeyValuePair<string,object>("locationReference",LocationReference);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
+      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
-      if (RelevantHistory is not null) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
+      if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
     }
 
   }

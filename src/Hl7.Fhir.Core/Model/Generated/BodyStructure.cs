@@ -301,13 +301,13 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
         "morphology" => Morphology,
         "location" => Location,
-        "locationQualifier" => LocationQualifier,
+        "locationQualifier" => LocationQualifier?.Any() == true ? LocationQualifier : null,
         "description" => DescriptionElement,
-        "image" => Image,
+        "image" => Image?.Any() == true ? Image : null,
         "patient" => Patient,
         _ => default
       };
@@ -318,13 +318,13 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (LocationQualifier is not null) yield return new KeyValuePair<string,object>("locationQualifier",LocationQualifier);
+      if (LocationQualifier?.Any() == true) yield return new KeyValuePair<string,object>("locationQualifier",LocationQualifier);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Image is not null) yield return new KeyValuePair<string,object>("image",Image);
+      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
     }
 

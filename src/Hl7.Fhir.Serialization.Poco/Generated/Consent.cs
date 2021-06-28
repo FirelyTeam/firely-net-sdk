@@ -75,12 +75,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Source)
         {
           case Hl7.Fhir.Model.Attachment v_Attachment:
-            writer.WritePropertyName("sourceAttachment");
-            v_Attachment.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("sourceAttachment", v_Attachment, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("sourceReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("sourceReference", v_ResourceReference, writer, options);
             break;
         }
       }

@@ -539,16 +539,16 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "name" => Name,
-        "telecom" => Telecom,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "name" => Name?.Any() == true ? Name : null,
+        "telecom" => Telecom?.Any() == true ? Telecom : null,
         "gender" => GenderElement,
         "birthDate" => BirthDateElement,
-        "address" => Address,
+        "address" => Address?.Any() == true ? Address : null,
         "photo" => Photo,
         "managingOrganization" => ManagingOrganization,
         "active" => ActiveElement,
-        "link" => Link,
+        "link" => Link?.Any() == true ? Link : null,
         _ => default
       };
 
@@ -558,16 +558,16 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
       if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
-      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
       if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
     }
 
   }

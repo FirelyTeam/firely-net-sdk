@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
         if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (Dose is not null) yield return new KeyValuePair<string,object>("dose",Dose);
-        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
     }
@@ -937,25 +937,25 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "instantiates" => InstantiatesElement,
-        "partOf" => PartOf,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "instantiates" => InstantiatesElement?.Any() == true ? InstantiatesElement : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
-        "statusReason" => StatusReason,
+        "statusReason" => StatusReason?.Any() == true ? StatusReason : null,
         "category" => Category,
         "medication" => Medication,
         "subject" => Subject,
         "context" => Context,
-        "supportingInformation" => SupportingInformation,
+        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
         "effective" => Effective,
-        "performer" => Performer,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
+        "performer" => Performer?.Any() == true ? Performer : null,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
         "request" => Request,
-        "device" => Device,
-        "note" => Note,
+        "device" => Device?.Any() == true ? Device : null,
+        "note" => Note?.Any() == true ? Note : null,
         "dosage" => Dosage,
-        "eventHistory" => EventHistory,
+        "eventHistory" => EventHistory?.Any() == true ? EventHistory : null,
         _ => default
       };
 
@@ -965,25 +965,25 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (InstantiatesElement is not null) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
-      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
-      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Dosage is not null) yield return new KeyValuePair<string,object>("dosage",Dosage);
-      if (EventHistory is not null) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+      if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

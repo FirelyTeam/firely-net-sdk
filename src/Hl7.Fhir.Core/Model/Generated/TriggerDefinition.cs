@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
         "type" => TypeElement,
         "name" => NameElement,
         "timing" => Timing,
-        "data" => Data,
+        "data" => Data?.Any() == true ? Data : null,
         "condition" => Condition,
         _ => default
       };
@@ -321,8 +321,8 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (Data is not null) yield return new KeyValuePair<string,object>("data",Data);
+      if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+      if (Data?.Any() == true) yield return new KeyValuePair<string,object>("data",Data);
       if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
     }
 

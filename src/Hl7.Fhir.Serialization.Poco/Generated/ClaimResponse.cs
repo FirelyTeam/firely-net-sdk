@@ -1235,8 +1235,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("servicedDate",v_Date,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("servicedPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("servicedPeriod", v_Period, writer, options);
             break;
         }
       }
@@ -1245,16 +1244,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Location)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("locationCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("locationCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.Address v_Address:
-            writer.WritePropertyName("locationAddress");
-            v_Address.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("locationAddress", v_Address, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("locationReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("locationReference", v_ResourceReference, writer, options);
             break;
         }
       }

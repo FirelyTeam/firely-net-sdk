@@ -1233,12 +1233,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Rate)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("rateQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("rateQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("rateRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("rateRatio", v_Ratio, writer, options);
             break;
         }
       }

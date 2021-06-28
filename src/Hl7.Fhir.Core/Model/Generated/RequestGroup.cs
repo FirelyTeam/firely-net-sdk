@@ -673,12 +673,12 @@ namespace Hl7.Fhir.Model
           "description" => DescriptionElement,
           "textEquivalent" => TextEquivalentElement,
           "priority" => PriorityElement,
-          "code" => Code,
-          "documentation" => Documentation,
-          "condition" => Condition,
-          "relatedAction" => RelatedAction,
+          "code" => Code?.Any() == true ? Code : null,
+          "documentation" => Documentation?.Any() == true ? Documentation : null,
+          "condition" => Condition?.Any() == true ? Condition : null,
+          "relatedAction" => RelatedAction?.Any() == true ? RelatedAction : null,
           "timing" => Timing,
-          "participant" => Participant,
+          "participant" => Participant?.Any() == true ? Participant : null,
           "type" => Type,
           "groupingBehavior" => GroupingBehaviorElement,
           "selectionBehavior" => SelectionBehaviorElement,
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
           "precheckBehavior" => PrecheckBehaviorElement,
           "cardinalityBehavior" => CardinalityBehaviorElement,
           "resource" => Resource,
-          "action" => Action,
+          "action" => Action?.Any() == true ? Action : null,
           _ => default
         };
 
@@ -701,12 +701,12 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (TextEquivalentElement is not null) yield return new KeyValuePair<string,object>("textEquivalent",TextEquivalentElement);
         if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
-        if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
-        if (RelatedAction is not null) yield return new KeyValuePair<string,object>("relatedAction",RelatedAction);
-        if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-        if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (Documentation?.Any() == true) yield return new KeyValuePair<string,object>("documentation",Documentation);
+        if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+        if (RelatedAction?.Any() == true) yield return new KeyValuePair<string,object>("relatedAction",RelatedAction);
+        if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+        if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (GroupingBehaviorElement is not null) yield return new KeyValuePair<string,object>("groupingBehavior",GroupingBehaviorElement);
         if (SelectionBehaviorElement is not null) yield return new KeyValuePair<string,object>("selectionBehavior",SelectionBehaviorElement);
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
         if (PrecheckBehaviorElement is not null) yield return new KeyValuePair<string,object>("precheckBehavior",PrecheckBehaviorElement);
         if (CardinalityBehaviorElement is not null) yield return new KeyValuePair<string,object>("cardinalityBehavior",CardinalityBehaviorElement);
         if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
     }
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ActionIdElement is not null) yield return new KeyValuePair<string,object>("actionId",ActionIdElement);
         if (RelationshipElement is not null) yield return new KeyValuePair<string,object>("relationship",RelationshipElement);
-        if (Offset is not null) yield return new KeyValuePair<string,object>("offset",Offset);
+        if (Offset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("offset", Offset),Offset);
       }
 
     }
@@ -1570,11 +1570,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "instantiatesCanonical" => InstantiatesCanonicalElement,
-        "instantiatesUri" => InstantiatesUriElement,
-        "basedOn" => BasedOn,
-        "replaces" => Replaces,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
+        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "replaces" => Replaces?.Any() == true ? Replaces : null,
         "groupIdentifier" => GroupIdentifier,
         "status" => StatusElement,
         "intent" => IntentElement,
@@ -1584,10 +1584,10 @@ namespace Hl7.Fhir.Model
         "encounter" => Encounter,
         "authoredOn" => AuthoredOnElement,
         "author" => Author,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "note" => Note,
-        "action" => Action,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "action" => Action?.Any() == true ? Action : null,
         _ => default
       };
 
@@ -1597,11 +1597,11 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
-      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Replaces is not null) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
       if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
@@ -1611,10 +1611,10 @@ namespace Hl7.Fhir.Model
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
     }
 
   }

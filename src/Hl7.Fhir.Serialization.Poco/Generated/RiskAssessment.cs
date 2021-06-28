@@ -78,8 +78,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("occurrenceDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("occurrencePeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("occurrencePeriod", v_Period, writer, options);
             break;
         }
       }
@@ -419,8 +418,7 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("probabilityDecimal",v_FhirDecimal,writer,options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("probabilityRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("probabilityRange", v_Range, writer, options);
             break;
         }
       }
@@ -433,12 +431,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.When)
         {
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("whenPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("whenPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("whenRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("whenRange", v_Range, writer, options);
             break;
         }
       }

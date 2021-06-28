@@ -241,9 +241,9 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "itemSequence" => ItemSequenceElement,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
-          "detail" => Detail,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -254,9 +254,9 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ItemSequenceElement is not null) yield return new KeyValuePair<string,object>("itemSequence",ItemSequenceElement);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -632,9 +632,9 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "detailSequence" => DetailSequenceElement,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
-          "subDetail" => SubDetail,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
+          "subDetail" => SubDetail?.Any() == true ? SubDetail : null,
           _ => default
         };
 
@@ -645,9 +645,9 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DetailSequenceElement is not null) yield return new KeyValuePair<string,object>("detailSequence",DetailSequenceElement);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
-        if (SubDetail is not null) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (SubDetail?.Any() == true) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
       }
 
     }
@@ -819,8 +819,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "subDetailSequence" => SubDetailSequenceElement,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
           _ => default
         };
 
@@ -831,8 +831,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SubDetailSequenceElement is not null) yield return new KeyValuePair<string,object>("subDetailSequence",SubDetailSequenceElement);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
       }
 
     }
@@ -1342,13 +1342,13 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "itemSequence" => ItemSequenceElement,
-          "detailSequence" => DetailSequenceElement,
-          "subdetailSequence" => SubdetailSequenceElement,
-          "provider" => Provider,
+          "itemSequence" => ItemSequenceElement?.Any() == true ? ItemSequenceElement : null,
+          "detailSequence" => DetailSequenceElement?.Any() == true ? DetailSequenceElement : null,
+          "subdetailSequence" => SubdetailSequenceElement?.Any() == true ? SubdetailSequenceElement : null,
+          "provider" => Provider?.Any() == true ? Provider : null,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
-          "programCode" => ProgramCode,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
+          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
           "serviced" => Serviced,
           "location" => Location,
           "quantity" => Quantity,
@@ -1356,10 +1356,10 @@ namespace Hl7.Fhir.Model
           "factor" => FactorElement,
           "net" => Net,
           "bodySite" => BodySite,
-          "subSite" => SubSite,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
-          "detail" => Detail,
+          "subSite" => SubSite?.Any() == true ? SubSite : null,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -1369,24 +1369,24 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (ItemSequenceElement is not null) yield return new KeyValuePair<string,object>("itemSequence",ItemSequenceElement);
-        if (DetailSequenceElement is not null) yield return new KeyValuePair<string,object>("detailSequence",DetailSequenceElement);
-        if (SubdetailSequenceElement is not null) yield return new KeyValuePair<string,object>("subdetailSequence",SubdetailSequenceElement);
-        if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+        if (ItemSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("itemSequence",ItemSequenceElement);
+        if (DetailSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("detailSequence",DetailSequenceElement);
+        if (SubdetailSequenceElement?.Any() == true) yield return new KeyValuePair<string,object>("subdetailSequence",SubdetailSequenceElement);
+        if (Provider?.Any() == true) yield return new KeyValuePair<string,object>("provider",Provider);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
-        if (ProgramCode is not null) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
-        if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
-        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (ProgramCode?.Any() == true) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
+        if (Serviced is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
+        if (Location is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-        if (SubSite is not null) yield return new KeyValuePair<string,object>("subSite",SubSite);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (SubSite?.Any() == true) yield return new KeyValuePair<string,object>("subSite",SubSite);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -1668,14 +1668,14 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "factor" => FactorElement,
           "net" => Net,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
-          "subDetail" => SubDetail,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
+          "subDetail" => SubDetail?.Any() == true ? SubDetail : null,
           _ => default
         };
 
@@ -1686,14 +1686,14 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
-        if (SubDetail is not null) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (SubDetail?.Any() == true) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
       }
 
     }
@@ -1956,13 +1956,13 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
           "quantity" => Quantity,
           "unitPrice" => UnitPrice,
           "factor" => FactorElement,
           "net" => Net,
-          "noteNumber" => NoteNumberElement,
-          "adjudication" => Adjudication,
+          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
+          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
           _ => default
         };
 
@@ -1973,13 +1973,13 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Net is not null) yield return new KeyValuePair<string,object>("net",Net);
-        if (NoteNumberElement is not null) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
-        if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+        if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
       }
 
     }
@@ -3711,7 +3711,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => Type,
         "subType" => SubType,
@@ -3726,18 +3726,18 @@ namespace Hl7.Fhir.Model
         "preAuthRef" => PreAuthRefElement,
         "preAuthPeriod" => PreAuthPeriod,
         "payeeType" => PayeeType,
-        "item" => Item,
-        "addItem" => AddItem,
-        "adjudication" => Adjudication,
-        "total" => Total,
+        "item" => Item?.Any() == true ? Item : null,
+        "addItem" => AddItem?.Any() == true ? AddItem : null,
+        "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
+        "total" => Total?.Any() == true ? Total : null,
         "payment" => Payment,
         "fundsReserve" => FundsReserve,
         "formCode" => FormCode,
         "form" => Form,
-        "processNote" => ProcessNote,
-        "communicationRequest" => CommunicationRequest,
-        "insurance" => Insurance,
-        "error" => Error,
+        "processNote" => ProcessNote?.Any() == true ? ProcessNote : null,
+        "communicationRequest" => CommunicationRequest?.Any() == true ? CommunicationRequest : null,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
+        "error" => Error?.Any() == true ? Error : null,
         _ => default
       };
 
@@ -3747,7 +3747,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (SubType is not null) yield return new KeyValuePair<string,object>("subType",SubType);
@@ -3762,18 +3762,18 @@ namespace Hl7.Fhir.Model
       if (PreAuthRefElement is not null) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
       if (PreAuthPeriod is not null) yield return new KeyValuePair<string,object>("preAuthPeriod",PreAuthPeriod);
       if (PayeeType is not null) yield return new KeyValuePair<string,object>("payeeType",PayeeType);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
-      if (AddItem is not null) yield return new KeyValuePair<string,object>("addItem",AddItem);
-      if (Adjudication is not null) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
-      if (Total is not null) yield return new KeyValuePair<string,object>("total",Total);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+      if (AddItem?.Any() == true) yield return new KeyValuePair<string,object>("addItem",AddItem);
+      if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+      if (Total?.Any() == true) yield return new KeyValuePair<string,object>("total",Total);
       if (Payment is not null) yield return new KeyValuePair<string,object>("payment",Payment);
       if (FundsReserve is not null) yield return new KeyValuePair<string,object>("fundsReserve",FundsReserve);
       if (FormCode is not null) yield return new KeyValuePair<string,object>("formCode",FormCode);
       if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
-      if (ProcessNote is not null) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
-      if (CommunicationRequest is not null) yield return new KeyValuePair<string,object>("communicationRequest",CommunicationRequest);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
-      if (Error is not null) yield return new KeyValuePair<string,object>("error",Error);
+      if (ProcessNote?.Any() == true) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
+      if (CommunicationRequest?.Any() == true) yield return new KeyValuePair<string,object>("communicationRequest",CommunicationRequest);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
     }
 
   }

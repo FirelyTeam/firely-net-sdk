@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
           "species" => Species,
           "intraspecificType" => IntraspecificType,
           "intraspecificDescription" => IntraspecificDescriptionElement,
-          "author" => Author,
+          "author" => Author?.Any() == true ? Author : null,
           "hybrid" => Hybrid,
           "organismGeneral" => OrganismGeneral,
           _ => default
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
         if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
         if (IntraspecificType is not null) yield return new KeyValuePair<string,object>("intraspecificType",IntraspecificType);
         if (IntraspecificDescriptionElement is not null) yield return new KeyValuePair<string,object>("intraspecificDescription",IntraspecificDescriptionElement);
-        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+        if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
         if (Hybrid is not null) yield return new KeyValuePair<string,object>("hybrid",Hybrid);
         if (OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",OrganismGeneral);
       }
@@ -1517,14 +1517,14 @@ namespace Hl7.Fhir.Model
         "sourceMaterialState" => SourceMaterialState,
         "organismId" => OrganismId,
         "organismName" => OrganismNameElement,
-        "parentSubstanceId" => ParentSubstanceId,
-        "parentSubstanceName" => ParentSubstanceNameElement,
-        "countryOfOrigin" => CountryOfOrigin,
-        "geographicalLocation" => GeographicalLocationElement,
+        "parentSubstanceId" => ParentSubstanceId?.Any() == true ? ParentSubstanceId : null,
+        "parentSubstanceName" => ParentSubstanceNameElement?.Any() == true ? ParentSubstanceNameElement : null,
+        "countryOfOrigin" => CountryOfOrigin?.Any() == true ? CountryOfOrigin : null,
+        "geographicalLocation" => GeographicalLocationElement?.Any() == true ? GeographicalLocationElement : null,
         "developmentStage" => DevelopmentStage,
-        "fractionDescription" => FractionDescription,
+        "fractionDescription" => FractionDescription?.Any() == true ? FractionDescription : null,
         "organism" => Organism,
-        "partDescription" => PartDescription,
+        "partDescription" => PartDescription?.Any() == true ? PartDescription : null,
         _ => default
       };
 
@@ -1539,14 +1539,14 @@ namespace Hl7.Fhir.Model
       if (SourceMaterialState is not null) yield return new KeyValuePair<string,object>("sourceMaterialState",SourceMaterialState);
       if (OrganismId is not null) yield return new KeyValuePair<string,object>("organismId",OrganismId);
       if (OrganismNameElement is not null) yield return new KeyValuePair<string,object>("organismName",OrganismNameElement);
-      if (ParentSubstanceId is not null) yield return new KeyValuePair<string,object>("parentSubstanceId",ParentSubstanceId);
-      if (ParentSubstanceNameElement is not null) yield return new KeyValuePair<string,object>("parentSubstanceName",ParentSubstanceNameElement);
-      if (CountryOfOrigin is not null) yield return new KeyValuePair<string,object>("countryOfOrigin",CountryOfOrigin);
-      if (GeographicalLocationElement is not null) yield return new KeyValuePair<string,object>("geographicalLocation",GeographicalLocationElement);
+      if (ParentSubstanceId?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceId",ParentSubstanceId);
+      if (ParentSubstanceNameElement?.Any() == true) yield return new KeyValuePair<string,object>("parentSubstanceName",ParentSubstanceNameElement);
+      if (CountryOfOrigin?.Any() == true) yield return new KeyValuePair<string,object>("countryOfOrigin",CountryOfOrigin);
+      if (GeographicalLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("geographicalLocation",GeographicalLocationElement);
       if (DevelopmentStage is not null) yield return new KeyValuePair<string,object>("developmentStage",DevelopmentStage);
-      if (FractionDescription is not null) yield return new KeyValuePair<string,object>("fractionDescription",FractionDescription);
+      if (FractionDescription?.Any() == true) yield return new KeyValuePair<string,object>("fractionDescription",FractionDescription);
       if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
-      if (PartDescription is not null) yield return new KeyValuePair<string,object>("partDescription",PartDescription);
+      if (PartDescription?.Any() == true) yield return new KeyValuePair<string,object>("partDescription",PartDescription);
     }
 
   }

@@ -209,11 +209,11 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "subject" => Subject,
+        "subject" => Subject?.Any() == true ? Subject : null,
         "symptomConditionEffect" => SymptomConditionEffect,
         "classification" => Classification,
         "frequencyOfOccurrence" => FrequencyOfOccurrence,
-        "population" => Population,
+        "population" => Population?.Any() == true ? Population : null,
         _ => default
       };
 
@@ -223,11 +223,11 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",SymptomConditionEffect);
       if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
       if (FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",FrequencyOfOccurrence);
-      if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
     }
 
   }

@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "summary" => Summary,
-          "assessment" => Assessment,
+          "assessment" => Assessment?.Any() == true ? Assessment : null,
           "type" => Type,
           _ => default
         };
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Summary is not null) yield return new KeyValuePair<string,object>("summary",Summary);
-        if (Assessment is not null) yield return new KeyValuePair<string,object>("assessment",Assessment);
+        if (Assessment?.Any() == true) yield return new KeyValuePair<string,object>("assessment",Assessment);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       }
 
@@ -409,8 +409,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "code" => Code,
-          "detail" => Detail,
+          "code" => Code?.Any() == true ? Code : null,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -420,8 +420,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -829,13 +829,13 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "clinicalStatus" => ClinicalStatus,
         "verificationStatus" => VerificationStatus,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "severity" => Severity,
         "code" => Code,
-        "bodySite" => BodySite,
+        "bodySite" => BodySite?.Any() == true ? BodySite : null,
         "subject" => Subject,
         "encounter" => Encounter,
         "onset" => Onset,
@@ -843,9 +843,9 @@ namespace Hl7.Fhir.Model
         "recordedDate" => RecordedDateElement,
         "recorder" => Recorder,
         "asserter" => Asserter,
-        "stage" => Stage,
-        "evidence" => Evidence,
-        "note" => Note,
+        "stage" => Stage?.Any() == true ? Stage : null,
+        "evidence" => Evidence?.Any() == true ? Evidence : null,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -855,23 +855,23 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ClinicalStatus is not null) yield return new KeyValuePair<string,object>("clinicalStatus",ClinicalStatus);
       if (VerificationStatus is not null) yield return new KeyValuePair<string,object>("verificationStatus",VerificationStatus);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Severity is not null) yield return new KeyValuePair<string,object>("severity",Severity);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
-      if (Abatement is not null) yield return new KeyValuePair<string,object>("abatement",Abatement);
+      if (Onset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
+      if (Abatement is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("abatement", Abatement),Abatement);
       if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
       if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
-      if (Stage is not null) yield return new KeyValuePair<string,object>("stage",Stage);
-      if (Evidence is not null) yield return new KeyValuePair<string,object>("evidence",Evidence);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Stage?.Any() == true) yield return new KeyValuePair<string,object>("stage",Stage);
+      if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

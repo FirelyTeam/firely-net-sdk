@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
           "min" => MinElement,
           "max" => MaxElement,
           "description" => DescriptionElement,
-          "target" => Target,
+          "target" => Target?.Any() == true ? Target : null,
           _ => default
         };
 
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
         if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
       }
 
     }
@@ -632,8 +632,8 @@ namespace Hl7.Fhir.Model
           "type" => TypeElement,
           "params" => ParamsElement,
           "profile" => ProfileElement,
-          "compartment" => Compartment,
-          "link" => Link,
+          "compartment" => Compartment?.Any() == true ? Compartment : null,
+          "link" => Link?.Any() == true ? Link : null,
           _ => default
         };
 
@@ -646,8 +646,8 @@ namespace Hl7.Fhir.Model
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (ParamsElement is not null) yield return new KeyValuePair<string,object>("params",ParamsElement);
         if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-        if (Compartment is not null) yield return new KeyValuePair<string,object>("compartment",Compartment);
-        if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+        if (Compartment?.Any() == true) yield return new KeyValuePair<string,object>("compartment",Compartment);
+        if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
       }
 
     }
@@ -1442,14 +1442,14 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "start" => StartElement,
         "profile" => ProfileElement,
-        "link" => Link,
+        "link" => Link?.Any() == true ? Link : null,
         _ => default
       };
 
@@ -1466,14 +1466,14 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
       if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-      if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
+      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
     }
 
   }

@@ -434,8 +434,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Amount)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("amountQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("amountQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("amountString",v_FhirString,writer,options);
@@ -581,12 +580,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.DefiningSubstance)
         {
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("definingSubstanceReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("definingSubstanceReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("definingSubstanceCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("definingSubstanceCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }
@@ -595,8 +592,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Amount)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("amountQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("amountQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("amountString",v_FhirString,writer,options);
@@ -1687,12 +1683,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Substance)
         {
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("substanceReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("substanceReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("substanceCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("substanceCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }
@@ -1705,16 +1699,13 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Amount)
         {
           case Hl7.Fhir.Model.Quantity v_Quantity:
-            writer.WritePropertyName("amountQuantity");
-            v_Quantity.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("amountQuantity", v_Quantity, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("amountRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("amountRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Ratio v_Ratio:
-            writer.WritePropertyName("amountRatio");
-            v_Ratio.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("amountRatio", v_Ratio, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("amountString",v_FhirString,writer,options);

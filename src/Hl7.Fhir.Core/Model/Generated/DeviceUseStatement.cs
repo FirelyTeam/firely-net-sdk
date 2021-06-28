@@ -455,19 +455,19 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "basedOn" => BasedOn,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
         "status" => StatusElement,
         "subject" => Subject,
-        "derivedFrom" => DerivedFrom,
+        "derivedFrom" => DerivedFrom?.Any() == true ? DerivedFrom : null,
         "timing" => Timing,
         "recordedOn" => RecordedOnElement,
         "source" => Source,
         "device" => Device,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
         "bodySite" => BodySite,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -477,19 +477,19 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
-      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
       if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
       if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

@@ -265,9 +265,9 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "code" => Code,
-          "population" => Population,
+          "population" => Population?.Any() == true ? Population : null,
           "measureScore" => MeasureScore,
-          "stratifier" => Stratifier,
+          "stratifier" => Stratifier?.Any() == true ? Stratifier : null,
           _ => default
         };
 
@@ -278,9 +278,9 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
         if (MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScore);
-        if (Stratifier is not null) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
+        if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
       }
 
     }
@@ -562,8 +562,8 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "code" => Code,
-          "stratum" => Stratum,
+          "code" => Code?.Any() == true ? Code : null,
+          "stratum" => Stratum?.Any() == true ? Stratum : null,
           _ => default
         };
 
@@ -573,8 +573,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Stratum is not null) yield return new KeyValuePair<string,object>("stratum",Stratum);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (Stratum?.Any() == true) yield return new KeyValuePair<string,object>("stratum",Stratum);
       }
 
     }
@@ -727,8 +727,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "value" => Value,
-          "component" => Component,
-          "population" => Population,
+          "component" => Component?.Any() == true ? Component : null,
+          "population" => Population?.Any() == true ? Population : null,
           "measureScore" => MeasureScore,
           _ => default
         };
@@ -740,8 +740,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Component is not null) yield return new KeyValuePair<string,object>("component",Component);
-        if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+        if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
+        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
         if (MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScore);
       }
 
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => TypeElement,
         "measure" => MeasureElement,
@@ -1395,8 +1395,8 @@ namespace Hl7.Fhir.Model
         "reporter" => Reporter,
         "period" => Period,
         "improvementNotation" => ImprovementNotation,
-        "group" => Group,
-        "evaluatedResource" => EvaluatedResource,
+        "group" => Group?.Any() == true ? Group : null,
+        "evaluatedResource" => EvaluatedResource?.Any() == true ? EvaluatedResource : null,
         _ => default
       };
 
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (MeasureElement is not null) yield return new KeyValuePair<string,object>("measure",MeasureElement);
@@ -1415,8 +1415,8 @@ namespace Hl7.Fhir.Model
       if (Reporter is not null) yield return new KeyValuePair<string,object>("reporter",Reporter);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (ImprovementNotation is not null) yield return new KeyValuePair<string,object>("improvementNotation",ImprovementNotation);
-      if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
-      if (EvaluatedResource is not null) yield return new KeyValuePair<string,object>("evaluatedResource",EvaluatedResource);
+      if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
+      if (EvaluatedResource?.Any() == true) yield return new KeyValuePair<string,object>("evaluatedResource",EvaluatedResource);
     }
 
   }

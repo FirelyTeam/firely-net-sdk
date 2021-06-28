@@ -318,8 +318,8 @@ namespace Hl7.Fhir.Model
           "linkId" => LinkIdElement,
           "definition" => DefinitionElement,
           "text" => TextElement,
-          "answer" => Answer,
-          "item" => Item,
+          "answer" => Answer?.Any() == true ? Answer : null,
+          "item" => Item?.Any() == true ? Item : null,
           _ => default
         };
 
@@ -332,8 +332,8 @@ namespace Hl7.Fhir.Model
         if (LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",LinkIdElement);
         if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
-        if (Answer is not null) yield return new KeyValuePair<string,object>("answer",Answer);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Answer?.Any() == true) yield return new KeyValuePair<string,object>("answer",Answer);
+        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "value" => Value,
-          "item" => Item,
+          "item" => Item?.Any() == true ? Item : null,
           _ => default
         };
 
@@ -462,8 +462,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -798,8 +798,8 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "identifier" => Identifier,
-        "basedOn" => BasedOn,
-        "partOf" => PartOf,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "questionnaire" => QuestionnaireElement,
         "status" => StatusElement,
         "subject" => Subject,
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
         "authored" => AuthoredElement,
         "author" => Author,
         "source" => Source,
-        "item" => Item,
+        "item" => Item?.Any() == true ? Item : null,
         _ => default
       };
 
@@ -818,8 +818,8 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (QuestionnaireElement is not null) yield return new KeyValuePair<string,object>("questionnaire",QuestionnaireElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
       if (AuthoredElement is not null) yield return new KeyValuePair<string,object>("authored",AuthoredElement);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

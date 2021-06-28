@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "type" => Type,
         "unit" => Unit,
         "source" => Source,
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
         "color" => ColorElement,
         "category" => CategoryElement,
         "measurementPeriod" => MeasurementPeriod,
-        "calibration" => Calibration,
+        "calibration" => Calibration?.Any() == true ? Calibration : null,
         _ => default
       };
 
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
       if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
       if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
       if (MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",MeasurementPeriod);
-      if (Calibration is not null) yield return new KeyValuePair<string,object>("calibration",Calibration);
+      if (Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",Calibration);
     }
 
   }

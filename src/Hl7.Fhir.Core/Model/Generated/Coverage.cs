@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
         {
           "type" => Type,
           "value" => Value,
-          "exception" => Exception,
+          "exception" => Exception?.Any() == true ? Exception : null,
           _ => default
         };
 
@@ -383,8 +383,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
-        if (Exception is not null) yield return new KeyValuePair<string,object>("exception",Exception);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Exception?.Any() == true) yield return new KeyValuePair<string,object>("exception",Exception);
       }
 
     }
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "type" => Type,
         "policyHolder" => PolicyHolder,
@@ -1018,13 +1018,13 @@ namespace Hl7.Fhir.Model
         "dependent" => DependentElement,
         "relationship" => Relationship,
         "period" => Period,
-        "payor" => Payor,
-        "class" => Class,
+        "payor" => Payor?.Any() == true ? Payor : null,
+        "class" => Class?.Any() == true ? Class : null,
         "order" => OrderElement,
         "network" => NetworkElement,
-        "costToBeneficiary" => CostToBeneficiary,
+        "costToBeneficiary" => CostToBeneficiary?.Any() == true ? CostToBeneficiary : null,
         "subrogation" => SubrogationElement,
-        "contract" => Contract,
+        "contract" => Contract?.Any() == true ? Contract : null,
         _ => default
       };
 
@@ -1034,7 +1034,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (PolicyHolder is not null) yield return new KeyValuePair<string,object>("policyHolder",PolicyHolder);
@@ -1044,13 +1044,13 @@ namespace Hl7.Fhir.Model
       if (DependentElement is not null) yield return new KeyValuePair<string,object>("dependent",DependentElement);
       if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (Payor is not null) yield return new KeyValuePair<string,object>("payor",Payor);
-      if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
+      if (Payor?.Any() == true) yield return new KeyValuePair<string,object>("payor",Payor);
+      if (Class?.Any() == true) yield return new KeyValuePair<string,object>("class",Class);
       if (OrderElement is not null) yield return new KeyValuePair<string,object>("order",OrderElement);
       if (NetworkElement is not null) yield return new KeyValuePair<string,object>("network",NetworkElement);
-      if (CostToBeneficiary is not null) yield return new KeyValuePair<string,object>("costToBeneficiary",CostToBeneficiary);
+      if (CostToBeneficiary?.Any() == true) yield return new KeyValuePair<string,object>("costToBeneficiary",CostToBeneficiary);
       if (SubrogationElement is not null) yield return new KeyValuePair<string,object>("subrogation",SubrogationElement);
-      if (Contract is not null) yield return new KeyValuePair<string,object>("contract",Contract);
+      if (Contract?.Any() == true) yield return new KeyValuePair<string,object>("contract",Contract);
     }
 
   }

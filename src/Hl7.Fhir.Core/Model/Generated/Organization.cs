@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
         {
           "purpose" => Purpose,
           "name" => Name,
-          "telecom" => Telecom,
+          "telecom" => Telecom?.Any() == true ? Telecom : null,
           "address" => Address,
           _ => default
         };
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
         if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-        if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+        if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
         if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
       }
 
@@ -527,16 +527,16 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
-        "type" => Type,
+        "type" => Type?.Any() == true ? Type : null,
         "name" => NameElement,
-        "alias" => AliasElement,
-        "telecom" => Telecom,
-        "address" => Address,
+        "alias" => AliasElement?.Any() == true ? AliasElement : null,
+        "telecom" => Telecom?.Any() == true ? Telecom : null,
+        "address" => Address?.Any() == true ? Address : null,
         "partOf" => PartOf,
-        "contact" => Contact,
-        "endpoint" => Endpoint,
+        "contact" => Contact?.Any() == true ? Contact : null,
+        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
         _ => default
       };
 
@@ -546,16 +546,16 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (AliasElement is not null) yield return new KeyValuePair<string,object>("alias",AliasElement);
-      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
-      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
     }
 
   }

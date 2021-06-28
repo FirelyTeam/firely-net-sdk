@@ -75,12 +75,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Subject)
         {
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("subjectCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("subjectCodeableConcept", v_CodeableConcept, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("subjectReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("subjectReference", v_ResourceReference, writer, options);
             break;
         }
       }
@@ -139,27 +137,22 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Timing)
         {
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("timingTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.FhirDateTime v_FhirDateTime:
             JsonStreamUtilities.SerializePrimitiveProperty("timingDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("timingAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("timingPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("timingRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("timingDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingDuration", v_Duration, writer, options);
             break;
         }
       }
@@ -172,12 +165,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Product)
         {
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("productReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("productReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.CodeableConcept v_CodeableConcept:
-            writer.WritePropertyName("productCodeableConcept");
-            v_CodeableConcept.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("productCodeableConcept", v_CodeableConcept, writer, options);
             break;
         }
       }

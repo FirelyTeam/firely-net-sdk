@@ -737,18 +737,18 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
-        "statusHistory" => StatusHistory,
-        "type" => Type,
-        "diagnosis" => Diagnosis,
+        "statusHistory" => StatusHistory?.Any() == true ? StatusHistory : null,
+        "type" => Type?.Any() == true ? Type : null,
+        "diagnosis" => Diagnosis?.Any() == true ? Diagnosis : null,
         "patient" => Patient,
         "managingOrganization" => ManagingOrganization,
         "period" => Period,
-        "referralRequest" => ReferralRequest,
+        "referralRequest" => ReferralRequest?.Any() == true ? ReferralRequest : null,
         "careManager" => CareManager,
-        "team" => Team,
-        "account" => Account,
+        "team" => Team?.Any() == true ? Team : null,
+        "account" => Account?.Any() == true ? Account : null,
         _ => default
       };
 
@@ -758,18 +758,18 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusHistory is not null) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+      if (StatusHistory?.Any() == true) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (ReferralRequest is not null) yield return new KeyValuePair<string,object>("referralRequest",ReferralRequest);
+      if (ReferralRequest?.Any() == true) yield return new KeyValuePair<string,object>("referralRequest",ReferralRequest);
       if (CareManager is not null) yield return new KeyValuePair<string,object>("careManager",CareManager);
-      if (Team is not null) yield return new KeyValuePair<string,object>("team",Team);
-      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
+      if (Team?.Any() == true) yield return new KeyValuePair<string,object>("team",Team);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
     }
 
   }

@@ -302,12 +302,12 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
-        "serviceCategory" => ServiceCategory,
-        "serviceType" => ServiceType,
-        "specialty" => Specialty,
-        "actor" => Actor,
+        "serviceCategory" => ServiceCategory?.Any() == true ? ServiceCategory : null,
+        "serviceType" => ServiceType?.Any() == true ? ServiceType : null,
+        "specialty" => Specialty?.Any() == true ? Specialty : null,
+        "actor" => Actor?.Any() == true ? Actor : null,
         "planningHorizon" => PlanningHorizon,
         "comment" => CommentElement,
         _ => default
@@ -319,12 +319,12 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
-      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
-      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
       if (PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",PlanningHorizon);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }

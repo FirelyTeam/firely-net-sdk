@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
       if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
       if (AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",AmountTextElement);
       if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);

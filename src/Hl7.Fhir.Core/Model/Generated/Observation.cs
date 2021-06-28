@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
           "low" => Low,
           "high" => High,
           "type" => Type,
-          "appliesTo" => AppliesTo,
+          "appliesTo" => AppliesTo?.Any() == true ? AppliesTo : null,
           "age" => Age,
           "text" => TextElement,
           _ => default
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
         if (Low is not null) yield return new KeyValuePair<string,object>("low",Low);
         if (High is not null) yield return new KeyValuePair<string,object>("high",High);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (AppliesTo is not null) yield return new KeyValuePair<string,object>("appliesTo",AppliesTo);
+        if (AppliesTo?.Any() == true) yield return new KeyValuePair<string,object>("appliesTo",AppliesTo);
         if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
       }
@@ -451,8 +451,8 @@ namespace Hl7.Fhir.Model
           "code" => Code,
           "value" => Value,
           "dataAbsentReason" => DataAbsentReason,
-          "interpretation" => Interpretation,
-          "referenceRange" => ReferenceRange,
+          "interpretation" => Interpretation?.Any() == true ? Interpretation : null,
+          "referenceRange" => ReferenceRange?.Any() == true ? ReferenceRange : null,
           _ => default
         };
 
@@ -463,10 +463,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
         if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
-        if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
-        if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+        if (Interpretation?.Any() == true) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
+        if (ReferenceRange?.Any() == true) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
       }
 
     }
@@ -1038,30 +1038,30 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "basedOn" => BasedOn,
-        "partOf" => PartOf,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "code" => Code,
         "subject" => Subject,
-        "focus" => Focus,
+        "focus" => Focus?.Any() == true ? Focus : null,
         "encounter" => Encounter,
         "effective" => Effective,
         "issued" => IssuedElement,
-        "performer" => Performer,
+        "performer" => Performer?.Any() == true ? Performer : null,
         "value" => Value,
         "dataAbsentReason" => DataAbsentReason,
-        "interpretation" => Interpretation,
-        "note" => Note,
+        "interpretation" => Interpretation?.Any() == true ? Interpretation : null,
+        "note" => Note?.Any() == true ? Note : null,
         "bodySite" => BodySite,
         "method" => Method,
         "specimen" => Specimen,
         "device" => Device,
-        "referenceRange" => ReferenceRange,
-        "hasMember" => HasMember,
-        "derivedFrom" => DerivedFrom,
-        "component" => Component,
+        "referenceRange" => ReferenceRange?.Any() == true ? ReferenceRange : null,
+        "hasMember" => HasMember?.Any() == true ? HasMember : null,
+        "derivedFrom" => DerivedFrom?.Any() == true ? DerivedFrom : null,
+        "component" => Component?.Any() == true ? Component : null,
         _ => default
       };
 
@@ -1071,30 +1071,30 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
-      if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Interpretation?.Any() == true) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
       if (Specimen is not null) yield return new KeyValuePair<string,object>("specimen",Specimen);
       if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
-      if (HasMember is not null) yield return new KeyValuePair<string,object>("hasMember",HasMember);
-      if (DerivedFrom is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
-      if (Component is not null) yield return new KeyValuePair<string,object>("component",Component);
+      if (ReferenceRange?.Any() == true) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+      if (HasMember?.Any() == true) yield return new KeyValuePair<string,object>("hasMember",HasMember);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
     }
 
   }

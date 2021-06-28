@@ -1056,8 +1056,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "valueQuantity" => ValueQuantity,
-          "valueCode" => ValueCode,
+          "valueQuantity" => ValueQuantity?.Any() == true ? ValueQuantity : null,
+          "valueCode" => ValueCode?.Any() == true ? ValueCode : null,
           _ => default
         };
 
@@ -1068,8 +1068,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (ValueQuantity is not null) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
-        if (ValueCode is not null) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
+        if (ValueQuantity?.Any() == true) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
+        if (ValueCode?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
       }
 
     }
@@ -1803,31 +1803,31 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "definition" => Definition,
-        "udiCarrier" => UdiCarrier,
+        "udiCarrier" => UdiCarrier?.Any() == true ? UdiCarrier : null,
         "status" => StatusElement,
-        "statusReason" => StatusReason,
+        "statusReason" => StatusReason?.Any() == true ? StatusReason : null,
         "distinctIdentifier" => DistinctIdentifierElement,
         "manufacturer" => ManufacturerElement,
         "manufactureDate" => ManufactureDateElement,
         "expirationDate" => ExpirationDateElement,
         "lotNumber" => LotNumberElement,
         "serialNumber" => SerialNumberElement,
-        "deviceName" => DeviceName,
+        "deviceName" => DeviceName?.Any() == true ? DeviceName : null,
         "modelNumber" => ModelNumberElement,
         "partNumber" => PartNumberElement,
         "type" => Type,
-        "specialization" => Specialization,
-        "version" => Version,
-        "property" => Property,
+        "specialization" => Specialization?.Any() == true ? Specialization : null,
+        "version" => Version?.Any() == true ? Version : null,
+        "property" => Property?.Any() == true ? Property : null,
         "patient" => Patient,
         "owner" => Owner,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "location" => Location,
         "url" => UrlElement,
-        "note" => Note,
-        "safety" => Safety,
+        "note" => Note?.Any() == true ? Note : null,
+        "safety" => Safety?.Any() == true ? Safety : null,
         "parent" => Parent,
         _ => default
       };
@@ -1838,31 +1838,31 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
-      if (UdiCarrier is not null) yield return new KeyValuePair<string,object>("udiCarrier",UdiCarrier);
+      if (UdiCarrier?.Any() == true) yield return new KeyValuePair<string,object>("udiCarrier",UdiCarrier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
       if (DistinctIdentifierElement is not null) yield return new KeyValuePair<string,object>("distinctIdentifier",DistinctIdentifierElement);
       if (ManufacturerElement is not null) yield return new KeyValuePair<string,object>("manufacturer",ManufacturerElement);
       if (ManufactureDateElement is not null) yield return new KeyValuePair<string,object>("manufactureDate",ManufactureDateElement);
       if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
       if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
       if (SerialNumberElement is not null) yield return new KeyValuePair<string,object>("serialNumber",SerialNumberElement);
-      if (DeviceName is not null) yield return new KeyValuePair<string,object>("deviceName",DeviceName);
+      if (DeviceName?.Any() == true) yield return new KeyValuePair<string,object>("deviceName",DeviceName);
       if (ModelNumberElement is not null) yield return new KeyValuePair<string,object>("modelNumber",ModelNumberElement);
       if (PartNumberElement is not null) yield return new KeyValuePair<string,object>("partNumber",PartNumberElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Specialization is not null) yield return new KeyValuePair<string,object>("specialization",Specialization);
-      if (Version is not null) yield return new KeyValuePair<string,object>("version",Version);
-      if (Property is not null) yield return new KeyValuePair<string,object>("property",Property);
+      if (Specialization?.Any() == true) yield return new KeyValuePair<string,object>("specialization",Specialization);
+      if (Version?.Any() == true) yield return new KeyValuePair<string,object>("version",Version);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Safety is not null) yield return new KeyValuePair<string,object>("safety",Safety);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",Safety);
       if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
     }
 

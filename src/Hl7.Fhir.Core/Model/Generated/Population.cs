@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+      if (Age is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("age", Age),Age);
       if (Gender is not null) yield return new KeyValuePair<string,object>("gender",Gender);
       if (Race is not null) yield return new KeyValuePair<string,object>("race",Race);
       if (PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",PhysiologicalCondition);

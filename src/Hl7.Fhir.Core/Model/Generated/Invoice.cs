@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
         {
           "sequence" => SequenceElement,
           "chargeItem" => ChargeItem,
-          "priceComponent" => PriceComponent,
+          "priceComponent" => PriceComponent?.Any() == true ? PriceComponent : null,
           _ => default
         };
 
@@ -387,8 +387,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (ChargeItem is not null) yield return new KeyValuePair<string,object>("chargeItem",ChargeItem);
-        if (PriceComponent is not null) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
+        if (ChargeItem is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("chargeItem", ChargeItem),ChargeItem);
+        if (PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
       }
 
     }
@@ -1014,22 +1014,22 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "cancelledReason" => CancelledReasonElement,
         "type" => Type,
         "subject" => Subject,
         "recipient" => Recipient,
         "date" => DateElement,
-        "participant" => Participant,
+        "participant" => Participant?.Any() == true ? Participant : null,
         "issuer" => Issuer,
         "account" => Account,
-        "lineItem" => LineItem,
-        "totalPriceComponent" => TotalPriceComponent,
+        "lineItem" => LineItem?.Any() == true ? LineItem : null,
+        "totalPriceComponent" => TotalPriceComponent?.Any() == true ? TotalPriceComponent : null,
         "totalNet" => TotalNet,
         "totalGross" => TotalGross,
         "paymentTerms" => PaymentTerms,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -1039,22 +1039,22 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (CancelledReasonElement is not null) yield return new KeyValuePair<string,object>("cancelledReason",CancelledReasonElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (Issuer is not null) yield return new KeyValuePair<string,object>("issuer",Issuer);
       if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
-      if (LineItem is not null) yield return new KeyValuePair<string,object>("lineItem",LineItem);
-      if (TotalPriceComponent is not null) yield return new KeyValuePair<string,object>("totalPriceComponent",TotalPriceComponent);
+      if (LineItem?.Any() == true) yield return new KeyValuePair<string,object>("lineItem",LineItem);
+      if (TotalPriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("totalPriceComponent",TotalPriceComponent);
       if (TotalNet is not null) yield return new KeyValuePair<string,object>("totalNet",TotalNet);
       if (TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",TotalGross);
       if (PaymentTerms is not null) yield return new KeyValuePair<string,object>("paymentTerms",PaymentTerms);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

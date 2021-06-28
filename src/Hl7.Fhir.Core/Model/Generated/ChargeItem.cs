@@ -912,32 +912,32 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
-        "definitionUri" => DefinitionUriElement,
-        "definitionCanonical" => DefinitionCanonicalElement,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
+        "definitionUri" => DefinitionUriElement?.Any() == true ? DefinitionUriElement : null,
+        "definitionCanonical" => DefinitionCanonicalElement?.Any() == true ? DefinitionCanonicalElement : null,
         "status" => StatusElement,
-        "partOf" => PartOf,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "code" => Code,
         "subject" => Subject,
         "context" => Context,
         "occurrence" => Occurrence,
-        "performer" => Performer,
+        "performer" => Performer?.Any() == true ? Performer : null,
         "performingOrganization" => PerformingOrganization,
         "requestingOrganization" => RequestingOrganization,
         "costCenter" => CostCenter,
         "quantity" => Quantity,
-        "bodysite" => Bodysite,
+        "bodysite" => Bodysite?.Any() == true ? Bodysite : null,
         "factorOverride" => FactorOverrideElement,
         "priceOverride" => PriceOverride,
         "overrideReason" => OverrideReasonElement,
         "enterer" => Enterer,
         "enteredDate" => EnteredDateElement,
-        "reason" => Reason,
-        "service" => Service,
+        "reason" => Reason?.Any() == true ? Reason : null,
+        "service" => Service?.Any() == true ? Service : null,
         "product" => Product,
-        "account" => Account,
-        "note" => Note,
-        "supportingInformation" => SupportingInformation,
+        "account" => Account?.Any() == true ? Account : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
         _ => default
       };
 
@@ -947,32 +947,32 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (DefinitionUriElement is not null) yield return new KeyValuePair<string,object>("definitionUri",DefinitionUriElement);
-      if (DefinitionCanonicalElement is not null) yield return new KeyValuePair<string,object>("definitionCanonical",DefinitionCanonicalElement);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (DefinitionUriElement?.Any() == true) yield return new KeyValuePair<string,object>("definitionUri",DefinitionUriElement);
+      if (DefinitionCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("definitionCanonical",DefinitionCanonicalElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (PerformingOrganization is not null) yield return new KeyValuePair<string,object>("performingOrganization",PerformingOrganization);
       if (RequestingOrganization is not null) yield return new KeyValuePair<string,object>("requestingOrganization",RequestingOrganization);
       if (CostCenter is not null) yield return new KeyValuePair<string,object>("costCenter",CostCenter);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-      if (Bodysite is not null) yield return new KeyValuePair<string,object>("bodysite",Bodysite);
+      if (Bodysite?.Any() == true) yield return new KeyValuePair<string,object>("bodysite",Bodysite);
       if (FactorOverrideElement is not null) yield return new KeyValuePair<string,object>("factorOverride",FactorOverrideElement);
       if (PriceOverride is not null) yield return new KeyValuePair<string,object>("priceOverride",PriceOverride);
       if (OverrideReasonElement is not null) yield return new KeyValuePair<string,object>("overrideReason",OverrideReasonElement);
       if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
       if (EnteredDateElement is not null) yield return new KeyValuePair<string,object>("enteredDate",EnteredDateElement);
-      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
-      if (Service is not null) yield return new KeyValuePair<string,object>("service",Service);
-      if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
-      if (Account is not null) yield return new KeyValuePair<string,object>("account",Account);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Service?.Any() == true) yield return new KeyValuePair<string,object>("service",Service);
+      if (Product is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("product", Product),Product);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
     }
 
   }

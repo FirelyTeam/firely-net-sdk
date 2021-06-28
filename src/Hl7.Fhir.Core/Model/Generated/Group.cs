@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
         if (ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",ExcludeElement);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
         "type" => TypeElement,
         "actual" => ActualElement,
@@ -803,8 +803,8 @@ namespace Hl7.Fhir.Model
         "name" => NameElement,
         "quantity" => QuantityElement,
         "managingEntity" => ManagingEntity,
-        "characteristic" => Characteristic,
-        "member" => Member,
+        "characteristic" => Characteristic?.Any() == true ? Characteristic : null,
+        "member" => Member?.Any() == true ? Member : null,
         _ => default
       };
 
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (ActualElement is not null) yield return new KeyValuePair<string,object>("actual",ActualElement);
@@ -822,8 +822,8 @@ namespace Hl7.Fhir.Model
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
       if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
-      if (Characteristic is not null) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
-      if (Member is not null) yield return new KeyValuePair<string,object>("member",Member);
+      if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
+      if (Member?.Any() == true) yield return new KeyValuePair<string,object>("member",Member);
     }
 
   }

@@ -811,20 +811,20 @@ namespace Hl7.Fhir.Model
         {
           "linkId" => LinkIdElement,
           "definition" => DefinitionElement,
-          "code" => Code,
+          "code" => Code?.Any() == true ? Code : null,
           "prefix" => PrefixElement,
           "text" => TextElement,
           "type" => TypeElement,
-          "enableWhen" => EnableWhen,
+          "enableWhen" => EnableWhen?.Any() == true ? EnableWhen : null,
           "enableBehavior" => EnableBehaviorElement,
           "required" => RequiredElement,
           "repeats" => RepeatsElement,
           "readOnly" => ReadOnlyElement,
           "maxLength" => MaxLengthElement,
           "answerValueSet" => AnswerValueSetElement,
-          "answerOption" => AnswerOption,
-          "initial" => Initial,
-          "item" => Item,
+          "answerOption" => AnswerOption?.Any() == true ? AnswerOption : null,
+          "initial" => Initial?.Any() == true ? Initial : null,
+          "item" => Item?.Any() == true ? Item : null,
           _ => default
         };
 
@@ -836,20 +836,20 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",LinkIdElement);
         if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (PrefixElement is not null) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (EnableWhen is not null) yield return new KeyValuePair<string,object>("enableWhen",EnableWhen);
+        if (EnableWhen?.Any() == true) yield return new KeyValuePair<string,object>("enableWhen",EnableWhen);
         if (EnableBehaviorElement is not null) yield return new KeyValuePair<string,object>("enableBehavior",EnableBehaviorElement);
         if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
         if (RepeatsElement is not null) yield return new KeyValuePair<string,object>("repeats",RepeatsElement);
         if (ReadOnlyElement is not null) yield return new KeyValuePair<string,object>("readOnly",ReadOnlyElement);
         if (MaxLengthElement is not null) yield return new KeyValuePair<string,object>("maxLength",MaxLengthElement);
         if (AnswerValueSetElement is not null) yield return new KeyValuePair<string,object>("answerValueSet",AnswerValueSetElement);
-        if (AnswerOption is not null) yield return new KeyValuePair<string,object>("answerOption",AnswerOption);
-        if (Initial is not null) yield return new KeyValuePair<string,object>("initial",Initial);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (AnswerOption?.Any() == true) yield return new KeyValuePair<string,object>("answerOption",AnswerOption);
+        if (Initial?.Any() == true) yield return new KeyValuePair<string,object>("initial",Initial);
+        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (QuestionElement is not null) yield return new KeyValuePair<string,object>("question",QuestionElement);
         if (OperatorElement is not null) yield return new KeyValuePair<string,object>("operator",OperatorElement);
-        if (Answer is not null) yield return new KeyValuePair<string,object>("answer",Answer);
+        if (Answer is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("answer", Answer),Answer);
       }
 
     }
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
         if (InitialSelectedElement is not null) yield return new KeyValuePair<string,object>("initialSelected",InitialSelectedElement);
       }
 
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -1985,27 +1985,27 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
-        "derivedFrom" => DerivedFromElement,
+        "derivedFrom" => DerivedFromElement?.Any() == true ? DerivedFromElement : null,
         "status" => StatusElement,
         "experimental" => ExperimentalElement,
-        "subjectType" => SubjectTypeElement,
+        "subjectType" => SubjectTypeElement?.Any() == true ? SubjectTypeElement : null,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
         "approvalDate" => ApprovalDateElement,
         "lastReviewDate" => LastReviewDateElement,
         "effectivePeriod" => EffectivePeriod,
-        "code" => Code,
-        "item" => Item,
+        "code" => Code?.Any() == true ? Code : null,
+        "item" => Item?.Any() == true ? Item : null,
         _ => default
       };
 
@@ -2016,27 +2016,27 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (DerivedFromElement is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFromElement);
+      if (DerivedFromElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFromElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
-      if (SubjectTypeElement is not null) yield return new KeyValuePair<string,object>("subjectType",SubjectTypeElement);
+      if (SubjectTypeElement?.Any() == true) yield return new KeyValuePair<string,object>("subjectType",SubjectTypeElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
       if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
       if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

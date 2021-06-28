@@ -521,16 +521,16 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "role" => Role,
+          "role" => Role?.Any() == true ? Role : null,
           "who" => Who,
           "altId" => AltIdElement,
           "name" => NameElement,
           "requestor" => RequestorElement,
           "location" => Location,
-          "policy" => PolicyElement,
+          "policy" => PolicyElement?.Any() == true ? PolicyElement : null,
           "media" => Media,
           "network" => Network,
-          "purposeOfUse" => PurposeOfUse,
+          "purposeOfUse" => PurposeOfUse?.Any() == true ? PurposeOfUse : null,
           _ => default
         };
 
@@ -541,16 +541,16 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
         if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
         if (AltIdElement is not null) yield return new KeyValuePair<string,object>("altId",AltIdElement);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (RequestorElement is not null) yield return new KeyValuePair<string,object>("requestor",RequestorElement);
         if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-        if (PolicyElement is not null) yield return new KeyValuePair<string,object>("policy",PolicyElement);
+        if (PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",PolicyElement);
         if (Media is not null) yield return new KeyValuePair<string,object>("media",Media);
         if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
-        if (PurposeOfUse is not null) yield return new KeyValuePair<string,object>("purposeOfUse",PurposeOfUse);
+        if (PurposeOfUse?.Any() == true) yield return new KeyValuePair<string,object>("purposeOfUse",PurposeOfUse);
       }
 
     }
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
         {
           "site" => SiteElement,
           "observer" => Observer,
-          "type" => Type,
+          "type" => Type?.Any() == true ? Type : null,
           _ => default
         };
 
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SiteElement is not null) yield return new KeyValuePair<string,object>("site",SiteElement);
         if (Observer is not null) yield return new KeyValuePair<string,object>("observer",Observer);
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       }
 
     }
@@ -1183,11 +1183,11 @@ namespace Hl7.Fhir.Model
           "type" => Type,
           "role" => Role,
           "lifecycle" => Lifecycle,
-          "securityLabel" => SecurityLabel,
+          "securityLabel" => SecurityLabel?.Any() == true ? SecurityLabel : null,
           "name" => NameElement,
           "description" => DescriptionElement,
           "query" => QueryElement,
-          "detail" => Detail,
+          "detail" => Detail?.Any() == true ? Detail : null,
           _ => default
         };
 
@@ -1201,11 +1201,11 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (Lifecycle is not null) yield return new KeyValuePair<string,object>("lifecycle",Lifecycle);
-        if (SecurityLabel is not null) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
+        if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (QueryElement is not null) yield return new KeyValuePair<string,object>("query",QueryElement);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
     }
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -1698,16 +1698,16 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "type" => Type,
-        "subtype" => Subtype,
+        "subtype" => Subtype?.Any() == true ? Subtype : null,
         "action" => ActionElement,
         "period" => Period,
         "recorded" => RecordedElement,
         "outcome" => OutcomeElement,
         "outcomeDesc" => OutcomeDescElement,
-        "purposeOfEvent" => PurposeOfEvent,
-        "agent" => Agent,
+        "purposeOfEvent" => PurposeOfEvent?.Any() == true ? PurposeOfEvent : null,
+        "agent" => Agent?.Any() == true ? Agent : null,
         "source" => Source,
-        "entity" => Entity,
+        "entity" => Entity?.Any() == true ? Entity : null,
         _ => default
       };
 
@@ -1718,16 +1718,16 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Subtype is not null) yield return new KeyValuePair<string,object>("subtype",Subtype);
+      if (Subtype?.Any() == true) yield return new KeyValuePair<string,object>("subtype",Subtype);
       if (ActionElement is not null) yield return new KeyValuePair<string,object>("action",ActionElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
       if (OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",OutcomeElement);
       if (OutcomeDescElement is not null) yield return new KeyValuePair<string,object>("outcomeDesc",OutcomeDescElement);
-      if (PurposeOfEvent is not null) yield return new KeyValuePair<string,object>("purposeOfEvent",PurposeOfEvent);
-      if (Agent is not null) yield return new KeyValuePair<string,object>("agent",Agent);
+      if (PurposeOfEvent?.Any() == true) yield return new KeyValuePair<string,object>("purposeOfEvent",PurposeOfEvent);
+      if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-      if (Entity is not null) yield return new KeyValuePair<string,object>("entity",Entity);
+      if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
     }
 
   }

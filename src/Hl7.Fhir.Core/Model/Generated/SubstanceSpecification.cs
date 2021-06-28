@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
         if (Stereochemistry is not null) yield return new KeyValuePair<string,object>("stereochemistry",Stereochemistry);
         if (OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",OpticalActivity);
         if (MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",MolecularFormulaElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
       }
 
     }
@@ -522,8 +522,8 @@ namespace Hl7.Fhir.Model
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (ParametersElement is not null) yield return new KeyValuePair<string,object>("parameters",ParametersElement);
-        if (DefiningSubstance is not null) yield return new KeyValuePair<string,object>("definingSubstance",DefiningSubstance);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (DefiningSubstance is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("definingSubstance", DefiningSubstance),DefiningSubstance);
+        if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
       }
 
     }
@@ -790,10 +790,10 @@ namespace Hl7.Fhir.Model
           "opticalActivity" => OpticalActivity,
           "molecularFormula" => MolecularFormulaElement,
           "molecularFormulaByMoiety" => MolecularFormulaByMoietyElement,
-          "isotope" => Isotope,
+          "isotope" => Isotope?.Any() == true ? Isotope : null,
           "molecularWeight" => MolecularWeight,
-          "source" => Source,
-          "representation" => Representation,
+          "source" => Source?.Any() == true ? Source : null,
+          "representation" => Representation?.Any() == true ? Representation : null,
           _ => default
         };
 
@@ -807,10 +807,10 @@ namespace Hl7.Fhir.Model
         if (OpticalActivity is not null) yield return new KeyValuePair<string,object>("opticalActivity",OpticalActivity);
         if (MolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("molecularFormula",MolecularFormulaElement);
         if (MolecularFormulaByMoietyElement is not null) yield return new KeyValuePair<string,object>("molecularFormulaByMoiety",MolecularFormulaByMoietyElement);
-        if (Isotope is not null) yield return new KeyValuePair<string,object>("isotope",Isotope);
+        if (Isotope?.Any() == true) yield return new KeyValuePair<string,object>("isotope",Isotope);
         if (MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
-        if (Representation is not null) yield return new KeyValuePair<string,object>("representation",Representation);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+        if (Representation?.Any() == true) yield return new KeyValuePair<string,object>("representation",Representation);
       }
 
     }
@@ -1517,7 +1517,7 @@ namespace Hl7.Fhir.Model
           "status" => Status,
           "statusDate" => StatusDateElement,
           "comment" => CommentElement,
-          "source" => Source,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -1531,7 +1531,7 @@ namespace Hl7.Fhir.Model
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
         if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
         if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -1857,13 +1857,13 @@ namespace Hl7.Fhir.Model
           "type" => Type,
           "status" => Status,
           "preferred" => PreferredElement,
-          "language" => Language,
-          "domain" => Domain,
-          "jurisdiction" => Jurisdiction,
-          "synonym" => Synonym,
-          "translation" => Translation,
-          "official" => Official,
-          "source" => Source,
+          "language" => Language?.Any() == true ? Language : null,
+          "domain" => Domain?.Any() == true ? Domain : null,
+          "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
+          "synonym" => Synonym?.Any() == true ? Synonym : null,
+          "translation" => Translation?.Any() == true ? Translation : null,
+          "official" => Official?.Any() == true ? Official : null,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -1877,13 +1877,13 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
         if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
-        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
-        if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
-        if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-        if (Synonym is not null) yield return new KeyValuePair<string,object>("synonym",Synonym);
-        if (Translation is not null) yield return new KeyValuePair<string,object>("translation",Translation);
-        if (Official is not null) yield return new KeyValuePair<string,object>("official",Official);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Language?.Any() == true) yield return new KeyValuePair<string,object>("language",Language);
+        if (Domain?.Any() == true) yield return new KeyValuePair<string,object>("domain",Domain);
+        if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+        if (Synonym?.Any() == true) yield return new KeyValuePair<string,object>("synonym",Synonym);
+        if (Translation?.Any() == true) yield return new KeyValuePair<string,object>("translation",Translation);
+        if (Official?.Any() == true) yield return new KeyValuePair<string,object>("official",Official);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -2283,7 +2283,7 @@ namespace Hl7.Fhir.Model
           "amount" => Amount,
           "amountRatioLowLimit" => AmountRatioLowLimit,
           "amountType" => AmountType,
-          "source" => Source,
+          "source" => Source?.Any() == true ? Source : null,
           _ => default
         };
 
@@ -2293,13 +2293,13 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
+        if (Substance is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("substance", Substance),Substance);
         if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
         if (IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",IsDefiningElement);
-        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
         if (AmountRatioLowLimit is not null) yield return new KeyValuePair<string,object>("amountRatioLowLimit",AmountRatioLowLimit);
         if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
-        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -2766,16 +2766,16 @@ namespace Hl7.Fhir.Model
         "status" => Status,
         "domain" => Domain,
         "description" => DescriptionElement,
-        "source" => Source,
+        "source" => Source?.Any() == true ? Source : null,
         "comment" => CommentElement,
-        "moiety" => Moiety,
-        "property" => Property,
+        "moiety" => Moiety?.Any() == true ? Moiety : null,
+        "property" => Property?.Any() == true ? Property : null,
         "referenceInformation" => ReferenceInformation,
         "structure" => Structure,
-        "code" => Code,
-        "name" => Name,
-        "molecularWeight" => MolecularWeight,
-        "relationship" => Relationship,
+        "code" => Code?.Any() == true ? Code : null,
+        "name" => Name?.Any() == true ? Name : null,
+        "molecularWeight" => MolecularWeight?.Any() == true ? MolecularWeight : null,
+        "relationship" => Relationship?.Any() == true ? Relationship : null,
         "nucleicAcid" => NucleicAcid,
         "polymer" => Polymer,
         "protein" => Protein,
@@ -2794,16 +2794,16 @@ namespace Hl7.Fhir.Model
       if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (Moiety is not null) yield return new KeyValuePair<string,object>("moiety",Moiety);
-      if (Property is not null) yield return new KeyValuePair<string,object>("property",Property);
+      if (Moiety?.Any() == true) yield return new KeyValuePair<string,object>("moiety",Moiety);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
       if (ReferenceInformation is not null) yield return new KeyValuePair<string,object>("referenceInformation",ReferenceInformation);
       if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-      if (MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
-      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (MolecularWeight?.Any() == true) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
+      if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
       if (NucleicAcid is not null) yield return new KeyValuePair<string,object>("nucleicAcid",NucleicAcid);
       if (Polymer is not null) yield return new KeyValuePair<string,object>("polymer",Polymer);
       if (Protein is not null) yield return new KeyValuePair<string,object>("protein",Protein);

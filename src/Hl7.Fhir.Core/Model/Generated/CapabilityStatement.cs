@@ -998,11 +998,11 @@ namespace Hl7.Fhir.Model
           "mode" => ModeElement,
           "documentation" => Documentation,
           "security" => Security,
-          "resource" => Resource,
-          "interaction" => Interaction,
-          "searchParam" => SearchParam,
-          "operation" => Operation,
-          "compartment" => CompartmentElement,
+          "resource" => Resource?.Any() == true ? Resource : null,
+          "interaction" => Interaction?.Any() == true ? Interaction : null,
+          "searchParam" => SearchParam?.Any() == true ? SearchParam : null,
+          "operation" => Operation?.Any() == true ? Operation : null,
+          "compartment" => CompartmentElement?.Any() == true ? CompartmentElement : null,
           _ => default
         };
 
@@ -1015,11 +1015,11 @@ namespace Hl7.Fhir.Model
         if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
         if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
         if (Security is not null) yield return new KeyValuePair<string,object>("security",Security);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
-        if (SearchParam is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParam);
-        if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
-        if (CompartmentElement is not null) yield return new KeyValuePair<string,object>("compartment",CompartmentElement);
+        if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
+        if (Interaction?.Any() == true) yield return new KeyValuePair<string,object>("interaction",Interaction);
+        if (SearchParam?.Any() == true) yield return new KeyValuePair<string,object>("searchParam",SearchParam);
+        if (Operation?.Any() == true) yield return new KeyValuePair<string,object>("operation",Operation);
+        if (CompartmentElement?.Any() == true) yield return new KeyValuePair<string,object>("compartment",CompartmentElement);
       }
 
     }
@@ -1171,7 +1171,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "cors" => CorsElement,
-          "service" => Service,
+          "service" => Service?.Any() == true ? Service : null,
           "description" => Description,
           _ => default
         };
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CorsElement is not null) yield return new KeyValuePair<string,object>("cors",CorsElement);
-        if (Service is not null) yield return new KeyValuePair<string,object>("service",Service);
+        if (Service?.Any() == true) yield return new KeyValuePair<string,object>("service",Service);
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
       }
 
@@ -1817,9 +1817,9 @@ namespace Hl7.Fhir.Model
         {
           "type" => TypeElement,
           "profile" => ProfileElement,
-          "supportedProfile" => SupportedProfileElement,
+          "supportedProfile" => SupportedProfileElement?.Any() == true ? SupportedProfileElement : null,
           "documentation" => Documentation,
-          "interaction" => Interaction,
+          "interaction" => Interaction?.Any() == true ? Interaction : null,
           "versioning" => VersioningElement,
           "readHistory" => ReadHistoryElement,
           "updateCreate" => UpdateCreateElement,
@@ -1827,11 +1827,11 @@ namespace Hl7.Fhir.Model
           "conditionalRead" => ConditionalReadElement,
           "conditionalUpdate" => ConditionalUpdateElement,
           "conditionalDelete" => ConditionalDeleteElement,
-          "referencePolicy" => ReferencePolicyElement,
-          "searchInclude" => SearchIncludeElement,
-          "searchRevInclude" => SearchRevIncludeElement,
-          "searchParam" => SearchParam,
-          "operation" => Operation,
+          "referencePolicy" => ReferencePolicyElement?.Any() == true ? ReferencePolicyElement : null,
+          "searchInclude" => SearchIncludeElement?.Any() == true ? SearchIncludeElement : null,
+          "searchRevInclude" => SearchRevIncludeElement?.Any() == true ? SearchRevIncludeElement : null,
+          "searchParam" => SearchParam?.Any() == true ? SearchParam : null,
+          "operation" => Operation?.Any() == true ? Operation : null,
           _ => default
         };
 
@@ -1843,9 +1843,9 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
-        if (SupportedProfileElement is not null) yield return new KeyValuePair<string,object>("supportedProfile",SupportedProfileElement);
+        if (SupportedProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("supportedProfile",SupportedProfileElement);
         if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
-        if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
+        if (Interaction?.Any() == true) yield return new KeyValuePair<string,object>("interaction",Interaction);
         if (VersioningElement is not null) yield return new KeyValuePair<string,object>("versioning",VersioningElement);
         if (ReadHistoryElement is not null) yield return new KeyValuePair<string,object>("readHistory",ReadHistoryElement);
         if (UpdateCreateElement is not null) yield return new KeyValuePair<string,object>("updateCreate",UpdateCreateElement);
@@ -1853,11 +1853,11 @@ namespace Hl7.Fhir.Model
         if (ConditionalReadElement is not null) yield return new KeyValuePair<string,object>("conditionalRead",ConditionalReadElement);
         if (ConditionalUpdateElement is not null) yield return new KeyValuePair<string,object>("conditionalUpdate",ConditionalUpdateElement);
         if (ConditionalDeleteElement is not null) yield return new KeyValuePair<string,object>("conditionalDelete",ConditionalDeleteElement);
-        if (ReferencePolicyElement is not null) yield return new KeyValuePair<string,object>("referencePolicy",ReferencePolicyElement);
-        if (SearchIncludeElement is not null) yield return new KeyValuePair<string,object>("searchInclude",SearchIncludeElement);
-        if (SearchRevIncludeElement is not null) yield return new KeyValuePair<string,object>("searchRevInclude",SearchRevIncludeElement);
-        if (SearchParam is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParam);
-        if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
+        if (ReferencePolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("referencePolicy",ReferencePolicyElement);
+        if (SearchIncludeElement?.Any() == true) yield return new KeyValuePair<string,object>("searchInclude",SearchIncludeElement);
+        if (SearchRevIncludeElement?.Any() == true) yield return new KeyValuePair<string,object>("searchRevInclude",SearchRevIncludeElement);
+        if (SearchParam?.Any() == true) yield return new KeyValuePair<string,object>("searchParam",SearchParam);
+        if (Operation?.Any() == true) yield return new KeyValuePair<string,object>("operation",Operation);
       }
 
     }
@@ -2726,10 +2726,10 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "endpoint" => Endpoint,
+          "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
           "reliableCache" => ReliableCacheElement,
           "documentation" => Documentation,
-          "supportedMessage" => SupportedMessage,
+          "supportedMessage" => SupportedMessage?.Any() == true ? SupportedMessage : null,
           _ => default
         };
 
@@ -2739,10 +2739,10 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+        if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
         if (ReliableCacheElement is not null) yield return new KeyValuePair<string,object>("reliableCache",ReliableCacheElement);
         if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
-        if (SupportedMessage is not null) yield return new KeyValuePair<string,object>("supportedMessage",SupportedMessage);
+        if (SupportedMessage?.Any() == true) yield return new KeyValuePair<string,object>("supportedMessage",SupportedMessage);
       }
 
     }
@@ -4067,24 +4067,24 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
         "kind" => KindElement,
-        "instantiates" => InstantiatesElement,
-        "imports" => ImportsElement,
+        "instantiates" => InstantiatesElement?.Any() == true ? InstantiatesElement : null,
+        "imports" => ImportsElement?.Any() == true ? ImportsElement : null,
         "software" => Software,
         "implementation" => Implementation,
         "fhirVersion" => FhirVersionElement,
-        "format" => FormatElement,
-        "patchFormat" => PatchFormatElement,
-        "implementationGuide" => ImplementationGuideElement,
-        "rest" => Rest,
-        "messaging" => Messaging,
-        "document" => Document,
+        "format" => FormatElement?.Any() == true ? FormatElement : null,
+        "patchFormat" => PatchFormatElement?.Any() == true ? PatchFormatElement : null,
+        "implementationGuide" => ImplementationGuideElement?.Any() == true ? ImplementationGuideElement : null,
+        "rest" => Rest?.Any() == true ? Rest : null,
+        "messaging" => Messaging?.Any() == true ? Messaging : null,
+        "document" => Document?.Any() == true ? Document : null,
         _ => default
       };
 
@@ -4102,24 +4102,24 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
-      if (InstantiatesElement is not null) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
-      if (ImportsElement is not null) yield return new KeyValuePair<string,object>("imports",ImportsElement);
+      if (InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
+      if (ImportsElement?.Any() == true) yield return new KeyValuePair<string,object>("imports",ImportsElement);
       if (Software is not null) yield return new KeyValuePair<string,object>("software",Software);
       if (Implementation is not null) yield return new KeyValuePair<string,object>("implementation",Implementation);
       if (FhirVersionElement is not null) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
-      if (FormatElement is not null) yield return new KeyValuePair<string,object>("format",FormatElement);
-      if (PatchFormatElement is not null) yield return new KeyValuePair<string,object>("patchFormat",PatchFormatElement);
-      if (ImplementationGuideElement is not null) yield return new KeyValuePair<string,object>("implementationGuide",ImplementationGuideElement);
-      if (Rest is not null) yield return new KeyValuePair<string,object>("rest",Rest);
-      if (Messaging is not null) yield return new KeyValuePair<string,object>("messaging",Messaging);
-      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
+      if (FormatElement?.Any() == true) yield return new KeyValuePair<string,object>("format",FormatElement);
+      if (PatchFormatElement?.Any() == true) yield return new KeyValuePair<string,object>("patchFormat",PatchFormatElement);
+      if (ImplementationGuideElement?.Any() == true) yield return new KeyValuePair<string,object>("implementationGuide",ImplementationGuideElement);
+      if (Rest?.Any() == true) yield return new KeyValuePair<string,object>("rest",Rest);
+      if (Messaging?.Any() == true) yield return new KeyValuePair<string,object>("messaging",Messaging);
+      if (Document?.Any() == true) yield return new KeyValuePair<string,object>("document",Document);
     }
 
   }

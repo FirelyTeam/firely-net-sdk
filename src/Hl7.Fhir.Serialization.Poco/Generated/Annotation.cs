@@ -58,8 +58,7 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Author)
         {
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("authorReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("authorReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.FhirString v_FhirString:
             JsonStreamUtilities.SerializePrimitiveProperty("authorString",v_FhirString,writer,options);

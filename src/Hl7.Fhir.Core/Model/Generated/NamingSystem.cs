@@ -813,14 +813,14 @@ namespace Hl7.Fhir.Model
         "kind" => KindElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "responsible" => ResponsibleElement,
         "type" => Type,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "usage" => UsageElement,
-        "uniqueId" => UniqueId,
+        "uniqueId" => UniqueId?.Any() == true ? UniqueId : null,
         _ => default
       };
 
@@ -835,14 +835,14 @@ namespace Hl7.Fhir.Model
       if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (ResponsibleElement is not null) yield return new KeyValuePair<string,object>("responsible",ResponsibleElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
-      if (UniqueId is not null) yield return new KeyValuePair<string,object>("uniqueId",UniqueId);
+      if (UniqueId?.Any() == true) yield return new KeyValuePair<string,object>("uniqueId",UniqueId);
     }
 
   }

@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -643,19 +643,19 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "category" => Category,
         "priority" => PriorityElement,
         "item" => Item,
         "quantity" => Quantity,
-        "parameter" => Parameter,
+        "parameter" => Parameter?.Any() == true ? Parameter : null,
         "occurrence" => Occurrence,
         "authoredOn" => AuthoredOnElement,
         "requester" => Requester,
-        "supplier" => Supplier,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
+        "supplier" => Supplier?.Any() == true ? Supplier : null,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
         "deliverFrom" => DeliverFrom,
         "deliverTo" => DeliverTo,
         _ => default
@@ -667,19 +667,19 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-      if (Parameter is not null) yield return new KeyValuePair<string,object>("parameter",Parameter);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
-      if (Supplier is not null) yield return new KeyValuePair<string,object>("supplier",Supplier);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",Supplier);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",DeliverFrom);
       if (DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",DeliverTo);
     }

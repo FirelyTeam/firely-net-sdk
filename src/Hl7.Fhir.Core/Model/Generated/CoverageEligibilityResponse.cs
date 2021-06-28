@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
           "coverage" => Coverage,
           "inforce" => InforceElement,
           "benefitPeriod" => BenefitPeriod,
-          "item" => Item,
+          "item" => Item?.Any() == true ? Item : null,
           _ => default
         };
 
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
         if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
         if (InforceElement is not null) yield return new KeyValuePair<string,object>("inforce",InforceElement);
         if (BenefitPeriod is not null) yield return new KeyValuePair<string,object>("benefitPeriod",BenefitPeriod);
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
         {
           "category" => Category,
           "productOrService" => ProductOrService,
-          "modifier" => Modifier,
+          "modifier" => Modifier?.Any() == true ? Modifier : null,
           "provider" => Provider,
           "excluded" => ExcludedElement,
           "name" => NameElement,
@@ -707,9 +707,9 @@ namespace Hl7.Fhir.Model
           "network" => Network,
           "unit" => Unit,
           "term" => Term,
-          "benefit" => Benefit,
+          "benefit" => Benefit?.Any() == true ? Benefit : null,
           "authorizationRequired" => AuthorizationRequiredElement,
-          "authorizationSupporting" => AuthorizationSupporting,
+          "authorizationSupporting" => AuthorizationSupporting?.Any() == true ? AuthorizationSupporting : null,
           "authorizationUrl" => AuthorizationUrlElement,
           _ => default
         };
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (ProductOrService is not null) yield return new KeyValuePair<string,object>("productOrService",ProductOrService);
-        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
         if (ExcludedElement is not null) yield return new KeyValuePair<string,object>("excluded",ExcludedElement);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
@@ -730,9 +730,9 @@ namespace Hl7.Fhir.Model
         if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
         if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
         if (Term is not null) yield return new KeyValuePair<string,object>("term",Term);
-        if (Benefit is not null) yield return new KeyValuePair<string,object>("benefit",Benefit);
+        if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
         if (AuthorizationRequiredElement is not null) yield return new KeyValuePair<string,object>("authorizationRequired",AuthorizationRequiredElement);
-        if (AuthorizationSupporting is not null) yield return new KeyValuePair<string,object>("authorizationSupporting",AuthorizationSupporting);
+        if (AuthorizationSupporting?.Any() == true) yield return new KeyValuePair<string,object>("authorizationSupporting",AuthorizationSupporting);
         if (AuthorizationUrlElement is not null) yield return new KeyValuePair<string,object>("authorizationUrl",AuthorizationUrlElement);
       }
 
@@ -883,8 +883,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Allowed is not null) yield return new KeyValuePair<string,object>("allowed",Allowed);
-        if (Used is not null) yield return new KeyValuePair<string,object>("used",Used);
+        if (Allowed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
+        if (Used is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
       }
 
     }
@@ -1457,9 +1457,9 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
-        "purpose" => PurposeElement,
+        "purpose" => PurposeElement?.Any() == true ? PurposeElement : null,
         "patient" => Patient,
         "serviced" => Serviced,
         "created" => CreatedElement,
@@ -1468,10 +1468,10 @@ namespace Hl7.Fhir.Model
         "outcome" => OutcomeElement,
         "disposition" => DispositionElement,
         "insurer" => Insurer,
-        "insurance" => Insurance,
+        "insurance" => Insurance?.Any() == true ? Insurance : null,
         "preAuthRef" => PreAuthRefElement,
         "form" => Form,
-        "error" => Error,
+        "error" => Error?.Any() == true ? Error : null,
         _ => default
       };
 
@@ -1481,21 +1481,21 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
+      if (PurposeElement?.Any() == true) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
       if (Requestor is not null) yield return new KeyValuePair<string,object>("requestor",Requestor);
       if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
       if (OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",OutcomeElement);
       if (DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",DispositionElement);
       if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
-      if (Insurance is not null) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
       if (PreAuthRefElement is not null) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
       if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
-      if (Error is not null) yield return new KeyValuePair<string,object>("error",Error);
+      if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
     }
 
   }

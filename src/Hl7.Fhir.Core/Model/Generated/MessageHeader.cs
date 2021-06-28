@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "event" => Event,
-        "destination" => Destination,
+        "destination" => Destination?.Any() == true ? Destination : null,
         "sender" => Sender,
         "enterer" => Enterer,
         "author" => Author,
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
         "responsible" => Responsible,
         "reason" => Reason,
         "response" => Response,
-        "focus" => Focus,
+        "focus" => Focus?.Any() == true ? Focus : null,
         "definition" => DefinitionElement,
         _ => default
       };
@@ -1048,8 +1048,8 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
-      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Event is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("event", Event),Event);
+      if (Destination?.Any() == true) yield return new KeyValuePair<string,object>("destination",Destination);
       if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
       if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
       if (Responsible is not null) yield return new KeyValuePair<string,object>("responsible",Responsible);
       if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
-      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
       if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
     }
 

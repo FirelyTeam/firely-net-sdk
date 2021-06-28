@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
         {
           "code" => CodeElement,
           "description" => DescriptionElement,
-          "operator" => OperatorElement,
+          "operator" => OperatorElement?.Any() == true ? OperatorElement : null,
           "value" => ValueElement,
           _ => default
         };
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (OperatorElement is not null) yield return new KeyValuePair<string,object>("operator",OperatorElement);
+        if (OperatorElement?.Any() == true) yield return new KeyValuePair<string,object>("operator",OperatorElement);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
@@ -906,9 +906,9 @@ namespace Hl7.Fhir.Model
           "code" => CodeElement,
           "display" => DisplayElement,
           "definition" => DefinitionElement,
-          "designation" => Designation,
-          "property" => Property,
-          "concept" => Concept,
+          "designation" => Designation?.Any() == true ? Designation : null,
+          "property" => Property?.Any() == true ? Property : null,
+          "concept" => Concept?.Any() == true ? Concept : null,
           _ => default
         };
 
@@ -921,9 +921,9 @@ namespace Hl7.Fhir.Model
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
         if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
-        if (Designation is not null) yield return new KeyValuePair<string,object>("designation",Designation);
-        if (Property is not null) yield return new KeyValuePair<string,object>("property",Property);
-        if (Concept is not null) yield return new KeyValuePair<string,object>("concept",Concept);
+        if (Designation?.Any() == true) yield return new KeyValuePair<string,object>("designation",Designation);
+        if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+        if (Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",Concept);
       }
 
     }
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -2088,7 +2088,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
@@ -2096,10 +2096,10 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "purpose" => Purpose,
         "copyright" => Copyright,
         "caseSensitive" => CaseSensitiveElement,
@@ -2110,9 +2110,9 @@ namespace Hl7.Fhir.Model
         "content" => ContentElement,
         "supplements" => SupplementsElement,
         "count" => CountElement,
-        "filter" => Filter,
-        "property" => Property,
-        "concept" => Concept,
+        "filter" => Filter?.Any() == true ? Filter : null,
+        "property" => Property?.Any() == true ? Property : null,
+        "concept" => Concept?.Any() == true ? Concept : null,
         _ => default
       };
 
@@ -2123,7 +2123,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -2131,10 +2131,10 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (CaseSensitiveElement is not null) yield return new KeyValuePair<string,object>("caseSensitive",CaseSensitiveElement);
@@ -2145,9 +2145,9 @@ namespace Hl7.Fhir.Model
       if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
       if (SupplementsElement is not null) yield return new KeyValuePair<string,object>("supplements",SupplementsElement);
       if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
-      if (Filter is not null) yield return new KeyValuePair<string,object>("filter",Filter);
-      if (Property is not null) yield return new KeyValuePair<string,object>("property",Property);
-      if (Concept is not null) yield return new KeyValuePair<string,object>("concept",Concept);
+      if (Filter?.Any() == true) yield return new KeyValuePair<string,object>("filter",Filter);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+      if (Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",Concept);
     }
 
   }

@@ -493,20 +493,20 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "requestIdentifier" => RequestIdentifier,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "module" => Module,
         "status" => StatusElement,
         "subject" => Subject,
         "encounter" => Encounter,
         "occurrenceDateTime" => OccurrenceDateTimeElement,
         "performer" => Performer,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "note" => Note,
-        "evaluationMessage" => EvaluationMessage,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "evaluationMessage" => EvaluationMessage?.Any() == true ? EvaluationMessage : null,
         "outputParameters" => OutputParameters,
         "result" => Result,
-        "dataRequirement" => DataRequirement,
+        "dataRequirement" => DataRequirement?.Any() == true ? DataRequirement : null,
         _ => default
       };
 
@@ -517,20 +517,20 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (RequestIdentifier is not null) yield return new KeyValuePair<string,object>("requestIdentifier",RequestIdentifier);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-      if (Module is not null) yield return new KeyValuePair<string,object>("module",Module);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Module is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("module", Module),Module);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",OccurrenceDateTimeElement);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (EvaluationMessage is not null) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (EvaluationMessage?.Any() == true) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
       if (OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",OutputParameters);
       if (Result is not null) yield return new KeyValuePair<string,object>("result",Result);
-      if (DataRequirement is not null) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
+      if (DataRequirement?.Any() == true) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
     }
 
   }

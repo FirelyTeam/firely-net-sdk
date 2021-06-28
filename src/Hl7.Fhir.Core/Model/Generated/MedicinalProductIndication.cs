@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",TherapyRelationshipType);
-        if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+        if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       }
 
     }
@@ -417,15 +417,15 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "subject" => Subject,
+        "subject" => Subject?.Any() == true ? Subject : null,
         "diseaseSymptomProcedure" => DiseaseSymptomProcedure,
         "diseaseStatus" => DiseaseStatus,
-        "comorbidity" => Comorbidity,
+        "comorbidity" => Comorbidity?.Any() == true ? Comorbidity : null,
         "intendedEffect" => IntendedEffect,
         "duration" => Duration,
-        "otherTherapy" => OtherTherapy,
-        "undesirableEffect" => UndesirableEffect,
-        "population" => Population,
+        "otherTherapy" => OtherTherapy?.Any() == true ? OtherTherapy : null,
+        "undesirableEffect" => UndesirableEffect?.Any() == true ? UndesirableEffect : null,
+        "population" => Population?.Any() == true ? Population : null,
         _ => default
       };
 
@@ -435,15 +435,15 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
       if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
-      if (Comorbidity is not null) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
+      if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
       if (IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",IntendedEffect);
       if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
-      if (OtherTherapy is not null) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
-      if (UndesirableEffect is not null) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
-      if (Population is not null) yield return new KeyValuePair<string,object>("population",Population);
+      if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+      if (UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
+      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
     }
 
   }

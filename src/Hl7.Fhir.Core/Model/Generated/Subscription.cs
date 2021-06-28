@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
           "type" => TypeElement,
           "endpoint" => EndpointElement,
           "payload" => PayloadElement,
-          "header" => HeaderElement,
+          "header" => HeaderElement?.Any() == true ? HeaderElement : null,
           _ => default
         };
 
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
         if (PayloadElement is not null) yield return new KeyValuePair<string,object>("payload",PayloadElement);
-        if (HeaderElement is not null) yield return new KeyValuePair<string,object>("header",HeaderElement);
+        if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
       }
 
     }
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "status" => StatusElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "end" => EndElement,
         "reason" => ReasonElement,
         "criteria" => CriteriaElement,
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
       if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
       if (CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",CriteriaElement);

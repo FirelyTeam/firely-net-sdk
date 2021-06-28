@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
         {
           "purpose" => Purpose,
           "name" => Name,
-          "telecom" => Telecom,
+          "telecom" => Telecom?.Any() == true ? Telecom : null,
           "address" => Address,
           _ => default
         };
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
         if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
-        if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
+        if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
         if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
       }
 
@@ -383,8 +383,8 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "network" => Network,
-          "benefit" => Benefit,
+          "network" => Network?.Any() == true ? Network : null,
+          "benefit" => Benefit?.Any() == true ? Benefit : null,
           _ => default
         };
 
@@ -395,8 +395,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
-        if (Benefit is not null) yield return new KeyValuePair<string,object>("benefit",Benefit);
+        if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+        if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
       }
 
     }
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
         {
           "type" => Type,
           "requirement" => RequirementElement,
-          "limit" => Limit,
+          "limit" => Limit?.Any() == true ? Limit : null,
           _ => default
         };
 
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (RequirementElement is not null) yield return new KeyValuePair<string,object>("requirement",RequirementElement);
-        if (Limit is not null) yield return new KeyValuePair<string,object>("limit",Limit);
+        if (Limit?.Any() == true) yield return new KeyValuePair<string,object>("limit",Limit);
       }
 
     }
@@ -883,12 +883,12 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "identifier" => Identifier,
+          "identifier" => Identifier?.Any() == true ? Identifier : null,
           "type" => Type,
-          "coverageArea" => CoverageArea,
-          "network" => Network,
-          "generalCost" => GeneralCost,
-          "specificCost" => SpecificCost,
+          "coverageArea" => CoverageArea?.Any() == true ? CoverageArea : null,
+          "network" => Network?.Any() == true ? Network : null,
+          "generalCost" => GeneralCost?.Any() == true ? GeneralCost : null,
+          "specificCost" => SpecificCost?.Any() == true ? SpecificCost : null,
           _ => default
         };
 
@@ -898,12 +898,12 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (CoverageArea is not null) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
-        if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
-        if (GeneralCost is not null) yield return new KeyValuePair<string,object>("generalCost",GeneralCost);
-        if (SpecificCost is not null) yield return new KeyValuePair<string,object>("specificCost",SpecificCost);
+        if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
+        if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+        if (GeneralCost?.Any() == true) yield return new KeyValuePair<string,object>("generalCost",GeneralCost);
+        if (SpecificCost?.Any() == true) yield return new KeyValuePair<string,object>("specificCost",SpecificCost);
       }
 
     }
@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "category" => Category,
-          "benefit" => Benefit,
+          "benefit" => Benefit?.Any() == true ? Benefit : null,
           _ => default
         };
 
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-        if (Benefit is not null) yield return new KeyValuePair<string,object>("benefit",Benefit);
+        if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
       }
 
     }
@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "type" => Type,
-          "cost" => Cost,
+          "cost" => Cost?.Any() == true ? Cost : null,
           _ => default
         };
 
@@ -1361,7 +1361,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Cost is not null) yield return new KeyValuePair<string,object>("cost",Cost);
+        if (Cost?.Any() == true) yield return new KeyValuePair<string,object>("cost",Cost);
       }
 
     }
@@ -1515,7 +1515,7 @@ namespace Hl7.Fhir.Model
         {
           "type" => Type,
           "applicability" => Applicability,
-          "qualifiers" => Qualifiers,
+          "qualifiers" => Qualifiers?.Any() == true ? Qualifiers : null,
           "value" => Value,
           _ => default
         };
@@ -1528,7 +1528,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
-        if (Qualifiers is not null) yield return new KeyValuePair<string,object>("qualifiers",Qualifiers);
+        if (Qualifiers?.Any() == true) yield return new KeyValuePair<string,object>("qualifiers",Qualifiers);
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
@@ -1920,20 +1920,20 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
-        "type" => Type,
+        "type" => Type?.Any() == true ? Type : null,
         "name" => NameElement,
-        "alias" => AliasElement,
+        "alias" => AliasElement?.Any() == true ? AliasElement : null,
         "period" => Period,
         "ownedBy" => OwnedBy,
         "administeredBy" => AdministeredBy,
-        "coverageArea" => CoverageArea,
-        "contact" => Contact,
-        "endpoint" => Endpoint,
-        "network" => Network,
-        "coverage" => Coverage,
-        "plan" => Plan,
+        "coverageArea" => CoverageArea?.Any() == true ? CoverageArea : null,
+        "contact" => Contact?.Any() == true ? Contact : null,
+        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
+        "network" => Network?.Any() == true ? Network : null,
+        "coverage" => Coverage?.Any() == true ? Coverage : null,
+        "plan" => Plan?.Any() == true ? Plan : null,
         _ => default
       };
 
@@ -1943,20 +1943,20 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (AliasElement is not null) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (OwnedBy is not null) yield return new KeyValuePair<string,object>("ownedBy",OwnedBy);
       if (AdministeredBy is not null) yield return new KeyValuePair<string,object>("administeredBy",AdministeredBy);
-      if (CoverageArea is not null) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
-      if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
-      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
-      if (Plan is not null) yield return new KeyValuePair<string,object>("plan",Plan);
+      if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+      if (Coverage?.Any() == true) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (Plan?.Any() == true) yield return new KeyValuePair<string,object>("plan",Plan);
     }
 
   }

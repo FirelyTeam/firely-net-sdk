@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "daysOfWeek" => DaysOfWeekElement,
+          "daysOfWeek" => DaysOfWeekElement?.Any() == true ? DaysOfWeekElement : null,
           "allDay" => AllDayElement,
           "availableStartTime" => AvailableStartTimeElement,
           "availableEndTime" => AvailableEndTimeElement,
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (DaysOfWeekElement is not null) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
+        if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
         if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
         if (AvailableStartTimeElement is not null) yield return new KeyValuePair<string,object>("availableStartTime",AvailableStartTimeElement);
         if (AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",AvailableEndTimeElement);
@@ -1172,30 +1172,30 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "active" => ActiveElement,
         "providedBy" => ProvidedBy,
-        "category" => Category,
-        "type" => Type,
-        "specialty" => Specialty,
-        "location" => Location,
+        "category" => Category?.Any() == true ? Category : null,
+        "type" => Type?.Any() == true ? Type : null,
+        "specialty" => Specialty?.Any() == true ? Specialty : null,
+        "location" => Location?.Any() == true ? Location : null,
         "name" => NameElement,
         "comment" => CommentElement,
         "extraDetails" => ExtraDetails,
         "photo" => Photo,
-        "telecom" => Telecom,
-        "coverageArea" => CoverageArea,
-        "serviceProvisionCode" => ServiceProvisionCode,
-        "eligibility" => Eligibility,
-        "program" => Program,
-        "characteristic" => Characteristic,
-        "communication" => Communication,
-        "referralMethod" => ReferralMethod,
+        "telecom" => Telecom?.Any() == true ? Telecom : null,
+        "coverageArea" => CoverageArea?.Any() == true ? CoverageArea : null,
+        "serviceProvisionCode" => ServiceProvisionCode?.Any() == true ? ServiceProvisionCode : null,
+        "eligibility" => Eligibility?.Any() == true ? Eligibility : null,
+        "program" => Program?.Any() == true ? Program : null,
+        "characteristic" => Characteristic?.Any() == true ? Characteristic : null,
+        "communication" => Communication?.Any() == true ? Communication : null,
+        "referralMethod" => ReferralMethod?.Any() == true ? ReferralMethod : null,
         "appointmentRequired" => AppointmentRequiredElement,
-        "availableTime" => AvailableTime,
-        "notAvailable" => NotAvailable,
+        "availableTime" => AvailableTime?.Any() == true ? AvailableTime : null,
+        "notAvailable" => NotAvailable?.Any() == true ? NotAvailable : null,
         "availabilityExceptions" => AvailabilityExceptionsElement,
-        "endpoint" => Endpoint,
+        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
         _ => default
       };
 
@@ -1205,30 +1205,30 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (ProvidedBy is not null) yield return new KeyValuePair<string,object>("providedBy",ProvidedBy);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       if (ExtraDetails is not null) yield return new KeyValuePair<string,object>("extraDetails",ExtraDetails);
       if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
-      if (Telecom is not null) yield return new KeyValuePair<string,object>("telecom",Telecom);
-      if (CoverageArea is not null) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
-      if (ServiceProvisionCode is not null) yield return new KeyValuePair<string,object>("serviceProvisionCode",ServiceProvisionCode);
-      if (Eligibility is not null) yield return new KeyValuePair<string,object>("eligibility",Eligibility);
-      if (Program is not null) yield return new KeyValuePair<string,object>("program",Program);
-      if (Characteristic is not null) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
-      if (Communication is not null) yield return new KeyValuePair<string,object>("communication",Communication);
-      if (ReferralMethod is not null) yield return new KeyValuePair<string,object>("referralMethod",ReferralMethod);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
+      if (ServiceProvisionCode?.Any() == true) yield return new KeyValuePair<string,object>("serviceProvisionCode",ServiceProvisionCode);
+      if (Eligibility?.Any() == true) yield return new KeyValuePair<string,object>("eligibility",Eligibility);
+      if (Program?.Any() == true) yield return new KeyValuePair<string,object>("program",Program);
+      if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
+      if (Communication?.Any() == true) yield return new KeyValuePair<string,object>("communication",Communication);
+      if (ReferralMethod?.Any() == true) yield return new KeyValuePair<string,object>("referralMethod",ReferralMethod);
       if (AppointmentRequiredElement is not null) yield return new KeyValuePair<string,object>("appointmentRequired",AppointmentRequiredElement);
-      if (AvailableTime is not null) yield return new KeyValuePair<string,object>("availableTime",AvailableTime);
-      if (NotAvailable is not null) yield return new KeyValuePair<string,object>("notAvailable",NotAvailable);
+      if (AvailableTime?.Any() == true) yield return new KeyValuePair<string,object>("availableTime",AvailableTime);
+      if (NotAvailable?.Any() == true) yield return new KeyValuePair<string,object>("notAvailable",NotAvailable);
       if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
-      if (Endpoint is not null) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
     }
 
   }

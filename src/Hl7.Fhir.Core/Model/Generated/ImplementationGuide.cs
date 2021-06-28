@@ -2778,11 +2778,11 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "grouping" => Grouping,
-          "resource" => Resource,
+          "grouping" => Grouping?.Any() == true ? Grouping : null,
+          "resource" => Resource?.Any() == true ? Resource : null,
           "page" => Page,
-          "parameter" => Parameter,
-          "template" => Template,
+          "parameter" => Parameter?.Any() == true ? Parameter : null,
+          "template" => Template?.Any() == true ? Template : null,
           _ => default
         };
 
@@ -2792,11 +2792,11 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Grouping is not null) yield return new KeyValuePair<string,object>("grouping",Grouping);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+        if (Grouping?.Any() == true) yield return new KeyValuePair<string,object>("grouping",Grouping);
+        if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
         if (Page is not null) yield return new KeyValuePair<string,object>("page",Page);
-        if (Parameter is not null) yield return new KeyValuePair<string,object>("parameter",Parameter);
-        if (Template is not null) yield return new KeyValuePair<string,object>("template",Template);
+        if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+        if (Template?.Any() == true) yield return new KeyValuePair<string,object>("template",Template);
       }
 
     }
@@ -3225,7 +3225,7 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "reference" => Reference,
-          "fhirVersion" => FhirVersionElement,
+          "fhirVersion" => FhirVersionElement?.Any() == true ? FhirVersionElement : null,
           "name" => NameElement,
           "description" => DescriptionElement,
           "example" => Example,
@@ -3240,10 +3240,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
-        if (FhirVersionElement is not null) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
+        if (FhirVersionElement?.Any() == true) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Example is not null) yield return new KeyValuePair<string,object>("example",Example);
+        if (Example is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("example", Example),Example);
         if (GroupingIdElement is not null) yield return new KeyValuePair<string,object>("groupingId",GroupingIdElement);
       }
 
@@ -3441,7 +3441,7 @@ namespace Hl7.Fhir.Model
           "name" => Name,
           "title" => TitleElement,
           "generation" => GenerationElement,
-          "page" => Page,
+          "page" => Page?.Any() == true ? Page : null,
           _ => default
         };
 
@@ -3451,10 +3451,10 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+        if (Name is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("name", Name),Name);
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (GenerationElement is not null) yield return new KeyValuePair<string,object>("generation",GenerationElement);
-        if (Page is not null) yield return new KeyValuePair<string,object>("page",Page);
+        if (Page?.Any() == true) yield return new KeyValuePair<string,object>("page",Page);
       }
 
     }
@@ -4048,10 +4048,10 @@ namespace Hl7.Fhir.Model
         value = key switch
         {
           "rendering" => RenderingElement,
-          "resource" => Resource,
-          "page" => Page,
-          "image" => ImageElement,
-          "other" => OtherElement,
+          "resource" => Resource?.Any() == true ? Resource : null,
+          "page" => Page?.Any() == true ? Page : null,
+          "image" => ImageElement?.Any() == true ? ImageElement : null,
+          "other" => OtherElement?.Any() == true ? OtherElement : null,
           _ => default
         };
 
@@ -4062,10 +4062,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (RenderingElement is not null) yield return new KeyValuePair<string,object>("rendering",RenderingElement);
-        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
-        if (Page is not null) yield return new KeyValuePair<string,object>("page",Page);
-        if (ImageElement is not null) yield return new KeyValuePair<string,object>("image",ImageElement);
-        if (OtherElement is not null) yield return new KeyValuePair<string,object>("other",OtherElement);
+        if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
+        if (Page?.Any() == true) yield return new KeyValuePair<string,object>("page",Page);
+        if (ImageElement?.Any() == true) yield return new KeyValuePair<string,object>("image",ImageElement);
+        if (OtherElement?.Any() == true) yield return new KeyValuePair<string,object>("other",OtherElement);
       }
 
     }
@@ -4233,7 +4233,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
-        if (Example is not null) yield return new KeyValuePair<string,object>("example",Example);
+        if (Example is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("example", Example),Example);
         if (RelativePathElement is not null) yield return new KeyValuePair<string,object>("relativePath",RelativePathElement);
       }
 
@@ -4424,7 +4424,7 @@ namespace Hl7.Fhir.Model
         {
           "name" => NameElement,
           "title" => TitleElement,
-          "anchor" => AnchorElement,
+          "anchor" => AnchorElement?.Any() == true ? AnchorElement : null,
           _ => default
         };
 
@@ -4436,7 +4436,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-        if (AnchorElement is not null) yield return new KeyValuePair<string,object>("anchor",AnchorElement);
+        if (AnchorElement?.Any() == true) yield return new KeyValuePair<string,object>("anchor",AnchorElement);
       }
 
     }
@@ -5080,16 +5080,16 @@ namespace Hl7.Fhir.Model
         "experimental" => ExperimentalElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "copyright" => Copyright,
         "packageId" => PackageIdElement,
         "license" => LicenseElement,
-        "fhirVersion" => FhirVersionElement,
-        "dependsOn" => DependsOn,
-        "global" => Global,
+        "fhirVersion" => FhirVersionElement?.Any() == true ? FhirVersionElement : null,
+        "dependsOn" => DependsOn?.Any() == true ? DependsOn : null,
+        "global" => Global?.Any() == true ? Global : null,
         "definition" => Definition,
         "manifest" => Manifest,
         _ => default
@@ -5109,16 +5109,16 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (PackageIdElement is not null) yield return new KeyValuePair<string,object>("packageId",PackageIdElement);
       if (LicenseElement is not null) yield return new KeyValuePair<string,object>("license",LicenseElement);
-      if (FhirVersionElement is not null) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
-      if (DependsOn is not null) yield return new KeyValuePair<string,object>("dependsOn",DependsOn);
-      if (Global is not null) yield return new KeyValuePair<string,object>("global",Global);
+      if (FhirVersionElement?.Any() == true) yield return new KeyValuePair<string,object>("fhirVersion",FhirVersionElement);
+      if (DependsOn?.Any() == true) yield return new KeyValuePair<string,object>("dependsOn",DependsOn);
+      if (Global?.Any() == true) yield return new KeyValuePair<string,object>("global",Global);
       if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
       if (Manifest is not null) yield return new KeyValuePair<string,object>("manifest",Manifest);
     }

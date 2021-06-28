@@ -358,8 +358,8 @@ namespace Hl7.Fhir.Model
           "container" => Container,
           "requirement" => RequirementElement,
           "retentionTime" => RetentionTime,
-          "rejectionCriterion" => RejectionCriterion,
-          "handling" => Handling,
+          "rejectionCriterion" => RejectionCriterion?.Any() == true ? RejectionCriterion : null,
+          "handling" => Handling?.Any() == true ? Handling : null,
           _ => default
         };
 
@@ -375,8 +375,8 @@ namespace Hl7.Fhir.Model
         if (Container is not null) yield return new KeyValuePair<string,object>("container",Container);
         if (RequirementElement is not null) yield return new KeyValuePair<string,object>("requirement",RequirementElement);
         if (RetentionTime is not null) yield return new KeyValuePair<string,object>("retentionTime",RetentionTime);
-        if (RejectionCriterion is not null) yield return new KeyValuePair<string,object>("rejectionCriterion",RejectionCriterion);
-        if (Handling is not null) yield return new KeyValuePair<string,object>("handling",Handling);
+        if (RejectionCriterion?.Any() == true) yield return new KeyValuePair<string,object>("rejectionCriterion",RejectionCriterion);
+        if (Handling?.Any() == true) yield return new KeyValuePair<string,object>("handling",Handling);
       }
 
     }
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
           "description" => DescriptionElement,
           "capacity" => Capacity,
           "minimumVolume" => MinimumVolume,
-          "additive" => Additive,
+          "additive" => Additive?.Any() == true ? Additive : null,
           "preparation" => PreparationElement,
           _ => default
         };
@@ -659,8 +659,8 @@ namespace Hl7.Fhir.Model
         if (Cap is not null) yield return new KeyValuePair<string,object>("cap",Cap);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
-        if (MinimumVolume is not null) yield return new KeyValuePair<string,object>("minimumVolume",MinimumVolume);
-        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (MinimumVolume is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("minimumVolume", MinimumVolume),MinimumVolume);
+        if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
         if (PreparationElement is not null) yield return new KeyValuePair<string,object>("preparation",PreparationElement);
       }
 
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (Additive is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
       }
 
     }
@@ -1151,10 +1151,10 @@ namespace Hl7.Fhir.Model
       {
         "identifier" => Identifier,
         "typeCollected" => TypeCollected,
-        "patientPreparation" => PatientPreparation,
+        "patientPreparation" => PatientPreparation?.Any() == true ? PatientPreparation : null,
         "timeAspect" => TimeAspectElement,
-        "collection" => Collection,
-        "typeTested" => TypeTested,
+        "collection" => Collection?.Any() == true ? Collection : null,
+        "typeTested" => TypeTested?.Any() == true ? TypeTested : null,
         _ => default
       };
 
@@ -1166,10 +1166,10 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (TypeCollected is not null) yield return new KeyValuePair<string,object>("typeCollected",TypeCollected);
-      if (PatientPreparation is not null) yield return new KeyValuePair<string,object>("patientPreparation",PatientPreparation);
+      if (PatientPreparation?.Any() == true) yield return new KeyValuePair<string,object>("patientPreparation",PatientPreparation);
       if (TimeAspectElement is not null) yield return new KeyValuePair<string,object>("timeAspect",TimeAspectElement);
-      if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
-      if (TypeTested is not null) yield return new KeyValuePair<string,object>("typeTested",TypeTested);
+      if (Collection?.Any() == true) yield return new KeyValuePair<string,object>("collection",Collection);
+      if (TypeTested?.Any() == true) yield return new KeyValuePair<string,object>("typeTested",TypeTested);
     }
 
   }

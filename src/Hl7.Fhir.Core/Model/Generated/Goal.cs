@@ -263,8 +263,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
-        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
-        if (Due is not null) yield return new KeyValuePair<string,object>("due",Due);
+        if (Detail is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("detail", Detail),Detail);
+        if (Due is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("due", Due),Due);
       }
 
     }
@@ -692,22 +692,22 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "lifecycleStatus" => LifecycleStatusElement,
         "achievementStatus" => AchievementStatus,
-        "category" => Category,
+        "category" => Category?.Any() == true ? Category : null,
         "priority" => Priority,
         "description" => Description,
         "subject" => Subject,
         "start" => Start,
-        "target" => Target,
+        "target" => Target?.Any() == true ? Target : null,
         "statusDate" => StatusDateElement,
         "statusReason" => StatusReasonElement,
         "expressedBy" => ExpressedBy,
-        "addresses" => Addresses,
-        "note" => Note,
-        "outcomeCode" => OutcomeCode,
-        "outcomeReference" => OutcomeReference,
+        "addresses" => Addresses?.Any() == true ? Addresses : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "outcomeCode" => OutcomeCode?.Any() == true ? OutcomeCode : null,
+        "outcomeReference" => OutcomeReference?.Any() == true ? OutcomeReference : null,
         _ => default
       };
 
@@ -717,22 +717,22 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (LifecycleStatusElement is not null) yield return new KeyValuePair<string,object>("lifecycleStatus",LifecycleStatusElement);
       if (AchievementStatus is not null) yield return new KeyValuePair<string,object>("achievementStatus",AchievementStatus);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Start is not null) yield return new KeyValuePair<string,object>("start",Start);
-      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+      if (Start is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("start", Start),Start);
+      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
       if (ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",ExpressedBy);
-      if (Addresses is not null) yield return new KeyValuePair<string,object>("addresses",Addresses);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (OutcomeCode is not null) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
-      if (OutcomeReference is not null) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+      if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
+      if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
     }
 
   }

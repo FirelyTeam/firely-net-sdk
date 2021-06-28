@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
         {
           "series" => SeriesElement,
           "authority" => Authority,
-          "targetDisease" => TargetDisease,
+          "targetDisease" => TargetDisease?.Any() == true ? TargetDisease : null,
           "doseNumber" => DoseNumber,
           "seriesDoses" => SeriesDoses,
           _ => default
@@ -839,9 +839,9 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
         if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
-        if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
-        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
-        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (DoseNumber is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("doseNumber", DoseNumber),DoseNumber);
+        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("seriesDoses", SeriesDoses),SeriesDoses);
       }
 
     }
@@ -1545,7 +1545,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "statusReason" => StatusReason,
         "vaccineCode" => VaccineCode,
@@ -1562,17 +1562,17 @@ namespace Hl7.Fhir.Model
         "site" => Site,
         "route" => Route,
         "doseQuantity" => DoseQuantity,
-        "performer" => Performer,
-        "note" => Note,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
+        "performer" => Performer?.Any() == true ? Performer : null,
+        "note" => Note?.Any() == true ? Note : null,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
         "isSubpotent" => IsSubpotentElement,
-        "subpotentReason" => SubpotentReason,
-        "education" => Education,
-        "programEligibility" => ProgramEligibility,
+        "subpotentReason" => SubpotentReason?.Any() == true ? SubpotentReason : null,
+        "education" => Education?.Any() == true ? Education : null,
+        "programEligibility" => ProgramEligibility?.Any() == true ? ProgramEligibility : null,
         "fundingSource" => FundingSource,
-        "reaction" => Reaction,
-        "protocolApplied" => ProtocolApplied,
+        "reaction" => Reaction?.Any() == true ? Reaction : null,
+        "protocolApplied" => ProtocolApplied?.Any() == true ? ProtocolApplied : null,
         _ => default
       };
 
@@ -1582,13 +1582,13 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
       if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
       if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
       if (PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",PrimarySourceElement);
       if (ReportOrigin is not null) yield return new KeyValuePair<string,object>("reportOrigin",ReportOrigin);
@@ -1599,17 +1599,17 @@ namespace Hl7.Fhir.Model
       if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
       if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
       if (DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",DoseQuantity);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (IsSubpotentElement is not null) yield return new KeyValuePair<string,object>("isSubpotent",IsSubpotentElement);
-      if (SubpotentReason is not null) yield return new KeyValuePair<string,object>("subpotentReason",SubpotentReason);
-      if (Education is not null) yield return new KeyValuePair<string,object>("education",Education);
-      if (ProgramEligibility is not null) yield return new KeyValuePair<string,object>("programEligibility",ProgramEligibility);
+      if (SubpotentReason?.Any() == true) yield return new KeyValuePair<string,object>("subpotentReason",SubpotentReason);
+      if (Education?.Any() == true) yield return new KeyValuePair<string,object>("education",Education);
+      if (ProgramEligibility?.Any() == true) yield return new KeyValuePair<string,object>("programEligibility",ProgramEligibility);
       if (FundingSource is not null) yield return new KeyValuePair<string,object>("fundingSource",FundingSource);
-      if (Reaction is not null) yield return new KeyValuePair<string,object>("reaction",Reaction);
-      if (ProtocolApplied is not null) yield return new KeyValuePair<string,object>("protocolApplied",ProtocolApplied);
+      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
+      if (ProtocolApplied?.Any() == true) yield return new KeyValuePair<string,object>("protocolApplied",ProtocolApplied);
     }
 
   }

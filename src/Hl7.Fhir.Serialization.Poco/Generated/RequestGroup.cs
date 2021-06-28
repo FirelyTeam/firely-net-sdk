@@ -578,24 +578,19 @@ namespace Hl7.Fhir.Serialization.Poco
             JsonStreamUtilities.SerializePrimitiveProperty("timingDateTime",v_FhirDateTime,writer,options);
             break;
           case Hl7.Fhir.Model.Age v_Age:
-            writer.WritePropertyName("timingAge");
-            v_Age.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingAge", v_Age, writer, options);
             break;
           case Hl7.Fhir.Model.Period v_Period:
-            writer.WritePropertyName("timingPeriod");
-            v_Period.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingPeriod", v_Period, writer, options);
             break;
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("timingDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("timingRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingRange", v_Range, writer, options);
             break;
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("timingTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingTiming", v_Timing, writer, options);
             break;
         }
       }
@@ -1140,12 +1135,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Offset)
         {
           case Hl7.Fhir.Model.Duration v_Duration:
-            writer.WritePropertyName("offsetDuration");
-            v_Duration.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("offsetDuration", v_Duration, writer, options);
             break;
           case Hl7.Fhir.Model.Range v_Range:
-            writer.WritePropertyName("offsetRange");
-            v_Range.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("offsetRange", v_Range, writer, options);
             break;
         }
       }

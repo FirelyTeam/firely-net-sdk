@@ -968,7 +968,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "period" => Period,
         "created" => CreatedElement,
@@ -980,9 +980,9 @@ namespace Hl7.Fhir.Model
         "paymentDate" => PaymentDateElement,
         "paymentAmount" => PaymentAmount,
         "paymentIdentifier" => PaymentIdentifier,
-        "detail" => Detail,
+        "detail" => Detail?.Any() == true ? Detail : null,
         "formCode" => FormCode,
-        "processNote" => ProcessNote,
+        "processNote" => ProcessNote?.Any() == true ? ProcessNote : null,
         _ => default
       };
 
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
@@ -1004,9 +1004,9 @@ namespace Hl7.Fhir.Model
       if (PaymentDateElement is not null) yield return new KeyValuePair<string,object>("paymentDate",PaymentDateElement);
       if (PaymentAmount is not null) yield return new KeyValuePair<string,object>("paymentAmount",PaymentAmount);
       if (PaymentIdentifier is not null) yield return new KeyValuePair<string,object>("paymentIdentifier",PaymentIdentifier);
-      if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+      if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       if (FormCode is not null) yield return new KeyValuePair<string,object>("formCode",FormCode);
-      if (ProcessNote is not null) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
+      if (ProcessNote?.Any() == true) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
     }
 
   }

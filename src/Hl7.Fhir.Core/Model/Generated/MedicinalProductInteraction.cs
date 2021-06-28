@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
       }
 
     }
@@ -373,9 +373,9 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "subject" => Subject,
+        "subject" => Subject?.Any() == true ? Subject : null,
         "description" => DescriptionElement,
-        "interactant" => Interactant,
+        "interactant" => Interactant?.Any() == true ? Interactant : null,
         "type" => Type,
         "effect" => Effect,
         "incidence" => Incidence,
@@ -389,9 +389,9 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (Interactant is not null) yield return new KeyValuePair<string,object>("interactant",Interactant);
+      if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
       if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);

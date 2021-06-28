@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
       value = key switch
       {
         "url" => UrlElement,
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "version" => VersionElement,
         "name" => NameElement,
         "title" => TitleElement,
@@ -849,24 +849,24 @@ namespace Hl7.Fhir.Model
         "status" => StatusElement,
         "date" => DateElement,
         "publisher" => PublisherElement,
-        "contact" => Contact,
+        "contact" => Contact?.Any() == true ? Contact : null,
         "description" => Description,
-        "note" => Note,
-        "useContext" => UseContext,
-        "jurisdiction" => Jurisdiction,
+        "note" => Note?.Any() == true ? Note : null,
+        "useContext" => UseContext?.Any() == true ? UseContext : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "copyright" => Copyright,
         "approvalDate" => ApprovalDateElement,
         "lastReviewDate" => LastReviewDateElement,
         "effectivePeriod" => EffectivePeriod,
-        "topic" => Topic,
-        "author" => Author,
-        "editor" => Editor,
-        "reviewer" => Reviewer,
-        "endorser" => Endorser,
-        "relatedArtifact" => RelatedArtifact,
+        "topic" => Topic?.Any() == true ? Topic : null,
+        "author" => Author?.Any() == true ? Author : null,
+        "editor" => Editor?.Any() == true ? Editor : null,
+        "reviewer" => Reviewer?.Any() == true ? Reviewer : null,
+        "endorser" => Endorser?.Any() == true ? Endorser : null,
+        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
         "exposureBackground" => ExposureBackground,
-        "exposureVariant" => ExposureVariant,
-        "outcome" => Outcome,
+        "exposureVariant" => ExposureVariant?.Any() == true ? ExposureVariant : null,
+        "outcome" => Outcome?.Any() == true ? Outcome : null,
         _ => default
       };
 
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -886,24 +886,24 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (UseContext is not null) yield return new KeyValuePair<string,object>("useContext",UseContext);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
       if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
       if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
-      if (Topic is not null) yield return new KeyValuePair<string,object>("topic",Topic);
-      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (Editor is not null) yield return new KeyValuePair<string,object>("editor",Editor);
-      if (Reviewer is not null) yield return new KeyValuePair<string,object>("reviewer",Reviewer);
-      if (Endorser is not null) yield return new KeyValuePair<string,object>("endorser",Endorser);
-      if (RelatedArtifact is not null) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
+      if (Editor?.Any() == true) yield return new KeyValuePair<string,object>("editor",Editor);
+      if (Reviewer?.Any() == true) yield return new KeyValuePair<string,object>("reviewer",Reviewer);
+      if (Endorser?.Any() == true) yield return new KeyValuePair<string,object>("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
       if (ExposureBackground is not null) yield return new KeyValuePair<string,object>("exposureBackground",ExposureBackground);
-      if (ExposureVariant is not null) yield return new KeyValuePair<string,object>("exposureVariant",ExposureVariant);
-      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (ExposureVariant?.Any() == true) yield return new KeyValuePair<string,object>("exposureVariant",ExposureVariant);
+      if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
     }
 
   }

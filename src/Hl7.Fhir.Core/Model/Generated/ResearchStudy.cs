@@ -1016,30 +1016,30 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "title" => TitleElement,
-        "protocol" => Protocol,
-        "partOf" => PartOf,
+        "protocol" => Protocol?.Any() == true ? Protocol : null,
+        "partOf" => PartOf?.Any() == true ? PartOf : null,
         "status" => StatusElement,
         "primaryPurposeType" => PrimaryPurposeType,
         "phase" => Phase,
-        "category" => Category,
-        "focus" => Focus,
-        "condition" => Condition,
-        "contact" => Contact,
-        "relatedArtifact" => RelatedArtifact,
-        "keyword" => Keyword,
-        "location" => Location,
+        "category" => Category?.Any() == true ? Category : null,
+        "focus" => Focus?.Any() == true ? Focus : null,
+        "condition" => Condition?.Any() == true ? Condition : null,
+        "contact" => Contact?.Any() == true ? Contact : null,
+        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
+        "keyword" => Keyword?.Any() == true ? Keyword : null,
+        "location" => Location?.Any() == true ? Location : null,
         "description" => Description,
-        "enrollment" => Enrollment,
+        "enrollment" => Enrollment?.Any() == true ? Enrollment : null,
         "period" => Period,
         "sponsor" => Sponsor,
         "principalInvestigator" => PrincipalInvestigator,
-        "site" => Site,
+        "site" => Site?.Any() == true ? Site : null,
         "reasonStopped" => ReasonStopped,
-        "note" => Note,
-        "arm" => Arm,
-        "objective" => Objective,
+        "note" => Note?.Any() == true ? Note : null,
+        "arm" => Arm?.Any() == true ? Arm : null,
+        "objective" => Objective?.Any() == true ? Objective : null,
         _ => default
       };
 
@@ -1049,30 +1049,30 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (Protocol is not null) yield return new KeyValuePair<string,object>("protocol",Protocol);
-      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Protocol?.Any() == true) yield return new KeyValuePair<string,object>("protocol",Protocol);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (PrimaryPurposeType is not null) yield return new KeyValuePair<string,object>("primaryPurposeType",PrimaryPurposeType);
       if (Phase is not null) yield return new KeyValuePair<string,object>("phase",Phase);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
-      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
-      if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (RelatedArtifact is not null) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
-      if (Keyword is not null) yield return new KeyValuePair<string,object>("keyword",Keyword);
-      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (Keyword?.Any() == true) yield return new KeyValuePair<string,object>("keyword",Keyword);
+      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (Enrollment is not null) yield return new KeyValuePair<string,object>("enrollment",Enrollment);
+      if (Enrollment?.Any() == true) yield return new KeyValuePair<string,object>("enrollment",Enrollment);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (Sponsor is not null) yield return new KeyValuePair<string,object>("sponsor",Sponsor);
       if (PrincipalInvestigator is not null) yield return new KeyValuePair<string,object>("principalInvestigator",PrincipalInvestigator);
-      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
+      if (Site?.Any() == true) yield return new KeyValuePair<string,object>("site",Site);
       if (ReasonStopped is not null) yield return new KeyValuePair<string,object>("reasonStopped",ReasonStopped);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
-      if (Arm is not null) yield return new KeyValuePair<string,object>("arm",Arm);
-      if (Objective is not null) yield return new KeyValuePair<string,object>("objective",Objective);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Arm?.Any() == true) yield return new KeyValuePair<string,object>("arm",Arm);
+      if (Objective?.Any() == true) yield return new KeyValuePair<string,object>("objective",Objective);
     }
 
   }

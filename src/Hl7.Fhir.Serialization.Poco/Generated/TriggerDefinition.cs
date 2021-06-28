@@ -62,12 +62,10 @@ namespace Hl7.Fhir.Serialization.Poco
         switch (current.Timing)
         {
           case Hl7.Fhir.Model.Timing v_Timing:
-            writer.WritePropertyName("timingTiming");
-            v_Timing.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingTiming", v_Timing, writer, options);
             break;
           case Hl7.Fhir.Model.ResourceReference v_ResourceReference:
-            writer.WritePropertyName("timingReference");
-            v_ResourceReference.SerializeJson(writer, options);
+            JsonStreamUtilities.SerializeComplexProperty("timingReference", v_ResourceReference, writer, options);
             break;
           case Hl7.Fhir.Model.Date v_Date:
             JsonStreamUtilities.SerializePrimitiveProperty("timingDate",v_Date,writer,options);

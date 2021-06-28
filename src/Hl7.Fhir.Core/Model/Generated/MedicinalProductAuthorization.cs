@@ -220,9 +220,9 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "identifier" => Identifier,
+          "identifier" => Identifier?.Any() == true ? Identifier : null,
           "country" => Country,
-          "jurisdiction" => Jurisdiction,
+          "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
           "legalStatusOfSupply" => LegalStatusOfSupply,
           "validityPeriod" => ValidityPeriod,
           _ => default
@@ -234,9 +234,9 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
-        if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+        if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
         if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
         if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
       }
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
           "identifier" => Identifier,
           "type" => Type,
           "date" => Date,
-          "application" => Application,
+          "application" => Application?.Any() == true ? Application : null,
           _ => default
         };
 
@@ -407,8 +407,8 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
-        if (Application is not null) yield return new KeyValuePair<string,object>("application",Application);
+        if (Date is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("date", Date),Date);
+        if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
       }
 
     }
@@ -843,10 +843,10 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "subject" => Subject,
-        "country" => Country,
-        "jurisdiction" => Jurisdiction,
+        "country" => Country?.Any() == true ? Country : null,
+        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
         "status" => Status,
         "statusDate" => StatusDateElement,
         "restoreDate" => RestoreDateElement,
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
         "dateOfFirstAuthorization" => DateOfFirstAuthorizationElement,
         "internationalBirthDate" => InternationalBirthDateElement,
         "legalBasis" => LegalBasis,
-        "jurisdictionalAuthorization" => JurisdictionalAuthorization,
+        "jurisdictionalAuthorization" => JurisdictionalAuthorization?.Any() == true ? JurisdictionalAuthorization : null,
         "holder" => Holder,
         "regulator" => Regulator,
         "procedure" => Procedure,
@@ -868,10 +868,10 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
-      if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",RestoreDateElement);
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
       if (DateOfFirstAuthorizationElement is not null) yield return new KeyValuePair<string,object>("dateOfFirstAuthorization",DateOfFirstAuthorizationElement);
       if (InternationalBirthDateElement is not null) yield return new KeyValuePair<string,object>("internationalBirthDate",InternationalBirthDateElement);
       if (LegalBasis is not null) yield return new KeyValuePair<string,object>("legalBasis",LegalBasis);
-      if (JurisdictionalAuthorization is not null) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",JurisdictionalAuthorization);
+      if (JurisdictionalAuthorization?.Any() == true) yield return new KeyValuePair<string,object>("jurisdictionalAuthorization",JurisdictionalAuthorization);
       if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
       if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
       if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);

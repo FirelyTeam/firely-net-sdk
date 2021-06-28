@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
       {
         value = key switch
         {
-          "type" => Type,
+          "type" => Type?.Any() == true ? Type : null,
           "actor" => Actor,
           "required" => RequiredElement,
           "status" => StatusElement,
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
         if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
         if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
@@ -1021,28 +1021,28 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "status" => StatusElement,
         "cancelationReason" => CancelationReason,
-        "serviceCategory" => ServiceCategory,
-        "serviceType" => ServiceType,
-        "specialty" => Specialty,
+        "serviceCategory" => ServiceCategory?.Any() == true ? ServiceCategory : null,
+        "serviceType" => ServiceType?.Any() == true ? ServiceType : null,
+        "specialty" => Specialty?.Any() == true ? Specialty : null,
         "appointmentType" => AppointmentType,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
         "priority" => PriorityElement,
         "description" => DescriptionElement,
-        "supportingInformation" => SupportingInformation,
+        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
         "start" => StartElement,
         "end" => EndElement,
         "minutesDuration" => MinutesDurationElement,
-        "slot" => Slot,
+        "slot" => Slot?.Any() == true ? Slot : null,
         "created" => CreatedElement,
         "comment" => CommentElement,
         "patientInstruction" => PatientInstructionElement,
-        "basedOn" => BasedOn,
-        "participant" => Participant,
-        "requestedPeriod" => RequestedPeriod,
+        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
+        "participant" => Participant?.Any() == true ? Participant : null,
+        "requestedPeriod" => RequestedPeriod?.Any() == true ? RequestedPeriod : null,
         _ => default
       };
 
@@ -1052,28 +1052,28 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (CancelationReason is not null) yield return new KeyValuePair<string,object>("cancelationReason",CancelationReason);
-      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
-      if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
-      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
       if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-      if (SupportingInformation is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
       if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
       if (MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",MinutesDurationElement);
-      if (Slot is not null) yield return new KeyValuePair<string,object>("slot",Slot);
+      if (Slot?.Any() == true) yield return new KeyValuePair<string,object>("slot",Slot);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
-      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
-      if (Participant is not null) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (RequestedPeriod is not null) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
     }
 
   }

@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
         "identifier" => Identifier,
         "type" => Type,
         "period" => Period,
-        "specialPrecautionsForStorage" => SpecialPrecautionsForStorage,
+        "specialPrecautionsForStorage" => SpecialPrecautionsForStorage?.Any() == true ? SpecialPrecautionsForStorage : null,
         _ => default
       };
 
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-      if (SpecialPrecautionsForStorage is not null) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",SpecialPrecautionsForStorage);
+      if (SpecialPrecautionsForStorage?.Any() == true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",SpecialPrecautionsForStorage);
     }
 
   }

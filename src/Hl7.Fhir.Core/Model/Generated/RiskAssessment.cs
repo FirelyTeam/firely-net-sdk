@@ -292,10 +292,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
-        if (Probability is not null) yield return new KeyValuePair<string,object>("probability",Probability);
+        if (Probability is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("probability", Probability),Probability);
         if (QualitativeRisk is not null) yield return new KeyValuePair<string,object>("qualitativeRisk",QualitativeRisk);
         if (RelativeRiskElement is not null) yield return new KeyValuePair<string,object>("relativeRisk",RelativeRiskElement);
-        if (When is not null) yield return new KeyValuePair<string,object>("when",When);
+        if (When is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("when", When),When);
         if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
       }
 
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
     {
       value = key switch
       {
-        "identifier" => Identifier,
+        "identifier" => Identifier?.Any() == true ? Identifier : null,
         "basedOn" => BasedOn,
         "parent" => Parent,
         "status" => StatusElement,
@@ -741,12 +741,12 @@ namespace Hl7.Fhir.Model
         "occurrence" => Occurrence,
         "condition" => Condition,
         "performer" => Performer,
-        "reasonCode" => ReasonCode,
-        "reasonReference" => ReasonReference,
-        "basis" => Basis,
-        "prediction" => Prediction,
+        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
+        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
+        "basis" => Basis?.Any() == true ? Basis : null,
+        "prediction" => Prediction?.Any() == true ? Prediction : null,
         "mitigation" => MitigationElement,
-        "note" => Note,
+        "note" => Note?.Any() == true ? Note : null,
         _ => default
       };
 
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
@@ -764,15 +764,15 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
       if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (Basis is not null) yield return new KeyValuePair<string,object>("basis",Basis);
-      if (Prediction is not null) yield return new KeyValuePair<string,object>("prediction",Prediction);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
+      if (Prediction?.Any() == true) yield return new KeyValuePair<string,object>("prediction",Prediction);
       if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);
-      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }
