@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Validation
     public class ValidationSettings
     {
         public StructureDefinitionSummaryProvider.TypeNameMapper ResourceMapping { get; set; }
-        
+
         [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
         public static readonly ValidationSettings Default = new ValidationSettings();
 
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Validation
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
+            other.ConstraintBestPractices = ConstraintBestPractices;
             other.GenerateSnapshot = GenerateSnapshot;
             other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
             other.EnableXsdValidation = EnableXsdValidation;
