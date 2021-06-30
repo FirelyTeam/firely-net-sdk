@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -58,7 +59,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
 
         [TestMethod]
-        public void CompareXmlJsonParseOutcomes()
+        public async Task CompareXmlJsonParseOutcomes()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if(Environment.NewLine == "\n")
                 tpJson = tpJson.Replace(@"\r\n", @"\n");
             var navXml = getXmlNode(tpXml);
-            var navJson = JsonParsingHelpers.ParseToTypedElement(tpJson, new PocoStructureDefinitionSummaryProvider());
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(tpJson, new PocoStructureDefinitionSummaryProvider());
 
             var compare = navXml.IsEqualTo(navJson);
 
@@ -96,21 +97,21 @@ namespace Hl7.Fhir.Serialization.Tests
 
 
         [TestMethod]
-        public void RoundtripXml()
+        public async Task RoundtripXml()
         {
-            ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
+            await ParseDemoPatient.RoundtripXml(reader => XmlParsingHelpers.ParseToTypedElement(reader, new PocoStructureDefinitionSummaryProvider()));
         }
 
         [TestMethod]
-        public void PingpongXml()
+        public async Task PingpongXml()
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             // will allow whitespace and comments to come through      
             var navXml = XmlParsingHelpers.ParseToTypedElement(tp, new PocoStructureDefinitionSummaryProvider());
-            var json = navXml.ToJson();
+            var json = await navXml.ToJsonAsync();
 
-            var navJson = JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider());
-            var xml = navJson.ToXml();
+            var navJson = await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider());
+            var xml = await navJson.ToXmlAsync();
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, xml, ignoreSchemaLocation: true);
         }
