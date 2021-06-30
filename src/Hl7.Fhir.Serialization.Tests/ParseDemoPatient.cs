@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsNotNull(id);
         }
 
-        public static void RoundtripXml(Func<string, object> navCreator)
+        public static async Task RoundtripXml(Func<string, object> navCreator)
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
@@ -116,26 +117,23 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = isn2.ToXml();
-            else if (nav is ITypedElement ien2) output = ien2.ToXml();
+            if (nav is ISourceNode isn2) output = await isn2.ToXmlAsync();
+            else if (nav is ITypedElement ien2) output = await ien2.ToXmlAsync();
             else
                 throw Error.InvalidOperation("Fix unit test");
 
             XmlAssert.AreSame("fp-test-patient.xml", tp, output);
         }
 
-        public static void RoundtripJson(Func<string, object> navCreator)
+        public static async Task RoundtripJson(Func<string, Task<object>> navCreator)
         {
-            //var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            //compareJson(navCreator, tp);
-
-            var tp = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
-            compareJson(@"TestData\json-edge-cases.json", navCreator, tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "json-edge-cases.json"));
+            await compareJson(@"TestData\json-edge-cases.json", navCreator, tp);
         }
 
-        private static void compareJson(string filename, Func<string, object> navCreator, string expected)
+        private static async Task compareJson(string filename, Func<string, Task<object>> navCreator, string expected)
         {
-            var nav = navCreator(expected);
+            var nav = await navCreator(expected);
             switch (nav)
             {
                 case ISourceNode _:
@@ -147,8 +145,8 @@ namespace Hl7.Fhir.Serialization.Tests
             }
 
             string output;
-            if (nav is ISourceNode isn2) output = isn2.ToJson();
-            else if (nav is ITypedElement ien2) output = ien2.ToJson();
+            if (nav is ISourceNode isn2) output = await isn2.ToJsonAsync();
+            else if (nav is ITypedElement ien2) output = await ien2.ToJsonAsync();
             else
                 throw Error.InvalidOperation("Fix unit test");
 

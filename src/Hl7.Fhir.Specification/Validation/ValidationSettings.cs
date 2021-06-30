@@ -105,6 +105,13 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public ConstraintBestPractices ConstraintBestPractices { get; set; } // = Ignore;
 
+       
+        /// <summary>
+        /// Determine where to retrieve the XSD schemas from when when Xsd validation is enabled and run.
+        /// </summary>
+        /// <remarks>If this is not set, the default location (using specification.zip) will be used.</remarks>
+        public SchemaCollection XsdSchemaCollection { get; set; }
+
         /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
         public ValidationSettings() { }
 
@@ -134,6 +141,7 @@ namespace Hl7.Fhir.Validation
             other.Trace = Trace;
             other.FhirPathCompiler = FhirPathCompiler;
             other.ResourceMapping = ResourceMapping;
+            other.XsdSchemaCollection = XsdSchemaCollection;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>

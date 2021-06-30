@@ -4,6 +4,7 @@ using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -15,7 +16,7 @@ namespace Hl7.Fhir.Serialization.Tests
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
         
         [TestMethod]
-        public void Summary()
+        public async Task Summary()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("Patient");
@@ -23,7 +24,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var nav = new ScopedNode(getXmlNode(tpXml));
             var masker = MaskingNode.ForSummary(nav);
-            var output = masker.ToXml();
+            var output = await masker.ToXmlAsync();
 
             var maskedChildren = masker.Children().ToList();
             Assert.IsTrue(maskedChildren.Count < inSummary.Count);
@@ -31,14 +32,14 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void SummaryText()
+        public async Task SummaryText()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "mask-text.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNode(getXmlNode(tpXml));
             var masker = MaskingNode.ForText(nav);
-            var output = masker.ToXml();
+            var output = await masker.ToXmlAsync();
 
             var m = masker.Descendants().ToList();
             var maskedChildren = masker.Descendants().Count();
@@ -46,14 +47,14 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void SummaryData()
+        public async Task SummaryData()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "mask-text.xml"));
             var typeinfo = new PocoStructureDefinitionSummaryProvider().Provide("ValueSet");
 
             var nav = new ScopedNode(getXmlNode(tpXml));
             var masker = MaskingNode.ForData(nav);
-            var output = masker.ToXml();
+            var output = await masker.ToXmlAsync();
 
             var maskedChildren = masker.Descendants().Count();
             Assert.AreEqual(nav.Descendants().Count()-3 , maskedChildren);
