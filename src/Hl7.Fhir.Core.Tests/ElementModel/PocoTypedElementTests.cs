@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Core.Tests.ElementModel
 {
@@ -86,15 +87,16 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         }
 
         [TestMethod]
-        public void CompareToOtherElementNavigator()
+        public async Tasks.Task CompareToOtherElementNavigator()
         {
             var json = TestDataHelper.ReadTestData("TestPatient.json");
             var xml = TestDataHelper.ReadTestData("TestPatient.xml");
 
-            var pocoP = (new FhirJsonParser()).Parse<Patient>(json).ToTypedElement();
-            var jsonP = FhirJsonNode.Parse(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true })
+            var poco = await (new FhirJsonParser()).ParseAsync<Patient>(json);
+            var pocoP = poco.ToTypedElement();
+            var jsonP = (await FhirJsonNode.ParseAsync(json, settings: new FhirJsonParsingSettings { AllowJsonComments = true }))
                 .ToTypedElement(new PocoStructureDefinitionSummaryProvider());
-            var xmlP = FhirXmlNode.Parse(xml).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+            var xmlP = (await FhirXmlNode.ParseAsync(xml)).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
             doCompare(pocoP, jsonP, "poco<->json");
             doCompare(pocoP, xmlP, "poco<->xml");

@@ -75,9 +75,9 @@ namespace Hl7.Fhir.Validation
                 validator.Trace(outcome, ni.Message, Issue.UNSUPPORTED_SLICING_NOT_SUPPORTED, parent);
                 return outcome;
             }
-            catch (IncorrectElementDefinitionException iede)
+            catch (Exception others)
             {
-                validator.Trace(outcome, iede.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, parent);
+                validator.Trace(outcome, others.Message, Issue.PROFILE_ELEMENTDEF_INCORRECT, parent);
                 return outcome;
             }
 

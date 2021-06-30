@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.ElementModel.Tests
 {
@@ -31,11 +32,11 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void AnnotationsFromParsingTest()
+        public async Tasks.Task AnnotationsFromParsingTest()
         {
             var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
             var patientJson = "{\"resourceType\":\"Patient\", \"active\":\"true\"}";
-            var patient  = FhirJsonNode.Parse(patientJson);
+            var patient = await FhirJsonNode.ParseAsync(patientJson);
             var typedPatient = patient.ToTypedElement(_sdsProvider, "Patient");
             var sourceNode = typedPatient.ToSourceNode();
 
@@ -51,15 +52,15 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var result3 = sourceNode.Annotation<IResourceTypeSupplier>();
             Assert.IsNotNull(result3);
-            Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result3.GetType()); 
+            Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result3.GetType());
         }
 
         [TestMethod]
-        public void SourceNodeFromElementNodeReturnsResourceTypeSupplier()
+        public async Tasks.Task SourceNodeFromElementNodeReturnsResourceTypeSupplier()
         {
             var _sdsProvider = new PocoStructureDefinitionSummaryProvider();
             var patientJson = "{\"resourceType\":\"Patient\", \"active\":\"true\"}";
-            var patientNode = FhirJsonNode.Parse(patientJson);
+            var patientNode = await FhirJsonNode.ParseAsync(patientJson);
             var typedPatient = patientNode.ToTypedElement(_sdsProvider, "Patient");
 
             var elementNode = ElementNode.FromElement(typedPatient);
