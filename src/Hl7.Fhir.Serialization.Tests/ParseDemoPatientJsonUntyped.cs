@@ -6,69 +6,70 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class ParseDemoPatientJsonUntyped
     {
-        public ISourceNode getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
-            FhirJsonNode.Parse(json, settings: settings);
+        public async Task<ISourceNode> getJsonNodeU(string json, FhirJsonParsingSettings settings = null) =>
+            await FhirJsonNode.ParseAsync(json, settings: settings);
 
-        ISourceNode FhirJsonNodeParse(string json, string rootName) =>
-               FhirJsonNode.Parse(json, rootName, new FhirJsonParsingSettings() { PermissiveParsing = false });
+        async Task<ISourceNode> FhirJsonNodeParse(string json, string rootName) =>
+               await FhirJsonNode.ParseAsync(json, rootName, new FhirJsonParsingSettings() { PermissiveParsing = false });
 
         [TestMethod]
-        public void CanReadThroughUntypedNavigator()
+        public async Task CanReadThroughUntypedNavigator()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var nav = getJsonNodeU(tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+            var nav = await getJsonNodeU(tp);
 #pragma warning disable 612, 618
             ParseDemoPatient.CanReadThroughTypedElement(nav.ToTypedElement(), typed: false);
 #pragma warning restore 612, 618
         }
 
         [TestMethod]
-        public void ElementNavPerformanceUntypedJson()
+        public async Task ElementNavPerformanceUntypedJson()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var nav = getJsonNodeU(tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+            var nav = await getJsonNodeU(tp);
             ParseDemoPatient.ElementNavPerformance(nav);
         }
 
         [TestMethod]
-        public void ProducesCorrectUntypedLocations()
+        public async Task ProducesCorrectUntypedLocations()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var patient = getJsonNodeU(tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+            var patient = await getJsonNodeU(tp);
 
             ParseDemoPatient.ProducesCorrectUntypedLocations(patient);
         }
 
         [TestMethod]
-        public void HasLineNumbers()
+        public async Task HasLineNumbers()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
-            var nav = getJsonNodeU(tp);
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
+            var nav = await getJsonNodeU(tp);
 
             ParseDemoPatient.HasLineNumbers<JsonSerializationDetails>(nav);
         }
 
         [TestMethod]
-        public void RoundtripJsonUntyped()
+        public async Task RoundtripJsonUntyped()
         {
-            ParseDemoPatient.RoundtripJson(jsonText =>
-                getJsonNodeU(jsonText, new FhirJsonParsingSettings { AllowJsonComments = true }));
+            await ParseDemoPatient.RoundtripJson(async jsonText =>
+                await getJsonNodeU(jsonText, new FhirJsonParsingSettings { AllowJsonComments = true }));
         }
 
         [TestMethod]
-        public void TryInvalidUntypedSource()
+        public async Task TryInvalidUntypedSource()
         {
-            var xmlNav = FhirXmlNode.Parse("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
+            var xmlNav = await FhirXmlNode.ParseAsync("<Patient xmlns='http://hl7.org/fhir'><active value='true'/></Patient>");
 
             try
             {
-                var output = xmlNav.ToJson();
+                var output = await xmlNav.ToJsonAsync();
                 Assert.Fail();
             }
             catch (NotSupportedException)
@@ -77,21 +78,20 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CheckBundleEntryNavigation()
+        public async Task CheckBundleEntryNavigation()
         {
-            var bundle = File.ReadAllText(Path.Combine("TestData", "BundleWithOneEntry.json"));
-            var nav = getJsonNodeU(bundle);
+            var bundle = await File.ReadAllTextAsync(Path.Combine("TestData", "BundleWithOneEntry.json"));
+            var nav = await getJsonNodeU(bundle);
 #pragma warning disable 612,618
             ParseDemoPatient.CheckBundleEntryNavigation(nav.ToTypedElement());
 #pragma warning restore 612, 618
         }
 
-
         [TestMethod]
-        public void CanReadEdgeCases()
+        public async Task CanReadEdgeCases()
         {
-            var tpJson = File.ReadAllText(Path.Combine("TestData", "json-edge-cases.json"));
-            var patient = getJsonNodeU(tpJson, new FhirJsonParsingSettings { AllowJsonComments = true });
+            var tpJson = await File.ReadAllTextAsync(Path.Combine("TestData", "json-edge-cases.json"));
+            var patient = await getJsonNodeU(tpJson, new FhirJsonParsingSettings { AllowJsonComments = true });
 
             Assert.AreEqual("Patient", patient.Name);
             Assert.AreEqual("Patient", patient.GetResourceTypeIndicator());
@@ -138,85 +138,85 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CatchesArrayMismatch()
+        public async Task CatchesArrayMismatch()
         {
-            var nav = FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : [2,4] }", "test");
+            var nav = await FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : [2,4] }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': 2, '_a' : [2] }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': 2, '_a' : [2] }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : {} }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': [2,3,4], '_a' : {} }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ '_a': [4,5,6] }", "test");
+            nav = await FhirJsonNodeParse("{ '_a': [4,5,6] }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': [2,3,4] }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': [2,3,4] }", "test");
             Assert.IsTrue(nav.Children().Any());
 
-            nav = FhirJsonNodeParse("{ 'a': [null,2], '_a' : [{'active':true},null] }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': [null,2], '_a' : [{'active':true},null] }", "test");
             Assert.IsTrue(nav.Children().Any());
         }
 
         [TestMethod]
-        public void CatchesUnsupportedFeatures()
+        public async Task CatchesUnsupportedFeatures()
         {
-            var nav = FhirJsonNodeParse("{ 'a': '   ' }", "test");
+            var nav = await FhirJsonNodeParse("{ 'a': '   ' }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': {}, '_a' : {} }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': {}, '_a' : {} }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': {'active':true}, '_a': {'dummy':4} }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': {'active':true}, '_a': {'dummy':4} }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ '_a' : {} }", "test");
+            nav = await FhirJsonNodeParse("{ '_a' : {} }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': 3, '_a' : 4 }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': 3, '_a' : 4 }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': new DateTime() }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': new DateTime() }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ '_a': new DateTime() }", "test");
+            nav = await FhirJsonNodeParse("{ '_a': new DateTime() }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
         }
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException), "Expected an InvalidOperationException about resourceType is missing.")]
-        public void CatchResourceTypeMissing()
+        public async Task CatchResourceTypeMissing()
         {
             var json = "{  \"resourceType\": \"\",  \"id\": \"rt1\",  \"meta\": {\"lastUpdated\": \"2020-04-23T13:45:32Z\"  } }";
-            _ = FhirJsonNodeParse(json, null);
+            _ = await FhirJsonNodeParse(json, null);
         }
 
         [TestMethod]
-        public void CatchNullErrors()
+        public async Task CatchNullErrors()
         {
-            var nav = FhirJsonNodeParse("{ 'a': null }", "test");
+            var nav = await FhirJsonNodeParse("{ 'a': null }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ '_a': null }", "test");
+            nav = await FhirJsonNodeParse("{ '_a': null }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': null, '_a' : null }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': null, '_a' : null }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': [null] }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': [null] }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
 
-            nav = FhirJsonNodeParse("{ 'a': [null], '_a': [null] }", "test");
+            nav = await FhirJsonNodeParse("{ 'a': [null], '_a': [null] }", "test");
             ExceptionAssert.Throws<FormatException>(() => nav.VisitAll());
         }
 
         [TestMethod]
-        public void PreservesParsingExceptionDetails()
+        public async Task PreservesParsingExceptionDetails()
         {
             try
             {
-                var nav = FhirJsonNode.Parse("<bla", "test");
+                var nav = await FhirJsonNode.ParseAsync("<bla", "test");
                 var dummy = nav.Text;
                 Assert.Fail();
             }
@@ -227,13 +227,13 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CatchParseErrors()
+        public async Task CatchParseErrors()
         {
             var text = "{";
 
             try
             {
-                var patient = getJsonNodeU(text);
+                var patient = await getJsonNodeU(text);
                 Assert.Fail();
             }
             catch (FormatException fe)
