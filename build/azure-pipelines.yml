@@ -271,7 +271,26 @@ stages:
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
                 includeSymbols: false  
-                
+            - bash: |
+                echo $(Build.SourceBranchName)
+
+                IFS='-'
+                read -a version <<<"$(Build.SourceBranchName)"
+
+                release=${version[1]}
+                echo $release
+
+                currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
+                previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
+                title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
+
+                echo $currenttag
+                echo $previoustag
+                echo $title_release
+
+                echo "##vso[task.setvariable variable=current_tag]$currenttag"
+                echo "##vso[task.setvariable variable=previous_tag]$previoustag"
+                echo "##vso[task.setvariable variable=release_title]$title_release"
             - task: GitHubRelease@1
               displayName: 'GitHub release notes (create)'  
               inputs:
@@ -280,7 +299,11 @@ stages:
                 action: 'create'
                 target: '$(Build.SourceVersion)'
                 tagSource: userSpecifiedTag
-                tag: '$(Build.SourceBranchName)'
+                tag: '$(current_tag)'
+                title: '$(release_title)'
                 isDraft: true
-                changeLogCompareToRelease: 'lastFullRelease'
-                changeLogType: 'issueBased'
+                changeLogCompareToRelease: lastNonDraftReleaseByTag
+                changeLogCompareToReleaseTag: '$(previous_tag)'
+                changeLogType: issueBased
+                changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
+              
