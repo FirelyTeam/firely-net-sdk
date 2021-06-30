@@ -289,6 +289,7 @@ namespace Hl7.Fhir.Specification.Tests
             resourceIds.Should().BeEquivalentTo(coreTypeUris);
         }
 
+#pragma warning disable CA1416 // Validate platform compatibility --> Only works on Windows platforms
         // [WMR 20170817] NEW
         // https://github.com/FirelyTeam/firely-net-sdk/issues/410
         // DirectorySource should gracefully handle insufficient access permissions
@@ -417,12 +418,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.Print($"[{nameof(TestAccessPermissions)}] Could not modify directory access permissions: '{ex.Message}'. Skip unit test...");
             }
         }
+#pragma warning restore CA1416 // Validate platform compatibility --> Only works on Windows platforms
 
         // LoadByName should handle duplicate filenames in (different subfolders of) the contentdirectory
         // https://github.com/FirelyTeam/firely-net-sdk/issues/875
 
         [TestMethod]
-        public void OpenDuplicateFileNames()
+        public async T.Task OpenDuplicateFileNames()
         {
             var testPath = prepareExampleDirectory(out int _);
 
@@ -440,11 +442,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var dirSource = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
 
-            Resource OpenStream(string filePath)
+            async T.Task<Resource> OpenStream(string filePath)
             {
                 using (var stream = dirSource.LoadArtifactByName(filePath))
                 {
-                    return new FhirXmlParser().Parse<Resource>(SerializationUtil.XmlReaderFromStream(stream));
+                    return await new FhirXmlParser().ParseAsync<Resource>(SerializationUtil.XmlReaderFromStream(stream));
                 }
             }
 
@@ -452,17 +454,17 @@ namespace Hl7.Fhir.Specification.Tests
 
             var rootFilePath = Path.Combine(testPath, srcFile);
             Assert.IsTrue(File.Exists(rootFilePath));
-            var res = OpenStream(rootFilePath);
+            var res = await OpenStream(rootFilePath);
             Assert.IsNotNull(res);
             // Modify the resource id and save back
             var dupId = res.Id;
             var rootId = Guid.NewGuid().ToString();
             res.Id = rootId;
-            _ = new FhirXmlSerializer().SerializeToString(res);
+            _ = await new FhirXmlSerializer().SerializeToStringAsync(res);
 
             var dupFilePath = Path.Combine(fullSubFolderPath, srcFile);
             Assert.IsTrue(File.Exists(dupFilePath));
-            res = OpenStream(dupFilePath);
+            res = await OpenStream(dupFilePath);
             Assert.IsNotNull(res);
             // Verify that we received the duplicate file from subfolder,
             // not the modified file in the root content directory
@@ -471,14 +473,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Retrieve artifact by file name
             // Should return nearest match, i.e. from content directory
-            res = OpenStream(srcFile);
+            res = await OpenStream(srcFile);
             Assert.IsNotNull(res);
             Assert.AreEqual(dupId, res.Id);
 
             // Retrieve artifact by relative path
             // Should return duplicate from subfolder
             var relPath = Path.Combine(subFolderName, srcFile);
-            res = OpenStream(relPath);
+            res = await OpenStream(relPath);
             Assert.IsNotNull(res);
             Assert.AreEqual(dupId, res.Id);
         }
