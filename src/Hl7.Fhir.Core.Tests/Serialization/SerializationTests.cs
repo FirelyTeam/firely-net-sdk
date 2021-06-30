@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Tests.Serialization
             string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonParser { Settings = { PermissiveParsing = true } };
-            var pat = await parser.ParseAsync<ValueSet>(json);
+            var pat = await parser.ParseAsync<Patient>(json);
             Assert.IsNotNull(pat);
 
             var xml = await FhirXmlSerializer.SerializeToStringAsync(pat);
