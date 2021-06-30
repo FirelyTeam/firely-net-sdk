@@ -201,15 +201,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "productName" => ProductNameElement,
-          "namePart" => NamePart?.Any() == true ? NamePart : null,
-          "countryLanguage" => CountryLanguage?.Any() == true ? CountryLanguage : null,
-          _ => default
+          case "productName":
+            value = ProductNameElement;
+            return ProductNameElement is not null;
+          case "namePart":
+            value = NamePart;
+            return NamePart?.Any() == true;
+          case "countryLanguage":
+            value = CountryLanguage;
+            return CountryLanguage?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -349,14 +355,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "part" => PartElement,
-          "type" => Type,
-          _ => default
+          case "part":
+            value = PartElement;
+            return PartElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -495,15 +505,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "country" => Country,
-          "jurisdiction" => Jurisdiction,
-          "language" => Language,
-          _ => default
+          case "country":
+            value = Country;
+            return Country is not null;
+          case "jurisdiction":
+            value = Jurisdiction;
+            return Jurisdiction is not null;
+          case "language":
+            value = Language;
+            return Language is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -718,18 +734,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "operationType" => OperationType,
-          "authorisationReferenceNumber" => AuthorisationReferenceNumber,
-          "effectiveDate" => EffectiveDateElement,
-          "confidentialityIndicator" => ConfidentialityIndicator,
-          "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
-          "regulator" => Regulator,
-          _ => default
+          case "operationType":
+            value = OperationType;
+            return OperationType is not null;
+          case "authorisationReferenceNumber":
+            value = AuthorisationReferenceNumber;
+            return AuthorisationReferenceNumber is not null;
+          case "effectiveDate":
+            value = EffectiveDateElement;
+            return EffectiveDateElement is not null;
+          case "confidentialityIndicator":
+            value = ConfidentialityIndicator;
+            return ConfidentialityIndicator is not null;
+          case "manufacturer":
+            value = Manufacturer;
+            return Manufacturer?.Any() == true;
+          case "regulator":
+            value = Regulator;
+            return Regulator is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -964,19 +992,43 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier?.Any() == true ? Identifier : null,
-          "type" => Type,
-          "intendedUse" => IntendedUse,
-          "indication" => Indication,
-          "status" => Status,
-          "date" => DateElement,
-          "species" => Species,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "intendedUse":
+            value = IntendedUse;
+            return IntendedUse is not null;
+          case "indication":
+            value = Indication;
+            return Indication is not null;
+          case "status":
+            value = Status;
+            return Status is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "species":
+            value = Species;
+            return Species is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("indication"))
+          {
+            value = Indication;
+            return Indication is not null && key.EndsWith(Indication.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1455,32 +1507,72 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "type" => Type,
-        "domain" => Domain,
-        "combinedPharmaceuticalDoseForm" => CombinedPharmaceuticalDoseForm,
-        "legalStatusOfSupply" => LegalStatusOfSupply,
-        "additionalMonitoringIndicator" => AdditionalMonitoringIndicator,
-        "specialMeasures" => SpecialMeasuresElement?.Any() == true ? SpecialMeasuresElement : null,
-        "paediatricUseIndicator" => PaediatricUseIndicator,
-        "productClassification" => ProductClassification?.Any() == true ? ProductClassification : null,
-        "marketingStatus" => MarketingStatus?.Any() == true ? MarketingStatus : null,
-        "pharmaceuticalProduct" => PharmaceuticalProduct?.Any() == true ? PharmaceuticalProduct : null,
-        "packagedMedicinalProduct" => PackagedMedicinalProduct?.Any() == true ? PackagedMedicinalProduct : null,
-        "attachedDocument" => AttachedDocument?.Any() == true ? AttachedDocument : null,
-        "masterFile" => MasterFile?.Any() == true ? MasterFile : null,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "clinicalTrial" => ClinicalTrial?.Any() == true ? ClinicalTrial : null,
-        "name" => Name?.Any() == true ? Name : null,
-        "crossReference" => CrossReference?.Any() == true ? CrossReference : null,
-        "manufacturingBusinessOperation" => ManufacturingBusinessOperation?.Any() == true ? ManufacturingBusinessOperation : null,
-        "specialDesignation" => SpecialDesignation?.Any() == true ? SpecialDesignation : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "domain":
+          value = Domain;
+          return Domain is not null;
+        case "combinedPharmaceuticalDoseForm":
+          value = CombinedPharmaceuticalDoseForm;
+          return CombinedPharmaceuticalDoseForm is not null;
+        case "legalStatusOfSupply":
+          value = LegalStatusOfSupply;
+          return LegalStatusOfSupply is not null;
+        case "additionalMonitoringIndicator":
+          value = AdditionalMonitoringIndicator;
+          return AdditionalMonitoringIndicator is not null;
+        case "specialMeasures":
+          value = SpecialMeasuresElement;
+          return SpecialMeasuresElement?.Any() == true;
+        case "paediatricUseIndicator":
+          value = PaediatricUseIndicator;
+          return PaediatricUseIndicator is not null;
+        case "productClassification":
+          value = ProductClassification;
+          return ProductClassification?.Any() == true;
+        case "marketingStatus":
+          value = MarketingStatus;
+          return MarketingStatus?.Any() == true;
+        case "pharmaceuticalProduct":
+          value = PharmaceuticalProduct;
+          return PharmaceuticalProduct?.Any() == true;
+        case "packagedMedicinalProduct":
+          value = PackagedMedicinalProduct;
+          return PackagedMedicinalProduct?.Any() == true;
+        case "attachedDocument":
+          value = AttachedDocument;
+          return AttachedDocument?.Any() == true;
+        case "masterFile":
+          value = MasterFile;
+          return MasterFile?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "clinicalTrial":
+          value = ClinicalTrial;
+          return ClinicalTrial?.Any() == true;
+        case "name":
+          value = Name;
+          return Name?.Any() == true;
+        case "crossReference":
+          value = CrossReference;
+          return CrossReference?.Any() == true;
+        case "manufacturingBusinessOperation":
+          value = ManufacturingBusinessOperation;
+          return ManufacturingBusinessOperation?.Any() == true;
+        case "specialDesignation":
+          value = SpecialDesignation;
+          return SpecialDesignation?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

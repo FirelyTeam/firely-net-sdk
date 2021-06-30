@@ -163,14 +163,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "status" => Status,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "status":
+            value = Status;
+            return Status is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -381,19 +385,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "firstDose" => FirstDose,
-          "maxSingleDose" => MaxSingleDose,
-          "maxDosePerDay" => MaxDosePerDay,
-          "maxDosePerTreatmentPeriod" => MaxDosePerTreatmentPeriod,
-          "maxTreatmentPeriod" => MaxTreatmentPeriod,
-          "targetSpecies" => TargetSpecies?.Any() == true ? TargetSpecies : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "firstDose":
+            value = FirstDose;
+            return FirstDose is not null;
+          case "maxSingleDose":
+            value = MaxSingleDose;
+            return MaxSingleDose is not null;
+          case "maxDosePerDay":
+            value = MaxDosePerDay;
+            return MaxDosePerDay is not null;
+          case "maxDosePerTreatmentPeriod":
+            value = MaxDosePerTreatmentPeriod;
+            return MaxDosePerTreatmentPeriod is not null;
+          case "maxTreatmentPeriod":
+            value = MaxTreatmentPeriod;
+            return MaxTreatmentPeriod is not null;
+          case "targetSpecies":
+            value = TargetSpecies;
+            return TargetSpecies?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -519,14 +537,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "withdrawalPeriod" => WithdrawalPeriod?.Any() == true ? WithdrawalPeriod : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "withdrawalPeriod":
+            value = WithdrawalPeriod;
+            return WithdrawalPeriod?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -683,15 +705,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "tissue" => Tissue,
-          "value" => Value,
-          "supportingInformation" => SupportingInformationElement,
-          _ => default
+          case "tissue":
+            value = Tissue;
+            return Tissue is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "supportingInformation":
+            value = SupportingInformationElement;
+            return SupportingInformationElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -898,19 +926,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "administrableDoseForm" => AdministrableDoseForm,
-        "unitOfPresentation" => UnitOfPresentation,
-        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
-        "device" => Device?.Any() == true ? Device : null,
-        "characteristics" => Characteristics?.Any() == true ? Characteristics : null,
-        "routeOfAdministration" => RouteOfAdministration?.Any() == true ? RouteOfAdministration : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "administrableDoseForm":
+          value = AdministrableDoseForm;
+          return AdministrableDoseForm is not null;
+        case "unitOfPresentation":
+          value = UnitOfPresentation;
+          return UnitOfPresentation is not null;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "device":
+          value = Device;
+          return Device?.Any() == true;
+        case "characteristics":
+          value = Characteristics;
+          return Characteristics?.Any() == true;
+        case "routeOfAdministration":
+          value = RouteOfAdministration;
+          return RouteOfAdministration?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

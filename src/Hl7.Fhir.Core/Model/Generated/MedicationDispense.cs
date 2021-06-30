@@ -229,14 +229,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "function" => Function,
-          "actor" => Actor,
-          _ => default
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -414,16 +418,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "wasSubstituted" => WasSubstitutedElement,
-          "type" => Type,
-          "reason" => Reason?.Any() == true ? Reason : null,
-          "responsibleParty" => ResponsibleParty?.Any() == true ? ResponsibleParty : null,
-          _ => default
+          case "wasSubstituted":
+            value = WasSubstitutedElement;
+            return WasSubstitutedElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "reason":
+            value = Reason;
+            return Reason?.Any() == true;
+          case "responsibleParty":
+            value = ResponsibleParty;
+            return ResponsibleParty?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1020,36 +1032,99 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason,
-        "category" => Category,
-        "medication" => Medication,
-        "subject" => Subject,
-        "context" => Context,
-        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "location" => Location,
-        "authorizingPrescription" => AuthorizingPrescription?.Any() == true ? AuthorizingPrescription : null,
-        "type" => Type,
-        "quantity" => Quantity,
-        "daysSupply" => DaysSupply,
-        "whenPrepared" => WhenPreparedElement,
-        "whenHandedOver" => WhenHandedOverElement,
-        "destination" => Destination,
-        "receiver" => Receiver?.Any() == true ? Receiver : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "dosageInstruction" => DosageInstruction?.Any() == true ? DosageInstruction : null,
-        "substitution" => Substitution,
-        "detectedIssue" => DetectedIssue?.Any() == true ? DetectedIssue : null,
-        "eventHistory" => EventHistory?.Any() == true ? EventHistory : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "medication":
+          value = Medication;
+          return Medication is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "authorizingPrescription":
+          value = AuthorizingPrescription;
+          return AuthorizingPrescription?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "daysSupply":
+          value = DaysSupply;
+          return DaysSupply is not null;
+        case "whenPrepared":
+          value = WhenPreparedElement;
+          return WhenPreparedElement is not null;
+        case "whenHandedOver":
+          value = WhenHandedOverElement;
+          return WhenHandedOverElement is not null;
+        case "destination":
+          value = Destination;
+          return Destination is not null;
+        case "receiver":
+          value = Receiver;
+          return Receiver?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "dosageInstruction":
+          value = DosageInstruction;
+          return DosageInstruction?.Any() == true;
+        case "substitution":
+          value = Substitution;
+          return Substitution is not null;
+        case "detectedIssue":
+          value = DetectedIssue;
+          return DetectedIssue?.Any() == true;
+        case "eventHistory":
+          value = EventHistory;
+          return EventHistory?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("statusReason"))
+        {
+          value = StatusReason;
+          return StatusReason is not null && key.EndsWith(StatusReason.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("medication"))
+        {
+          value = Medication;
+          return Medication is not null && key.EndsWith(Medication.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

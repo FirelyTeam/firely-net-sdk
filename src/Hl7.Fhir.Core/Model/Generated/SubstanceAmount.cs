@@ -162,14 +162,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "lowLimit" => LowLimit,
-          "highLimit" => HighLimit,
-          _ => default
+          case "lowLimit":
+            value = LowLimit;
+            return LowLimit is not null;
+          case "highLimit":
+            value = HighLimit;
+            return HighLimit is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -331,16 +335,34 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "amount" => Amount,
-        "amountType" => AmountType,
-        "amountText" => AmountTextElement,
-        "referenceRange" => ReferenceRange,
-        _ => default
+        case "amount":
+          value = Amount;
+          return Amount is not null;
+        case "amountType":
+          value = AmountType;
+          return AmountType is not null;
+        case "amountText":
+          value = AmountTextElement;
+          return AmountTextElement is not null;
+        case "referenceRange":
+          value = ReferenceRange;
+          return ReferenceRange is not null;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("amount"))
+        {
+          value = Amount;
+          return Amount is not null && key.EndsWith(Amount.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

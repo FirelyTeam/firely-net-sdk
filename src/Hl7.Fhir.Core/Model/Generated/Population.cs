@@ -187,16 +187,34 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "age" => Age,
-        "gender" => Gender,
-        "race" => Race,
-        "physiologicalCondition" => PhysiologicalCondition,
-        _ => default
+        case "age":
+          value = Age;
+          return Age is not null;
+        case "gender":
+          value = Gender;
+          return Gender is not null;
+        case "race":
+          value = Race;
+          return Race is not null;
+        case "physiologicalCondition":
+          value = PhysiologicalCondition;
+          return PhysiologicalCondition is not null;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("age"))
+        {
+          value = Age;
+          return Age is not null && key.EndsWith(Age.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

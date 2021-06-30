@@ -256,19 +256,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "category" => Category,
-          "description" => Description,
-          "priority" => Priority,
-          "start" => Start,
-          "addresses" => Addresses?.Any() == true ? Addresses : null,
-          "documentation" => Documentation?.Any() == true ? Documentation : null,
-          "target" => Target?.Any() == true ? Target : null,
-          _ => default
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "description":
+            value = Description;
+            return Description is not null;
+          case "priority":
+            value = Priority;
+            return Priority is not null;
+          case "start":
+            value = Start;
+            return Start is not null;
+          case "addresses":
+            value = Addresses;
+            return Addresses?.Any() == true;
+          case "documentation":
+            value = Documentation;
+            return Documentation?.Any() == true;
+          case "target":
+            value = Target;
+            return Target?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -412,15 +426,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "measure" => Measure,
-          "detail" => Detail,
-          "due" => Due,
-          _ => default
+          case "measure":
+            value = Measure;
+            return Measure is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          case "due":
+            value = Due;
+            return Due is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("detail"))
+          {
+            value = Detail;
+            return Detail is not null && key.EndsWith(Detail.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1231,39 +1261,113 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "prefix" => PrefixElement,
-          "title" => TitleElement,
-          "description" => DescriptionElement,
-          "textEquivalent" => TextEquivalentElement,
-          "priority" => PriorityElement,
-          "code" => Code?.Any() == true ? Code : null,
-          "reason" => Reason?.Any() == true ? Reason : null,
-          "documentation" => Documentation?.Any() == true ? Documentation : null,
-          "goalId" => GoalIdElement?.Any() == true ? GoalIdElement : null,
-          "subject" => Subject,
-          "trigger" => Trigger?.Any() == true ? Trigger : null,
-          "condition" => Condition?.Any() == true ? Condition : null,
-          "input" => Input?.Any() == true ? Input : null,
-          "output" => Output?.Any() == true ? Output : null,
-          "relatedAction" => RelatedAction?.Any() == true ? RelatedAction : null,
-          "timing" => Timing,
-          "participant" => Participant?.Any() == true ? Participant : null,
-          "type" => Type,
-          "groupingBehavior" => GroupingBehaviorElement,
-          "selectionBehavior" => SelectionBehaviorElement,
-          "requiredBehavior" => RequiredBehaviorElement,
-          "precheckBehavior" => PrecheckBehaviorElement,
-          "cardinalityBehavior" => CardinalityBehaviorElement,
-          "definition" => Definition,
-          "transform" => TransformElement,
-          "dynamicValue" => DynamicValue?.Any() == true ? DynamicValue : null,
-          "action" => Action?.Any() == true ? Action : null,
-          _ => default
+          case "prefix":
+            value = PrefixElement;
+            return PrefixElement is not null;
+          case "title":
+            value = TitleElement;
+            return TitleElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "textEquivalent":
+            value = TextEquivalentElement;
+            return TextEquivalentElement is not null;
+          case "priority":
+            value = PriorityElement;
+            return PriorityElement is not null;
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          case "reason":
+            value = Reason;
+            return Reason?.Any() == true;
+          case "documentation":
+            value = Documentation;
+            return Documentation?.Any() == true;
+          case "goalId":
+            value = GoalIdElement;
+            return GoalIdElement?.Any() == true;
+          case "subject":
+            value = Subject;
+            return Subject is not null;
+          case "trigger":
+            value = Trigger;
+            return Trigger?.Any() == true;
+          case "condition":
+            value = Condition;
+            return Condition?.Any() == true;
+          case "input":
+            value = Input;
+            return Input?.Any() == true;
+          case "output":
+            value = Output;
+            return Output?.Any() == true;
+          case "relatedAction":
+            value = RelatedAction;
+            return RelatedAction?.Any() == true;
+          case "timing":
+            value = Timing;
+            return Timing is not null;
+          case "participant":
+            value = Participant;
+            return Participant?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "groupingBehavior":
+            value = GroupingBehaviorElement;
+            return GroupingBehaviorElement is not null;
+          case "selectionBehavior":
+            value = SelectionBehaviorElement;
+            return SelectionBehaviorElement is not null;
+          case "requiredBehavior":
+            value = RequiredBehaviorElement;
+            return RequiredBehaviorElement is not null;
+          case "precheckBehavior":
+            value = PrecheckBehaviorElement;
+            return PrecheckBehaviorElement is not null;
+          case "cardinalityBehavior":
+            value = CardinalityBehaviorElement;
+            return CardinalityBehaviorElement is not null;
+          case "definition":
+            value = Definition;
+            return Definition is not null;
+          case "transform":
+            value = TransformElement;
+            return TransformElement is not null;
+          case "dynamicValue":
+            value = DynamicValue;
+            return DynamicValue?.Any() == true;
+          case "action":
+            value = Action;
+            return Action?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("subject"))
+          {
+            value = Subject;
+            return Subject is not null && key.EndsWith(Subject.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("timing"))
+          {
+            value = Timing;
+            return Timing is not null && key.EndsWith(Timing.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("definition"))
+          {
+            value = Definition;
+            return Definition is not null && key.EndsWith(Definition.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1427,14 +1531,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "kind" => KindElement,
-          "expression" => Expression,
-          _ => default
+          case "kind":
+            value = KindElement;
+            return KindElement is not null;
+          case "expression":
+            value = Expression;
+            return Expression is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1612,15 +1720,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "actionId" => ActionIdElement,
-          "relationship" => RelationshipElement,
-          "offset" => Offset,
-          _ => default
+          case "actionId":
+            value = ActionIdElement;
+            return ActionIdElement is not null;
+          case "relationship":
+            value = RelationshipElement;
+            return RelationshipElement is not null;
+          case "offset":
+            value = Offset;
+            return Offset is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("offset"))
+          {
+            value = Offset;
+            return Offset is not null && key.EndsWith(Offset.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1760,14 +1884,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "role" => Role,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1904,14 +2032,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "path" => PathElement,
-          "expression" => Expression,
-          _ => default
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "expression":
+            value = Expression;
+            return Expression is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2791,43 +2923,115 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "title" => TitleElement,
-        "subtitle" => SubtitleElement,
-        "type" => Type,
-        "status" => StatusElement,
-        "experimental" => ExperimentalElement,
-        "subject" => Subject,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "purpose" => Purpose,
-        "usage" => UsageElement,
-        "copyright" => Copyright,
-        "approvalDate" => ApprovalDateElement,
-        "lastReviewDate" => LastReviewDateElement,
-        "effectivePeriod" => EffectivePeriod,
-        "topic" => Topic?.Any() == true ? Topic : null,
-        "author" => Author?.Any() == true ? Author : null,
-        "editor" => Editor?.Any() == true ? Editor : null,
-        "reviewer" => Reviewer?.Any() == true ? Reviewer : null,
-        "endorser" => Endorser?.Any() == true ? Endorser : null,
-        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
-        "library" => LibraryElement?.Any() == true ? LibraryElement : null,
-        "goal" => Goal?.Any() == true ? Goal : null,
-        "action" => Action?.Any() == true ? Action : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "subtitle":
+          value = SubtitleElement;
+          return SubtitleElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "usage":
+          value = UsageElement;
+          return UsageElement is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "topic":
+          value = Topic;
+          return Topic?.Any() == true;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "editor":
+          value = Editor;
+          return Editor?.Any() == true;
+        case "reviewer":
+          value = Reviewer;
+          return Reviewer?.Any() == true;
+        case "endorser":
+          value = Endorser;
+          return Endorser?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "library":
+          value = LibraryElement;
+          return LibraryElement?.Any() == true;
+        case "goal":
+          value = Goal;
+          return Goal?.Any() == true;
+        case "action":
+          value = Action;
+          return Action?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("subject"))
+        {
+          value = Subject;
+          return Subject is not null && key.EndsWith(Subject.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

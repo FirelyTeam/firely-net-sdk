@@ -194,14 +194,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "item" => Item?.Any() == true ? Item : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "item":
+            value = Item;
+            return Item?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -358,15 +362,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "itemCodeableConcept" => ItemCodeableConcept,
-          "itemReference" => ItemReference,
-          "basis" => BasisElement,
-          _ => default
+          case "itemCodeableConcept":
+            value = ItemCodeableConcept;
+            return ItemCodeableConcept is not null;
+          case "itemReference":
+            value = ItemReference;
+            return ItemReference is not null;
+          case "basis":
+            value = BasisElement;
+            return BasisElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -915,32 +925,82 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason,
-        "code" => Code,
-        "description" => DescriptionElement,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "effective" => Effective,
-        "date" => DateElement,
-        "assessor" => Assessor,
-        "previous" => Previous,
-        "problem" => Problem?.Any() == true ? Problem : null,
-        "investigation" => Investigation?.Any() == true ? Investigation : null,
-        "protocol" => ProtocolElement?.Any() == true ? ProtocolElement : null,
-        "summary" => SummaryElement,
-        "finding" => Finding?.Any() == true ? Finding : null,
-        "prognosisCodeableConcept" => PrognosisCodeableConcept?.Any() == true ? PrognosisCodeableConcept : null,
-        "prognosisReference" => PrognosisReference?.Any() == true ? PrognosisReference : null,
-        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "assessor":
+          value = Assessor;
+          return Assessor is not null;
+        case "previous":
+          value = Previous;
+          return Previous is not null;
+        case "problem":
+          value = Problem;
+          return Problem?.Any() == true;
+        case "investigation":
+          value = Investigation;
+          return Investigation?.Any() == true;
+        case "protocol":
+          value = ProtocolElement;
+          return ProtocolElement?.Any() == true;
+        case "summary":
+          value = SummaryElement;
+          return SummaryElement is not null;
+        case "finding":
+          value = Finding;
+          return Finding?.Any() == true;
+        case "prognosisCodeableConcept":
+          value = PrognosisCodeableConcept;
+          return PrognosisCodeableConcept?.Any() == true;
+        case "prognosisReference":
+          value = PrognosisReference;
+          return PrognosisReference?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && key.EndsWith(Effective.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

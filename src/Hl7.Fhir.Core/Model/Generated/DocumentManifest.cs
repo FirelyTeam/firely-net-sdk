@@ -164,14 +164,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier,
-          "ref" => Ref,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "ref":
+            value = Ref;
+            return Ref is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -544,24 +548,48 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "masterIdentifier" => MasterIdentifier,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "type" => Type,
-        "subject" => Subject,
-        "created" => CreatedElement,
-        "author" => Author?.Any() == true ? Author : null,
-        "recipient" => Recipient?.Any() == true ? Recipient : null,
-        "source" => SourceElement,
-        "description" => DescriptionElement,
-        "content" => Content?.Any() == true ? Content : null,
-        "related" => Related?.Any() == true ? Related : null,
-        _ => default
+        case "masterIdentifier":
+          value = MasterIdentifier;
+          return MasterIdentifier is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "recipient":
+          value = Recipient;
+          return Recipient?.Any() == true;
+        case "source":
+          value = SourceElement;
+          return SourceElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "content":
+          value = Content;
+          return Content?.Any() == true;
+        case "related":
+          value = Related;
+          return Related?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

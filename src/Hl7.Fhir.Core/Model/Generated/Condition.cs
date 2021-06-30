@@ -275,15 +275,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "summary" => Summary,
-          "assessment" => Assessment?.Any() == true ? Assessment : null,
-          "type" => Type,
-          _ => default
+          case "summary":
+            value = Summary;
+            return Summary is not null;
+          case "assessment":
+            value = Assessment;
+            return Assessment?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -407,14 +413,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code?.Any() == true ? Code : null,
-          "detail" => Detail?.Any() == true ? Detail : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          case "detail":
+            value = Detail;
+            return Detail?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -827,29 +837,78 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "clinicalStatus" => ClinicalStatus,
-        "verificationStatus" => VerificationStatus,
-        "category" => Category?.Any() == true ? Category : null,
-        "severity" => Severity,
-        "code" => Code,
-        "bodySite" => BodySite?.Any() == true ? BodySite : null,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "onset" => Onset,
-        "abatement" => Abatement,
-        "recordedDate" => RecordedDateElement,
-        "recorder" => Recorder,
-        "asserter" => Asserter,
-        "stage" => Stage?.Any() == true ? Stage : null,
-        "evidence" => Evidence?.Any() == true ? Evidence : null,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "clinicalStatus":
+          value = ClinicalStatus;
+          return ClinicalStatus is not null;
+        case "verificationStatus":
+          value = VerificationStatus;
+          return VerificationStatus is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "severity":
+          value = Severity;
+          return Severity is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "bodySite":
+          value = BodySite;
+          return BodySite?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "onset":
+          value = Onset;
+          return Onset is not null;
+        case "abatement":
+          value = Abatement;
+          return Abatement is not null;
+        case "recordedDate":
+          value = RecordedDateElement;
+          return RecordedDateElement is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "asserter":
+          value = Asserter;
+          return Asserter is not null;
+        case "stage":
+          value = Stage;
+          return Stage?.Any() == true;
+        case "evidence":
+          value = Evidence;
+          return Evidence?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("onset"))
+        {
+          value = Onset;
+          return Onset is not null && key.EndsWith(Onset.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("abatement"))
+        {
+          value = Abatement;
+          return Abatement is not null && key.EndsWith(Abatement.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

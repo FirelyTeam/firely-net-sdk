@@ -338,20 +338,36 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "appointment" => Appointment,
-        "start" => StartElement,
-        "end" => EndElement,
-        "participantType" => ParticipantType?.Any() == true ? ParticipantType : null,
-        "actor" => Actor,
-        "participantStatus" => ParticipantStatusElement,
-        "comment" => CommentElement,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "appointment":
+          value = Appointment;
+          return Appointment is not null;
+        case "start":
+          value = StartElement;
+          return StartElement is not null;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "participantType":
+          value = ParticipantType;
+          return ParticipantType?.Any() == true;
+        case "actor":
+          value = Actor;
+          return Actor is not null;
+        case "participantStatus":
+          value = ParticipantStatusElement;
+          return ParticipantStatusElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

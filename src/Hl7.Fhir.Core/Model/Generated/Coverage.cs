@@ -218,15 +218,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "value" => ValueElement,
-          "name" => NameElement,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = ValueElement;
+            return ValueElement is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -368,15 +374,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "value" => Value,
-          "exception" => Exception?.Any() == true ? Exception : null,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "exception":
+            value = Exception;
+            return Exception?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -497,14 +519,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "period" => Period,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1006,29 +1032,63 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "type" => Type,
-        "policyHolder" => PolicyHolder,
-        "subscriber" => Subscriber,
-        "subscriberId" => SubscriberIdElement,
-        "beneficiary" => Beneficiary,
-        "dependent" => DependentElement,
-        "relationship" => Relationship,
-        "period" => Period,
-        "payor" => Payor?.Any() == true ? Payor : null,
-        "class" => Class?.Any() == true ? Class : null,
-        "order" => OrderElement,
-        "network" => NetworkElement,
-        "costToBeneficiary" => CostToBeneficiary?.Any() == true ? CostToBeneficiary : null,
-        "subrogation" => SubrogationElement,
-        "contract" => Contract?.Any() == true ? Contract : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "policyHolder":
+          value = PolicyHolder;
+          return PolicyHolder is not null;
+        case "subscriber":
+          value = Subscriber;
+          return Subscriber is not null;
+        case "subscriberId":
+          value = SubscriberIdElement;
+          return SubscriberIdElement is not null;
+        case "beneficiary":
+          value = Beneficiary;
+          return Beneficiary is not null;
+        case "dependent":
+          value = DependentElement;
+          return DependentElement is not null;
+        case "relationship":
+          value = Relationship;
+          return Relationship is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "payor":
+          value = Payor;
+          return Payor?.Any() == true;
+        case "class":
+          value = Class;
+          return Class?.Any() == true;
+        case "order":
+          value = OrderElement;
+          return OrderElement is not null;
+        case "network":
+          value = NetworkElement;
+          return NetworkElement is not null;
+        case "costToBeneficiary":
+          value = CostToBeneficiary;
+          return CostToBeneficiary?.Any() == true;
+        case "subrogation":
+          value = SubrogationElement;
+          return SubrogationElement is not null;
+        case "contract":
+          value = Contract;
+          return Contract?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

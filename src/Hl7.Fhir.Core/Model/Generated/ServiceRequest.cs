@@ -905,45 +905,131 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "replaces" => Replaces?.Any() == true ? Replaces : null,
-        "requisition" => Requisition,
-        "status" => StatusElement,
-        "intent" => IntentElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "priority" => PriorityElement,
-        "doNotPerform" => DoNotPerformElement,
-        "code" => Code,
-        "orderDetail" => OrderDetail?.Any() == true ? OrderDetail : null,
-        "quantity" => Quantity,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "occurrence" => Occurrence,
-        "asNeeded" => AsNeeded,
-        "authoredOn" => AuthoredOnElement,
-        "requester" => Requester,
-        "performerType" => PerformerType,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "locationCode" => LocationCode?.Any() == true ? LocationCode : null,
-        "locationReference" => LocationReference?.Any() == true ? LocationReference : null,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "insurance" => Insurance?.Any() == true ? Insurance : null,
-        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
-        "specimen" => Specimen?.Any() == true ? Specimen : null,
-        "bodySite" => BodySite?.Any() == true ? BodySite : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "patientInstruction" => PatientInstructionElement,
-        "relevantHistory" => RelevantHistory?.Any() == true ? RelevantHistory : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
+        case "requisition":
+          value = Requisition;
+          return Requisition is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "doNotPerform":
+          value = DoNotPerformElement;
+          return DoNotPerformElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "orderDetail":
+          value = OrderDetail;
+          return OrderDetail?.Any() == true;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "asNeeded":
+          value = AsNeeded;
+          return AsNeeded is not null;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "performerType":
+          value = PerformerType;
+          return PerformerType is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "locationCode":
+          value = LocationCode;
+          return LocationCode?.Any() == true;
+        case "locationReference":
+          value = LocationReference;
+          return LocationReference?.Any() == true;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "insurance":
+          value = Insurance;
+          return Insurance?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "specimen":
+          value = Specimen;
+          return Specimen?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "patientInstruction":
+          value = PatientInstructionElement;
+          return PatientInstructionElement is not null;
+        case "relevantHistory":
+          value = RelevantHistory;
+          return RelevantHistory?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("quantity"))
+        {
+          value = Quantity;
+          return Quantity is not null && key.EndsWith(Quantity.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("asNeeded"))
+        {
+          value = AsNeeded;
+          return AsNeeded is not null && key.EndsWith(AsNeeded.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

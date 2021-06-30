@@ -226,15 +226,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier,
-          "expiry" => ExpiryElement,
-          "quantity" => Quantity,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "expiry":
+            value = ExpiryElement;
+            return ExpiryElement is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -358,14 +364,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "quantity" => Quantity,
-          "substance" => Substance,
-          _ => default
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "substance":
+            value = Substance;
+            return Substance is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("substance"))
+          {
+            value = Substance;
+            return Substance is not null && key.EndsWith(Substance.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -603,19 +623,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "code" => Code,
-        "description" => DescriptionElement,
-        "instance" => Instance?.Any() == true ? Instance : null,
-        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "instance":
+          value = Instance;
+          return Instance?.Any() == true;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

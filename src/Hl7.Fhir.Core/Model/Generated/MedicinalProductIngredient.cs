@@ -201,16 +201,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "group" => Group,
-          "confidentiality" => Confidentiality,
-          "strength" => Strength?.Any() == true ? Strength : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "group":
+            value = Group;
+            return Group is not null;
+          case "confidentiality":
+            value = Confidentiality;
+            return Confidentiality is not null;
+          case "strength":
+            value = Strength;
+            return Strength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -442,19 +450,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "presentation" => Presentation,
-          "presentationLowLimit" => PresentationLowLimit,
-          "concentration" => Concentration,
-          "concentrationLowLimit" => ConcentrationLowLimit,
-          "measurementPoint" => MeasurementPointElement,
-          "country" => Country?.Any() == true ? Country : null,
-          "referenceStrength" => ReferenceStrength?.Any() == true ? ReferenceStrength : null,
-          _ => default
+          case "presentation":
+            value = Presentation;
+            return Presentation is not null;
+          case "presentationLowLimit":
+            value = PresentationLowLimit;
+            return PresentationLowLimit is not null;
+          case "concentration":
+            value = Concentration;
+            return Concentration is not null;
+          case "concentrationLowLimit":
+            value = ConcentrationLowLimit;
+            return ConcentrationLowLimit is not null;
+          case "measurementPoint":
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
+          case "country":
+            value = Country;
+            return Country?.Any() == true;
+          case "referenceStrength":
+            value = ReferenceStrength;
+            return ReferenceStrength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -652,17 +674,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "substance" => Substance,
-          "strength" => Strength,
-          "strengthLowLimit" => StrengthLowLimit,
-          "measurementPoint" => MeasurementPointElement,
-          "country" => Country?.Any() == true ? Country : null,
-          _ => default
+          case "substance":
+            value = Substance;
+            return Substance is not null;
+          case "strength":
+            value = Strength;
+            return Strength is not null;
+          case "strengthLowLimit":
+            value = StrengthLowLimit;
+            return StrengthLowLimit is not null;
+          case "measurementPoint":
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
+          case "country":
+            value = Country;
+            return Country?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -786,14 +818,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "strength" => Strength?.Any() == true ? Strength : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "strength":
+            value = Strength;
+            return Strength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -994,18 +1030,30 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier,
-        "role" => Role,
-        "allergenicIndicator" => AllergenicIndicatorElement,
-        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
-        "specifiedSubstance" => SpecifiedSubstance?.Any() == true ? SpecifiedSubstance : null,
-        "substance" => Substance,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "role":
+          value = Role;
+          return Role is not null;
+        case "allergenicIndicator":
+          value = AllergenicIndicatorElement;
+          return AllergenicIndicatorElement is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "specifiedSubstance":
+          value = SpecifiedSubstance;
+          return SpecifiedSubstance?.Any() == true;
+        case "substance":
+          value = Substance;
+          return Substance is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

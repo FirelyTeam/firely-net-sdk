@@ -248,15 +248,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "measure" => Measure,
-          "detail" => Detail,
-          "due" => Due,
-          _ => default
+          case "measure":
+            value = Measure;
+            return Measure is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          case "due":
+            value = Due;
+            return Due is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("detail"))
+          {
+            value = Detail;
+            return Detail is not null && key.EndsWith(Detail.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("due"))
+          {
+            value = Due;
+            return Due is not null && key.EndsWith(Due.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -690,28 +711,70 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "lifecycleStatus" => LifecycleStatusElement,
-        "achievementStatus" => AchievementStatus,
-        "category" => Category?.Any() == true ? Category : null,
-        "priority" => Priority,
-        "description" => Description,
-        "subject" => Subject,
-        "start" => Start,
-        "target" => Target?.Any() == true ? Target : null,
-        "statusDate" => StatusDateElement,
-        "statusReason" => StatusReasonElement,
-        "expressedBy" => ExpressedBy,
-        "addresses" => Addresses?.Any() == true ? Addresses : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "outcomeCode" => OutcomeCode?.Any() == true ? OutcomeCode : null,
-        "outcomeReference" => OutcomeReference?.Any() == true ? OutcomeReference : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "lifecycleStatus":
+          value = LifecycleStatusElement;
+          return LifecycleStatusElement is not null;
+        case "achievementStatus":
+          value = AchievementStatus;
+          return AchievementStatus is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "priority":
+          value = Priority;
+          return Priority is not null;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "start":
+          value = Start;
+          return Start is not null;
+        case "target":
+          value = Target;
+          return Target?.Any() == true;
+        case "statusDate":
+          value = StatusDateElement;
+          return StatusDateElement is not null;
+        case "statusReason":
+          value = StatusReasonElement;
+          return StatusReasonElement is not null;
+        case "expressedBy":
+          value = ExpressedBy;
+          return ExpressedBy is not null;
+        case "addresses":
+          value = Addresses;
+          return Addresses?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "outcomeCode":
+          value = OutcomeCode;
+          return OutcomeCode?.Any() == true;
+        case "outcomeReference":
+          value = OutcomeReference;
+          return OutcomeReference?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("start"))
+        {
+          value = Start;
+          return Start is not null && key.EndsWith(Start.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -207,14 +207,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "relationtype" => RelationtypeElement,
-          "item" => Item,
-          _ => default
+          case "relationtype":
+            value = RelationtypeElement;
+            return RelationtypeElement is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -601,25 +605,51 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "type" => Type,
-        "orderable" => OrderableElement,
-        "referencedItem" => ReferencedItem,
-        "additionalIdentifier" => AdditionalIdentifier?.Any() == true ? AdditionalIdentifier : null,
-        "classification" => Classification?.Any() == true ? Classification : null,
-        "status" => StatusElement,
-        "validityPeriod" => ValidityPeriod,
-        "validTo" => ValidToElement,
-        "lastUpdated" => LastUpdatedElement,
-        "additionalCharacteristic" => AdditionalCharacteristic?.Any() == true ? AdditionalCharacteristic : null,
-        "additionalClassification" => AdditionalClassification?.Any() == true ? AdditionalClassification : null,
-        "relatedEntry" => RelatedEntry?.Any() == true ? RelatedEntry : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "orderable":
+          value = OrderableElement;
+          return OrderableElement is not null;
+        case "referencedItem":
+          value = ReferencedItem;
+          return ReferencedItem is not null;
+        case "additionalIdentifier":
+          value = AdditionalIdentifier;
+          return AdditionalIdentifier?.Any() == true;
+        case "classification":
+          value = Classification;
+          return Classification?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "validityPeriod":
+          value = ValidityPeriod;
+          return ValidityPeriod is not null;
+        case "validTo":
+          value = ValidToElement;
+          return ValidToElement is not null;
+        case "lastUpdated":
+          value = LastUpdatedElement;
+          return LastUpdatedElement is not null;
+        case "additionalCharacteristic":
+          value = AdditionalCharacteristic;
+          return AdditionalCharacteristic?.Any() == true;
+        case "additionalClassification":
+          value = AdditionalClassification;
+          return AdditionalClassification?.Any() == true;
+        case "relatedEntry":
+          value = RelatedEntry;
+          return RelatedEntry?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

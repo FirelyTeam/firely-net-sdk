@@ -205,14 +205,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "role" => Role,
-          "actor" => Actor,
-          _ => default
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -372,15 +376,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "chargeItem" => ChargeItem,
-          "priceComponent" => PriceComponent?.Any() == true ? PriceComponent : null,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "chargeItem":
+            value = ChargeItem;
+            return ChargeItem is not null;
+          case "priceComponent":
+            value = PriceComponent;
+            return PriceComponent?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("chargeItem"))
+          {
+            value = ChargeItem;
+            return ChargeItem is not null && key.EndsWith(ChargeItem.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -574,16 +594,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "code" => Code,
-          "factor" => FactorElement,
-          "amount" => Amount,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1012,28 +1040,60 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "cancelledReason" => CancelledReasonElement,
-        "type" => Type,
-        "subject" => Subject,
-        "recipient" => Recipient,
-        "date" => DateElement,
-        "participant" => Participant?.Any() == true ? Participant : null,
-        "issuer" => Issuer,
-        "account" => Account,
-        "lineItem" => LineItem?.Any() == true ? LineItem : null,
-        "totalPriceComponent" => TotalPriceComponent?.Any() == true ? TotalPriceComponent : null,
-        "totalNet" => TotalNet,
-        "totalGross" => TotalGross,
-        "paymentTerms" => PaymentTerms,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "cancelledReason":
+          value = CancelledReasonElement;
+          return CancelledReasonElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "recipient":
+          value = Recipient;
+          return Recipient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "issuer":
+          value = Issuer;
+          return Issuer is not null;
+        case "account":
+          value = Account;
+          return Account is not null;
+        case "lineItem":
+          value = LineItem;
+          return LineItem?.Any() == true;
+        case "totalPriceComponent":
+          value = TotalPriceComponent;
+          return TotalPriceComponent?.Any() == true;
+        case "totalNet":
+          value = TotalNet;
+          return TotalNet is not null;
+        case "totalGross":
+          value = TotalGross;
+          return TotalGross is not null;
+        case "paymentTerms":
+          value = PaymentTerms;
+          return PaymentTerms is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

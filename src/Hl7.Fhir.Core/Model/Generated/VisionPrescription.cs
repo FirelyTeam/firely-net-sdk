@@ -619,26 +619,54 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "product" => Product,
-          "eye" => EyeElement,
-          "sphere" => SphereElement,
-          "cylinder" => CylinderElement,
-          "axis" => AxisElement,
-          "prism" => Prism?.Any() == true ? Prism : null,
-          "add" => AddElement,
-          "power" => PowerElement,
-          "backCurve" => BackCurveElement,
-          "diameter" => DiameterElement,
-          "duration" => Duration,
-          "color" => ColorElement,
-          "brand" => BrandElement,
-          "note" => Note?.Any() == true ? Note : null,
-          _ => default
+          case "product":
+            value = Product;
+            return Product is not null;
+          case "eye":
+            value = EyeElement;
+            return EyeElement is not null;
+          case "sphere":
+            value = SphereElement;
+            return SphereElement is not null;
+          case "cylinder":
+            value = CylinderElement;
+            return CylinderElement is not null;
+          case "axis":
+            value = AxisElement;
+            return AxisElement is not null;
+          case "prism":
+            value = Prism;
+            return Prism?.Any() == true;
+          case "add":
+            value = AddElement;
+            return AddElement is not null;
+          case "power":
+            value = PowerElement;
+            return PowerElement is not null;
+          case "backCurve":
+            value = BackCurveElement;
+            return BackCurveElement is not null;
+          case "diameter":
+            value = DiameterElement;
+            return DiameterElement is not null;
+          case "duration":
+            value = Duration;
+            return Duration is not null;
+          case "color":
+            value = ColorElement;
+            return ColorElement is not null;
+          case "brand":
+            value = BrandElement;
+            return BrandElement is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -808,14 +836,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "amount" => AmountElement,
-          "base" => BaseElement,
-          _ => default
+          case "amount":
+            value = AmountElement;
+            return AmountElement is not null;
+          case "base":
+            value = BaseElement;
+            return BaseElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1097,20 +1129,36 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "created" => CreatedElement,
-        "patient" => Patient,
-        "encounter" => Encounter,
-        "dateWritten" => DateWrittenElement,
-        "prescriber" => Prescriber,
-        "lensSpecification" => LensSpecification?.Any() == true ? LensSpecification : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "dateWritten":
+          value = DateWrittenElement;
+          return DateWrittenElement is not null;
+        case "prescriber":
+          value = Prescriber;
+          return Prescriber is not null;
+        case "lensSpecification":
+          value = LensSpecification;
+          return LensSpecification?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

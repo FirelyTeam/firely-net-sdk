@@ -162,14 +162,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "comment" => Comment,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "comment":
+            value = Comment;
+            return Comment is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -398,16 +402,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "daysOfWeek" => DaysOfWeekElement?.Any() == true ? DaysOfWeekElement : null,
-          "allDay" => AllDayElement,
-          "availableStartTime" => AvailableStartTimeElement,
-          "availableEndTime" => AvailableEndTimeElement,
-          _ => default
+          case "daysOfWeek":
+            value = DaysOfWeekElement;
+            return DaysOfWeekElement?.Any() == true;
+          case "allDay":
+            value = AllDayElement;
+            return AllDayElement is not null;
+          case "availableStartTime":
+            value = AvailableStartTimeElement;
+            return AvailableStartTimeElement is not null;
+          case "availableEndTime":
+            value = AvailableEndTimeElement;
+            return AvailableEndTimeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -547,14 +559,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "description" => DescriptionElement,
-          "during" => During,
-          _ => default
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "during":
+            value = During;
+            return During is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1170,36 +1186,84 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "active" => ActiveElement,
-        "providedBy" => ProvidedBy,
-        "category" => Category?.Any() == true ? Category : null,
-        "type" => Type?.Any() == true ? Type : null,
-        "specialty" => Specialty?.Any() == true ? Specialty : null,
-        "location" => Location?.Any() == true ? Location : null,
-        "name" => NameElement,
-        "comment" => CommentElement,
-        "extraDetails" => ExtraDetails,
-        "photo" => Photo,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "coverageArea" => CoverageArea?.Any() == true ? CoverageArea : null,
-        "serviceProvisionCode" => ServiceProvisionCode?.Any() == true ? ServiceProvisionCode : null,
-        "eligibility" => Eligibility?.Any() == true ? Eligibility : null,
-        "program" => Program?.Any() == true ? Program : null,
-        "characteristic" => Characteristic?.Any() == true ? Characteristic : null,
-        "communication" => Communication?.Any() == true ? Communication : null,
-        "referralMethod" => ReferralMethod?.Any() == true ? ReferralMethod : null,
-        "appointmentRequired" => AppointmentRequiredElement,
-        "availableTime" => AvailableTime?.Any() == true ? AvailableTime : null,
-        "notAvailable" => NotAvailable?.Any() == true ? NotAvailable : null,
-        "availabilityExceptions" => AvailabilityExceptionsElement,
-        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "providedBy":
+          value = ProvidedBy;
+          return ProvidedBy is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        case "extraDetails":
+          value = ExtraDetails;
+          return ExtraDetails is not null;
+        case "photo":
+          value = Photo;
+          return Photo is not null;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "coverageArea":
+          value = CoverageArea;
+          return CoverageArea?.Any() == true;
+        case "serviceProvisionCode":
+          value = ServiceProvisionCode;
+          return ServiceProvisionCode?.Any() == true;
+        case "eligibility":
+          value = Eligibility;
+          return Eligibility?.Any() == true;
+        case "program":
+          value = Program;
+          return Program?.Any() == true;
+        case "characteristic":
+          value = Characteristic;
+          return Characteristic?.Any() == true;
+        case "communication":
+          value = Communication;
+          return Communication?.Any() == true;
+        case "referralMethod":
+          value = ReferralMethod;
+          return ReferralMethod?.Any() == true;
+        case "appointmentRequired":
+          value = AppointmentRequiredElement;
+          return AppointmentRequiredElement is not null;
+        case "availableTime":
+          value = AvailableTime;
+          return AvailableTime?.Any() == true;
+        case "notAvailable":
+          value = NotAvailable;
+          return NotAvailable?.Any() == true;
+        case "availabilityExceptions":
+          value = AvailabilityExceptionsElement;
+          return AvailabilityExceptionsElement is not null;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

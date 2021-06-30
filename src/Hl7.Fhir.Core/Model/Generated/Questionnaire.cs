@@ -807,28 +807,60 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "linkId" => LinkIdElement,
-          "definition" => DefinitionElement,
-          "code" => Code?.Any() == true ? Code : null,
-          "prefix" => PrefixElement,
-          "text" => TextElement,
-          "type" => TypeElement,
-          "enableWhen" => EnableWhen?.Any() == true ? EnableWhen : null,
-          "enableBehavior" => EnableBehaviorElement,
-          "required" => RequiredElement,
-          "repeats" => RepeatsElement,
-          "readOnly" => ReadOnlyElement,
-          "maxLength" => MaxLengthElement,
-          "answerValueSet" => AnswerValueSetElement,
-          "answerOption" => AnswerOption?.Any() == true ? AnswerOption : null,
-          "initial" => Initial?.Any() == true ? Initial : null,
-          "item" => Item?.Any() == true ? Item : null,
-          _ => default
+          case "linkId":
+            value = LinkIdElement;
+            return LinkIdElement is not null;
+          case "definition":
+            value = DefinitionElement;
+            return DefinitionElement is not null;
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          case "prefix":
+            value = PrefixElement;
+            return PrefixElement is not null;
+          case "text":
+            value = TextElement;
+            return TextElement is not null;
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "enableWhen":
+            value = EnableWhen;
+            return EnableWhen?.Any() == true;
+          case "enableBehavior":
+            value = EnableBehaviorElement;
+            return EnableBehaviorElement is not null;
+          case "required":
+            value = RequiredElement;
+            return RequiredElement is not null;
+          case "repeats":
+            value = RepeatsElement;
+            return RepeatsElement is not null;
+          case "readOnly":
+            value = ReadOnlyElement;
+            return ReadOnlyElement is not null;
+          case "maxLength":
+            value = MaxLengthElement;
+            return MaxLengthElement is not null;
+          case "answerValueSet":
+            value = AnswerValueSetElement;
+            return AnswerValueSetElement is not null;
+          case "answerOption":
+            value = AnswerOption;
+            return AnswerOption?.Any() == true;
+          case "initial":
+            value = Initial;
+            return Initial?.Any() == true;
+          case "item":
+            value = Item;
+            return Item?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1022,15 +1054,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "question" => QuestionElement,
-          "operator" => OperatorElement,
-          "answer" => Answer,
-          _ => default
+          case "question":
+            value = QuestionElement;
+            return QuestionElement is not null;
+          case "operator":
+            value = OperatorElement;
+            return OperatorElement is not null;
+          case "answer":
+            value = Answer;
+            return Answer is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("answer"))
+          {
+            value = Answer;
+            return Answer is not null && key.EndsWith(Answer.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1172,14 +1220,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "value" => Value,
-          "initialSelected" => InitialSelectedElement,
-          _ => default
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "initialSelected":
+            value = InitialSelectedElement;
+            return InitialSelectedElement is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1284,13 +1346,25 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "value" => Value,
-          _ => default
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1982,34 +2056,78 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "title" => TitleElement,
-        "derivedFrom" => DerivedFromElement?.Any() == true ? DerivedFromElement : null,
-        "status" => StatusElement,
-        "experimental" => ExperimentalElement,
-        "subjectType" => SubjectTypeElement?.Any() == true ? SubjectTypeElement : null,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "purpose" => Purpose,
-        "copyright" => Copyright,
-        "approvalDate" => ApprovalDateElement,
-        "lastReviewDate" => LastReviewDateElement,
-        "effectivePeriod" => EffectivePeriod,
-        "code" => Code?.Any() == true ? Code : null,
-        "item" => Item?.Any() == true ? Item : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "derivedFrom":
+          value = DerivedFromElement;
+          return DerivedFromElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "subjectType":
+          value = SubjectTypeElement;
+          return SubjectTypeElement?.Any() == true;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "code":
+          value = Code;
+          return Code?.Any() == true;
+        case "item":
+          value = Item;
+          return Item?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

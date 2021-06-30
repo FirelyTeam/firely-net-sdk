@@ -367,24 +367,48 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "active" => ActiveElement,
-        "period" => Period,
-        "organization" => Organization,
-        "participatingOrganization" => ParticipatingOrganization,
-        "network" => Network?.Any() == true ? Network : null,
-        "code" => Code?.Any() == true ? Code : null,
-        "specialty" => Specialty?.Any() == true ? Specialty : null,
-        "location" => Location?.Any() == true ? Location : null,
-        "healthcareService" => HealthcareService?.Any() == true ? HealthcareService : null,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "organization":
+          value = Organization;
+          return Organization is not null;
+        case "participatingOrganization":
+          value = ParticipatingOrganization;
+          return ParticipatingOrganization is not null;
+        case "network":
+          value = Network;
+          return Network?.Any() == true;
+        case "code":
+          value = Code;
+          return Code?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "healthcareService":
+          value = HealthcareService;
+          return HealthcareService?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

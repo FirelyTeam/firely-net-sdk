@@ -545,29 +545,78 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason?.Any() == true ? StatusReason : null,
-        "category" => Category,
-        "medication" => Medication,
-        "subject" => Subject,
-        "context" => Context,
-        "effective" => Effective,
-        "dateAsserted" => DateAssertedElement,
-        "informationSource" => InformationSource,
-        "derivedFrom" => DerivedFrom?.Any() == true ? DerivedFrom : null,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "dosage" => Dosage?.Any() == true ? Dosage : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason?.Any() == true;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "medication":
+          value = Medication;
+          return Medication is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "dateAsserted":
+          value = DateAssertedElement;
+          return DateAssertedElement is not null;
+        case "informationSource":
+          value = InformationSource;
+          return InformationSource is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "dosage":
+          value = Dosage;
+          return Dosage?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("medication"))
+        {
+          value = Medication;
+          return Medication is not null && key.EndsWith(Medication.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && key.EndsWith(Effective.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

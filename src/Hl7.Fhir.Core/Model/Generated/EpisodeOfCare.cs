@@ -235,14 +235,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "status" => StatusElement,
-          "period" => Period,
-          _ => default
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -400,15 +404,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "condition" => Condition,
-          "role" => Role,
-          "rank" => RankElement,
-          _ => default
+          case "condition":
+            value = Condition;
+            return Condition is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "rank":
+            value = RankElement;
+            return RankElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -735,24 +745,48 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "statusHistory" => StatusHistory?.Any() == true ? StatusHistory : null,
-        "type" => Type?.Any() == true ? Type : null,
-        "diagnosis" => Diagnosis?.Any() == true ? Diagnosis : null,
-        "patient" => Patient,
-        "managingOrganization" => ManagingOrganization,
-        "period" => Period,
-        "referralRequest" => ReferralRequest?.Any() == true ? ReferralRequest : null,
-        "careManager" => CareManager,
-        "team" => Team?.Any() == true ? Team : null,
-        "account" => Account?.Any() == true ? Account : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusHistory":
+          value = StatusHistory;
+          return StatusHistory?.Any() == true;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "diagnosis":
+          value = Diagnosis;
+          return Diagnosis?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "referralRequest":
+          value = ReferralRequest;
+          return ReferralRequest?.Any() == true;
+        case "careManager":
+          value = CareManager;
+          return CareManager is not null;
+        case "team":
+          value = Team;
+          return Team?.Any() == true;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

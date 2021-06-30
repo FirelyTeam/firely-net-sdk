@@ -282,14 +282,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "role" => Role,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -428,14 +432,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "path" => PathElement,
-          "expression" => Expression,
-          _ => default
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "expression":
+            value = Expression;
+            return Expression is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1714,58 +1722,170 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "title" => TitleElement,
-        "subtitle" => SubtitleElement,
-        "status" => StatusElement,
-        "experimental" => ExperimentalElement,
-        "subject" => Subject,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "purpose" => Purpose,
-        "usage" => UsageElement,
-        "copyright" => Copyright,
-        "approvalDate" => ApprovalDateElement,
-        "lastReviewDate" => LastReviewDateElement,
-        "effectivePeriod" => EffectivePeriod,
-        "topic" => Topic?.Any() == true ? Topic : null,
-        "author" => Author?.Any() == true ? Author : null,
-        "editor" => Editor?.Any() == true ? Editor : null,
-        "reviewer" => Reviewer?.Any() == true ? Reviewer : null,
-        "endorser" => Endorser?.Any() == true ? Endorser : null,
-        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
-        "library" => LibraryElement?.Any() == true ? LibraryElement : null,
-        "kind" => KindElement,
-        "profile" => ProfileElement,
-        "code" => Code,
-        "intent" => IntentElement,
-        "priority" => PriorityElement,
-        "doNotPerform" => DoNotPerformElement,
-        "timing" => Timing,
-        "location" => Location,
-        "participant" => Participant?.Any() == true ? Participant : null,
-        "product" => Product,
-        "quantity" => Quantity,
-        "dosage" => Dosage?.Any() == true ? Dosage : null,
-        "bodySite" => BodySite?.Any() == true ? BodySite : null,
-        "specimenRequirement" => SpecimenRequirement?.Any() == true ? SpecimenRequirement : null,
-        "observationRequirement" => ObservationRequirement?.Any() == true ? ObservationRequirement : null,
-        "observationResultRequirement" => ObservationResultRequirement?.Any() == true ? ObservationResultRequirement : null,
-        "transform" => TransformElement,
-        "dynamicValue" => DynamicValue?.Any() == true ? DynamicValue : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "subtitle":
+          value = SubtitleElement;
+          return SubtitleElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "usage":
+          value = UsageElement;
+          return UsageElement is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "topic":
+          value = Topic;
+          return Topic?.Any() == true;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "editor":
+          value = Editor;
+          return Editor?.Any() == true;
+        case "reviewer":
+          value = Reviewer;
+          return Reviewer?.Any() == true;
+        case "endorser":
+          value = Endorser;
+          return Endorser?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "library":
+          value = LibraryElement;
+          return LibraryElement?.Any() == true;
+        case "kind":
+          value = KindElement;
+          return KindElement is not null;
+        case "profile":
+          value = ProfileElement;
+          return ProfileElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "doNotPerform":
+          value = DoNotPerformElement;
+          return DoNotPerformElement is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "product":
+          value = Product;
+          return Product is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "dosage":
+          value = Dosage;
+          return Dosage?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite?.Any() == true;
+        case "specimenRequirement":
+          value = SpecimenRequirement;
+          return SpecimenRequirement?.Any() == true;
+        case "observationRequirement":
+          value = ObservationRequirement;
+          return ObservationRequirement?.Any() == true;
+        case "observationResultRequirement":
+          value = ObservationResultRequirement;
+          return ObservationResultRequirement?.Any() == true;
+        case "transform":
+          value = TransformElement;
+          return TransformElement is not null;
+        case "dynamicValue":
+          value = DynamicValue;
+          return DynamicValue?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("subject"))
+        {
+          value = Subject;
+          return Subject is not null && key.EndsWith(Subject.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("timing"))
+        {
+          value = Timing;
+          return Timing is not null && key.EndsWith(Timing.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("product"))
+        {
+          value = Product;
+          return Product is not null && key.EndsWith(Product.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

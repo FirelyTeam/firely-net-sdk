@@ -490,27 +490,67 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "requestIdentifier" => RequestIdentifier,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "module" => Module,
-        "status" => StatusElement,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "occurrenceDateTime" => OccurrenceDateTimeElement,
-        "performer" => Performer,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "evaluationMessage" => EvaluationMessage?.Any() == true ? EvaluationMessage : null,
-        "outputParameters" => OutputParameters,
-        "result" => Result,
-        "dataRequirement" => DataRequirement?.Any() == true ? DataRequirement : null,
-        _ => default
+        case "requestIdentifier":
+          value = RequestIdentifier;
+          return RequestIdentifier is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "module":
+          value = Module;
+          return Module is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrenceDateTime":
+          value = OccurrenceDateTimeElement;
+          return OccurrenceDateTimeElement is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "evaluationMessage":
+          value = EvaluationMessage;
+          return EvaluationMessage?.Any() == true;
+        case "outputParameters":
+          value = OutputParameters;
+          return OutputParameters is not null;
+        case "result":
+          value = Result;
+          return Result is not null;
+        case "dataRequirement":
+          value = DataRequirement;
+          return DataRequirement?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("module"))
+        {
+          value = Module;
+          return Module is not null && key.EndsWith(Module.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

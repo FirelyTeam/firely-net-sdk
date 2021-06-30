@@ -180,14 +180,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "fraction" => FractionElement,
-          "materialType" => MaterialType,
-          _ => default
+          case "fraction":
+            value = FractionElement;
+            return FractionElement is not null;
+          case "materialType":
+            value = MaterialType;
+            return MaterialType is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -433,20 +437,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "family" => Family,
-          "genus" => Genus,
-          "species" => Species,
-          "intraspecificType" => IntraspecificType,
-          "intraspecificDescription" => IntraspecificDescriptionElement,
-          "author" => Author?.Any() == true ? Author : null,
-          "hybrid" => Hybrid,
-          "organismGeneral" => OrganismGeneral,
-          _ => default
+          case "family":
+            value = Family;
+            return Family is not null;
+          case "genus":
+            value = Genus;
+            return Genus is not null;
+          case "species":
+            value = Species;
+            return Species is not null;
+          case "intraspecificType":
+            value = IntraspecificType;
+            return IntraspecificType is not null;
+          case "intraspecificDescription":
+            value = IntraspecificDescriptionElement;
+            return IntraspecificDescriptionElement is not null;
+          case "author":
+            value = Author;
+            return Author?.Any() == true;
+          case "hybrid":
+            value = Hybrid;
+            return Hybrid is not null;
+          case "organismGeneral":
+            value = OrganismGeneral;
+            return OrganismGeneral is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -589,14 +609,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "authorType" => AuthorType,
-          "authorDescription" => AuthorDescriptionElement,
-          _ => default
+          case "authorType":
+            value = AuthorType;
+            return AuthorType is not null;
+          case "authorDescription":
+            value = AuthorDescriptionElement;
+            return AuthorDescriptionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -841,17 +865,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "maternalOrganismId" => MaternalOrganismIdElement,
-          "maternalOrganismName" => MaternalOrganismNameElement,
-          "paternalOrganismId" => PaternalOrganismIdElement,
-          "paternalOrganismName" => PaternalOrganismNameElement,
-          "hybridType" => HybridType,
-          _ => default
+          case "maternalOrganismId":
+            value = MaternalOrganismIdElement;
+            return MaternalOrganismIdElement is not null;
+          case "maternalOrganismName":
+            value = MaternalOrganismNameElement;
+            return MaternalOrganismNameElement is not null;
+          case "paternalOrganismId":
+            value = PaternalOrganismIdElement;
+            return PaternalOrganismIdElement is not null;
+          case "paternalOrganismName":
+            value = PaternalOrganismNameElement;
+            return PaternalOrganismNameElement is not null;
+          case "hybridType":
+            value = HybridType;
+            return HybridType is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1009,16 +1043,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "kingdom" => Kingdom,
-          "phylum" => Phylum,
-          "class" => Class,
-          "order" => Order,
-          _ => default
+          case "kingdom":
+            value = Kingdom;
+            return Kingdom is not null;
+          case "phylum":
+            value = Phylum;
+            return Phylum is not null;
+          case "class":
+            value = Class;
+            return Class is not null;
+          case "order":
+            value = Order;
+            return Order is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1139,14 +1181,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "part" => Part,
-          "partLocation" => PartLocation,
-          _ => default
+          case "part":
+            value = Part;
+            return Part is not null;
+          case "partLocation":
+            value = PartLocation;
+            return PartLocation is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1510,25 +1556,51 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "sourceMaterialClass" => SourceMaterialClass,
-        "sourceMaterialType" => SourceMaterialType,
-        "sourceMaterialState" => SourceMaterialState,
-        "organismId" => OrganismId,
-        "organismName" => OrganismNameElement,
-        "parentSubstanceId" => ParentSubstanceId?.Any() == true ? ParentSubstanceId : null,
-        "parentSubstanceName" => ParentSubstanceNameElement?.Any() == true ? ParentSubstanceNameElement : null,
-        "countryOfOrigin" => CountryOfOrigin?.Any() == true ? CountryOfOrigin : null,
-        "geographicalLocation" => GeographicalLocationElement?.Any() == true ? GeographicalLocationElement : null,
-        "developmentStage" => DevelopmentStage,
-        "fractionDescription" => FractionDescription?.Any() == true ? FractionDescription : null,
-        "organism" => Organism,
-        "partDescription" => PartDescription?.Any() == true ? PartDescription : null,
-        _ => default
+        case "sourceMaterialClass":
+          value = SourceMaterialClass;
+          return SourceMaterialClass is not null;
+        case "sourceMaterialType":
+          value = SourceMaterialType;
+          return SourceMaterialType is not null;
+        case "sourceMaterialState":
+          value = SourceMaterialState;
+          return SourceMaterialState is not null;
+        case "organismId":
+          value = OrganismId;
+          return OrganismId is not null;
+        case "organismName":
+          value = OrganismNameElement;
+          return OrganismNameElement is not null;
+        case "parentSubstanceId":
+          value = ParentSubstanceId;
+          return ParentSubstanceId?.Any() == true;
+        case "parentSubstanceName":
+          value = ParentSubstanceNameElement;
+          return ParentSubstanceNameElement?.Any() == true;
+        case "countryOfOrigin":
+          value = CountryOfOrigin;
+          return CountryOfOrigin?.Any() == true;
+        case "geographicalLocation":
+          value = GeographicalLocationElement;
+          return GeographicalLocationElement?.Any() == true;
+        case "developmentStage":
+          value = DevelopmentStage;
+          return DevelopmentStage is not null;
+        case "fractionDescription":
+          value = FractionDescription;
+          return FractionDescription?.Any() == true;
+        case "organism":
+          value = Organism;
+          return Organism is not null;
+        case "partDescription":
+          value = PartDescription;
+          return PartDescription?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

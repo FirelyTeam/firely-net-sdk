@@ -326,20 +326,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "subunit" => SubunitElement,
-          "sequence" => SequenceElement,
-          "length" => LengthElement,
-          "sequenceAttachment" => SequenceAttachment,
-          "fivePrime" => FivePrime,
-          "threePrime" => ThreePrime,
-          "linkage" => Linkage?.Any() == true ? Linkage : null,
-          "sugar" => Sugar?.Any() == true ? Sugar : null,
-          _ => default
+          case "subunit":
+            value = SubunitElement;
+            return SubunitElement is not null;
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "length":
+            value = LengthElement;
+            return LengthElement is not null;
+          case "sequenceAttachment":
+            value = SequenceAttachment;
+            return SequenceAttachment is not null;
+          case "fivePrime":
+            value = FivePrime;
+            return FivePrime is not null;
+          case "threePrime":
+            value = ThreePrime;
+            return ThreePrime is not null;
+          case "linkage":
+            value = Linkage;
+            return Linkage?.Any() == true;
+          case "sugar":
+            value = Sugar;
+            return Sugar?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -554,16 +570,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "connectivity" => ConnectivityElement,
-          "identifier" => Identifier,
-          "name" => NameElement,
-          "residueSite" => ResidueSiteElement,
-          _ => default
+          case "connectivity":
+            value = ConnectivityElement;
+            return ConnectivityElement is not null;
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "residueSite":
+            value = ResidueSiteElement;
+            return ResidueSiteElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -738,15 +762,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier,
-          "name" => NameElement,
-          "residueSite" => ResidueSiteElement,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "residueSite":
+            value = ResidueSiteElement;
+            return ResidueSiteElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -944,17 +974,27 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "sequenceType" => SequenceType,
-        "numberOfSubunits" => NumberOfSubunitsElement,
-        "areaOfHybridisation" => AreaOfHybridisationElement,
-        "oligoNucleotideType" => OligoNucleotideType,
-        "subunit" => Subunit?.Any() == true ? Subunit : null,
-        _ => default
+        case "sequenceType":
+          value = SequenceType;
+          return SequenceType is not null;
+        case "numberOfSubunits":
+          value = NumberOfSubunitsElement;
+          return NumberOfSubunitsElement is not null;
+        case "areaOfHybridisation":
+          value = AreaOfHybridisationElement;
+          return AreaOfHybridisationElement is not null;
+        case "oligoNucleotideType":
+          value = OligoNucleotideType;
+          return OligoNucleotideType is not null;
+        case "subunit":
+          value = Subunit;
+          return Subunit?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

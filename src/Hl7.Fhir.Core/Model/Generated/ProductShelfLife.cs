@@ -188,16 +188,24 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier,
-        "type" => Type,
-        "period" => Period,
-        "specialPrecautionsForStorage" => SpecialPrecautionsForStorage?.Any() == true ? SpecialPrecautionsForStorage : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "specialPrecautionsForStorage":
+          value = SpecialPrecautionsForStorage;
+          return SpecialPrecautionsForStorage?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

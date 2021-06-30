@@ -148,13 +148,25 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "item" => Item,
-          _ => default
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("item"))
+          {
+            value = Item;
+            return Item is not null && key.EndsWith(Item.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -371,19 +383,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "subject" => Subject?.Any() == true ? Subject : null,
-        "description" => DescriptionElement,
-        "interactant" => Interactant?.Any() == true ? Interactant : null,
-        "type" => Type,
-        "effect" => Effect,
-        "incidence" => Incidence,
-        "management" => Management,
-        _ => default
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "interactant":
+          value = Interactant;
+          return Interactant?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "effect":
+          value = Effect;
+          return Effect is not null;
+        case "incidence":
+          value = Incidence;
+          return Incidence is not null;
+        case "management":
+          value = Management;
+          return Management is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

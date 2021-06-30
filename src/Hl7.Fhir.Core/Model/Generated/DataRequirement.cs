@@ -275,16 +275,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "path" => PathElement,
-          "searchParam" => SearchParamElement,
-          "valueSet" => ValueSetElement,
-          "code" => Code?.Any() == true ? Code : null,
-          _ => default
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "searchParam":
+            value = SearchParamElement;
+            return SearchParamElement is not null;
+          case "valueSet":
+            value = ValueSetElement;
+            return ValueSetElement is not null;
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -461,15 +469,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "path" => PathElement,
-          "searchParam" => SearchParamElement,
-          "value" => Value,
-          _ => default
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "searchParam":
+            value = SearchParamElement;
+            return SearchParamElement is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -628,14 +652,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "path" => PathElement,
-          "direction" => DirectionElement,
-          _ => default
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "direction":
+            value = DirectionElement;
+            return DirectionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -931,20 +959,46 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "type" => TypeElement,
-        "profile" => ProfileElement?.Any() == true ? ProfileElement : null,
-        "subject" => Subject,
-        "mustSupport" => MustSupportElement?.Any() == true ? MustSupportElement : null,
-        "codeFilter" => CodeFilter?.Any() == true ? CodeFilter : null,
-        "dateFilter" => DateFilter?.Any() == true ? DateFilter : null,
-        "limit" => LimitElement,
-        "sort" => Sort?.Any() == true ? Sort : null,
-        _ => default
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "profile":
+          value = ProfileElement;
+          return ProfileElement?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "mustSupport":
+          value = MustSupportElement;
+          return MustSupportElement?.Any() == true;
+        case "codeFilter":
+          value = CodeFilter;
+          return CodeFilter?.Any() == true;
+        case "dateFilter":
+          value = DateFilter;
+          return DateFilter?.Any() == true;
+        case "limit":
+          value = LimitElement;
+          return LimitElement is not null;
+        case "sort":
+          value = Sort;
+          return Sort?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("subject"))
+        {
+          value = Subject;
+          return Subject is not null && key.EndsWith(Subject.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

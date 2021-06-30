@@ -286,15 +286,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "longitude" => LongitudeElement,
-          "latitude" => LatitudeElement,
-          "altitude" => AltitudeElement,
-          _ => default
+          case "longitude":
+            value = LongitudeElement;
+            return LongitudeElement is not null;
+          case "latitude":
+            value = LatitudeElement;
+            return LatitudeElement is not null;
+          case "altitude":
+            value = AltitudeElement;
+            return AltitudeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -524,16 +530,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "daysOfWeek" => DaysOfWeekElement?.Any() == true ? DaysOfWeekElement : null,
-          "allDay" => AllDayElement,
-          "openingTime" => OpeningTimeElement,
-          "closingTime" => ClosingTimeElement,
-          _ => default
+          case "daysOfWeek":
+            value = DaysOfWeekElement;
+            return DaysOfWeekElement?.Any() == true;
+          case "allDay":
+            value = AllDayElement;
+            return AllDayElement is not null;
+          case "openingTime":
+            value = OpeningTimeElement;
+            return OpeningTimeElement is not null;
+          case "closingTime":
+            value = ClosingTimeElement;
+            return ClosingTimeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1033,29 +1047,63 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "operationalStatus" => OperationalStatus,
-        "name" => NameElement,
-        "alias" => AliasElement?.Any() == true ? AliasElement : null,
-        "description" => DescriptionElement,
-        "mode" => ModeElement,
-        "type" => Type?.Any() == true ? Type : null,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "address" => Address,
-        "physicalType" => PhysicalType,
-        "position" => Position,
-        "managingOrganization" => ManagingOrganization,
-        "partOf" => PartOf,
-        "hoursOfOperation" => HoursOfOperation?.Any() == true ? HoursOfOperation : null,
-        "availabilityExceptions" => AvailabilityExceptionsElement,
-        "endpoint" => Endpoint?.Any() == true ? Endpoint : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "operationalStatus":
+          value = OperationalStatus;
+          return OperationalStatus is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "alias":
+          value = AliasElement;
+          return AliasElement?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "mode":
+          value = ModeElement;
+          return ModeElement is not null;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "address":
+          value = Address;
+          return Address is not null;
+        case "physicalType":
+          value = PhysicalType;
+          return PhysicalType is not null;
+        case "position":
+          value = Position;
+          return Position is not null;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf is not null;
+        case "hoursOfOperation":
+          value = HoursOfOperation;
+          return HoursOfOperation?.Any() == true;
+        case "availabilityExceptions":
+          value = AvailabilityExceptionsElement;
+          return AvailabilityExceptionsElement is not null;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

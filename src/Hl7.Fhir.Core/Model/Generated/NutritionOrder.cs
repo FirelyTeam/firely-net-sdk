@@ -257,18 +257,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type?.Any() == true ? Type : null,
-          "schedule" => Schedule?.Any() == true ? Schedule : null,
-          "nutrient" => Nutrient?.Any() == true ? Nutrient : null,
-          "texture" => Texture?.Any() == true ? Texture : null,
-          "fluidConsistencyType" => FluidConsistencyType?.Any() == true ? FluidConsistencyType : null,
-          "instruction" => InstructionElement,
-          _ => default
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "nutrient":
+            value = Nutrient;
+            return Nutrient?.Any() == true;
+          case "texture":
+            value = Texture;
+            return Texture?.Any() == true;
+          case "fluidConsistencyType":
+            value = FluidConsistencyType;
+            return FluidConsistencyType?.Any() == true;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -391,14 +403,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "modifier" => Modifier,
-          "amount" => Amount,
-          _ => default
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -517,14 +533,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "modifier" => Modifier,
-          "foodType" => FoodType,
-          _ => default
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "foodType":
+            value = FoodType;
+            return FoodType is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -734,17 +754,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "productName" => ProductNameElement,
-          "schedule" => Schedule?.Any() == true ? Schedule : null,
-          "quantity" => Quantity,
-          "instruction" => InstructionElement,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "productName":
+            value = ProductNameElement;
+            return ProductNameElement is not null;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1047,21 +1077,39 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "baseFormulaType" => BaseFormulaType,
-          "baseFormulaProductName" => BaseFormulaProductNameElement,
-          "additiveType" => AdditiveType,
-          "additiveProductName" => AdditiveProductNameElement,
-          "caloricDensity" => CaloricDensity,
-          "routeofAdministration" => RouteofAdministration,
-          "administration" => Administration?.Any() == true ? Administration : null,
-          "maxVolumeToDeliver" => MaxVolumeToDeliver,
-          "administrationInstruction" => AdministrationInstructionElement,
-          _ => default
+          case "baseFormulaType":
+            value = BaseFormulaType;
+            return BaseFormulaType is not null;
+          case "baseFormulaProductName":
+            value = BaseFormulaProductNameElement;
+            return BaseFormulaProductNameElement is not null;
+          case "additiveType":
+            value = AdditiveType;
+            return AdditiveType is not null;
+          case "additiveProductName":
+            value = AdditiveProductNameElement;
+            return AdditiveProductNameElement is not null;
+          case "caloricDensity":
+            value = CaloricDensity;
+            return CaloricDensity is not null;
+          case "routeofAdministration":
+            value = RouteofAdministration;
+            return RouteofAdministration is not null;
+          case "administration":
+            value = Administration;
+            return Administration?.Any() == true;
+          case "maxVolumeToDeliver":
+            value = MaxVolumeToDeliver;
+            return MaxVolumeToDeliver is not null;
+          case "administrationInstruction":
+            value = AdministrationInstructionElement;
+            return AdministrationInstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1207,15 +1255,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "schedule" => Schedule,
-          "quantity" => Quantity,
-          "rate" => Rate,
-          _ => default
+          case "schedule":
+            value = Schedule;
+            return Schedule is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "rate":
+            value = Rate;
+            return Rate is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("rate"))
+          {
+            value = Rate;
+            return Rate is not null && key.EndsWith(Rate.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1723,29 +1787,63 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "instantiates" => InstantiatesElement?.Any() == true ? InstantiatesElement : null,
-        "status" => StatusElement,
-        "intent" => IntentElement,
-        "patient" => Patient,
-        "encounter" => Encounter,
-        "dateTime" => DateTimeElement,
-        "orderer" => Orderer,
-        "allergyIntolerance" => AllergyIntolerance?.Any() == true ? AllergyIntolerance : null,
-        "foodPreferenceModifier" => FoodPreferenceModifier?.Any() == true ? FoodPreferenceModifier : null,
-        "excludeFoodModifier" => ExcludeFoodModifier?.Any() == true ? ExcludeFoodModifier : null,
-        "oralDiet" => OralDiet,
-        "supplement" => Supplement?.Any() == true ? Supplement : null,
-        "enteralFormula" => EnteralFormula,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "instantiates":
+          value = InstantiatesElement;
+          return InstantiatesElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "dateTime":
+          value = DateTimeElement;
+          return DateTimeElement is not null;
+        case "orderer":
+          value = Orderer;
+          return Orderer is not null;
+        case "allergyIntolerance":
+          value = AllergyIntolerance;
+          return AllergyIntolerance?.Any() == true;
+        case "foodPreferenceModifier":
+          value = FoodPreferenceModifier;
+          return FoodPreferenceModifier?.Any() == true;
+        case "excludeFoodModifier":
+          value = ExcludeFoodModifier;
+          return ExcludeFoodModifier?.Any() == true;
+        case "oralDiet":
+          value = OralDiet;
+          return OralDiet is not null;
+        case "supplement":
+          value = Supplement;
+          return Supplement?.Any() == true;
+        case "enteralFormula":
+          value = EnteralFormula;
+          return EnteralFormula is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -244,16 +244,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "role" => Role?.Any() == true ? Role : null,
-          "who" => Who,
-          "onBehalfOf" => OnBehalfOf,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "role":
+            value = Role;
+            return Role?.Any() == true;
+          case "who":
+            value = Who;
+            return Who is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -416,15 +424,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "role" => RoleElement,
-          "what" => What,
-          "agent" => Agent?.Any() == true ? Agent : null,
-          _ => default
+          case "role":
+            value = RoleElement;
+            return RoleElement is not null;
+          case "what":
+            value = What;
+            return What is not null;
+          case "agent":
+            value = Agent;
+            return Agent?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -724,22 +738,52 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "target" => Target?.Any() == true ? Target : null,
-        "occurred" => Occurred,
-        "recorded" => RecordedElement,
-        "policy" => PolicyElement?.Any() == true ? PolicyElement : null,
-        "location" => Location,
-        "reason" => Reason?.Any() == true ? Reason : null,
-        "activity" => Activity,
-        "agent" => Agent?.Any() == true ? Agent : null,
-        "entity" => Entity?.Any() == true ? Entity : null,
-        "signature" => Signature?.Any() == true ? Signature : null,
-        _ => default
+        case "target":
+          value = Target;
+          return Target?.Any() == true;
+        case "occurred":
+          value = Occurred;
+          return Occurred is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
+        case "policy":
+          value = PolicyElement;
+          return PolicyElement?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "activity":
+          value = Activity;
+          return Activity is not null;
+        case "agent":
+          value = Agent;
+          return Agent?.Any() == true;
+        case "entity":
+          value = Entity;
+          return Entity?.Any() == true;
+        case "signature":
+          value = Signature;
+          return Signature?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurred"))
+        {
+          value = Occurred;
+          return Occurred is not null && key.EndsWith(Occurred.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -167,14 +167,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "therapyRelationshipType" => TherapyRelationshipType,
-          "medication" => Medication,
-          _ => default
+          case "therapyRelationshipType":
+            value = TherapyRelationshipType;
+            return TherapyRelationshipType is not null;
+          case "medication":
+            value = Medication;
+            return Medication is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("medication"))
+          {
+            value = Medication;
+            return Medication is not null && key.EndsWith(Medication.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -379,19 +393,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "subject" => Subject?.Any() == true ? Subject : null,
-        "disease" => Disease,
-        "diseaseStatus" => DiseaseStatus,
-        "comorbidity" => Comorbidity?.Any() == true ? Comorbidity : null,
-        "therapeuticIndication" => TherapeuticIndication?.Any() == true ? TherapeuticIndication : null,
-        "otherTherapy" => OtherTherapy?.Any() == true ? OtherTherapy : null,
-        "population" => Population?.Any() == true ? Population : null,
-        _ => default
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "disease":
+          value = Disease;
+          return Disease is not null;
+        case "diseaseStatus":
+          value = DiseaseStatus;
+          return DiseaseStatus is not null;
+        case "comorbidity":
+          value = Comorbidity;
+          return Comorbidity?.Any() == true;
+        case "therapeuticIndication":
+          value = TherapeuticIndication;
+          return TherapeuticIndication?.Any() == true;
+        case "otherTherapy":
+          value = OtherTherapy;
+          return OtherTherapy?.Any() == true;
+        case "population":
+          value = Population;
+          return Population?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

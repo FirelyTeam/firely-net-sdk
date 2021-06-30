@@ -216,15 +216,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "claim" => Claim,
-          "relationship" => Relationship,
-          "reference" => Reference,
-          _ => default
+          case "claim":
+            value = Claim;
+            return Claim is not null;
+          case "relationship":
+            value = Relationship;
+            return Relationship is not null;
+          case "reference":
+            value = Reference;
+            return Reference is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -346,14 +352,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "party" => Party,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "party":
+            value = Party;
+            return Party is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -566,17 +576,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "provider" => Provider,
-          "responsible" => ResponsibleElement,
-          "role" => Role,
-          "qualification" => Qualification,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "provider":
+            value = Provider;
+            return Provider is not null;
+          case "responsible":
+            value = ResponsibleElement;
+            return ResponsibleElement is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "qualification":
+            value = Qualification;
+            return Qualification is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -795,18 +815,45 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "category" => Category,
-          "code" => Code,
-          "timing" => Timing,
-          "value" => Value,
-          "reason" => Reason,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "timing":
+            value = Timing;
+            return Timing is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "reason":
+            value = Reason;
+            return Reason is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("timing"))
+          {
+            value = Timing;
+            return Timing is not null && key.EndsWith(Timing.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1007,17 +1054,37 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "diagnosis" => Diagnosis,
-          "type" => Type?.Any() == true ? Type : null,
-          "onAdmission" => OnAdmission,
-          "packageCode" => PackageCode,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "diagnosis":
+            value = Diagnosis;
+            return Diagnosis is not null;
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "onAdmission":
+            value = OnAdmission;
+            return OnAdmission is not null;
+          case "packageCode":
+            value = PackageCode;
+            return PackageCode is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("diagnosis"))
+          {
+            value = Diagnosis;
+            return Diagnosis is not null && key.EndsWith(Diagnosis.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1238,17 +1305,37 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "type" => Type?.Any() == true ? Type : null,
-          "date" => DateElement,
-          "procedure" => Procedure,
-          "udi" => Udi?.Any() == true ? Udi : null,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "procedure":
+            value = Procedure;
+            return Procedure is not null;
+          case "udi":
+            value = Udi;
+            return Udi?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("procedure"))
+          {
+            value = Procedure;
+            return Procedure is not null && key.EndsWith(Procedure.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1429,15 +1516,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "focal" => FocalElement,
-          "coverage" => Coverage,
-          "preAuthRef" => PreAuthRefElement?.Any() == true ? PreAuthRefElement : null,
-          _ => default
+          case "focal":
+            value = FocalElement;
+            return FocalElement is not null;
+          case "coverage":
+            value = Coverage;
+            return Coverage is not null;
+          case "preAuthRef":
+            value = PreAuthRefElement;
+            return PreAuthRefElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1596,15 +1689,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "date" => DateElement,
-          "type" => Type,
-          "location" => Location,
-          _ => default
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("location"))
+          {
+            value = Location;
+            return Location is not null && key.EndsWith(Location.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2251,35 +2360,96 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "careTeamSequence" => CareTeamSequenceElement?.Any() == true ? CareTeamSequenceElement : null,
-          "diagnosisSequence" => DiagnosisSequenceElement?.Any() == true ? DiagnosisSequenceElement : null,
-          "procedureSequence" => ProcedureSequenceElement?.Any() == true ? ProcedureSequenceElement : null,
-          "informationSequence" => InformationSequenceElement?.Any() == true ? InformationSequenceElement : null,
-          "revenue" => Revenue,
-          "category" => Category,
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
-          "serviced" => Serviced,
-          "location" => Location,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "udi" => Udi?.Any() == true ? Udi : null,
-          "bodySite" => BodySite,
-          "subSite" => SubSite?.Any() == true ? SubSite : null,
-          "encounter" => Encounter?.Any() == true ? Encounter : null,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          "detail" => Detail?.Any() == true ? Detail : null,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "careTeamSequence":
+            value = CareTeamSequenceElement;
+            return CareTeamSequenceElement?.Any() == true;
+          case "diagnosisSequence":
+            value = DiagnosisSequenceElement;
+            return DiagnosisSequenceElement?.Any() == true;
+          case "procedureSequence":
+            value = ProcedureSequenceElement;
+            return ProcedureSequenceElement?.Any() == true;
+          case "informationSequence":
+            value = InformationSequenceElement;
+            return InformationSequenceElement?.Any() == true;
+          case "revenue":
+            value = Revenue;
+            return Revenue is not null;
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "programCode":
+            value = ProgramCode;
+            return ProgramCode?.Any() == true;
+          case "serviced":
+            value = Serviced;
+            return Serviced is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "udi":
+            value = Udi;
+            return Udi?.Any() == true;
+          case "bodySite":
+            value = BodySite;
+            return BodySite is not null;
+          case "subSite":
+            value = SubSite;
+            return SubSite?.Any() == true;
+          case "encounter":
+            value = Encounter;
+            return Encounter?.Any() == true;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          case "detail":
+            value = Detail;
+            return Detail?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("serviced"))
+          {
+            value = Serviced;
+            return Serviced is not null && key.EndsWith(Serviced.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("location"))
+          {
+            value = Location;
+            return Location is not null && key.EndsWith(Location.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2474,16 +2644,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "category" => Category,
-          "reason" => Reason,
-          "amount" => Amount,
-          "value" => ValueElement,
-          _ => default
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "reason":
+            value = Reason;
+            return Reason is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          case "value":
+            value = ValueElement;
+            return ValueElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2884,26 +3062,54 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "revenue" => Revenue,
-          "category" => Category,
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "udi" => Udi?.Any() == true ? Udi : null,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          "subDetail" => SubDetail?.Any() == true ? SubDetail : null,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "revenue":
+            value = Revenue;
+            return Revenue is not null;
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "programCode":
+            value = ProgramCode;
+            return ProgramCode?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "udi":
+            value = Udi;
+            return Udi?.Any() == true;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          case "subDetail":
+            value = SubDetail;
+            return SubDetail?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -3295,25 +3501,51 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "sequence" => SequenceElement,
-          "revenue" => Revenue,
-          "category" => Category,
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "udi" => Udi?.Any() == true ? Udi : null,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          _ => default
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "revenue":
+            value = Revenue;
+            return Revenue is not null;
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "programCode":
+            value = ProgramCode;
+            return ProgramCode?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "udi":
+            value = Udi;
+            return Udi?.Any() == true;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -3839,30 +4071,81 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "itemSequence" => ItemSequenceElement?.Any() == true ? ItemSequenceElement : null,
-          "detailSequence" => DetailSequenceElement?.Any() == true ? DetailSequenceElement : null,
-          "subDetailSequence" => SubDetailSequenceElement?.Any() == true ? SubDetailSequenceElement : null,
-          "provider" => Provider?.Any() == true ? Provider : null,
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "programCode" => ProgramCode?.Any() == true ? ProgramCode : null,
-          "serviced" => Serviced,
-          "location" => Location,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "bodySite" => BodySite,
-          "subSite" => SubSite?.Any() == true ? SubSite : null,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          "detail" => Detail?.Any() == true ? Detail : null,
-          _ => default
+          case "itemSequence":
+            value = ItemSequenceElement;
+            return ItemSequenceElement?.Any() == true;
+          case "detailSequence":
+            value = DetailSequenceElement;
+            return DetailSequenceElement?.Any() == true;
+          case "subDetailSequence":
+            value = SubDetailSequenceElement;
+            return SubDetailSequenceElement?.Any() == true;
+          case "provider":
+            value = Provider;
+            return Provider?.Any() == true;
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "programCode":
+            value = ProgramCode;
+            return ProgramCode?.Any() == true;
+          case "serviced":
+            value = Serviced;
+            return Serviced is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "bodySite":
+            value = BodySite;
+            return BodySite is not null;
+          case "subSite":
+            value = SubSite;
+            return SubSite?.Any() == true;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          case "detail":
+            value = Detail;
+            return Detail?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("serviced"))
+          {
+            value = Serviced;
+            return Serviced is not null && key.EndsWith(Serviced.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("location"))
+          {
+            value = Location;
+            return Location is not null && key.EndsWith(Location.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -4164,21 +4447,39 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          "subDetail" => SubDetail?.Any() == true ? SubDetail : null,
-          _ => default
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          case "subDetail":
+            value = SubDetail;
+            return SubDetail?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -4452,20 +4753,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "productOrService" => ProductOrService,
-          "modifier" => Modifier?.Any() == true ? Modifier : null,
-          "quantity" => Quantity,
-          "unitPrice" => UnitPrice,
-          "factor" => FactorElement,
-          "net" => Net,
-          "noteNumber" => NoteNumberElement?.Any() == true ? NoteNumberElement : null,
-          "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-          _ => default
+          case "productOrService":
+            value = ProductOrService;
+            return ProductOrService is not null;
+          case "modifier":
+            value = Modifier;
+            return Modifier?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "unitPrice":
+            value = UnitPrice;
+            return UnitPrice is not null;
+          case "factor":
+            value = FactorElement;
+            return FactorElement is not null;
+          case "net":
+            value = Net;
+            return Net is not null;
+          case "noteNumber":
+            value = NoteNumberElement;
+            return NoteNumberElement?.Any() == true;
+          case "adjudication":
+            value = Adjudication;
+            return Adjudication?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -4592,14 +4909,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "category" => Category,
-          "amount" => Amount,
-          _ => default
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -4808,18 +5129,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "adjustment" => Adjustment,
-          "adjustmentReason" => AdjustmentReason,
-          "date" => DateElement,
-          "amount" => Amount,
-          "identifier" => Identifier,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "adjustment":
+            value = Adjustment;
+            return Adjustment is not null;
+          case "adjustmentReason":
+            value = AdjustmentReason;
+            return AdjustmentReason is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -5033,16 +5366,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "number" => NumberElement,
-          "type" => TypeElement,
-          "text" => TextElement,
-          "language" => Language,
-          _ => default
+          case "number":
+            value = NumberElement;
+            return NumberElement is not null;
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "text":
+            value = TextElement;
+            return TextElement is not null;
+          case "language":
+            value = Language;
+            return Language is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -5327,20 +5668,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "category" => Category,
-          "excluded" => ExcludedElement,
-          "name" => NameElement,
-          "description" => DescriptionElement,
-          "network" => Network,
-          "unit" => Unit,
-          "term" => Term,
-          "financial" => Financial?.Any() == true ? Financial : null,
-          _ => default
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "excluded":
+            value = ExcludedElement;
+            return ExcludedElement is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "network":
+            value = Network;
+            return Network is not null;
+          case "unit":
+            value = Unit;
+            return Unit is not null;
+          case "term":
+            value = Term;
+            return Term is not null;
+          case "financial":
+            value = Financial;
+            return Financial?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -5488,15 +5845,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "allowed" => Allowed,
-          "used" => Used,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "allowed":
+            value = Allowed;
+            return Allowed is not null;
+          case "used":
+            value = Used;
+            return Used is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("allowed"))
+          {
+            value = Allowed;
+            return Allowed is not null && key.EndsWith(Allowed.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("used"))
+          {
+            value = Used;
+            return Used is not null && key.EndsWith(Used.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -6513,55 +6891,141 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "type" => Type,
-        "subType" => SubType,
-        "use" => UseElement,
-        "patient" => Patient,
-        "billablePeriod" => BillablePeriod,
-        "created" => CreatedElement,
-        "enterer" => Enterer,
-        "insurer" => Insurer,
-        "provider" => Provider,
-        "priority" => Priority,
-        "fundsReserveRequested" => FundsReserveRequested,
-        "fundsReserve" => FundsReserve,
-        "related" => Related?.Any() == true ? Related : null,
-        "prescription" => Prescription,
-        "originalPrescription" => OriginalPrescription,
-        "payee" => Payee,
-        "referral" => Referral,
-        "facility" => Facility,
-        "claim" => Claim,
-        "claimResponse" => ClaimResponse,
-        "outcome" => OutcomeElement,
-        "disposition" => DispositionElement,
-        "preAuthRef" => PreAuthRefElement?.Any() == true ? PreAuthRefElement : null,
-        "preAuthRefPeriod" => PreAuthRefPeriod?.Any() == true ? PreAuthRefPeriod : null,
-        "careTeam" => CareTeam?.Any() == true ? CareTeam : null,
-        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
-        "diagnosis" => Diagnosis?.Any() == true ? Diagnosis : null,
-        "procedure" => Procedure?.Any() == true ? Procedure : null,
-        "precedence" => PrecedenceElement,
-        "insurance" => Insurance?.Any() == true ? Insurance : null,
-        "accident" => Accident,
-        "item" => Item?.Any() == true ? Item : null,
-        "addItem" => AddItem?.Any() == true ? AddItem : null,
-        "adjudication" => Adjudication?.Any() == true ? Adjudication : null,
-        "total" => Total?.Any() == true ? Total : null,
-        "payment" => Payment,
-        "formCode" => FormCode,
-        "form" => Form,
-        "processNote" => ProcessNote?.Any() == true ? ProcessNote : null,
-        "benefitPeriod" => BenefitPeriod,
-        "benefitBalance" => BenefitBalance?.Any() == true ? BenefitBalance : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subType":
+          value = SubType;
+          return SubType is not null;
+        case "use":
+          value = UseElement;
+          return UseElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "billablePeriod":
+          value = BillablePeriod;
+          return BillablePeriod is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "insurer":
+          value = Insurer;
+          return Insurer is not null;
+        case "provider":
+          value = Provider;
+          return Provider is not null;
+        case "priority":
+          value = Priority;
+          return Priority is not null;
+        case "fundsReserveRequested":
+          value = FundsReserveRequested;
+          return FundsReserveRequested is not null;
+        case "fundsReserve":
+          value = FundsReserve;
+          return FundsReserve is not null;
+        case "related":
+          value = Related;
+          return Related?.Any() == true;
+        case "prescription":
+          value = Prescription;
+          return Prescription is not null;
+        case "originalPrescription":
+          value = OriginalPrescription;
+          return OriginalPrescription is not null;
+        case "payee":
+          value = Payee;
+          return Payee is not null;
+        case "referral":
+          value = Referral;
+          return Referral is not null;
+        case "facility":
+          value = Facility;
+          return Facility is not null;
+        case "claim":
+          value = Claim;
+          return Claim is not null;
+        case "claimResponse":
+          value = ClaimResponse;
+          return ClaimResponse is not null;
+        case "outcome":
+          value = OutcomeElement;
+          return OutcomeElement is not null;
+        case "disposition":
+          value = DispositionElement;
+          return DispositionElement is not null;
+        case "preAuthRef":
+          value = PreAuthRefElement;
+          return PreAuthRefElement?.Any() == true;
+        case "preAuthRefPeriod":
+          value = PreAuthRefPeriod;
+          return PreAuthRefPeriod?.Any() == true;
+        case "careTeam":
+          value = CareTeam;
+          return CareTeam?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "diagnosis":
+          value = Diagnosis;
+          return Diagnosis?.Any() == true;
+        case "procedure":
+          value = Procedure;
+          return Procedure?.Any() == true;
+        case "precedence":
+          value = PrecedenceElement;
+          return PrecedenceElement is not null;
+        case "insurance":
+          value = Insurance;
+          return Insurance?.Any() == true;
+        case "accident":
+          value = Accident;
+          return Accident is not null;
+        case "item":
+          value = Item;
+          return Item?.Any() == true;
+        case "addItem":
+          value = AddItem;
+          return AddItem?.Any() == true;
+        case "adjudication":
+          value = Adjudication;
+          return Adjudication?.Any() == true;
+        case "total":
+          value = Total;
+          return Total?.Any() == true;
+        case "payment":
+          value = Payment;
+          return Payment is not null;
+        case "formCode":
+          value = FormCode;
+          return FormCode is not null;
+        case "form":
+          value = Form;
+          return Form is not null;
+        case "processNote":
+          value = ProcessNote;
+          return ProcessNote?.Any() == true;
+        case "benefitPeriod":
+          value = BenefitPeriod;
+          return BenefitPeriod is not null;
+        case "benefitBalance":
+          value = BenefitBalance;
+          return BenefitBalance?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

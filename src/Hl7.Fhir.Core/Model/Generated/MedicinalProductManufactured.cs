@@ -248,19 +248,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "manufacturedDoseForm" => ManufacturedDoseForm,
-        "unitOfPresentation" => UnitOfPresentation,
-        "quantity" => Quantity,
-        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
-        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
-        "physicalCharacteristics" => PhysicalCharacteristics,
-        "otherCharacteristics" => OtherCharacteristics?.Any() == true ? OtherCharacteristics : null,
-        _ => default
+        case "manufacturedDoseForm":
+          value = ManufacturedDoseForm;
+          return ManufacturedDoseForm is not null;
+        case "unitOfPresentation":
+          value = UnitOfPresentation;
+          return UnitOfPresentation is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "physicalCharacteristics":
+          value = PhysicalCharacteristics;
+          return PhysicalCharacteristics is not null;
+        case "otherCharacteristics":
+          value = OtherCharacteristics;
+          return OtherCharacteristics?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

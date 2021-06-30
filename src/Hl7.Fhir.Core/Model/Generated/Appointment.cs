@@ -357,17 +357,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type?.Any() == true ? Type : null,
-          "actor" => Actor,
-          "required" => RequiredElement,
-          "status" => StatusElement,
-          "period" => Period,
-          _ => default
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          case "required":
+            value = RequiredElement;
+            return RequiredElement is not null;
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1019,34 +1029,78 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "cancelationReason" => CancelationReason,
-        "serviceCategory" => ServiceCategory?.Any() == true ? ServiceCategory : null,
-        "serviceType" => ServiceType?.Any() == true ? ServiceType : null,
-        "specialty" => Specialty?.Any() == true ? Specialty : null,
-        "appointmentType" => AppointmentType,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "priority" => PriorityElement,
-        "description" => DescriptionElement,
-        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
-        "start" => StartElement,
-        "end" => EndElement,
-        "minutesDuration" => MinutesDurationElement,
-        "slot" => Slot?.Any() == true ? Slot : null,
-        "created" => CreatedElement,
-        "comment" => CommentElement,
-        "patientInstruction" => PatientInstructionElement,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "participant" => Participant?.Any() == true ? Participant : null,
-        "requestedPeriod" => RequestedPeriod?.Any() == true ? RequestedPeriod : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "cancelationReason":
+          value = CancelationReason;
+          return CancelationReason is not null;
+        case "serviceCategory":
+          value = ServiceCategory;
+          return ServiceCategory?.Any() == true;
+        case "serviceType":
+          value = ServiceType;
+          return ServiceType?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "appointmentType":
+          value = AppointmentType;
+          return AppointmentType is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "start":
+          value = StartElement;
+          return StartElement is not null;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "minutesDuration":
+          value = MinutesDurationElement;
+          return MinutesDurationElement is not null;
+        case "slot":
+          value = Slot;
+          return Slot?.Any() == true;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        case "patientInstruction":
+          value = PatientInstructionElement;
+          return PatientInstructionElement is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "requestedPeriod":
+          value = RequestedPeriod;
+          return RequestedPeriod?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

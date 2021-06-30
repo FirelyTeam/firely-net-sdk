@@ -253,14 +253,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "comment" => CommentElement,
-          "link" => Link,
-          _ => default
+          case "comment":
+            value = CommentElement;
+            return CommentElement is not null;
+          case "link":
+            value = Link;
+            return Link is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -740,30 +744,76 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "status" => StatusElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "code" => Code,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "effective" => Effective,
-        "issued" => IssuedElement,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "resultsInterpreter" => ResultsInterpreter?.Any() == true ? ResultsInterpreter : null,
-        "specimen" => Specimen?.Any() == true ? Specimen : null,
-        "result" => Result?.Any() == true ? Result : null,
-        "imagingStudy" => ImagingStudy?.Any() == true ? ImagingStudy : null,
-        "media" => Media?.Any() == true ? Media : null,
-        "conclusion" => ConclusionElement,
-        "conclusionCode" => ConclusionCode?.Any() == true ? ConclusionCode : null,
-        "presentedForm" => PresentedForm?.Any() == true ? PresentedForm : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "resultsInterpreter":
+          value = ResultsInterpreter;
+          return ResultsInterpreter?.Any() == true;
+        case "specimen":
+          value = Specimen;
+          return Specimen?.Any() == true;
+        case "result":
+          value = Result;
+          return Result?.Any() == true;
+        case "imagingStudy":
+          value = ImagingStudy;
+          return ImagingStudy?.Any() == true;
+        case "media":
+          value = Media;
+          return Media?.Any() == true;
+        case "conclusion":
+          value = ConclusionElement;
+          return ConclusionElement is not null;
+        case "conclusionCode":
+          value = ConclusionCode;
+          return ConclusionCode?.Any() == true;
+        case "presentedForm":
+          value = PresentedForm;
+          return PresentedForm?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && key.EndsWith(Effective.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

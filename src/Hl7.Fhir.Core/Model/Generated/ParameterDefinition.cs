@@ -369,19 +369,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "name" => NameElement,
-        "use" => UseElement,
-        "min" => MinElement,
-        "max" => MaxElement,
-        "documentation" => DocumentationElement,
-        "type" => TypeElement,
-        "profile" => ProfileElement,
-        _ => default
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "use":
+          value = UseElement;
+          return UseElement is not null;
+        case "min":
+          value = MinElement;
+          return MinElement is not null;
+        case "max":
+          value = MaxElement;
+          return MaxElement is not null;
+        case "documentation":
+          value = DocumentationElement;
+          return DocumentationElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "profile":
+          value = ProfileElement;
+          return ProfileElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

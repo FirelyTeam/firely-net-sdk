@@ -837,40 +837,96 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "title" => TitleElement,
-        "shortTitle" => ShortTitleElement,
-        "subtitle" => SubtitleElement,
-        "status" => StatusElement,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "note" => Note?.Any() == true ? Note : null,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "copyright" => Copyright,
-        "approvalDate" => ApprovalDateElement,
-        "lastReviewDate" => LastReviewDateElement,
-        "effectivePeriod" => EffectivePeriod,
-        "topic" => Topic?.Any() == true ? Topic : null,
-        "author" => Author?.Any() == true ? Author : null,
-        "editor" => Editor?.Any() == true ? Editor : null,
-        "reviewer" => Reviewer?.Any() == true ? Reviewer : null,
-        "endorser" => Endorser?.Any() == true ? Endorser : null,
-        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
-        "exposureBackground" => ExposureBackground,
-        "exposureVariant" => ExposureVariant?.Any() == true ? ExposureVariant : null,
-        "outcome" => Outcome?.Any() == true ? Outcome : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "shortTitle":
+          value = ShortTitleElement;
+          return ShortTitleElement is not null;
+        case "subtitle":
+          value = SubtitleElement;
+          return SubtitleElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "topic":
+          value = Topic;
+          return Topic?.Any() == true;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "editor":
+          value = Editor;
+          return Editor?.Any() == true;
+        case "reviewer":
+          value = Reviewer;
+          return Reviewer?.Any() == true;
+        case "endorser":
+          value = Endorser;
+          return Endorser?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "exposureBackground":
+          value = ExposureBackground;
+          return ExposureBackground is not null;
+        case "exposureVariant":
+          value = ExposureVariant;
+          return ExposureVariant?.Any() == true;
+        case "outcome":
+          value = Outcome;
+          return Outcome?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

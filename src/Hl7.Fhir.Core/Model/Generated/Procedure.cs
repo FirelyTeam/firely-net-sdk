@@ -185,15 +185,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "function" => Function,
-          "actor" => Actor,
-          "onBehalfOf" => OnBehalfOf,
-          _ => default
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -316,14 +322,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "action" => Action,
-          "manipulated" => Manipulated,
-          _ => default
+          case "action":
+            value = Action;
+            return Action is not null;
+          case "manipulated":
+            value = Manipulated;
+            return Manipulated is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -995,40 +1005,106 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason,
-        "category" => Category,
-        "code" => Code,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "performed" => Performed,
-        "recorder" => Recorder,
-        "asserter" => Asserter,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "location" => Location,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "bodySite" => BodySite?.Any() == true ? BodySite : null,
-        "outcome" => Outcome,
-        "report" => Report?.Any() == true ? Report : null,
-        "complication" => Complication?.Any() == true ? Complication : null,
-        "complicationDetail" => ComplicationDetail?.Any() == true ? ComplicationDetail : null,
-        "followUp" => FollowUp?.Any() == true ? FollowUp : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "focalDevice" => FocalDevice?.Any() == true ? FocalDevice : null,
-        "usedReference" => UsedReference?.Any() == true ? UsedReference : null,
-        "usedCode" => UsedCode?.Any() == true ? UsedCode : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "performed":
+          value = Performed;
+          return Performed is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "asserter":
+          value = Asserter;
+          return Asserter is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite?.Any() == true;
+        case "outcome":
+          value = Outcome;
+          return Outcome is not null;
+        case "report":
+          value = Report;
+          return Report?.Any() == true;
+        case "complication":
+          value = Complication;
+          return Complication?.Any() == true;
+        case "complicationDetail":
+          value = ComplicationDetail;
+          return ComplicationDetail?.Any() == true;
+        case "followUp":
+          value = FollowUp;
+          return FollowUp?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "focalDevice":
+          value = FocalDevice;
+          return FocalDevice?.Any() == true;
+        case "usedReference":
+          value = UsedReference;
+          return UsedReference?.Any() == true;
+        case "usedCode":
+          value = UsedCode;
+          return UsedCode?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("performed"))
+        {
+          value = Performed;
+          return Performed is not null && key.EndsWith(Performed.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

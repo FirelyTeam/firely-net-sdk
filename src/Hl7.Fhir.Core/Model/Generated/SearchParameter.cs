@@ -386,14 +386,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "definition" => DefinitionElement,
-          "expression" => ExpressionElement,
-          _ => default
+          case "definition":
+            value = DefinitionElement;
+            return DefinitionElement is not null;
+          case "expression":
+            value = ExpressionElement;
+            return ExpressionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1313,38 +1317,90 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "derivedFrom" => DerivedFromElement,
-        "status" => StatusElement,
-        "experimental" => ExperimentalElement,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "purpose" => Purpose,
-        "code" => CodeElement,
-        "base" => BaseElement?.Any() == true ? BaseElement : null,
-        "type" => TypeElement,
-        "expression" => ExpressionElement,
-        "xpath" => XpathElement,
-        "xpathUsage" => XpathUsageElement,
-        "target" => TargetElement?.Any() == true ? TargetElement : null,
-        "multipleOr" => MultipleOrElement,
-        "multipleAnd" => MultipleAndElement,
-        "comparator" => ComparatorElement?.Any() == true ? ComparatorElement : null,
-        "modifier" => ModifierElement?.Any() == true ? ModifierElement : null,
-        "chain" => ChainElement?.Any() == true ? ChainElement : null,
-        "component" => Component?.Any() == true ? Component : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "derivedFrom":
+          value = DerivedFromElement;
+          return DerivedFromElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "code":
+          value = CodeElement;
+          return CodeElement is not null;
+        case "base":
+          value = BaseElement;
+          return BaseElement?.Any() == true;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "expression":
+          value = ExpressionElement;
+          return ExpressionElement is not null;
+        case "xpath":
+          value = XpathElement;
+          return XpathElement is not null;
+        case "xpathUsage":
+          value = XpathUsageElement;
+          return XpathUsageElement is not null;
+        case "target":
+          value = TargetElement;
+          return TargetElement?.Any() == true;
+        case "multipleOr":
+          value = MultipleOrElement;
+          return MultipleOrElement is not null;
+        case "multipleAnd":
+          value = MultipleAndElement;
+          return MultipleAndElement is not null;
+        case "comparator":
+          value = ComparatorElement;
+          return ComparatorElement?.Any() == true;
+        case "modifier":
+          value = ModifierElement;
+          return ModifierElement?.Any() == true;
+        case "chain":
+          value = ChainElement;
+          return ChainElement?.Any() == true;
+        case "component":
+          value = Component;
+          return Component?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

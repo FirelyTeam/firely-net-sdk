@@ -163,14 +163,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "outerPackaging" => OuterPackaging,
-          "immediatePackaging" => ImmediatePackaging,
-          _ => default
+          case "outerPackaging":
+            value = OuterPackaging;
+            return OuterPackaging is not null;
+          case "immediatePackaging":
+            value = ImmediatePackaging;
+            return ImmediatePackaging is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -486,24 +490,48 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier?.Any() == true ? Identifier : null,
-          "type" => Type,
-          "quantity" => Quantity,
-          "material" => Material?.Any() == true ? Material : null,
-          "alternateMaterial" => AlternateMaterial?.Any() == true ? AlternateMaterial : null,
-          "device" => Device?.Any() == true ? Device : null,
-          "manufacturedItem" => ManufacturedItem?.Any() == true ? ManufacturedItem : null,
-          "packageItem" => PackageItem?.Any() == true ? PackageItem : null,
-          "physicalCharacteristics" => PhysicalCharacteristics,
-          "otherCharacteristics" => OtherCharacteristics?.Any() == true ? OtherCharacteristics : null,
-          "shelfLifeStorage" => ShelfLifeStorage?.Any() == true ? ShelfLifeStorage : null,
-          "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "material":
+            value = Material;
+            return Material?.Any() == true;
+          case "alternateMaterial":
+            value = AlternateMaterial;
+            return AlternateMaterial?.Any() == true;
+          case "device":
+            value = Device;
+            return Device?.Any() == true;
+          case "manufacturedItem":
+            value = ManufacturedItem;
+            return ManufacturedItem?.Any() == true;
+          case "packageItem":
+            value = PackageItem;
+            return PackageItem?.Any() == true;
+          case "physicalCharacteristics":
+            value = PhysicalCharacteristics;
+            return PhysicalCharacteristics is not null;
+          case "otherCharacteristics":
+            value = OtherCharacteristics;
+            return OtherCharacteristics?.Any() == true;
+          case "shelfLifeStorage":
+            value = ShelfLifeStorage;
+            return ShelfLifeStorage?.Any() == true;
+          case "manufacturer":
+            value = Manufacturer;
+            return Manufacturer?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -775,21 +803,39 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "subject" => Subject?.Any() == true ? Subject : null,
-        "description" => DescriptionElement,
-        "legalStatusOfSupply" => LegalStatusOfSupply,
-        "marketingStatus" => MarketingStatus?.Any() == true ? MarketingStatus : null,
-        "marketingAuthorization" => MarketingAuthorization,
-        "manufacturer" => Manufacturer?.Any() == true ? Manufacturer : null,
-        "batchIdentifier" => BatchIdentifier?.Any() == true ? BatchIdentifier : null,
-        "packageItem" => PackageItem?.Any() == true ? PackageItem : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "legalStatusOfSupply":
+          value = LegalStatusOfSupply;
+          return LegalStatusOfSupply is not null;
+        case "marketingStatus":
+          value = MarketingStatus;
+          return MarketingStatus?.Any() == true;
+        case "marketingAuthorization":
+          value = MarketingAuthorization;
+          return MarketingAuthorization is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "batchIdentifier":
+          value = BatchIdentifier;
+          return BatchIdentifier?.Any() == true;
+        case "packageItem":
+          value = PackageItem;
+          return PackageItem?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

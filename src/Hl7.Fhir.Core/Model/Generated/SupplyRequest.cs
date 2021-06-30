@@ -216,14 +216,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "value" => Value,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -641,27 +655,72 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "category" => Category,
-        "priority" => PriorityElement,
-        "item" => Item,
-        "quantity" => Quantity,
-        "parameter" => Parameter?.Any() == true ? Parameter : null,
-        "occurrence" => Occurrence,
-        "authoredOn" => AuthoredOnElement,
-        "requester" => Requester,
-        "supplier" => Supplier?.Any() == true ? Supplier : null,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "deliverFrom" => DeliverFrom,
-        "deliverTo" => DeliverTo,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "item":
+          value = Item;
+          return Item is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "parameter":
+          value = Parameter;
+          return Parameter?.Any() == true;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "supplier":
+          value = Supplier;
+          return Supplier?.Any() == true;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "deliverFrom":
+          value = DeliverFrom;
+          return DeliverFrom is not null;
+        case "deliverTo":
+          value = DeliverTo;
+          return DeliverTo is not null;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("item"))
+        {
+          value = Item;
+          return Item is not null && key.EndsWith(Item.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

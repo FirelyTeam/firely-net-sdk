@@ -218,17 +218,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier?.Any() == true ? Identifier : null,
-          "country" => Country,
-          "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-          "legalStatusOfSupply" => LegalStatusOfSupply,
-          "validityPeriod" => ValidityPeriod,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "country":
+            value = Country;
+            return Country is not null;
+          case "jurisdiction":
+            value = Jurisdiction;
+            return Jurisdiction?.Any() == true;
+          case "legalStatusOfSupply":
+            value = LegalStatusOfSupply;
+            return LegalStatusOfSupply is not null;
+          case "validityPeriod":
+            value = ValidityPeriod;
+            return ValidityPeriod is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -390,16 +400,34 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier,
-          "type" => Type,
-          "date" => Date,
-          "application" => Application?.Any() == true ? Application : null,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "date":
+            value = Date;
+            return Date is not null;
+          case "application":
+            value = Application;
+            return Application?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("date"))
+          {
+            value = Date;
+            return Date is not null && key.EndsWith(Date.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -841,28 +869,60 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "subject" => Subject,
-        "country" => Country?.Any() == true ? Country : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "status" => Status,
-        "statusDate" => StatusDateElement,
-        "restoreDate" => RestoreDateElement,
-        "validityPeriod" => ValidityPeriod,
-        "dataExclusivityPeriod" => DataExclusivityPeriod,
-        "dateOfFirstAuthorization" => DateOfFirstAuthorizationElement,
-        "internationalBirthDate" => InternationalBirthDateElement,
-        "legalBasis" => LegalBasis,
-        "jurisdictionalAuthorization" => JurisdictionalAuthorization?.Any() == true ? JurisdictionalAuthorization : null,
-        "holder" => Holder,
-        "regulator" => Regulator,
-        "procedure" => Procedure,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "country":
+          value = Country;
+          return Country?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "status":
+          value = Status;
+          return Status is not null;
+        case "statusDate":
+          value = StatusDateElement;
+          return StatusDateElement is not null;
+        case "restoreDate":
+          value = RestoreDateElement;
+          return RestoreDateElement is not null;
+        case "validityPeriod":
+          value = ValidityPeriod;
+          return ValidityPeriod is not null;
+        case "dataExclusivityPeriod":
+          value = DataExclusivityPeriod;
+          return DataExclusivityPeriod is not null;
+        case "dateOfFirstAuthorization":
+          value = DateOfFirstAuthorizationElement;
+          return DateOfFirstAuthorizationElement is not null;
+        case "internationalBirthDate":
+          value = InternationalBirthDateElement;
+          return InternationalBirthDateElement is not null;
+        case "legalBasis":
+          value = LegalBasis;
+          return LegalBasis is not null;
+        case "jurisdictionalAuthorization":
+          value = JurisdictionalAuthorization;
+          return JurisdictionalAuthorization?.Any() == true;
+        case "holder":
+          value = Holder;
+          return Holder is not null;
+        case "regulator":
+          value = Regulator;
+          return Regulator is not null;
+        case "procedure":
+          value = Procedure;
+          return Procedure is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

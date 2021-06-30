@@ -884,27 +884,67 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "bounds" => Bounds,
-          "count" => CountElement,
-          "countMax" => CountMaxElement,
-          "duration" => DurationElement,
-          "durationMax" => DurationMaxElement,
-          "durationUnit" => DurationUnitElement,
-          "frequency" => FrequencyElement,
-          "frequencyMax" => FrequencyMaxElement,
-          "period" => PeriodElement,
-          "periodMax" => PeriodMaxElement,
-          "periodUnit" => PeriodUnitElement,
-          "dayOfWeek" => DayOfWeekElement?.Any() == true ? DayOfWeekElement : null,
-          "timeOfDay" => TimeOfDayElement?.Any() == true ? TimeOfDayElement : null,
-          "when" => WhenElement?.Any() == true ? WhenElement : null,
-          "offset" => OffsetElement,
-          _ => default
+          case "bounds":
+            value = Bounds;
+            return Bounds is not null;
+          case "count":
+            value = CountElement;
+            return CountElement is not null;
+          case "countMax":
+            value = CountMaxElement;
+            return CountMaxElement is not null;
+          case "duration":
+            value = DurationElement;
+            return DurationElement is not null;
+          case "durationMax":
+            value = DurationMaxElement;
+            return DurationMaxElement is not null;
+          case "durationUnit":
+            value = DurationUnitElement;
+            return DurationUnitElement is not null;
+          case "frequency":
+            value = FrequencyElement;
+            return FrequencyElement is not null;
+          case "frequencyMax":
+            value = FrequencyMaxElement;
+            return FrequencyMaxElement is not null;
+          case "period":
+            value = PeriodElement;
+            return PeriodElement is not null;
+          case "periodMax":
+            value = PeriodMaxElement;
+            return PeriodMaxElement is not null;
+          case "periodUnit":
+            value = PeriodUnitElement;
+            return PeriodUnitElement is not null;
+          case "dayOfWeek":
+            value = DayOfWeekElement;
+            return DayOfWeekElement?.Any() == true;
+          case "timeOfDay":
+            value = TimeOfDayElement;
+            return TimeOfDayElement?.Any() == true;
+          case "when":
+            value = WhenElement;
+            return WhenElement?.Any() == true;
+          case "offset":
+            value = OffsetElement;
+            return OffsetElement is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("bounds"))
+          {
+            value = Bounds;
+            return Bounds is not null && key.EndsWith(Bounds.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1060,15 +1100,21 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "event" => EventElement?.Any() == true ? EventElement : null,
-        "repeat" => Repeat,
-        "code" => Code,
-        _ => default
+        case "event":
+          value = EventElement;
+          return EventElement?.Any() == true;
+        case "repeat":
+          value = Repeat;
+          return Repeat is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

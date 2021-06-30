@@ -540,21 +540,39 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "chromosome" => Chromosome,
-          "genomeBuild" => GenomeBuildElement,
-          "orientation" => OrientationElement,
-          "referenceSeqId" => ReferenceSeqId,
-          "referenceSeqPointer" => ReferenceSeqPointer,
-          "referenceSeqString" => ReferenceSeqStringElement,
-          "strand" => StrandElement,
-          "windowStart" => WindowStartElement,
-          "windowEnd" => WindowEndElement,
-          _ => default
+          case "chromosome":
+            value = Chromosome;
+            return Chromosome is not null;
+          case "genomeBuild":
+            value = GenomeBuildElement;
+            return GenomeBuildElement is not null;
+          case "orientation":
+            value = OrientationElement;
+            return OrientationElement is not null;
+          case "referenceSeqId":
+            value = ReferenceSeqId;
+            return ReferenceSeqId is not null;
+          case "referenceSeqPointer":
+            value = ReferenceSeqPointer;
+            return ReferenceSeqPointer is not null;
+          case "referenceSeqString":
+            value = ReferenceSeqStringElement;
+            return ReferenceSeqStringElement is not null;
+          case "strand":
+            value = StrandElement;
+            return StrandElement is not null;
+          case "windowStart":
+            value = WindowStartElement;
+            return WindowStartElement is not null;
+          case "windowEnd":
+            value = WindowEndElement;
+            return WindowEndElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -844,18 +862,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "start" => StartElement,
-          "end" => EndElement,
-          "observedAllele" => ObservedAlleleElement,
-          "referenceAllele" => ReferenceAlleleElement,
-          "cigar" => CigarElement,
-          "variantPointer" => VariantPointer,
-          _ => default
+          case "start":
+            value = StartElement;
+            return StartElement is not null;
+          case "end":
+            value = EndElement;
+            return EndElement is not null;
+          case "observedAllele":
+            value = ObservedAlleleElement;
+            return ObservedAlleleElement is not null;
+          case "referenceAllele":
+            value = ReferenceAlleleElement;
+            return ReferenceAlleleElement is not null;
+          case "cigar":
+            value = CigarElement;
+            return CigarElement is not null;
+          case "variantPointer":
+            value = VariantPointer;
+            return VariantPointer is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1412,27 +1442,57 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "standardSequence" => StandardSequence,
-          "start" => StartElement,
-          "end" => EndElement,
-          "score" => Score,
-          "method" => Method,
-          "truthTP" => TruthTPElement,
-          "queryTP" => QueryTPElement,
-          "truthFN" => TruthFNElement,
-          "queryFP" => QueryFPElement,
-          "gtFP" => GtFPElement,
-          "precision" => PrecisionElement,
-          "recall" => RecallElement,
-          "fScore" => FScoreElement,
-          "roc" => Roc,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "standardSequence":
+            value = StandardSequence;
+            return StandardSequence is not null;
+          case "start":
+            value = StartElement;
+            return StartElement is not null;
+          case "end":
+            value = EndElement;
+            return EndElement is not null;
+          case "score":
+            value = Score;
+            return Score is not null;
+          case "method":
+            value = Method;
+            return Method is not null;
+          case "truthTP":
+            value = TruthTPElement;
+            return TruthTPElement is not null;
+          case "queryTP":
+            value = QueryTPElement;
+            return QueryTPElement is not null;
+          case "truthFN":
+            value = TruthFNElement;
+            return TruthFNElement is not null;
+          case "queryFP":
+            value = QueryFPElement;
+            return QueryFPElement is not null;
+          case "gtFP":
+            value = GtFPElement;
+            return GtFPElement is not null;
+          case "precision":
+            value = PrecisionElement;
+            return PrecisionElement is not null;
+          case "recall":
+            value = RecallElement;
+            return RecallElement is not null;
+          case "fScore":
+            value = FScoreElement;
+            return FScoreElement is not null;
+          case "roc":
+            value = Roc;
+            return Roc is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1787,19 +1847,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "score" => ScoreElement?.Any() == true ? ScoreElement : null,
-          "numTP" => NumTPElement?.Any() == true ? NumTPElement : null,
-          "numFP" => NumFPElement?.Any() == true ? NumFPElement : null,
-          "numFN" => NumFNElement?.Any() == true ? NumFNElement : null,
-          "precision" => PrecisionElement?.Any() == true ? PrecisionElement : null,
-          "sensitivity" => SensitivityElement?.Any() == true ? SensitivityElement : null,
-          "fMeasure" => FMeasureElement?.Any() == true ? FMeasureElement : null,
-          _ => default
+          case "score":
+            value = ScoreElement;
+            return ScoreElement?.Any() == true;
+          case "numTP":
+            value = NumTPElement;
+            return NumTPElement?.Any() == true;
+          case "numFP":
+            value = NumFPElement;
+            return NumFPElement?.Any() == true;
+          case "numFN":
+            value = NumFNElement;
+            return NumFNElement?.Any() == true;
+          case "precision":
+            value = PrecisionElement;
+            return PrecisionElement?.Any() == true;
+          case "sensitivity":
+            value = SensitivityElement;
+            return SensitivityElement?.Any() == true;
+          case "fMeasure":
+            value = FMeasureElement;
+            return FMeasureElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2105,18 +2179,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "url" => UrlElement,
-          "name" => NameElement,
-          "datasetId" => DatasetIdElement,
-          "variantsetId" => VariantsetIdElement,
-          "readsetId" => ReadsetIdElement,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "url":
+            value = UrlElement;
+            return UrlElement is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "datasetId":
+            value = DatasetIdElement;
+            return DatasetIdElement is not null;
+          case "variantsetId":
+            value = VariantsetIdElement;
+            return VariantsetIdElement is not null;
+          case "readsetId":
+            value = ReadsetIdElement;
+            return ReadsetIdElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2329,17 +2415,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "variantType" => VariantType,
-          "exact" => ExactElement,
-          "length" => LengthElement,
-          "outer" => Outer,
-          "inner" => Inner,
-          _ => default
+          case "variantType":
+            value = VariantType;
+            return VariantType is not null;
+          case "exact":
+            value = ExactElement;
+            return ExactElement is not null;
+          case "length":
+            value = LengthElement;
+            return LengthElement is not null;
+          case "outer":
+            value = Outer;
+            return Outer is not null;
+          case "inner":
+            value = Inner;
+            return Inner is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2497,14 +2593,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "start" => StartElement,
-          "end" => EndElement,
-          _ => default
+          case "start":
+            value = StartElement;
+            return StartElement is not null;
+          case "end":
+            value = EndElement;
+            return EndElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -2659,14 +2759,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "start" => StartElement,
-          "end" => EndElement,
-          _ => default
+          case "start":
+            value = StartElement;
+            return StartElement is not null;
+          case "end":
+            value = EndElement;
+            return EndElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -3114,28 +3218,60 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "type" => TypeElement,
-        "coordinateSystem" => CoordinateSystemElement,
-        "patient" => Patient,
-        "specimen" => Specimen,
-        "device" => Device,
-        "performer" => Performer,
-        "quantity" => Quantity,
-        "referenceSeq" => ReferenceSeq,
-        "variant" => Variant?.Any() == true ? Variant : null,
-        "observedSeq" => ObservedSeqElement,
-        "quality" => Quality?.Any() == true ? Quality : null,
-        "readCoverage" => ReadCoverageElement,
-        "repository" => Repository?.Any() == true ? Repository : null,
-        "pointer" => Pointer?.Any() == true ? Pointer : null,
-        "structureVariant" => StructureVariant?.Any() == true ? StructureVariant : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "coordinateSystem":
+          value = CoordinateSystemElement;
+          return CoordinateSystemElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "specimen":
+          value = Specimen;
+          return Specimen is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "referenceSeq":
+          value = ReferenceSeq;
+          return ReferenceSeq is not null;
+        case "variant":
+          value = Variant;
+          return Variant?.Any() == true;
+        case "observedSeq":
+          value = ObservedSeqElement;
+          return ObservedSeqElement is not null;
+        case "quality":
+          value = Quality;
+          return Quality?.Any() == true;
+        case "readCoverage":
+          value = ReadCoverageElement;
+          return ReadCoverageElement is not null;
+        case "repository":
+          value = Repository;
+          return Repository?.Any() == true;
+        case "pointer":
+          value = Pointer;
+          return Pointer?.Any() == true;
+        case "structureVariant":
+          value = StructureVariant;
+          return StructureVariant?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

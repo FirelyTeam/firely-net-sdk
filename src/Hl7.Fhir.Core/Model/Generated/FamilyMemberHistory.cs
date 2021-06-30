@@ -272,17 +272,37 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "outcome" => Outcome,
-          "contributedToDeath" => ContributedToDeathElement,
-          "onset" => Onset,
-          "note" => Note?.Any() == true ? Note : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "contributedToDeath":
+            value = ContributedToDeathElement;
+            return ContributedToDeathElement is not null;
+          case "onset":
+            value = Onset;
+            return Onset is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("onset"))
+          {
+            value = Onset;
+            return Onset is not null && key.EndsWith(Onset.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -808,30 +828,86 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "status" => StatusElement,
-        "dataAbsentReason" => DataAbsentReason,
-        "patient" => Patient,
-        "date" => DateElement,
-        "name" => NameElement,
-        "relationship" => Relationship,
-        "sex" => Sex,
-        "born" => Born,
-        "age" => Age,
-        "estimatedAge" => EstimatedAgeElement,
-        "deceased" => Deceased,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "condition" => Condition?.Any() == true ? Condition : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "dataAbsentReason":
+          value = DataAbsentReason;
+          return DataAbsentReason is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "relationship":
+          value = Relationship;
+          return Relationship is not null;
+        case "sex":
+          value = Sex;
+          return Sex is not null;
+        case "born":
+          value = Born;
+          return Born is not null;
+        case "age":
+          value = Age;
+          return Age is not null;
+        case "estimatedAge":
+          value = EstimatedAgeElement;
+          return EstimatedAgeElement is not null;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "condition":
+          value = Condition;
+          return Condition?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("born"))
+        {
+          value = Born;
+          return Born is not null && key.EndsWith(Born.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("age"))
+        {
+          value = Age;
+          return Age is not null && key.EndsWith(Age.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("deceased"))
+        {
+          value = Deceased;
+          return Deceased is not null && key.EndsWith(Deceased.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

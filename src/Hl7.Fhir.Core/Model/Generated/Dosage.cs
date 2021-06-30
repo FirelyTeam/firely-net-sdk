@@ -184,15 +184,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "dose" => Dose,
-          "rate" => Rate,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "dose":
+            value = Dose;
+            return Dose is not null;
+          case "rate":
+            value = Rate;
+            return Rate is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("dose"))
+          {
+            value = Dose;
+            return Dose is not null && key.EndsWith(Dose.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("rate"))
+          {
+            value = Rate;
+            return Rate is not null && key.EndsWith(Rate.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -555,25 +576,61 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "sequence" => SequenceElement,
-        "text" => TextElement,
-        "additionalInstruction" => AdditionalInstruction?.Any() == true ? AdditionalInstruction : null,
-        "patientInstruction" => PatientInstructionElement,
-        "timing" => Timing,
-        "asNeeded" => AsNeeded,
-        "site" => Site,
-        "route" => Route,
-        "method" => Method,
-        "doseAndRate" => DoseAndRate?.Any() == true ? DoseAndRate : null,
-        "maxDosePerPeriod" => MaxDosePerPeriod,
-        "maxDosePerAdministration" => MaxDosePerAdministration,
-        "maxDosePerLifetime" => MaxDosePerLifetime,
-        _ => default
+        case "sequence":
+          value = SequenceElement;
+          return SequenceElement is not null;
+        case "text":
+          value = TextElement;
+          return TextElement is not null;
+        case "additionalInstruction":
+          value = AdditionalInstruction;
+          return AdditionalInstruction?.Any() == true;
+        case "patientInstruction":
+          value = PatientInstructionElement;
+          return PatientInstructionElement is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "asNeeded":
+          value = AsNeeded;
+          return AsNeeded is not null;
+        case "site":
+          value = Site;
+          return Site is not null;
+        case "route":
+          value = Route;
+          return Route is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "doseAndRate":
+          value = DoseAndRate;
+          return DoseAndRate?.Any() == true;
+        case "maxDosePerPeriod":
+          value = MaxDosePerPeriod;
+          return MaxDosePerPeriod is not null;
+        case "maxDosePerAdministration":
+          value = MaxDosePerAdministration;
+          return MaxDosePerAdministration is not null;
+        case "maxDosePerLifetime":
+          value = MaxDosePerLifetime;
+          return MaxDosePerLifetime is not null;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("asNeeded"))
+        {
+          value = AsNeeded;
+          return AsNeeded is not null && key.EndsWith(AsNeeded.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

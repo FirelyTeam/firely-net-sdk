@@ -194,14 +194,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code?.Any() == true ? Code : null,
-          "detail" => Detail?.Any() == true ? Detail : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          case "detail":
+            value = Detail;
+            return Detail?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -359,15 +363,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "action" => Action,
-          "date" => DateElement,
-          "author" => Author,
-          _ => default
+          case "action":
+            value = Action;
+            return Action is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "author":
+            value = Author;
+            return Author is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -741,24 +751,58 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "code" => Code,
-        "severity" => SeverityElement,
-        "patient" => Patient,
-        "identified" => Identified,
-        "author" => Author,
-        "implicated" => Implicated?.Any() == true ? Implicated : null,
-        "evidence" => Evidence?.Any() == true ? Evidence : null,
-        "detail" => DetailElement,
-        "reference" => ReferenceElement,
-        "mitigation" => Mitigation?.Any() == true ? Mitigation : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "severity":
+          value = SeverityElement;
+          return SeverityElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "identified":
+          value = Identified;
+          return Identified is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "implicated":
+          value = Implicated;
+          return Implicated?.Any() == true;
+        case "evidence":
+          value = Evidence;
+          return Evidence?.Any() == true;
+        case "detail":
+          value = DetailElement;
+          return DetailElement is not null;
+        case "reference":
+          value = ReferenceElement;
+          return ReferenceElement is not null;
+        case "mitigation":
+          value = Mitigation;
+          return Mitigation?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("identified"))
+        {
+          value = Identified;
+          return Identified is not null && key.EndsWith(Identified.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

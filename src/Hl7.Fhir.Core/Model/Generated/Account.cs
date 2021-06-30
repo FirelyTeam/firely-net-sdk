@@ -223,14 +223,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "coverage" => Coverage,
-          "priority" => PriorityElement,
-          _ => default
+          case "coverage":
+            value = Coverage;
+            return Coverage is not null;
+          case "priority":
+            value = PriorityElement;
+            return PriorityElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -388,15 +392,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "party" => Party,
-          "onHold" => OnHoldElement,
-          "period" => Period,
-          _ => default
+          case "party":
+            value = Party;
+            return Party is not null;
+          case "onHold":
+            value = OnHoldElement;
+            return OnHoldElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -731,23 +741,45 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "type" => Type,
-        "name" => NameElement,
-        "subject" => Subject?.Any() == true ? Subject : null,
-        "servicePeriod" => ServicePeriod,
-        "coverage" => Coverage?.Any() == true ? Coverage : null,
-        "owner" => Owner,
-        "description" => DescriptionElement,
-        "guarantor" => Guarantor?.Any() == true ? Guarantor : null,
-        "partOf" => PartOf,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "servicePeriod":
+          value = ServicePeriod;
+          return ServicePeriod is not null;
+        case "coverage":
+          value = Coverage;
+          return Coverage?.Any() == true;
+        case "owner":
+          value = Owner;
+          return Owner is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "guarantor":
+          value = Guarantor;
+          return Guarantor?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

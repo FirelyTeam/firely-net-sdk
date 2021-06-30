@@ -230,15 +230,31 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "item" => Item,
-          "isActive" => IsActiveElement,
-          "strength" => Strength,
-          _ => default
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "isActive":
+            value = IsActiveElement;
+            return IsActiveElement is not null;
+          case "strength":
+            value = Strength;
+            return Strength is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("item"))
+          {
+            value = Item;
+            return Item is not null && key.EndsWith(Item.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -394,14 +410,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "lotNumber" => LotNumberElement,
-          "expirationDate" => ExpirationDateElement,
-          _ => default
+          case "lotNumber":
+            value = LotNumberElement;
+            return LotNumberElement is not null;
+          case "expirationDate":
+            value = ExpirationDateElement;
+            return ExpirationDateElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -638,20 +658,36 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "code" => Code,
-        "status" => StatusElement,
-        "manufacturer" => Manufacturer,
-        "form" => Form,
-        "amount" => Amount,
-        "ingredient" => Ingredient?.Any() == true ? Ingredient : null,
-        "batch" => Batch,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer is not null;
+        case "form":
+          value = Form;
+          return Form is not null;
+        case "amount":
+          value = Amount;
+          return Amount is not null;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "batch":
+          value = Batch;
+          return Batch is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

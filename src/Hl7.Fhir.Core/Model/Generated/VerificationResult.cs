@@ -321,19 +321,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "who" => Who,
-          "type" => Type?.Any() == true ? Type : null,
-          "communicationMethod" => CommunicationMethod?.Any() == true ? CommunicationMethod : null,
-          "validationStatus" => ValidationStatus,
-          "validationDate" => ValidationDateElement,
-          "canPushUpdates" => CanPushUpdates,
-          "pushTypeAvailable" => PushTypeAvailable?.Any() == true ? PushTypeAvailable : null,
-          _ => default
+          case "who":
+            value = Who;
+            return Who is not null;
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "communicationMethod":
+            value = CommunicationMethod;
+            return CommunicationMethod?.Any() == true;
+          case "validationStatus":
+            value = ValidationStatus;
+            return ValidationStatus is not null;
+          case "validationDate":
+            value = ValidationDateElement;
+            return ValidationDateElement is not null;
+          case "canPushUpdates":
+            value = CanPushUpdates;
+            return CanPushUpdates is not null;
+          case "pushTypeAvailable":
+            value = PushTypeAvailable;
+            return PushTypeAvailable?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -623,20 +637,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "who" => Who,
-          "onBehalfOf" => OnBehalfOf,
-          "communicationMethod" => CommunicationMethod,
-          "date" => DateElement,
-          "sourceIdentityCertificate" => SourceIdentityCertificateElement,
-          "proxyIdentityCertificate" => ProxyIdentityCertificateElement,
-          "proxySignature" => ProxySignature,
-          "sourceSignature" => SourceSignature,
-          _ => default
+          case "who":
+            value = Who;
+            return Who is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          case "communicationMethod":
+            value = CommunicationMethod;
+            return CommunicationMethod is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "sourceIdentityCertificate":
+            value = SourceIdentityCertificateElement;
+            return SourceIdentityCertificateElement is not null;
+          case "proxyIdentityCertificate":
+            value = ProxyIdentityCertificateElement;
+            return ProxyIdentityCertificateElement is not null;
+          case "proxySignature":
+            value = ProxySignature;
+            return ProxySignature is not null;
+          case "sourceSignature":
+            value = SourceSignature;
+            return SourceSignature is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -800,15 +830,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "organization" => Organization,
-          "identityCertificate" => IdentityCertificateElement,
-          "attestationSignature" => AttestationSignature,
-          _ => default
+          case "organization":
+            value = Organization;
+            return Organization is not null;
+          case "identityCertificate":
+            value = IdentityCertificateElement;
+            return IdentityCertificateElement is not null;
+          case "attestationSignature":
+            value = AttestationSignature;
+            return AttestationSignature is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1230,26 +1266,54 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "target" => Target?.Any() == true ? Target : null,
-        "targetLocation" => TargetLocationElement?.Any() == true ? TargetLocationElement : null,
-        "need" => Need,
-        "status" => Status_Element,
-        "statusDate" => StatusDateElement,
-        "validationType" => ValidationType,
-        "validationProcess" => ValidationProcess?.Any() == true ? ValidationProcess : null,
-        "frequency" => Frequency,
-        "lastPerformed" => LastPerformedElement,
-        "nextScheduled" => NextScheduledElement,
-        "failureAction" => FailureAction,
-        "primarySource" => PrimarySource?.Any() == true ? PrimarySource : null,
-        "attestation" => Attestation,
-        "validator" => Validator?.Any() == true ? Validator : null,
-        _ => default
+        case "target":
+          value = Target;
+          return Target?.Any() == true;
+        case "targetLocation":
+          value = TargetLocationElement;
+          return TargetLocationElement?.Any() == true;
+        case "need":
+          value = Need;
+          return Need is not null;
+        case "status":
+          value = Status_Element;
+          return Status_Element is not null;
+        case "statusDate":
+          value = StatusDateElement;
+          return StatusDateElement is not null;
+        case "validationType":
+          value = ValidationType;
+          return ValidationType is not null;
+        case "validationProcess":
+          value = ValidationProcess;
+          return ValidationProcess?.Any() == true;
+        case "frequency":
+          value = Frequency;
+          return Frequency is not null;
+        case "lastPerformed":
+          value = LastPerformedElement;
+          return LastPerformedElement is not null;
+        case "nextScheduled":
+          value = NextScheduledElement;
+          return NextScheduledElement is not null;
+        case "failureAction":
+          value = FailureAction;
+          return FailureAction is not null;
+        case "primarySource":
+          value = PrimarySource;
+          return PrimarySource?.Any() == true;
+        case "attestation":
+          value = Attestation;
+          return Attestation is not null;
+        case "validator":
+          value = Validator;
+          return Validator?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

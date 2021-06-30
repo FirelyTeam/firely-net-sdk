@@ -207,17 +207,27 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "subject" => Subject?.Any() == true ? Subject : null,
-        "symptomConditionEffect" => SymptomConditionEffect,
-        "classification" => Classification,
-        "frequencyOfOccurrence" => FrequencyOfOccurrence,
-        "population" => Population?.Any() == true ? Population : null,
-        _ => default
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "symptomConditionEffect":
+          value = SymptomConditionEffect;
+          return SymptomConditionEffect is not null;
+        case "classification":
+          value = Classification;
+          return Classification is not null;
+        case "frequencyOfOccurrence":
+          value = FrequencyOfOccurrence;
+          return FrequencyOfOccurrence is not null;
+        case "population":
+          value = Population;
+          return Population?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -253,18 +253,30 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "low" => Low,
-          "high" => High,
-          "type" => Type,
-          "appliesTo" => AppliesTo?.Any() == true ? AppliesTo : null,
-          "age" => Age,
-          "text" => TextElement,
-          _ => default
+          case "low":
+            value = Low;
+            return Low is not null;
+          case "high":
+            value = High;
+            return High is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "appliesTo":
+            value = AppliesTo;
+            return AppliesTo?.Any() == true;
+          case "age":
+            value = Age;
+            return Age is not null;
+          case "text":
+            value = TextElement;
+            return TextElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -446,17 +458,37 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "value" => Value,
-          "dataAbsentReason" => DataAbsentReason,
-          "interpretation" => Interpretation?.Any() == true ? Interpretation : null,
-          "referenceRange" => ReferenceRange?.Any() == true ? ReferenceRange : null,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "dataAbsentReason":
+            value = DataAbsentReason;
+            return DataAbsentReason is not null;
+          case "interpretation":
+            value = Interpretation;
+            return Interpretation?.Any() == true;
+          case "referenceRange":
+            value = ReferenceRange;
+            return ReferenceRange?.Any() == true;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1036,36 +1068,99 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "code" => Code,
-        "subject" => Subject,
-        "focus" => Focus?.Any() == true ? Focus : null,
-        "encounter" => Encounter,
-        "effective" => Effective,
-        "issued" => IssuedElement,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "value" => Value,
-        "dataAbsentReason" => DataAbsentReason,
-        "interpretation" => Interpretation?.Any() == true ? Interpretation : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "bodySite" => BodySite,
-        "method" => Method,
-        "specimen" => Specimen,
-        "device" => Device,
-        "referenceRange" => ReferenceRange?.Any() == true ? ReferenceRange : null,
-        "hasMember" => HasMember?.Any() == true ? HasMember : null,
-        "derivedFrom" => DerivedFrom?.Any() == true ? DerivedFrom : null,
-        "component" => Component?.Any() == true ? Component : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "value":
+          value = Value;
+          return Value is not null;
+        case "dataAbsentReason":
+          value = DataAbsentReason;
+          return DataAbsentReason is not null;
+        case "interpretation":
+          value = Interpretation;
+          return Interpretation?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "specimen":
+          value = Specimen;
+          return Specimen is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "referenceRange":
+          value = ReferenceRange;
+          return ReferenceRange?.Any() == true;
+        case "hasMember":
+          value = HasMember;
+          return HasMember?.Any() == true;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "component":
+          value = Component;
+          return Component?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && key.EndsWith(Effective.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("value"))
+        {
+          value = Value;
+          return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

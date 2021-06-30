@@ -483,19 +483,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "substance" => Substance,
-          "manifestation" => Manifestation?.Any() == true ? Manifestation : null,
-          "description" => DescriptionElement,
-          "onset" => OnsetElement,
-          "severity" => SeverityElement,
-          "exposureRoute" => ExposureRoute,
-          "note" => Note?.Any() == true ? Note : null,
-          _ => default
+          case "substance":
+            value = Substance;
+            return Substance is not null;
+          case "manifestation":
+            value = Manifestation;
+            return Manifestation?.Any() == true;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "onset":
+            value = OnsetElement;
+            return OnsetElement is not null;
+          case "severity":
+            value = SeverityElement;
+            return SeverityElement is not null;
+          case "exposureRoute":
+            value = ExposureRoute;
+            return ExposureRoute is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -966,28 +980,70 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "clinicalStatus" => ClinicalStatus,
-        "verificationStatus" => VerificationStatus,
-        "type" => TypeElement,
-        "category" => CategoryElement?.Any() == true ? CategoryElement : null,
-        "criticality" => CriticalityElement,
-        "code" => Code,
-        "patient" => Patient,
-        "encounter" => Encounter,
-        "onset" => Onset,
-        "recordedDate" => RecordedDateElement,
-        "recorder" => Recorder,
-        "asserter" => Asserter,
-        "lastOccurrence" => LastOccurrenceElement,
-        "note" => Note?.Any() == true ? Note : null,
-        "reaction" => Reaction?.Any() == true ? Reaction : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "clinicalStatus":
+          value = ClinicalStatus;
+          return ClinicalStatus is not null;
+        case "verificationStatus":
+          value = VerificationStatus;
+          return VerificationStatus is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "category":
+          value = CategoryElement;
+          return CategoryElement?.Any() == true;
+        case "criticality":
+          value = CriticalityElement;
+          return CriticalityElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "onset":
+          value = Onset;
+          return Onset is not null;
+        case "recordedDate":
+          value = RecordedDateElement;
+          return RecordedDateElement is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "asserter":
+          value = Asserter;
+          return Asserter is not null;
+        case "lastOccurrence":
+          value = LastOccurrenceElement;
+          return LastOccurrenceElement is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "reaction":
+          value = Reaction;
+          return Reaction?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("onset"))
+        {
+          value = Onset;
+          return Onset is not null && key.EndsWith(Onset.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -224,17 +224,27 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "country" => Country,
-        "jurisdiction" => Jurisdiction,
-        "status" => Status,
-        "dateRange" => DateRange,
-        "restoreDate" => RestoreDateElement,
-        _ => default
+        case "country":
+          value = Country;
+          return Country is not null;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction is not null;
+        case "status":
+          value = Status;
+          return Status is not null;
+        case "dateRange":
+          value = DateRange;
+          return DateRange is not null;
+        case "restoreDate":
+          value = RestoreDateElement;
+          return RestoreDateElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -347,16 +347,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "endpoint" => EndpointElement,
-          "payload" => PayloadElement,
-          "header" => HeaderElement?.Any() == true ? HeaderElement : null,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          case "payload":
+            value = PayloadElement;
+            return PayloadElement is not null;
+          case "header":
+            value = HeaderElement;
+            return HeaderElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -650,19 +658,33 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "status" => StatusElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "end" => EndElement,
-        "reason" => ReasonElement,
-        "criteria" => CriteriaElement,
-        "error" => ErrorElement,
-        "channel" => Channel,
-        _ => default
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "reason":
+          value = ReasonElement;
+          return ReasonElement is not null;
+        case "criteria":
+          value = CriteriaElement;
+          return CriteriaElement is not null;
+        case "error":
+          value = ErrorElement;
+          return ErrorElement is not null;
+        case "channel":
+          value = Channel;
+          return Channel is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

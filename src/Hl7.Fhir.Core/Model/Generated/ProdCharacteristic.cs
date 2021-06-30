@@ -368,23 +368,45 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "height" => Height,
-        "width" => Width,
-        "depth" => Depth,
-        "weight" => Weight,
-        "nominalVolume" => NominalVolume,
-        "externalDiameter" => ExternalDiameter,
-        "shape" => ShapeElement,
-        "color" => ColorElement?.Any() == true ? ColorElement : null,
-        "imprint" => ImprintElement?.Any() == true ? ImprintElement : null,
-        "image" => Image?.Any() == true ? Image : null,
-        "scoring" => Scoring,
-        _ => default
+        case "height":
+          value = Height;
+          return Height is not null;
+        case "width":
+          value = Width;
+          return Width is not null;
+        case "depth":
+          value = Depth;
+          return Depth is not null;
+        case "weight":
+          value = Weight;
+          return Weight is not null;
+        case "nominalVolume":
+          value = NominalVolume;
+          return NominalVolume is not null;
+        case "externalDiameter":
+          value = ExternalDiameter;
+          return ExternalDiameter is not null;
+        case "shape":
+          value = ShapeElement;
+          return ShapeElement is not null;
+        case "color":
+          value = ColorElement;
+          return ColorElement?.Any() == true;
+        case "imprint":
+          value = ImprintElement;
+          return ImprintElement?.Any() == true;
+        case "image":
+          value = Image;
+          return Image?.Any() == true;
+        case "scoring":
+          value = Scoring;
+          return Scoring is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

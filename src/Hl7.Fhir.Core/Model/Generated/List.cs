@@ -265,16 +265,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "flag" => Flag,
-          "deleted" => DeletedElement,
-          "date" => DateElement,
-          "item" => Item,
-          _ => default
+          case "flag":
+            value = Flag;
+            return Flag is not null;
+          case "deleted":
+            value = DeletedElement;
+            return DeletedElement is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -665,25 +673,51 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "mode" => ModeElement,
-        "title" => TitleElement,
-        "code" => Code,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "date" => DateElement,
-        "source" => Source,
-        "orderedBy" => OrderedBy,
-        "note" => Note?.Any() == true ? Note : null,
-        "entry" => Entry?.Any() == true ? Entry : null,
-        "emptyReason" => EmptyReason,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "mode":
+          value = ModeElement;
+          return ModeElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "orderedBy":
+          value = OrderedBy;
+          return OrderedBy is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "entry":
+          value = Entry;
+          return Entry?.Any() == true;
+        case "emptyReason":
+          value = EmptyReason;
+          return EmptyReason is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

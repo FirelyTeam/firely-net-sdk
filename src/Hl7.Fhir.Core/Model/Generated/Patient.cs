@@ -309,19 +309,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "relationship" => Relationship?.Any() == true ? Relationship : null,
-          "name" => Name,
-          "telecom" => Telecom?.Any() == true ? Telecom : null,
-          "address" => Address,
-          "gender" => GenderElement,
-          "organization" => Organization,
-          "period" => Period,
-          _ => default
+          case "relationship":
+            value = Relationship;
+            return Relationship?.Any() == true;
+          case "name":
+            value = Name;
+            return Name is not null;
+          case "telecom":
+            value = Telecom;
+            return Telecom?.Any() == true;
+          case "address":
+            value = Address;
+            return Address is not null;
+          case "gender":
+            value = GenderElement;
+            return GenderElement is not null;
+          case "organization":
+            value = Organization;
+            return Organization is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -464,14 +478,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "language" => Language,
-          "preferred" => PreferredElement,
-          _ => default
+          case "language":
+            value = Language;
+            return Language is not null;
+          case "preferred":
+            value = PreferredElement;
+            return PreferredElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -613,14 +631,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "other" => Other,
-          "type" => TypeElement,
-          _ => default
+          case "other":
+            value = Other;
+            return Other is not null;
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1050,28 +1072,75 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "active" => ActiveElement,
-        "name" => Name?.Any() == true ? Name : null,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "gender" => GenderElement,
-        "birthDate" => BirthDateElement,
-        "deceased" => Deceased,
-        "address" => Address?.Any() == true ? Address : null,
-        "maritalStatus" => MaritalStatus,
-        "multipleBirth" => MultipleBirth,
-        "photo" => Photo?.Any() == true ? Photo : null,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "communication" => Communication?.Any() == true ? Communication : null,
-        "generalPractitioner" => GeneralPractitioner?.Any() == true ? GeneralPractitioner : null,
-        "managingOrganization" => ManagingOrganization,
-        "link" => Link?.Any() == true ? Link : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "name":
+          value = Name;
+          return Name?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "gender":
+          value = GenderElement;
+          return GenderElement is not null;
+        case "birthDate":
+          value = BirthDateElement;
+          return BirthDateElement is not null;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
+        case "address":
+          value = Address;
+          return Address?.Any() == true;
+        case "maritalStatus":
+          value = MaritalStatus;
+          return MaritalStatus is not null;
+        case "multipleBirth":
+          value = MultipleBirth;
+          return MultipleBirth is not null;
+        case "photo":
+          value = Photo;
+          return Photo?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "communication":
+          value = Communication;
+          return Communication?.Any() == true;
+        case "generalPractitioner":
+          value = GeneralPractitioner;
+          return GeneralPractitioner?.Any() == true;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "link":
+          value = Link;
+          return Link?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("deceased"))
+        {
+          value = Deceased;
+          return Deceased is not null && key.EndsWith(Deceased.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("multipleBirth"))
+        {
+          value = MultipleBirth;
+          return MultipleBirth is not null && key.EndsWith(MultipleBirth.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

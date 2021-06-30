@@ -202,16 +202,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "identifier" => Identifier?.Any() == true ? Identifier : null,
-          "code" => Code,
-          "period" => Period,
-          "issuer" => Issuer,
-          _ => default
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          case "issuer":
+            value = Issuer;
+            return Issuer is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -525,22 +533,42 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "active" => ActiveElement,
-        "name" => Name?.Any() == true ? Name : null,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "address" => Address?.Any() == true ? Address : null,
-        "gender" => GenderElement,
-        "birthDate" => BirthDateElement,
-        "photo" => Photo?.Any() == true ? Photo : null,
-        "qualification" => Qualification?.Any() == true ? Qualification : null,
-        "communication" => Communication?.Any() == true ? Communication : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "name":
+          value = Name;
+          return Name?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "address":
+          value = Address;
+          return Address?.Any() == true;
+        case "gender":
+          value = GenderElement;
+          return GenderElement is not null;
+        case "birthDate":
+          value = BirthDateElement;
+          return BirthDateElement is not null;
+        case "photo":
+          value = Photo;
+          return Photo?.Any() == true;
+        case "qualification":
+          value = Qualification;
+          return Qualification?.Any() == true;
+        case "communication":
+          value = Communication;
+          return Communication?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

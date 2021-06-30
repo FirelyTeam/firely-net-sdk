@@ -267,16 +267,34 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "value" => Value,
-          "exclude" => ExcludeElement,
-          "period" => Period,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "exclude":
+            value = ExcludeElement;
+            return ExcludeElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -436,15 +454,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "entity" => Entity,
-          "period" => Period,
-          "inactive" => InactiveElement,
-          _ => default
+          case "entity":
+            value = Entity;
+            return Entity is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          case "inactive":
+            value = InactiveElement;
+            return InactiveElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -793,22 +817,42 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "active" => ActiveElement,
-        "type" => TypeElement,
-        "actual" => ActualElement,
-        "code" => Code,
-        "name" => NameElement,
-        "quantity" => QuantityElement,
-        "managingEntity" => ManagingEntity,
-        "characteristic" => Characteristic?.Any() == true ? Characteristic : null,
-        "member" => Member?.Any() == true ? Member : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "actual":
+          value = ActualElement;
+          return ActualElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "quantity":
+          value = QuantityElement;
+          return QuantityElement is not null;
+        case "managingEntity":
+          value = ManagingEntity;
+          return ManagingEntity is not null;
+        case "characteristic":
+          value = Characteristic;
+          return Characteristic?.Any() == true;
+        case "member":
+          value = Member;
+          return Member?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

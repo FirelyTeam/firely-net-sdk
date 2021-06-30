@@ -274,18 +274,45 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "outcome" => Outcome,
-          "probability" => Probability,
-          "qualitativeRisk" => QualitativeRisk,
-          "relativeRisk" => RelativeRiskElement,
-          "when" => When,
-          "rationale" => RationaleElement,
-          _ => default
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "probability":
+            value = Probability;
+            return Probability is not null;
+          case "qualitativeRisk":
+            value = QualitativeRisk;
+            return QualitativeRisk is not null;
+          case "relativeRisk":
+            value = RelativeRiskElement;
+            return RelativeRiskElement is not null;
+          case "when":
+            value = When;
+            return When is not null;
+          case "rationale":
+            value = RationaleElement;
+            return RationaleElement is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("probability"))
+          {
+            value = Probability;
+            return Probability is not null && key.EndsWith(Probability.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("when"))
+          {
+            value = When;
+            return When is not null && key.EndsWith(When.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -728,29 +755,73 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn,
-        "parent" => Parent,
-        "status" => StatusElement,
-        "method" => Method,
-        "code" => Code,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "occurrence" => Occurrence,
-        "condition" => Condition,
-        "performer" => Performer,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "basis" => Basis?.Any() == true ? Basis : null,
-        "prediction" => Prediction?.Any() == true ? Prediction : null,
-        "mitigation" => MitigationElement,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn is not null;
+        case "parent":
+          value = Parent;
+          return Parent is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "condition":
+          value = Condition;
+          return Condition is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "basis":
+          value = Basis;
+          return Basis?.Any() == true;
+        case "prediction":
+          value = Prediction;
+          return Prediction?.Any() == true;
+        case "mitigation":
+          value = MitigationElement;
+          return MitigationElement is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

@@ -148,13 +148,25 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "content" => Content,
-          _ => default
+          case "content":
+            value = Content;
+            return Content is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("content"))
+          {
+            value = Content;
+            return Content is not null && key.EndsWith(Content.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -780,35 +792,81 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "inResponseTo" => InResponseTo?.Any() == true ? InResponseTo : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason,
-        "category" => Category?.Any() == true ? Category : null,
-        "priority" => PriorityElement,
-        "medium" => Medium?.Any() == true ? Medium : null,
-        "subject" => Subject,
-        "topic" => Topic,
-        "about" => About?.Any() == true ? About : null,
-        "encounter" => Encounter,
-        "sent" => SentElement,
-        "received" => ReceivedElement,
-        "recipient" => Recipient?.Any() == true ? Recipient : null,
-        "sender" => Sender,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "payload" => Payload?.Any() == true ? Payload : null,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "inResponseTo":
+          value = InResponseTo;
+          return InResponseTo?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "medium":
+          value = Medium;
+          return Medium?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "topic":
+          value = Topic;
+          return Topic is not null;
+        case "about":
+          value = About;
+          return About?.Any() == true;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "sent":
+          value = SentElement;
+          return SentElement is not null;
+        case "received":
+          value = ReceivedElement;
+          return ReceivedElement is not null;
+        case "recipient":
+          value = Recipient;
+          return Recipient?.Any() == true;
+        case "sender":
+          value = Sender;
+          return Sender is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "payload":
+          value = Payload;
+          return Payload?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

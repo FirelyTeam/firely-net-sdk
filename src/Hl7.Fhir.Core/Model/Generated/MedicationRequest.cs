@@ -388,19 +388,33 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "initialFill" => InitialFill,
-          "dispenseInterval" => DispenseInterval,
-          "validityPeriod" => ValidityPeriod,
-          "numberOfRepeatsAllowed" => NumberOfRepeatsAllowedElement,
-          "quantity" => Quantity,
-          "expectedSupplyDuration" => ExpectedSupplyDuration,
-          "performer" => Performer,
-          _ => default
+          case "initialFill":
+            value = InitialFill;
+            return InitialFill is not null;
+          case "dispenseInterval":
+            value = DispenseInterval;
+            return DispenseInterval is not null;
+          case "validityPeriod":
+            value = ValidityPeriod;
+            return ValidityPeriod is not null;
+          case "numberOfRepeatsAllowed":
+            value = NumberOfRepeatsAllowedElement;
+            return NumberOfRepeatsAllowedElement is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "expectedSupplyDuration":
+            value = ExpectedSupplyDuration;
+            return ExpectedSupplyDuration is not null;
+          case "performer":
+            value = Performer;
+            return Performer is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -524,14 +538,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "quantity" => Quantity,
-          "duration" => Duration,
-          _ => default
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "duration":
+            value = Duration;
+            return Duration is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -653,14 +671,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "allowed" => Allowed,
-          "reason" => Reason,
-          _ => default
+          case "allowed":
+            value = Allowed;
+            return Allowed is not null;
+          case "reason":
+            value = Reason;
+            return Reason is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("allowed"))
+          {
+            value = Allowed;
+            return Allowed is not null && key.EndsWith(Allowed.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1482,44 +1514,123 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "statusReason" => StatusReason,
-        "intent" => IntentElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "priority" => PriorityElement,
-        "doNotPerform" => DoNotPerformElement,
-        "reported" => Reported,
-        "medication" => Medication,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
-        "authoredOn" => AuthoredOnElement,
-        "requester" => Requester,
-        "performer" => Performer,
-        "performerType" => PerformerType,
-        "recorder" => Recorder,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "groupIdentifier" => GroupIdentifier,
-        "courseOfTherapyType" => CourseOfTherapyType,
-        "insurance" => Insurance?.Any() == true ? Insurance : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "dosageInstruction" => DosageInstruction?.Any() == true ? DosageInstruction : null,
-        "dispenseRequest" => DispenseRequest,
-        "substitution" => Substitution,
-        "priorPrescription" => PriorPrescription,
-        "detectedIssue" => DetectedIssue?.Any() == true ? DetectedIssue : null,
-        "eventHistory" => EventHistory?.Any() == true ? EventHistory : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "doNotPerform":
+          value = DoNotPerformElement;
+          return DoNotPerformElement is not null;
+        case "reported":
+          value = Reported;
+          return Reported is not null;
+        case "medication":
+          value = Medication;
+          return Medication is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "performerType":
+          value = PerformerType;
+          return PerformerType is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
+        case "courseOfTherapyType":
+          value = CourseOfTherapyType;
+          return CourseOfTherapyType is not null;
+        case "insurance":
+          value = Insurance;
+          return Insurance?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "dosageInstruction":
+          value = DosageInstruction;
+          return DosageInstruction?.Any() == true;
+        case "dispenseRequest":
+          value = DispenseRequest;
+          return DispenseRequest is not null;
+        case "substitution":
+          value = Substitution;
+          return Substitution is not null;
+        case "priorPrescription":
+          value = PriorPrescription;
+          return PriorPrescription is not null;
+        case "detectedIssue":
+          value = DetectedIssue;
+          return DetectedIssue?.Any() == true;
+        case "eventHistory":
+          value = EventHistory;
+          return EventHistory?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("reported"))
+        {
+          value = Reported;
+          return Reported is not null && key.EndsWith(Reported.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("medication"))
+        {
+          value = Medication;
+          return Medication is not null && key.EndsWith(Medication.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

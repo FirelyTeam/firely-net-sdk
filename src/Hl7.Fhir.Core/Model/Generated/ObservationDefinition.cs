@@ -338,16 +338,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "customaryUnit" => CustomaryUnit,
-          "unit" => Unit,
-          "conversionFactor" => ConversionFactorElement,
-          "decimalPrecision" => DecimalPrecisionElement,
-          _ => default
+          case "customaryUnit":
+            value = CustomaryUnit;
+            return CustomaryUnit is not null;
+          case "unit":
+            value = Unit;
+            return Unit is not null;
+          case "conversionFactor":
+            value = ConversionFactorElement;
+            return ConversionFactorElement is not null;
+          case "decimalPrecision":
+            value = DecimalPrecisionElement;
+            return DecimalPrecisionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -633,20 +641,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "category" => CategoryElement,
-          "range" => Range,
-          "context" => Context,
-          "appliesTo" => AppliesTo?.Any() == true ? AppliesTo : null,
-          "gender" => GenderElement,
-          "age" => Age,
-          "gestationalAge" => GestationalAge,
-          "condition" => ConditionElement,
-          _ => default
+          case "category":
+            value = CategoryElement;
+            return CategoryElement is not null;
+          case "range":
+            value = Range;
+            return Range is not null;
+          case "context":
+            value = Context;
+            return Context is not null;
+          case "appliesTo":
+            value = AppliesTo;
+            return AppliesTo?.Any() == true;
+          case "gender":
+            value = GenderElement;
+            return GenderElement is not null;
+          case "age":
+            value = Age;
+            return Age is not null;
+          case "gestationalAge":
+            value = GestationalAge;
+            return GestationalAge is not null;
+          case "condition":
+            value = ConditionElement;
+            return ConditionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1024,25 +1048,51 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "category" => Category?.Any() == true ? Category : null,
-        "code" => Code,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "permittedDataType" => PermittedDataTypeElement?.Any() == true ? PermittedDataTypeElement : null,
-        "multipleResultsAllowed" => MultipleResultsAllowedElement,
-        "method" => Method,
-        "preferredReportName" => PreferredReportNameElement,
-        "quantitativeDetails" => QuantitativeDetails,
-        "qualifiedInterval" => QualifiedInterval?.Any() == true ? QualifiedInterval : null,
-        "validCodedValueSet" => ValidCodedValueSet,
-        "normalCodedValueSet" => NormalCodedValueSet,
-        "abnormalCodedValueSet" => AbnormalCodedValueSet,
-        "criticalCodedValueSet" => CriticalCodedValueSet,
-        _ => default
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "permittedDataType":
+          value = PermittedDataTypeElement;
+          return PermittedDataTypeElement?.Any() == true;
+        case "multipleResultsAllowed":
+          value = MultipleResultsAllowedElement;
+          return MultipleResultsAllowedElement is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "preferredReportName":
+          value = PreferredReportNameElement;
+          return PreferredReportNameElement is not null;
+        case "quantitativeDetails":
+          value = QuantitativeDetails;
+          return QuantitativeDetails is not null;
+        case "qualifiedInterval":
+          value = QualifiedInterval;
+          return QualifiedInterval?.Any() == true;
+        case "validCodedValueSet":
+          value = ValidCodedValueSet;
+          return ValidCodedValueSet is not null;
+        case "normalCodedValueSet":
+          value = NormalCodedValueSet;
+          return NormalCodedValueSet is not null;
+        case "abnormalCodedValueSet":
+          value = AbnormalCodedValueSet;
+          return AbnormalCodedValueSet is not null;
+        case "criticalCodedValueSet":
+          value = CriticalCodedValueSet;
+          return CriticalCodedValueSet is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

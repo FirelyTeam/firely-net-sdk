@@ -430,15 +430,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "state" => StateElement,
-          "time" => TimeElement,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "state":
+            value = StateElement;
+            return StateElement is not null;
+          case "time":
+            value = TimeElement;
+            return TimeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -754,22 +760,42 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "type" => Type,
-        "unit" => Unit,
-        "source" => Source,
-        "parent" => Parent,
-        "operationalStatus" => OperationalStatusElement,
-        "color" => ColorElement,
-        "category" => CategoryElement,
-        "measurementPeriod" => MeasurementPeriod,
-        "calibration" => Calibration?.Any() == true ? Calibration : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "unit":
+          value = Unit;
+          return Unit is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "parent":
+          value = Parent;
+          return Parent is not null;
+        case "operationalStatus":
+          value = OperationalStatusElement;
+          return OperationalStatusElement is not null;
+        case "color":
+          value = ColorElement;
+          return ColorElement is not null;
+        case "category":
+          value = CategoryElement;
+          return CategoryElement is not null;
+        case "measurementPeriod":
+          value = MeasurementPeriod;
+          return MeasurementPeriod is not null;
+        case "calibration":
+          value = Calibration;
+          return Calibration?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

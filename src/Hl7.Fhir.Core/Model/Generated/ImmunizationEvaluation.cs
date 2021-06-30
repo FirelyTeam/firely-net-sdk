@@ -459,25 +459,66 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "patient" => Patient,
-        "date" => DateElement,
-        "authority" => Authority,
-        "targetDisease" => TargetDisease,
-        "immunizationEvent" => ImmunizationEvent,
-        "doseStatus" => DoseStatus,
-        "doseStatusReason" => DoseStatusReason?.Any() == true ? DoseStatusReason : null,
-        "description" => DescriptionElement,
-        "series" => SeriesElement,
-        "doseNumber" => DoseNumber,
-        "seriesDoses" => SeriesDoses,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "authority":
+          value = Authority;
+          return Authority is not null;
+        case "targetDisease":
+          value = TargetDisease;
+          return TargetDisease is not null;
+        case "immunizationEvent":
+          value = ImmunizationEvent;
+          return ImmunizationEvent is not null;
+        case "doseStatus":
+          value = DoseStatus;
+          return DoseStatus is not null;
+        case "doseStatusReason":
+          value = DoseStatusReason;
+          return DoseStatusReason?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "series":
+          value = SeriesElement;
+          return SeriesElement is not null;
+        case "doseNumber":
+          value = DoseNumber;
+          return DoseNumber is not null;
+        case "seriesDoses":
+          value = SeriesDoses;
+          return SeriesDoses is not null;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("doseNumber"))
+        {
+          value = DoseNumber;
+          return DoseNumber is not null && key.EndsWith(DoseNumber.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("seriesDoses"))
+        {
+          value = SeriesDoses;
+          return SeriesDoses is not null && key.EndsWith(SeriesDoses.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

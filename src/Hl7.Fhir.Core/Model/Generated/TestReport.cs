@@ -373,15 +373,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => TypeElement,
-          "uri" => UriElement,
-          "display" => DisplayElement,
-          _ => default
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "uri":
+            value = UriElement;
+            return UriElement is not null;
+          case "display":
+            value = DisplayElement;
+            return DisplayElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -484,13 +490,15 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "action" => Action?.Any() == true ? Action : null,
-          _ => default
+          case "action":
+            value = Action;
+            return Action?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -608,14 +616,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "operation" => Operation,
-          "assert" => Assert,
-          _ => default
+          case "operation":
+            value = Operation;
+            return Operation is not null;
+          case "assert":
+            value = Assert;
+            return Assert is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -790,15 +802,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "result" => ResultElement,
-          "message" => Message,
-          "detail" => DetailElement,
-          _ => default
+          case "result":
+            value = ResultElement;
+            return ResultElement is not null;
+          case "message":
+            value = Message;
+            return Message is not null;
+          case "detail":
+            value = DetailElement;
+            return DetailElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -974,15 +992,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "result" => ResultElement,
-          "message" => Message,
-          "detail" => DetailElement,
-          _ => default
+          case "result":
+            value = ResultElement;
+            return ResultElement is not null;
+          case "message":
+            value = Message;
+            return Message is not null;
+          case "detail":
+            value = DetailElement;
+            return DetailElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1157,15 +1181,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "name" => NameElement,
-          "description" => DescriptionElement,
-          "action" => Action?.Any() == true ? Action : null,
-          _ => default
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "action":
+            value = Action;
+            return Action?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1285,14 +1315,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "operation" => Operation,
-          "assert" => Assert,
-          _ => default
+          case "operation":
+            value = Operation;
+            return Operation is not null;
+          case "assert":
+            value = Assert;
+            return Assert is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1394,13 +1428,15 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "action" => Action?.Any() == true ? Action : null,
-          _ => default
+          case "action":
+            value = Action;
+            return Action?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1501,13 +1537,15 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "operation" => Operation,
-          _ => default
+          case "operation":
+            value = Operation;
+            return Operation is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1909,24 +1947,48 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier,
-        "name" => NameElement,
-        "status" => StatusElement,
-        "testScript" => TestScript,
-        "result" => ResultElement,
-        "score" => ScoreElement,
-        "tester" => TesterElement,
-        "issued" => IssuedElement,
-        "participant" => Participant?.Any() == true ? Participant : null,
-        "setup" => Setup,
-        "test" => Test?.Any() == true ? Test : null,
-        "teardown" => Teardown,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "testScript":
+          value = TestScript;
+          return TestScript is not null;
+        case "result":
+          value = ResultElement;
+          return ResultElement is not null;
+        case "score":
+          value = ScoreElement;
+          return ScoreElement is not null;
+        case "tester":
+          value = TesterElement;
+          return TesterElement is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "setup":
+          value = Setup;
+          return Setup is not null;
+        case "test":
+          value = Test;
+          return Test?.Any() == true;
+        case "teardown":
+          value = Teardown;
+          return Teardown is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

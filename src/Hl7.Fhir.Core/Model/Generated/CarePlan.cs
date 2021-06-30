@@ -379,17 +379,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "outcomeCodeableConcept" => OutcomeCodeableConcept?.Any() == true ? OutcomeCodeableConcept : null,
-          "outcomeReference" => OutcomeReference?.Any() == true ? OutcomeReference : null,
-          "progress" => Progress?.Any() == true ? Progress : null,
-          "reference" => Reference,
-          "detail" => Detail,
-          _ => default
+          case "outcomeCodeableConcept":
+            value = OutcomeCodeableConcept;
+            return OutcomeCodeableConcept?.Any() == true;
+          case "outcomeReference":
+            value = OutcomeReference;
+            return OutcomeReference?.Any() == true;
+          case "progress":
+            value = Progress;
+            return Progress?.Any() == true;
+          case "reference":
+            value = Reference;
+            return Reference is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -911,29 +921,78 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "kind" => KindElement,
-          "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-          "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-          "code" => Code,
-          "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-          "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-          "goal" => Goal?.Any() == true ? Goal : null,
-          "status" => StatusElement,
-          "statusReason" => StatusReason,
-          "doNotPerform" => DoNotPerformElement,
-          "scheduled" => Scheduled,
-          "location" => Location,
-          "performer" => Performer?.Any() == true ? Performer : null,
-          "product" => Product,
-          "dailyAmount" => DailyAmount,
-          "quantity" => Quantity,
-          "description" => DescriptionElement,
-          _ => default
+          case "kind":
+            value = KindElement;
+            return KindElement is not null;
+          case "instantiatesCanonical":
+            value = InstantiatesCanonicalElement;
+            return InstantiatesCanonicalElement?.Any() == true;
+          case "instantiatesUri":
+            value = InstantiatesUriElement;
+            return InstantiatesUriElement?.Any() == true;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "reasonCode":
+            value = ReasonCode;
+            return ReasonCode?.Any() == true;
+          case "reasonReference":
+            value = ReasonReference;
+            return ReasonReference?.Any() == true;
+          case "goal":
+            value = Goal;
+            return Goal?.Any() == true;
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "statusReason":
+            value = StatusReason;
+            return StatusReason is not null;
+          case "doNotPerform":
+            value = DoNotPerformElement;
+            return DoNotPerformElement is not null;
+          case "scheduled":
+            value = Scheduled;
+            return Scheduled is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "performer":
+            value = Performer;
+            return Performer?.Any() == true;
+          case "product":
+            value = Product;
+            return Product is not null;
+          case "dailyAmount":
+            value = DailyAmount;
+            return DailyAmount is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("scheduled"))
+          {
+            value = Scheduled;
+            return Scheduled is not null && key.EndsWith(Scheduled.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          else if (key.StartsWith("product"))
+          {
+            value = Product;
+            return Product is not null && key.EndsWith(Product.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1599,35 +1658,81 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "replaces" => Replaces?.Any() == true ? Replaces : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "intent" => IntentElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "title" => TitleElement,
-        "description" => DescriptionElement,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "period" => Period,
-        "created" => CreatedElement,
-        "author" => Author,
-        "contributor" => Contributor?.Any() == true ? Contributor : null,
-        "careTeam" => CareTeam?.Any() == true ? CareTeam : null,
-        "addresses" => Addresses?.Any() == true ? Addresses : null,
-        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
-        "goal" => Goal?.Any() == true ? Goal : null,
-        "activity" => Activity?.Any() == true ? Activity : null,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "contributor":
+          value = Contributor;
+          return Contributor?.Any() == true;
+        case "careTeam":
+          value = CareTeam;
+          return CareTeam?.Any() == true;
+        case "addresses":
+          value = Addresses;
+          return Addresses?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "goal":
+          value = Goal;
+          return Goal?.Any() == true;
+        case "activity":
+          value = Activity;
+          return Activity?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

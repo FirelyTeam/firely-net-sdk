@@ -217,14 +217,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "function" => Function,
-          "actor" => Actor,
-          _ => default
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -910,38 +914,105 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "definitionUri" => DefinitionUriElement?.Any() == true ? DefinitionUriElement : null,
-        "definitionCanonical" => DefinitionCanonicalElement?.Any() == true ? DefinitionCanonicalElement : null,
-        "status" => StatusElement,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "code" => Code,
-        "subject" => Subject,
-        "context" => Context,
-        "occurrence" => Occurrence,
-        "performer" => Performer?.Any() == true ? Performer : null,
-        "performingOrganization" => PerformingOrganization,
-        "requestingOrganization" => RequestingOrganization,
-        "costCenter" => CostCenter,
-        "quantity" => Quantity,
-        "bodysite" => Bodysite?.Any() == true ? Bodysite : null,
-        "factorOverride" => FactorOverrideElement,
-        "priceOverride" => PriceOverride,
-        "overrideReason" => OverrideReasonElement,
-        "enterer" => Enterer,
-        "enteredDate" => EnteredDateElement,
-        "reason" => Reason?.Any() == true ? Reason : null,
-        "service" => Service?.Any() == true ? Service : null,
-        "product" => Product,
-        "account" => Account?.Any() == true ? Account : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "supportingInformation" => SupportingInformation?.Any() == true ? SupportingInformation : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definitionUri":
+          value = DefinitionUriElement;
+          return DefinitionUriElement?.Any() == true;
+        case "definitionCanonical":
+          value = DefinitionCanonicalElement;
+          return DefinitionCanonicalElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "performingOrganization":
+          value = PerformingOrganization;
+          return PerformingOrganization is not null;
+        case "requestingOrganization":
+          value = RequestingOrganization;
+          return RequestingOrganization is not null;
+        case "costCenter":
+          value = CostCenter;
+          return CostCenter is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "bodysite":
+          value = Bodysite;
+          return Bodysite?.Any() == true;
+        case "factorOverride":
+          value = FactorOverrideElement;
+          return FactorOverrideElement is not null;
+        case "priceOverride":
+          value = PriceOverride;
+          return PriceOverride is not null;
+        case "overrideReason":
+          value = OverrideReasonElement;
+          return OverrideReasonElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "enteredDate":
+          value = EnteredDateElement;
+          return EnteredDateElement is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "service":
+          value = Service;
+          return Service?.Any() == true;
+        case "product":
+          value = Product;
+          return Product is not null;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("product"))
+        {
+          value = Product;
+          return Product is not null && key.EndsWith(Product.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

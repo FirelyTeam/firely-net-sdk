@@ -163,14 +163,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "ratioType" => RatioType,
-          "startingMaterial" => StartingMaterial?.Any() == true ? StartingMaterial : null,
-          _ => default
+          case "ratioType":
+            value = RatioType;
+            return RatioType is not null;
+          case "startingMaterial":
+            value = StartingMaterial;
+            return StartingMaterial?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -343,16 +347,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "material" => Material,
-          "type" => Type,
-          "isDefining" => IsDefiningElement,
-          "amount" => Amount,
-          _ => default
+          case "material":
+            value = Material;
+            return Material is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "isDefining":
+            value = IsDefiningElement;
+            return IsDefiningElement is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -546,16 +558,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "numberOfUnits" => NumberOfUnitsElement,
-          "averageMolecularFormula" => AverageMolecularFormulaElement,
-          "repeatUnitAmountType" => RepeatUnitAmountType,
-          "repeatUnit" => RepeatUnit?.Any() == true ? RepeatUnit : null,
-          _ => default
+          case "numberOfUnits":
+            value = NumberOfUnitsElement;
+            return NumberOfUnitsElement is not null;
+          case "averageMolecularFormula":
+            value = AverageMolecularFormulaElement;
+            return AverageMolecularFormulaElement is not null;
+          case "repeatUnitAmountType":
+            value = RepeatUnitAmountType;
+            return RepeatUnitAmountType is not null;
+          case "repeatUnit":
+            value = RepeatUnit;
+            return RepeatUnit?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -750,17 +770,27 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "orientationOfPolymerisation" => OrientationOfPolymerisation,
-          "repeatUnit" => RepeatUnitElement,
-          "amount" => Amount,
-          "degreeOfPolymerisation" => DegreeOfPolymerisation?.Any() == true ? DegreeOfPolymerisation : null,
-          "structuralRepresentation" => StructuralRepresentation?.Any() == true ? StructuralRepresentation : null,
-          _ => default
+          case "orientationOfPolymerisation":
+            value = OrientationOfPolymerisation;
+            return OrientationOfPolymerisation is not null;
+          case "repeatUnit":
+            value = RepeatUnitElement;
+            return RepeatUnitElement is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          case "degreeOfPolymerisation":
+            value = DegreeOfPolymerisation;
+            return DegreeOfPolymerisation?.Any() == true;
+          case "structuralRepresentation":
+            value = StructuralRepresentation;
+            return StructuralRepresentation?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -882,14 +912,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "degree" => Degree,
-          "amount" => Amount,
-          _ => default
+          case "degree":
+            value = Degree;
+            return Degree is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1044,15 +1078,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "type" => Type,
-          "representation" => RepresentationElement,
-          "attachment" => Attachment,
-          _ => default
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "representation":
+            value = RepresentationElement;
+            return RepresentationElement is not null;
+          case "attachment":
+            value = Attachment;
+            return Attachment is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1253,18 +1293,30 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "class" => Class,
-        "geometry" => Geometry,
-        "copolymerConnectivity" => CopolymerConnectivity?.Any() == true ? CopolymerConnectivity : null,
-        "modification" => ModificationElement?.Any() == true ? ModificationElement : null,
-        "monomerSet" => MonomerSet?.Any() == true ? MonomerSet : null,
-        "repeat" => Repeat?.Any() == true ? Repeat : null,
-        _ => default
+        case "class":
+          value = Class;
+          return Class is not null;
+        case "geometry":
+          value = Geometry;
+          return Geometry is not null;
+        case "copolymerConnectivity":
+          value = CopolymerConnectivity;
+          return CopolymerConnectivity?.Any() == true;
+        case "modification":
+          value = ModificationElement;
+          return ModificationElement?.Any() == true;
+        case "monomerSet":
+          value = MonomerSet;
+          return MonomerSet?.Any() == true;
+        case "repeat":
+          value = Repeat;
+          return Repeat?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

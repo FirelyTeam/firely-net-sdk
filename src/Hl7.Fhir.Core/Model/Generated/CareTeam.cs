@@ -243,16 +243,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "role" => Role?.Any() == true ? Role : null,
-          "member" => Member,
-          "onBehalfOf" => OnBehalfOf,
-          "period" => Period,
-          _ => default
+          case "role":
+            value = Role;
+            return Role?.Any() == true;
+          case "member":
+            value = Member;
+            return Member is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -611,25 +619,51 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "status" => StatusElement,
-        "category" => Category?.Any() == true ? Category : null,
-        "name" => NameElement,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "period" => Period,
-        "participant" => Participant?.Any() == true ? Participant : null,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "managingOrganization" => ManagingOrganization?.Any() == true ? ManagingOrganization : null,
-        "telecom" => Telecom?.Any() == true ? Telecom : null,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

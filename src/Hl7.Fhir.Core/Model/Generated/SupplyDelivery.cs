@@ -221,14 +221,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "quantity" => Quantity,
-          "item" => Item,
-          _ => default
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("item"))
+          {
+            value = Item;
+            return Item is not null && key.EndsWith(Item.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -533,23 +547,55 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "patient" => Patient,
-        "type" => Type,
-        "suppliedItem" => SuppliedItem,
-        "occurrence" => Occurrence,
-        "supplier" => Supplier,
-        "destination" => Destination,
-        "receiver" => Receiver?.Any() == true ? Receiver : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "suppliedItem":
+          value = SuppliedItem;
+          return SuppliedItem is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "supplier":
+          value = Supplier;
+          return Supplier is not null;
+        case "destination":
+          value = Destination;
+          return Destination is not null;
+        case "receiver":
+          value = Receiver;
+          return Receiver?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

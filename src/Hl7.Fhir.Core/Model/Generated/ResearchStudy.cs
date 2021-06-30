@@ -294,15 +294,21 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "name" => NameElement,
-          "type" => Type,
-          "description" => DescriptionElement,
-          _ => default
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -440,14 +446,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "name" => NameElement,
-          "type" => Type,
-          _ => default
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1014,36 +1024,84 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "title" => TitleElement,
-        "protocol" => Protocol?.Any() == true ? Protocol : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "primaryPurposeType" => PrimaryPurposeType,
-        "phase" => Phase,
-        "category" => Category?.Any() == true ? Category : null,
-        "focus" => Focus?.Any() == true ? Focus : null,
-        "condition" => Condition?.Any() == true ? Condition : null,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "relatedArtifact" => RelatedArtifact?.Any() == true ? RelatedArtifact : null,
-        "keyword" => Keyword?.Any() == true ? Keyword : null,
-        "location" => Location?.Any() == true ? Location : null,
-        "description" => Description,
-        "enrollment" => Enrollment?.Any() == true ? Enrollment : null,
-        "period" => Period,
-        "sponsor" => Sponsor,
-        "principalInvestigator" => PrincipalInvestigator,
-        "site" => Site?.Any() == true ? Site : null,
-        "reasonStopped" => ReasonStopped,
-        "note" => Note?.Any() == true ? Note : null,
-        "arm" => Arm?.Any() == true ? Arm : null,
-        "objective" => Objective?.Any() == true ? Objective : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "protocol":
+          value = Protocol;
+          return Protocol?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "primaryPurposeType":
+          value = PrimaryPurposeType;
+          return PrimaryPurposeType is not null;
+        case "phase":
+          value = Phase;
+          return Phase is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "condition":
+          value = Condition;
+          return Condition?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "keyword":
+          value = Keyword;
+          return Keyword?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "enrollment":
+          value = Enrollment;
+          return Enrollment?.Any() == true;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "sponsor":
+          value = Sponsor;
+          return Sponsor is not null;
+        case "principalInvestigator":
+          value = PrincipalInvestigator;
+          return PrincipalInvestigator is not null;
+        case "site":
+          value = Site;
+          return Site?.Any() == true;
+        case "reasonStopped":
+          value = ReasonStopped;
+          return ReasonStopped is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "arm":
+          value = Arm;
+          return Arm?.Any() == true;
+        case "objective":
+          value = Objective;
+          return Objective?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

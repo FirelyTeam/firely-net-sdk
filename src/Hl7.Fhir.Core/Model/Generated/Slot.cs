@@ -452,23 +452,45 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "serviceCategory" => ServiceCategory?.Any() == true ? ServiceCategory : null,
-        "serviceType" => ServiceType?.Any() == true ? ServiceType : null,
-        "specialty" => Specialty?.Any() == true ? Specialty : null,
-        "appointmentType" => AppointmentType,
-        "schedule" => Schedule,
-        "status" => StatusElement,
-        "start" => StartElement,
-        "end" => EndElement,
-        "overbooked" => OverbookedElement,
-        "comment" => CommentElement,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "serviceCategory":
+          value = ServiceCategory;
+          return ServiceCategory?.Any() == true;
+        case "serviceType":
+          value = ServiceType;
+          return ServiceType?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "appointmentType":
+          value = AppointmentType;
+          return AppointmentType is not null;
+        case "schedule":
+          value = Schedule;
+          return Schedule is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "start":
+          value = StartElement;
+          return StartElement is not null;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "overbooked":
+          value = OverbookedElement;
+          return OverbookedElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

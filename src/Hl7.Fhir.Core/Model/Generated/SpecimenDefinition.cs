@@ -350,20 +350,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "isDerived" => IsDerivedElement,
-          "type" => Type,
-          "preference" => PreferenceElement,
-          "container" => Container,
-          "requirement" => RequirementElement,
-          "retentionTime" => RetentionTime,
-          "rejectionCriterion" => RejectionCriterion?.Any() == true ? RejectionCriterion : null,
-          "handling" => Handling?.Any() == true ? Handling : null,
-          _ => default
+          case "isDerived":
+            value = IsDerivedElement;
+            return IsDerivedElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "preference":
+            value = PreferenceElement;
+            return PreferenceElement is not null;
+          case "container":
+            value = Container;
+            return Container is not null;
+          case "requirement":
+            value = RequirementElement;
+            return RequirementElement is not null;
+          case "retentionTime":
+            value = RetentionTime;
+            return RetentionTime is not null;
+          case "rejectionCriterion":
+            value = RejectionCriterion;
+            return RejectionCriterion?.Any() == true;
+          case "handling":
+            value = Handling;
+            return Handling?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -635,20 +651,46 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "material" => Material,
-          "type" => Type,
-          "cap" => Cap,
-          "description" => DescriptionElement,
-          "capacity" => Capacity,
-          "minimumVolume" => MinimumVolume,
-          "additive" => Additive?.Any() == true ? Additive : null,
-          "preparation" => PreparationElement,
-          _ => default
+          case "material":
+            value = Material;
+            return Material is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "cap":
+            value = Cap;
+            return Cap is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "capacity":
+            value = Capacity;
+            return Capacity is not null;
+          case "minimumVolume":
+            value = MinimumVolume;
+            return MinimumVolume is not null;
+          case "additive":
+            value = Additive;
+            return Additive?.Any() == true;
+          case "preparation":
+            value = PreparationElement;
+            return PreparationElement is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("minimumVolume"))
+          {
+            value = MinimumVolume;
+            return MinimumVolume is not null && key.EndsWith(MinimumVolume.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -759,13 +801,25 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "additive" => Additive,
-          _ => default
+          case "additive":
+            value = Additive;
+            return Additive is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("additive"))
+          {
+            value = Additive;
+            return Additive is not null && key.EndsWith(Additive.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -937,16 +991,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "temperatureQualifier" => TemperatureQualifier,
-          "temperatureRange" => TemperatureRange,
-          "maxDuration" => MaxDuration,
-          "instruction" => InstructionElement,
-          _ => default
+          case "temperatureQualifier":
+            value = TemperatureQualifier;
+            return TemperatureQualifier is not null;
+          case "temperatureRange":
+            value = TemperatureRange;
+            return TemperatureRange is not null;
+          case "maxDuration":
+            value = MaxDuration;
+            return MaxDuration is not null;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1147,18 +1209,30 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier,
-        "typeCollected" => TypeCollected,
-        "patientPreparation" => PatientPreparation?.Any() == true ? PatientPreparation : null,
-        "timeAspect" => TimeAspectElement,
-        "collection" => Collection?.Any() == true ? Collection : null,
-        "typeTested" => TypeTested?.Any() == true ? TypeTested : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "typeCollected":
+          value = TypeCollected;
+          return TypeCollected is not null;
+        case "patientPreparation":
+          value = PatientPreparation;
+          return PatientPreparation?.Any() == true;
+        case "timeAspect":
+          value = TimeAspectElement;
+          return TimeAspectElement is not null;
+        case "collection":
+          value = Collection;
+          return Collection?.Any() == true;
+        case "typeTested":
+          value = TypeTested;
+          return TypeTested?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

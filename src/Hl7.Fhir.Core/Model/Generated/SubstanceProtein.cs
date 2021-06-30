@@ -360,20 +360,36 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "subunit" => SubunitElement,
-          "sequence" => SequenceElement,
-          "length" => LengthElement,
-          "sequenceAttachment" => SequenceAttachment,
-          "nTerminalModificationId" => NTerminalModificationId,
-          "nTerminalModification" => NTerminalModificationElement,
-          "cTerminalModificationId" => CTerminalModificationId,
-          "cTerminalModification" => CTerminalModificationElement,
-          _ => default
+          case "subunit":
+            value = SubunitElement;
+            return SubunitElement is not null;
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "length":
+            value = LengthElement;
+            return LengthElement is not null;
+          case "sequenceAttachment":
+            value = SequenceAttachment;
+            return SequenceAttachment is not null;
+          case "nTerminalModificationId":
+            value = NTerminalModificationId;
+            return NTerminalModificationId is not null;
+          case "nTerminalModification":
+            value = NTerminalModificationElement;
+            return NTerminalModificationElement is not null;
+          case "cTerminalModificationId":
+            value = CTerminalModificationId;
+            return CTerminalModificationId is not null;
+          case "cTerminalModification":
+            value = CTerminalModificationElement;
+            return CTerminalModificationElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -559,16 +575,24 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "sequenceType" => SequenceType,
-        "numberOfSubunits" => NumberOfSubunitsElement,
-        "disulfideLinkage" => DisulfideLinkageElement?.Any() == true ? DisulfideLinkageElement : null,
-        "subunit" => Subunit?.Any() == true ? Subunit : null,
-        _ => default
+        case "sequenceType":
+          value = SequenceType;
+          return SequenceType is not null;
+        case "numberOfSubunits":
+          value = NumberOfSubunitsElement;
+          return NumberOfSubunitsElement is not null;
+        case "disulfideLinkage":
+          value = DisulfideLinkageElement;
+          return DisulfideLinkageElement?.Any() == true;
+        case "subunit":
+          value = Subunit;
+          return Subunit?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

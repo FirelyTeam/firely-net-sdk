@@ -301,16 +301,24 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => CodeElement,
-          "profile" => ProfileElement,
-          "min" => MinElement,
-          "max" => MaxElement,
-          _ => default
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "profile":
+            value = ProfileElement;
+            return ProfileElement is not null;
+          case "min":
+            value = MinElement;
+            return MinElement is not null;
+          case "max":
+            value = MaxElement;
+            return MaxElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -450,14 +458,18 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "message" => MessageElement,
-          "situation" => Situation,
-          _ => default
+          case "message":
+            value = MessageElement;
+            return MessageElement is not null;
+          case "situation":
+            value = Situation;
+            return Situation is not null;
+          default:
+            return base.TryGetValue(key, out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -1228,36 +1240,94 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "url" => UrlElement,
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "version" => VersionElement,
-        "name" => NameElement,
-        "title" => TitleElement,
-        "replaces" => ReplacesElement?.Any() == true ? ReplacesElement : null,
-        "status" => StatusElement,
-        "experimental" => ExperimentalElement,
-        "date" => DateElement,
-        "publisher" => PublisherElement,
-        "contact" => Contact?.Any() == true ? Contact : null,
-        "description" => Description,
-        "useContext" => UseContext?.Any() == true ? UseContext : null,
-        "jurisdiction" => Jurisdiction?.Any() == true ? Jurisdiction : null,
-        "purpose" => Purpose,
-        "copyright" => Copyright,
-        "base" => BaseElement,
-        "parent" => ParentElement?.Any() == true ? ParentElement : null,
-        "event" => Event,
-        "category" => CategoryElement,
-        "focus" => Focus?.Any() == true ? Focus : null,
-        "responseRequired" => ResponseRequiredElement,
-        "allowedResponse" => AllowedResponse?.Any() == true ? AllowedResponse : null,
-        "graph" => GraphElement?.Any() == true ? GraphElement : null,
-        _ => default
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "replaces":
+          value = ReplacesElement;
+          return ReplacesElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "base":
+          value = BaseElement;
+          return BaseElement is not null;
+        case "parent":
+          value = ParentElement;
+          return ParentElement?.Any() == true;
+        case "event":
+          value = Event;
+          return Event is not null;
+        case "category":
+          value = CategoryElement;
+          return CategoryElement is not null;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "responseRequired":
+          value = ResponseRequiredElement;
+          return ResponseRequiredElement is not null;
+        case "allowedResponse":
+          value = AllowedResponse;
+          return AllowedResponse?.Any() == true;
+        case "graph":
+          value = GraphElement;
+          return GraphElement?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("event"))
+        {
+          value = Event;
+          return Event is not null && key.EndsWith(Event.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

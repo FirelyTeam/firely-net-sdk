@@ -657,34 +657,88 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "partOf" => PartOf?.Any() == true ? PartOf : null,
-        "status" => StatusElement,
-        "type" => Type,
-        "modality" => Modality,
-        "view" => View,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "created" => Created,
-        "issued" => IssuedElement,
-        "operator" => Operator,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "bodySite" => BodySite,
-        "deviceName" => DeviceNameElement,
-        "device" => Device,
-        "height" => HeightElement,
-        "width" => WidthElement,
-        "frames" => FramesElement,
-        "duration" => DurationElement,
-        "content" => Content,
-        "note" => Note?.Any() == true ? Note : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "modality":
+          value = Modality;
+          return Modality is not null;
+        case "view":
+          value = View;
+          return View is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "created":
+          value = Created;
+          return Created is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "operator":
+          value = Operator;
+          return Operator is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "deviceName":
+          value = DeviceNameElement;
+          return DeviceNameElement is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "height":
+          value = HeightElement;
+          return HeightElement is not null;
+        case "width":
+          value = WidthElement;
+          return WidthElement is not null;
+        case "frames":
+          value = FramesElement;
+          return FramesElement is not null;
+        case "duration":
+          value = DurationElement;
+          return DurationElement is not null;
+        case "content":
+          value = Content;
+          return Content is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("created"))
+        {
+          value = Created;
+          return Created is not null && key.EndsWith(Created.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()

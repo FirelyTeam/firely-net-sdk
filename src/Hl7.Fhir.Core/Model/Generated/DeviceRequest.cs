@@ -164,14 +164,28 @@ namespace Hl7.Fhir.Model
 
       public override bool TryGetValue(string key, out object value)
       {
-        value = key switch
+        switch (key)
         {
-          "code" => Code,
-          "value" => Value,
-          _ => default
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return choiceMatches(out value);
         };
 
-        return value is not null || base.TryGetValue(key, out value);
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && key.EndsWith(Value.TypeName, StringComparison.OrdinalIgnoreCase);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
@@ -824,36 +838,99 @@ namespace Hl7.Fhir.Model
 
     public override bool TryGetValue(string key, out object value)
     {
-      value = key switch
+      switch (key)
       {
-        "identifier" => Identifier?.Any() == true ? Identifier : null,
-        "instantiatesCanonical" => InstantiatesCanonicalElement?.Any() == true ? InstantiatesCanonicalElement : null,
-        "instantiatesUri" => InstantiatesUriElement?.Any() == true ? InstantiatesUriElement : null,
-        "basedOn" => BasedOn?.Any() == true ? BasedOn : null,
-        "priorRequest" => PriorRequest?.Any() == true ? PriorRequest : null,
-        "groupIdentifier" => GroupIdentifier,
-        "status" => StatusElement,
-        "intent" => IntentElement,
-        "priority" => PriorityElement,
-        "code" => Code,
-        "parameter" => Parameter?.Any() == true ? Parameter : null,
-        "subject" => Subject,
-        "encounter" => Encounter,
-        "occurrence" => Occurrence,
-        "authoredOn" => AuthoredOnElement,
-        "requester" => Requester,
-        "performerType" => PerformerType,
-        "performer" => Performer,
-        "reasonCode" => ReasonCode?.Any() == true ? ReasonCode : null,
-        "reasonReference" => ReasonReference?.Any() == true ? ReasonReference : null,
-        "insurance" => Insurance?.Any() == true ? Insurance : null,
-        "supportingInfo" => SupportingInfo?.Any() == true ? SupportingInfo : null,
-        "note" => Note?.Any() == true ? Note : null,
-        "relevantHistory" => RelevantHistory?.Any() == true ? RelevantHistory : null,
-        _ => default
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "priorRequest":
+          value = PriorRequest;
+          return PriorRequest?.Any() == true;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "parameter":
+          value = Parameter;
+          return Parameter?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "performerType":
+          value = PerformerType;
+          return PerformerType is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "insurance":
+          value = Insurance;
+          return Insurance?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "relevantHistory":
+          value = RelevantHistory;
+          return RelevantHistory?.Any() == true;
+        default:
+          return choiceMatches(out value);
       };
 
-      return value is not null || base.TryGetValue(key, out value);
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("code"))
+        {
+          value = Code;
+          return Code is not null && key.EndsWith(Code.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        else if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && key.EndsWith(Occurrence.TypeName, StringComparison.OrdinalIgnoreCase);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
     }
 
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
