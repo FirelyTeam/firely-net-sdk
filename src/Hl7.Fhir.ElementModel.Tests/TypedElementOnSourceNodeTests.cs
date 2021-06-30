@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,10 +14,10 @@ namespace Hl7.Fhir.ElementModel.Tests
 
         [ExpectedException(typeof(StructuralTypeException), "Should have thrown on .Value as complex types can't have a value")]
         [TestMethod]
-        public void TestExceptionComplexTypeValue()
+        public async Task TestExceptionComplexTypeValue()
         {
             var bundleJson = "{\"resourceType\":\"Bundle\", \"entry\":\"Invalid\"}";
-            var bundle = FhirJsonNode.Parse(bundleJson);
+            var bundle = await FhirJsonNode.ParseAsync(bundleJson);
             var typedBundle = bundle.ToTypedElement(provider, "Bundle");
 
             var _ = typedBundle.Children("entry").First().Value;

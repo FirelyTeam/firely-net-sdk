@@ -1,14 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-  </PropertyGroup>
-
+	
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.ElementModel.Tests</AssemblyName>
-    <ContainsTests>true</ContainsTests>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,12 +15,10 @@
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">   
     <PackageReference Include="System.IO.Compression" Version="4.3.0" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />  
     <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
 

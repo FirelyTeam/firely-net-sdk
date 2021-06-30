@@ -1171,8 +1171,8 @@ namespace Hl7.Fhir.Specification.Tests
             // {
             var tempPath = Path.GetTempPath();
             var xmlSer = new FhirXmlSerializer();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), await xmlSer.SerializeToStringAsync(original));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), await xmlSer.SerializeToStringAsync(expanded));
             // }
 
             // Assert.IsTrue(areEqual);
@@ -9012,14 +9012,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Differential = new StructureDefinition.DifferentialComponent
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{
+                Element = new System.Collections.Generic.List<ElementDefinition>{                   
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
                         Path = "Observation.value[x].extension",
                         Slicing = new ElementDefinition.SlicingComponent
                         {
-                            Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                            Discriminator = new System.Collections.Generic.List<ElementDefinition.DiscriminatorComponent>
                             {
                                 new ElementDefinition.DiscriminatorComponent
                                 {
@@ -9035,7 +9035,7 @@ namespace Hl7.Fhir.Specification.Tests
                         ElementId = "Observation.value[x].extension:myExtension",
                         Path = "Observation.value[x].extension",
                         SliceName = "myExtension",
-                        Type = new List<ElementDefinition.TypeRefComponent>
+                        Type = new System.Collections.Generic.List<ElementDefinition.TypeRefComponent>
                         {
                             new ElementDefinition.TypeRefComponent
                             {
@@ -9058,6 +9058,5 @@ namespace Hl7.Fhir.Specification.Tests
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.value[x].extension").Should().HaveCount(2, "Elements are in the snapshot");
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.extension").Should().HaveCount(1, "Only the root extension should be there");
         }
-
     }
 }

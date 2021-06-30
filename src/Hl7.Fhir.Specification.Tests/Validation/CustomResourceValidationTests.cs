@@ -21,13 +21,13 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public async T.Task CustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
-            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R4.json");
-            var structureDefNode = FhirJsonNode.Parse(structureDefJson);
+            var structureDefJson = await File.ReadAllTextAsync(@"TestData\CustomBasic-StructureDefinition-R4.json");
+            var structureDefNode = await FhirJsonNode.ParseAsync(structureDefJson);
             var customBasicCanonical = structureDefNode.Children("url").First().Text;
             #endregion
 
             #region Create a Provider that knows this CustomBasic resource
-            var structureDef = new FhirJsonParser().Parse<StructureDefinition>(structureDefJson);
+            var structureDef = await new FhirJsonParser().ParseAsync<StructureDefinition>(structureDefJson);
             var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
             await snapShotGenerator.UpdateAsync(structureDef);
 
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             #region Validate Custom Resource
 
-            var customNode = FhirJsonNode.Parse(_custom1);
+            var customNode = await FhirJsonNode.ParseAsync(_custom1);
             var customTyped = customNode.ToTypedElement(provider);
             var typingErrors = customTyped.VisitAndCatch();
             Assert.Empty(typingErrors);
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
-            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             #endregion
         }
 
@@ -61,12 +61,12 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public async T.Task BundleWithCustomResourceCanBeValidated()
         {
             #region Read StructureDefinition for Custom Resource
-            var structureDefJson = File.ReadAllText(@"TestData\CustomBasic-StructureDefinition-R4.json");
-            var structureDefNode = FhirJsonNode.Parse(structureDefJson);
+            var structureDefJson = await File.ReadAllTextAsync(@"TestData\CustomBasic-StructureDefinition-R4.json");
+            var structureDefNode = await FhirJsonNode.ParseAsync(structureDefJson);
             var structureDef = structureDefNode.ToPoco<StructureDefinition>();
             var customBasicCanonical = structureDefNode.Children("url").First().Text;
             #endregion
-            
+
             #region Create a Provider that knows this CustomBasic resource
             var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
             await snapShotGenerator.UpdateAsync(structureDef);
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             #region Validate Bundle with Custom Resource
 
-            var customNode = FhirJsonNode.Parse(_bundleWithCustom1);
+            var customNode = await FhirJsonNode.ParseAsync(_bundleWithCustom1);
             var customTyped = customNode.ToTypedElement(provider);
             var typingErrors = customTyped.VisitAndCatch();
             Assert.Empty(typingErrors);
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
             var result = validator.Validate(customTyped);
 
-            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + result.ToJson());
+            Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             //CK: This is failing with message "The declared type of the element (Resource) is incompatible with that of the instance ('CustomBasic')"},"location":["Bundle.entry[0].resource[0]"]". 
             //Cause: the implementation of ModelInfo.IsInstanceTypeFor, called from ProfileAssertion.Validate, line 248 (and 255).
             #endregion
