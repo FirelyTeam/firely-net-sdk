@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Test
 {
@@ -257,7 +258,7 @@ namespace Hl7.Fhir.Test
         #region Bundle.EntryComponent To EntryRequest
 
         [TestMethod]
-        public void TestBundleToEntryRequest()
+        public async Tasks.Task TestBundleToEntryRequest()
         {
             var bundleComponent = new Bundle.EntryComponent
             {
@@ -273,7 +274,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = bundleComponent.ToEntryRequest(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -287,7 +288,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        public void TestPatchBundleToEntryRequest()
+        public async Tasks.Task TestPatchBundleToEntryRequest()
         {
             var bundleComponent = new Bundle.EntryComponent
             {
@@ -303,7 +304,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Patch);
 
-            var entryRequest = bundleComponent.ToEntryRequest(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -317,7 +318,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
-        public void TestBundleToEntryRequestBody()
+        public async Tasks.Task TestBundleToEntryRequestBody()
         {
             var bundleComponent = new Bundle.EntryComponent
             {
@@ -333,7 +334,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = bundleComponent.ToEntryRequest(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
             Assert.IsNotNull(entryRequest);
             Assert.IsNotNull(entryRequest.RequestBodyContent);
             Assert.AreEqual("test content type", entryRequest.ContentType);
@@ -345,7 +346,7 @@ namespace Hl7.Fhir.Test
         #region EntryResponse To TypedEntryResponse
 
         [TestMethod]
-        public void TestToTypedEntryResponse()
+        public async Tasks.Task TestToTypedEntryResponse()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
@@ -360,9 +361,9 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
+            var result = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
 
-            var typedElementXml = result.TypedElement.ToXml();
+            var typedElementXml = await result.TypedElement.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
             Assert.AreEqual(response.ContentType, result.ContentType);
             Assert.AreEqual(response.Etag, result.Etag);
@@ -379,7 +380,7 @@ namespace Hl7.Fhir.Test
         #region TypedEntryResponse To BundleEntryResponse
 
         [TestMethod]
-        public void TestTypedEntryResponseToBundle()
+        public async Tasks.Task TestTypedEntryResponseToBundle()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
@@ -393,7 +394,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = response.ToTypedEntryResponse(new PocoStructureDefinitionSummaryProvider());
+            var typedresponse = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
 
             var settings = new ParserSettings
             {

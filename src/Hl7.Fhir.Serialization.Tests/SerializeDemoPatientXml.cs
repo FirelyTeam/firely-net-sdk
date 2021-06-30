@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Linq;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
@@ -14,16 +15,16 @@ namespace Hl7.Fhir.Serialization.Tests
     {
         public ITypedElement getXmlElement(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        public ITypedElement getJsonElement(string json, FhirJsonParsingSettings s = null) =>
-            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) =>
+            await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
 
         [TestMethod]
-        public void CanSerializeThroughNavigatorAndCompare()
+        public async Tasks.Task CanSerializeThroughNavigatorAndCompare()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var nav = getXmlElement(tpXml);
-            var output = nav.ToXml();
+            var output = await nav.ToXmlAsync();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
@@ -54,29 +55,29 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void CanSerializeFromPoco()
+        public async Tasks.Task CanSerializeFromPoco()
         {
             var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
             var pser = new FhirXmlParser(new ParserSettings { DisallowXsiAttributesOnRoot = false });
-            var pat = pser.Parse<Patient>(tpXml);
+            var pat = await pser.ParseAsync<Patient>(tpXml);
 
             var nav = pat.ToTypedElement();
-            var output = nav.ToXml();
+            var output = await nav.ToXmlAsync();
             XmlAssert.AreSame("fp-test-patient.xml", tpXml, output, ignoreSchemaLocation: true);
         }
 
         [TestMethod]
-        public void CompareSubtrees()
+        public async Tasks.Task CompareSubtrees()
         {
-            var tpXml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
-            var tpJson = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var tpXml = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.xml"));
+            var tpJson = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
             // If on a Unix platform replace \\r\\n in json strings to \\n.
             if(Environment.NewLine == "\n")
                 tpJson = tpJson.Replace(@"\r\n", @"\n");
-            var pat = (new FhirXmlParser()).Parse<Patient>(tpXml);
+            var pat = await (new FhirXmlParser()).ParseAsync<Patient>(tpXml);
 
             var navXml = getXmlElement(tpXml);
-            var navJson = getJsonElement(tpJson);
+            var navJson = await getJsonElement(tpJson);
             var navPoco = pat.ToTypedElement();
             assertAreAllEqual(navXml, navJson, navPoco);
 
@@ -95,41 +96,41 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DoesPretty()
+        public async Tasks.Task DoesPretty()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
             var nav = getXmlElement(xml);
-            var output = nav.ToXml();
+            var output = await nav.ToXmlAsync();
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            var pretty = nav.ToXml(new FhirXmlSerializationSettings { Pretty = true });
+            var pretty = await nav.ToXmlAsync(new FhirXmlSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
 
-            var p = (new FhirXmlParser()).Parse<Patient>(xml);
-            output = (new FhirXmlSerializer(new SerializerSettings { Pretty = false })).SerializeToString(p);
+            var p = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
+            output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false })).SerializeToStringAsync(p);
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            pretty = (new FhirXmlSerializer(new SerializerSettings { Pretty = true })).SerializeToString(p);
+            pretty = await (new FhirXmlSerializer(new SerializerSettings { Pretty = true })).SerializeToStringAsync(p);
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
         }
 
         [TestMethod]
-        public void TestAppendNewLine()
+        public async Tasks.Task TestAppendNewLine()
         {
             var xml = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.xml"));
 
             var nav = getXmlElement(xml);
-            var output = nav.ToXml();
+            var output = await nav.ToXmlAsync();
             Assert.IsFalse(output.Substring(0, 50).Contains('\n'));
-            var pretty = nav.ToXml(new FhirXmlSerializationSettings { Pretty = true });
+            var pretty = await nav.ToXmlAsync(new FhirXmlSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 50).Contains('\n'));
             var lastLine = pretty.Split('\n').Last();
             Assert.IsFalse(string.IsNullOrEmpty(lastLine));
 
-            var p = (new FhirXmlParser()).Parse<Patient>(xml);
-            output = (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToString(p);
+            var p = await (new FhirXmlParser()).ParseAsync<Patient>(xml);
+            output = await (new FhirXmlSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = output.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
-            pretty = (new FhirXmlSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
+            pretty = await (new FhirXmlSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = pretty.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
         }

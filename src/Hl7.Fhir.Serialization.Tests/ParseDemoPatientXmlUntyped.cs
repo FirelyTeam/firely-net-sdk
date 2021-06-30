@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -191,19 +192,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void RoundtripXmlUntyped()
+        public async Task RoundtripXmlUntyped()
         {
-            ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
+            await ParseDemoPatient.RoundtripXml(xmlText => FhirXmlNode.Parse(xmlText));
         }
 
         [TestMethod]
-        public void TryInvalidUntypedSource()
+        public async Task TryInvalidUntypedSource()
         {
-            var jsonNav = FhirJsonNode.Parse("{ 'resourceType': 'Patient', 'active':true }");
+            var jsonNav = await FhirJsonNode.ParseAsync("{ 'resourceType': 'Patient', 'active':true }");
 
             try
             {
-                var output = jsonNav.ToXml();
+                var output = await jsonNav.ToXmlAsync();
                 Assert.Fail();
             }
             catch (NotSupportedException)

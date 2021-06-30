@@ -8,6 +8,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Validation;
 using Hl7.FhirPath;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -371,6 +372,31 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(0, report.Errors);
         }
 
+
+        [Fact]
+        public void CatchesTypeErrors()
+        {
+            var patJ = new JObject(
+                            new JProperty("resourceType", "Patient"),
+                            new JProperty("deceasedInteger", "4"),
+                            new JProperty("unknown", "bla"));
+            var patTE = FhirJsonNode.Create(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+
+            var report = _validator.Validate(patTE);
+            Assert.Contains("deceasedInteger", report.ToString());
+        }
+
+
+        [Fact]
+        public void CatchesSyntaxErrors()
+        {
+            var patJ = "{ \"resourceType\": \"Patient\", \"active\" : \"\" }";
+            var patTE = FhirJsonNode.Parse(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
+
+            var report = _validator.Validate(patTE);
+            Assert.DoesNotContain("Internal logic", report.ToString());
+        }
+
         [Fact]
         public async T.Task ValidatesPatternValue()
         {
@@ -636,7 +662,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
-            var careplan = (new FhirXmlParser()).Parse<CarePlan>(careplanXml);
+            var careplan = await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
@@ -808,23 +834,35 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void RunXsdValidation()
+        public void TestXsdValidation() => runXsdValidation(_validator);
+
+        [Fact]
+        public void TestXsdValidationExplicitSet()
+        {
+            var mySettings = _validator.Settings.Clone();
+            mySettings.XsdSchemaCollection = new SchemaCollection(ZipSource.CreateValidationSource());
+            var myValidator = new Validator(mySettings);
+
+            runXsdValidation(myValidator);
+        }
+
+
+        private static void runXsdValidation(Validator v)
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
             var cpDoc = XDocument.Parse(careplanXml, LoadOptions.SetLineInfo);
 
-            var report = _validator.Validate(cpDoc.CreateReader());
+            var report = v.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
             Assert.Equal(0, report.Warnings);            // 3x missing invariant
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
 
-            report = _validator.Validate(cpDoc.CreateReader());
+            report = v.Validate(cpDoc.CreateReader());
             if (!report.Success)
             {
                 report.Issue.RemoveAll(i => i.Severity == OperationOutcome.IssueSeverity.Warning);
-                output.WriteLine(report.ToString());
             }
             Assert.False(report.Success);
             Assert.Contains(".NET Xsd validation", report.ToString());
@@ -992,13 +1030,13 @@ namespace Hl7.Fhir.Specification.Tests
             // var source = new DirectorySource(Path.Combine("TestData", "validation"));
             // var res = source.ResolveByUri("Patient/pat1"); // cf. "Patient/Levin"
 
-            var jsonPatient = File.ReadAllText(Path.Combine("TestData", "validation", "patient-ck.json"));
+            var jsonPatient = await File.ReadAllTextAsync(Path.Combine("TestData", "validation", "patient-ck.json"));
             var parser = new FhirJsonParser();
-            var patient = parser.Parse<Patient>(jsonPatient);
+            var patient = await parser.ParseAsync<Patient>(jsonPatient);
             Assert.NotNull(patient);
 
-            var jsonOrganization = File.ReadAllText(Path.Combine("TestData", "validation", "organization-ck.json"));
-            var organization = parser.Parse<Organization>(jsonOrganization);
+            var jsonOrganization = await File.ReadAllTextAsync(Path.Combine("TestData", "validation", "organization-ck.json"));
+            var organization = await parser.ParseAsync<Organization>(jsonOrganization);
             Assert.NotNull(organization);
 
             var resources = new Resource[] { patient, organization };
@@ -1275,6 +1313,33 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ConditionCon3ConstraintTest()
+        {
+            // the invariant con-3 of condition is wrong in the specification (R4). For now we fixed this in profiles-resources.xml. The correct FhirPath is
+            // "clinicalStatus.exists() or verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.coding.where($this.code='problem-list-item').empty()"
+            // So when the profiles-resources.xml has been overwritten and this unit test is failing, then the above FP expression should be set again (snapshot and 
+            // differential
+            // MV 28-06-2021
+
+            var condition = new Condition
+            {
+                Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Testing the con-3 invariant</div>", Status = Narrative.NarrativeStatus.Additional },
+                Subject = new ResourceReference("Patient/1"),
+                Category = new List<CodeableConcept> { new CodeableConcept("http://terminology.hl7.org/CodeSystem/condition-category", "encounter-diagnosis") },
+            };
+
+            var settings = new ValidationSettings
+            {
+                ConstraintBestPractices = ConstraintBestPractices.Enabled,
+                ResourceResolver = new CachedResolver(ZipSource.CreateValidationSource())
+            };
+
+            var validator = new Validator(settings);
+            var result = validator.Validate(condition);
+            Assert.True(result.Success);
+        }
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;
@@ -1313,7 +1378,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public InMemoryResourceResolver(IEnumerable<Resource> profiles)
         {
-            _resources = profiles.ToLookup(r => getResourceUri(r), r => r as Resource);
+            _resources = profiles.ToLookup(r => getResourceUri(r), r => r);
         }
 
         public InMemoryResourceResolver(Resource profile) : this(new Resource[] { profile }) { }
