@@ -46,6 +46,7 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7.FhirPath.Tests", "common\src\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj", "{98390A5A-0F65-4275-ADF1-ADF4BD915FA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath.R4.Tests", "src\Hl7.FhirPath.R4.Tests\Hl7.FhirPath.R4.Tests.csproj", "{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Support.Poco.Tests", "common\src\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj", "{88E59825-ADF2-4B46-892F-BCC95B68559F}"
 EndProject
 Global
