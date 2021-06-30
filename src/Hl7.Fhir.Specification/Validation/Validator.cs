@@ -170,88 +170,97 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = new OperationOutcome();
 
-            // If navigator cannot be moved to content, there's really nothing to validate against.
-            if (definition.AtRoot && !definition.MoveToFirstChild())
+            try
             {
-                outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
-                return outcome;
-            }
 
-            Trace(outcome, $"Start validation of ElementDefinition at path '{definition.CanonicalPath()}'", Issue.PROCESSING_PROGRESS, instance);
-
-            // This does not work, since the children might still be empty, we need something better
-            //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
-            if (instance.Value == null && !instance.Children().Any())
-            {
-                outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
-                return outcome;
-            }
-
-            var elementConstraints = definition.Current;
-
-            if (elementConstraints.IsPrimitiveValueConstraint())
-            {
-                // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
-                // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
-                // primitive against the regex given in the core definition
-                outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
-            }
-            else
-            {
-                bool isInlineChildren = !definition.Current.IsRootElement();
-
-                // Now, validate the children
-                if (definition.HasChildren)
+                // If navigator cannot be moved to content, there's really nothing to validate against.
+                if (definition.AtRoot && !definition.MoveToFirstChild())
                 {
-                    // If we are at the root of an abstract type (e.g. is this instance a Resource)?
-                    // or we are at a nested resource, we may expect more children in the instance than
-                    // we know about
-                    bool allowAdditionalChildren = (isInlineChildren && elementConstraints.IsResourcePlaceholder()) ||
-                                      (!isInlineChildren && definition.StructureDefinition.Abstract == true);
+                    outcome.AddIssue($"Snapshot component of profile '{definition.StructureDefinition?.Url}' has no content.", Issue.PROFILE_ELEMENTDEF_IS_EMPTY, instance);
+                    return outcome;
+                }
 
-                    // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
-                    // so there's no point in also validating the <type> or <nameReference>
-                    // TODO: Check whether this is even true when the <type> has a profile?
-                    // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
-                    // in which case there may be additional children (verified in the next step)
-                    outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+                Trace(outcome, $"Start validation of ElementDefinition at path '{definition.CanonicalPath()}'", Issue.PROCESSING_PROGRESS, instance);
 
-                    // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
-                    // we need to validate based on the actual type of the instance
-                    if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
+                // This does not work, since the children might still be empty, we need something better
+                //// Any node must either have a value, or children, or both (e.g. extensions on primitives)
+                if (instance.Value == null && !instance.Children().Any())
+                {
+                    outcome.AddIssue("Element must not be empty", Issue.CONTENT_ELEMENT_MUST_HAVE_VALUE_OR_CHILDREN, instance);
+                    return outcome;
+                }
+
+                var elementConstraints = definition.Current;
+
+                if (elementConstraints.IsPrimitiveValueConstraint())
+                {
+                    // The "value" property of a FHIR Primitive is the bottom of our recursion chain, it does not have a nameReference
+                    // nor a <type>, the only thing left to do to validate the content is to validate the string representation of the
+                    // primitive against the regex given in the core definition
+                    outcome.Add(VerifyPrimitiveContents(elementConstraints, instance));
+                }
+                else
+                {
+                    bool isInlineChildren = !definition.Current.IsRootElement();
+
+                    // Now, validate the children
+                    if (definition.HasChildren)
                     {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
+                        // If we are at the root of an abstract type (e.g. is this instance a Resource)?
+                        // or we are at a nested resource, we may expect more children in the instance than
+                        // we know about
+                        bool allowAdditionalChildren = (isInlineChildren && elementConstraints.IsResourcePlaceholder()) ||
+                                          (!isInlineChildren && definition.StructureDefinition.Abstract == true);
+
+                        // Handle in-lined constraints on children. In a snapshot, these children should be exhaustive,
+                        // so there's no point in also validating the <type> or <nameReference>
+                        // TODO: Check whether this is even true when the <type> has a profile?
+                        // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
+                        // in which case there may be additional children (verified in the next step)
+                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+
+                        // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
+                        // we need to validate based on the actual type of the instance
+                        if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
+                        {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                        }
+                    }
+
+                    if (!definition.HasChildren)
+                    {
+                        // No inline-children, so validation depends on the presence of a <type> or <contentReference>
+                        if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
+                        {
+                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                        }
+                        else
+                            Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
                     }
                 }
 
-                if (!definition.HasChildren)
-                {
-                    // No inline-children, so validation depends on the presence of a <type> or <contentReference>
-                    if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
-                    {
-                        outcome.Add(this.ValidateType(elementConstraints, instance));
-                        outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
-                    }
-                    else
-                        Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
-                }
+                //Context is needed by some external validators in case a system is missing.
+                var context = $"{definition.StructureDefinition.Url}#{elementConstraints.Path}";
+
+                outcome.Add(this.ValidateFixed(elementConstraints, instance));
+                outcome.Add(this.ValidatePattern(elementConstraints, instance));
+                outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
+                outcome.Add(ValidateMaxLength(elementConstraints, instance));
+                outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
+                outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+                outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
+
+                // If the report only has partial information, no use to show the hierarchy, so flatten it.
+                if (Settings.Trace == false) outcome.Flatten();
+
+                return outcome;
             }
-
-            //Context is needed by some external validators in case a system is missing.
-            var context = $"{definition.StructureDefinition.Url}#{elementConstraints.Path}"; 
-
-            outcome.Add(this.ValidateFixed(elementConstraints, instance));
-            outcome.Add(this.ValidatePattern(elementConstraints, instance));
-            outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
-            outcome.Add(ValidateMaxLength(elementConstraints, instance));
-            outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
-            outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
-            outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
-
-            // If the report only has partial information, no use to show the hierarchy, so flatten it.
-            if (Settings.Trace == false) outcome.Flatten();
-
-            return outcome;
+            catch (StructuralTypeException te)
+            {
+                outcome.AddIssue(te.Message, Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance.Location);
+                return outcome;
+            }
         }
 
         private OperationOutcome ValidateExtension(IExtendable elementDef, ITypedElement instance, string uri)
@@ -497,6 +506,7 @@ namespace Hl7.Fhir.Validation
 #pragma warning restore CS0618 // Type or member is obsolete
 
 #if DEBUG
+                // TODO: Validation Async Support
                 string xml = (new FhirXmlSerializer()).SerializeToString(definition);
                 string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = Path.Combine(Path.GetTempPath(), "validation");

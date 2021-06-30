@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Specification.Terminology
                     // Serialize the code or coding to json for display purposes in the issue
                     var jsonSer = new FhirJsonSerializer();
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
-                                            : jsonSer.SerializeToString(coding);
+                        : jsonSer.SerializeToString(coding);
 
                     outcome.AddIssue($"Validation of '{codeDisplay}' failed, but" +
                                 $"the terminology service at {Endpoint.Endpoint} did not provide further details.",

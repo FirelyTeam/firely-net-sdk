@@ -3,6 +3,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -10,12 +11,12 @@ namespace Hl7.Fhir.Tests.Serialization
     public class ValueQuantityParsingTests
     {
         [TestMethod]
-        public void RoundtripValueQuantityXml() => RoundtripValueQuantity(true);
+        public async Tasks.Task RoundtripValueQuantityXml() => await RoundtripValueQuantity(true);
 
         [TestMethod]
-        public void RoundtripValueQuantityJson() => RoundtripValueQuantity(false);
+        public async Tasks.Task RoundtripValueQuantityJson() => await RoundtripValueQuantity(false);
 
-        static void RoundtripValueQuantity(bool xml)
+        static async Tasks.Task RoundtripValueQuantity(bool xml)
         {
             var resource = new StructureDefinition()
             {
@@ -48,7 +49,7 @@ namespace Hl7.Fhir.Tests.Serialization
             var orgExample = resource.Differential.Element[0].Example[0];
             Assert.AreEqual("Quantity", orgExample.Value.TypeName);
 
-            var parsed = xml ? XmlRoundTrip(resource) : JsonRoundTrip(resource);
+            var parsed = xml ? await XmlRoundTripAsync(resource) : await JsonRoundTrip(resource);
 
             Assert.IsNotNull(parsed);
             Assert.IsNotNull(parsed.Differential?.Element);
@@ -63,30 +64,30 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("Quantity", example.Value.TypeName);
         }
 
-        static T XmlRoundTrip<T>(T resource) where T : Resource
+        async static Tasks.Task<T> XmlRoundTripAsync<T>(T resource) where T : Resource
         {
             var baseTestPath = CreateEmptyDir();
 
             var xmlFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.xml");
-            var xml = new FhirXmlSerializer().SerializeToString(resource);
-            File.WriteAllText(xmlFile, xml);
+            var xml = await new FhirXmlSerializer().SerializeToStringAsync(resource);
+            await File.WriteAllTextAsync(xmlFile, xml);
 
-            xml = File.ReadAllText(xmlFile);
-            var parsed = new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).Parse<T>(xml);
+            xml = await File.ReadAllTextAsync(xmlFile);
+            var parsed = await new FhirXmlParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(xml);
 
             return parsed;
         }
 
-        static T JsonRoundTrip<T>(T resource) where T : Resource
+        static async Tasks.Task<T> JsonRoundTrip<T>(T resource) where T : Resource
         {
             var baseTestPath = CreateEmptyDir();
 
             var jsonFile = Path.Combine(baseTestPath, "ObservationWithValueQuantityExample.json");
-            var json = new FhirJsonSerializer().SerializeToString(resource);
-            File.WriteAllText(jsonFile, json);
+            var json = await new FhirJsonSerializer().SerializeToStringAsync(resource);
+            await File.WriteAllTextAsync(jsonFile, json);
 
-            json = File.ReadAllText(jsonFile);
-            var parsed = new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).Parse<T>(json);
+            json = await File.ReadAllTextAsync(jsonFile);
+            var parsed = await new FhirJsonParser(new ParserSettings { PermissiveParsing = true }).ParseAsync<T>(json);
 
             return parsed;
         }

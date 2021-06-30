@@ -964,14 +964,14 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = request.ToEntryRequest(Settings);
+            var entryRequest = await request.ToEntryRequestAsync(Settings).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                typedEntryResponse = entryResponse.ToTypedEntryResponse(_provider);
+                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_provider).ConfigureAwait(false);
             }
             catch (UnsupportedBodyTypeException ex)
             {

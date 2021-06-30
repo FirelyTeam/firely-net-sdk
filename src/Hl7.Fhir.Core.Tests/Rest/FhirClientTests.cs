@@ -21,7 +21,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -301,22 +301,22 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void Read()
+        public async T.Task Read()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
-            testReadClient(client);
+            await testReadClientAsync(client);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadHttpClient()
+        public async T.Task ReadHttpClient()
         {
             using (FhirClient client = new FhirClient(testEndpoint))
             {
-                testReadClient(client);
+                await testReadClientAsync(client);
             }
         }
-
-        private void testReadClient(BaseFhirClient client)
+        
+        private async T.Task testReadClientAsync(BaseFhirClient client)
         {
             var loc = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(loc);
@@ -344,15 +344,14 @@ namespace Hl7.Fhir.Tests.Rest
             var loc3 = client.Read<Location>(ResourceIdentity.Build("Location", locationId, loc.Meta.VersionId));
             Assert.IsNotNull(loc3);
             var jsonSer = new FhirJsonSerializer();
-            Assert.AreEqual(jsonSer.SerializeToString(loc),
-                            jsonSer.SerializeToString(loc3));
+            Assert.AreEqual(await jsonSer.SerializeToStringAsync(loc),
+                await jsonSer.SerializeToStringAsync(loc3));
 
             var loc4 = client.Read<Location>(loc.ResourceIdentity());
             Assert.IsNotNull(loc4);
-            Assert.AreEqual(jsonSer.SerializeToString(loc),
-                            jsonSer.SerializeToString(loc4));
+            Assert.AreEqual(await jsonSer.SerializeToStringAsync(loc),
+                await jsonSer.SerializeToStringAsync(loc4));
         }
-
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadRelative()
@@ -765,24 +764,24 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CreateEditDelete()
+        public async T.Task CreateEditDelete()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
             client.OnBeforeRequest += Compression_OnBeforeWebRequestZipOrDeflate;
-            testCreateEditDelete(client);
+            await testCreateEditDeleteAsync(client);
         }
 
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CreateEditDeleteHttpClient()
+        public async T.Task CreateEditDeleteHttpClient()
         {
             using (var handler = new HttpClientHandler())
             using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
             {
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
                 // client.CompressRequestBody = true;
-                testCreateEditDelete(client);
+                await testCreateEditDeleteAsync(client);
             }
         }
 
@@ -792,7 +791,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
         /// </summary>
-        private void testCreateEditDelete(BaseFhirClient client)
+        private async T.Task testCreateEditDeleteAsync(BaseFhirClient client)
         {
             // client.CompressRequestBody = true;
 
@@ -801,7 +800,7 @@ namespace Hl7.Fhir.Tests.Rest
             pat.Identifier.Clear();
             pat.Identifier.Add(new Identifier("http://hl7.org/test/2", "99999"));
 
-            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(pat));
+            System.Diagnostics.Trace.WriteLine(await new FhirXmlSerializer().SerializeToStringAsync(pat));
 
             var fe = client.Create(pat); // Create as we are not providing the ID to be used.
             Assert.IsNotNull(fe);
@@ -957,10 +956,10 @@ namespace Hl7.Fhir.Tests.Rest
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
-        public void History()
+        public async T.Task History()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
-            testHistory(client);
+            await testHistoryAsync(client);
         }
 
 
@@ -969,17 +968,17 @@ namespace Hl7.Fhir.Tests.Rest
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
-        public void HistoryHttpClient()
+        public async T.Task HistoryHttpClient()
         {
             FhirClient client = new FhirClient(testEndpoint);
-            testHistory(client);
+            await testHistoryAsync(client);
         }
 
-        private void testHistory(BaseFhirClient client)
+        private async T.Task testHistoryAsync(BaseFhirClient client)
         {
             System.Threading.Thread.Sleep(500);
             DateTimeOffset timestampBeforeCreationAndDeletions = DateTimeOffset.Now;
-            testCreateEditDelete(client); // this test does a create, update, update, delete (4 operations)
+            await testCreateEditDeleteAsync(client); // this test does a create, update, update, delete (4 operations)
 
             System.Diagnostics.Trace.WriteLine("History of this specific patient since just before the create, update, update, delete (4 operations)");
 
@@ -1268,23 +1267,23 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CreateDynamic()
+        public async T.Task CreateDynamic()
         {
             LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
-            testCreateDynamicHttpClient(client);
+            await testCreateDynamicHttpClientAsync(client);
         }
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CreateDynamicHttpClient()
+        public async T.Task CreateDynamicHttpClient()
         {
             using (FhirClient client = new FhirClient(testEndpoint))
             {
-                testCreateDynamicHttpClient(client);
+                await testCreateDynamicHttpClientAsync(client);
             }
         }
 
-        private static void testCreateDynamicHttpClient(BaseFhirClient client)
+        private static async T.Task testCreateDynamicHttpClientAsync(BaseFhirClient client)
         {
             Resource furore = new Organization
             {
@@ -1296,7 +1295,7 @@ namespace Hl7.Fhir.Tests.Rest
                 }
             };
 
-            System.Diagnostics.Trace.WriteLine(new FhirXmlSerializer().SerializeToString(furore));
+            System.Diagnostics.Trace.WriteLine(await new FhirXmlSerializer().SerializeToStringAsync(furore));
             var fe = client.Create(furore);
             Assert.IsNotNull(fe);
         }

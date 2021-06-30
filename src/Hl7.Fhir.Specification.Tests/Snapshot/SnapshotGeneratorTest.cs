@@ -1058,8 +1058,8 @@ namespace Hl7.Fhir.Specification.Tests
             // {
             var tempPath = Path.GetTempPath();
             var xmlSer = new FhirXmlSerializer();
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-source.xml"), xmlSer.SerializeToString(original));
-            File.WriteAllText(Path.Combine(tempPath, "snapshotgen-dest.xml"), xmlSer.SerializeToString(expanded));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-source.xml"), await xmlSer.SerializeToStringAsync(original));
+            await File.WriteAllTextAsync(Path.Combine(tempPath, "snapshotgen-dest.xml"), await xmlSer.SerializeToStringAsync(expanded));
             // }
 
             // Assert.IsTrue(areEqual);
@@ -7379,5 +7379,58 @@ namespace Hl7.Fhir.Specification.Tests
               .WithMessage("*choice type of diff does not occur in snap*");
         }
 
+        [TestMethod]
+        public async T.Task SnapshotSucceedsWithExtendedVariantElementDef()
+        {
+            var structureDef = new StructureDefinition();
+            structureDef.BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation";
+            structureDef.Type = "Observation";
+            structureDef.Url = "http://some.canonical";
+
+            structureDef.Differential = new StructureDefinition.DifferentialComponent
+            {
+                Element = new System.Collections.Generic.List<ElementDefinition>{                   
+                    new ElementDefinition
+                    {
+                        ElementId = "Observation.value[x].extension",
+                        Path = "Observation.value[x].extension",
+                        Slicing = new ElementDefinition.SlicingComponent
+                        {
+                            Discriminator = new System.Collections.Generic.List<ElementDefinition.DiscriminatorComponent>
+                            {
+                                new ElementDefinition.DiscriminatorComponent
+                                {
+                                    Type = ElementDefinition.DiscriminatorType.Value,
+                                    Path = "url"
+                                },
+                            },
+                            Rules = ElementDefinition.SlicingRules.Open
+                        }
+                    },
+                    new ElementDefinition
+                    {
+                        ElementId = "Observation.value[x].extension:myExtension",
+                        Path = "Observation.value[x].extension",
+                        SliceName = "myExtension",
+                        Type = new System.Collections.Generic.List<ElementDefinition.TypeRefComponent>
+                        {
+                            new ElementDefinition.TypeRefComponent
+                            {
+                                Code = "Extension",
+                                Profile = "http://example.org/fhir/StructureDefinition/MyExtension"                                
+                            }
+                        }
+                    }
+                }
+            };
+
+
+            _generator = new SnapshotGenerator(_testResolver, SnapshotGeneratorSettings.CreateDefault());
+
+            await _generator.UpdateAsync(structureDef);
+
+            structureDef.Snapshot.Element.Where(element => element.Path == "Observation.value[x].extension").Should().HaveCount(2, "Elements are in the snapshot");
+            structureDef.Snapshot.Element.Where(element => element.Path == "Observation.extension").Should().HaveCount(1, "Only the root extension should be there");
+        }       
     }
 }
