@@ -11,11 +11,14 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Threading.Tasks;
+using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Rest
 {
     public static class BundleToEntryRequest
     {
+        /// <inheritdoc cref="ToEntryRequestAsync(Bundle.EntryComponent, FhirClientSettings)" />
         public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings)
         {
             var result = new EntryRequest
@@ -44,7 +47,41 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                setBodyAndContentType(result, entry.Resource, settings.PreferredFormat, searchUsingPost);
+                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost));
+            }
+
+            return result;
+        }
+
+        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings)
+        {
+            var result = new EntryRequest
+            {
+                Agent = ModelInfo.Version,
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
+                Type = entry.Annotation<InteractionType>(),
+                Url = entry.Request.Url,
+                Headers = new EntryRequestHeaders
+                {
+                    IfMatch = entry.Request.IfMatch,
+                    IfModifiedSince = entry.Request.IfModifiedSince,
+                    IfNoneExist = entry.Request.IfNoneExist,
+                    IfNoneMatch = entry.Request.IfNoneMatch
+                }
+            };
+
+            if (!settings.UseFormatParameter)
+            {
+                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+            }
+
+            if (entry.Resource != null)
+            {
+                bool searchUsingPost =
+                    result.Method == HTTPVerb.POST
+                    && entry.Annotation<InteractionType>() == InteractionType.Search
+                    && entry.Resource is Parameters;
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost).ConfigureAwait(false);
             }
 
             return result;
@@ -81,7 +118,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static void setBodyAndContentType(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -106,7 +143,7 @@ namespace Hl7.Fhir.Rest
                 if (bodyParameters.Count > 0)
                 {
                     FormUrlEncodedContent content = new FormUrlEncodedContent(bodyParameters);
-                    request.RequestBodyContent = content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                    request.RequestBodyContent = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 else
                 {
@@ -118,8 +155,8 @@ namespace Hl7.Fhir.Rest
             else
             {
                 request.RequestBodyContent = format == ResourceFormat.Xml ?
-                    new FhirXmlSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False) :
-                    new FhirJsonSerializer().SerializeToBytes(data, summary: Fhir.Rest.SummaryType.False);
+                    await new FhirXmlSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false) :
+                    await new FhirJsonSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed

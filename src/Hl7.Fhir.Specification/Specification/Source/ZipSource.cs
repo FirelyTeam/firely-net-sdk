@@ -24,16 +24,24 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const string SpecificationZipFileName = "specification.zip";
 
+
+        /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
+        /// found in the path passed to this function.</summary>
+        /// <returns>A new <see cref="ZipSource"/> instance.</returns>
+        /// <param name="path">A path to a directory containing the specification.zip file.</param>
+        public static ZipSource CreateValidationSource(string path)
+        {
+            return !File.Exists(path)
+                ? throw new FileNotFoundException($"Cannot create a {nameof(ZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.")
+                : new ZipSource(path);
+        }
+
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip".</summary>
         /// <returns>A new <see cref="ZipSource"/> instance.</returns>
         public static ZipSource CreateValidationSource()
         {
             var path = Path.Combine(DirectorySource.SpecificationDirectory, SpecificationZipFileName);
-            if(!File.Exists(path))
-            {
-                throw new FileNotFoundException($"Cannot create a {nameof(ZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.");
-            }
-            return new ZipSource(path);
+            return CreateValidationSource(path);
         }
 
         private string _mask;
@@ -83,7 +91,8 @@ namespace Hl7.Fhir.Specification.Source
         public string Mask
         {
             get { return _mask; }
-            set {
+            set
+            {
                 _mask = value;
                 // No need to lock, DirectorySource is synchronized
                 var source = _lazySource.Value;
@@ -222,7 +231,7 @@ namespace Hl7.Fhir.Specification.Source
         private string GetCacheKey()
         {
             Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
-            var versionInfo =  assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var versionInfo = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             var productInfo = assembly.GetCustomAttribute<AssemblyProductAttribute>();
             return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }

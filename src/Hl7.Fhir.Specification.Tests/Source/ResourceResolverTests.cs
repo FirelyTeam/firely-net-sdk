@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20160823] NEW - Verify FileDirectoryArtifactSource & ResolvingConflictException
         [TestMethod]
-        public void TestCanonicalUrlConflicts()
+        public async T.Task TestCanonicalUrlConflicts()
         {
             //const string srcFileName = "extension-definitions.xml";
             const string dupFileName = "patient-birthtime";
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Save back to disk to create a conflicting duplicate
             var b = new Bundle();
             b.AddResourceEntry(ext, url);
-            var xml = new FhirXmlSerializer().SerializeToString(b);
+            var xml = await new FhirXmlSerializer().SerializeToStringAsync(b);
             var filePath = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + ".xml";
             var filePath2 = Path.Combine(DirectorySource.SpecificationDirectory, dupFileName) + "2.xml";
             File.WriteAllText(filePath, xml);
