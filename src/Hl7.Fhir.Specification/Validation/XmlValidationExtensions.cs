@@ -6,15 +6,14 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.FhirPath;
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Schema;
@@ -22,14 +21,16 @@ using System.Xml.Schema;
 namespace Hl7.Fhir.Validation
 {
     /// <summary>
-    /// Add support for validating against Base subclasses (instead of IElementNavigator) to the Validator
+    /// Add support for validating data straight from an <see cref="XmlReader"/>.
     /// </summary>
     public static class XmlValidationExtensions
     {
+        private static XmlSchemaSet getSchemaSetFromSettings(Validator v) => v.Settings.XsdSchemaCollection?.MinimalSchemas ??
+                            SchemaCollection.ValidationSchemaSet;
+
         public static OperationOutcome Validate(this Validator me, XmlReader instance)
         {
-            Resource poco;
-            var result = me.ValidatedParseXml(instance, out poco);
+            var result = me.ValidatedParseXml(instance, getSchemaSetFromSettings(me), out var poco);
 
             if (poco != null)
                 result.Add(me.Validate(poco));
@@ -39,8 +40,7 @@ namespace Hl7.Fhir.Validation
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, params string[] definitionUris)
         {
-            Resource poco;
-            var result = me.ValidatedParseXml(instance, out poco);
+            var result = me.ValidatedParseXml(instance, getSchemaSetFromSettings(me), out var poco);
 
             if (poco != null)
                 result.Add(me.Validate(poco, definitionUris));
@@ -50,8 +50,7 @@ namespace Hl7.Fhir.Validation
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, StructureDefinition structureDefinition)
         {
-            Resource poco;
-            var result = me.ValidatedParseXml(instance, out poco);
+            var result = me.ValidatedParseXml(instance, getSchemaSetFromSettings(me), out var poco);
 
             if (poco != null)
                 result.Add(me.Validate(poco, structureDefinition));
@@ -61,8 +60,7 @@ namespace Hl7.Fhir.Validation
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            Resource poco;
-            var result = me.ValidatedParseXml(instance, out poco);
+            var result = me.ValidatedParseXml(instance, getSchemaSetFromSettings(me), out var poco);
 
             if (poco != null)
                 result.Add(me.Validate(poco, structureDefinitions));
@@ -71,7 +69,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        internal static OperationOutcome ValidatedParseXml(this Validator me, XmlReader instance, out Resource poco)
+        internal static OperationOutcome ValidatedParseXml(this Validator me, XmlReader instance, XmlSchemaSet xsdSchemas, out Resource? poco)
         {
             var result = new OperationOutcome();
 
@@ -81,7 +79,7 @@ namespace Hl7.Fhir.Validation
                 if (me.Settings.EnableXsdValidation)
                 {
                     var doc = XDocument.Load(instance, LoadOptions.SetLineInfo);
-                    result.Add(me.ValidateXml(doc));
+                    result.Add(validateXml(doc, xsdSchemas));
                     instance = doc.CreateReader();
                 }
 
@@ -89,24 +87,24 @@ namespace Hl7.Fhir.Validation
             }
             catch (Exception e)
             {
-                result.AddIssue($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, (string)null);
+                result.AddIssue($"Parsing of Xml into a FHIR Poco failed: {e.Message}", Issue.XSD_CONTENT_POCO_PARSING_FAILED, default(string));
                 poco = null;
             }
 
             return result;
+
+            static OperationOutcome validateXml(XDocument instance, XmlSchemaSet xsdSchemas)
+            {
+                var result = new OperationOutcome();
+
+                void veh(object o, ValidationEventArgs args) => result.AddIssue(ToIssueComponent(args));
+                instance.Validate(xsdSchemas, veh);
+
+                return result;
+            }
+
         }
 
-
-
-        internal static OperationOutcome ValidateXml(this Validator me, XDocument instance)
-        {
-            var result = new OperationOutcome();
-
-            ValidationEventHandler veh = (o, args) => result.AddIssue(ToIssueComponent(args));
-            instance.Validate(SchemaCollection.ValidationSchemaSet, veh);
-
-            return result;
-        }
 
         private static OperationOutcome.IssueComponent ToIssueComponent(ValidationEventArgs args)
         {
@@ -120,3 +118,5 @@ namespace Hl7.Fhir.Validation
         }
     }
 }
+
+#nullable restore

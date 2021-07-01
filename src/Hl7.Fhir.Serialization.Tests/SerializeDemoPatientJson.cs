@@ -8,22 +8,23 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class SerializeDemoPatientJson
     {
-        public ITypedElement getJsonElement(string json, FhirJsonParsingSettings s = null) => 
-            JsonParsingHelpers.ParseToTypedElement(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
+        public async Tasks.Task<ITypedElement> getJsonElement(string json, FhirJsonParsingSettings s = null) => 
+            await JsonParsingHelpers.ParseToTypedElementAsync(json, new PocoStructureDefinitionSummaryProvider(), settings: s);
 
         [TestMethod]
-        public void CanSerializeThroughNavigatorAndCompare()
+        public async Tasks.Task CanSerializeThroughNavigatorAndCompare()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
-            var output = nav.ToJson();
+            var nav = await getJsonElement(json);
+            var output = await nav.ToJsonAsync();
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", json, output, errors);
@@ -32,27 +33,27 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void TestPruneEmptyNodes()
+        public async Tasks.Task TestPruneEmptyNodes()
         {
-            var tp = File.ReadAllText(Path.Combine("TestData", "test-empty-nodes.json"));
+            var tp = await File.ReadAllTextAsync(Path.Combine("TestData", "test-empty-nodes.json"));
 
             // Make sure permissive parsing is on - otherwise the parser will complain about all those empty nodes
-            var nav = getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
+            var nav = await getJsonElement(tp, new FhirJsonParsingSettings { PermissiveParsing = true });
 
-            var output = nav.ToJson();
+            var output = await nav.ToJsonAsync();
             var doc = JObject.Parse(output);
             Assert.AreEqual(17, doc.DescendantsAndSelf().Count());
         }
 
        
         [TestMethod]
-        public void CanSerializeFromPoco()
+        public async Tasks.Task CanSerializeFromPoco()
         {
             var tp = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
             var pser = new FhirJsonParser(new ParserSettings { DisallowXsiAttributesOnRoot = false } );
-            var pat = pser.Parse<Patient>(tp);
+            var pat = await pser.ParseAsync<Patient>(tp);
 
-            var output = pat.ToJson();
+            var output = await pat.ToJsonAsync();
 
             List<string> errors = new List<string>();
             JsonAssert.AreSame(@"TestData\fp-test-patient.json", tp, output, errors);
@@ -61,41 +62,41 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void DoesPretty()
+        public async Tasks.Task DoesPretty()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
-            var output = nav.ToJson();
+            var nav = await getJsonElement(json);
+            var output = await nav.ToJsonAsync();
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
+            var pretty = await nav.ToJsonAsync(new FhirJsonSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
 
-            var p = (new FhirJsonParser()).Parse<Patient>(json);
-            output = (new FhirJsonSerializer(new SerializerSettings { Pretty = false })).SerializeToString(p);
+            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
+            output = await (new FhirJsonSerializer(new SerializerSettings { Pretty = false })).SerializeToStringAsync(p);
             Assert.IsFalse(output.Substring(0, 20).Contains('\n'));
-            pretty = (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
+            pretty = await (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
             Assert.IsTrue(pretty.Substring(0, 20).Contains('\n'));
         }
 
         [TestMethod]
-        public void TestAppendNewLine()
+        public async Tasks.Task TestAppendNewLine()
         {
-            var json = File.ReadAllText(Path.Combine("TestData", "fp-test-patient.json"));
+            var json = await File.ReadAllTextAsync(Path.Combine("TestData", "fp-test-patient.json"));
 
-            var nav = getJsonElement(json);
-            var output = nav.ToJson();
+            var nav = await getJsonElement(json);
+            var output = await nav.ToJsonAsync();
             Assert.IsFalse(output.Contains('\n'));
-            var pretty = nav.ToJson(new FhirJsonSerializationSettings { Pretty = true });
+            var pretty = await nav.ToJsonAsync(new FhirJsonSerializationSettings { Pretty = true });
             Assert.IsTrue(pretty.Contains('\n'));
             var lastLine = pretty.Split('\n').Last();
             Assert.IsFalse(string.IsNullOrEmpty(lastLine));
 
-            var p = (new FhirJsonParser()).Parse<Patient>(json);
-            output = (new FhirJsonSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToString(p);
+            var p = await new FhirJsonParser().ParseAsync<Patient>(json);
+            output = await (new FhirJsonSerializer(new SerializerSettings { Pretty = false, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = output.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
-            pretty = (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToString(p);
+            pretty = await (new FhirJsonSerializer(new SerializerSettings { Pretty = true, AppendNewLine = true })).SerializeToStringAsync(p);
             lastLine = pretty.Split('\n').Last();
             Assert.IsTrue(string.IsNullOrEmpty(lastLine));
         }
