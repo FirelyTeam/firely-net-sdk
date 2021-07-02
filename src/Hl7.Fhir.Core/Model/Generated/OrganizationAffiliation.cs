@@ -428,6 +428,23 @@ namespace Hl7.Fhir.Model
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Period is not null) callback("period",Period);
+      if (Organization is not null) callback("organization",Organization);
+      if (ParticipatingOrganization is not null) callback("participatingOrganization",ParticipatingOrganization);
+      if (Network?.Any() == true) callback("network",Network);
+      if (Code?.Any() == true) callback("code",Code);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (Location?.Any() == true) callback("location",Location);
+      if (HealthcareService?.Any() == true) callback("healthcareService",HealthcareService);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
+    }
+
   }
 
 }

@@ -376,6 +376,14 @@ namespace Hl7.Fhir.Model
         if (Party is not null) yield return new KeyValuePair<string,object>("party",Party);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ModeElement is not null) callback("mode",ModeElement);
+        if (TimeElement is not null) callback("time",TimeElement);
+        if (Party is not null) callback("party",Party);
+      }
+
     }
 
     /// <summary>
@@ -540,6 +548,13 @@ namespace Hl7.Fhir.Model
         if (Target is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("target", Target),Target);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (Target is not null) callback(PocoDictionary.ComposeChoiceElementName("target", Target),Target);
+      }
+
     }
 
     /// <summary>
@@ -694,6 +709,14 @@ namespace Hl7.Fhir.Model
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
         if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code?.Any() == true) callback("code",Code);
+        if (Period is not null) callback("period",Period);
+        if (Detail?.Any() == true) callback("detail",Detail);
       }
 
     }
@@ -1046,6 +1069,21 @@ namespace Hl7.Fhir.Model
         if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
         if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
         if (Section?.Any() == true) yield return new KeyValuePair<string,object>("section",Section);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (Code is not null) callback("code",Code);
+        if (Author?.Any() == true) callback("author",Author);
+        if (Focus is not null) callback("focus",Focus);
+        if (Text is not null) callback("text",Text);
+        if (ModeElement is not null) callback("mode",ModeElement);
+        if (OrderedBy is not null) callback("orderedBy",OrderedBy);
+        if (Entry?.Any() == true) callback("entry",Entry);
+        if (EmptyReason is not null) callback("emptyReason",EmptyReason);
+        if (Section?.Any() == true) callback("section",Section);
       }
 
     }
@@ -1541,6 +1579,26 @@ namespace Hl7.Fhir.Model
       if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);
       if (Event?.Any() == true) yield return new KeyValuePair<string,object>("event",Event);
       if (Section?.Any() == true) yield return new KeyValuePair<string,object>("section",Section);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Author?.Any() == true) callback("author",Author);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (ConfidentialityElement is not null) callback("confidentiality",ConfidentialityElement);
+      if (Attester?.Any() == true) callback("attester",Attester);
+      if (Custodian is not null) callback("custodian",Custodian);
+      if (RelatesTo?.Any() == true) callback("relatesTo",RelatesTo);
+      if (Event?.Any() == true) callback("event",Event);
+      if (Section?.Any() == true) callback("section",Section);
     }
 
   }

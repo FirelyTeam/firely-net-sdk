@@ -405,6 +405,19 @@ namespace Hl7.Fhir.Model
         if (CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",CTerminalModificationElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SubunitElement is not null) callback("subunit",SubunitElement);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (LengthElement is not null) callback("length",LengthElement);
+        if (SequenceAttachment is not null) callback("sequenceAttachment",SequenceAttachment);
+        if (NTerminalModificationId is not null) callback("nTerminalModificationId",NTerminalModificationId);
+        if (NTerminalModificationElement is not null) callback("nTerminalModification",NTerminalModificationElement);
+        if (CTerminalModificationId is not null) callback("cTerminalModificationId",CTerminalModificationId);
+        if (CTerminalModificationElement is not null) callback("cTerminalModification",CTerminalModificationElement);
+      }
+
     }
 
     /// <summary>
@@ -602,6 +615,15 @@ namespace Hl7.Fhir.Model
       if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
       if (DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
       if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (SequenceType is not null) callback("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) callback("numberOfSubunits",NumberOfSubunitsElement);
+      if (DisulfideLinkageElement?.Any() == true) callback("disulfideLinkage",DisulfideLinkageElement);
+      if (Subunit?.Any() == true) callback("subunit",Subunit);
     }
 
   }

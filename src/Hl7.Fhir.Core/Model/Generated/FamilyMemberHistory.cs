@@ -315,6 +315,16 @@ namespace Hl7.Fhir.Model
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Outcome is not null) callback("outcome",Outcome);
+        if (ContributedToDeathElement is not null) callback("contributedToDeath",ContributedToDeathElement);
+        if (Onset is not null) callback(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
+        if (Note?.Any() == true) callback("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -931,6 +941,29 @@ namespace Hl7.Fhir.Model
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (DataAbsentReason is not null) callback("dataAbsentReason",DataAbsentReason);
+      if (Patient is not null) callback("patient",Patient);
+      if (DateElement is not null) callback("date",DateElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (Relationship is not null) callback("relationship",Relationship);
+      if (Sex is not null) callback("sex",Sex);
+      if (Born is not null) callback(PocoDictionary.ComposeChoiceElementName("born", Born),Born);
+      if (Age is not null) callback(PocoDictionary.ComposeChoiceElementName("age", Age),Age);
+      if (EstimatedAgeElement is not null) callback("estimatedAge",EstimatedAgeElement);
+      if (Deceased is not null) callback(PocoDictionary.ComposeChoiceElementName("deceased", Deceased),Deceased);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Condition?.Any() == true) callback("condition",Condition);
     }
 
   }

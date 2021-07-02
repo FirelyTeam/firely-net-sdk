@@ -412,6 +412,16 @@ namespace Hl7.Fhir.Model
         if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (OutcomeCodeableConcept?.Any() == true) callback("outcomeCodeableConcept",OutcomeCodeableConcept);
+        if (OutcomeReference?.Any() == true) callback("outcomeReference",OutcomeReference);
+        if (Progress?.Any() == true) callback("progress",Progress);
+        if (Reference is not null) callback("reference",Reference);
+        if (Detail is not null) callback("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -1015,6 +1025,28 @@ namespace Hl7.Fhir.Model
         if (DailyAmount is not null) yield return new KeyValuePair<string,object>("dailyAmount",DailyAmount);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (KindElement is not null) callback("kind",KindElement);
+        if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+        if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+        if (Code is not null) callback("code",Code);
+        if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+        if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+        if (Goal?.Any() == true) callback("goal",Goal);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (StatusReason is not null) callback("statusReason",StatusReason);
+        if (DoNotPerformElement is not null) callback("doNotPerform",DoNotPerformElement);
+        if (Scheduled is not null) callback(PocoDictionary.ComposeChoiceElementName("scheduled", Scheduled),Scheduled);
+        if (Location is not null) callback("location",Location);
+        if (Performer?.Any() == true) callback("performer",Performer);
+        if (Product is not null) callback(PocoDictionary.ComposeChoiceElementName("product", Product),Product);
+        if (DailyAmount is not null) callback("dailyAmount",DailyAmount);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
       }
 
     }
@@ -1761,6 +1793,34 @@ namespace Hl7.Fhir.Model
       if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
       if (Activity?.Any() == true) yield return new KeyValuePair<string,object>("activity",Activity);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Replaces?.Any() == true) callback("replaces",Replaces);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Period is not null) callback("period",Period);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Author is not null) callback("author",Author);
+      if (Contributor?.Any() == true) callback("contributor",Contributor);
+      if (CareTeam?.Any() == true) callback("careTeam",CareTeam);
+      if (Addresses?.Any() == true) callback("addresses",Addresses);
+      if (SupportingInfo?.Any() == true) callback("supportingInfo",SupportingInfo);
+      if (Goal?.Any() == true) callback("goal",Goal);
+      if (Activity?.Any() == true) callback("activity",Activity);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

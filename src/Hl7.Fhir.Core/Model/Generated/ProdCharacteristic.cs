@@ -425,6 +425,22 @@ namespace Hl7.Fhir.Model
       if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Height is not null) callback("height",Height);
+      if (Width is not null) callback("width",Width);
+      if (Depth is not null) callback("depth",Depth);
+      if (Weight is not null) callback("weight",Weight);
+      if (NominalVolume is not null) callback("nominalVolume",NominalVolume);
+      if (ExternalDiameter is not null) callback("externalDiameter",ExternalDiameter);
+      if (ShapeElement is not null) callback("shape",ShapeElement);
+      if (ColorElement?.Any() == true) callback("color",ColorElement);
+      if (ImprintElement?.Any() == true) callback("imprint",ImprintElement);
+      if (Image?.Any() == true) callback("image",Image);
+      if (Scoring is not null) callback("scoring",Scoring);
+    }
+
   }
 
 }

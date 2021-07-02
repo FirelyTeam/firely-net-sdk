@@ -306,6 +306,15 @@ namespace Hl7.Fhir.Model
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ActorIdElement is not null) callback("actorId",ActorIdElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Description is not null) callback("description",Description);
+      }
+
     }
 
     /// <summary>
@@ -583,6 +592,17 @@ namespace Hl7.Fhir.Model
         if (ContainedInstance?.Any() == true) yield return new KeyValuePair<string,object>("containedInstance",ContainedInstance);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ResourceIdElement is not null) callback("resourceId",ResourceIdElement);
+        if (ResourceTypeElement is not null) callback("resourceType",ResourceTypeElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Description is not null) callback("description",Description);
+        if (Version?.Any() == true) callback("version",Version);
+        if (ContainedInstance?.Any() == true) callback("containedInstance",ContainedInstance);
+      }
+
     }
 
     /// <summary>
@@ -731,6 +751,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",VersionIdElement);
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (VersionIdElement is not null) callback("versionId",VersionIdElement);
+        if (Description is not null) callback("description",Description);
       }
 
     }
@@ -898,6 +925,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ResourceIdElement is not null) yield return new KeyValuePair<string,object>("resourceId",ResourceIdElement);
         if (VersionIdElement is not null) yield return new KeyValuePair<string,object>("versionId",VersionIdElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ResourceIdElement is not null) callback("resourceId",ResourceIdElement);
+        if (VersionIdElement is not null) callback("versionId",VersionIdElement);
       }
 
     }
@@ -1116,6 +1150,16 @@ namespace Hl7.Fhir.Model
         if (Step?.Any() == true) yield return new KeyValuePair<string,object>("step",Step);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (Description is not null) callback("description",Description);
+        if (PreConditions is not null) callback("preConditions",PreConditions);
+        if (PostConditions is not null) callback("postConditions",PostConditions);
+        if (Step?.Any() == true) callback("step",Step);
+      }
+
     }
 
     /// <summary>
@@ -1308,6 +1352,15 @@ namespace Hl7.Fhir.Model
         if (PauseElement is not null) yield return new KeyValuePair<string,object>("pause",PauseElement);
         if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
         if (Alternative?.Any() == true) yield return new KeyValuePair<string,object>("alternative",Alternative);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Process?.Any() == true) callback("process",Process);
+        if (PauseElement is not null) callback("pause",PauseElement);
+        if (Operation is not null) callback("operation",Operation);
+        if (Alternative?.Any() == true) callback("alternative",Alternative);
       }
 
     }
@@ -1743,6 +1796,21 @@ namespace Hl7.Fhir.Model
         if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NumberElement is not null) callback("number",NumberElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (InitiatorElement is not null) callback("initiator",InitiatorElement);
+        if (ReceiverElement is not null) callback("receiver",ReceiverElement);
+        if (Description is not null) callback("description",Description);
+        if (InitiatorActiveElement is not null) callback("initiatorActive",InitiatorActiveElement);
+        if (ReceiverActiveElement is not null) callback("receiverActive",ReceiverActiveElement);
+        if (Request is not null) callback("request",Request);
+        if (Response is not null) callback("response",Response);
+      }
+
     }
 
     /// <summary>
@@ -1913,6 +1981,14 @@ namespace Hl7.Fhir.Model
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
         if (Step?.Any() == true) yield return new KeyValuePair<string,object>("step",Step);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (Description is not null) callback("description",Description);
+        if (Step?.Any() == true) callback("step",Step);
       }
 
     }
@@ -2514,6 +2590,28 @@ namespace Hl7.Fhir.Model
       if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       if (Process?.Any() == true) yield return new KeyValuePair<string,object>("process",Process);
       if (WorkflowElement?.Any() == true) yield return new KeyValuePair<string,object>("workflow",WorkflowElement);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (Actor?.Any() == true) callback("actor",Actor);
+      if (Instance?.Any() == true) callback("instance",Instance);
+      if (Process?.Any() == true) callback("process",Process);
+      if (WorkflowElement?.Any() == true) callback("workflow",WorkflowElement);
     }
 
   }

@@ -228,6 +228,15 @@ namespace Hl7.Fhir.Model
         if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Purpose is not null) callback("purpose",Purpose);
+        if (Name is not null) callback("name",Name);
+        if (Telecom?.Any() == true) callback("telecom",Telecom);
+        if (Address is not null) callback("address",Address);
+      }
+
     }
 
     /// <summary>
@@ -584,6 +593,21 @@ namespace Hl7.Fhir.Model
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Type?.Any() == true) callback("type",Type);
+      if (NameElement is not null) callback("name",NameElement);
+      if (AliasElement?.Any() == true) callback("alias",AliasElement);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (Address?.Any() == true) callback("address",Address);
+      if (PartOf is not null) callback("partOf",PartOf);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
     }
 
   }

@@ -251,6 +251,14 @@ namespace Hl7.Fhir.Model
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (ExpiryElement is not null) callback("expiry",ExpiryElement);
+        if (Quantity is not null) callback("quantity",Quantity);
+      }
+
     }
 
     /// <summary>
@@ -393,6 +401,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Substance is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("substance", Substance),Substance);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Substance is not null) callback(PocoDictionary.ComposeChoiceElementName("substance", Substance),Substance);
       }
 
     }
@@ -662,6 +677,18 @@ namespace Hl7.Fhir.Model
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Instance?.Any() == true) callback("instance",Instance);
+      if (Ingredient?.Any() == true) callback("ingredient",Ingredient);
     }
 
   }

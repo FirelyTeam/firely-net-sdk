@@ -367,6 +367,15 @@ namespace Hl7.Fhir.Model
         if (DecimalPrecisionElement is not null) yield return new KeyValuePair<string,object>("decimalPrecision",DecimalPrecisionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CustomaryUnit is not null) callback("customaryUnit",CustomaryUnit);
+        if (Unit is not null) callback("unit",Unit);
+        if (ConversionFactorElement is not null) callback("conversionFactor",ConversionFactorElement);
+        if (DecimalPrecisionElement is not null) callback("decimalPrecision",DecimalPrecisionElement);
+      }
+
     }
 
     /// <summary>
@@ -684,6 +693,19 @@ namespace Hl7.Fhir.Model
         if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
         if (GestationalAge is not null) yield return new KeyValuePair<string,object>("gestationalAge",GestationalAge);
         if (ConditionElement is not null) yield return new KeyValuePair<string,object>("condition",ConditionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CategoryElement is not null) callback("category",CategoryElement);
+        if (Range is not null) callback("range",Range);
+        if (Context is not null) callback("context",Context);
+        if (AppliesTo?.Any() == true) callback("appliesTo",AppliesTo);
+        if (GenderElement is not null) callback("gender",GenderElement);
+        if (Age is not null) callback("age",Age);
+        if (GestationalAge is not null) callback("gestationalAge",GestationalAge);
+        if (ConditionElement is not null) callback("condition",ConditionElement);
       }
 
     }
@@ -1111,6 +1133,24 @@ namespace Hl7.Fhir.Model
       if (NormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("normalCodedValueSet",NormalCodedValueSet);
       if (AbnormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("abnormalCodedValueSet",AbnormalCodedValueSet);
       if (CriticalCodedValueSet is not null) yield return new KeyValuePair<string,object>("criticalCodedValueSet",CriticalCodedValueSet);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (PermittedDataTypeElement?.Any() == true) callback("permittedDataType",PermittedDataTypeElement);
+      if (MultipleResultsAllowedElement is not null) callback("multipleResultsAllowed",MultipleResultsAllowedElement);
+      if (Method is not null) callback("method",Method);
+      if (PreferredReportNameElement is not null) callback("preferredReportName",PreferredReportNameElement);
+      if (QuantitativeDetails is not null) callback("quantitativeDetails",QuantitativeDetails);
+      if (QualifiedInterval?.Any() == true) callback("qualifiedInterval",QualifiedInterval);
+      if (ValidCodedValueSet is not null) callback("validCodedValueSet",ValidCodedValueSet);
+      if (NormalCodedValueSet is not null) callback("normalCodedValueSet",NormalCodedValueSet);
+      if (AbnormalCodedValueSet is not null) callback("abnormalCodedValueSet",AbnormalCodedValueSet);
+      if (CriticalCodedValueSet is not null) callback("criticalCodedValueSet",CriticalCodedValueSet);
     }
 
   }

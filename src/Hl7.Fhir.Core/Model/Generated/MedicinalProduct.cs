@@ -226,6 +226,14 @@ namespace Hl7.Fhir.Model
         if (CountryLanguage?.Any() == true) yield return new KeyValuePair<string,object>("countryLanguage",CountryLanguage);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ProductNameElement is not null) callback("productName",ProductNameElement);
+        if (NamePart?.Any() == true) callback("namePart",NamePart);
+        if (CountryLanguage?.Any() == true) callback("countryLanguage",CountryLanguage);
+      }
+
     }
 
     /// <summary>
@@ -374,6 +382,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PartElement is not null) yield return new KeyValuePair<string,object>("part",PartElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PartElement is not null) callback("part",PartElement);
+        if (Type is not null) callback("type",Type);
       }
 
     }
@@ -528,6 +543,14 @@ namespace Hl7.Fhir.Model
         if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
         if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
         if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Country is not null) callback("country",Country);
+        if (Jurisdiction is not null) callback("jurisdiction",Jurisdiction);
+        if (Language is not null) callback("language",Language);
       }
 
     }
@@ -769,6 +792,17 @@ namespace Hl7.Fhir.Model
         if (ConfidentialityIndicator is not null) yield return new KeyValuePair<string,object>("confidentialityIndicator",ConfidentialityIndicator);
         if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
         if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (OperationType is not null) callback("operationType",OperationType);
+        if (AuthorisationReferenceNumber is not null) callback("authorisationReferenceNumber",AuthorisationReferenceNumber);
+        if (EffectiveDateElement is not null) callback("effectiveDate",EffectiveDateElement);
+        if (ConfidentialityIndicator is not null) callback("confidentialityIndicator",ConfidentialityIndicator);
+        if (Manufacturer?.Any() == true) callback("manufacturer",Manufacturer);
+        if (Regulator is not null) callback("regulator",Regulator);
       }
 
     }
@@ -1041,6 +1075,18 @@ namespace Hl7.Fhir.Model
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier?.Any() == true) callback("identifier",Identifier);
+        if (Type is not null) callback("type",Type);
+        if (IntendedUse is not null) callback("intendedUse",IntendedUse);
+        if (Indication is not null) callback(PocoDictionary.ComposeChoiceElementName("indication", Indication),Indication);
+        if (Status is not null) callback("status",Status);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Species is not null) callback("species",Species);
       }
 
     }
@@ -1598,6 +1644,31 @@ namespace Hl7.Fhir.Model
       if (CrossReference?.Any() == true) yield return new KeyValuePair<string,object>("crossReference",CrossReference);
       if (ManufacturingBusinessOperation?.Any() == true) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",ManufacturingBusinessOperation);
       if (SpecialDesignation?.Any() == true) yield return new KeyValuePair<string,object>("specialDesignation",SpecialDesignation);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Type is not null) callback("type",Type);
+      if (Domain is not null) callback("domain",Domain);
+      if (CombinedPharmaceuticalDoseForm is not null) callback("combinedPharmaceuticalDoseForm",CombinedPharmaceuticalDoseForm);
+      if (LegalStatusOfSupply is not null) callback("legalStatusOfSupply",LegalStatusOfSupply);
+      if (AdditionalMonitoringIndicator is not null) callback("additionalMonitoringIndicator",AdditionalMonitoringIndicator);
+      if (SpecialMeasuresElement?.Any() == true) callback("specialMeasures",SpecialMeasuresElement);
+      if (PaediatricUseIndicator is not null) callback("paediatricUseIndicator",PaediatricUseIndicator);
+      if (ProductClassification?.Any() == true) callback("productClassification",ProductClassification);
+      if (MarketingStatus?.Any() == true) callback("marketingStatus",MarketingStatus);
+      if (PharmaceuticalProduct?.Any() == true) callback("pharmaceuticalProduct",PharmaceuticalProduct);
+      if (PackagedMedicinalProduct?.Any() == true) callback("packagedMedicinalProduct",PackagedMedicinalProduct);
+      if (AttachedDocument?.Any() == true) callback("attachedDocument",AttachedDocument);
+      if (MasterFile?.Any() == true) callback("masterFile",MasterFile);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (ClinicalTrial?.Any() == true) callback("clinicalTrial",ClinicalTrial);
+      if (Name?.Any() == true) callback("name",Name);
+      if (CrossReference?.Any() == true) callback("crossReference",CrossReference);
+      if (ManufacturingBusinessOperation?.Any() == true) callback("manufacturingBusinessOperation",ManufacturingBusinessOperation);
+      if (SpecialDesignation?.Any() == true) callback("specialDesignation",SpecialDesignation);
     }
 
   }

@@ -175,6 +175,12 @@ namespace Hl7.Fhir.Model
         if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Content is not null) callback(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+      }
+
     }
 
     /// <summary>
@@ -895,6 +901,34 @@ namespace Hl7.Fhir.Model
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",Payload);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (InResponseTo?.Any() == true) callback("inResponseTo",InResponseTo);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (Category?.Any() == true) callback("category",Category);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (Medium?.Any() == true) callback("medium",Medium);
+      if (Subject is not null) callback("subject",Subject);
+      if (Topic is not null) callback("topic",Topic);
+      if (About?.Any() == true) callback("about",About);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (SentElement is not null) callback("sent",SentElement);
+      if (ReceivedElement is not null) callback("received",ReceivedElement);
+      if (Recipient?.Any() == true) callback("recipient",Recipient);
+      if (Sender is not null) callback("sender",Sender);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Payload?.Any() == true) callback("payload",Payload);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

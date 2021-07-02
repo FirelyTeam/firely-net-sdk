@@ -967,6 +967,26 @@ namespace Hl7.Fhir.Model
         if (OffsetElement is not null) yield return new KeyValuePair<string,object>("offset",OffsetElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Bounds is not null) callback(PocoDictionary.ComposeChoiceElementName("bounds", Bounds),Bounds);
+        if (CountElement is not null) callback("count",CountElement);
+        if (CountMaxElement is not null) callback("countMax",CountMaxElement);
+        if (DurationElement is not null) callback("duration",DurationElement);
+        if (DurationMaxElement is not null) callback("durationMax",DurationMaxElement);
+        if (DurationUnitElement is not null) callback("durationUnit",DurationUnitElement);
+        if (FrequencyElement is not null) callback("frequency",FrequencyElement);
+        if (FrequencyMaxElement is not null) callback("frequencyMax",FrequencyMaxElement);
+        if (PeriodElement is not null) callback("period",PeriodElement);
+        if (PeriodMaxElement is not null) callback("periodMax",PeriodMaxElement);
+        if (PeriodUnitElement is not null) callback("periodUnit",PeriodUnitElement);
+        if (DayOfWeekElement?.Any() == true) callback("dayOfWeek",DayOfWeekElement);
+        if (TimeOfDayElement?.Any() == true) callback("timeOfDay",TimeOfDayElement);
+        if (WhenElement?.Any() == true) callback("when",WhenElement);
+        if (OffsetElement is not null) callback("offset",OffsetElement);
+      }
+
     }
 
     /// <summary>
@@ -1123,6 +1143,14 @@ namespace Hl7.Fhir.Model
       if (EventElement?.Any() == true) yield return new KeyValuePair<string,object>("event",EventElement);
       if (Repeat is not null) yield return new KeyValuePair<string,object>("repeat",Repeat);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (EventElement?.Any() == true) callback("event",EventElement);
+      if (Repeat is not null) callback("repeat",Repeat);
+      if (Code is not null) callback("code",Code);
     }
 
   }

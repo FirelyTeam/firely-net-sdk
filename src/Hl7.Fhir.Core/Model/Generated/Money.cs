@@ -1309,6 +1309,13 @@ namespace Hl7.Fhir.Model
       if (CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",CurrencyElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (ValueElement is not null) callback("value",ValueElement);
+      if (CurrencyElement is not null) callback("currency",CurrencyElement);
+    }
+
   }
 
 }

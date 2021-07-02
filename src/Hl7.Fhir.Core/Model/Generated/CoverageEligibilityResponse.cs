@@ -283,6 +283,15 @@ namespace Hl7.Fhir.Model
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Coverage is not null) callback("coverage",Coverage);
+        if (InforceElement is not null) callback("inforce",InforceElement);
+        if (BenefitPeriod is not null) callback("benefitPeriod",BenefitPeriod);
+        if (Item?.Any() == true) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -772,6 +781,25 @@ namespace Hl7.Fhir.Model
         if (AuthorizationUrlElement is not null) yield return new KeyValuePair<string,object>("authorizationUrl",AuthorizationUrlElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (Provider is not null) callback("provider",Provider);
+        if (ExcludedElement is not null) callback("excluded",ExcludedElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Network is not null) callback("network",Network);
+        if (Unit is not null) callback("unit",Unit);
+        if (Term is not null) callback("term",Term);
+        if (Benefit?.Any() == true) callback("benefit",Benefit);
+        if (AuthorizationRequiredElement is not null) callback("authorizationRequired",AuthorizationRequiredElement);
+        if (AuthorizationSupporting?.Any() == true) callback("authorizationSupporting",AuthorizationSupporting);
+        if (AuthorizationUrlElement is not null) callback("authorizationUrl",AuthorizationUrlElement);
+      }
+
     }
 
     /// <summary>
@@ -944,6 +972,14 @@ namespace Hl7.Fhir.Model
         if (Used is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Allowed is not null) callback(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
+        if (Used is not null) callback(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
+      }
+
     }
 
     /// <summary>
@@ -1051,6 +1087,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
       }
 
     }
@@ -1595,6 +1637,26 @@ namespace Hl7.Fhir.Model
       if (PreAuthRefElement is not null) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
       if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
       if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (PurposeElement?.Any() == true) callback("purpose",PurposeElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Serviced is not null) callback(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Requestor is not null) callback("requestor",Requestor);
+      if (Request is not null) callback("request",Request);
+      if (OutcomeElement is not null) callback("outcome",OutcomeElement);
+      if (DispositionElement is not null) callback("disposition",DispositionElement);
+      if (Insurer is not null) callback("insurer",Insurer);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (PreAuthRefElement is not null) callback("preAuthRef",PreAuthRefElement);
+      if (Form is not null) callback("form",Form);
+      if (Error?.Any() == true) callback("error",Error);
     }
 
   }

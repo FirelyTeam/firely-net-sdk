@@ -17,6 +17,10 @@
     <RootNamespace>Hl7.Fhir.Serialization.Poco</RootNamespace>
   </PropertyGroup>
 
+   <ItemGroup>
+     <Compile Remove="JsonSerializationExtensions.cs" />
+   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>

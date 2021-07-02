@@ -446,6 +446,19 @@ namespace Hl7.Fhir.Model
       if (CreationElement is not null) yield return new KeyValuePair<string,object>("creation",CreationElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (ContentTypeElement is not null) callback("contentType",ContentTypeElement);
+      if (LanguageElement is not null) callback("language",LanguageElement);
+      if (DataElement is not null) callback("data",DataElement);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (SizeElement is not null) callback("size",SizeElement);
+      if (HashElement is not null) callback("hash",HashElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (CreationElement is not null) callback("creation",CreationElement);
+    }
+
   }
 
 }

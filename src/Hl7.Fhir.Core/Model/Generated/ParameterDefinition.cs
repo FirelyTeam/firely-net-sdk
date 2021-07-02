@@ -410,6 +410,18 @@ namespace Hl7.Fhir.Model
       if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (NameElement is not null) callback("name",NameElement);
+      if (UseElement is not null) callback("use",UseElement);
+      if (MinElement is not null) callback("min",MinElement);
+      if (MaxElement is not null) callback("max",MaxElement);
+      if (DocumentationElement is not null) callback("documentation",DocumentationElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (ProfileElement is not null) callback("profile",ProfileElement);
+    }
+
   }
 
 }

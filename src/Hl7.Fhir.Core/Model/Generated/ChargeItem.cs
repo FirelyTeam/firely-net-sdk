@@ -238,6 +238,13 @@ namespace Hl7.Fhir.Model
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Function is not null) callback("function",Function);
+        if (Actor is not null) callback("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -1044,6 +1051,37 @@ namespace Hl7.Fhir.Model
       if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (DefinitionUriElement?.Any() == true) callback("definitionUri",DefinitionUriElement);
+      if (DefinitionCanonicalElement?.Any() == true) callback("definitionCanonical",DefinitionCanonicalElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Context is not null) callback("context",Context);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (PerformingOrganization is not null) callback("performingOrganization",PerformingOrganization);
+      if (RequestingOrganization is not null) callback("requestingOrganization",RequestingOrganization);
+      if (CostCenter is not null) callback("costCenter",CostCenter);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (Bodysite?.Any() == true) callback("bodysite",Bodysite);
+      if (FactorOverrideElement is not null) callback("factorOverride",FactorOverrideElement);
+      if (PriceOverride is not null) callback("priceOverride",PriceOverride);
+      if (OverrideReasonElement is not null) callback("overrideReason",OverrideReasonElement);
+      if (Enterer is not null) callback("enterer",Enterer);
+      if (EnteredDateElement is not null) callback("enteredDate",EnteredDateElement);
+      if (Reason?.Any() == true) callback("reason",Reason);
+      if (Service?.Any() == true) callback("service",Service);
+      if (Product is not null) callback(PocoDictionary.ComposeChoiceElementName("product", Product),Product);
+      if (Account?.Any() == true) callback("account",Account);
+      if (Note?.Any() == true) callback("note",Note);
+      if (SupportingInformation?.Any() == true) callback("supportingInformation",SupportingInformation);
     }
 
   }

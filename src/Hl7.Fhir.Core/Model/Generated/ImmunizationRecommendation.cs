@@ -469,6 +469,23 @@ namespace Hl7.Fhir.Model
         if (SupportingPatientInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (VaccineCode?.Any() == true) callback("vaccineCode",VaccineCode);
+        if (TargetDisease is not null) callback("targetDisease",TargetDisease);
+        if (ContraindicatedVaccineCode?.Any() == true) callback("contraindicatedVaccineCode",ContraindicatedVaccineCode);
+        if (ForecastStatus is not null) callback("forecastStatus",ForecastStatus);
+        if (ForecastReason?.Any() == true) callback("forecastReason",ForecastReason);
+        if (DateCriterion?.Any() == true) callback("dateCriterion",DateCriterion);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (SeriesElement is not null) callback("series",SeriesElement);
+        if (DoseNumber is not null) callback(PocoDictionary.ComposeChoiceElementName("doseNumber", DoseNumber),DoseNumber);
+        if (SeriesDoses is not null) callback(PocoDictionary.ComposeChoiceElementName("seriesDoses", SeriesDoses),SeriesDoses);
+        if (SupportingImmunization?.Any() == true) callback("supportingImmunization",SupportingImmunization);
+        if (SupportingPatientInformation?.Any() == true) callback("supportingPatientInformation",SupportingPatientInformation);
+      }
+
     }
 
     /// <summary>
@@ -617,6 +634,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (ValueElement is not null) callback("value",ValueElement);
       }
 
     }
@@ -826,6 +850,16 @@ namespace Hl7.Fhir.Model
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
       if (Recommendation?.Any() == true) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Patient is not null) callback("patient",Patient);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Authority is not null) callback("authority",Authority);
+      if (Recommendation?.Any() == true) callback("recommendation",Recommendation);
     }
 
   }

@@ -311,6 +311,14 @@ namespace Hl7.Fhir.Model
         if (AltitudeElement is not null) yield return new KeyValuePair<string,object>("altitude",AltitudeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LongitudeElement is not null) callback("longitude",LongitudeElement);
+        if (LatitudeElement is not null) callback("latitude",LatitudeElement);
+        if (AltitudeElement is not null) callback("altitude",AltitudeElement);
+      }
+
     }
 
     /// <summary>
@@ -557,6 +565,15 @@ namespace Hl7.Fhir.Model
         if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
         if (OpeningTimeElement is not null) yield return new KeyValuePair<string,object>("openingTime",OpeningTimeElement);
         if (ClosingTimeElement is not null) yield return new KeyValuePair<string,object>("closingTime",ClosingTimeElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DaysOfWeekElement?.Any() == true) callback("daysOfWeek",DaysOfWeekElement);
+        if (AllDayElement is not null) callback("allDay",AllDayElement);
+        if (OpeningTimeElement is not null) callback("openingTime",OpeningTimeElement);
+        if (ClosingTimeElement is not null) callback("closingTime",ClosingTimeElement);
       }
 
     }
@@ -1126,6 +1143,28 @@ namespace Hl7.Fhir.Model
       if (HoursOfOperation?.Any() == true) yield return new KeyValuePair<string,object>("hoursOfOperation",HoursOfOperation);
       if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (OperationalStatus is not null) callback("operationalStatus",OperationalStatus);
+      if (NameElement is not null) callback("name",NameElement);
+      if (AliasElement?.Any() == true) callback("alias",AliasElement);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (ModeElement is not null) callback("mode",ModeElement);
+      if (Type?.Any() == true) callback("type",Type);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (Address is not null) callback("address",Address);
+      if (PhysicalType is not null) callback("physicalType",PhysicalType);
+      if (Position is not null) callback("position",Position);
+      if (ManagingOrganization is not null) callback("managingOrganization",ManagingOrganization);
+      if (PartOf is not null) callback("partOf",PartOf);
+      if (HoursOfOperation?.Any() == true) callback("hoursOfOperation",HoursOfOperation);
+      if (AvailabilityExceptionsElement is not null) callback("availabilityExceptions",AvailabilityExceptionsElement);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
     }
 
   }

@@ -326,6 +326,18 @@ namespace Hl7.Fhir.Model
       if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Insurer is not null) callback("insurer",Insurer);
+      if (Provider is not null) callback("provider",Provider);
+      if (Candidate is not null) callback("candidate",Candidate);
+      if (Coverage is not null) callback("coverage",Coverage);
+    }
+
   }
 
 }

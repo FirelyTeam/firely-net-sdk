@@ -238,6 +238,13 @@ namespace Hl7.Fhir.Model
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Function is not null) callback("function",Function);
+        if (Actor is not null) callback("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -484,6 +491,17 @@ namespace Hl7.Fhir.Model
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (Dose is not null) yield return new KeyValuePair<string,object>("dose",Dose);
         if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TextElement is not null) callback("text",TextElement);
+        if (Site is not null) callback("site",Site);
+        if (Route is not null) callback("route",Route);
+        if (Method is not null) callback("method",Method);
+        if (Dose is not null) callback("dose",Dose);
+        if (Rate is not null) callback(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
     }
@@ -1063,6 +1081,30 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Dosage is not null) yield return new KeyValuePair<string,object>("dosage",Dosage);
       if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesElement?.Any() == true) callback("instantiates",InstantiatesElement);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason?.Any() == true) callback("statusReason",StatusReason);
+      if (Category is not null) callback("category",Category);
+      if (Medication is not null) callback(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      if (Subject is not null) callback("subject",Subject);
+      if (Context is not null) callback("context",Context);
+      if (SupportingInformation?.Any() == true) callback("supportingInformation",SupportingInformation);
+      if (Effective is not null) callback(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Request is not null) callback("request",Request);
+      if (Device?.Any() == true) callback("device",Device);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Dosage is not null) callback("dosage",Dosage);
+      if (EventHistory?.Any() == true) callback("eventHistory",EventHistory);
     }
 
   }

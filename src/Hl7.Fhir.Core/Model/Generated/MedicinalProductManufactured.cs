@@ -289,6 +289,18 @@ namespace Hl7.Fhir.Model
       if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (ManufacturedDoseForm is not null) callback("manufacturedDoseForm",ManufacturedDoseForm);
+      if (UnitOfPresentation is not null) callback("unitOfPresentation",UnitOfPresentation);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (Manufacturer?.Any() == true) callback("manufacturer",Manufacturer);
+      if (Ingredient?.Any() == true) callback("ingredient",Ingredient);
+      if (PhysicalCharacteristics is not null) callback("physicalCharacteristics",PhysicalCharacteristics);
+      if (OtherCharacteristics?.Any() == true) callback("otherCharacteristics",OtherCharacteristics);
+    }
+
   }
 
 }

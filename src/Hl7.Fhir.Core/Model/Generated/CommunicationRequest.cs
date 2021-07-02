@@ -175,6 +175,12 @@ namespace Hl7.Fhir.Model
         if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Content is not null) callback(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+      }
+
     }
 
     /// <summary>
@@ -846,6 +852,33 @@ namespace Hl7.Fhir.Model
       if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Replaces?.Any() == true) callback("replaces",Replaces);
+      if (GroupIdentifier is not null) callback("groupIdentifier",GroupIdentifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (Category?.Any() == true) callback("category",Category);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (DoNotPerformElement is not null) callback("doNotPerform",DoNotPerformElement);
+      if (Medium?.Any() == true) callback("medium",Medium);
+      if (Subject is not null) callback("subject",Subject);
+      if (About?.Any() == true) callback("about",About);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Payload?.Any() == true) callback("payload",Payload);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (Recipient?.Any() == true) callback("recipient",Recipient);
+      if (Sender is not null) callback("sender",Sender);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

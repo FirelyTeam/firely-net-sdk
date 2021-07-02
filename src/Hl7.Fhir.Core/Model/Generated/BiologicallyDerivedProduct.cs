@@ -311,6 +311,14 @@ namespace Hl7.Fhir.Model
         if (Collected is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Collector is not null) callback("collector",Collector);
+        if (Source is not null) callback("source",Source);
+        if (Collected is not null) callback(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
+      }
+
     }
 
     /// <summary>
@@ -517,6 +525,15 @@ namespace Hl7.Fhir.Model
         if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Procedure is not null) callback("procedure",Procedure);
+        if (Additive is not null) callback("additive",Additive);
+        if (Time is not null) callback(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
+      }
+
     }
 
     /// <summary>
@@ -675,6 +692,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Time is not null) callback(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
     }
@@ -904,6 +928,15 @@ namespace Hl7.Fhir.Model
         if (TemperatureElement is not null) yield return new KeyValuePair<string,object>("temperature",TemperatureElement);
         if (ScaleElement is not null) yield return new KeyValuePair<string,object>("scale",ScaleElement);
         if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (TemperatureElement is not null) callback("temperature",TemperatureElement);
+        if (ScaleElement is not null) callback("scale",ScaleElement);
+        if (Duration is not null) callback("duration",Duration);
       }
 
     }
@@ -1284,6 +1317,22 @@ namespace Hl7.Fhir.Model
       if (Processing?.Any() == true) yield return new KeyValuePair<string,object>("processing",Processing);
       if (Manipulation is not null) yield return new KeyValuePair<string,object>("manipulation",Manipulation);
       if (Storage?.Any() == true) yield return new KeyValuePair<string,object>("storage",Storage);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ProductCategoryElement is not null) callback("productCategory",ProductCategoryElement);
+      if (ProductCode is not null) callback("productCode",ProductCode);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Request?.Any() == true) callback("request",Request);
+      if (QuantityElement is not null) callback("quantity",QuantityElement);
+      if (Parent?.Any() == true) callback("parent",Parent);
+      if (Collection is not null) callback("collection",Collection);
+      if (Processing?.Any() == true) callback("processing",Processing);
+      if (Manipulation is not null) callback("manipulation",Manipulation);
+      if (Storage?.Any() == true) callback("storage",Storage);
     }
 
   }

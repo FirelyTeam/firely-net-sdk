@@ -360,6 +360,19 @@ namespace Hl7.Fhir.Model
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Period is not null) callback("period",Period);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Author is not null) callback("author",Author);
+    }
+
   }
 
 }

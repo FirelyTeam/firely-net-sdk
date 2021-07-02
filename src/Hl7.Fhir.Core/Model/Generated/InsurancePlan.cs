@@ -256,6 +256,15 @@ namespace Hl7.Fhir.Model
         if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Purpose is not null) callback("purpose",Purpose);
+        if (Name is not null) callback("name",Name);
+        if (Telecom?.Any() == true) callback("telecom",Telecom);
+        if (Address is not null) callback("address",Address);
+      }
+
     }
 
     /// <summary>
@@ -411,6 +420,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
         if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Network?.Any() == true) callback("network",Network);
+        if (Benefit?.Any() == true) callback("benefit",Benefit);
       }
 
     }
@@ -585,6 +602,14 @@ namespace Hl7.Fhir.Model
         if (Limit?.Any() == true) yield return new KeyValuePair<string,object>("limit",Limit);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (RequirementElement is not null) callback("requirement",RequirementElement);
+        if (Limit?.Any() == true) callback("limit",Limit);
+      }
+
     }
 
     /// <summary>
@@ -713,6 +738,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Value is not null) callback("value",Value);
+        if (Code is not null) callback("code",Code);
       }
 
     }
@@ -942,6 +974,17 @@ namespace Hl7.Fhir.Model
         if (SpecificCost?.Any() == true) yield return new KeyValuePair<string,object>("specificCost",SpecificCost);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier?.Any() == true) callback("identifier",Identifier);
+        if (Type is not null) callback("type",Type);
+        if (CoverageArea?.Any() == true) callback("coverageArea",CoverageArea);
+        if (Network?.Any() == true) callback("network",Network);
+        if (GeneralCost?.Any() == true) callback("generalCost",GeneralCost);
+        if (SpecificCost?.Any() == true) callback("specificCost",SpecificCost);
+      }
+
     }
 
     /// <summary>
@@ -1152,6 +1195,15 @@ namespace Hl7.Fhir.Model
         if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (GroupSizeElement is not null) callback("groupSize",GroupSizeElement);
+        if (Cost is not null) callback("cost",Cost);
+        if (CommentElement is not null) callback("comment",CommentElement);
+      }
+
     }
 
     /// <summary>
@@ -1284,6 +1336,13 @@ namespace Hl7.Fhir.Model
         if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (Benefit?.Any() == true) callback("benefit",Benefit);
+      }
+
     }
 
     /// <summary>
@@ -1414,6 +1473,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Cost?.Any() == true) yield return new KeyValuePair<string,object>("cost",Cost);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Cost?.Any() == true) callback("cost",Cost);
       }
 
     }
@@ -1590,6 +1656,15 @@ namespace Hl7.Fhir.Model
         if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
         if (Qualifiers?.Any() == true) yield return new KeyValuePair<string,object>("qualifiers",Qualifiers);
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Applicability is not null) callback("applicability",Applicability);
+        if (Qualifiers?.Any() == true) callback("qualifiers",Qualifiers);
+        if (Value is not null) callback("value",Value);
       }
 
     }
@@ -2045,6 +2120,25 @@ namespace Hl7.Fhir.Model
       if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
       if (Coverage?.Any() == true) yield return new KeyValuePair<string,object>("coverage",Coverage);
       if (Plan?.Any() == true) yield return new KeyValuePair<string,object>("plan",Plan);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type?.Any() == true) callback("type",Type);
+      if (NameElement is not null) callback("name",NameElement);
+      if (AliasElement?.Any() == true) callback("alias",AliasElement);
+      if (Period is not null) callback("period",Period);
+      if (OwnedBy is not null) callback("ownedBy",OwnedBy);
+      if (AdministeredBy is not null) callback("administeredBy",AdministeredBy);
+      if (CoverageArea?.Any() == true) callback("coverageArea",CoverageArea);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
+      if (Network?.Any() == true) callback("network",Network);
+      if (Coverage?.Any() == true) callback("coverage",Coverage);
+      if (Plan?.Any() == true) callback("plan",Plan);
     }
 
   }

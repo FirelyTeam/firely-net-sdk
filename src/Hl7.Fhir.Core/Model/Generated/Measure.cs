@@ -247,6 +247,15 @@ namespace Hl7.Fhir.Model
         if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Population?.Any() == true) callback("population",Population);
+        if (Stratifier?.Any() == true) callback("stratifier",Stratifier);
+      }
+
     }
 
     /// <summary>
@@ -416,6 +425,14 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Criteria is not null) yield return new KeyValuePair<string,object>("criteria",Criteria);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Criteria is not null) callback("criteria",Criteria);
       }
 
     }
@@ -611,6 +628,15 @@ namespace Hl7.Fhir.Model
         if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Criteria is not null) callback("criteria",Criteria);
+        if (Component?.Any() == true) callback("component",Component);
+      }
+
     }
 
     /// <summary>
@@ -780,6 +806,14 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Criteria is not null) yield return new KeyValuePair<string,object>("criteria",Criteria);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Criteria is not null) callback("criteria",Criteria);
       }
 
     }
@@ -974,6 +1008,15 @@ namespace Hl7.Fhir.Model
         if (Usage?.Any() == true) yield return new KeyValuePair<string,object>("usage",Usage);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Criteria is not null) yield return new KeyValuePair<string,object>("criteria",Criteria);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Usage?.Any() == true) callback("usage",Usage);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Criteria is not null) callback("criteria",Criteria);
       }
 
     }
@@ -2249,6 +2292,52 @@ namespace Hl7.Fhir.Model
       if (Guidance is not null) yield return new KeyValuePair<string,object>("guidance",Guidance);
       if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
       if (SupplementalData?.Any() == true) yield return new KeyValuePair<string,object>("supplementalData",SupplementalData);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (SubtitleElement is not null) callback("subtitle",SubtitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (Subject is not null) callback(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (UsageElement is not null) callback("usage",UsageElement);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (LibraryElement?.Any() == true) callback("library",LibraryElement);
+      if (Disclaimer is not null) callback("disclaimer",Disclaimer);
+      if (Scoring is not null) callback("scoring",Scoring);
+      if (CompositeScoring is not null) callback("compositeScoring",CompositeScoring);
+      if (Type?.Any() == true) callback("type",Type);
+      if (RiskAdjustmentElement is not null) callback("riskAdjustment",RiskAdjustmentElement);
+      if (RateAggregationElement is not null) callback("rateAggregation",RateAggregationElement);
+      if (Rationale is not null) callback("rationale",Rationale);
+      if (ClinicalRecommendationStatement is not null) callback("clinicalRecommendationStatement",ClinicalRecommendationStatement);
+      if (ImprovementNotation is not null) callback("improvementNotation",ImprovementNotation);
+      if (Definition?.Any() == true) callback("definition",Definition);
+      if (Guidance is not null) callback("guidance",Guidance);
+      if (Group?.Any() == true) callback("group",Group);
+      if (SupplementalData?.Any() == true) callback("supplementalData",SupplementalData);
     }
 
   }

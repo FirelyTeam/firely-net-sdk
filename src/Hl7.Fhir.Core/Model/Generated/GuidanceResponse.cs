@@ -573,6 +573,26 @@ namespace Hl7.Fhir.Model
       if (DataRequirement?.Any() == true) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (RequestIdentifier is not null) callback("requestIdentifier",RequestIdentifier);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Module is not null) callback(PocoDictionary.ComposeChoiceElementName("module", Module),Module);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (OccurrenceDateTimeElement is not null) callback("occurrenceDateTime",OccurrenceDateTimeElement);
+      if (Performer is not null) callback("performer",Performer);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
+      if (EvaluationMessage?.Any() == true) callback("evaluationMessage",EvaluationMessage);
+      if (OutputParameters is not null) callback("outputParameters",OutputParameters);
+      if (Result is not null) callback("result",Result);
+      if (DataRequirement?.Any() == true) callback("dataRequirement",DataRequirement);
+    }
+
   }
 
 }

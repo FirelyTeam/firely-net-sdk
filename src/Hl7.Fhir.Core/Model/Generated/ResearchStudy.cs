@@ -319,6 +319,14 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Type is not null) callback("type",Type);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+      }
+
     }
 
     /// <summary>
@@ -465,6 +473,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Type is not null) callback("type",Type);
       }
 
     }
@@ -1131,6 +1146,35 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Arm?.Any() == true) yield return new KeyValuePair<string,object>("arm",Arm);
       if (Objective?.Any() == true) yield return new KeyValuePair<string,object>("objective",Objective);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (Protocol?.Any() == true) callback("protocol",Protocol);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (PrimaryPurposeType is not null) callback("primaryPurposeType",PrimaryPurposeType);
+      if (Phase is not null) callback("phase",Phase);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Focus?.Any() == true) callback("focus",Focus);
+      if (Condition?.Any() == true) callback("condition",Condition);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (Keyword?.Any() == true) callback("keyword",Keyword);
+      if (Location?.Any() == true) callback("location",Location);
+      if (Description is not null) callback("description",Description);
+      if (Enrollment?.Any() == true) callback("enrollment",Enrollment);
+      if (Period is not null) callback("period",Period);
+      if (Sponsor is not null) callback("sponsor",Sponsor);
+      if (PrincipalInvestigator is not null) callback("principalInvestigator",PrincipalInvestigator);
+      if (Site?.Any() == true) callback("site",Site);
+      if (ReasonStopped is not null) callback("reasonStopped",ReasonStopped);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Arm?.Any() == true) callback("arm",Arm);
+      if (Objective?.Any() == true) callback("objective",Objective);
     }
 
   }

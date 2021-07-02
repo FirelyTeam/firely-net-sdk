@@ -231,6 +231,14 @@ namespace Hl7.Fhir.Model
       if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (ContentTypeElement is not null) callback("contentType",ContentTypeElement);
+      if (SecurityContext is not null) callback("securityContext",SecurityContext);
+      if (DataElement is not null) callback("data",DataElement);
+    }
+
   }
 
 }

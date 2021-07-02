@@ -262,6 +262,14 @@ namespace Hl7.Fhir.Model
         if (JurisdictionElement is not null) yield return new KeyValuePair<string,object>("jurisdiction",JurisdictionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DeviceIdentifierElement is not null) callback("deviceIdentifier",DeviceIdentifierElement);
+        if (IssuerElement is not null) callback("issuer",IssuerElement);
+        if (JurisdictionElement is not null) callback("jurisdiction",JurisdictionElement);
+      }
+
     }
 
     /// <summary>
@@ -431,6 +439,13 @@ namespace Hl7.Fhir.Model
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+      }
+
     }
 
     /// <summary>
@@ -598,6 +613,13 @@ namespace Hl7.Fhir.Model
         if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SystemTypeElement is not null) callback("systemType",SystemTypeElement);
+        if (VersionElement is not null) callback("version",VersionElement);
+      }
+
     }
 
     /// <summary>
@@ -728,6 +750,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Description?.Any() == true) yield return new KeyValuePair<string,object>("description",Description);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Description?.Any() == true) callback("description",Description);
       }
 
     }
@@ -883,6 +912,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (ValueQuantity?.Any() == true) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
         if (ValueCode?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (ValueQuantity?.Any() == true) callback("valueQuantity",ValueQuantity);
+        if (ValueCode?.Any() == true) callback("valueCode",ValueCode);
       }
 
     }
@@ -1072,6 +1109,14 @@ namespace Hl7.Fhir.Model
         if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
         if (AlternateElement is not null) yield return new KeyValuePair<string,object>("alternate",AlternateElement);
         if (AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",AllergenicIndicatorElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Substance is not null) callback("substance",Substance);
+        if (AlternateElement is not null) callback("alternate",AlternateElement);
+        if (AllergenicIndicatorElement is not null) callback("allergenicIndicator",AllergenicIndicatorElement);
       }
 
     }
@@ -1731,6 +1776,33 @@ namespace Hl7.Fhir.Model
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       if (ParentDevice is not null) yield return new KeyValuePair<string,object>("parentDevice",ParentDevice);
       if (Material?.Any() == true) yield return new KeyValuePair<string,object>("material",Material);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (UdiDeviceIdentifier?.Any() == true) callback("udiDeviceIdentifier",UdiDeviceIdentifier);
+      if (Manufacturer is not null) callback(PocoDictionary.ComposeChoiceElementName("manufacturer", Manufacturer),Manufacturer);
+      if (DeviceName?.Any() == true) callback("deviceName",DeviceName);
+      if (ModelNumberElement is not null) callback("modelNumber",ModelNumberElement);
+      if (Type is not null) callback("type",Type);
+      if (Specialization?.Any() == true) callback("specialization",Specialization);
+      if (VersionElement?.Any() == true) callback("version",VersionElement);
+      if (Safety?.Any() == true) callback("safety",Safety);
+      if (ShelfLifeStorage?.Any() == true) callback("shelfLifeStorage",ShelfLifeStorage);
+      if (PhysicalCharacteristics is not null) callback("physicalCharacteristics",PhysicalCharacteristics);
+      if (LanguageCode?.Any() == true) callback("languageCode",LanguageCode);
+      if (Capability?.Any() == true) callback("capability",Capability);
+      if (Property?.Any() == true) callback("property",Property);
+      if (Owner is not null) callback("owner",Owner);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (OnlineInformationElement is not null) callback("onlineInformation",OnlineInformationElement);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (ParentDevice is not null) callback("parentDevice",ParentDevice);
+      if (Material?.Any() == true) callback("material",Material);
     }
 
   }

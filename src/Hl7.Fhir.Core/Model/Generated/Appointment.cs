@@ -390,6 +390,16 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type?.Any() == true) callback("type",Type);
+        if (Actor is not null) callback("actor",Actor);
+        if (RequiredElement is not null) callback("required",RequiredElement);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -1128,6 +1138,33 @@ namespace Hl7.Fhir.Model
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (CancelationReason is not null) callback("cancelationReason",CancelationReason);
+      if (ServiceCategory?.Any() == true) callback("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) callback("serviceType",ServiceType);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (AppointmentType is not null) callback("appointmentType",AppointmentType);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (SupportingInformation?.Any() == true) callback("supportingInformation",SupportingInformation);
+      if (StartElement is not null) callback("start",StartElement);
+      if (EndElement is not null) callback("end",EndElement);
+      if (MinutesDurationElement is not null) callback("minutesDuration",MinutesDurationElement);
+      if (Slot?.Any() == true) callback("slot",Slot);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (CommentElement is not null) callback("comment",CommentElement);
+      if (PatientInstructionElement is not null) callback("patientInstruction",PatientInstructionElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (RequestedPeriod?.Any() == true) callback("requestedPeriod",RequestedPeriod);
     }
 
   }

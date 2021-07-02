@@ -184,6 +184,13 @@ namespace Hl7.Fhir.Model
         if (ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",ImmediatePackaging);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (OuterPackaging is not null) callback("outerPackaging",OuterPackaging);
+        if (ImmediatePackaging is not null) callback("immediatePackaging",ImmediatePackaging);
+      }
+
     }
 
     /// <summary>
@@ -551,6 +558,23 @@ namespace Hl7.Fhir.Model
         if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier?.Any() == true) callback("identifier",Identifier);
+        if (Type is not null) callback("type",Type);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Material?.Any() == true) callback("material",Material);
+        if (AlternateMaterial?.Any() == true) callback("alternateMaterial",AlternateMaterial);
+        if (Device?.Any() == true) callback("device",Device);
+        if (ManufacturedItem?.Any() == true) callback("manufacturedItem",ManufacturedItem);
+        if (PackageItem?.Any() == true) callback("packageItem",PackageItem);
+        if (PhysicalCharacteristics is not null) callback("physicalCharacteristics",PhysicalCharacteristics);
+        if (OtherCharacteristics?.Any() == true) callback("otherCharacteristics",OtherCharacteristics);
+        if (ShelfLifeStorage?.Any() == true) callback("shelfLifeStorage",ShelfLifeStorage);
+        if (Manufacturer?.Any() == true) callback("manufacturer",Manufacturer);
+      }
+
     }
 
     /// <summary>
@@ -850,6 +874,20 @@ namespace Hl7.Fhir.Model
       if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       if (BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
       if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Subject?.Any() == true) callback("subject",Subject);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (LegalStatusOfSupply is not null) callback("legalStatusOfSupply",LegalStatusOfSupply);
+      if (MarketingStatus?.Any() == true) callback("marketingStatus",MarketingStatus);
+      if (MarketingAuthorization is not null) callback("marketingAuthorization",MarketingAuthorization);
+      if (Manufacturer?.Any() == true) callback("manufacturer",Manufacturer);
+      if (BatchIdentifier?.Any() == true) callback("batchIdentifier",BatchIdentifier);
+      if (PackageItem?.Any() == true) callback("packageItem",PackageItem);
     }
 
   }

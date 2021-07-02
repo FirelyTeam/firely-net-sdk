@@ -256,6 +256,13 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -427,6 +434,14 @@ namespace Hl7.Fhir.Model
         if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Condition is not null) callback("condition",Condition);
+        if (Role is not null) callback("role",Role);
+        if (RankElement is not null) callback("rank",RankElement);
       }
 
     }
@@ -804,6 +819,23 @@ namespace Hl7.Fhir.Model
       if (CareManager is not null) yield return new KeyValuePair<string,object>("careManager",CareManager);
       if (Team?.Any() == true) yield return new KeyValuePair<string,object>("team",Team);
       if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusHistory?.Any() == true) callback("statusHistory",StatusHistory);
+      if (Type?.Any() == true) callback("type",Type);
+      if (Diagnosis?.Any() == true) callback("diagnosis",Diagnosis);
+      if (Patient is not null) callback("patient",Patient);
+      if (ManagingOrganization is not null) callback("managingOrganization",ManagingOrganization);
+      if (Period is not null) callback("period",Period);
+      if (ReferralRequest?.Any() == true) callback("referralRequest",ReferralRequest);
+      if (CareManager is not null) callback("careManager",CareManager);
+      if (Team?.Any() == true) callback("team",Team);
+      if (Account?.Any() == true) callback("account",Account);
     }
 
   }

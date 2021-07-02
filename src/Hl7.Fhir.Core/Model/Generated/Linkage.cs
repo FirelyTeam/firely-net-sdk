@@ -234,6 +234,13 @@ namespace Hl7.Fhir.Model
         if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (Resource is not null) callback("resource",Resource);
+      }
+
     }
 
     /// <summary>
@@ -392,6 +399,14 @@ namespace Hl7.Fhir.Model
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Author is not null) callback("author",Author);
+      if (Item?.Any() == true) callback("item",Item);
     }
 
   }

@@ -509,6 +509,22 @@ namespace Hl7.Fhir.Model
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ServiceCategory?.Any() == true) callback("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) callback("serviceType",ServiceType);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (AppointmentType is not null) callback("appointmentType",AppointmentType);
+      if (Schedule is not null) callback("schedule",Schedule);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StartElement is not null) callback("start",StartElement);
+      if (EndElement is not null) callback("end",EndElement);
+      if (OverbookedElement is not null) callback("overbooked",OverbookedElement);
+      if (CommentElement is not null) callback("comment",CommentElement);
+    }
+
   }
 
 }

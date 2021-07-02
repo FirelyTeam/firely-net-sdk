@@ -321,6 +321,13 @@ namespace Hl7.Fhir.Model
         if (UriElement is not null) yield return new KeyValuePair<string,object>("uri",UriElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (AuthorityElement is not null) callback("authority",AuthorityElement);
+        if (UriElement is not null) callback("uri",UriElement);
+      }
+
     }
 
     /// <summary>
@@ -510,6 +517,14 @@ namespace Hl7.Fhir.Model
         if (VerifiedElement is not null) yield return new KeyValuePair<string,object>("verified",VerifiedElement);
         if (VerifiedWith is not null) yield return new KeyValuePair<string,object>("verifiedWith",VerifiedWith);
         if (VerificationDateElement is not null) yield return new KeyValuePair<string,object>("verificationDate",VerificationDateElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (VerifiedElement is not null) callback("verified",VerifiedElement);
+        if (VerifiedWith is not null) callback("verifiedWith",VerifiedWith);
+        if (VerificationDateElement is not null) callback("verificationDate",VerificationDateElement);
       }
 
     }
@@ -867,6 +882,22 @@ namespace Hl7.Fhir.Model
         if (Provision?.Any() == true) yield return new KeyValuePair<string,object>("provision",Provision);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (Period is not null) callback("period",Period);
+        if (Actor?.Any() == true) callback("actor",Actor);
+        if (Action?.Any() == true) callback("action",Action);
+        if (SecurityLabel?.Any() == true) callback("securityLabel",SecurityLabel);
+        if (Purpose?.Any() == true) callback("purpose",Purpose);
+        if (Class?.Any() == true) callback("class",Class);
+        if (Code?.Any() == true) callback("code",Code);
+        if (DataPeriod is not null) callback("dataPeriod",DataPeriod);
+        if (Data?.Any() == true) callback("data",Data);
+        if (Provision?.Any() == true) callback("provision",Provision);
+      }
+
     }
 
     /// <summary>
@@ -999,6 +1030,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Role is not null) callback("role",Role);
+        if (Reference is not null) callback("reference",Reference);
       }
 
     }
@@ -1152,6 +1190,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (MeaningElement is not null) yield return new KeyValuePair<string,object>("meaning",MeaningElement);
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (MeaningElement is not null) callback("meaning",MeaningElement);
+        if (Reference is not null) callback("reference",Reference);
       }
 
     }
@@ -1575,6 +1620,24 @@ namespace Hl7.Fhir.Model
       if (PolicyRule is not null) yield return new KeyValuePair<string,object>("policyRule",PolicyRule);
       if (Verification?.Any() == true) yield return new KeyValuePair<string,object>("verification",Verification);
       if (Provision is not null) yield return new KeyValuePair<string,object>("provision",Provision);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Scope is not null) callback("scope",Scope);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Patient is not null) callback("patient",Patient);
+      if (DateTimeElement is not null) callback("dateTime",DateTimeElement);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (Organization?.Any() == true) callback("organization",Organization);
+      if (Source is not null) callback(PocoDictionary.ComposeChoiceElementName("source", Source),Source);
+      if (Policy?.Any() == true) callback("policy",Policy);
+      if (PolicyRule is not null) callback("policyRule",PolicyRule);
+      if (Verification?.Any() == true) callback("verification",Verification);
+      if (Provision is not null) callback("provision",Provision);
     }
 
   }

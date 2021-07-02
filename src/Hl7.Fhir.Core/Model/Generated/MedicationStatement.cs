@@ -641,6 +641,28 @@ namespace Hl7.Fhir.Model
       if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason?.Any() == true) callback("statusReason",StatusReason);
+      if (Category is not null) callback("category",Category);
+      if (Medication is not null) callback(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      if (Subject is not null) callback("subject",Subject);
+      if (Context is not null) callback("context",Context);
+      if (Effective is not null) callback(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (DateAssertedElement is not null) callback("dateAsserted",DateAssertedElement);
+      if (InformationSource is not null) callback("informationSource",InformationSource);
+      if (DerivedFrom?.Any() == true) callback("derivedFrom",DerivedFrom);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Dosage?.Any() == true) callback("dosage",Dosage);
+    }
+
   }
 
 }

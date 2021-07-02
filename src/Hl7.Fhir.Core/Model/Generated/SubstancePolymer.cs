@@ -184,6 +184,13 @@ namespace Hl7.Fhir.Model
         if (StartingMaterial?.Any() == true) yield return new KeyValuePair<string,object>("startingMaterial",StartingMaterial);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RatioType is not null) callback("ratioType",RatioType);
+        if (StartingMaterial?.Any() == true) callback("startingMaterial",StartingMaterial);
+      }
+
     }
 
     /// <summary>
@@ -374,6 +381,15 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",IsDefiningElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Material is not null) callback("material",Material);
+        if (Type is not null) callback("type",Type);
+        if (IsDefiningElement is not null) callback("isDefining",IsDefiningElement);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -585,6 +601,15 @@ namespace Hl7.Fhir.Model
         if (AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",AverageMolecularFormulaElement);
         if (RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",RepeatUnitAmountType);
         if (RepeatUnit?.Any() == true) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnit);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NumberOfUnitsElement is not null) callback("numberOfUnits",NumberOfUnitsElement);
+        if (AverageMolecularFormulaElement is not null) callback("averageMolecularFormula",AverageMolecularFormulaElement);
+        if (RepeatUnitAmountType is not null) callback("repeatUnitAmountType",RepeatUnitAmountType);
+        if (RepeatUnit?.Any() == true) callback("repeatUnit",RepeatUnit);
       }
 
     }
@@ -803,6 +828,16 @@ namespace Hl7.Fhir.Model
         if (StructuralRepresentation?.Any() == true) yield return new KeyValuePair<string,object>("structuralRepresentation",StructuralRepresentation);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (OrientationOfPolymerisation is not null) callback("orientationOfPolymerisation",OrientationOfPolymerisation);
+        if (RepeatUnitElement is not null) callback("repeatUnit",RepeatUnitElement);
+        if (Amount is not null) callback("amount",Amount);
+        if (DegreeOfPolymerisation?.Any() == true) callback("degreeOfPolymerisation",DegreeOfPolymerisation);
+        if (StructuralRepresentation?.Any() == true) callback("structuralRepresentation",StructuralRepresentation);
+      }
+
     }
 
     /// <summary>
@@ -931,6 +966,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Degree is not null) yield return new KeyValuePair<string,object>("degree",Degree);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Degree is not null) callback("degree",Degree);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -1101,6 +1143,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
         if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (RepresentationElement is not null) callback("representation",RepresentationElement);
+        if (Attachment is not null) callback("attachment",Attachment);
       }
 
     }
@@ -1328,6 +1378,17 @@ namespace Hl7.Fhir.Model
       if (ModificationElement?.Any() == true) yield return new KeyValuePair<string,object>("modification",ModificationElement);
       if (MonomerSet?.Any() == true) yield return new KeyValuePair<string,object>("monomerSet",MonomerSet);
       if (Repeat?.Any() == true) yield return new KeyValuePair<string,object>("repeat",Repeat);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Class is not null) callback("class",Class);
+      if (Geometry is not null) callback("geometry",Geometry);
+      if (CopolymerConnectivity?.Any() == true) callback("copolymerConnectivity",CopolymerConnectivity);
+      if (ModificationElement?.Any() == true) callback("modification",ModificationElement);
+      if (MonomerSet?.Any() == true) callback("monomerSet",MonomerSet);
+      if (Repeat?.Any() == true) callback("repeat",Repeat);
     }
 
   }

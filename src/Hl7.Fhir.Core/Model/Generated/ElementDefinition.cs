@@ -470,6 +470,15 @@ namespace Hl7.Fhir.Model
         if (RulesElement is not null) yield return new KeyValuePair<string,object>("rules",RulesElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Discriminator?.Any() == true) callback("discriminator",Discriminator);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (OrderedElement is not null) callback("ordered",OrderedElement);
+        if (RulesElement is not null) callback("rules",RulesElement);
+      }
+
     }
 
     /// <summary>
@@ -637,6 +646,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (PathElement is not null) callback("path",PathElement);
       }
 
     }
@@ -846,6 +862,14 @@ namespace Hl7.Fhir.Model
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
         if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (MinElement is not null) callback("min",MinElement);
+        if (MaxElement is not null) callback("max",MaxElement);
       }
 
     }
@@ -1140,6 +1164,16 @@ namespace Hl7.Fhir.Model
         if (VersioningElement is not null) yield return new KeyValuePair<string,object>("versioning",VersioningElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (ProfileElement?.Any() == true) callback("profile",ProfileElement);
+        if (TargetProfileElement?.Any() == true) callback("targetProfile",TargetProfileElement);
+        if (AggregationElement?.Any() == true) callback("aggregation",AggregationElement);
+        if (VersioningElement is not null) callback("versioning",VersioningElement);
+      }
+
     }
 
     /// <summary>
@@ -1300,6 +1334,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LabelElement is not null) callback("label",LabelElement);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -1672,6 +1713,18 @@ namespace Hl7.Fhir.Model
         if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (KeyElement is not null) callback("key",KeyElement);
+        if (RequirementsElement is not null) callback("requirements",RequirementsElement);
+        if (SeverityElement is not null) callback("severity",SeverityElement);
+        if (HumanElement is not null) callback("human",HumanElement);
+        if (ExpressionElement is not null) callback("expression",ExpressionElement);
+        if (XpathElement is not null) callback("xpath",XpathElement);
+        if (SourceElement is not null) callback("source",SourceElement);
+      }
+
     }
 
     /// <summary>
@@ -1878,6 +1931,14 @@ namespace Hl7.Fhir.Model
         if (StrengthElement is not null) yield return new KeyValuePair<string,object>("strength",StrengthElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StrengthElement is not null) callback("strength",StrengthElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (ValueSetElement is not null) callback("valueSet",ValueSetElement);
       }
 
     }
@@ -2126,6 +2187,15 @@ namespace Hl7.Fhir.Model
         if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
         if (MapElement is not null) yield return new KeyValuePair<string,object>("map",MapElement);
         if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (IdentityElement is not null) callback("identity",IdentityElement);
+        if (LanguageElement is not null) callback("language",LanguageElement);
+        if (MapElement is not null) callback("map",MapElement);
+        if (CommentElement is not null) callback("comment",CommentElement);
       }
 
     }
@@ -3303,6 +3373,45 @@ namespace Hl7.Fhir.Model
       if (IsSummaryElement is not null) yield return new KeyValuePair<string,object>("isSummary",IsSummaryElement);
       if (Binding is not null) yield return new KeyValuePair<string,object>("binding",Binding);
       if (Mapping?.Any() == true) yield return new KeyValuePair<string,object>("mapping",Mapping);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (PathElement is not null) callback("path",PathElement);
+      if (RepresentationElement?.Any() == true) callback("representation",RepresentationElement);
+      if (SliceNameElement is not null) callback("sliceName",SliceNameElement);
+      if (SliceIsConstrainingElement is not null) callback("sliceIsConstraining",SliceIsConstrainingElement);
+      if (LabelElement is not null) callback("label",LabelElement);
+      if (Code?.Any() == true) callback("code",Code);
+      if (Slicing is not null) callback("slicing",Slicing);
+      if (ShortElement is not null) callback("short",ShortElement);
+      if (Definition is not null) callback("definition",Definition);
+      if (Comment is not null) callback("comment",Comment);
+      if (Requirements is not null) callback("requirements",Requirements);
+      if (AliasElement?.Any() == true) callback("alias",AliasElement);
+      if (MinElement is not null) callback("min",MinElement);
+      if (MaxElement is not null) callback("max",MaxElement);
+      if (Base is not null) callback("base",Base);
+      if (ContentReferenceElement is not null) callback("contentReference",ContentReferenceElement);
+      if (Type?.Any() == true) callback("type",Type);
+      if (DefaultValue is not null) callback(PocoDictionary.ComposeChoiceElementName("defaultValue", DefaultValue),DefaultValue);
+      if (MeaningWhenMissing is not null) callback("meaningWhenMissing",MeaningWhenMissing);
+      if (OrderMeaningElement is not null) callback("orderMeaning",OrderMeaningElement);
+      if (Fixed is not null) callback(PocoDictionary.ComposeChoiceElementName("fixed", Fixed),Fixed);
+      if (Pattern is not null) callback(PocoDictionary.ComposeChoiceElementName("pattern", Pattern),Pattern);
+      if (Example?.Any() == true) callback("example",Example);
+      if (MinValue is not null) callback(PocoDictionary.ComposeChoiceElementName("minValue", MinValue),MinValue);
+      if (MaxValue is not null) callback(PocoDictionary.ComposeChoiceElementName("maxValue", MaxValue),MaxValue);
+      if (MaxLengthElement is not null) callback("maxLength",MaxLengthElement);
+      if (ConditionElement?.Any() == true) callback("condition",ConditionElement);
+      if (Constraint?.Any() == true) callback("constraint",Constraint);
+      if (MustSupportElement is not null) callback("mustSupport",MustSupportElement);
+      if (IsModifierElement is not null) callback("isModifier",IsModifierElement);
+      if (IsModifierReasonElement is not null) callback("isModifierReason",IsModifierReasonElement);
+      if (IsSummaryElement is not null) callback("isSummary",IsSummaryElement);
+      if (Binding is not null) callback("binding",Binding);
+      if (Mapping?.Any() == true) callback("mapping",Mapping);
     }
 
   }

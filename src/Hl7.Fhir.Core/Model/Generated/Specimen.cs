@@ -348,6 +348,18 @@ namespace Hl7.Fhir.Model
         if (FastingStatus is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("fastingStatus", FastingStatus),FastingStatus);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Collector is not null) callback("collector",Collector);
+        if (Collected is not null) callback(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
+        if (Duration is not null) callback("duration",Duration);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Method is not null) callback("method",Method);
+        if (BodySite is not null) callback("bodySite",BodySite);
+        if (FastingStatus is not null) callback(PocoDictionary.ComposeChoiceElementName("fastingStatus", FastingStatus),FastingStatus);
+      }
+
     }
 
     /// <summary>
@@ -553,6 +565,15 @@ namespace Hl7.Fhir.Model
         if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
         if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
         if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Procedure is not null) callback("procedure",Procedure);
+        if (Additive?.Any() == true) callback("additive",Additive);
+        if (Time is not null) callback(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
       }
 
     }
@@ -803,6 +824,17 @@ namespace Hl7.Fhir.Model
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
         if (SpecimenQuantity is not null) yield return new KeyValuePair<string,object>("specimenQuantity",SpecimenQuantity);
         if (Additive is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier?.Any() == true) callback("identifier",Identifier);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Type is not null) callback("type",Type);
+        if (Capacity is not null) callback("capacity",Capacity);
+        if (SpecimenQuantity is not null) callback("specimenQuantity",SpecimenQuantity);
+        if (Additive is not null) callback(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
       }
 
     }
@@ -1212,6 +1244,24 @@ namespace Hl7.Fhir.Model
       if (Container?.Any() == true) yield return new KeyValuePair<string,object>("container",Container);
       if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (AccessionIdentifier is not null) callback("accessionIdentifier",AccessionIdentifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (Subject is not null) callback("subject",Subject);
+      if (ReceivedTimeElement is not null) callback("receivedTime",ReceivedTimeElement);
+      if (Parent?.Any() == true) callback("parent",Parent);
+      if (Request?.Any() == true) callback("request",Request);
+      if (Collection is not null) callback("collection",Collection);
+      if (Processing?.Any() == true) callback("processing",Processing);
+      if (Container?.Any() == true) callback("container",Container);
+      if (Condition?.Any() == true) callback("condition",Condition);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

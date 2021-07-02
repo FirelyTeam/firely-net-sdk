@@ -765,6 +765,30 @@ namespace Hl7.Fhir.Model
         if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PrefixElement is not null) callback("prefix",PrefixElement);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (TextEquivalentElement is not null) callback("textEquivalent",TextEquivalentElement);
+        if (PriorityElement is not null) callback("priority",PriorityElement);
+        if (Code?.Any() == true) callback("code",Code);
+        if (Documentation?.Any() == true) callback("documentation",Documentation);
+        if (Condition?.Any() == true) callback("condition",Condition);
+        if (RelatedAction?.Any() == true) callback("relatedAction",RelatedAction);
+        if (Timing is not null) callback(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+        if (Participant?.Any() == true) callback("participant",Participant);
+        if (Type is not null) callback("type",Type);
+        if (GroupingBehaviorElement is not null) callback("groupingBehavior",GroupingBehaviorElement);
+        if (SelectionBehaviorElement is not null) callback("selectionBehavior",SelectionBehaviorElement);
+        if (RequiredBehaviorElement is not null) callback("requiredBehavior",RequiredBehaviorElement);
+        if (PrecheckBehaviorElement is not null) callback("precheckBehavior",PrecheckBehaviorElement);
+        if (CardinalityBehaviorElement is not null) callback("cardinalityBehavior",CardinalityBehaviorElement);
+        if (Resource is not null) callback("resource",Resource);
+        if (Action?.Any() == true) callback("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -913,6 +937,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
         if (Expression is not null) yield return new KeyValuePair<string,object>("expression",Expression);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (KindElement is not null) callback("kind",KindElement);
+        if (Expression is not null) callback("expression",Expression);
       }
 
     }
@@ -1116,6 +1147,14 @@ namespace Hl7.Fhir.Model
         if (ActionIdElement is not null) yield return new KeyValuePair<string,object>("actionId",ActionIdElement);
         if (RelationshipElement is not null) yield return new KeyValuePair<string,object>("relationship",RelationshipElement);
         if (Offset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("offset", Offset),Offset);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ActionIdElement is not null) callback("actionId",ActionIdElement);
+        if (RelationshipElement is not null) callback("relationship",RelationshipElement);
+        if (Offset is not null) callback(PocoDictionary.ComposeChoiceElementName("offset", Offset),Offset);
       }
 
     }
@@ -1719,6 +1758,29 @@ namespace Hl7.Fhir.Model
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Replaces?.Any() == true) callback("replaces",Replaces);
+      if (GroupIdentifier is not null) callback("groupIdentifier",GroupIdentifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Author is not null) callback("author",Author);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Action?.Any() == true) callback("action",Action);
     }
 
   }

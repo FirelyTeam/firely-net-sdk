@@ -210,6 +210,14 @@ namespace Hl7.Fhir.Model
         if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Function is not null) callback("function",Function);
+        if (Actor is not null) callback("actor",Actor);
+        if (OnBehalfOf is not null) callback("onBehalfOf",OnBehalfOf);
+      }
+
     }
 
     /// <summary>
@@ -341,6 +349,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
         if (Manipulated is not null) yield return new KeyValuePair<string,object>("manipulated",Manipulated);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Action is not null) callback("action",Action);
+        if (Manipulated is not null) callback("manipulated",Manipulated);
       }
 
     }
@@ -1138,6 +1153,39 @@ namespace Hl7.Fhir.Model
       if (FocalDevice?.Any() == true) yield return new KeyValuePair<string,object>("focalDevice",FocalDevice);
       if (UsedReference?.Any() == true) yield return new KeyValuePair<string,object>("usedReference",UsedReference);
       if (UsedCode?.Any() == true) yield return new KeyValuePair<string,object>("usedCode",UsedCode);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (Category is not null) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Performed is not null) callback(PocoDictionary.ComposeChoiceElementName("performed", Performed),Performed);
+      if (Recorder is not null) callback("recorder",Recorder);
+      if (Asserter is not null) callback("asserter",Asserter);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (Location is not null) callback("location",Location);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (BodySite?.Any() == true) callback("bodySite",BodySite);
+      if (Outcome is not null) callback("outcome",Outcome);
+      if (Report?.Any() == true) callback("report",Report);
+      if (Complication?.Any() == true) callback("complication",Complication);
+      if (ComplicationDetail?.Any() == true) callback("complicationDetail",ComplicationDetail);
+      if (FollowUp?.Any() == true) callback("followUp",FollowUp);
+      if (Note?.Any() == true) callback("note",Note);
+      if (FocalDevice?.Any() == true) callback("focalDevice",FocalDevice);
+      if (UsedReference?.Any() == true) callback("usedReference",UsedReference);
+      if (UsedCode?.Any() == true) callback("usedCode",UsedCode);
     }
 
   }

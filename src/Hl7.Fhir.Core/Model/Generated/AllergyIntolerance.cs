@@ -524,6 +524,18 @@ namespace Hl7.Fhir.Model
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Substance is not null) callback("substance",Substance);
+        if (Manifestation?.Any() == true) callback("manifestation",Manifestation);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (OnsetElement is not null) callback("onset",OnsetElement);
+        if (SeverityElement is not null) callback("severity",SeverityElement);
+        if (ExposureRoute is not null) callback("exposureRoute",ExposureRoute);
+        if (Note?.Any() == true) callback("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -1065,6 +1077,27 @@ namespace Hl7.Fhir.Model
       if (LastOccurrenceElement is not null) yield return new KeyValuePair<string,object>("lastOccurrence",LastOccurrenceElement);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ClinicalStatus is not null) callback("clinicalStatus",ClinicalStatus);
+      if (VerificationStatus is not null) callback("verificationStatus",VerificationStatus);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (CategoryElement?.Any() == true) callback("category",CategoryElement);
+      if (CriticalityElement is not null) callback("criticality",CriticalityElement);
+      if (Code is not null) callback("code",Code);
+      if (Patient is not null) callback("patient",Patient);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Onset is not null) callback(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
+      if (RecordedDateElement is not null) callback("recordedDate",RecordedDateElement);
+      if (Recorder is not null) callback("recorder",Recorder);
+      if (Asserter is not null) callback("asserter",Asserter);
+      if (LastOccurrenceElement is not null) callback("lastOccurrence",LastOccurrenceElement);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Reaction?.Any() == true) callback("reaction",Reaction);
     }
 
   }

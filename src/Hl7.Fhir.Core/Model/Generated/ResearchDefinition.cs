@@ -1180,6 +1180,45 @@ namespace Hl7.Fhir.Model
       if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (ShortTitleElement is not null) callback("shortTitle",ShortTitleElement);
+      if (SubtitleElement is not null) callback("subtitle",SubtitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (Subject is not null) callback(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (CommentElement?.Any() == true) callback("comment",CommentElement);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (UsageElement is not null) callback("usage",UsageElement);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (LibraryElement?.Any() == true) callback("library",LibraryElement);
+      if (Population is not null) callback("population",Population);
+      if (Exposure is not null) callback("exposure",Exposure);
+      if (ExposureAlternative is not null) callback("exposureAlternative",ExposureAlternative);
+      if (Outcome is not null) callback("outcome",Outcome);
+    }
+
   }
 
 }

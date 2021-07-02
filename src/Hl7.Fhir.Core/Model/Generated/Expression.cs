@@ -327,6 +327,16 @@ namespace Hl7.Fhir.Model
       if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (LanguageElement is not null) callback("language",LanguageElement);
+      if (ExpressionElement is not null) callback("expression",ExpressionElement);
+      if (ReferenceElement is not null) callback("reference",ReferenceElement);
+    }
+
   }
 
 }

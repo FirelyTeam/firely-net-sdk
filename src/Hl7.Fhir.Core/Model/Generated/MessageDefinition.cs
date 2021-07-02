@@ -330,6 +330,15 @@ namespace Hl7.Fhir.Model
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (ProfileElement is not null) callback("profile",ProfileElement);
+        if (MinElement is not null) callback("min",MinElement);
+        if (MaxElement is not null) callback("max",MaxElement);
+      }
+
     }
 
     /// <summary>
@@ -477,6 +486,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (MessageElement is not null) yield return new KeyValuePair<string,object>("message",MessageElement);
         if (Situation is not null) yield return new KeyValuePair<string,object>("situation",Situation);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (MessageElement is not null) callback("message",MessageElement);
+        if (Situation is not null) callback("situation",Situation);
       }
 
     }
@@ -1357,6 +1373,35 @@ namespace Hl7.Fhir.Model
       if (ResponseRequiredElement is not null) yield return new KeyValuePair<string,object>("responseRequired",ResponseRequiredElement);
       if (AllowedResponse?.Any() == true) yield return new KeyValuePair<string,object>("allowedResponse",AllowedResponse);
       if (GraphElement?.Any() == true) yield return new KeyValuePair<string,object>("graph",GraphElement);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (ReplacesElement?.Any() == true) callback("replaces",ReplacesElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (BaseElement is not null) callback("base",BaseElement);
+      if (ParentElement?.Any() == true) callback("parent",ParentElement);
+      if (Event is not null) callback(PocoDictionary.ComposeChoiceElementName("event", Event),Event);
+      if (CategoryElement is not null) callback("category",CategoryElement);
+      if (Focus?.Any() == true) callback("focus",Focus);
+      if (ResponseRequiredElement is not null) callback("responseRequired",ResponseRequiredElement);
+      if (AllowedResponse?.Any() == true) callback("allowedResponse",AllowedResponse);
+      if (GraphElement?.Any() == true) callback("graph",GraphElement);
     }
 
   }

@@ -407,6 +407,13 @@ namespace Hl7.Fhir.Model
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DefinitionElement is not null) callback("definition",DefinitionElement);
+        if (ExpressionElement is not null) callback("expression",ExpressionElement);
+      }
+
     }
 
     /// <summary>
@@ -1432,6 +1439,37 @@ namespace Hl7.Fhir.Model
       if (ModifierElement?.Any() == true) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
       if (ChainElement?.Any() == true) yield return new KeyValuePair<string,object>("chain",ChainElement);
       if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (DerivedFromElement is not null) callback("derivedFrom",DerivedFromElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (CodeElement is not null) callback("code",CodeElement);
+      if (BaseElement?.Any() == true) callback("base",BaseElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (ExpressionElement is not null) callback("expression",ExpressionElement);
+      if (XpathElement is not null) callback("xpath",XpathElement);
+      if (XpathUsageElement is not null) callback("xpathUsage",XpathUsageElement);
+      if (TargetElement?.Any() == true) callback("target",TargetElement);
+      if (MultipleOrElement is not null) callback("multipleOr",MultipleOrElement);
+      if (MultipleAndElement is not null) callback("multipleAnd",MultipleAndElement);
+      if (ComparatorElement?.Any() == true) callback("comparator",ComparatorElement);
+      if (ModifierElement?.Any() == true) callback("modifier",ModifierElement);
+      if (ChainElement?.Any() == true) callback("chain",ChainElement);
+      if (Component?.Any() == true) callback("component",Component);
     }
 
   }

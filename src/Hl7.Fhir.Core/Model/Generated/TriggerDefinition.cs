@@ -346,6 +346,16 @@ namespace Hl7.Fhir.Model
       if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (Timing is not null) callback(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+      if (Data?.Any() == true) callback("data",Data);
+      if (Condition is not null) callback("condition",Condition);
+    }
+
   }
 
 }

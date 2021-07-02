@@ -252,6 +252,13 @@ namespace Hl7.Fhir.Model
         if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Item is not null) callback(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+      }
+
     }
 
     /// <summary>
@@ -612,6 +619,22 @@ namespace Hl7.Fhir.Model
       if (Supplier is not null) yield return new KeyValuePair<string,object>("supplier",Supplier);
       if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
       if (Receiver?.Any() == true) yield return new KeyValuePair<string,object>("receiver",Receiver);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Type is not null) callback("type",Type);
+      if (SuppliedItem is not null) callback("suppliedItem",SuppliedItem);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Supplier is not null) callback("supplier",Supplier);
+      if (Destination is not null) callback("destination",Destination);
+      if (Receiver?.Any() == true) callback("receiver",Receiver);
     }
 
   }

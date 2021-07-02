@@ -371,6 +371,19 @@ namespace Hl7.Fhir.Model
         if (Sugar?.Any() == true) yield return new KeyValuePair<string,object>("sugar",Sugar);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SubunitElement is not null) callback("subunit",SubunitElement);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (LengthElement is not null) callback("length",LengthElement);
+        if (SequenceAttachment is not null) callback("sequenceAttachment",SequenceAttachment);
+        if (FivePrime is not null) callback("fivePrime",FivePrime);
+        if (ThreePrime is not null) callback("threePrime",ThreePrime);
+        if (Linkage?.Any() == true) callback("linkage",Linkage);
+        if (Sugar?.Any() == true) callback("sugar",Sugar);
+      }
+
     }
 
     /// <summary>
@@ -599,6 +612,15 @@ namespace Hl7.Fhir.Model
         if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ConnectivityElement is not null) callback("connectivity",ConnectivityElement);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (NameElement is not null) callback("name",NameElement);
+        if (ResidueSiteElement is not null) callback("residueSite",ResidueSiteElement);
+      }
+
     }
 
     /// <summary>
@@ -785,6 +807,14 @@ namespace Hl7.Fhir.Model
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (ResidueSiteElement is not null) yield return new KeyValuePair<string,object>("residueSite",ResidueSiteElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (NameElement is not null) callback("name",NameElement);
+        if (ResidueSiteElement is not null) callback("residueSite",ResidueSiteElement);
       }
 
     }
@@ -1005,6 +1035,16 @@ namespace Hl7.Fhir.Model
       if (AreaOfHybridisationElement is not null) yield return new KeyValuePair<string,object>("areaOfHybridisation",AreaOfHybridisationElement);
       if (OligoNucleotideType is not null) yield return new KeyValuePair<string,object>("oligoNucleotideType",OligoNucleotideType);
       if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (SequenceType is not null) callback("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) callback("numberOfSubunits",NumberOfSubunitsElement);
+      if (AreaOfHybridisationElement is not null) callback("areaOfHybridisation",AreaOfHybridisationElement);
+      if (OligoNucleotideType is not null) callback("oligoNucleotideType",OligoNucleotideType);
+      if (Subunit?.Any() == true) callback("subunit",Subunit);
     }
 
   }

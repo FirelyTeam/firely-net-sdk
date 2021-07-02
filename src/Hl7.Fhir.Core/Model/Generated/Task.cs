@@ -372,6 +372,14 @@ namespace Hl7.Fhir.Model
         if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RepetitionsElement is not null) callback("repetitions",RepetitionsElement);
+        if (Period is not null) callback("period",Period);
+        if (Recipient?.Any() == true) callback("recipient",Recipient);
+      }
+
     }
 
     /// <summary>
@@ -516,6 +524,13 @@ namespace Hl7.Fhir.Model
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
     }
 
     /// <summary>
@@ -658,6 +673,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -1593,6 +1615,42 @@ namespace Hl7.Fhir.Model
       if (Restriction is not null) yield return new KeyValuePair<string,object>("restriction",Restriction);
       if (Input?.Any() == true) yield return new KeyValuePair<string,object>("input",Input);
       if (Output?.Any() == true) yield return new KeyValuePair<string,object>("output",Output);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement is not null) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement is not null) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (GroupIdentifier is not null) callback("groupIdentifier",GroupIdentifier);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (BusinessStatus is not null) callback("businessStatus",BusinessStatus);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (Code is not null) callback("code",Code);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Focus is not null) callback("focus",Focus);
+      if (For is not null) callback("for",For);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (ExecutionPeriod is not null) callback("executionPeriod",ExecutionPeriod);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (LastModifiedElement is not null) callback("lastModified",LastModifiedElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (PerformerType?.Any() == true) callback("performerType",PerformerType);
+      if (Owner is not null) callback("owner",Owner);
+      if (Location is not null) callback("location",Location);
+      if (ReasonCode is not null) callback("reasonCode",ReasonCode);
+      if (ReasonReference is not null) callback("reasonReference",ReasonReference);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (Note?.Any() == true) callback("note",Note);
+      if (RelevantHistory?.Any() == true) callback("relevantHistory",RelevantHistory);
+      if (Restriction is not null) callback("restriction",Restriction);
+      if (Input?.Any() == true) callback("input",Input);
+      if (Output?.Any() == true) callback("output",Output);
     }
 
   }

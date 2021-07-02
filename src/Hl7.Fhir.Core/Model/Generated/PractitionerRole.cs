@@ -301,6 +301,15 @@ namespace Hl7.Fhir.Model
         if (AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",AvailableEndTimeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DaysOfWeekElement?.Any() == true) callback("daysOfWeek",DaysOfWeekElement);
+        if (AllDayElement is not null) callback("allDay",AllDayElement);
+        if (AvailableStartTimeElement is not null) callback("availableStartTime",AvailableStartTimeElement);
+        if (AvailableEndTimeElement is not null) callback("availableEndTime",AvailableEndTimeElement);
+      }
+
     }
 
     /// <summary>
@@ -448,6 +457,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (During is not null) yield return new KeyValuePair<string,object>("during",During);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (During is not null) callback("during",During);
       }
 
     }
@@ -884,6 +900,25 @@ namespace Hl7.Fhir.Model
       if (NotAvailable?.Any() == true) yield return new KeyValuePair<string,object>("notAvailable",NotAvailable);
       if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Period is not null) callback("period",Period);
+      if (Practitioner is not null) callback("practitioner",Practitioner);
+      if (Organization is not null) callback("organization",Organization);
+      if (Code?.Any() == true) callback("code",Code);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (Location?.Any() == true) callback("location",Location);
+      if (HealthcareService?.Any() == true) callback("healthcareService",HealthcareService);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (AvailableTime?.Any() == true) callback("availableTime",AvailableTime);
+      if (NotAvailable?.Any() == true) callback("notAvailable",NotAvailable);
+      if (AvailabilityExceptionsElement is not null) callback("availabilityExceptions",AvailabilityExceptionsElement);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
     }
 
   }

@@ -259,6 +259,14 @@ namespace Hl7.Fhir.Model
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (LanguageElement is not null) callback("language",LanguageElement);
+        if (ExpressionElement is not null) callback("expression",ExpressionElement);
+      }
+
     }
 
     /// <summary>
@@ -389,6 +397,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Applicability?.Any() == true) yield return new KeyValuePair<string,object>("applicability",Applicability);
         if (PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Applicability?.Any() == true) callback("applicability",Applicability);
+        if (PriceComponent?.Any() == true) callback("priceComponent",PriceComponent);
       }
 
     }
@@ -601,6 +616,15 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (Code is not null) callback("code",Code);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -1411,6 +1435,34 @@ namespace Hl7.Fhir.Model
       if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       if (Applicability?.Any() == true) yield return new KeyValuePair<string,object>("applicability",Applicability);
       if (PropertyGroup?.Any() == true) yield return new KeyValuePair<string,object>("propertyGroup",PropertyGroup);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (DerivedFromUriElement?.Any() == true) callback("derivedFromUri",DerivedFromUriElement);
+      if (PartOfElement?.Any() == true) callback("partOf",PartOfElement);
+      if (ReplacesElement?.Any() == true) callback("replaces",ReplacesElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Code is not null) callback("code",Code);
+      if (Instance?.Any() == true) callback("instance",Instance);
+      if (Applicability?.Any() == true) callback("applicability",Applicability);
+      if (PropertyGroup?.Any() == true) callback("propertyGroup",PropertyGroup);
     }
 
   }

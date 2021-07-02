@@ -350,6 +350,18 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Relationship?.Any() == true) callback("relationship",Relationship);
+        if (Name is not null) callback("name",Name);
+        if (Telecom?.Any() == true) callback("telecom",Telecom);
+        if (Address is not null) callback("address",Address);
+        if (GenderElement is not null) callback("gender",GenderElement);
+        if (Organization is not null) callback("organization",Organization);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -497,6 +509,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
         if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Language is not null) callback("language",Language);
+        if (PreferredElement is not null) callback("preferred",PreferredElement);
       }
 
     }
@@ -650,6 +669,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Other is not null) yield return new KeyValuePair<string,object>("other",Other);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Other is not null) callback("other",Other);
+        if (TypeElement is not null) callback("type",TypeElement);
       }
 
     }
@@ -1162,6 +1188,27 @@ namespace Hl7.Fhir.Model
       if (GeneralPractitioner?.Any() == true) yield return new KeyValuePair<string,object>("generalPractitioner",GeneralPractitioner);
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Name?.Any() == true) callback("name",Name);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (GenderElement is not null) callback("gender",GenderElement);
+      if (BirthDateElement is not null) callback("birthDate",BirthDateElement);
+      if (Deceased is not null) callback(PocoDictionary.ComposeChoiceElementName("deceased", Deceased),Deceased);
+      if (Address?.Any() == true) callback("address",Address);
+      if (MaritalStatus is not null) callback("maritalStatus",MaritalStatus);
+      if (MultipleBirth is not null) callback(PocoDictionary.ComposeChoiceElementName("multipleBirth", MultipleBirth),MultipleBirth);
+      if (Photo?.Any() == true) callback("photo",Photo);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Communication?.Any() == true) callback("communication",Communication);
+      if (GeneralPractitioner?.Any() == true) callback("generalPractitioner",GeneralPractitioner);
+      if (ManagingOrganization is not null) callback("managingOrganization",ManagingOrganization);
+      if (Link?.Any() == true) callback("link",Link);
     }
 
   }

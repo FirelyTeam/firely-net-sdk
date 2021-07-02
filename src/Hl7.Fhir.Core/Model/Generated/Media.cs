@@ -768,6 +768,33 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (Modality is not null) callback("modality",Modality);
+      if (View is not null) callback("view",View);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Created is not null) callback(PocoDictionary.ComposeChoiceElementName("created", Created),Created);
+      if (IssuedElement is not null) callback("issued",IssuedElement);
+      if (Operator is not null) callback("operator",Operator);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (BodySite is not null) callback("bodySite",BodySite);
+      if (DeviceNameElement is not null) callback("deviceName",DeviceNameElement);
+      if (Device is not null) callback("device",Device);
+      if (HeightElement is not null) callback("height",HeightElement);
+      if (WidthElement is not null) callback("width",WidthElement);
+      if (FramesElement is not null) callback("frames",FramesElement);
+      if (DurationElement is not null) callback("duration",DurationElement);
+      if (Content is not null) callback("content",Content);
+      if (Note?.Any() == true) callback("note",Note);
+    }
+
   }
 
 }

@@ -359,6 +359,18 @@ namespace Hl7.Fhir.Model
       if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Type?.Any() == true) callback("type",Type);
+      if (WhenElement is not null) callback("when",WhenElement);
+      if (Who is not null) callback("who",Who);
+      if (OnBehalfOf is not null) callback("onBehalfOf",OnBehalfOf);
+      if (TargetFormatElement is not null) callback("targetFormat",TargetFormatElement);
+      if (SigFormatElement is not null) callback("sigFormat",SigFormatElement);
+      if (DataElement is not null) callback("data",DataElement);
+    }
+
   }
 
 }

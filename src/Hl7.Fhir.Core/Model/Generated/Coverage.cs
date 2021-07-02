@@ -243,6 +243,14 @@ namespace Hl7.Fhir.Model
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (ValueElement is not null) callback("value",ValueElement);
+        if (NameElement is not null) callback("name",NameElement);
+      }
+
     }
 
     /// <summary>
@@ -409,6 +417,14 @@ namespace Hl7.Fhir.Model
         if (Exception?.Any() == true) yield return new KeyValuePair<string,object>("exception",Exception);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Exception?.Any() == true) callback("exception",Exception);
+      }
+
     }
 
     /// <summary>
@@ -538,6 +554,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Period is not null) callback("period",Period);
       }
 
     }
@@ -1111,6 +1134,28 @@ namespace Hl7.Fhir.Model
       if (CostToBeneficiary?.Any() == true) yield return new KeyValuePair<string,object>("costToBeneficiary",CostToBeneficiary);
       if (SubrogationElement is not null) yield return new KeyValuePair<string,object>("subrogation",SubrogationElement);
       if (Contract?.Any() == true) yield return new KeyValuePair<string,object>("contract",Contract);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (PolicyHolder is not null) callback("policyHolder",PolicyHolder);
+      if (Subscriber is not null) callback("subscriber",Subscriber);
+      if (SubscriberIdElement is not null) callback("subscriberId",SubscriberIdElement);
+      if (Beneficiary is not null) callback("beneficiary",Beneficiary);
+      if (DependentElement is not null) callback("dependent",DependentElement);
+      if (Relationship is not null) callback("relationship",Relationship);
+      if (Period is not null) callback("period",Period);
+      if (Payor?.Any() == true) callback("payor",Payor);
+      if (Class?.Any() == true) callback("class",Class);
+      if (OrderElement is not null) callback("order",OrderElement);
+      if (NetworkElement is not null) callback("network",NetworkElement);
+      if (CostToBeneficiary?.Any() == true) callback("costToBeneficiary",CostToBeneficiary);
+      if (SubrogationElement is not null) callback("subrogation",SubrogationElement);
+      if (Contract?.Any() == true) callback("contract",Contract);
     }
 
   }

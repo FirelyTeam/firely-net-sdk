@@ -291,6 +291,15 @@ namespace Hl7.Fhir.Model
         if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Population?.Any() == true) callback("population",Population);
+        if (MeasureScore is not null) callback("measureScore",MeasureScore);
+        if (Stratifier?.Any() == true) callback("stratifier",Stratifier);
+      }
+
     }
 
     /// <summary>
@@ -463,6 +472,14 @@ namespace Hl7.Fhir.Model
         if (SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",SubjectResults);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (CountElement is not null) callback("count",CountElement);
+        if (SubjectResults is not null) callback("subjectResults",SubjectResults);
+      }
+
     }
 
     /// <summary>
@@ -593,6 +610,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (Stratum?.Any() == true) yield return new KeyValuePair<string,object>("stratum",Stratum);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code?.Any() == true) callback("code",Code);
+        if (Stratum?.Any() == true) callback("stratum",Stratum);
       }
 
     }
@@ -771,6 +795,15 @@ namespace Hl7.Fhir.Model
         if (MeasureScore is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScore);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Value is not null) callback("value",Value);
+        if (Component?.Any() == true) callback("component",Component);
+        if (Population?.Any() == true) callback("population",Population);
+        if (MeasureScore is not null) callback("measureScore",MeasureScore);
+      }
+
     }
 
     /// <summary>
@@ -901,6 +934,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Value is not null) callback("value",Value);
       }
 
     }
@@ -1073,6 +1113,14 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
         if (SubjectResults is not null) yield return new KeyValuePair<string,object>("subjectResults",SubjectResults);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (CountElement is not null) callback("count",CountElement);
+        if (SubjectResults is not null) callback("subjectResults",SubjectResults);
       }
 
     }
@@ -1475,6 +1523,22 @@ namespace Hl7.Fhir.Model
       if (ImprovementNotation is not null) yield return new KeyValuePair<string,object>("improvementNotation",ImprovementNotation);
       if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
       if (EvaluatedResource?.Any() == true) yield return new KeyValuePair<string,object>("evaluatedResource",EvaluatedResource);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (MeasureElement is not null) callback("measure",MeasureElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Reporter is not null) callback("reporter",Reporter);
+      if (Period is not null) callback("period",Period);
+      if (ImprovementNotation is not null) callback("improvementNotation",ImprovementNotation);
+      if (Group?.Any() == true) callback("group",Group);
+      if (EvaluatedResource?.Any() == true) callback("evaluatedResource",EvaluatedResource);
     }
 
   }

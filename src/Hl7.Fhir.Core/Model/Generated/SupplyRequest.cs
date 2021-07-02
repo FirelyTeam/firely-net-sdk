@@ -247,6 +247,13 @@ namespace Hl7.Fhir.Model
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
     }
 
     /// <summary>
@@ -741,6 +748,26 @@ namespace Hl7.Fhir.Model
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",DeliverFrom);
       if (DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",DeliverTo);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category is not null) callback("category",Category);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (Item is not null) callback(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (Parameter?.Any() == true) callback("parameter",Parameter);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (Supplier?.Any() == true) callback("supplier",Supplier);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (DeliverFrom is not null) callback("deliverFrom",DeliverFrom);
+      if (DeliverTo is not null) callback("deliverTo",DeliverTo);
     }
 
   }

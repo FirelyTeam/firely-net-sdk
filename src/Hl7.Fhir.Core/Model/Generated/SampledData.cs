@@ -391,6 +391,18 @@ namespace Hl7.Fhir.Model
       if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Origin is not null) callback("origin",Origin);
+      if (PeriodElement is not null) callback("period",PeriodElement);
+      if (FactorElement is not null) callback("factor",FactorElement);
+      if (LowerLimitElement is not null) callback("lowerLimit",LowerLimitElement);
+      if (UpperLimitElement is not null) callback("upperLimit",UpperLimitElement);
+      if (DimensionsElement is not null) callback("dimensions",DimensionsElement);
+      if (DataElement is not null) callback("data",DataElement);
+    }
+
   }
 
 }

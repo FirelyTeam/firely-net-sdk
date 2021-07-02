@@ -290,6 +290,17 @@ namespace Hl7.Fhir.Model
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Low is not null) callback("low",Low);
+        if (High is not null) callback("high",High);
+        if (Type is not null) callback("type",Type);
+        if (AppliesTo?.Any() == true) callback("appliesTo",AppliesTo);
+        if (Age is not null) callback("age",Age);
+        if (TextElement is not null) callback("text",TextElement);
+      }
+
     }
 
     /// <summary>
@@ -499,6 +510,16 @@ namespace Hl7.Fhir.Model
         if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
         if (Interpretation?.Any() == true) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
         if (ReferenceRange?.Any() == true) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (DataAbsentReason is not null) callback("dataAbsentReason",DataAbsentReason);
+        if (Interpretation?.Any() == true) callback("interpretation",Interpretation);
+        if (ReferenceRange?.Any() == true) callback("referenceRange",ReferenceRange);
       }
 
     }
@@ -1190,6 +1211,35 @@ namespace Hl7.Fhir.Model
       if (HasMember?.Any() == true) yield return new KeyValuePair<string,object>("hasMember",HasMember);
       if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
       if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Focus?.Any() == true) callback("focus",Focus);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Effective is not null) callback(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (IssuedElement is not null) callback("issued",IssuedElement);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      if (DataAbsentReason is not null) callback("dataAbsentReason",DataAbsentReason);
+      if (Interpretation?.Any() == true) callback("interpretation",Interpretation);
+      if (Note?.Any() == true) callback("note",Note);
+      if (BodySite is not null) callback("bodySite",BodySite);
+      if (Method is not null) callback("method",Method);
+      if (Specimen is not null) callback("specimen",Specimen);
+      if (Device is not null) callback("device",Device);
+      if (ReferenceRange?.Any() == true) callback("referenceRange",ReferenceRange);
+      if (HasMember?.Any() == true) callback("hasMember",HasMember);
+      if (DerivedFrom?.Any() == true) callback("derivedFrom",DerivedFrom);
+      if (Component?.Any() == true) callback("component",Component);
     }
 
   }

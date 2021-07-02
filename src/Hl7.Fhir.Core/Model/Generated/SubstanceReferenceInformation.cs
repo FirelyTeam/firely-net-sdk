@@ -208,6 +208,14 @@ namespace Hl7.Fhir.Model
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (GeneSequenceOrigin is not null) callback("geneSequenceOrigin",GeneSequenceOrigin);
+        if (Gene is not null) callback("gene",Gene);
+        if (Source?.Any() == true) callback("source",Source);
+      }
+
     }
 
     /// <summary>
@@ -361,6 +369,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Element is not null) yield return new KeyValuePair<string,object>("element",Element);
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Element is not null) callback("element",Element);
+        if (Source?.Any() == true) callback("source",Source);
       }
 
     }
@@ -539,6 +555,15 @@ namespace Hl7.Fhir.Model
         if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
         if (Subtype?.Any() == true) yield return new KeyValuePair<string,object>("subtype",Subtype);
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Domain is not null) callback("domain",Domain);
+        if (Classification is not null) callback("classification",Classification);
+        if (Subtype?.Any() == true) callback("subtype",Subtype);
+        if (Source?.Any() == true) callback("source",Source);
       }
 
     }
@@ -818,6 +843,19 @@ namespace Hl7.Fhir.Model
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Target is not null) callback("target",Target);
+        if (Type is not null) callback("type",Type);
+        if (Interaction is not null) callback("interaction",Interaction);
+        if (Organism is not null) callback("organism",Organism);
+        if (OrganismType is not null) callback("organismType",OrganismType);
+        if (Amount is not null) callback(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
+        if (AmountType is not null) callback("amountType",AmountType);
+        if (Source?.Any() == true) callback("source",Source);
+      }
+
     }
 
     /// <summary>
@@ -1021,6 +1059,16 @@ namespace Hl7.Fhir.Model
       if (GeneElement?.Any() == true) yield return new KeyValuePair<string,object>("geneElement",GeneElement);
       if (Classification?.Any() == true) yield return new KeyValuePair<string,object>("classification",Classification);
       if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (CommentElement is not null) callback("comment",CommentElement);
+      if (Gene?.Any() == true) callback("gene",Gene);
+      if (GeneElement?.Any() == true) callback("geneElement",GeneElement);
+      if (Classification?.Any() == true) callback("classification",Classification);
+      if (Target?.Any() == true) callback("target",Target);
     }
 
   }

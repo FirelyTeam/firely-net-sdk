@@ -457,6 +457,19 @@ namespace Hl7.Fhir.Model
       if (Consent is not null) yield return new KeyValuePair<string,object>("consent",Consent);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Period is not null) callback("period",Period);
+      if (Study is not null) callback("study",Study);
+      if (Individual is not null) callback("individual",Individual);
+      if (AssignedArmElement is not null) callback("assignedArm",AssignedArmElement);
+      if (ActualArmElement is not null) callback("actualArm",ActualArmElement);
+      if (Consent is not null) callback("consent",Consent);
+    }
+
   }
 
 }

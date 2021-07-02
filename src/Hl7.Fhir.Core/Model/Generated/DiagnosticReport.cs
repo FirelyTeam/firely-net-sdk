@@ -274,6 +274,13 @@ namespace Hl7.Fhir.Model
         if (Link is not null) yield return new KeyValuePair<string,object>("link",Link);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CommentElement is not null) callback("comment",CommentElement);
+        if (Link is not null) callback("link",Link);
+      }
+
     }
 
     /// <summary>
@@ -837,6 +844,29 @@ namespace Hl7.Fhir.Model
       if (ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",ConclusionElement);
       if (ConclusionCode?.Any() == true) yield return new KeyValuePair<string,object>("conclusionCode",ConclusionCode);
       if (PresentedForm?.Any() == true) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Effective is not null) callback(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (IssuedElement is not null) callback("issued",IssuedElement);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (ResultsInterpreter?.Any() == true) callback("resultsInterpreter",ResultsInterpreter);
+      if (Specimen?.Any() == true) callback("specimen",Specimen);
+      if (Result?.Any() == true) callback("result",Result);
+      if (ImagingStudy?.Any() == true) callback("imagingStudy",ImagingStudy);
+      if (Media?.Any() == true) callback("media",Media);
+      if (ConclusionElement is not null) callback("conclusion",ConclusionElement);
+      if (ConclusionCode?.Any() == true) callback("conclusionCode",ConclusionCode);
+      if (PresentedForm?.Any() == true) callback("presentedForm",PresentedForm);
     }
 
   }

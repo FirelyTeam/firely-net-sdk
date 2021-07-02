@@ -170,6 +170,13 @@ namespace Hl7.Fhir.Model
       if (Denominator is not null) yield return new KeyValuePair<string,object>("denominator",Denominator);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Numerator is not null) callback("numerator",Numerator);
+      if (Denominator is not null) callback("denominator",Denominator);
+    }
+
   }
 
 }

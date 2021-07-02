@@ -294,6 +294,15 @@ namespace Hl7.Fhir.Model
         if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Flag is not null) callback("flag",Flag);
+        if (DeletedElement is not null) callback("deleted",DeletedElement);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Item is not null) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -736,6 +745,24 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
       if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ModeElement is not null) callback("mode",ModeElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Source is not null) callback("source",Source);
+      if (OrderedBy is not null) callback("orderedBy",OrderedBy);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Entry?.Any() == true) callback("entry",Entry);
+      if (EmptyReason is not null) callback("emptyReason",EmptyReason);
     }
 
   }

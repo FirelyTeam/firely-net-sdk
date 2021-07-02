@@ -262,6 +262,14 @@ namespace Hl7.Fhir.Model
         if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (ParamElement?.Any() == true) callback("param",ParamElement);
+        if (DocumentationElement is not null) callback("documentation",DocumentationElement);
+      }
+
     }
 
     /// <summary>
@@ -813,6 +821,25 @@ namespace Hl7.Fhir.Model
       if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
       if (SearchElement is not null) yield return new KeyValuePair<string,object>("search",SearchElement);
       if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (CodeElement is not null) callback("code",CodeElement);
+      if (SearchElement is not null) callback("search",SearchElement);
+      if (Resource?.Any() == true) callback("resource",Resource);
     }
 
   }

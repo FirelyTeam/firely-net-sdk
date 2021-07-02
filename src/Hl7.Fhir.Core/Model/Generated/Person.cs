@@ -239,6 +239,13 @@ namespace Hl7.Fhir.Model
         if (AssuranceElement is not null) yield return new KeyValuePair<string,object>("assurance",AssuranceElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Target is not null) callback("target",Target);
+        if (AssuranceElement is not null) callback("assurance",AssuranceElement);
+      }
+
     }
 
     /// <summary>
@@ -592,6 +599,21 @@ namespace Hl7.Fhir.Model
       if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Name?.Any() == true) callback("name",Name);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (GenderElement is not null) callback("gender",GenderElement);
+      if (BirthDateElement is not null) callback("birthDate",BirthDateElement);
+      if (Address?.Any() == true) callback("address",Address);
+      if (Photo is not null) callback("photo",Photo);
+      if (ManagingOrganization is not null) callback("managingOrganization",ManagingOrganization);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Link?.Any() == true) callback("link",Link);
     }
 
   }

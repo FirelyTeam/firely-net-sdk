@@ -266,6 +266,14 @@ namespace Hl7.Fhir.Model
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+    }
+
   }
 
 }

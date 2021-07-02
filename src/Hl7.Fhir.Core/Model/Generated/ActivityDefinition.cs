@@ -303,6 +303,13 @@ namespace Hl7.Fhir.Model
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (Role is not null) callback("role",Role);
+      }
+
     }
 
     /// <summary>
@@ -451,6 +458,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
         if (Expression is not null) yield return new KeyValuePair<string,object>("expression",Expression);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (Expression is not null) callback("expression",Expression);
       }
 
     }
@@ -1937,6 +1951,57 @@ namespace Hl7.Fhir.Model
       if (ObservationResultRequirement?.Any() == true) yield return new KeyValuePair<string,object>("observationResultRequirement",ObservationResultRequirement);
       if (TransformElement is not null) yield return new KeyValuePair<string,object>("transform",TransformElement);
       if (DynamicValue?.Any() == true) yield return new KeyValuePair<string,object>("dynamicValue",DynamicValue);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (SubtitleElement is not null) callback("subtitle",SubtitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (Subject is not null) callback(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (UsageElement is not null) callback("usage",UsageElement);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (LibraryElement?.Any() == true) callback("library",LibraryElement);
+      if (KindElement is not null) callback("kind",KindElement);
+      if (ProfileElement is not null) callback("profile",ProfileElement);
+      if (Code is not null) callback("code",Code);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (DoNotPerformElement is not null) callback("doNotPerform",DoNotPerformElement);
+      if (Timing is not null) callback(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+      if (Location is not null) callback("location",Location);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (Product is not null) callback(PocoDictionary.ComposeChoiceElementName("product", Product),Product);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (Dosage?.Any() == true) callback("dosage",Dosage);
+      if (BodySite?.Any() == true) callback("bodySite",BodySite);
+      if (SpecimenRequirement?.Any() == true) callback("specimenRequirement",SpecimenRequirement);
+      if (ObservationRequirement?.Any() == true) callback("observationRequirement",ObservationRequirement);
+      if (ObservationResultRequirement?.Any() == true) callback("observationResultRequirement",ObservationResultRequirement);
+      if (TransformElement is not null) callback("transform",TransformElement);
+      if (DynamicValue?.Any() == true) callback("dynamicValue",DynamicValue);
     }
 
   }

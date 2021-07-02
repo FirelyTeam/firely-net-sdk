@@ -51,8 +51,6 @@ namespace Hl7.Fhir.Serialization.Poco
 
         public static void SerializeObject(IEnumerable<KeyValuePair<string, object>> members, Utf8JsonWriter writer)
         {
-            // ResourceType: from IDictionary?
-
             writer.WriteStartObject();
 
             foreach (var member in members)

@@ -195,6 +195,13 @@ namespace Hl7.Fhir.Model
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
     }
 
     /// <summary>
@@ -960,6 +967,35 @@ namespace Hl7.Fhir.Model
       if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PriorRequest?.Any() == true) callback("priorRequest",PriorRequest);
+      if (GroupIdentifier is not null) callback("groupIdentifier",GroupIdentifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (Code is not null) callback(PocoDictionary.ComposeChoiceElementName("code", Code),Code);
+      if (Parameter?.Any() == true) callback("parameter",Parameter);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (PerformerType is not null) callback("performerType",PerformerType);
+      if (Performer is not null) callback("performer",Performer);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (SupportingInfo?.Any() == true) callback("supportingInfo",SupportingInfo);
+      if (Note?.Any() == true) callback("note",Note);
+      if (RelevantHistory?.Any() == true) callback("relevantHistory",RelevantHistory);
     }
 
   }

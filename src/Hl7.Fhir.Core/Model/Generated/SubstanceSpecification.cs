@@ -341,6 +341,18 @@ namespace Hl7.Fhir.Model
         if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Role is not null) callback("role",Role);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Stereochemistry is not null) callback("stereochemistry",Stereochemistry);
+        if (OpticalActivity is not null) callback("opticalActivity",OpticalActivity);
+        if (MolecularFormulaElement is not null) callback("molecularFormula",MolecularFormulaElement);
+        if (Amount is not null) callback(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
+      }
+
     }
 
     /// <summary>
@@ -573,6 +585,16 @@ namespace Hl7.Fhir.Model
         if (ParametersElement is not null) yield return new KeyValuePair<string,object>("parameters",ParametersElement);
         if (DefiningSubstance is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("definingSubstance", DefiningSubstance),DefiningSubstance);
         if (Amount is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (Code is not null) callback("code",Code);
+        if (ParametersElement is not null) callback("parameters",ParametersElement);
+        if (DefiningSubstance is not null) callback(PocoDictionary.ComposeChoiceElementName("definingSubstance", DefiningSubstance),DefiningSubstance);
+        if (Amount is not null) callback(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
       }
 
     }
@@ -878,6 +900,19 @@ namespace Hl7.Fhir.Model
         if (Representation?.Any() == true) yield return new KeyValuePair<string,object>("representation",Representation);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Stereochemistry is not null) callback("stereochemistry",Stereochemistry);
+        if (OpticalActivity is not null) callback("opticalActivity",OpticalActivity);
+        if (MolecularFormulaElement is not null) callback("molecularFormula",MolecularFormulaElement);
+        if (MolecularFormulaByMoietyElement is not null) callback("molecularFormulaByMoiety",MolecularFormulaByMoietyElement);
+        if (Isotope?.Any() == true) callback("isotope",Isotope);
+        if (MolecularWeight is not null) callback("molecularWeight",MolecularWeight);
+        if (Source?.Any() == true) callback("source",Source);
+        if (Representation?.Any() == true) callback("representation",Representation);
+      }
+
     }
 
     /// <summary>
@@ -1074,6 +1109,16 @@ namespace Hl7.Fhir.Model
         if (MolecularWeight is not null) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (Name is not null) callback("name",Name);
+        if (Substitution is not null) callback("substitution",Substitution);
+        if (HalfLife is not null) callback("halfLife",HalfLife);
+        if (MolecularWeight is not null) callback("molecularWeight",MolecularWeight);
+      }
+
     }
 
     /// <summary>
@@ -1224,6 +1269,14 @@ namespace Hl7.Fhir.Model
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Method is not null) callback("method",Method);
+        if (Type is not null) callback("type",Type);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -1394,6 +1447,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
         if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (RepresentationElement is not null) callback("representation",RepresentationElement);
+        if (Attachment is not null) callback("attachment",Attachment);
       }
 
     }
@@ -1629,6 +1690,16 @@ namespace Hl7.Fhir.Model
         if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
         if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Status is not null) callback("status",Status);
+        if (StatusDateElement is not null) callback("statusDate",StatusDateElement);
+        if (CommentElement is not null) callback("comment",CommentElement);
+        if (Source?.Any() == true) callback("source",Source);
       }
 
     }
@@ -2005,6 +2076,22 @@ namespace Hl7.Fhir.Model
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Type is not null) callback("type",Type);
+        if (Status is not null) callback("status",Status);
+        if (PreferredElement is not null) callback("preferred",PreferredElement);
+        if (Language?.Any() == true) callback("language",Language);
+        if (Domain?.Any() == true) callback("domain",Domain);
+        if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+        if (Synonym?.Any() == true) callback("synonym",Synonym);
+        if (Translation?.Any() == true) callback("translation",Translation);
+        if (Official?.Any() == true) callback("official",Official);
+        if (Source?.Any() == true) callback("source",Source);
+      }
+
     }
 
     /// <summary>
@@ -2173,6 +2260,14 @@ namespace Hl7.Fhir.Model
         if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Authority is not null) callback("authority",Authority);
+        if (Status is not null) callback("status",Status);
+        if (DateElement is not null) callback("date",DateElement);
       }
 
     }
@@ -2454,6 +2549,18 @@ namespace Hl7.Fhir.Model
         if (AmountRatioLowLimit is not null) yield return new KeyValuePair<string,object>("amountRatioLowLimit",AmountRatioLowLimit);
         if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
         if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Substance is not null) callback(PocoDictionary.ComposeChoiceElementName("substance", Substance),Substance);
+        if (Relationship is not null) callback("relationship",Relationship);
+        if (IsDefiningElement is not null) callback("isDefining",IsDefiningElement);
+        if (Amount is not null) callback(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
+        if (AmountRatioLowLimit is not null) callback("amountRatioLowLimit",AmountRatioLowLimit);
+        if (AmountType is not null) callback("amountType",AmountType);
+        if (Source?.Any() == true) callback("source",Source);
       }
 
     }
@@ -3000,6 +3107,30 @@ namespace Hl7.Fhir.Model
       if (Polymer is not null) yield return new KeyValuePair<string,object>("polymer",Polymer);
       if (Protein is not null) yield return new KeyValuePair<string,object>("protein",Protein);
       if (SourceMaterial is not null) yield return new KeyValuePair<string,object>("sourceMaterial",SourceMaterial);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (Type is not null) callback("type",Type);
+      if (Status is not null) callback("status",Status);
+      if (Domain is not null) callback("domain",Domain);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Source?.Any() == true) callback("source",Source);
+      if (CommentElement is not null) callback("comment",CommentElement);
+      if (Moiety?.Any() == true) callback("moiety",Moiety);
+      if (Property?.Any() == true) callback("property",Property);
+      if (ReferenceInformation is not null) callback("referenceInformation",ReferenceInformation);
+      if (Structure is not null) callback("structure",Structure);
+      if (Code?.Any() == true) callback("code",Code);
+      if (Name?.Any() == true) callback("name",Name);
+      if (MolecularWeight?.Any() == true) callback("molecularWeight",MolecularWeight);
+      if (Relationship?.Any() == true) callback("relationship",Relationship);
+      if (NucleicAcid is not null) callback("nucleicAcid",NucleicAcid);
+      if (Polymer is not null) callback("polymer",Polymer);
+      if (Protein is not null) callback("protein",Protein);
+      if (SourceMaterial is not null) callback("sourceMaterial",SourceMaterial);
     }
 
   }

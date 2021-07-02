@@ -359,6 +359,13 @@ namespace Hl7.Fhir.Model
         if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RelationElement is not null) callback("relation",RelationElement);
+        if (UrlElement is not null) callback("url",UrlElement);
+      }
+
     }
 
     /// <summary>
@@ -598,6 +605,17 @@ namespace Hl7.Fhir.Model
         if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Link?.Any() == true) callback("link",Link);
+        if (FullUrlElement is not null) callback("fullUrl",FullUrlElement);
+        if (Resource is not null) callback("resource",Resource);
+        if (Search is not null) callback("search",Search);
+        if (Request is not null) callback("request",Request);
+        if (Response is not null) callback("response",Response);
+      }
+
     }
 
     /// <summary>
@@ -763,6 +781,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
         if (ScoreElement is not null) yield return new KeyValuePair<string,object>("score",ScoreElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ModeElement is not null) callback("mode",ModeElement);
+        if (ScoreElement is not null) callback("score",ScoreElement);
       }
 
     }
@@ -1094,6 +1119,17 @@ namespace Hl7.Fhir.Model
         if (IfNoneExistElement is not null) yield return new KeyValuePair<string,object>("ifNoneExist",IfNoneExistElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (MethodElement is not null) callback("method",MethodElement);
+        if (UrlElement is not null) callback("url",UrlElement);
+        if (IfNoneMatchElement is not null) callback("ifNoneMatch",IfNoneMatchElement);
+        if (IfModifiedSinceElement is not null) callback("ifModifiedSince",IfModifiedSinceElement);
+        if (IfMatchElement is not null) callback("ifMatch",IfMatchElement);
+        if (IfNoneExistElement is not null) callback("ifNoneExist",IfNoneExistElement);
+      }
+
     }
 
     /// <summary>
@@ -1363,6 +1399,16 @@ namespace Hl7.Fhir.Model
         if (EtagElement is not null) yield return new KeyValuePair<string,object>("etag",EtagElement);
         if (LastModifiedElement is not null) yield return new KeyValuePair<string,object>("lastModified",LastModifiedElement);
         if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (LocationElement is not null) callback("location",LocationElement);
+        if (EtagElement is not null) callback("etag",EtagElement);
+        if (LastModifiedElement is not null) callback("lastModified",LastModifiedElement);
+        if (Outcome is not null) callback("outcome",Outcome);
       }
 
     }
@@ -1648,6 +1694,18 @@ namespace Hl7.Fhir.Model
       if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
       if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
       if (Signature is not null) yield return new KeyValuePair<string,object>("signature",Signature);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (TimestampElement is not null) callback("timestamp",TimestampElement);
+      if (TotalElement is not null) callback("total",TotalElement);
+      if (Link?.Any() == true) callback("link",Link);
+      if (Entry?.Any() == true) callback("entry",Entry);
+      if (Signature is not null) callback("signature",Signature);
     }
 
   }

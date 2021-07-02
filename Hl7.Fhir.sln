@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath.R4.Tests", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization.Poco", "src\Hl7.Fhir.Serialization.Poco\Hl7.Fhir.Serialization.Poco.csproj", "{0205BF9B-1350-41EB-88D3-022A87CFAFBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkSdk", "BenchmarkSdk\BenchmarkSdk.csproj", "{BF6AFF39-5415-420F-8AF2-C3A97325584E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +146,12 @@ Global
 		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
 		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

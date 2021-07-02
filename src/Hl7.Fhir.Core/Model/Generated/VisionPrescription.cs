@@ -688,6 +688,25 @@ namespace Hl7.Fhir.Model
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Product is not null) callback("product",Product);
+        if (EyeElement is not null) callback("eye",EyeElement);
+        if (SphereElement is not null) callback("sphere",SphereElement);
+        if (CylinderElement is not null) callback("cylinder",CylinderElement);
+        if (AxisElement is not null) callback("axis",AxisElement);
+        if (Prism?.Any() == true) callback("prism",Prism);
+        if (AddElement is not null) callback("add",AddElement);
+        if (PowerElement is not null) callback("power",PowerElement);
+        if (BackCurveElement is not null) callback("backCurve",BackCurveElement);
+        if (DiameterElement is not null) callback("diameter",DiameterElement);
+        if (Duration is not null) callback("duration",Duration);
+        if (ColorElement is not null) callback("color",ColorElement);
+        if (BrandElement is not null) callback("brand",BrandElement);
+        if (Note?.Any() == true) callback("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -855,6 +874,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
         if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (AmountElement is not null) callback("amount",AmountElement);
+        if (BaseElement is not null) callback("base",BaseElement);
       }
 
     }
@@ -1172,6 +1198,19 @@ namespace Hl7.Fhir.Model
       if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
       if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
       if (LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (DateWrittenElement is not null) callback("dateWritten",DateWrittenElement);
+      if (Prescriber is not null) callback("prescriber",Prescriber);
+      if (LensSpecification?.Any() == true) callback("lensSpecification",LensSpecification);
     }
 
   }

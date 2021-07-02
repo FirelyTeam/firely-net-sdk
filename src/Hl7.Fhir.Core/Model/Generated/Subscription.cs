@@ -376,6 +376,15 @@ namespace Hl7.Fhir.Model
         if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (EndpointElement is not null) callback("endpoint",EndpointElement);
+        if (PayloadElement is not null) callback("payload",PayloadElement);
+        if (HeaderElement?.Any() == true) callback("header",HeaderElement);
+      }
+
     }
 
     /// <summary>
@@ -697,6 +706,18 @@ namespace Hl7.Fhir.Model
       if (CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",CriteriaElement);
       if (ErrorElement is not null) yield return new KeyValuePair<string,object>("error",ErrorElement);
       if (Channel is not null) yield return new KeyValuePair<string,object>("channel",Channel);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (EndElement is not null) callback("end",EndElement);
+      if (ReasonElement is not null) callback("reason",ReasonElement);
+      if (CriteriaElement is not null) callback("criteria",CriteriaElement);
+      if (ErrorElement is not null) callback("error",ErrorElement);
+      if (Channel is not null) callback("channel",Channel);
     }
 
   }

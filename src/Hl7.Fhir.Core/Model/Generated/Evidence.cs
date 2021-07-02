@@ -962,6 +962,39 @@ namespace Hl7.Fhir.Model
       if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (ShortTitleElement is not null) callback("shortTitle",ShortTitleElement);
+      if (SubtitleElement is not null) callback("subtitle",SubtitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (Note?.Any() == true) callback("note",Note);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (ExposureBackground is not null) callback("exposureBackground",ExposureBackground);
+      if (ExposureVariant?.Any() == true) callback("exposureVariant",ExposureVariant);
+      if (Outcome?.Any() == true) callback("outcome",Outcome);
+    }
+
   }
 
 }

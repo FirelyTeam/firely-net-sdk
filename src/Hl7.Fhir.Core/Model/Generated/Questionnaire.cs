@@ -884,6 +884,27 @@ namespace Hl7.Fhir.Model
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LinkIdElement is not null) callback("linkId",LinkIdElement);
+        if (DefinitionElement is not null) callback("definition",DefinitionElement);
+        if (Code?.Any() == true) callback("code",Code);
+        if (PrefixElement is not null) callback("prefix",PrefixElement);
+        if (TextElement is not null) callback("text",TextElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (EnableWhen?.Any() == true) callback("enableWhen",EnableWhen);
+        if (EnableBehaviorElement is not null) callback("enableBehavior",EnableBehaviorElement);
+        if (RequiredElement is not null) callback("required",RequiredElement);
+        if (RepeatsElement is not null) callback("repeats",RepeatsElement);
+        if (ReadOnlyElement is not null) callback("readOnly",ReadOnlyElement);
+        if (MaxLengthElement is not null) callback("maxLength",MaxLengthElement);
+        if (AnswerValueSetElement is not null) callback("answerValueSet",AnswerValueSetElement);
+        if (AnswerOption?.Any() == true) callback("answerOption",AnswerOption);
+        if (Initial?.Any() == true) callback("initial",Initial);
+        if (Item?.Any() == true) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -1089,6 +1110,14 @@ namespace Hl7.Fhir.Model
         if (Answer is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("answer", Answer),Answer);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (QuestionElement is not null) callback("question",QuestionElement);
+        if (OperatorElement is not null) callback("operator",OperatorElement);
+        if (Answer is not null) callback(PocoDictionary.ComposeChoiceElementName("answer", Answer),Answer);
+      }
+
     }
 
     /// <summary>
@@ -1251,6 +1280,13 @@ namespace Hl7.Fhir.Model
         if (InitialSelectedElement is not null) yield return new KeyValuePair<string,object>("initialSelected",InitialSelectedElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (InitialSelectedElement is not null) callback("initialSelected",InitialSelectedElement);
+      }
+
     }
 
     /// <summary>
@@ -1371,6 +1407,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -2155,6 +2197,33 @@ namespace Hl7.Fhir.Model
       if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
       if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (DerivedFromElement?.Any() == true) callback("derivedFrom",DerivedFromElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (SubjectTypeElement?.Any() == true) callback("subjectType",SubjectTypeElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Code?.Any() == true) callback("code",Code);
+      if (Item?.Any() == true) callback("item",Item);
     }
 
   }

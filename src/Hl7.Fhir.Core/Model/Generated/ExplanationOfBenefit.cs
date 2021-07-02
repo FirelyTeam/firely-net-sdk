@@ -241,6 +241,14 @@ namespace Hl7.Fhir.Model
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Claim is not null) callback("claim",Claim);
+        if (Relationship is not null) callback("relationship",Relationship);
+        if (Reference is not null) callback("reference",Reference);
+      }
+
     }
 
     /// <summary>
@@ -371,6 +379,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Party is not null) yield return new KeyValuePair<string,object>("party",Party);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Party is not null) callback("party",Party);
       }
 
     }
@@ -607,6 +622,16 @@ namespace Hl7.Fhir.Model
         if (ResponsibleElement is not null) yield return new KeyValuePair<string,object>("responsible",ResponsibleElement);
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (Qualification is not null) yield return new KeyValuePair<string,object>("qualification",Qualification);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Provider is not null) callback("provider",Provider);
+        if (ResponsibleElement is not null) callback("responsible",ResponsibleElement);
+        if (Role is not null) callback("role",Role);
+        if (Qualification is not null) callback("qualification",Qualification);
       }
 
     }
@@ -867,6 +892,17 @@ namespace Hl7.Fhir.Model
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Category is not null) callback("category",Category);
+        if (Code is not null) callback("code",Code);
+        if (Timing is not null) callback(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Reason is not null) callback("reason",Reason);
+      }
+
     }
 
     /// <summary>
@@ -1095,6 +1131,16 @@ namespace Hl7.Fhir.Model
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (OnAdmission is not null) yield return new KeyValuePair<string,object>("onAdmission",OnAdmission);
         if (PackageCode is not null) yield return new KeyValuePair<string,object>("packageCode",PackageCode);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Diagnosis is not null) callback(PocoDictionary.ComposeChoiceElementName("diagnosis", Diagnosis),Diagnosis);
+        if (Type?.Any() == true) callback("type",Type);
+        if (OnAdmission is not null) callback("onAdmission",OnAdmission);
+        if (PackageCode is not null) callback("packageCode",PackageCode);
       }
 
     }
@@ -1348,6 +1394,16 @@ namespace Hl7.Fhir.Model
         if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Type?.Any() == true) callback("type",Type);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Procedure is not null) callback(PocoDictionary.ComposeChoiceElementName("procedure", Procedure),Procedure);
+        if (Udi?.Any() == true) callback("udi",Udi);
+      }
+
     }
 
     /// <summary>
@@ -1541,6 +1597,14 @@ namespace Hl7.Fhir.Model
         if (PreAuthRefElement?.Any() == true) yield return new KeyValuePair<string,object>("preAuthRef",PreAuthRefElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (FocalElement is not null) callback("focal",FocalElement);
+        if (Coverage is not null) callback("coverage",Coverage);
+        if (PreAuthRefElement?.Any() == true) callback("preAuthRef",PreAuthRefElement);
+      }
+
     }
 
     /// <summary>
@@ -1722,6 +1786,14 @@ namespace Hl7.Fhir.Model
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Location is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Type is not null) callback("type",Type);
+        if (Location is not null) callback(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
       }
 
     }
@@ -2480,6 +2552,34 @@ namespace Hl7.Fhir.Model
         if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (CareTeamSequenceElement?.Any() == true) callback("careTeamSequence",CareTeamSequenceElement);
+        if (DiagnosisSequenceElement?.Any() == true) callback("diagnosisSequence",DiagnosisSequenceElement);
+        if (ProcedureSequenceElement?.Any() == true) callback("procedureSequence",ProcedureSequenceElement);
+        if (InformationSequenceElement?.Any() == true) callback("informationSequence",InformationSequenceElement);
+        if (Revenue is not null) callback("revenue",Revenue);
+        if (Category is not null) callback("category",Category);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (ProgramCode?.Any() == true) callback("programCode",ProgramCode);
+        if (Serviced is not null) callback(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
+        if (Location is not null) callback(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (Udi?.Any() == true) callback("udi",Udi);
+        if (BodySite is not null) callback("bodySite",BodySite);
+        if (SubSite?.Any() == true) callback("subSite",SubSite);
+        if (Encounter?.Any() == true) callback("encounter",Encounter);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+        if (Detail?.Any() == true) callback("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -2671,6 +2771,15 @@ namespace Hl7.Fhir.Model
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (Reason is not null) callback("reason",Reason);
+        if (Amount is not null) callback("amount",Amount);
+        if (ValueElement is not null) callback("value",ValueElement);
       }
 
     }
@@ -3131,6 +3240,25 @@ namespace Hl7.Fhir.Model
         if (SubDetail?.Any() == true) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Revenue is not null) callback("revenue",Revenue);
+        if (Category is not null) callback("category",Category);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (ProgramCode?.Any() == true) callback("programCode",ProgramCode);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (Udi?.Any() == true) callback("udi",Udi);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+        if (SubDetail?.Any() == true) callback("subDetail",SubDetail);
+      }
+
     }
 
     /// <summary>
@@ -3564,6 +3692,24 @@ namespace Hl7.Fhir.Model
         if (Udi?.Any() == true) yield return new KeyValuePair<string,object>("udi",Udi);
         if (NoteNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("noteNumber",NoteNumberElement);
         if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (Revenue is not null) callback("revenue",Revenue);
+        if (Category is not null) callback("category",Category);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (ProgramCode?.Any() == true) callback("programCode",ProgramCode);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (Udi?.Any() == true) callback("udi",Udi);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
       }
 
     }
@@ -4171,6 +4317,29 @@ namespace Hl7.Fhir.Model
         if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ItemSequenceElement?.Any() == true) callback("itemSequence",ItemSequenceElement);
+        if (DetailSequenceElement?.Any() == true) callback("detailSequence",DetailSequenceElement);
+        if (SubDetailSequenceElement?.Any() == true) callback("subDetailSequence",SubDetailSequenceElement);
+        if (Provider?.Any() == true) callback("provider",Provider);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (ProgramCode?.Any() == true) callback("programCode",ProgramCode);
+        if (Serviced is not null) callback(PocoDictionary.ComposeChoiceElementName("serviced", Serviced),Serviced);
+        if (Location is not null) callback(PocoDictionary.ComposeChoiceElementName("location", Location),Location);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (BodySite is not null) callback("bodySite",BodySite);
+        if (SubSite?.Any() == true) callback("subSite",SubSite);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+        if (Detail?.Any() == true) callback("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -4496,6 +4665,20 @@ namespace Hl7.Fhir.Model
         if (SubDetail?.Any() == true) yield return new KeyValuePair<string,object>("subDetail",SubDetail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+        if (SubDetail?.Any() == true) callback("subDetail",SubDetail);
+      }
+
     }
 
     /// <summary>
@@ -4798,6 +4981,19 @@ namespace Hl7.Fhir.Model
         if (Adjudication?.Any() == true) yield return new KeyValuePair<string,object>("adjudication",Adjudication);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ProductOrService is not null) callback("productOrService",ProductOrService);
+        if (Modifier?.Any() == true) callback("modifier",Modifier);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (UnitPrice is not null) callback("unitPrice",UnitPrice);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Net is not null) callback("net",Net);
+        if (NoteNumberElement?.Any() == true) callback("noteNumber",NoteNumberElement);
+        if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+      }
+
     }
 
     /// <summary>
@@ -4928,6 +5124,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -5166,6 +5369,17 @@ namespace Hl7.Fhir.Model
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Adjustment is not null) callback("adjustment",Adjustment);
+        if (AdjustmentReason is not null) callback("adjustmentReason",AdjustmentReason);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Amount is not null) callback("amount",Amount);
+        if (Identifier is not null) callback("identifier",Identifier);
+      }
+
     }
 
     /// <summary>
@@ -5393,6 +5607,15 @@ namespace Hl7.Fhir.Model
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
         if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NumberElement is not null) callback("number",NumberElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (TextElement is not null) callback("text",TextElement);
+        if (Language is not null) callback("language",Language);
       }
 
     }
@@ -5713,6 +5936,19 @@ namespace Hl7.Fhir.Model
         if (Financial?.Any() == true) yield return new KeyValuePair<string,object>("financial",Financial);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Category is not null) callback("category",Category);
+        if (ExcludedElement is not null) callback("excluded",ExcludedElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Network is not null) callback("network",Network);
+        if (Unit is not null) callback("unit",Unit);
+        if (Term is not null) callback("term",Term);
+        if (Financial?.Any() == true) callback("financial",Financial);
+      }
+
     }
 
     /// <summary>
@@ -5883,6 +6119,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Allowed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
         if (Used is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Allowed is not null) callback(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
+        if (Used is not null) callback(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
       }
 
     }
@@ -7074,6 +7318,54 @@ namespace Hl7.Fhir.Model
       if (ProcessNote?.Any() == true) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
       if (BenefitPeriod is not null) yield return new KeyValuePair<string,object>("benefitPeriod",BenefitPeriod);
       if (BenefitBalance?.Any() == true) yield return new KeyValuePair<string,object>("benefitBalance",BenefitBalance);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (SubType is not null) callback("subType",SubType);
+      if (UseElement is not null) callback("use",UseElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (BillablePeriod is not null) callback("billablePeriod",BillablePeriod);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Enterer is not null) callback("enterer",Enterer);
+      if (Insurer is not null) callback("insurer",Insurer);
+      if (Provider is not null) callback("provider",Provider);
+      if (Priority is not null) callback("priority",Priority);
+      if (FundsReserveRequested is not null) callback("fundsReserveRequested",FundsReserveRequested);
+      if (FundsReserve is not null) callback("fundsReserve",FundsReserve);
+      if (Related?.Any() == true) callback("related",Related);
+      if (Prescription is not null) callback("prescription",Prescription);
+      if (OriginalPrescription is not null) callback("originalPrescription",OriginalPrescription);
+      if (Payee is not null) callback("payee",Payee);
+      if (Referral is not null) callback("referral",Referral);
+      if (Facility is not null) callback("facility",Facility);
+      if (Claim is not null) callback("claim",Claim);
+      if (ClaimResponse is not null) callback("claimResponse",ClaimResponse);
+      if (OutcomeElement is not null) callback("outcome",OutcomeElement);
+      if (DispositionElement is not null) callback("disposition",DispositionElement);
+      if (PreAuthRefElement?.Any() == true) callback("preAuthRef",PreAuthRefElement);
+      if (PreAuthRefPeriod?.Any() == true) callback("preAuthRefPeriod",PreAuthRefPeriod);
+      if (CareTeam?.Any() == true) callback("careTeam",CareTeam);
+      if (SupportingInfo?.Any() == true) callback("supportingInfo",SupportingInfo);
+      if (Diagnosis?.Any() == true) callback("diagnosis",Diagnosis);
+      if (Procedure?.Any() == true) callback("procedure",Procedure);
+      if (PrecedenceElement is not null) callback("precedence",PrecedenceElement);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (Accident is not null) callback("accident",Accident);
+      if (Item?.Any() == true) callback("item",Item);
+      if (AddItem?.Any() == true) callback("addItem",AddItem);
+      if (Adjudication?.Any() == true) callback("adjudication",Adjudication);
+      if (Total?.Any() == true) callback("total",Total);
+      if (Payment is not null) callback("payment",Payment);
+      if (FormCode is not null) callback("formCode",FormCode);
+      if (Form is not null) callback("form",Form);
+      if (ProcessNote?.Any() == true) callback("processNote",ProcessNote);
+      if (BenefitPeriod is not null) callback("benefitPeriod",BenefitPeriod);
+      if (BenefitBalance?.Any() == true) callback("benefitBalance",BenefitBalance);
     }
 
   }

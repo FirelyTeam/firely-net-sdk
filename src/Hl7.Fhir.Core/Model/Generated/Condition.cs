@@ -300,6 +300,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Summary is not null) callback("summary",Summary);
+        if (Assessment?.Any() == true) callback("assessment",Assessment);
+        if (Type is not null) callback("type",Type);
+      }
+
     }
 
     /// <summary>
@@ -432,6 +440,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code?.Any() == true) callback("code",Code);
+        if (Detail?.Any() == true) callback("detail",Detail);
       }
 
     }
@@ -931,6 +946,28 @@ namespace Hl7.Fhir.Model
       if (Stage?.Any() == true) yield return new KeyValuePair<string,object>("stage",Stage);
       if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ClinicalStatus is not null) callback("clinicalStatus",ClinicalStatus);
+      if (VerificationStatus is not null) callback("verificationStatus",VerificationStatus);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Severity is not null) callback("severity",Severity);
+      if (Code is not null) callback("code",Code);
+      if (BodySite?.Any() == true) callback("bodySite",BodySite);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Onset is not null) callback(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
+      if (Abatement is not null) callback(PocoDictionary.ComposeChoiceElementName("abatement", Abatement),Abatement);
+      if (RecordedDateElement is not null) callback("recordedDate",RecordedDateElement);
+      if (Recorder is not null) callback("recorder",Recorder);
+      if (Asserter is not null) callback("asserter",Asserter);
+      if (Stage?.Any() == true) callback("stage",Stage);
+      if (Evidence?.Any() == true) callback("evidence",Evidence);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

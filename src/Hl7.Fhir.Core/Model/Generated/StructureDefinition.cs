@@ -384,6 +384,15 @@ namespace Hl7.Fhir.Model
         if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (IdentityElement is not null) callback("identity",IdentityElement);
+        if (UriElement is not null) callback("uri",UriElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (CommentElement is not null) callback("comment",CommentElement);
+      }
+
     }
 
     /// <summary>
@@ -553,6 +562,13 @@ namespace Hl7.Fhir.Model
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (ExpressionElement is not null) callback("expression",ExpressionElement);
+      }
+
     }
 
     /// <summary>
@@ -662,6 +678,12 @@ namespace Hl7.Fhir.Model
         if (Element?.Any() == true) yield return new KeyValuePair<string,object>("element",Element);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Element?.Any() == true) callback("element",Element);
+      }
+
     }
 
     /// <summary>
@@ -769,6 +791,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Element?.Any() == true) yield return new KeyValuePair<string,object>("element",Element);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Element?.Any() == true) callback("element",Element);
       }
 
     }
@@ -1724,6 +1752,38 @@ namespace Hl7.Fhir.Model
       if (DerivationElement is not null) yield return new KeyValuePair<string,object>("derivation",DerivationElement);
       if (Snapshot is not null) yield return new KeyValuePair<string,object>("snapshot",Snapshot);
       if (Differential is not null) yield return new KeyValuePair<string,object>("differential",Differential);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (Keyword?.Any() == true) callback("keyword",Keyword);
+      if (FhirVersionElement is not null) callback("fhirVersion",FhirVersionElement);
+      if (Mapping?.Any() == true) callback("mapping",Mapping);
+      if (KindElement is not null) callback("kind",KindElement);
+      if (AbstractElement is not null) callback("abstract",AbstractElement);
+      if (Context?.Any() == true) callback("context",Context);
+      if (ContextInvariantElement?.Any() == true) callback("contextInvariant",ContextInvariantElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (BaseDefinitionElement is not null) callback("baseDefinition",BaseDefinitionElement);
+      if (DerivationElement is not null) callback("derivation",DerivationElement);
+      if (Snapshot is not null) callback("snapshot",Snapshot);
+      if (Differential is not null) callback("differential",Differential);
     }
 
   }

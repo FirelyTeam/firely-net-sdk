@@ -388,6 +388,21 @@ namespace Hl7.Fhir.Model
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (Predecessor is not null) callback("predecessor",Predecessor);
+        if (Type is not null) callback("type",Type);
+        if (Request is not null) callback("request",Request);
+        if (Submitter is not null) callback("submitter",Submitter);
+        if (Response is not null) callback("response",Response);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Responsible is not null) callback("responsible",Responsible);
+        if (Payee is not null) callback("payee",Payee);
+        if (Amount is not null) callback("amount",Amount);
+      }
+
     }
 
     /// <summary>
@@ -553,6 +568,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (TextElement is not null) callback("text",TextElement);
       }
 
     }
@@ -1061,6 +1083,26 @@ namespace Hl7.Fhir.Model
       if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       if (FormCode is not null) yield return new KeyValuePair<string,object>("formCode",FormCode);
       if (ProcessNote?.Any() == true) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Period is not null) callback("period",Period);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (PaymentIssuer is not null) callback("paymentIssuer",PaymentIssuer);
+      if (Request is not null) callback("request",Request);
+      if (Requestor is not null) callback("requestor",Requestor);
+      if (OutcomeElement is not null) callback("outcome",OutcomeElement);
+      if (DispositionElement is not null) callback("disposition",DispositionElement);
+      if (PaymentDateElement is not null) callback("paymentDate",PaymentDateElement);
+      if (PaymentAmount is not null) callback("paymentAmount",PaymentAmount);
+      if (PaymentIdentifier is not null) callback("paymentIdentifier",PaymentIdentifier);
+      if (Detail?.Any() == true) callback("detail",Detail);
+      if (FormCode is not null) callback("formCode",FormCode);
+      if (ProcessNote?.Any() == true) callback("processNote",ProcessNote);
     }
 
   }

@@ -183,6 +183,13 @@ namespace Hl7.Fhir.Model
         if (HighLimit is not null) yield return new KeyValuePair<string,object>("highLimit",HighLimit);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LowLimit is not null) callback("lowLimit",LowLimit);
+        if (HighLimit is not null) callback("highLimit",HighLimit);
+      }
+
     }
 
     /// <summary>
@@ -372,6 +379,15 @@ namespace Hl7.Fhir.Model
       if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
       if (AmountTextElement is not null) yield return new KeyValuePair<string,object>("amountText",AmountTextElement);
       if (ReferenceRange is not null) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Amount is not null) callback(PocoDictionary.ComposeChoiceElementName("amount", Amount),Amount);
+      if (AmountType is not null) callback("amountType",AmountType);
+      if (AmountTextElement is not null) callback("amountText",AmountTextElement);
+      if (ReferenceRange is not null) callback("referenceRange",ReferenceRange);
     }
 
   }

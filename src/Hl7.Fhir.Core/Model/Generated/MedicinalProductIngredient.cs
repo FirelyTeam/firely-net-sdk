@@ -230,6 +230,15 @@ namespace Hl7.Fhir.Model
         if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Group is not null) callback("group",Group);
+        if (Confidentiality is not null) callback("confidentiality",Confidentiality);
+        if (Strength?.Any() == true) callback("strength",Strength);
+      }
+
     }
 
     /// <summary>
@@ -491,6 +500,18 @@ namespace Hl7.Fhir.Model
         if (ReferenceStrength?.Any() == true) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Presentation is not null) callback("presentation",Presentation);
+        if (PresentationLowLimit is not null) callback("presentationLowLimit",PresentationLowLimit);
+        if (Concentration is not null) callback("concentration",Concentration);
+        if (ConcentrationLowLimit is not null) callback("concentrationLowLimit",ConcentrationLowLimit);
+        if (MeasurementPointElement is not null) callback("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) callback("country",Country);
+        if (ReferenceStrength?.Any() == true) callback("referenceStrength",ReferenceStrength);
+      }
+
     }
 
     /// <summary>
@@ -707,6 +728,16 @@ namespace Hl7.Fhir.Model
         if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Substance is not null) callback("substance",Substance);
+        if (Strength is not null) callback("strength",Strength);
+        if (StrengthLowLimit is not null) callback("strengthLowLimit",StrengthLowLimit);
+        if (MeasurementPointElement is not null) callback("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) callback("country",Country);
+      }
+
     }
 
     /// <summary>
@@ -837,6 +868,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Strength?.Any() == true) callback("strength",Strength);
       }
 
     }
@@ -1065,6 +1103,17 @@ namespace Hl7.Fhir.Model
       if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       if (SpecifiedSubstance?.Any() == true) yield return new KeyValuePair<string,object>("specifiedSubstance",SpecifiedSubstance);
       if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (Role is not null) callback("role",Role);
+      if (AllergenicIndicatorElement is not null) callback("allergenicIndicator",AllergenicIndicatorElement);
+      if (Manufacturer?.Any() == true) callback("manufacturer",Manufacturer);
+      if (SpecifiedSubstance?.Any() == true) callback("specifiedSubstance",SpecifiedSubstance);
+      if (Substance is not null) callback("substance",Substance);
     }
 
   }

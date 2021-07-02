@@ -326,6 +326,17 @@ namespace Hl7.Fhir.Model
         if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Outcome is not null) callback("outcome",Outcome);
+        if (Probability is not null) callback(PocoDictionary.ComposeChoiceElementName("probability", Probability),Probability);
+        if (QualitativeRisk is not null) callback("qualitativeRisk",QualitativeRisk);
+        if (RelativeRiskElement is not null) callback("relativeRisk",RelativeRiskElement);
+        if (When is not null) callback(PocoDictionary.ComposeChoiceElementName("when", When),When);
+        if (RationaleElement is not null) callback("rationale",RationaleElement);
+      }
+
     }
 
     /// <summary>
@@ -844,6 +855,28 @@ namespace Hl7.Fhir.Model
       if (Prediction?.Any() == true) yield return new KeyValuePair<string,object>("prediction",Prediction);
       if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn is not null) callback("basedOn",BasedOn);
+      if (Parent is not null) callback("parent",Parent);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Method is not null) callback("method",Method);
+      if (Code is not null) callback("code",Code);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Condition is not null) callback("condition",Condition);
+      if (Performer is not null) callback("performer",Performer);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Basis?.Any() == true) callback("basis",Basis);
+      if (Prediction?.Any() == true) callback("prediction",Prediction);
+      if (MitigationElement is not null) callback("mitigation",MitigationElement);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

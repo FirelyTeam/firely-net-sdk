@@ -215,6 +215,13 @@ namespace Hl7.Fhir.Model
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Item?.Any() == true) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -385,6 +392,14 @@ namespace Hl7.Fhir.Model
         if (ItemCodeableConcept is not null) yield return new KeyValuePair<string,object>("itemCodeableConcept",ItemCodeableConcept);
         if (ItemReference is not null) yield return new KeyValuePair<string,object>("itemReference",ItemReference);
         if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ItemCodeableConcept is not null) callback("itemCodeableConcept",ItemCodeableConcept);
+        if (ItemReference is not null) callback("itemReference",ItemReference);
+        if (BasisElement is not null) callback("basis",BasisElement);
       }
 
     }
@@ -1026,6 +1041,31 @@ namespace Hl7.Fhir.Model
       if (PrognosisReference?.Any() == true) yield return new KeyValuePair<string,object>("prognosisReference",PrognosisReference);
       if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (Code is not null) callback("code",Code);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Effective is not null) callback(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Assessor is not null) callback("assessor",Assessor);
+      if (Previous is not null) callback("previous",Previous);
+      if (Problem?.Any() == true) callback("problem",Problem);
+      if (Investigation?.Any() == true) callback("investigation",Investigation);
+      if (ProtocolElement?.Any() == true) callback("protocol",ProtocolElement);
+      if (SummaryElement is not null) callback("summary",SummaryElement);
+      if (Finding?.Any() == true) callback("finding",Finding);
+      if (PrognosisCodeableConcept?.Any() == true) callback("prognosisCodeableConcept",PrognosisCodeableConcept);
+      if (PrognosisReference?.Any() == true) callback("prognosisReference",PrognosisReference);
+      if (SupportingInfo?.Any() == true) callback("supportingInfo",SupportingInfo);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

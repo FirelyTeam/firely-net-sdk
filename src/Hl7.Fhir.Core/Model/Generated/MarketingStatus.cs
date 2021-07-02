@@ -257,6 +257,16 @@ namespace Hl7.Fhir.Model
       if (RestoreDateElement is not null) yield return new KeyValuePair<string,object>("restoreDate",RestoreDateElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Country is not null) callback("country",Country);
+      if (Jurisdiction is not null) callback("jurisdiction",Jurisdiction);
+      if (Status is not null) callback("status",Status);
+      if (DateRange is not null) callback("dateRange",DateRange);
+      if (RestoreDateElement is not null) callback("restoreDate",RestoreDateElement);
+    }
+
   }
 
 }

@@ -430,6 +430,18 @@ namespace Hl7.Fhir.Model
       if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (LabelElement is not null) callback("label",LabelElement);
+      if (DisplayElement is not null) callback("display",DisplayElement);
+      if (Citation is not null) callback("citation",Citation);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Document is not null) callback("document",Document);
+      if (ResourceElement is not null) callback("resource",ResourceElement);
+    }
+
   }
 
 }

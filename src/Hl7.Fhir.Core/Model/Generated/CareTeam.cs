@@ -272,6 +272,15 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Role?.Any() == true) callback("role",Role);
+        if (Member is not null) callback("member",Member);
+        if (OnBehalfOf is not null) callback("onBehalfOf",OnBehalfOf);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -682,6 +691,24 @@ namespace Hl7.Fhir.Model
       if (ManagingOrganization?.Any() == true) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (NameElement is not null) callback("name",NameElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Period is not null) callback("period",Period);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (ManagingOrganization?.Any() == true) callback("managingOrganization",ManagingOrganization);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

@@ -460,6 +460,17 @@ namespace Hl7.Fhir.Model
         if (EntryTypeElement is not null) yield return new KeyValuePair<string,object>("entryType",EntryTypeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DeviceIdentifierElement is not null) callback("deviceIdentifier",DeviceIdentifierElement);
+        if (IssuerElement is not null) callback("issuer",IssuerElement);
+        if (JurisdictionElement is not null) callback("jurisdiction",JurisdictionElement);
+        if (CarrierAIDCElement is not null) callback("carrierAIDC",CarrierAIDCElement);
+        if (CarrierHRFElement is not null) callback("carrierHRF",CarrierHRFElement);
+        if (EntryTypeElement is not null) callback("entryType",EntryTypeElement);
+      }
+
     }
 
     /// <summary>
@@ -629,6 +640,13 @@ namespace Hl7.Fhir.Model
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (TypeElement is not null) callback("type",TypeElement);
+      }
+
     }
 
     /// <summary>
@@ -776,6 +794,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SystemType is not null) yield return new KeyValuePair<string,object>("systemType",SystemType);
         if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SystemType is not null) callback("systemType",SystemType);
+        if (VersionElement is not null) callback("version",VersionElement);
       }
 
     }
@@ -949,6 +974,14 @@ namespace Hl7.Fhir.Model
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Component is not null) callback("component",Component);
+        if (ValueElement is not null) callback("value",ValueElement);
+      }
+
     }
 
     /// <summary>
@@ -1102,6 +1135,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (ValueQuantity?.Any() == true) yield return new KeyValuePair<string,object>("valueQuantity",ValueQuantity);
         if (ValueCode?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCode);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (ValueQuantity?.Any() == true) callback("valueQuantity",ValueQuantity);
+        if (ValueCode?.Any() == true) callback("valueCode",ValueCode);
       }
 
     }
@@ -1948,6 +1989,37 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",Safety);
       if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Definition is not null) callback("definition",Definition);
+      if (UdiCarrier?.Any() == true) callback("udiCarrier",UdiCarrier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason?.Any() == true) callback("statusReason",StatusReason);
+      if (DistinctIdentifierElement is not null) callback("distinctIdentifier",DistinctIdentifierElement);
+      if (ManufacturerElement is not null) callback("manufacturer",ManufacturerElement);
+      if (ManufactureDateElement is not null) callback("manufactureDate",ManufactureDateElement);
+      if (ExpirationDateElement is not null) callback("expirationDate",ExpirationDateElement);
+      if (LotNumberElement is not null) callback("lotNumber",LotNumberElement);
+      if (SerialNumberElement is not null) callback("serialNumber",SerialNumberElement);
+      if (DeviceName?.Any() == true) callback("deviceName",DeviceName);
+      if (ModelNumberElement is not null) callback("modelNumber",ModelNumberElement);
+      if (PartNumberElement is not null) callback("partNumber",PartNumberElement);
+      if (Type is not null) callback("type",Type);
+      if (Specialization?.Any() == true) callback("specialization",Specialization);
+      if (Version?.Any() == true) callback("version",Version);
+      if (Property?.Any() == true) callback("property",Property);
+      if (Patient is not null) callback("patient",Patient);
+      if (Owner is not null) callback("owner",Owner);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Location is not null) callback("location",Location);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Note?.Any() == true) callback("note",Note);
+      if (Safety?.Any() == true) callback("safety",Safety);
+      if (Parent is not null) callback("parent",Parent);
     }
 
   }

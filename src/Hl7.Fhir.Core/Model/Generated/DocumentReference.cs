@@ -206,6 +206,13 @@ namespace Hl7.Fhir.Model
         if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (Target is not null) callback("target",Target);
+      }
+
     }
 
     /// <summary>
@@ -335,6 +342,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
         if (Format is not null) yield return new KeyValuePair<string,object>("format",Format);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Attachment is not null) callback("attachment",Attachment);
+        if (Format is not null) callback("format",Format);
       }
 
     }
@@ -584,6 +598,18 @@ namespace Hl7.Fhir.Model
         if (PracticeSetting is not null) yield return new KeyValuePair<string,object>("practiceSetting",PracticeSetting);
         if (SourcePatientInfo is not null) yield return new KeyValuePair<string,object>("sourcePatientInfo",SourcePatientInfo);
         if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Encounter?.Any() == true) callback("encounter",Encounter);
+        if (Event?.Any() == true) callback("event",Event);
+        if (Period is not null) callback("period",Period);
+        if (FacilityType is not null) callback("facilityType",FacilityType);
+        if (PracticeSetting is not null) callback("practiceSetting",PracticeSetting);
+        if (SourcePatientInfo is not null) callback("sourcePatientInfo",SourcePatientInfo);
+        if (Related?.Any() == true) callback("related",Related);
       }
 
     }
@@ -1098,6 +1124,27 @@ namespace Hl7.Fhir.Model
       if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
       if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (MasterIdentifier is not null) callback("masterIdentifier",MasterIdentifier);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (DocStatusElement is not null) callback("docStatus",DocStatusElement);
+      if (Type is not null) callback("type",Type);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Subject is not null) callback("subject",Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Authenticator is not null) callback("authenticator",Authenticator);
+      if (Custodian is not null) callback("custodian",Custodian);
+      if (RelatesTo?.Any() == true) callback("relatesTo",RelatesTo);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (SecurityLabel?.Any() == true) callback("securityLabel",SecurityLabel);
+      if (Content?.Any() == true) callback("content",Content);
+      if (Context is not null) callback("context",Context);
     }
 
   }

@@ -418,6 +418,17 @@ namespace Hl7.Fhir.Model
         if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (SliceNameElement is not null) callback("sliceName",SliceNameElement);
+        if (MinElement is not null) callback("min",MinElement);
+        if (MaxElement is not null) callback("max",MaxElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Target?.Any() == true) callback("target",Target);
+      }
+
     }
 
     /// <summary>
@@ -670,6 +681,16 @@ namespace Hl7.Fhir.Model
         if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
         if (Compartment?.Any() == true) yield return new KeyValuePair<string,object>("compartment",Compartment);
         if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (ParamsElement is not null) callback("params",ParamsElement);
+        if (ProfileElement is not null) callback("profile",ProfileElement);
+        if (Compartment?.Any() == true) callback("compartment",Compartment);
+        if (Link?.Any() == true) callback("link",Link);
       }
 
     }
@@ -962,6 +983,16 @@ namespace Hl7.Fhir.Model
         if (RuleElement is not null) yield return new KeyValuePair<string,object>("rule",RuleElement);
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (UseElement is not null) callback("use",UseElement);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (RuleElement is not null) callback("rule",RuleElement);
+        if (ExpressionElement is not null) callback("expression",ExpressionElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
       }
 
     }
@@ -1536,6 +1567,26 @@ namespace Hl7.Fhir.Model
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
       if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
       if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (StartElement is not null) callback("start",StartElement);
+      if (ProfileElement is not null) callback("profile",ProfileElement);
+      if (Link?.Any() == true) callback("link",Link);
     }
 
   }

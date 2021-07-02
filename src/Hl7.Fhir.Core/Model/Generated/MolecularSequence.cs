@@ -589,6 +589,20 @@ namespace Hl7.Fhir.Model
         if (WindowEndElement is not null) yield return new KeyValuePair<string,object>("windowEnd",WindowEndElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Chromosome is not null) callback("chromosome",Chromosome);
+        if (GenomeBuildElement is not null) callback("genomeBuild",GenomeBuildElement);
+        if (OrientationElement is not null) callback("orientation",OrientationElement);
+        if (ReferenceSeqId is not null) callback("referenceSeqId",ReferenceSeqId);
+        if (ReferenceSeqPointer is not null) callback("referenceSeqPointer",ReferenceSeqPointer);
+        if (ReferenceSeqStringElement is not null) callback("referenceSeqString",ReferenceSeqStringElement);
+        if (StrandElement is not null) callback("strand",StrandElement);
+        if (WindowStartElement is not null) callback("windowStart",WindowStartElement);
+        if (WindowEndElement is not null) callback("windowEnd",WindowEndElement);
+      }
+
     }
 
     /// <summary>
@@ -897,6 +911,17 @@ namespace Hl7.Fhir.Model
         if (ReferenceAlleleElement is not null) yield return new KeyValuePair<string,object>("referenceAllele",ReferenceAlleleElement);
         if (CigarElement is not null) yield return new KeyValuePair<string,object>("cigar",CigarElement);
         if (VariantPointer is not null) yield return new KeyValuePair<string,object>("variantPointer",VariantPointer);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StartElement is not null) callback("start",StartElement);
+        if (EndElement is not null) callback("end",EndElement);
+        if (ObservedAlleleElement is not null) callback("observedAllele",ObservedAlleleElement);
+        if (ReferenceAlleleElement is not null) callback("referenceAllele",ReferenceAlleleElement);
+        if (CigarElement is not null) callback("cigar",CigarElement);
+        if (VariantPointer is not null) callback("variantPointer",VariantPointer);
       }
 
     }
@@ -1515,6 +1540,26 @@ namespace Hl7.Fhir.Model
         if (Roc is not null) yield return new KeyValuePair<string,object>("roc",Roc);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (StandardSequence is not null) callback("standardSequence",StandardSequence);
+        if (StartElement is not null) callback("start",StartElement);
+        if (EndElement is not null) callback("end",EndElement);
+        if (Score is not null) callback("score",Score);
+        if (Method is not null) callback("method",Method);
+        if (TruthTPElement is not null) callback("truthTP",TruthTPElement);
+        if (QueryTPElement is not null) callback("queryTP",QueryTPElement);
+        if (TruthFNElement is not null) callback("truthFN",TruthFNElement);
+        if (QueryFPElement is not null) callback("queryFP",QueryFPElement);
+        if (GtFPElement is not null) callback("gtFP",GtFPElement);
+        if (PrecisionElement is not null) callback("precision",PrecisionElement);
+        if (RecallElement is not null) callback("recall",RecallElement);
+        if (FScoreElement is not null) callback("fScore",FScoreElement);
+        if (Roc is not null) callback("roc",Roc);
+      }
+
     }
 
     /// <summary>
@@ -1888,6 +1933,18 @@ namespace Hl7.Fhir.Model
         if (FMeasureElement?.Any() == true) yield return new KeyValuePair<string,object>("fMeasure",FMeasureElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ScoreElement?.Any() == true) callback("score",ScoreElement);
+        if (NumTPElement?.Any() == true) callback("numTP",NumTPElement);
+        if (NumFPElement?.Any() == true) callback("numFP",NumFPElement);
+        if (NumFNElement?.Any() == true) callback("numFN",NumFNElement);
+        if (PrecisionElement?.Any() == true) callback("precision",PrecisionElement);
+        if (SensitivityElement?.Any() == true) callback("sensitivity",SensitivityElement);
+        if (FMeasureElement?.Any() == true) callback("fMeasure",FMeasureElement);
+      }
+
     }
 
     /// <summary>
@@ -2216,6 +2273,17 @@ namespace Hl7.Fhir.Model
         if (ReadsetIdElement is not null) yield return new KeyValuePair<string,object>("readsetId",ReadsetIdElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (UrlElement is not null) callback("url",UrlElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DatasetIdElement is not null) callback("datasetId",DatasetIdElement);
+        if (VariantsetIdElement is not null) callback("variantsetId",VariantsetIdElement);
+        if (ReadsetIdElement is not null) callback("readsetId",ReadsetIdElement);
+      }
+
     }
 
     /// <summary>
@@ -2448,6 +2516,16 @@ namespace Hl7.Fhir.Model
         if (Inner is not null) yield return new KeyValuePair<string,object>("inner",Inner);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (VariantType is not null) callback("variantType",VariantType);
+        if (ExactElement is not null) callback("exact",ExactElement);
+        if (LengthElement is not null) callback("length",LengthElement);
+        if (Outer is not null) callback("outer",Outer);
+        if (Inner is not null) callback("inner",Inner);
+      }
+
     }
 
     /// <summary>
@@ -2614,6 +2692,13 @@ namespace Hl7.Fhir.Model
         if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StartElement is not null) callback("start",StartElement);
+        if (EndElement is not null) callback("end",EndElement);
+      }
+
     }
 
     /// <summary>
@@ -2778,6 +2863,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
         if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StartElement is not null) callback("start",StartElement);
+        if (EndElement is not null) callback("end",EndElement);
       }
 
     }
@@ -3293,6 +3385,27 @@ namespace Hl7.Fhir.Model
       if (Repository?.Any() == true) yield return new KeyValuePair<string,object>("repository",Repository);
       if (Pointer?.Any() == true) yield return new KeyValuePair<string,object>("pointer",Pointer);
       if (StructureVariant?.Any() == true) yield return new KeyValuePair<string,object>("structureVariant",StructureVariant);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (CoordinateSystemElement is not null) callback("coordinateSystem",CoordinateSystemElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Specimen is not null) callback("specimen",Specimen);
+      if (Device is not null) callback("device",Device);
+      if (Performer is not null) callback("performer",Performer);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (ReferenceSeq is not null) callback("referenceSeq",ReferenceSeq);
+      if (Variant?.Any() == true) callback("variant",Variant);
+      if (ObservedSeqElement is not null) callback("observedSeq",ObservedSeqElement);
+      if (Quality?.Any() == true) callback("quality",Quality);
+      if (ReadCoverageElement is not null) callback("readCoverage",ReadCoverageElement);
+      if (Repository?.Any() == true) callback("repository",Repository);
+      if (Pointer?.Any() == true) callback("pointer",Pointer);
+      if (StructureVariant?.Any() == true) callback("structureVariant",StructureVariant);
     }
 
   }

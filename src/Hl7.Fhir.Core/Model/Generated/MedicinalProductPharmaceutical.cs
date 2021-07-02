@@ -184,6 +184,13 @@ namespace Hl7.Fhir.Model
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Status is not null) callback("status",Status);
+      }
+
     }
 
     /// <summary>
@@ -426,6 +433,18 @@ namespace Hl7.Fhir.Model
         if (TargetSpecies?.Any() == true) yield return new KeyValuePair<string,object>("targetSpecies",TargetSpecies);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (FirstDose is not null) callback("firstDose",FirstDose);
+        if (MaxSingleDose is not null) callback("maxSingleDose",MaxSingleDose);
+        if (MaxDosePerDay is not null) callback("maxDosePerDay",MaxDosePerDay);
+        if (MaxDosePerTreatmentPeriod is not null) callback("maxDosePerTreatmentPeriod",MaxDosePerTreatmentPeriod);
+        if (MaxTreatmentPeriod is not null) callback("maxTreatmentPeriod",MaxTreatmentPeriod);
+        if (TargetSpecies?.Any() == true) callback("targetSpecies",TargetSpecies);
+      }
+
     }
 
     /// <summary>
@@ -556,6 +575,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (WithdrawalPeriod?.Any() == true) yield return new KeyValuePair<string,object>("withdrawalPeriod",WithdrawalPeriod);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (WithdrawalPeriod?.Any() == true) callback("withdrawalPeriod",WithdrawalPeriod);
       }
 
     }
@@ -728,6 +754,14 @@ namespace Hl7.Fhir.Model
         if (Tissue is not null) yield return new KeyValuePair<string,object>("tissue",Tissue);
         if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
         if (SupportingInformationElement is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformationElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Tissue is not null) callback("tissue",Tissue);
+        if (Value is not null) callback("value",Value);
+        if (SupportingInformationElement is not null) callback("supportingInformation",SupportingInformationElement);
       }
 
     }
@@ -965,6 +999,18 @@ namespace Hl7.Fhir.Model
       if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
       if (Characteristics?.Any() == true) yield return new KeyValuePair<string,object>("characteristics",Characteristics);
       if (RouteOfAdministration?.Any() == true) yield return new KeyValuePair<string,object>("routeOfAdministration",RouteOfAdministration);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (AdministrableDoseForm is not null) callback("administrableDoseForm",AdministrableDoseForm);
+      if (UnitOfPresentation is not null) callback("unitOfPresentation",UnitOfPresentation);
+      if (Ingredient?.Any() == true) callback("ingredient",Ingredient);
+      if (Device?.Any() == true) callback("device",Device);
+      if (Characteristics?.Any() == true) callback("characteristics",Characteristics);
+      if (RouteOfAdministration?.Any() == true) callback("routeOfAdministration",RouteOfAdministration);
     }
 
   }

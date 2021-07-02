@@ -201,6 +201,13 @@ namespace Hl7.Fhir.Model
         if (MaterialType is not null) yield return new KeyValuePair<string,object>("materialType",MaterialType);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (FractionElement is not null) callback("fraction",FractionElement);
+        if (MaterialType is not null) callback("materialType",MaterialType);
+      }
+
     }
 
     /// <summary>
@@ -482,6 +489,19 @@ namespace Hl7.Fhir.Model
         if (OrganismGeneral is not null) yield return new KeyValuePair<string,object>("organismGeneral",OrganismGeneral);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Family is not null) callback("family",Family);
+        if (Genus is not null) callback("genus",Genus);
+        if (Species is not null) callback("species",Species);
+        if (IntraspecificType is not null) callback("intraspecificType",IntraspecificType);
+        if (IntraspecificDescriptionElement is not null) callback("intraspecificDescription",IntraspecificDescriptionElement);
+        if (Author?.Any() == true) callback("author",Author);
+        if (Hybrid is not null) callback("hybrid",Hybrid);
+        if (OrganismGeneral is not null) callback("organismGeneral",OrganismGeneral);
+      }
+
     }
 
     /// <summary>
@@ -628,6 +648,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (AuthorType is not null) yield return new KeyValuePair<string,object>("authorType",AuthorType);
         if (AuthorDescriptionElement is not null) yield return new KeyValuePair<string,object>("authorDescription",AuthorDescriptionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (AuthorType is not null) callback("authorType",AuthorType);
+        if (AuthorDescriptionElement is not null) callback("authorDescription",AuthorDescriptionElement);
       }
 
     }
@@ -898,6 +925,16 @@ namespace Hl7.Fhir.Model
         if (HybridType is not null) yield return new KeyValuePair<string,object>("hybridType",HybridType);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (MaternalOrganismIdElement is not null) callback("maternalOrganismId",MaternalOrganismIdElement);
+        if (MaternalOrganismNameElement is not null) callback("maternalOrganismName",MaternalOrganismNameElement);
+        if (PaternalOrganismIdElement is not null) callback("paternalOrganismId",PaternalOrganismIdElement);
+        if (PaternalOrganismNameElement is not null) callback("paternalOrganismName",PaternalOrganismNameElement);
+        if (HybridType is not null) callback("hybridType",HybridType);
+      }
+
     }
 
     /// <summary>
@@ -1072,6 +1109,15 @@ namespace Hl7.Fhir.Model
         if (Order is not null) yield return new KeyValuePair<string,object>("order",Order);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Kingdom is not null) callback("kingdom",Kingdom);
+        if (Phylum is not null) callback("phylum",Phylum);
+        if (Class is not null) callback("class",Class);
+        if (Order is not null) callback("order",Order);
+      }
+
     }
 
     /// <summary>
@@ -1200,6 +1246,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Part is not null) yield return new KeyValuePair<string,object>("part",Part);
         if (PartLocation is not null) yield return new KeyValuePair<string,object>("partLocation",PartLocation);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Part is not null) callback("part",Part);
+        if (PartLocation is not null) callback("partLocation",PartLocation);
       }
 
     }
@@ -1619,6 +1672,24 @@ namespace Hl7.Fhir.Model
       if (FractionDescription?.Any() == true) yield return new KeyValuePair<string,object>("fractionDescription",FractionDescription);
       if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
       if (PartDescription?.Any() == true) yield return new KeyValuePair<string,object>("partDescription",PartDescription);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (SourceMaterialClass is not null) callback("sourceMaterialClass",SourceMaterialClass);
+      if (SourceMaterialType is not null) callback("sourceMaterialType",SourceMaterialType);
+      if (SourceMaterialState is not null) callback("sourceMaterialState",SourceMaterialState);
+      if (OrganismId is not null) callback("organismId",OrganismId);
+      if (OrganismNameElement is not null) callback("organismName",OrganismNameElement);
+      if (ParentSubstanceId?.Any() == true) callback("parentSubstanceId",ParentSubstanceId);
+      if (ParentSubstanceNameElement?.Any() == true) callback("parentSubstanceName",ParentSubstanceNameElement);
+      if (CountryOfOrigin?.Any() == true) callback("countryOfOrigin",CountryOfOrigin);
+      if (GeographicalLocationElement?.Any() == true) callback("geographicalLocation",GeographicalLocationElement);
+      if (DevelopmentStage is not null) callback("developmentStage",DevelopmentStage);
+      if (FractionDescription?.Any() == true) callback("fractionDescription",FractionDescription);
+      if (Organism is not null) callback("organism",Organism);
+      if (PartDescription?.Any() == true) callback("partDescription",PartDescription);
     }
 
   }

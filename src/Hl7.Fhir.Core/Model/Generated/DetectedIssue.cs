@@ -215,6 +215,13 @@ namespace Hl7.Fhir.Model
         if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code?.Any() == true) callback("code",Code);
+        if (Detail?.Any() == true) callback("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -386,6 +393,14 @@ namespace Hl7.Fhir.Model
         if (Action is not null) yield return new KeyValuePair<string,object>("action",Action);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Action is not null) callback("action",Action);
+        if (DateElement is not null) callback("date",DateElement);
+        if (Author is not null) callback("author",Author);
       }
 
     }
@@ -820,6 +835,23 @@ namespace Hl7.Fhir.Model
       if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
       if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
       if (Mitigation?.Any() == true) yield return new KeyValuePair<string,object>("mitigation",Mitigation);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Code is not null) callback("code",Code);
+      if (SeverityElement is not null) callback("severity",SeverityElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Identified is not null) callback(PocoDictionary.ComposeChoiceElementName("identified", Identified),Identified);
+      if (Author is not null) callback("author",Author);
+      if (Implicated?.Any() == true) callback("implicated",Implicated);
+      if (Evidence?.Any() == true) callback("evidence",Evidence);
+      if (DetailElement is not null) callback("detail",DetailElement);
+      if (ReferenceElement is not null) callback("reference",ReferenceElement);
+      if (Mitigation?.Any() == true) callback("mitigation",Mitigation);
     }
 
   }

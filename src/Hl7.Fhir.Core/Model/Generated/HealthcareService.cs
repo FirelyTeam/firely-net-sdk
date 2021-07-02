@@ -183,6 +183,13 @@ namespace Hl7.Fhir.Model
         if (Comment is not null) yield return new KeyValuePair<string,object>("comment",Comment);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Comment is not null) callback("comment",Comment);
+      }
+
     }
 
     /// <summary>
@@ -431,6 +438,15 @@ namespace Hl7.Fhir.Model
         if (AvailableEndTimeElement is not null) yield return new KeyValuePair<string,object>("availableEndTime",AvailableEndTimeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DaysOfWeekElement?.Any() == true) callback("daysOfWeek",DaysOfWeekElement);
+        if (AllDayElement is not null) callback("allDay",AllDayElement);
+        if (AvailableStartTimeElement is not null) callback("availableStartTime",AvailableStartTimeElement);
+        if (AvailableEndTimeElement is not null) callback("availableEndTime",AvailableEndTimeElement);
+      }
+
     }
 
     /// <summary>
@@ -578,6 +594,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (During is not null) yield return new KeyValuePair<string,object>("during",During);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (During is not null) callback("during",During);
       }
 
     }
@@ -1293,6 +1316,35 @@ namespace Hl7.Fhir.Model
       if (NotAvailable?.Any() == true) yield return new KeyValuePair<string,object>("notAvailable",NotAvailable);
       if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (ProvidedBy is not null) callback("providedBy",ProvidedBy);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Type?.Any() == true) callback("type",Type);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (Location?.Any() == true) callback("location",Location);
+      if (NameElement is not null) callback("name",NameElement);
+      if (CommentElement is not null) callback("comment",CommentElement);
+      if (ExtraDetails is not null) callback("extraDetails",ExtraDetails);
+      if (Photo is not null) callback("photo",Photo);
+      if (Telecom?.Any() == true) callback("telecom",Telecom);
+      if (CoverageArea?.Any() == true) callback("coverageArea",CoverageArea);
+      if (ServiceProvisionCode?.Any() == true) callback("serviceProvisionCode",ServiceProvisionCode);
+      if (Eligibility?.Any() == true) callback("eligibility",Eligibility);
+      if (Program?.Any() == true) callback("program",Program);
+      if (Characteristic?.Any() == true) callback("characteristic",Characteristic);
+      if (Communication?.Any() == true) callback("communication",Communication);
+      if (ReferralMethod?.Any() == true) callback("referralMethod",ReferralMethod);
+      if (AppointmentRequiredElement is not null) callback("appointmentRequired",AppointmentRequiredElement);
+      if (AvailableTime?.Any() == true) callback("availableTime",AvailableTime);
+      if (NotAvailable?.Any() == true) callback("notAvailable",NotAvailable);
+      if (AvailabilityExceptionsElement is not null) callback("availabilityExceptions",AvailabilityExceptionsElement);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
     }
 
   }

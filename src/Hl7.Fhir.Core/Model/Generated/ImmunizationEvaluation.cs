@@ -539,6 +539,24 @@ namespace Hl7.Fhir.Model
       if (SeriesDoses is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("seriesDoses", SeriesDoses),SeriesDoses);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Authority is not null) callback("authority",Authority);
+      if (TargetDisease is not null) callback("targetDisease",TargetDisease);
+      if (ImmunizationEvent is not null) callback("immunizationEvent",ImmunizationEvent);
+      if (DoseStatus is not null) callback("doseStatus",DoseStatus);
+      if (DoseStatusReason?.Any() == true) callback("doseStatusReason",DoseStatusReason);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (SeriesElement is not null) callback("series",SeriesElement);
+      if (DoseNumber is not null) callback(PocoDictionary.ComposeChoiceElementName("doseNumber", DoseNumber),DoseNumber);
+      if (SeriesDoses is not null) callback(PocoDictionary.ComposeChoiceElementName("seriesDoses", SeriesDoses),SeriesDoses);
+    }
+
   }
 
 }

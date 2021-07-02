@@ -345,6 +345,19 @@ namespace Hl7.Fhir.Model
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (ServiceCategory?.Any() == true) callback("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) callback("serviceType",ServiceType);
+      if (Specialty?.Any() == true) callback("specialty",Specialty);
+      if (Actor?.Any() == true) callback("actor",Actor);
+      if (PlanningHorizon is not null) callback("planningHorizon",PlanningHorizon);
+      if (CommentElement is not null) callback("comment",CommentElement);
+    }
+
   }
 
 }

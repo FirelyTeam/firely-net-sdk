@@ -362,6 +362,18 @@ namespace Hl7.Fhir.Model
         if (PushTypeAvailable?.Any() == true) yield return new KeyValuePair<string,object>("pushTypeAvailable",PushTypeAvailable);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Who is not null) callback("who",Who);
+        if (Type?.Any() == true) callback("type",Type);
+        if (CommunicationMethod?.Any() == true) callback("communicationMethod",CommunicationMethod);
+        if (ValidationStatus is not null) callback("validationStatus",ValidationStatus);
+        if (ValidationDateElement is not null) callback("validationDate",ValidationDateElement);
+        if (CanPushUpdates is not null) callback("canPushUpdates",CanPushUpdates);
+        if (PushTypeAvailable?.Any() == true) callback("pushTypeAvailable",PushTypeAvailable);
+      }
+
     }
 
     /// <summary>
@@ -682,6 +694,19 @@ namespace Hl7.Fhir.Model
         if (SourceSignature is not null) yield return new KeyValuePair<string,object>("sourceSignature",SourceSignature);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Who is not null) callback("who",Who);
+        if (OnBehalfOf is not null) callback("onBehalfOf",OnBehalfOf);
+        if (CommunicationMethod is not null) callback("communicationMethod",CommunicationMethod);
+        if (DateElement is not null) callback("date",DateElement);
+        if (SourceIdentityCertificateElement is not null) callback("sourceIdentityCertificate",SourceIdentityCertificateElement);
+        if (ProxyIdentityCertificateElement is not null) callback("proxyIdentityCertificate",ProxyIdentityCertificateElement);
+        if (ProxySignature is not null) callback("proxySignature",ProxySignature);
+        if (SourceSignature is not null) callback("sourceSignature",SourceSignature);
+      }
+
     }
 
     /// <summary>
@@ -853,6 +878,14 @@ namespace Hl7.Fhir.Model
         if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
         if (IdentityCertificateElement is not null) yield return new KeyValuePair<string,object>("identityCertificate",IdentityCertificateElement);
         if (AttestationSignature is not null) yield return new KeyValuePair<string,object>("attestationSignature",AttestationSignature);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Organization is not null) callback("organization",Organization);
+        if (IdentityCertificateElement is not null) callback("identityCertificate",IdentityCertificateElement);
+        if (AttestationSignature is not null) callback("attestationSignature",AttestationSignature);
       }
 
     }
@@ -1333,6 +1366,25 @@ namespace Hl7.Fhir.Model
       if (PrimarySource?.Any() == true) yield return new KeyValuePair<string,object>("primarySource",PrimarySource);
       if (Attestation is not null) yield return new KeyValuePair<string,object>("attestation",Attestation);
       if (Validator?.Any() == true) yield return new KeyValuePair<string,object>("validator",Validator);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Target?.Any() == true) callback("target",Target);
+      if (TargetLocationElement?.Any() == true) callback("targetLocation",TargetLocationElement);
+      if (Need is not null) callback("need",Need);
+      if (Status_Element is not null) callback("status",Status_Element);
+      if (StatusDateElement is not null) callback("statusDate",StatusDateElement);
+      if (ValidationType is not null) callback("validationType",ValidationType);
+      if (ValidationProcess?.Any() == true) callback("validationProcess",ValidationProcess);
+      if (Frequency is not null) callback("frequency",Frequency);
+      if (LastPerformedElement is not null) callback("lastPerformed",LastPerformedElement);
+      if (NextScheduledElement is not null) callback("nextScheduled",NextScheduledElement);
+      if (FailureAction is not null) callback("failureAction",FailureAction);
+      if (PrimarySource?.Any() == true) callback("primarySource",PrimarySource);
+      if (Attestation is not null) callback("attestation",Attestation);
+      if (Validator?.Any() == true) callback("validator",Validator);
     }
 
   }

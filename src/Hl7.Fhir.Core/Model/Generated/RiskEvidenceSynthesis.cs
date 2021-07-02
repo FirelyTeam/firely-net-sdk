@@ -259,6 +259,14 @@ namespace Hl7.Fhir.Model
         if (NumberOfParticipantsElement is not null) yield return new KeyValuePair<string,object>("numberOfParticipants",NumberOfParticipantsElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (NumberOfStudiesElement is not null) callback("numberOfStudies",NumberOfStudiesElement);
+        if (NumberOfParticipantsElement is not null) callback("numberOfParticipants",NumberOfParticipantsElement);
+      }
+
     }
 
     /// <summary>
@@ -572,6 +580,18 @@ namespace Hl7.Fhir.Model
         if (PrecisionEstimate?.Any() == true) yield return new KeyValuePair<string,object>("precisionEstimate",PrecisionEstimate);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Type is not null) callback("type",Type);
+        if (ValueElement is not null) callback("value",ValueElement);
+        if (UnitOfMeasure is not null) callback("unitOfMeasure",UnitOfMeasure);
+        if (DenominatorCountElement is not null) callback("denominatorCount",DenominatorCountElement);
+        if (NumeratorCountElement is not null) callback("numeratorCount",NumeratorCountElement);
+        if (PrecisionEstimate?.Any() == true) callback("precisionEstimate",PrecisionEstimate);
+      }
+
     }
 
     /// <summary>
@@ -800,6 +820,15 @@ namespace Hl7.Fhir.Model
         if (ToElement is not null) yield return new KeyValuePair<string,object>("to",ToElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (LevelElement is not null) callback("level",LevelElement);
+        if (FromElement is not null) callback("from",FromElement);
+        if (ToElement is not null) callback("to",ToElement);
+      }
+
     }
 
     /// <summary>
@@ -955,6 +984,14 @@ namespace Hl7.Fhir.Model
         if (CertaintySubcomponent?.Any() == true) yield return new KeyValuePair<string,object>("certaintySubcomponent",CertaintySubcomponent);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Rating?.Any() == true) callback("rating",Rating);
+        if (Note?.Any() == true) callback("note",Note);
+        if (CertaintySubcomponent?.Any() == true) callback("certaintySubcomponent",CertaintySubcomponent);
+      }
+
     }
 
     /// <summary>
@@ -1107,6 +1144,14 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Rating?.Any() == true) yield return new KeyValuePair<string,object>("rating",Rating);
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Rating?.Any() == true) callback("rating",Rating);
+        if (Note?.Any() == true) callback("note",Note);
       }
 
     }
@@ -2046,6 +2091,42 @@ namespace Hl7.Fhir.Model
       if (SampleSize is not null) yield return new KeyValuePair<string,object>("sampleSize",SampleSize);
       if (RiskEstimate is not null) yield return new KeyValuePair<string,object>("riskEstimate",RiskEstimate);
       if (Certainty?.Any() == true) yield return new KeyValuePair<string,object>("certainty",Certainty);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (Note?.Any() == true) callback("note",Note);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (SynthesisType is not null) callback("synthesisType",SynthesisType);
+      if (StudyType is not null) callback("studyType",StudyType);
+      if (Population is not null) callback("population",Population);
+      if (Exposure is not null) callback("exposure",Exposure);
+      if (Outcome is not null) callback("outcome",Outcome);
+      if (SampleSize is not null) callback("sampleSize",SampleSize);
+      if (RiskEstimate is not null) callback("riskEstimate",RiskEstimate);
+      if (Certainty?.Any() == true) callback("certainty",Certainty);
     }
 
   }

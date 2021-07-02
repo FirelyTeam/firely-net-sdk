@@ -217,6 +217,15 @@ namespace Hl7.Fhir.Model
       if (SpecialPrecautionsForStorage?.Any() == true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",SpecialPrecautionsForStorage);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (Type is not null) callback("type",Type);
+      if (Period is not null) callback("period",Period);
+      if (SpecialPrecautionsForStorage?.Any() == true) callback("specialPrecautionsForStorage",SpecialPrecautionsForStorage);
+    }
+
   }
 
 }

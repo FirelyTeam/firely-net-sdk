@@ -224,6 +224,14 @@ namespace Hl7.Fhir.Model
         if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Dose is not null) callback(PocoDictionary.ComposeChoiceElementName("dose", Dose),Dose);
+        if (Rate is not null) callback(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
+      }
+
     }
 
     /// <summary>
@@ -649,6 +657,24 @@ namespace Hl7.Fhir.Model
       if (MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",MaxDosePerPeriod);
       if (MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",MaxDosePerAdministration);
       if (MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",MaxDosePerLifetime);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (SequenceElement is not null) callback("sequence",SequenceElement);
+      if (TextElement is not null) callback("text",TextElement);
+      if (AdditionalInstruction?.Any() == true) callback("additionalInstruction",AdditionalInstruction);
+      if (PatientInstructionElement is not null) callback("patientInstruction",PatientInstructionElement);
+      if (Timing is not null) callback("timing",Timing);
+      if (AsNeeded is not null) callback(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
+      if (Site is not null) callback("site",Site);
+      if (Route is not null) callback("route",Route);
+      if (Method is not null) callback("method",Method);
+      if (DoseAndRate?.Any() == true) callback("doseAndRate",DoseAndRate);
+      if (MaxDosePerPeriod is not null) callback("maxDosePerPeriod",MaxDosePerPeriod);
+      if (MaxDosePerAdministration is not null) callback("maxDosePerAdministration",MaxDosePerAdministration);
+      if (MaxDosePerLifetime is not null) callback("maxDosePerLifetime",MaxDosePerLifetime);
     }
 
   }

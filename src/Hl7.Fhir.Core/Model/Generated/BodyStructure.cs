@@ -344,6 +344,19 @@ namespace Hl7.Fhir.Model
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (Morphology is not null) callback("morphology",Morphology);
+      if (Location is not null) callback("location",Location);
+      if (LocationQualifier?.Any() == true) callback("locationQualifier",LocationQualifier);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Image?.Any() == true) callback("image",Image);
+      if (Patient is not null) callback("patient",Patient);
+    }
+
   }
 
 }

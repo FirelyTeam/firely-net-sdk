@@ -383,6 +383,19 @@ namespace Hl7.Fhir.Model
       if (RequestProvider is not null) yield return new KeyValuePair<string,object>("requestProvider",RequestProvider);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Request is not null) callback("request",Request);
+      if (OutcomeElement is not null) callback("outcome",OutcomeElement);
+      if (DispositionElement is not null) callback("disposition",DispositionElement);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Organization is not null) callback("organization",Organization);
+      if (RequestProvider is not null) callback("requestProvider",RequestProvider);
+    }
+
   }
 
 }

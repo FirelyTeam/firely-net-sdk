@@ -551,6 +551,23 @@ namespace Hl7.Fhir.Model
         if (ParticipantEffectiveGroupMeasureElement is not null) yield return new KeyValuePair<string,object>("participantEffectiveGroupMeasure",ParticipantEffectiveGroupMeasureElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Definition is not null) callback(PocoDictionary.ComposeChoiceElementName("definition", Definition),Definition);
+        if (UsageContext?.Any() == true) callback("usageContext",UsageContext);
+        if (ExcludeElement is not null) callback("exclude",ExcludeElement);
+        if (UnitOfMeasure is not null) callback("unitOfMeasure",UnitOfMeasure);
+        if (StudyEffectiveDescriptionElement is not null) callback("studyEffectiveDescription",StudyEffectiveDescriptionElement);
+        if (StudyEffective is not null) callback(PocoDictionary.ComposeChoiceElementName("studyEffective", StudyEffective),StudyEffective);
+        if (StudyEffectiveTimeFromStart is not null) callback("studyEffectiveTimeFromStart",StudyEffectiveTimeFromStart);
+        if (StudyEffectiveGroupMeasureElement is not null) callback("studyEffectiveGroupMeasure",StudyEffectiveGroupMeasureElement);
+        if (ParticipantEffectiveDescriptionElement is not null) callback("participantEffectiveDescription",ParticipantEffectiveDescriptionElement);
+        if (ParticipantEffective is not null) callback(PocoDictionary.ComposeChoiceElementName("participantEffective", ParticipantEffective),ParticipantEffective);
+        if (ParticipantEffectiveTimeFromStart is not null) callback("participantEffectiveTimeFromStart",ParticipantEffectiveTimeFromStart);
+        if (ParticipantEffectiveGroupMeasureElement is not null) callback("participantEffectiveGroupMeasure",ParticipantEffectiveGroupMeasureElement);
+      }
+
     }
 
     /// <summary>
@@ -1685,6 +1702,44 @@ namespace Hl7.Fhir.Model
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (VariableTypeElement is not null) yield return new KeyValuePair<string,object>("variableType",VariableTypeElement);
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (ShortTitleElement is not null) callback("shortTitle",ShortTitleElement);
+      if (SubtitleElement is not null) callback("subtitle",SubtitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (Subject is not null) callback(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (CommentElement?.Any() == true) callback("comment",CommentElement);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (UsageElement is not null) callback("usage",UsageElement);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (ApprovalDateElement is not null) callback("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) callback("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) callback("effectivePeriod",EffectivePeriod);
+      if (Topic?.Any() == true) callback("topic",Topic);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Editor?.Any() == true) callback("editor",Editor);
+      if (Reviewer?.Any() == true) callback("reviewer",Reviewer);
+      if (Endorser?.Any() == true) callback("endorser",Endorser);
+      if (RelatedArtifact?.Any() == true) callback("relatedArtifact",RelatedArtifact);
+      if (LibraryElement?.Any() == true) callback("library",LibraryElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (VariableTypeElement is not null) callback("variableType",VariableTypeElement);
+      if (Characteristic?.Any() == true) callback("characteristic",Characteristic);
     }
 
   }

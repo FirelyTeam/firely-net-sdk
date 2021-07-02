@@ -228,6 +228,13 @@ namespace Hl7.Fhir.Model
         if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RelationtypeElement is not null) callback("relationtype",RelationtypeElement);
+        if (Item is not null) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -668,6 +675,24 @@ namespace Hl7.Fhir.Model
       if (AdditionalCharacteristic?.Any() == true) yield return new KeyValuePair<string,object>("additionalCharacteristic",AdditionalCharacteristic);
       if (AdditionalClassification?.Any() == true) yield return new KeyValuePair<string,object>("additionalClassification",AdditionalClassification);
       if (RelatedEntry?.Any() == true) yield return new KeyValuePair<string,object>("relatedEntry",RelatedEntry);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Type is not null) callback("type",Type);
+      if (OrderableElement is not null) callback("orderable",OrderableElement);
+      if (ReferencedItem is not null) callback("referencedItem",ReferencedItem);
+      if (AdditionalIdentifier?.Any() == true) callback("additionalIdentifier",AdditionalIdentifier);
+      if (Classification?.Any() == true) callback("classification",Classification);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ValidityPeriod is not null) callback("validityPeriod",ValidityPeriod);
+      if (ValidToElement is not null) callback("validTo",ValidToElement);
+      if (LastUpdatedElement is not null) callback("lastUpdated",LastUpdatedElement);
+      if (AdditionalCharacteristic?.Any() == true) callback("additionalCharacteristic",AdditionalCharacteristic);
+      if (AdditionalClassification?.Any() == true) callback("additionalClassification",AdditionalClassification);
+      if (RelatedEntry?.Any() == true) callback("relatedEntry",RelatedEntry);
     }
 
   }

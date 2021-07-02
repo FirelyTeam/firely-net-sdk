@@ -224,6 +224,14 @@ namespace Hl7.Fhir.Model
       if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Author is not null) callback(PocoDictionary.ComposeChoiceElementName("author", Author),Author);
+      if (TimeElement is not null) callback("time",TimeElement);
+      if (Text is not null) callback("text",Text);
+    }
+
   }
 
 }

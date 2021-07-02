@@ -175,6 +175,12 @@ namespace Hl7.Fhir.Model
         if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Item is not null) callback(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+      }
+
     }
 
     /// <summary>
@@ -422,6 +428,18 @@ namespace Hl7.Fhir.Model
       if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
       if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
       if (Management is not null) yield return new KeyValuePair<string,object>("management",Management);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Subject?.Any() == true) callback("subject",Subject);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Interactant?.Any() == true) callback("interactant",Interactant);
+      if (Type is not null) callback("type",Type);
+      if (Effect is not null) callback("effect",Effect);
+      if (Incidence is not null) callback("incidence",Incidence);
+      if (Management is not null) callback("management",Management);
     }
 
   }

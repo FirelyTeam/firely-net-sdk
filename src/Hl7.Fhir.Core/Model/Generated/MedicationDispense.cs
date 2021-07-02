@@ -250,6 +250,13 @@ namespace Hl7.Fhir.Model
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Function is not null) callback("function",Function);
+        if (Actor is not null) callback("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -445,6 +452,15 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
         if (ResponsibleParty?.Any() == true) yield return new KeyValuePair<string,object>("responsibleParty",ResponsibleParty);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (WasSubstitutedElement is not null) callback("wasSubstituted",WasSubstitutedElement);
+        if (Type is not null) callback("type",Type);
+        if (Reason?.Any() == true) callback("reason",Reason);
+        if (ResponsibleParty?.Any() == true) callback("responsibleParty",ResponsibleParty);
       }
 
     }
@@ -1154,6 +1170,35 @@ namespace Hl7.Fhir.Model
       if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
       if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
       if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback(PocoDictionary.ComposeChoiceElementName("statusReason", StatusReason),StatusReason);
+      if (Category is not null) callback("category",Category);
+      if (Medication is not null) callback(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      if (Subject is not null) callback("subject",Subject);
+      if (Context is not null) callback("context",Context);
+      if (SupportingInformation?.Any() == true) callback("supportingInformation",SupportingInformation);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (Location is not null) callback("location",Location);
+      if (AuthorizingPrescription?.Any() == true) callback("authorizingPrescription",AuthorizingPrescription);
+      if (Type is not null) callback("type",Type);
+      if (Quantity is not null) callback("quantity",Quantity);
+      if (DaysSupply is not null) callback("daysSupply",DaysSupply);
+      if (WhenPreparedElement is not null) callback("whenPrepared",WhenPreparedElement);
+      if (WhenHandedOverElement is not null) callback("whenHandedOver",WhenHandedOverElement);
+      if (Destination is not null) callback("destination",Destination);
+      if (Receiver?.Any() == true) callback("receiver",Receiver);
+      if (Note?.Any() == true) callback("note",Note);
+      if (DosageInstruction?.Any() == true) callback("dosageInstruction",DosageInstruction);
+      if (Substitution is not null) callback("substitution",Substitution);
+      if (DetectedIssue?.Any() == true) callback("detectedIssue",DetectedIssue);
+      if (EventHistory?.Any() == true) callback("eventHistory",EventHistory);
     }
 
   }

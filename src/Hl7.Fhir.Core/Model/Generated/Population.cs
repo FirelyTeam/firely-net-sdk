@@ -226,6 +226,15 @@ namespace Hl7.Fhir.Model
       if (PhysiologicalCondition is not null) yield return new KeyValuePair<string,object>("physiologicalCondition",PhysiologicalCondition);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Age is not null) callback(PocoDictionary.ComposeChoiceElementName("age", Age),Age);
+      if (Gender is not null) callback("gender",Gender);
+      if (Race is not null) callback("race",Race);
+      if (PhysiologicalCondition is not null) callback("physiologicalCondition",PhysiologicalCondition);
+    }
+
   }
 
 }

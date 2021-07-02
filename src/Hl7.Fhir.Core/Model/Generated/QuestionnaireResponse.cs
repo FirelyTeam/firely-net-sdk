@@ -346,6 +346,16 @@ namespace Hl7.Fhir.Model
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LinkIdElement is not null) callback("linkId",LinkIdElement);
+        if (DefinitionElement is not null) callback("definition",DefinitionElement);
+        if (TextElement is not null) callback("text",TextElement);
+        if (Answer?.Any() == true) callback("answer",Answer);
+        if (Item?.Any() == true) callback("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -488,6 +498,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Item?.Any() == true) callback("item",Item);
       }
 
     }
@@ -874,6 +891,22 @@ namespace Hl7.Fhir.Model
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
       if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (PartOf?.Any() == true) callback("partOf",PartOf);
+      if (QuestionnaireElement is not null) callback("questionnaire",QuestionnaireElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (AuthoredElement is not null) callback("authored",AuthoredElement);
+      if (Author is not null) callback("author",Author);
+      if (Source is not null) callback("source",Source);
+      if (Item?.Any() == true) callback("item",Item);
     }
 
   }

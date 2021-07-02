@@ -455,6 +455,14 @@ namespace Hl7.Fhir.Model
         if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (StateElement is not null) callback("state",StateElement);
+        if (TimeElement is not null) callback("time",TimeElement);
+      }
+
     }
 
     /// <summary>
@@ -811,6 +819,21 @@ namespace Hl7.Fhir.Model
       if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
       if (MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",MeasurementPeriod);
       if (Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",Calibration);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Type is not null) callback("type",Type);
+      if (Unit is not null) callback("unit",Unit);
+      if (Source is not null) callback("source",Source);
+      if (Parent is not null) callback("parent",Parent);
+      if (OperationalStatusElement is not null) callback("operationalStatus",OperationalStatusElement);
+      if (ColorElement is not null) callback("color",ColorElement);
+      if (CategoryElement is not null) callback("category",CategoryElement);
+      if (MeasurementPeriod is not null) callback("measurementPeriod",MeasurementPeriod);
+      if (Calibration?.Any() == true) callback("calibration",Calibration);
     }
 
   }

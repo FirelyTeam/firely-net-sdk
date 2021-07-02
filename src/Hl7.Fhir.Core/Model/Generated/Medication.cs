@@ -265,6 +265,14 @@ namespace Hl7.Fhir.Model
         if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Item is not null) callback(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (IsActiveElement is not null) callback("isActive",IsActiveElement);
+        if (Strength is not null) callback("strength",Strength);
+      }
+
     }
 
     /// <summary>
@@ -429,6 +437,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
         if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LotNumberElement is not null) callback("lotNumber",LotNumberElement);
+        if (ExpirationDateElement is not null) callback("expirationDate",ExpirationDateElement);
       }
 
     }
@@ -701,6 +716,19 @@ namespace Hl7.Fhir.Model
       if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
       if (Batch is not null) yield return new KeyValuePair<string,object>("batch",Batch);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Code is not null) callback("code",Code);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Manufacturer is not null) callback("manufacturer",Manufacturer);
+      if (Form is not null) callback("form",Form);
+      if (Amount is not null) callback("amount",Amount);
+      if (Ingredient?.Any() == true) callback("ingredient",Ingredient);
+      if (Batch is not null) callback("batch",Batch);
     }
 
   }

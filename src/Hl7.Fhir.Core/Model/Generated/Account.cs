@@ -244,6 +244,13 @@ namespace Hl7.Fhir.Model
         if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Coverage is not null) callback("coverage",Coverage);
+        if (PriorityElement is not null) callback("priority",PriorityElement);
+      }
+
     }
 
     /// <summary>
@@ -415,6 +422,14 @@ namespace Hl7.Fhir.Model
         if (Party is not null) yield return new KeyValuePair<string,object>("party",Party);
         if (OnHoldElement is not null) yield return new KeyValuePair<string,object>("onHold",OnHoldElement);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Party is not null) callback("party",Party);
+        if (OnHoldElement is not null) callback("onHold",OnHoldElement);
+        if (Period is not null) callback("period",Period);
       }
 
     }
@@ -796,6 +811,22 @@ namespace Hl7.Fhir.Model
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Guarantor?.Any() == true) yield return new KeyValuePair<string,object>("guarantor",Guarantor);
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (NameElement is not null) callback("name",NameElement);
+      if (Subject?.Any() == true) callback("subject",Subject);
+      if (ServicePeriod is not null) callback("servicePeriod",ServicePeriod);
+      if (Coverage?.Any() == true) callback("coverage",Coverage);
+      if (Owner is not null) callback("owner",Owner);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Guarantor?.Any() == true) callback("guarantor",Guarantor);
+      if (PartOf is not null) callback("partOf",PartOf);
     }
 
   }

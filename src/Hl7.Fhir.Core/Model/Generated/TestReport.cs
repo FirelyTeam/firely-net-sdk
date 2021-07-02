@@ -398,6 +398,14 @@ namespace Hl7.Fhir.Model
         if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (UriElement is not null) callback("uri",UriElement);
+        if (DisplayElement is not null) callback("display",DisplayElement);
+      }
+
     }
 
     /// <summary>
@@ -505,6 +513,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Action?.Any() == true) callback("action",Action);
       }
 
     }
@@ -635,6 +649,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
         if (Assert is not null) yield return new KeyValuePair<string,object>("assert",Assert);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Operation is not null) callback("operation",Operation);
+        if (Assert is not null) callback("assert",Assert);
       }
 
     }
@@ -827,6 +848,14 @@ namespace Hl7.Fhir.Model
         if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ResultElement is not null) callback("result",ResultElement);
+        if (Message is not null) callback("message",Message);
+        if (DetailElement is not null) callback("detail",DetailElement);
+      }
+
     }
 
     /// <summary>
@@ -1015,6 +1044,14 @@ namespace Hl7.Fhir.Model
         if (ResultElement is not null) yield return new KeyValuePair<string,object>("result",ResultElement);
         if (Message is not null) yield return new KeyValuePair<string,object>("message",Message);
         if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (ResultElement is not null) callback("result",ResultElement);
+        if (Message is not null) callback("message",Message);
+        if (DetailElement is not null) callback("detail",DetailElement);
       }
 
     }
@@ -1206,6 +1243,14 @@ namespace Hl7.Fhir.Model
         if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Action?.Any() == true) callback("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -1336,6 +1381,13 @@ namespace Hl7.Fhir.Model
         if (Assert is not null) yield return new KeyValuePair<string,object>("assert",Assert);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Operation is not null) callback("operation",Operation);
+        if (Assert is not null) callback("assert",Assert);
+      }
+
     }
 
     /// <summary>
@@ -1445,6 +1497,12 @@ namespace Hl7.Fhir.Model
         if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Action?.Any() == true) callback("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -1552,6 +1610,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Operation is not null) yield return new KeyValuePair<string,object>("operation",Operation);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Operation is not null) callback("operation",Operation);
       }
 
     }
@@ -2006,6 +2070,23 @@ namespace Hl7.Fhir.Model
       if (Setup is not null) yield return new KeyValuePair<string,object>("setup",Setup);
       if (Test?.Any() == true) yield return new KeyValuePair<string,object>("test",Test);
       if (Teardown is not null) yield return new KeyValuePair<string,object>("teardown",Teardown);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (NameElement is not null) callback("name",NameElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (TestScript is not null) callback("testScript",TestScript);
+      if (ResultElement is not null) callback("result",ResultElement);
+      if (ScoreElement is not null) callback("score",ScoreElement);
+      if (TesterElement is not null) callback("tester",TesterElement);
+      if (IssuedElement is not null) callback("issued",IssuedElement);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (Setup is not null) callback("setup",Setup);
+      if (Test?.Any() == true) callback("test",Test);
+      if (Teardown is not null) callback("teardown",Teardown);
     }
 
   }

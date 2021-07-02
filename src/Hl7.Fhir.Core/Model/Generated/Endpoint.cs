@@ -515,6 +515,22 @@ namespace Hl7.Fhir.Model
       if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ConnectionType is not null) callback("connectionType",ConnectionType);
+      if (NameElement is not null) callback("name",NameElement);
+      if (ManagingOrganization is not null) callback("managingOrganization",ManagingOrganization);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Period is not null) callback("period",Period);
+      if (PayloadType?.Any() == true) callback("payloadType",PayloadType);
+      if (PayloadMimeTypeElement?.Any() == true) callback("payloadMimeType",PayloadMimeTypeElement);
+      if (AddressElement is not null) callback("address",AddressElement);
+      if (HeaderElement?.Any() == true) callback("header",HeaderElement);
+    }
+
   }
 
 }

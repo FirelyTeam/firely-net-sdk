@@ -296,6 +296,15 @@ namespace Hl7.Fhir.Model
         if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (Target is not null) callback("target",Target);
+        if (EndpointElement is not null) callback("endpoint",EndpointElement);
+        if (Receiver is not null) callback("receiver",Receiver);
+      }
+
     }
 
     /// <summary>
@@ -565,6 +574,16 @@ namespace Hl7.Fhir.Model
         if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (SoftwareElement is not null) callback("software",SoftwareElement);
+        if (VersionElement is not null) callback("version",VersionElement);
+        if (Contact is not null) callback("contact",Contact);
+        if (EndpointElement is not null) callback("endpoint",EndpointElement);
+      }
+
     }
 
     /// <summary>
@@ -756,6 +775,14 @@ namespace Hl7.Fhir.Model
         if (IdentifierElement is not null) yield return new KeyValuePair<string,object>("identifier",IdentifierElement);
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (Details is not null) yield return new KeyValuePair<string,object>("details",Details);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (IdentifierElement is not null) callback("identifier",IdentifierElement);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (Details is not null) callback("details",Details);
       }
 
     }
@@ -1115,6 +1142,22 @@ namespace Hl7.Fhir.Model
       if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
       if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
       if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Event is not null) callback(PocoDictionary.ComposeChoiceElementName("event", Event),Event);
+      if (Destination?.Any() == true) callback("destination",Destination);
+      if (Sender is not null) callback("sender",Sender);
+      if (Enterer is not null) callback("enterer",Enterer);
+      if (Author is not null) callback("author",Author);
+      if (Source is not null) callback("source",Source);
+      if (Responsible is not null) callback("responsible",Responsible);
+      if (Reason is not null) callback("reason",Reason);
+      if (Response is not null) callback("response",Response);
+      if (Focus?.Any() == true) callback("focus",Focus);
+      if (DefinitionElement is not null) callback("definition",DefinitionElement);
     }
 
   }

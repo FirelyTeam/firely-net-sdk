@@ -429,6 +429,18 @@ namespace Hl7.Fhir.Model
         if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (InitialFill is not null) callback("initialFill",InitialFill);
+        if (DispenseInterval is not null) callback("dispenseInterval",DispenseInterval);
+        if (ValidityPeriod is not null) callback("validityPeriod",ValidityPeriod);
+        if (NumberOfRepeatsAllowedElement is not null) callback("numberOfRepeatsAllowed",NumberOfRepeatsAllowedElement);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (ExpectedSupplyDuration is not null) callback("expectedSupplyDuration",ExpectedSupplyDuration);
+        if (Performer is not null) callback("performer",Performer);
+      }
+
     }
 
     /// <summary>
@@ -557,6 +569,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Duration is not null) callback("duration",Duration);
       }
 
     }
@@ -700,6 +719,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Allowed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Allowed is not null) callback(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
+        if (Reason is not null) callback("reason",Reason);
       }
 
     }
@@ -1668,6 +1694,43 @@ namespace Hl7.Fhir.Model
       if (PriorPrescription is not null) yield return new KeyValuePair<string,object>("priorPrescription",PriorPrescription);
       if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
       if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusReason is not null) callback("statusReason",StatusReason);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (DoNotPerformElement is not null) callback("doNotPerform",DoNotPerformElement);
+      if (Reported is not null) callback(PocoDictionary.ComposeChoiceElementName("reported", Reported),Reported);
+      if (Medication is not null) callback(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (SupportingInformation?.Any() == true) callback("supportingInformation",SupportingInformation);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (Performer is not null) callback("performer",Performer);
+      if (PerformerType is not null) callback("performerType",PerformerType);
+      if (Recorder is not null) callback("recorder",Recorder);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (GroupIdentifier is not null) callback("groupIdentifier",GroupIdentifier);
+      if (CourseOfTherapyType is not null) callback("courseOfTherapyType",CourseOfTherapyType);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (Note?.Any() == true) callback("note",Note);
+      if (DosageInstruction?.Any() == true) callback("dosageInstruction",DosageInstruction);
+      if (DispenseRequest is not null) callback("dispenseRequest",DispenseRequest);
+      if (Substitution is not null) callback("substitution",Substitution);
+      if (PriorPrescription is not null) callback("priorPrescription",PriorPrescription);
+      if (DetectedIssue?.Any() == true) callback("detectedIssue",DetectedIssue);
+      if (EventHistory?.Any() == true) callback("eventHistory",EventHistory);
     }
 
   }

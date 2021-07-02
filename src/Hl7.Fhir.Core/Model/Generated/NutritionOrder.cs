@@ -294,6 +294,17 @@ namespace Hl7.Fhir.Model
         if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type?.Any() == true) callback("type",Type);
+        if (Schedule?.Any() == true) callback("schedule",Schedule);
+        if (Nutrient?.Any() == true) callback("nutrient",Nutrient);
+        if (Texture?.Any() == true) callback("texture",Texture);
+        if (FluidConsistencyType?.Any() == true) callback("fluidConsistencyType",FluidConsistencyType);
+        if (InstructionElement is not null) callback("instruction",InstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -424,6 +435,13 @@ namespace Hl7.Fhir.Model
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Modifier is not null) callback("modifier",Modifier);
+        if (Amount is not null) callback("amount",Amount);
+      }
+
     }
 
     /// <summary>
@@ -552,6 +570,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (FoodType is not null) yield return new KeyValuePair<string,object>("foodType",FoodType);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Modifier is not null) callback("modifier",Modifier);
+        if (FoodType is not null) callback("foodType",FoodType);
       }
 
     }
@@ -785,6 +810,16 @@ namespace Hl7.Fhir.Model
         if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (ProductNameElement is not null) callback("productName",ProductNameElement);
+        if (Schedule?.Any() == true) callback("schedule",Schedule);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (InstructionElement is not null) callback("instruction",InstructionElement);
       }
 
     }
@@ -1126,6 +1161,20 @@ namespace Hl7.Fhir.Model
         if (AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",AdministrationInstructionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (BaseFormulaType is not null) callback("baseFormulaType",BaseFormulaType);
+        if (BaseFormulaProductNameElement is not null) callback("baseFormulaProductName",BaseFormulaProductNameElement);
+        if (AdditiveType is not null) callback("additiveType",AdditiveType);
+        if (AdditiveProductNameElement is not null) callback("additiveProductName",AdditiveProductNameElement);
+        if (CaloricDensity is not null) callback("caloricDensity",CaloricDensity);
+        if (RouteofAdministration is not null) callback("routeofAdministration",RouteofAdministration);
+        if (Administration?.Any() == true) callback("administration",Administration);
+        if (MaxVolumeToDeliver is not null) callback("maxVolumeToDeliver",MaxVolumeToDeliver);
+        if (AdministrationInstructionElement is not null) callback("administrationInstruction",AdministrationInstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -1288,6 +1337,14 @@ namespace Hl7.Fhir.Model
         if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Schedule is not null) callback("schedule",Schedule);
+        if (Quantity is not null) callback("quantity",Quantity);
+        if (Rate is not null) callback(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
       }
 
     }
@@ -1866,6 +1923,28 @@ namespace Hl7.Fhir.Model
       if (Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",Supplement);
       if (EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",EnteralFormula);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (InstantiatesElement?.Any() == true) callback("instantiates",InstantiatesElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (Patient is not null) callback("patient",Patient);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (DateTimeElement is not null) callback("dateTime",DateTimeElement);
+      if (Orderer is not null) callback("orderer",Orderer);
+      if (AllergyIntolerance?.Any() == true) callback("allergyIntolerance",AllergyIntolerance);
+      if (FoodPreferenceModifier?.Any() == true) callback("foodPreferenceModifier",FoodPreferenceModifier);
+      if (ExcludeFoodModifier?.Any() == true) callback("excludeFoodModifier",ExcludeFoodModifier);
+      if (OralDiet is not null) callback("oralDiet",OralDiet);
+      if (Supplement?.Any() == true) callback("supplement",Supplement);
+      if (EnteralFormula is not null) callback("enteralFormula",EnteralFormula);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

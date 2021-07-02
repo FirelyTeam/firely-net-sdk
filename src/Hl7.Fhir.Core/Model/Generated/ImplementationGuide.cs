@@ -2450,6 +2450,14 @@ namespace Hl7.Fhir.Model
         if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (UriElement is not null) callback("uri",UriElement);
+        if (PackageIdElement is not null) callback("packageId",PackageIdElement);
+        if (VersionElement is not null) callback("version",VersionElement);
+      }
+
     }
 
     /// <summary>
@@ -2617,6 +2625,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (ProfileElement is not null) yield return new KeyValuePair<string,object>("profile",ProfileElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (ProfileElement is not null) callback("profile",ProfileElement);
       }
 
     }
@@ -2819,6 +2834,16 @@ namespace Hl7.Fhir.Model
         if (Template?.Any() == true) yield return new KeyValuePair<string,object>("template",Template);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Grouping?.Any() == true) callback("grouping",Grouping);
+        if (Resource?.Any() == true) callback("resource",Resource);
+        if (Page is not null) callback("page",Page);
+        if (Parameter?.Any() == true) callback("parameter",Parameter);
+        if (Template?.Any() == true) callback("template",Template);
+      }
+
     }
 
     /// <summary>
@@ -2984,6 +3009,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
       }
 
     }
@@ -3293,6 +3325,17 @@ namespace Hl7.Fhir.Model
         if (GroupingIdElement is not null) yield return new KeyValuePair<string,object>("groupingId",GroupingIdElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Reference is not null) callback("reference",Reference);
+        if (FhirVersionElement?.Any() == true) callback("fhirVersion",FhirVersionElement);
+        if (NameElement is not null) callback("name",NameElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Example is not null) callback(PocoDictionary.ComposeChoiceElementName("example", Example),Example);
+        if (GroupingIdElement is not null) callback("groupingId",GroupingIdElement);
+      }
+
     }
 
     /// <summary>
@@ -3521,6 +3564,15 @@ namespace Hl7.Fhir.Model
         if (Page?.Any() == true) yield return new KeyValuePair<string,object>("page",Page);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Name is not null) callback(PocoDictionary.ComposeChoiceElementName("name", Name),Name);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (GenerationElement is not null) callback("generation",GenerationElement);
+        if (Page?.Any() == true) callback("page",Page);
+      }
+
     }
 
     /// <summary>
@@ -3688,6 +3740,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (ValueElement is not null) callback("value",ValueElement);
       }
 
     }
@@ -3896,6 +3955,14 @@ namespace Hl7.Fhir.Model
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
         if (ScopeElement is not null) yield return new KeyValuePair<string,object>("scope",ScopeElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (SourceElement is not null) callback("source",SourceElement);
+        if (ScopeElement is not null) callback("scope",ScopeElement);
       }
 
     }
@@ -4152,6 +4219,16 @@ namespace Hl7.Fhir.Model
         if (OtherElement?.Any() == true) yield return new KeyValuePair<string,object>("other",OtherElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RenderingElement is not null) callback("rendering",RenderingElement);
+        if (Resource?.Any() == true) callback("resource",Resource);
+        if (Page?.Any() == true) callback("page",Page);
+        if (ImageElement?.Any() == true) callback("image",ImageElement);
+        if (OtherElement?.Any() == true) callback("other",OtherElement);
+      }
+
     }
 
     /// <summary>
@@ -4335,6 +4412,14 @@ namespace Hl7.Fhir.Model
         if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
         if (Example is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("example", Example),Example);
         if (RelativePathElement is not null) yield return new KeyValuePair<string,object>("relativePath",RelativePathElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Reference is not null) callback("reference",Reference);
+        if (Example is not null) callback(PocoDictionary.ComposeChoiceElementName("example", Example),Example);
+        if (RelativePathElement is not null) callback("relativePath",RelativePathElement);
       }
 
     }
@@ -4543,6 +4628,14 @@ namespace Hl7.Fhir.Model
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (AnchorElement?.Any() == true) yield return new KeyValuePair<string,object>("anchor",AnchorElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (NameElement is not null) callback("name",NameElement);
+        if (TitleElement is not null) callback("title",TitleElement);
+        if (AnchorElement?.Any() == true) callback("anchor",AnchorElement);
       }
 
     }
@@ -5267,6 +5360,31 @@ namespace Hl7.Fhir.Model
       if (Global?.Any() == true) yield return new KeyValuePair<string,object>("global",Global);
       if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
       if (Manifest is not null) yield return new KeyValuePair<string,object>("manifest",Manifest);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (PackageIdElement is not null) callback("packageId",PackageIdElement);
+      if (LicenseElement is not null) callback("license",LicenseElement);
+      if (FhirVersionElement?.Any() == true) callback("fhirVersion",FhirVersionElement);
+      if (DependsOn?.Any() == true) callback("dependsOn",DependsOn);
+      if (Global?.Any() == true) callback("global",Global);
+      if (Definition is not null) callback("definition",Definition);
+      if (Manifest is not null) callback("manifest",Manifest);
     }
 
   }

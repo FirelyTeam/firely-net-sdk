@@ -251,6 +251,16 @@ namespace Hl7.Fhir.Model
         if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier?.Any() == true) callback("identifier",Identifier);
+        if (Country is not null) callback("country",Country);
+        if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+        if (LegalStatusOfSupply is not null) callback("legalStatusOfSupply",LegalStatusOfSupply);
+        if (ValidityPeriod is not null) callback("validityPeriod",ValidityPeriod);
+      }
+
     }
 
     /// <summary>
@@ -437,6 +447,15 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Date is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("date", Date),Date);
         if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (Type is not null) callback("type",Type);
+        if (Date is not null) callback(PocoDictionary.ComposeChoiceElementName("date", Date),Date);
+        if (Application?.Any() == true) callback("application",Application);
       }
 
     }
@@ -944,6 +963,27 @@ namespace Hl7.Fhir.Model
       if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
       if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
       if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (Subject is not null) callback("subject",Subject);
+      if (Country?.Any() == true) callback("country",Country);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Status is not null) callback("status",Status);
+      if (StatusDateElement is not null) callback("statusDate",StatusDateElement);
+      if (RestoreDateElement is not null) callback("restoreDate",RestoreDateElement);
+      if (ValidityPeriod is not null) callback("validityPeriod",ValidityPeriod);
+      if (DataExclusivityPeriod is not null) callback("dataExclusivityPeriod",DataExclusivityPeriod);
+      if (DateOfFirstAuthorizationElement is not null) callback("dateOfFirstAuthorization",DateOfFirstAuthorizationElement);
+      if (InternationalBirthDateElement is not null) callback("internationalBirthDate",InternationalBirthDateElement);
+      if (LegalBasis is not null) callback("legalBasis",LegalBasis);
+      if (JurisdictionalAuthorization?.Any() == true) callback("jurisdictionalAuthorization",JurisdictionalAuthorization);
+      if (Holder is not null) callback("holder",Holder);
+      if (Regulator is not null) callback("regulator",Regulator);
+      if (Procedure is not null) callback("procedure",Procedure);
     }
 
   }

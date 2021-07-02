@@ -240,6 +240,16 @@ namespace Hl7.Fhir.Model
       if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Subject?.Any() == true) callback("subject",Subject);
+      if (SymptomConditionEffect is not null) callback("symptomConditionEffect",SymptomConditionEffect);
+      if (Classification is not null) callback("classification",Classification);
+      if (FrequencyOfOccurrence is not null) callback("frequencyOfOccurrence",FrequencyOfOccurrence);
+      if (Population?.Any() == true) callback("population",Population);
+    }
+
   }
 
 }

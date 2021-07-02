@@ -283,6 +283,13 @@ namespace Hl7.Fhir.Model
         if (Causality?.Any() == true) yield return new KeyValuePair<string,object>("causality",Causality);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Instance is not null) callback("instance",Instance);
+        if (Causality?.Any() == true) callback("causality",Causality);
+      }
+
     }
 
     /// <summary>
@@ -475,6 +482,15 @@ namespace Hl7.Fhir.Model
         if (ProductRelatednessElement is not null) yield return new KeyValuePair<string,object>("productRelatedness",ProductRelatednessElement);
         if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Assessment is not null) callback("assessment",Assessment);
+        if (ProductRelatednessElement is not null) callback("productRelatedness",ProductRelatednessElement);
+        if (Author is not null) callback("author",Author);
+        if (Method is not null) callback("method",Method);
       }
 
     }
@@ -1088,6 +1104,31 @@ namespace Hl7.Fhir.Model
       if (SubjectMedicalHistory?.Any() == true) yield return new KeyValuePair<string,object>("subjectMedicalHistory",SubjectMedicalHistory);
       if (ReferenceDocument?.Any() == true) yield return new KeyValuePair<string,object>("referenceDocument",ReferenceDocument);
       if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (ActualityElement is not null) callback("actuality",ActualityElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Event is not null) callback("event",Event);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (DateElement is not null) callback("date",DateElement);
+      if (DetectedElement is not null) callback("detected",DetectedElement);
+      if (RecordedDateElement is not null) callback("recordedDate",RecordedDateElement);
+      if (ResultingCondition?.Any() == true) callback("resultingCondition",ResultingCondition);
+      if (Location is not null) callback("location",Location);
+      if (Seriousness is not null) callback("seriousness",Seriousness);
+      if (Severity is not null) callback("severity",Severity);
+      if (Outcome is not null) callback("outcome",Outcome);
+      if (Recorder is not null) callback("recorder",Recorder);
+      if (Contributor?.Any() == true) callback("contributor",Contributor);
+      if (SuspectEntity?.Any() == true) callback("suspectEntity",SuspectEntity);
+      if (SubjectMedicalHistory?.Any() == true) callback("subjectMedicalHistory",SubjectMedicalHistory);
+      if (ReferenceDocument?.Any() == true) callback("referenceDocument",ReferenceDocument);
+      if (Study?.Any() == true) callback("study",Study);
     }
 
   }

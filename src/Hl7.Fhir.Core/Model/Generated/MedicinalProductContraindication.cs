@@ -198,6 +198,13 @@ namespace Hl7.Fhir.Model
         if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TherapyRelationshipType is not null) callback("therapyRelationshipType",TherapyRelationshipType);
+        if (Medication is not null) callback(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      }
+
     }
 
     /// <summary>
@@ -432,6 +439,18 @@ namespace Hl7.Fhir.Model
       if (TherapeuticIndication?.Any() == true) yield return new KeyValuePair<string,object>("therapeuticIndication",TherapeuticIndication);
       if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
       if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Subject?.Any() == true) callback("subject",Subject);
+      if (Disease is not null) callback("disease",Disease);
+      if (DiseaseStatus is not null) callback("diseaseStatus",DiseaseStatus);
+      if (Comorbidity?.Any() == true) callback("comorbidity",Comorbidity);
+      if (TherapeuticIndication?.Any() == true) callback("therapeuticIndication",TherapeuticIndication);
+      if (OtherTherapy?.Any() == true) callback("otherTherapy",OtherTherapy);
+      if (Population?.Any() == true) callback("population",Population);
     }
 
   }

@@ -395,6 +395,19 @@ namespace Hl7.Fhir.Model
         if (Handling?.Any() == true) yield return new KeyValuePair<string,object>("handling",Handling);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (IsDerivedElement is not null) callback("isDerived",IsDerivedElement);
+        if (Type is not null) callback("type",Type);
+        if (PreferenceElement is not null) callback("preference",PreferenceElement);
+        if (Container is not null) callback("container",Container);
+        if (RequirementElement is not null) callback("requirement",RequirementElement);
+        if (RetentionTime is not null) callback("retentionTime",RetentionTime);
+        if (RejectionCriterion?.Any() == true) callback("rejectionCriterion",RejectionCriterion);
+        if (Handling?.Any() == true) callback("handling",Handling);
+      }
+
     }
 
     /// <summary>
@@ -706,6 +719,19 @@ namespace Hl7.Fhir.Model
         if (PreparationElement is not null) yield return new KeyValuePair<string,object>("preparation",PreparationElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Material is not null) callback("material",Material);
+        if (Type is not null) callback("type",Type);
+        if (Cap is not null) callback("cap",Cap);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (Capacity is not null) callback("capacity",Capacity);
+        if (MinimumVolume is not null) callback(PocoDictionary.ComposeChoiceElementName("minimumVolume", MinimumVolume),MinimumVolume);
+        if (Additive?.Any() == true) callback("additive",Additive);
+        if (PreparationElement is not null) callback("preparation",PreparationElement);
+      }
+
     }
 
     /// <summary>
@@ -826,6 +852,12 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Additive is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Additive is not null) callback(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
       }
 
     }
@@ -1018,6 +1050,15 @@ namespace Hl7.Fhir.Model
         if (TemperatureRange is not null) yield return new KeyValuePair<string,object>("temperatureRange",TemperatureRange);
         if (MaxDuration is not null) yield return new KeyValuePair<string,object>("maxDuration",MaxDuration);
         if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TemperatureQualifier is not null) callback("temperatureQualifier",TemperatureQualifier);
+        if (TemperatureRange is not null) callback("temperatureRange",TemperatureRange);
+        if (MaxDuration is not null) callback("maxDuration",MaxDuration);
+        if (InstructionElement is not null) callback("instruction",InstructionElement);
       }
 
     }
@@ -1244,6 +1285,17 @@ namespace Hl7.Fhir.Model
       if (TimeAspectElement is not null) yield return new KeyValuePair<string,object>("timeAspect",TimeAspectElement);
       if (Collection?.Any() == true) yield return new KeyValuePair<string,object>("collection",Collection);
       if (TypeTested?.Any() == true) yield return new KeyValuePair<string,object>("typeTested",TypeTested);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier is not null) callback("identifier",Identifier);
+      if (TypeCollected is not null) callback("typeCollected",TypeCollected);
+      if (PatientPreparation?.Any() == true) callback("patientPreparation",PatientPreparation);
+      if (TimeAspectElement is not null) callback("timeAspect",TimeAspectElement);
+      if (Collection?.Any() == true) callback("collection",Collection);
+      if (TypeTested?.Any() == true) callback("typeTested",TypeTested);
     }
 
   }

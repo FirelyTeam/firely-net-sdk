@@ -1070,6 +1070,44 @@ namespace Hl7.Fhir.Model
       if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) callback("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) callback("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Replaces?.Any() == true) callback("replaces",Replaces);
+      if (Requisition is not null) callback("requisition",Requisition);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (IntentElement is not null) callback("intent",IntentElement);
+      if (Category?.Any() == true) callback("category",Category);
+      if (PriorityElement is not null) callback("priority",PriorityElement);
+      if (DoNotPerformElement is not null) callback("doNotPerform",DoNotPerformElement);
+      if (Code is not null) callback("code",Code);
+      if (OrderDetail?.Any() == true) callback("orderDetail",OrderDetail);
+      if (Quantity is not null) callback(PocoDictionary.ComposeChoiceElementName("quantity", Quantity),Quantity);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (Occurrence is not null) callback(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (AsNeeded is not null) callback(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
+      if (AuthoredOnElement is not null) callback("authoredOn",AuthoredOnElement);
+      if (Requester is not null) callback("requester",Requester);
+      if (PerformerType is not null) callback("performerType",PerformerType);
+      if (Performer?.Any() == true) callback("performer",Performer);
+      if (LocationCode?.Any() == true) callback("locationCode",LocationCode);
+      if (LocationReference?.Any() == true) callback("locationReference",LocationReference);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Insurance?.Any() == true) callback("insurance",Insurance);
+      if (SupportingInfo?.Any() == true) callback("supportingInfo",SupportingInfo);
+      if (Specimen?.Any() == true) callback("specimen",Specimen);
+      if (BodySite?.Any() == true) callback("bodySite",BodySite);
+      if (Note?.Any() == true) callback("note",Note);
+      if (PatientInstructionElement is not null) callback("patientInstruction",PatientInstructionElement);
+      if (RelevantHistory?.Any() == true) callback("relevantHistory",RelevantHistory);
+    }
+
   }
 
 }

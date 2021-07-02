@@ -528,6 +528,24 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Subject is not null) callback("subject",Subject);
+      if (DerivedFrom?.Any() == true) callback("derivedFrom",DerivedFrom);
+      if (Timing is not null) callback(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+      if (RecordedOnElement is not null) callback("recordedOn",RecordedOnElement);
+      if (Source is not null) callback("source",Source);
+      if (Device is not null) callback("device",Device);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (BodySite is not null) callback("bodySite",BodySite);
+      if (Note?.Any() == true) callback("note",Note);
+    }
+
   }
 
 }

@@ -543,6 +543,23 @@ namespace Hl7.Fhir.Model
         if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (UidElement is not null) callback("uid",UidElement);
+        if (NumberElement is not null) callback("number",NumberElement);
+        if (Modality is not null) callback("modality",Modality);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (NumberOfInstancesElement is not null) callback("numberOfInstances",NumberOfInstancesElement);
+        if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
+        if (BodySite is not null) callback("bodySite",BodySite);
+        if (Laterality is not null) callback("laterality",Laterality);
+        if (Specimen?.Any() == true) callback("specimen",Specimen);
+        if (StartedElement is not null) callback("started",StartedElement);
+        if (Performer?.Any() == true) callback("performer",Performer);
+        if (Instance?.Any() == true) callback("instance",Instance);
+      }
+
     }
 
     /// <summary>
@@ -674,6 +691,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Function is not null) callback("function",Function);
+        if (Actor is not null) callback("actor",Actor);
       }
 
     }
@@ -904,6 +928,15 @@ namespace Hl7.Fhir.Model
         if (SopClass is not null) yield return new KeyValuePair<string,object>("sopClass",SopClass);
         if (NumberElement is not null) yield return new KeyValuePair<string,object>("number",NumberElement);
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (UidElement is not null) callback("uid",UidElement);
+        if (SopClass is not null) callback("sopClass",SopClass);
+        if (NumberElement is not null) callback("number",NumberElement);
+        if (TitleElement is not null) callback("title",TitleElement);
       }
 
     }
@@ -1538,6 +1571,31 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Series?.Any() == true) yield return new KeyValuePair<string,object>("series",Series);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Modality?.Any() == true) callback("modality",Modality);
+      if (Subject is not null) callback("subject",Subject);
+      if (Encounter is not null) callback("encounter",Encounter);
+      if (StartedElement is not null) callback("started",StartedElement);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Referrer is not null) callback("referrer",Referrer);
+      if (Interpreter?.Any() == true) callback("interpreter",Interpreter);
+      if (Endpoint?.Any() == true) callback("endpoint",Endpoint);
+      if (NumberOfSeriesElement is not null) callback("numberOfSeries",NumberOfSeriesElement);
+      if (NumberOfInstancesElement is not null) callback("numberOfInstances",NumberOfInstancesElement);
+      if (ProcedureReference is not null) callback("procedureReference",ProcedureReference);
+      if (ProcedureCode?.Any() == true) callback("procedureCode",ProcedureCode);
+      if (Location is not null) callback("location",Location);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Note?.Any() == true) callback("note",Note);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Series?.Any() == true) callback("series",Series);
     }
 
   }

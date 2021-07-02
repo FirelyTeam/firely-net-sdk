@@ -463,6 +463,23 @@ namespace Hl7.Fhir.Model
       if (PaymentStatus is not null) yield return new KeyValuePair<string,object>("paymentStatus",PaymentStatus);
     }
 
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Request is not null) callback("request",Request);
+      if (Response is not null) callback("response",Response);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Provider is not null) callback("provider",Provider);
+      if (Payment is not null) callback("payment",Payment);
+      if (PaymentDateElement is not null) callback("paymentDate",PaymentDateElement);
+      if (Payee is not null) callback("payee",Payee);
+      if (Recipient is not null) callback("recipient",Recipient);
+      if (Amount is not null) callback("amount",Amount);
+      if (PaymentStatus is not null) callback("paymentStatus",PaymentStatus);
+    }
+
   }
 
 }

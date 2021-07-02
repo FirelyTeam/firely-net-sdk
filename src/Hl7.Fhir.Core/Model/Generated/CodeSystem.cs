@@ -429,6 +429,15 @@ namespace Hl7.Fhir.Model
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (OperatorElement?.Any() == true) callback("operator",OperatorElement);
+        if (ValueElement is not null) callback("value",ValueElement);
+      }
+
     }
 
     /// <summary>
@@ -676,6 +685,15 @@ namespace Hl7.Fhir.Model
         if (UriElement is not null) yield return new KeyValuePair<string,object>("uri",UriElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (UriElement is not null) callback("uri",UriElement);
+        if (DescriptionElement is not null) callback("description",DescriptionElement);
+        if (TypeElement is not null) callback("type",TypeElement);
       }
 
     }
@@ -954,6 +972,17 @@ namespace Hl7.Fhir.Model
         if (Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",Concept);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (DisplayElement is not null) callback("display",DisplayElement);
+        if (DefinitionElement is not null) callback("definition",DefinitionElement);
+        if (Designation?.Any() == true) callback("designation",Designation);
+        if (Property?.Any() == true) callback("property",Property);
+        if (Concept?.Any() == true) callback("concept",Concept);
+      }
+
     }
 
     /// <summary>
@@ -1143,6 +1172,14 @@ namespace Hl7.Fhir.Model
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (LanguageElement is not null) callback("language",LanguageElement);
+        if (Use is not null) callback("use",Use);
+        if (ValueElement is not null) callback("value",ValueElement);
+      }
+
     }
 
     /// <summary>
@@ -1303,6 +1340,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (CodeElement is not null) callback("code",CodeElement);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
     }
@@ -2248,6 +2292,37 @@ namespace Hl7.Fhir.Model
       if (Filter?.Any() == true) yield return new KeyValuePair<string,object>("filter",Filter);
       if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
       if (Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",Concept);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (UrlElement is not null) callback("url",UrlElement);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (VersionElement is not null) callback("version",VersionElement);
+      if (NameElement is not null) callback("name",NameElement);
+      if (TitleElement is not null) callback("title",TitleElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (ExperimentalElement is not null) callback("experimental",ExperimentalElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (Purpose is not null) callback("purpose",Purpose);
+      if (Copyright is not null) callback("copyright",Copyright);
+      if (CaseSensitiveElement is not null) callback("caseSensitive",CaseSensitiveElement);
+      if (ValueSetElement is not null) callback("valueSet",ValueSetElement);
+      if (HierarchyMeaningElement is not null) callback("hierarchyMeaning",HierarchyMeaningElement);
+      if (CompositionalElement is not null) callback("compositional",CompositionalElement);
+      if (VersionNeededElement is not null) callback("versionNeeded",VersionNeededElement);
+      if (ContentElement is not null) callback("content",ContentElement);
+      if (SupplementsElement is not null) callback("supplements",SupplementsElement);
+      if (CountElement is not null) callback("count",CountElement);
+      if (Filter?.Any() == true) callback("filter",Filter);
+      if (Property?.Any() == true) callback("property",Property);
+      if (Concept?.Any() == true) callback("concept",Concept);
     }
 
   }

@@ -185,6 +185,13 @@ namespace Hl7.Fhir.Model
         if (Ref is not null) yield return new KeyValuePair<string,object>("ref",Ref);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Identifier is not null) callback("identifier",Identifier);
+        if (Ref is not null) callback("ref",Ref);
+      }
+
     }
 
     /// <summary>
@@ -607,6 +614,23 @@ namespace Hl7.Fhir.Model
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
       if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (MasterIdentifier is not null) callback("masterIdentifier",MasterIdentifier);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (Type is not null) callback("type",Type);
+      if (Subject is not null) callback("subject",Subject);
+      if (CreatedElement is not null) callback("created",CreatedElement);
+      if (Author?.Any() == true) callback("author",Author);
+      if (Recipient?.Any() == true) callback("recipient",Recipient);
+      if (SourceElement is not null) callback("source",SourceElement);
+      if (DescriptionElement is not null) callback("description",DescriptionElement);
+      if (Content?.Any() == true) callback("content",Content);
+      if (Related?.Any() == true) callback("related",Related);
     }
 
   }

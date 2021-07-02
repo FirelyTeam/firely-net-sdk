@@ -386,6 +386,16 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (ValueElement is not null) callback("value",ValueElement);
+        if (PreferredElement is not null) callback("preferred",PreferredElement);
+        if (CommentElement is not null) callback("comment",CommentElement);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -879,6 +889,24 @@ namespace Hl7.Fhir.Model
       if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
       if (UniqueId?.Any() == true) yield return new KeyValuePair<string,object>("uniqueId",UniqueId);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (NameElement is not null) callback("name",NameElement);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (KindElement is not null) callback("kind",KindElement);
+      if (DateElement is not null) callback("date",DateElement);
+      if (PublisherElement is not null) callback("publisher",PublisherElement);
+      if (Contact?.Any() == true) callback("contact",Contact);
+      if (ResponsibleElement is not null) callback("responsible",ResponsibleElement);
+      if (Type is not null) callback("type",Type);
+      if (Description is not null) callback("description",Description);
+      if (UseContext?.Any() == true) callback("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) callback("jurisdiction",Jurisdiction);
+      if (UsageElement is not null) callback("usage",UsageElement);
+      if (UniqueId?.Any() == true) callback("uniqueId",UniqueId);
     }
 
   }

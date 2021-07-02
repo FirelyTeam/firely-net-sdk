@@ -304,6 +304,13 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -434,6 +441,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Class is not null) callback("class",Class);
+        if (Period is not null) callback("period",Period);
       }
 
     }
@@ -589,6 +603,14 @@ namespace Hl7.Fhir.Model
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
         if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type?.Any() == true) callback("type",Type);
+        if (Period is not null) callback("period",Period);
+        if (Individual is not null) callback("individual",Individual);
       }
 
     }
@@ -762,6 +784,14 @@ namespace Hl7.Fhir.Model
         if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
         if (Use is not null) yield return new KeyValuePair<string,object>("use",Use);
         if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Condition is not null) callback("condition",Condition);
+        if (Use is not null) callback("use",Use);
+        if (RankElement is not null) callback("rank",RankElement);
       }
 
     }
@@ -1055,6 +1085,20 @@ namespace Hl7.Fhir.Model
         if (DischargeDisposition is not null) yield return new KeyValuePair<string,object>("dischargeDisposition",DischargeDisposition);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PreAdmissionIdentifier is not null) callback("preAdmissionIdentifier",PreAdmissionIdentifier);
+        if (Origin is not null) callback("origin",Origin);
+        if (AdmitSource is not null) callback("admitSource",AdmitSource);
+        if (ReAdmission is not null) callback("reAdmission",ReAdmission);
+        if (DietPreference?.Any() == true) callback("dietPreference",DietPreference);
+        if (SpecialCourtesy?.Any() == true) callback("specialCourtesy",SpecialCourtesy);
+        if (SpecialArrangement?.Any() == true) callback("specialArrangement",SpecialArrangement);
+        if (Destination is not null) callback("destination",Destination);
+        if (DischargeDisposition is not null) callback("dischargeDisposition",DischargeDisposition);
+      }
+
     }
 
     /// <summary>
@@ -1249,6 +1293,15 @@ namespace Hl7.Fhir.Model
         if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
         if (PhysicalType is not null) yield return new KeyValuePair<string,object>("physicalType",PhysicalType);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Location is not null) callback("location",Location);
+        if (StatusElement is not null) callback("status",StatusElement);
+        if (PhysicalType is not null) callback("physicalType",PhysicalType);
+        if (Period is not null) callback("period",Period);
       }
 
     }
@@ -1878,6 +1931,34 @@ namespace Hl7.Fhir.Model
       if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
       if (ServiceProvider is not null) yield return new KeyValuePair<string,object>("serviceProvider",ServiceProvider);
       if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (StatusHistory?.Any() == true) callback("statusHistory",StatusHistory);
+      if (Class is not null) callback("class",Class);
+      if (ClassHistory?.Any() == true) callback("classHistory",ClassHistory);
+      if (Type?.Any() == true) callback("type",Type);
+      if (ServiceType is not null) callback("serviceType",ServiceType);
+      if (Priority is not null) callback("priority",Priority);
+      if (Subject is not null) callback("subject",Subject);
+      if (EpisodeOfCare?.Any() == true) callback("episodeOfCare",EpisodeOfCare);
+      if (BasedOn?.Any() == true) callback("basedOn",BasedOn);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (Appointment?.Any() == true) callback("appointment",Appointment);
+      if (Period is not null) callback("period",Period);
+      if (Length is not null) callback("length",Length);
+      if (ReasonCode?.Any() == true) callback("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) callback("reasonReference",ReasonReference);
+      if (Diagnosis?.Any() == true) callback("diagnosis",Diagnosis);
+      if (Account?.Any() == true) callback("account",Account);
+      if (Hospitalization is not null) callback("hospitalization",Hospitalization);
+      if (Location?.Any() == true) callback("location",Location);
+      if (ServiceProvider is not null) callback("serviceProvider",ServiceProvider);
+      if (PartOf is not null) callback("partOf",PartOf);
     }
 
   }

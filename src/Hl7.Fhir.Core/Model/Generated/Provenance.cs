@@ -273,6 +273,15 @@ namespace Hl7.Fhir.Model
         if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Type is not null) callback("type",Type);
+        if (Role?.Any() == true) callback("role",Role);
+        if (Who is not null) callback("who",Who);
+        if (OnBehalfOf is not null) callback("onBehalfOf",OnBehalfOf);
+      }
+
     }
 
     /// <summary>
@@ -447,6 +456,14 @@ namespace Hl7.Fhir.Model
         if (RoleElement is not null) yield return new KeyValuePair<string,object>("role",RoleElement);
         if (What is not null) yield return new KeyValuePair<string,object>("what",What);
         if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (RoleElement is not null) callback("role",RoleElement);
+        if (What is not null) callback("what",What);
+        if (Agent?.Any() == true) callback("agent",Agent);
       }
 
     }
@@ -799,6 +816,21 @@ namespace Hl7.Fhir.Model
       if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
       if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
       if (Signature?.Any() == true) yield return new KeyValuePair<string,object>("signature",Signature);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Target?.Any() == true) callback("target",Target);
+      if (Occurred is not null) callback(PocoDictionary.ComposeChoiceElementName("occurred", Occurred),Occurred);
+      if (RecordedElement is not null) callback("recorded",RecordedElement);
+      if (PolicyElement?.Any() == true) callback("policy",PolicyElement);
+      if (Location is not null) callback("location",Location);
+      if (Reason?.Any() == true) callback("reason",Reason);
+      if (Activity is not null) callback("activity",Activity);
+      if (Agent?.Any() == true) callback("agent",Agent);
+      if (Entity?.Any() == true) callback("entity",Entity);
+      if (Signature?.Any() == true) callback("signature",Signature);
     }
 
   }

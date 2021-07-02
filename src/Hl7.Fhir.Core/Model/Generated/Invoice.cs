@@ -226,6 +226,13 @@ namespace Hl7.Fhir.Model
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Role is not null) callback("role",Role);
+        if (Actor is not null) callback("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -409,6 +416,14 @@ namespace Hl7.Fhir.Model
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
         if (ChargeItem is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("chargeItem", ChargeItem),ChargeItem);
         if (PriceComponent?.Any() == true) yield return new KeyValuePair<string,object>("priceComponent",PriceComponent);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (SequenceElement is not null) callback("sequence",SequenceElement);
+        if (ChargeItem is not null) callback(PocoDictionary.ComposeChoiceElementName("chargeItem", ChargeItem),ChargeItem);
+        if (PriceComponent?.Any() == true) callback("priceComponent",PriceComponent);
       }
 
     }
@@ -621,6 +636,15 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (TypeElement is not null) callback("type",TypeElement);
+        if (Code is not null) callback("code",Code);
+        if (FactorElement is not null) callback("factor",FactorElement);
+        if (Amount is not null) callback("amount",Amount);
       }
 
     }
@@ -1115,6 +1139,27 @@ namespace Hl7.Fhir.Model
       if (TotalGross is not null) yield return new KeyValuePair<string,object>("totalGross",TotalGross);
       if (PaymentTerms is not null) yield return new KeyValuePair<string,object>("paymentTerms",PaymentTerms);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (StatusElement is not null) callback("status",StatusElement);
+      if (CancelledReasonElement is not null) callback("cancelledReason",CancelledReasonElement);
+      if (Type is not null) callback("type",Type);
+      if (Subject is not null) callback("subject",Subject);
+      if (Recipient is not null) callback("recipient",Recipient);
+      if (DateElement is not null) callback("date",DateElement);
+      if (Participant?.Any() == true) callback("participant",Participant);
+      if (Issuer is not null) callback("issuer",Issuer);
+      if (Account is not null) callback("account",Account);
+      if (LineItem?.Any() == true) callback("lineItem",LineItem);
+      if (TotalPriceComponent?.Any() == true) callback("totalPriceComponent",TotalPriceComponent);
+      if (TotalNet is not null) callback("totalNet",TotalNet);
+      if (TotalGross is not null) callback("totalGross",TotalGross);
+      if (PaymentTerms is not null) callback("paymentTerms",PaymentTerms);
+      if (Note?.Any() == true) callback("note",Note);
     }
 
   }

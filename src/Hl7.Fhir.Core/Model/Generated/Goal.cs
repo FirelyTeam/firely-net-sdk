@@ -288,6 +288,14 @@ namespace Hl7.Fhir.Model
         if (Due is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("due", Due),Due);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Measure is not null) callback("measure",Measure);
+        if (Detail is not null) callback(PocoDictionary.ComposeChoiceElementName("detail", Detail),Detail);
+        if (Due is not null) callback(PocoDictionary.ComposeChoiceElementName("due", Due),Due);
+      }
+
     }
 
     /// <summary>
@@ -796,6 +804,27 @@ namespace Hl7.Fhir.Model
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
       if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (LifecycleStatusElement is not null) callback("lifecycleStatus",LifecycleStatusElement);
+      if (AchievementStatus is not null) callback("achievementStatus",AchievementStatus);
+      if (Category?.Any() == true) callback("category",Category);
+      if (Priority is not null) callback("priority",Priority);
+      if (Description is not null) callback("description",Description);
+      if (Subject is not null) callback("subject",Subject);
+      if (Start is not null) callback(PocoDictionary.ComposeChoiceElementName("start", Start),Start);
+      if (Target?.Any() == true) callback("target",Target);
+      if (StatusDateElement is not null) callback("statusDate",StatusDateElement);
+      if (StatusReasonElement is not null) callback("statusReason",StatusReasonElement);
+      if (ExpressedBy is not null) callback("expressedBy",ExpressedBy);
+      if (Addresses?.Any() == true) callback("addresses",Addresses);
+      if (Note?.Any() == true) callback("note",Note);
+      if (OutcomeCode?.Any() == true) callback("outcomeCode",OutcomeCode);
+      if (OutcomeReference?.Any() == true) callback("outcomeReference",OutcomeReference);
     }
 
   }

@@ -306,6 +306,15 @@ namespace Hl7.Fhir.Model
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Code is not null) callback("code",Code);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (ExcludeElement is not null) callback("exclude",ExcludeElement);
+        if (Period is not null) callback("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -477,6 +486,14 @@ namespace Hl7.Fhir.Model
         if (Entity is not null) yield return new KeyValuePair<string,object>("entity",Entity);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
         if (InactiveElement is not null) yield return new KeyValuePair<string,object>("inactive",InactiveElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (Entity is not null) callback("entity",Entity);
+        if (Period is not null) callback("period",Period);
+        if (InactiveElement is not null) callback("inactive",InactiveElement);
       }
 
     }
@@ -868,6 +885,21 @@ namespace Hl7.Fhir.Model
       if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
       if (Member?.Any() == true) yield return new KeyValuePair<string,object>("member",Member);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (Identifier?.Any() == true) callback("identifier",Identifier);
+      if (ActiveElement is not null) callback("active",ActiveElement);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (ActualElement is not null) callback("actual",ActualElement);
+      if (Code is not null) callback("code",Code);
+      if (NameElement is not null) callback("name",NameElement);
+      if (QuantityElement is not null) callback("quantity",QuantityElement);
+      if (ManagingEntity is not null) callback("managingEntity",ManagingEntity);
+      if (Characteristic?.Any() == true) callback("characteristic",Characteristic);
+      if (Member?.Any() == true) callback("member",Member);
     }
 
   }

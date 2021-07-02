@@ -304,6 +304,15 @@ namespace Hl7.Fhir.Model
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (SearchParamElement is not null) callback("searchParam",SearchParamElement);
+        if (ValueSetElement is not null) callback("valueSet",ValueSetElement);
+        if (Code?.Any() == true) callback("code",Code);
+      }
+
     }
 
     /// <summary>
@@ -504,6 +513,14 @@ namespace Hl7.Fhir.Model
         if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
       }
 
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (SearchParamElement is not null) callback("searchParam",SearchParamElement);
+        if (Value is not null) callback(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+      }
+
     }
 
     /// <summary>
@@ -671,6 +688,13 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
         if (DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",DirectionElement);
+      }
+
+      public override void EnumerateElements(Action<string,object> callback)
+      {
+        base.EnumerateElements(callback);
+        if (PathElement is not null) callback("path",PathElement);
+        if (DirectionElement is not null) callback("direction",DirectionElement);
       }
 
     }
@@ -1012,6 +1036,19 @@ namespace Hl7.Fhir.Model
       if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
       if (LimitElement is not null) yield return new KeyValuePair<string,object>("limit",LimitElement);
       if (Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",Sort);
+    }
+
+    public override void EnumerateElements(Action<string,object> callback)
+    {
+      base.EnumerateElements(callback);
+      if (TypeElement is not null) callback("type",TypeElement);
+      if (ProfileElement?.Any() == true) callback("profile",ProfileElement);
+      if (Subject is not null) callback(PocoDictionary.ComposeChoiceElementName("subject", Subject),Subject);
+      if (MustSupportElement?.Any() == true) callback("mustSupport",MustSupportElement);
+      if (CodeFilter?.Any() == true) callback("codeFilter",CodeFilter);
+      if (DateFilter?.Any() == true) callback("dateFilter",DateFilter);
+      if (LimitElement is not null) callback("limit",LimitElement);
+      if (Sort?.Any() == true) callback("sort",Sort);
     }
 
   }
