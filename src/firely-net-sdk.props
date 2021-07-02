@@ -39,7 +39,7 @@
   <PropertyGroup>
     <LangVersion>9.0</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Configurations>Debug;Release;FullDebug</Configurations>
+    <Configurations>Debug;Release;FullDebug;ProfileRelease</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
@@ -50,8 +50,12 @@
      <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'ProfileRelease' ">
+    <DefineConstants>$(DefineConstants);PROFILE_RELEASE</DefineConstants>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <SignAssembly>True</SignAssembly>
+    <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
     <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
