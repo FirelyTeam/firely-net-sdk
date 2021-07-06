@@ -206,7 +206,7 @@ stages:
               inputs:
                 command: custom
                 custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)/NuGetPackages/*.nupkg --api-key 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 --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+                arguments: 'push $(Agent.BuildDirectory)/NuGetPackages/*.nupkg --api-key $(GitHubPushPackagesAPIKey) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
 
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
