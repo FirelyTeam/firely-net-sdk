@@ -207,7 +207,7 @@ stages:
                   command: push
                   packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
                   nuGetFeedType: external
-                  publishFeedCredentials: MyGet
+                  publishFeedCredentials: GitHubPackages
                   verbosityPush: Normal    
 
 - stage: deploy_nuget 
