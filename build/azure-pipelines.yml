@@ -202,10 +202,10 @@ stages:
 - stage: releaseNotes
   displayName: Create Release Notes
   dependsOn: build
-  environment: ReleaseNotes
   jobs:
     - deployment: relNotes
       displayName: Release Notes
+      environment: ReleaseNotes
       variables:
         - name: curTag
           value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
