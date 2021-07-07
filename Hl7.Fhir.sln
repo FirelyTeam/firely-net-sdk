@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31423.177
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2836B1CC-7AAF-46AB-BEA8-98DFEA170414}"
 	ProjectSection(SolutionItems) = preProject
@@ -45,9 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7.FhirPath.Tests", "commo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath.R4.Tests", "src\Hl7.FhirPath.R4.Tests\Hl7.FhirPath.R4.Tests.csproj", "{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization.Poco", "src\Hl7.Fhir.Serialization.Poco\Hl7.Fhir.Serialization.Poco.csproj", "{0205BF9B-1350-41EB-88D3-022A87CFAFBD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchmarkSdk", "BenchmarkSdk\BenchmarkSdk.csproj", "{BF6AFF39-5415-420F-8AF2-C3A97325584E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkSdk", "BenchmarkSdk\BenchmarkSdk.csproj", "{BF6AFF39-5415-420F-8AF2-C3A97325584E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -140,12 +138,6 @@ Global
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.FullDebug|Any CPU.Build.0 = FullDebug|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0205BF9B-1350-41EB-88D3-022A87CFAFBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF6AFF39-5415-420F-8AF2-C3A97325584E}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU

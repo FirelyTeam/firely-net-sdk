@@ -1,8 +1,9 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Running;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Serialization.Poco;
+//using Hl7.Fhir.Serialization.Poco;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text.Json;
@@ -10,9 +11,9 @@ using System.Text.Json;
 namespace BenchmarkSdk
 {
 #if !DEBUG
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             _ = BenchmarkRunner.Run<SerializerBenchmarks>();
         }
@@ -81,20 +82,20 @@ namespace BenchmarkSdk
             ser.SerializeObject(oo);
         }
 
-        [Benchmark(Baseline = true)]
-        public void GeneratedSerializer()
-        {
-            var options = new JsonSerializerOptions();
-            var ms = new MemoryStream();
-            var jw = new Utf8JsonWriter(ms);
+        //[Benchmark(Baseline = true)]
+        //public void GeneratedSerializer()
+        //{
+        //    var options = new JsonSerializerOptions();
+        //    var ms = new MemoryStream();
+        //    var jw = new Utf8JsonWriter(ms);
 
-            oo.SerializeJson(jw, options);
-        }
+        //    oo.SerializeJson(jw, options);
+        //}
 
-        [Benchmark]
-        public byte[] TypedElementSerializer()
-        {
-            return oo.ToJsonBytes();
-        }
+        //[Benchmark]
+        //public byte[] TypedElementSerializer()
+        //{
+        //    return oo.ToJsonBytes();
+        //}
     }
 }

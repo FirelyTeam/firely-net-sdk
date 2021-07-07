@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization.Poco;
+//using Hl7.Fhir.Serialization.Poco;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -33,20 +34,45 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
+        //[TestMethod]
+        //public void UseGeneratedSerializer()
+        //{
+        //    // practitionerrole-example.json: Number of elements are not the same in container 
+        //    var filename = Path.Combine("TestData", "practitionerrole-example.json");
+
+        //    var expected = File.ReadAllText(filename);
+        //    var options = new JsonSerializerOptions();
+        //    options.Converters.Add(new JsonStreamResourceConverter());
+
+        //    var resource = JsonSerializer.Deserialize<Resource>(expected, options);
+        //    //var resource = JsonSerializer.Deserialize<PractitionerRole>(jsonR, options);
+
+        //    var actual = JsonSerializer.Serialize(resource, options);
+
+        //    var errors = new List<string>();
+        //    JsonAssert.AreSame(filename, expected, actual, errors);
+        //    Console.WriteLine(String.Join("\r\n", errors));
+        //    Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
+        //}
+
         [TestMethod]
-        public void UseGeneratedSerializer()
+        public void UseNewSerializer()
         {
             // practitionerrole-example.json: Number of elements are not the same in container 
-            var filename = Path.Combine("TestData", "practitionerrole-example.json");
-
+            var filename = Path.Combine("TestData", "json-edge-cases.json");
             var expected = File.ReadAllText(filename);
-            var options = new JsonSerializerOptions();
-            options.Converters.Add(new JsonStreamResourceConverter());
+            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(expected));
+            var deserializer = new JsonDynamicDeserializer(typeof(Patient).Assembly);
 
-            var resource = JsonSerializer.Deserialize<Resource>(expected, options);
-            //var resource = JsonSerializer.Deserialize<PractitionerRole>(jsonR, options);
+            var resource = deserializer.DeserializeResource(ref reader);
 
-            var actual = JsonSerializer.Serialize(resource, options);
+            var memoryStream = new MemoryStream();
+            var writer = new Utf8JsonWriter(memoryStream);
+            JsonSerializationExtensions.SerializeObject(resource, writer);
+            writer.Flush();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            var actual = new StreamReader(memoryStream).ReadToEnd();
 
             var errors = new List<string>();
             JsonAssert.AreSame(filename, expected, actual, errors);
