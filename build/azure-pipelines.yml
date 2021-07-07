@@ -33,7 +33,7 @@ stages:
   displayName: Build
   jobs:
   - job: restoreAndBuild
-    displayName: 'Build in $(buildConfiguration) mode'
+    displayName: 'Build Artifacts'
     steps:
     - checkout: self
       clean: true
@@ -118,6 +118,28 @@ stages:
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: NuGetPackages
+    - bash: |
+        echo $(Build.SourceBranchName)
+
+        IFS='-'
+        read -a version <<<"$(Build.SourceBranchName)"
+
+        release=${version[1]}
+        echo $release
+
+        currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
+        previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
+        title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
+
+        echo $currenttag
+        echo $previoustag
+        echo $title_release
+
+        echo "##vso[task.setvariable variable=current_tag;isOutput=true]$currenttag"
+        echo "##vso[task.setvariable variable=previous_tag;isOutput=true]$previoustag"
+        echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
+      name: tagnames
+      displayName: Determine tagnames
 
 - stage: test
   displayName: Test
@@ -186,6 +208,8 @@ stages:
   - deployment: myget
     displayName: MyGet
     environment: MyGet
+    variables:
+      GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in UI of Azure Devops
     strategy:
       runOnce:
         deploy:
@@ -201,10 +225,18 @@ stages:
                   nuGetFeedType: external
                   publishFeedCredentials: MyGet
                   verbosityPush: Normal    
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push'
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
 
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
-  dependsOn: deploy_myget
+  dependsOn:
+    - deploy_myget
+    - build
   condition: and(succeeded(), eq(variables.isTagBranch, true)) 
   jobs:
   - deployment: nuget
@@ -271,26 +303,22 @@ stages:
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
                 includeSymbols: false  
-            - bash: |
-                echo $(Build.SourceBranchName)
-
-                IFS='-'
-                read -a version <<<"$(Build.SourceBranchName)"
-
-                release=${version[1]}
-                echo $release
-
-                currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
-                previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
-                title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
-
-                echo $currenttag
-                echo $previoustag
-                echo $title_release
-
-                echo "##vso[task.setvariable variable=current_tag]$currenttag"
-                echo "##vso[task.setvariable variable=previous_tag]$previoustag"
-                echo "##vso[task.setvariable variable=release_title]$title_release"
+            
+  - deployment: relNotes
+    displayName: Release Notes
+    environment: NuGet
+    variables:
+      - name: curTag
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
+      - name: prevTag
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.previous_tag'] ]
+      - name: releaseTitle
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: none
             - task: GitHubRelease@1
               displayName: 'GitHub release notes (create)'  
               inputs:
@@ -299,11 +327,11 @@ stages:
                 action: 'create'
                 target: '$(Build.SourceVersion)'
                 tagSource: userSpecifiedTag
-                tag: '$(current_tag)'
-                title: '$(release_title)'
+                tag: '$(curTag)'
+                title: '$(releaseTitle)'
                 isDraft: true
                 changeLogCompareToRelease: lastNonDraftReleaseByTag
-                changeLogCompareToReleaseTag: '$(previous_tag)'
+                changeLogCompareToReleaseTag: '$(prevTag)'
                 changeLogType: issueBased
                 changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
-              
+    
