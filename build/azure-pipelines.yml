@@ -202,6 +202,7 @@ stages:
 - stage: releaseNotes
   displayName: Create Release Notes
   dependsOn: build
+  environment: ReleaseNotes
   jobs:
     - deployment: relNotes
       displayName: Release Notes
