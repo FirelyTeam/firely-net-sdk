@@ -118,6 +118,27 @@ stages:
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: NuGetPackages
+    - bash: |
+        echo $(Build.SourceBranchName)
+
+        IFS='-'
+        read -a version <<<"$(Build.SourceBranchName)"
+
+        release=${version[1]}
+        echo $release
+
+        currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
+        previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
+        title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
+
+        echo $currenttag
+        echo $previoustag
+        echo $title_release
+
+        echo "##vso[task.setvariable variable=current_tag;isOutput=true]$currenttag"
+        echo "##vso[task.setvariable variable=previous_tag;isOutput=true]$previoustag"
+        echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
+      name: tagnames
 
 - stage: test
   displayName: Test
@@ -177,6 +198,41 @@ stages:
         parameters:
           testRunTitle: Tests ElementModel test project
           projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
+
+- stage: releaseNotes
+  displayName: Create Release Notes
+  dependsOn: build
+  jobs:
+    - deployment: relNotes
+      displayName: Release Notes
+      variables:
+        - name: curTag
+          value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
+        - name: prevTag
+          value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.previous_tag'] ]
+        - name: releaseTitle
+          value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
+      strategy:
+        runOnce:
+          deploy:
+              steps:
+              - download: none
+              - task: GitHubRelease@1
+                displayName: 'GitHub release notes (create)'  
+                inputs:
+                  gitHubConnection: 'GitHub Fhir-net-api'
+                  repositoryName: '$(Build.Repository.Name)'
+                  action: 'create'
+                  target: '$(Build.SourceVersion)'
+                  tagSource: userSpecifiedTag
+                  tag: '$(curTag)'
+                  title: '$(releaseTitle)'
+                  isDraft: true
+                  changeLogCompareToRelease: lastNonDraftReleaseByTag
+                  changeLogCompareToReleaseTag: '$(prevTag)'
+                  changeLogType: issueBased
+                  changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
+
 
 - stage: deploy_myget
   displayName: Deploy to MyGet
