@@ -205,7 +205,7 @@ stages:
   jobs:
     - deployment: relNotes
       displayName: Release Notes
-      environment: ReleaseNotes
+      environment: MyGet
       variables:
         - name: curTag
           value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
