@@ -3,30 +3,67 @@ using BenchmarkDotNet.Running;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-//using Hl7.Fhir.Serialization.Poco;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Serialization.Poco;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 
 namespace BenchmarkSdk
 {
-#if !DEBUG
     public class Program
     {
         public static void Main(string[] args)
         {
-            _ = BenchmarkRunner.Run<SerializerBenchmarks>();
+            //_ = BenchmarkRunner.Run<SerializerBenchmarks>();
+            _ = BenchmarkRunner.Run<DeserializerBenchmarks>();
         }
-
     }
-#endif
 
     [MemoryDiagnoser]
-    [TestClass]
+    public class DeserializerBenchmarks
+    {
+        byte[] testInput;
+        string testJson;
+        JsonDynamicDeserializer dynDes;
+
+        [GlobalSetup]
+        public void BenchmarkSetup()
+        {
+            var oo = SerializerBenchmarks.SetupOutcome();
+            testJson = TypedSerialization.ToTypedElement(oo).ToJson();
+            testInput = Encoding.UTF8.GetBytes(testJson);
+
+            dynDes = new JsonDynamicDeserializer(typeof(OperationOutcome).Assembly);
+        }
+
+        [Benchmark]
+        public Resource DynamicDeserializer()
+        {
+            var reader = new Utf8JsonReader(testInput);
+            return dynDes.DeserializeResource(ref reader);
+        }
+
+        [Benchmark(Baseline = true)]
+        public Resource GeneratedDeserializer()
+        {
+            var options = new JsonSerializerOptions();
+            var reader = new Utf8JsonReader(testInput);
+
+            return JsonStreamResourceConverter.PolymorphicRead(ref reader, options);
+        }
+
+        [Benchmark]
+        public Resource TypedElementDeserializer()
+        {
+            var sourceNode = FhirJsonNode.Parse(testJson);
+            return TypedSerialization.ToPoco<Resource>(sourceNode);
+        }
+    }
+
+    [MemoryDiagnoser]
     public class SerializerBenchmarks
     {
-
-        private OperationOutcome setupOutcome()
+        public static OperationOutcome SetupOutcome()
         {
             OperationOutcome oo = new OperationOutcome()
             {
@@ -37,7 +74,6 @@ namespace BenchmarkSdk
             var fu = new FhirUri();
             fu.SetStringExtension("http://ha.nl", "hi");
             oo.Meta.ProfileElement.Add(fu);
-
 
             oo.Issue.Add(
                 new OperationOutcome.IssueComponent()
@@ -54,12 +90,13 @@ namespace BenchmarkSdk
         }
 
         OperationOutcome oo;
+        string testJson;
 
         [GlobalSetup]
         public void BenchmarkSetup()
         {
-            oo = setupOutcome();
-            _ = TypedSerialization.ToTypedElement(oo).ToJson();
+            oo = SetupOutcome();
+            testJson = TypedSerialization.ToTypedElement(oo).ToJson();
         }
 
         [Benchmark]
@@ -72,7 +109,6 @@ namespace BenchmarkSdk
         }
 
         [Benchmark]
-        [TestMethod]
         public void CallbackSerializer()
         {
             var ms = new MemoryStream();
@@ -82,20 +118,20 @@ namespace BenchmarkSdk
             ser.SerializeObject(oo);
         }
 
-        //[Benchmark(Baseline = true)]
-        //public void GeneratedSerializer()
-        //{
-        //    var options = new JsonSerializerOptions();
-        //    var ms = new MemoryStream();
-        //    var jw = new Utf8JsonWriter(ms);
+        [Benchmark(Baseline = true)]
+        public void GeneratedSerializer()
+        {
+            var options = new JsonSerializerOptions();
+            var ms = new MemoryStream();
+            var jw = new Utf8JsonWriter(ms);
 
-        //    oo.SerializeJson(jw, options);
-        //}
+            oo.SerializeJson(jw, options);
+        }
 
-        //[Benchmark]
-        //public byte[] TypedElementSerializer()
-        //{
-        //    return oo.ToJsonBytes();
-        //}
+        [Benchmark]
+        public byte[] TypedElementSerializer()
+        {
+            return oo.ToJsonBytes();
+        }
     }
 }
