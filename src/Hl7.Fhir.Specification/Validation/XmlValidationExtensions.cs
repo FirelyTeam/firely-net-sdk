@@ -6,7 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-#nullable enable
+#nullable enable annotations
+#nullable disable warnings
+
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
