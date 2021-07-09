@@ -6,9 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-#nullable enable annotations
-#nullable disable warnings
-
+#nullable enable
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -99,8 +97,7 @@ namespace Hl7.Fhir.Validation
             {
                 var result = new OperationOutcome();
 
-                void veh(object o, ValidationEventArgs args) => result.AddIssue(ToIssueComponent(args));
-                instance.Validate(xsdSchemas, veh);
+                instance.Validate(xsdSchemas, (o, args) => { result.AddIssue(ToIssueComponent(args)); });
 
                 return result;
             }
