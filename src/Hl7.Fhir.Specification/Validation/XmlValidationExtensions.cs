@@ -97,8 +97,7 @@ namespace Hl7.Fhir.Validation
             {
                 var result = new OperationOutcome();
 
-                void veh(object o, ValidationEventArgs args) => result.AddIssue(ToIssueComponent(args));
-                instance.Validate(xsdSchemas, veh);
+                instance.Validate(xsdSchemas, (o, args) => { result.AddIssue(ToIssueComponent(args)); });
 
                 return result;
             }
