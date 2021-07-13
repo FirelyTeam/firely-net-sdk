@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
       /// </summary>
-      [FhirElement("equivalence", InSummary=true, Order=60)]
+      [FhirElement("equivalence", Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement

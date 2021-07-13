@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether substitution is allowed or not
       /// </summary>
-      [FhirElement("allowed", InSummary=true, Order=40)]
+      [FhirElement("allowed", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AllowedElement

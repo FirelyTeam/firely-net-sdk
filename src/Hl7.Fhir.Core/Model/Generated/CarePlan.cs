@@ -465,7 +465,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-started | scheduled | in-progress | on-hold | completed | cancelled | unknown
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=100)]
+      [FhirElement("status", Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Do NOT do
       /// </summary>
-      [FhirElement("prohibited", InSummary=true, Order=120)]
+      [FhirElement("prohibited", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ProhibitedElement
       {

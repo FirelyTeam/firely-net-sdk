@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Group includes or excludes
       /// </summary>
-      [FhirElement("exclude", InSummary=true, Order=60)]
+      [FhirElement("exclude", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ExcludeElement

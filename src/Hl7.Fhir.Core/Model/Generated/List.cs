@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this item is actually marked as deleted
       /// </summary>
-      [FhirElement("deleted", InSummary=true, Order=50)]
+      [FhirElement("deleted", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DeletedElement
       {
