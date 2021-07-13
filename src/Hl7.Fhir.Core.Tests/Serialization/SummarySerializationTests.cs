@@ -6,20 +6,15 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Introspection;
-using Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Rest;
 using System.IO;
+using System.Linq;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -61,7 +56,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 LinkId = "linkid",
                 Text = "TEXT"
             });
-            
+
             Assert.IsNull(q.Meta, "Meta element has not been created.");
             var qfull = await FhirXmlSerializer.SerializeToStringAsync(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
@@ -124,11 +119,11 @@ namespace Hl7.Fhir.Tests.Serialization
             l.Id = "testId";
             l.Language = "testLang";
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(l, Fhir.Rest.SummaryType.Count);
-            
+
             Assert.IsFalse(summaryElements.Contains("<language"));
             Assert.IsTrue(summaryElements.Contains("<type>"));
             Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
-            
+
             var customMaskingNode = new MaskingNode(new ScopedNode(l.ToTypedElement()), new MaskingNodeSettings
             {
                 IncludeMandatory = true,
@@ -158,7 +153,7 @@ namespace Hl7.Fhir.Tests.Serialization
             });
 
             result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
-            
+
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
@@ -172,7 +167,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
             };
             var elements = new[] { "photo" };
-            
+
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
@@ -343,7 +338,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(patientOne, mode) :
                                     await FhirXmlSerializer.SerializeToStringAsync(patientOne, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(expectedData, actualData);
+                Assert.AreEqual(expectedData, actualData, $"SummaryType.{mode} in file {pair.Key}");
             }
         }
 
