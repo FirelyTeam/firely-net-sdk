@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class StructureDefinitionSummaryProviderTest
     {
         [TestMethod]
-        public void MyTestMethod()
+        public void PocoAndSdSummaryProvidersShouldBeEqual()
         {
             IStructureDefinitionSummaryProvider pocoSdProvider = new PocoStructureDefinitionSummaryProvider();
             var resolver = ZipSource.CreateValidationSource();
@@ -27,10 +27,6 @@ namespace Hl7.Fhir.Specification.Tests
 
                 AssertEqual(pocoSummary, sdSummary);
             }
-
-            //var canonicalResource = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation);
-
-
         }
 
 
@@ -56,7 +52,6 @@ namespace Hl7.Fhir.Specification.Tests
                 context = string.Join('.', workStack.Reverse());
                 try
                 {
-
                     left.IsAbstract.Should().Be(right.IsAbstract, context + ": Abstract differs");
                     left.IsResource.Should().Be(right.IsResource, context + ": IsResource differs");
                     left.TypeName.Should().Be(right.TypeName, context + ": TypeName differs");
@@ -125,6 +120,7 @@ namespace Hl7.Fhir.Specification.Tests
                 left.IsResource.Should().Be(right.IsResource, context + ": IsResource differs");
                 //     left.Order.Should().Be(right.Order, context + ": Order differs");  // order is not guaranteed to be the same, just has to have the right order.
                 left.Representation.Should().Be(right.Representation, context + ": Representation differs");
+
                 areEqual(left.Type, right.Type, workStack);
             }
             workStack.Pop();
@@ -142,6 +138,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (left is object && right is object)
             {
+                // This is an exception: parameter.value can have all the types, but [AllowedTypes] is not generated, because not all the types
+                // are located in Common.
+                if (context == "Parameters.parameter.BackboneElement.value" || context == "Parameters.parameter.BackboneElement.part.BackboneElement.value")
+                    return;
+
                 left.Length.Should().Be(right.Length, context + ": nr. of elements differs.");
                 foreach (var leftItem in left)
                 {
@@ -153,10 +154,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                     else if (leftItem is IStructureDefinitionReference lref)
                     {
-                        var matchingRight = right.FirstOrDefault(r => r is IStructureDefinitionReference rref && ((rref.ReferredType == lref.ReferredType) || (rref.ReferredType == "id" && lref.ReferredType == "string")));
-                        //TODO: CK: The latter check is a hack for HL7 issue https://jira.hl7.org/browse/FHIR-25262 that is corrected in the August build. 
-                        //Due to this issue elenents in profiles-resources with a base path of 'Element.id' have the fhir-type extension with value 'id', but it should be 'string'.
-                        //Remove the hack when a new beta API for R5 is released.
+                        var matchingRight = right.FirstOrDefault(r => r is IStructureDefinitionReference rref && rref.ReferredType == lref.ReferredType);
                         matchingRight.Should().NotBeNull(context + ": No matching IStructureDefinitionReference found for " + lref.ReferredType);
                     }
                     else
