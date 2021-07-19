@@ -351,6 +351,49 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "use":
+          value = UseElement;
+          return UseElement is not null;
+        case "min":
+          value = MinElement;
+          return MinElement is not null;
+        case "max":
+          value = MaxElement;
+          return MaxElement is not null;
+        case "documentation":
+          value = DocumentationElement;
+          return DocumentationElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "profile":
+          value = Profile;
+          return Profile is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
+      if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
+      if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
+      if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (Profile is not null) yield return new KeyValuePair<string,object>("profile",Profile);
+    }
+
   }
 
 }

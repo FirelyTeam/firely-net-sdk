@@ -324,6 +324,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          case "required":
+            value = RequiredElement;
+            return RequiredElement is not null;
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+        if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      }
+
     }
 
     /// <summary>
@@ -904,6 +935,101 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Participant) { if (elem != null) yield return new ElementValue("participant", elem); }
         foreach (var elem in RequestedPeriod) { if (elem != null) yield return new ElementValue("requestedPeriod", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "serviceCategory":
+          value = ServiceCategory;
+          return ServiceCategory is not null;
+        case "serviceType":
+          value = ServiceType;
+          return ServiceType?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "appointmentType":
+          value = AppointmentType;
+          return AppointmentType is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "indication":
+          value = Indication;
+          return Indication?.Any() == true;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "start":
+          value = StartElement;
+          return StartElement is not null;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "minutesDuration":
+          value = MinutesDurationElement;
+          return MinutesDurationElement is not null;
+        case "slot":
+          value = Slot;
+          return Slot?.Any() == true;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        case "incomingReferral":
+          value = IncomingReferral;
+          return IncomingReferral?.Any() == true;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "requestedPeriod":
+          value = RequestedPeriod;
+          return RequestedPeriod?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",MinutesDurationElement);
+      if (Slot?.Any() == true) yield return new KeyValuePair<string,object>("slot",Slot);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      if (IncomingReferral?.Any() == true) yield return new KeyValuePair<string,object>("incomingReferral",IncomingReferral);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
     }
 
   }

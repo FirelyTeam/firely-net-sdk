@@ -205,6 +205,33 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "contentType":
+          value = ContentTypeElement;
+          return ContentTypeElement is not null;
+        case "securityContext":
+          value = SecurityContext;
+          return SecurityContext is not null;
+        case "content":
+          value = ContentElement;
+          return ContentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+      if (SecurityContext is not null) yield return new KeyValuePair<string,object>("securityContext",SecurityContext);
+      if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
+    }
+
   }
 
 }

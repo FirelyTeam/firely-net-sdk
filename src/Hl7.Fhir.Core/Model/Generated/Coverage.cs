@@ -556,6 +556,69 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "group":
+            value = GroupElement;
+            return GroupElement is not null;
+          case "groupDisplay":
+            value = GroupDisplayElement;
+            return GroupDisplayElement is not null;
+          case "subGroup":
+            value = SubGroupElement;
+            return SubGroupElement is not null;
+          case "subGroupDisplay":
+            value = SubGroupDisplayElement;
+            return SubGroupDisplayElement is not null;
+          case "plan":
+            value = PlanElement;
+            return PlanElement is not null;
+          case "planDisplay":
+            value = PlanDisplayElement;
+            return PlanDisplayElement is not null;
+          case "subPlan":
+            value = SubPlanElement;
+            return SubPlanElement is not null;
+          case "subPlanDisplay":
+            value = SubPlanDisplayElement;
+            return SubPlanDisplayElement is not null;
+          case "class":
+            value = ClassElement;
+            return ClassElement is not null;
+          case "classDisplay":
+            value = ClassDisplayElement;
+            return ClassDisplayElement is not null;
+          case "subClass":
+            value = SubClassElement;
+            return SubClassElement is not null;
+          case "subClassDisplay":
+            value = SubClassDisplayElement;
+            return SubClassDisplayElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (GroupElement is not null) yield return new KeyValuePair<string,object>("group",GroupElement);
+        if (GroupDisplayElement is not null) yield return new KeyValuePair<string,object>("groupDisplay",GroupDisplayElement);
+        if (SubGroupElement is not null) yield return new KeyValuePair<string,object>("subGroup",SubGroupElement);
+        if (SubGroupDisplayElement is not null) yield return new KeyValuePair<string,object>("subGroupDisplay",SubGroupDisplayElement);
+        if (PlanElement is not null) yield return new KeyValuePair<string,object>("plan",PlanElement);
+        if (PlanDisplayElement is not null) yield return new KeyValuePair<string,object>("planDisplay",PlanDisplayElement);
+        if (SubPlanElement is not null) yield return new KeyValuePair<string,object>("subPlan",SubPlanElement);
+        if (SubPlanDisplayElement is not null) yield return new KeyValuePair<string,object>("subPlanDisplay",SubPlanDisplayElement);
+        if (ClassElement is not null) yield return new KeyValuePair<string,object>("class",ClassElement);
+        if (ClassDisplayElement is not null) yield return new KeyValuePair<string,object>("classDisplay",ClassDisplayElement);
+        if (SubClassElement is not null) yield return new KeyValuePair<string,object>("subClass",SubClassElement);
+        if (SubClassDisplayElement is not null) yield return new KeyValuePair<string,object>("subClassDisplay",SubClassDisplayElement);
+      }
+
     }
 
     /// <summary>
@@ -1022,6 +1085,85 @@ namespace Hl7.Fhir.Model
         if (NetworkElement != null) yield return new ElementValue("network", NetworkElement);
         foreach (var elem in Contract) { if (elem != null) yield return new ElementValue("contract", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "policyHolder":
+          value = PolicyHolder;
+          return PolicyHolder is not null;
+        case "subscriber":
+          value = Subscriber;
+          return Subscriber is not null;
+        case "subscriberId":
+          value = SubscriberIdElement;
+          return SubscriberIdElement is not null;
+        case "beneficiary":
+          value = Beneficiary;
+          return Beneficiary is not null;
+        case "relationship":
+          value = Relationship;
+          return Relationship is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "payor":
+          value = Payor;
+          return Payor?.Any() == true;
+        case "grouping":
+          value = Grouping;
+          return Grouping is not null;
+        case "dependent":
+          value = DependentElement;
+          return DependentElement is not null;
+        case "sequence":
+          value = SequenceElement;
+          return SequenceElement is not null;
+        case "order":
+          value = OrderElement;
+          return OrderElement is not null;
+        case "network":
+          value = NetworkElement;
+          return NetworkElement is not null;
+        case "contract":
+          value = Contract;
+          return Contract?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (PolicyHolder is not null) yield return new KeyValuePair<string,object>("policyHolder",PolicyHolder);
+      if (Subscriber is not null) yield return new KeyValuePair<string,object>("subscriber",Subscriber);
+      if (SubscriberIdElement is not null) yield return new KeyValuePair<string,object>("subscriberId",SubscriberIdElement);
+      if (Beneficiary is not null) yield return new KeyValuePair<string,object>("beneficiary",Beneficiary);
+      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Payor?.Any() == true) yield return new KeyValuePair<string,object>("payor",Payor);
+      if (Grouping is not null) yield return new KeyValuePair<string,object>("grouping",Grouping);
+      if (DependentElement is not null) yield return new KeyValuePair<string,object>("dependent",DependentElement);
+      if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+      if (OrderElement is not null) yield return new KeyValuePair<string,object>("order",OrderElement);
+      if (NetworkElement is not null) yield return new KeyValuePair<string,object>("network",NetworkElement);
+      if (Contract?.Any() == true) yield return new KeyValuePair<string,object>("contract",Contract);
     }
 
   }

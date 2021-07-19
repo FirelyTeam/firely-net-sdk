@@ -272,6 +272,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "specType":
+            value = SpecType;
+            return SpecType is not null;
+          case "componentId":
+            value = ComponentId;
+            return ComponentId is not null;
+          case "productionSpec":
+            value = ProductionSpecElement;
+            return ProductionSpecElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SpecType is not null) yield return new KeyValuePair<string,object>("specType",SpecType);
+        if (ComponentId is not null) yield return new KeyValuePair<string,object>("componentId",ComponentId);
+        if (ProductionSpecElement is not null) yield return new KeyValuePair<string,object>("productionSpec",ProductionSpecElement);
+      }
+
     }
 
     /// <summary>
@@ -553,6 +580,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in ProductionSpecification) { if (elem != null) yield return new ElementValue("productionSpecification", elem); }
         if (LanguageCode != null) yield return new ElementValue("languageCode", LanguageCode);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "lastSystemChange":
+          value = LastSystemChangeElement;
+          return LastSystemChangeElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "parent":
+          value = Parent;
+          return Parent is not null;
+        case "operationalStatus":
+          value = OperationalStatus;
+          return OperationalStatus?.Any() == true;
+        case "parameterGroup":
+          value = ParameterGroup;
+          return ParameterGroup is not null;
+        case "measurementPrinciple":
+          value = MeasurementPrincipleElement;
+          return MeasurementPrincipleElement is not null;
+        case "productionSpecification":
+          value = ProductionSpecification;
+          return ProductionSpecification?.Any() == true;
+        case "languageCode":
+          value = LanguageCode;
+          return LanguageCode is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (LastSystemChangeElement is not null) yield return new KeyValuePair<string,object>("lastSystemChange",LastSystemChangeElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (OperationalStatus?.Any() == true) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatus);
+      if (ParameterGroup is not null) yield return new KeyValuePair<string,object>("parameterGroup",ParameterGroup);
+      if (MeasurementPrincipleElement is not null) yield return new KeyValuePair<string,object>("measurementPrinciple",MeasurementPrincipleElement);
+      if (ProductionSpecification?.Any() == true) yield return new KeyValuePair<string,object>("productionSpecification",ProductionSpecification);
+      if (LanguageCode is not null) yield return new KeyValuePair<string,object>("languageCode",LanguageCode);
     }
 
   }

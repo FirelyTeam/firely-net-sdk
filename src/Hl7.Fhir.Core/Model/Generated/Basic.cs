@@ -225,6 +225,41 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+    }
+
   }
 
 }

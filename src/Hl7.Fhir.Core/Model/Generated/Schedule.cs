@@ -297,6 +297,53 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "serviceCategory":
+          value = ServiceCategory;
+          return ServiceCategory is not null;
+        case "serviceType":
+          value = ServiceType;
+          return ServiceType?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "actor":
+          value = Actor;
+          return Actor?.Any() == true;
+        case "planningHorizon":
+          value = PlanningHorizon;
+          return PlanningHorizon is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (ServiceCategory is not null) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",PlanningHorizon);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+    }
+
   }
 
 }

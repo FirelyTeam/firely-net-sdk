@@ -349,6 +349,49 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "origin":
+          value = Origin;
+          return Origin is not null;
+        case "period":
+          value = PeriodElement;
+          return PeriodElement is not null;
+        case "factor":
+          value = FactorElement;
+          return FactorElement is not null;
+        case "lowerLimit":
+          value = LowerLimitElement;
+          return LowerLimitElement is not null;
+        case "upperLimit":
+          value = UpperLimitElement;
+          return UpperLimitElement is not null;
+        case "dimensions":
+          value = DimensionsElement;
+          return DimensionsElement is not null;
+        case "data":
+          value = DataElement;
+          return DataElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Origin is not null) yield return new KeyValuePair<string,object>("origin",Origin);
+      if (PeriodElement is not null) yield return new KeyValuePair<string,object>("period",PeriodElement);
+      if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);
+      if (LowerLimitElement is not null) yield return new KeyValuePair<string,object>("lowerLimit",LowerLimitElement);
+      if (UpperLimitElement is not null) yield return new KeyValuePair<string,object>("upperLimit",UpperLimitElement);
+      if (DimensionsElement is not null) yield return new KeyValuePair<string,object>("dimensions",DimensionsElement);
+      if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
+    }
+
   }
 
 }

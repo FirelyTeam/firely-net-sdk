@@ -178,6 +178,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "text":
+            value = TextElement;
+            return TextElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      }
+
     }
 
     /// <summary>
@@ -537,6 +560,73 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
         foreach (var elem in CommunicationRequest) { if (elem != null) yield return new ElementValue("communicationRequest", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "organization":
+          value = Organization;
+          return Organization is not null;
+        case "request":
+          value = Request;
+          return Request is not null;
+        case "outcome":
+          value = Outcome;
+          return Outcome is not null;
+        case "disposition":
+          value = DispositionElement;
+          return DispositionElement is not null;
+        case "requestProvider":
+          value = RequestProvider;
+          return RequestProvider is not null;
+        case "requestOrganization":
+          value = RequestOrganization;
+          return RequestOrganization is not null;
+        case "form":
+          value = Form;
+          return Form is not null;
+        case "processNote":
+          value = ProcessNote;
+          return ProcessNote?.Any() == true;
+        case "error":
+          value = Error;
+          return Error?.Any() == true;
+        case "communicationRequest":
+          value = CommunicationRequest;
+          return CommunicationRequest?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
+      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",DispositionElement);
+      if (RequestProvider is not null) yield return new KeyValuePair<string,object>("requestProvider",RequestProvider);
+      if (RequestOrganization is not null) yield return new KeyValuePair<string,object>("requestOrganization",RequestOrganization);
+      if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
+      if (ProcessNote?.Any() == true) yield return new KeyValuePair<string,object>("processNote",ProcessNote);
+      if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
+      if (CommunicationRequest?.Any() == true) yield return new KeyValuePair<string,object>("communicationRequest",CommunicationRequest);
     }
 
   }

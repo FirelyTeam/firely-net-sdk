@@ -245,6 +245,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "target":
+            value = Target;
+            return Target is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+      }
+
     }
 
     /// <summary>
@@ -479,6 +506,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "software":
+            value = SoftwareElement;
+            return SoftwareElement is not null;
+          case "version":
+            value = VersionElement;
+            return VersionElement is not null;
+          case "contact":
+            value = Contact;
+            return Contact is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (SoftwareElement is not null) yield return new KeyValuePair<string,object>("software",SoftwareElement);
+        if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+        if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+      }
+
     }
 
     /// <summary>
@@ -643,6 +705,33 @@ namespace Hl7.Fhir.Model
           if (CodeElement != null) yield return new ElementValue("code", CodeElement);
           if (Details != null) yield return new ElementValue("details", Details);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = IdentifierElement;
+            return IdentifierElement is not null;
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "details":
+            value = Details;
+            return Details is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (IdentifierElement is not null) yield return new KeyValuePair<string,object>("identifier",IdentifierElement);
+        if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+        if (Details is not null) yield return new KeyValuePair<string,object>("details",Details);
       }
 
     }
@@ -952,6 +1041,69 @@ namespace Hl7.Fhir.Model
         if (Response != null) yield return new ElementValue("response", Response);
         foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "event":
+          value = Event;
+          return Event is not null;
+        case "destination":
+          value = Destination;
+          return Destination?.Any() == true;
+        case "receiver":
+          value = Receiver;
+          return Receiver is not null;
+        case "sender":
+          value = Sender;
+          return Sender is not null;
+        case "timestamp":
+          value = TimestampElement;
+          return TimestampElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "responsible":
+          value = Responsible;
+          return Responsible is not null;
+        case "reason":
+          value = Reason;
+          return Reason is not null;
+        case "response":
+          value = Response;
+          return Response is not null;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
+      if (Destination?.Any() == true) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
+      if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
+      if (TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",TimestampElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Responsible is not null) yield return new KeyValuePair<string,object>("responsible",Responsible);
+      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
     }
 
   }

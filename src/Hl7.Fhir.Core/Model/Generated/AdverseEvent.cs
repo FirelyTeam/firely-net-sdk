@@ -382,6 +382,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "instance":
+            value = Instance;
+            return Instance is not null;
+          case "causality":
+            value = CausalityElement;
+            return CausalityElement is not null;
+          case "causalityAssessment":
+            value = CausalityAssessment;
+            return CausalityAssessment is not null;
+          case "causalityProductRelatedness":
+            value = CausalityProductRelatednessElement;
+            return CausalityProductRelatednessElement is not null;
+          case "causalityMethod":
+            value = CausalityMethod;
+            return CausalityMethod is not null;
+          case "causalityAuthor":
+            value = CausalityAuthor;
+            return CausalityAuthor is not null;
+          case "causalityResult":
+            value = CausalityResult;
+            return CausalityResult is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
+        if (CausalityElement is not null) yield return new KeyValuePair<string,object>("causality",CausalityElement);
+        if (CausalityAssessment is not null) yield return new KeyValuePair<string,object>("causalityAssessment",CausalityAssessment);
+        if (CausalityProductRelatednessElement is not null) yield return new KeyValuePair<string,object>("causalityProductRelatedness",CausalityProductRelatednessElement);
+        if (CausalityMethod is not null) yield return new KeyValuePair<string,object>("causalityMethod",CausalityMethod);
+        if (CausalityAuthor is not null) yield return new KeyValuePair<string,object>("causalityAuthor",CausalityAuthor);
+        if (CausalityResult is not null) yield return new KeyValuePair<string,object>("causalityResult",CausalityResult);
+      }
+
     }
 
     /// <summary>
@@ -804,6 +847,85 @@ namespace Hl7.Fhir.Model
         foreach (var elem in ReferenceDocument) { if (elem != null) yield return new ElementValue("referenceDocument", elem); }
         foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "category":
+          value = CategoryElement;
+          return CategoryElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "reaction":
+          value = Reaction;
+          return Reaction?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "seriousness":
+          value = Seriousness;
+          return Seriousness is not null;
+        case "outcome":
+          value = Outcome;
+          return Outcome is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "eventParticipant":
+          value = EventParticipant;
+          return EventParticipant is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "suspectEntity":
+          value = SuspectEntity;
+          return SuspectEntity?.Any() == true;
+        case "subjectMedicalHistory":
+          value = SubjectMedicalHistory;
+          return SubjectMedicalHistory?.Any() == true;
+        case "referenceDocument":
+          value = ReferenceDocument;
+          return ReferenceDocument?.Any() == true;
+        case "study":
+          value = Study;
+          return Study?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",Seriousness);
+      if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
+      if (EventParticipant is not null) yield return new KeyValuePair<string,object>("eventParticipant",EventParticipant);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
+      if (SubjectMedicalHistory?.Any() == true) yield return new KeyValuePair<string,object>("subjectMedicalHistory",SubjectMedicalHistory);
+      if (ReferenceDocument?.Any() == true) yield return new KeyValuePair<string,object>("referenceDocument",ReferenceDocument);
+      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
     }
 
   }

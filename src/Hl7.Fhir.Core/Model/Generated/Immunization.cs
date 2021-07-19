@@ -185,6 +185,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -292,6 +315,29 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
           foreach (var elem in ReasonNotGiven) { if (elem != null) yield return new ElementValue("reasonNotGiven", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "reason":
+            value = Reason;
+            return Reason?.Any() == true;
+          case "reasonNotGiven":
+            value = ReasonNotGiven;
+            return ReasonNotGiven?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (ReasonNotGiven?.Any() == true) yield return new KeyValuePair<string,object>("reasonNotGiven",ReasonNotGiven);
       }
 
     }
@@ -455,6 +501,33 @@ namespace Hl7.Fhir.Model
           if (Detail != null) yield return new ElementValue("detail", Detail);
           if (ReportedElement != null) yield return new ElementValue("reported", ReportedElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          case "reported":
+            value = ReportedElement;
+            return ReportedElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (ReportedElement is not null) yield return new KeyValuePair<string,object>("reported",ReportedElement);
       }
 
     }
@@ -746,6 +819,53 @@ namespace Hl7.Fhir.Model
           if (DoseStatus != null) yield return new ElementValue("doseStatus", DoseStatus);
           if (DoseStatusReason != null) yield return new ElementValue("doseStatusReason", DoseStatusReason);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "doseSequence":
+            value = DoseSequenceElement;
+            return DoseSequenceElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "authority":
+            value = Authority;
+            return Authority is not null;
+          case "series":
+            value = SeriesElement;
+            return SeriesElement is not null;
+          case "seriesDoses":
+            value = SeriesDosesElement;
+            return SeriesDosesElement is not null;
+          case "targetDisease":
+            value = TargetDisease;
+            return TargetDisease?.Any() == true;
+          case "doseStatus":
+            value = DoseStatus;
+            return DoseStatus is not null;
+          case "doseStatusReason":
+            value = DoseStatusReason;
+            return DoseStatusReason is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DoseSequenceElement is not null) yield return new KeyValuePair<string,object>("doseSequence",DoseSequenceElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+        if (SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDosesElement);
+        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (DoseStatus is not null) yield return new KeyValuePair<string,object>("doseStatus",DoseStatus);
+        if (DoseStatusReason is not null) yield return new KeyValuePair<string,object>("doseStatusReason",DoseStatusReason);
       }
 
     }
@@ -1309,6 +1429,105 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
         foreach (var elem in VaccinationProtocol) { if (elem != null) yield return new ElementValue("vaccinationProtocol", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "notGiven":
+          value = NotGivenElement;
+          return NotGivenElement is not null;
+        case "vaccineCode":
+          value = VaccineCode;
+          return VaccineCode is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "primarySource":
+          value = PrimarySourceElement;
+          return PrimarySourceElement is not null;
+        case "reportOrigin":
+          value = ReportOrigin;
+          return ReportOrigin is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer is not null;
+        case "lotNumber":
+          value = LotNumberElement;
+          return LotNumberElement is not null;
+        case "expirationDate":
+          value = ExpirationDateElement;
+          return ExpirationDateElement is not null;
+        case "site":
+          value = Site;
+          return Site is not null;
+        case "route":
+          value = Route;
+          return Route is not null;
+        case "doseQuantity":
+          value = DoseQuantity;
+          return DoseQuantity is not null;
+        case "practitioner":
+          value = Practitioner;
+          return Practitioner?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "explanation":
+          value = Explanation;
+          return Explanation is not null;
+        case "reaction":
+          value = Reaction;
+          return Reaction?.Any() == true;
+        case "vaccinationProtocol":
+          value = VaccinationProtocol;
+          return VaccinationProtocol?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (NotGivenElement is not null) yield return new KeyValuePair<string,object>("notGiven",NotGivenElement);
+      if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",PrimarySourceElement);
+      if (ReportOrigin is not null) yield return new KeyValuePair<string,object>("reportOrigin",ReportOrigin);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
+      if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
+      if (DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",DoseQuantity);
+      if (Practitioner?.Any() == true) yield return new KeyValuePair<string,object>("practitioner",Practitioner);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Explanation is not null) yield return new KeyValuePair<string,object>("explanation",Explanation);
+      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
+      if (VaccinationProtocol?.Any() == true) yield return new KeyValuePair<string,object>("vaccinationProtocol",VaccinationProtocol);
     }
 
   }

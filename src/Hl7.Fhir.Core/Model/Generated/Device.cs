@@ -457,6 +457,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "deviceIdentifier":
+            value = DeviceIdentifierElement;
+            return DeviceIdentifierElement is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "jurisdiction":
+            value = JurisdictionElement;
+            return JurisdictionElement is not null;
+          case "carrierHRF":
+            value = CarrierHRFElement;
+            return CarrierHRFElement is not null;
+          case "carrierAIDC":
+            value = CarrierAIDCElement;
+            return CarrierAIDCElement is not null;
+          case "issuer":
+            value = IssuerElement;
+            return IssuerElement is not null;
+          case "entryType":
+            value = EntryTypeElement;
+            return EntryTypeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DeviceIdentifierElement is not null) yield return new KeyValuePair<string,object>("deviceIdentifier",DeviceIdentifierElement);
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (JurisdictionElement is not null) yield return new KeyValuePair<string,object>("jurisdiction",JurisdictionElement);
+        if (CarrierHRFElement is not null) yield return new KeyValuePair<string,object>("carrierHRF",CarrierHRFElement);
+        if (CarrierAIDCElement is not null) yield return new KeyValuePair<string,object>("carrierAIDC",CarrierAIDCElement);
+        if (IssuerElement is not null) yield return new KeyValuePair<string,object>("issuer",IssuerElement);
+        if (EntryTypeElement is not null) yield return new KeyValuePair<string,object>("entryType",EntryTypeElement);
+      }
+
     }
 
     /// <summary>
@@ -974,6 +1017,89 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in Safety) { if (elem != null) yield return new ElementValue("safety", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "udi":
+          value = Udi;
+          return Udi is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "lotNumber":
+          value = LotNumberElement;
+          return LotNumberElement is not null;
+        case "manufacturer":
+          value = ManufacturerElement;
+          return ManufacturerElement is not null;
+        case "manufactureDate":
+          value = ManufactureDateElement;
+          return ManufactureDateElement is not null;
+        case "expirationDate":
+          value = ExpirationDateElement;
+          return ExpirationDateElement is not null;
+        case "model":
+          value = ModelElement;
+          return ModelElement is not null;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "owner":
+          value = Owner;
+          return Owner is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "safety":
+          value = Safety;
+          return Safety?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Udi is not null) yield return new KeyValuePair<string,object>("udi",Udi);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+      if (ManufacturerElement is not null) yield return new KeyValuePair<string,object>("manufacturer",ManufacturerElement);
+      if (ManufactureDateElement is not null) yield return new KeyValuePair<string,object>("manufactureDate",ManufactureDateElement);
+      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      if (ModelElement is not null) yield return new KeyValuePair<string,object>("model",ModelElement);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Safety?.Any() == true) yield return new KeyValuePair<string,object>("safety",Safety);
     }
 
   }
