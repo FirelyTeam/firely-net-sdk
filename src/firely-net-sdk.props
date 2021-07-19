@@ -56,6 +56,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <NoWarn>1591</NoWarn> <!-- Missing XML comments -->
   </PropertyGroup>
 </Project>
 
