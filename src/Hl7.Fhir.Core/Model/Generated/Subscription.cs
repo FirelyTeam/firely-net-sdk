@@ -345,6 +345,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          case "payload":
+            value = PayloadElement;
+            return PayloadElement is not null;
+          case "header":
+            value = HeaderElement;
+            return HeaderElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+        if (PayloadElement is not null) yield return new KeyValuePair<string,object>("payload",PayloadElement);
+        if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      }
+
     }
 
     /// <summary>
@@ -642,6 +673,53 @@ namespace Hl7.Fhir.Model
         if (Channel != null) yield return new ElementValue("channel", Channel);
         foreach (var elem in Tag) { if (elem != null) yield return new ElementValue("tag", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "reason":
+          value = ReasonElement;
+          return ReasonElement is not null;
+        case "criteria":
+          value = CriteriaElement;
+          return CriteriaElement is not null;
+        case "error":
+          value = ErrorElement;
+          return ErrorElement is not null;
+        case "channel":
+          value = Channel;
+          return Channel is not null;
+        case "tag":
+          value = Tag;
+          return Tag?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
+      if (CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",CriteriaElement);
+      if (ErrorElement is not null) yield return new KeyValuePair<string,object>("error",ErrorElement);
+      if (Channel is not null) yield return new KeyValuePair<string,object>("channel",Channel);
+      if (Tag?.Any() == true) yield return new KeyValuePair<string,object>("tag",Tag);
     }
 
   }

@@ -261,6 +261,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
     }
 
     /// <summary>
@@ -740,6 +767,101 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in Arm) { if (elem != null) yield return new ElementValue("arm", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "protocol":
+          value = Protocol;
+          return Protocol?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "keyword":
+          value = Keyword;
+          return Keyword?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "enrollment":
+          value = Enrollment;
+          return Enrollment?.Any() == true;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "sponsor":
+          value = Sponsor;
+          return Sponsor is not null;
+        case "principalInvestigator":
+          value = PrincipalInvestigator;
+          return PrincipalInvestigator is not null;
+        case "site":
+          value = Site;
+          return Site?.Any() == true;
+        case "reasonStopped":
+          value = ReasonStopped;
+          return ReasonStopped is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "arm":
+          value = Arm;
+          return Arm?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (Protocol?.Any() == true) yield return new KeyValuePair<string,object>("protocol",Protocol);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (Keyword?.Any() == true) yield return new KeyValuePair<string,object>("keyword",Keyword);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Enrollment?.Any() == true) yield return new KeyValuePair<string,object>("enrollment",Enrollment);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Sponsor is not null) yield return new KeyValuePair<string,object>("sponsor",Sponsor);
+      if (PrincipalInvestigator is not null) yield return new KeyValuePair<string,object>("principalInvestigator",PrincipalInvestigator);
+      if (Site?.Any() == true) yield return new KeyValuePair<string,object>("site",Site);
+      if (ReasonStopped is not null) yield return new KeyValuePair<string,object>("reasonStopped",ReasonStopped);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Arm?.Any() == true) yield return new KeyValuePair<string,object>("arm",Arm);
     }
 
   }

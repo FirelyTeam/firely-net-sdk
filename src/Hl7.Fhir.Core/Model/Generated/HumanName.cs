@@ -401,6 +401,49 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "use":
+          value = UseElement;
+          return UseElement is not null;
+        case "text":
+          value = TextElement;
+          return TextElement is not null;
+        case "family":
+          value = FamilyElement;
+          return FamilyElement is not null;
+        case "given":
+          value = GivenElement;
+          return GivenElement?.Any() == true;
+        case "prefix":
+          value = PrefixElement;
+          return PrefixElement?.Any() == true;
+        case "suffix":
+          value = SuffixElement;
+          return SuffixElement?.Any() == true;
+        case "period":
+          value = Period;
+          return Period is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if (FamilyElement is not null) yield return new KeyValuePair<string,object>("family",FamilyElement);
+      if (GivenElement?.Any() == true) yield return new KeyValuePair<string,object>("given",GivenElement);
+      if (PrefixElement?.Any() == true) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
+      if (SuffixElement?.Any() == true) yield return new KeyValuePair<string,object>("suffix",SuffixElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+    }
+
   }
 
 }

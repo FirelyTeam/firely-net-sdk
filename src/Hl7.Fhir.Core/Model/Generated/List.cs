@@ -263,6 +263,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "flag":
+            value = Flag;
+            return Flag is not null;
+          case "deleted":
+            value = DeletedElement;
+            return DeletedElement is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Flag is not null) yield return new KeyValuePair<string,object>("flag",Flag);
+        if (DeletedElement is not null) yield return new KeyValuePair<string,object>("deleted",DeletedElement);
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -638,6 +669,73 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
         if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "mode":
+          value = ModeElement;
+          return ModeElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "orderedBy":
+          value = OrderedBy;
+          return OrderedBy is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "entry":
+          value = Entry;
+          return Entry?.Any() == true;
+        case "emptyReason":
+          value = EmptyReason;
+          return EmptyReason is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (OrderedBy is not null) yield return new KeyValuePair<string,object>("orderedBy",OrderedBy);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
+      if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
     }
 
   }
