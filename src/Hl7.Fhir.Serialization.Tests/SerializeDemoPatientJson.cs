@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -63,12 +62,11 @@ namespace Hl7.Fhir.Serialization.Tests
             var filename = Path.Combine("TestData", "json-edge-cases.json");
             var expected = File.ReadAllText(filename);
 
-            var fhirConverter = new JsonDynamicFhirConverter(typeof(Patient).Assembly);
+            var fhirConverter = new JsonFhirConverter(typeof(Patient).Assembly);
             var options = new JsonSerializerOptions();
             options.Converters.Add(fhirConverter);
-            
-            var poco = JsonSerializer.Deserialize<Resource>(expected, options);
-            var actual = JsonSerializer.Serialize(poco, options);
+            Resource poco = JsonSerializer.Deserialize<Resource>(expected, options);
+            string actual = JsonSerializer.Serialize(poco, options);
 
             var errors = new List<string>();
             JsonAssert.AreSame(filename, expected, actual, errors);

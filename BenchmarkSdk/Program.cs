@@ -1,4 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
+using BenchmarkDotNet.Diagnostics.Windows.Configs;
 using BenchmarkDotNet.Running;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
@@ -14,12 +15,14 @@ namespace BenchmarkSdk
     {
         public static void Main(string[] args)
         {
-            //_ = BenchmarkRunner.Run<SerializerBenchmarks>();
-            _ = BenchmarkRunner.Run<DeserializerBenchmarks>();
+            _ = BenchmarkRunner.Run<SerializerBenchmarks>();
+
+            //_ = BenchmarkRunner.Run<DeserializerBenchmarks>();
         }
     }
 
     [MemoryDiagnoser]
+    [EtwProfiler]
     public class DeserializerBenchmarks
     {
         byte[] testInput;
@@ -105,30 +108,34 @@ namespace BenchmarkSdk
             var ms = new MemoryStream();
             var jw = new Utf8JsonWriter(ms);
 
-            JsonSerializationExtensions.SerializeObject(oo, jw);
+            var serializer = new JsonDictionarySerializer();
+            serializer.SerializeObject(oo, jw);
         }
+
+        //[Benchmark]
+        //public void CallbackSerializer()
+        //{
+        //    var ms = new MemoryStream();
+        //    var jw = new Utf8JsonWriter(ms);
+        //    var ser = new JsonCallbackSerializer(jw);
+
+        //    ser.SerializeObject(oo);
+        //}
 
         [Benchmark]
-        public void CallbackSerializer()
-        {
-            var ms = new MemoryStream();
-            var jw = new Utf8JsonWriter(ms);
-            var ser = new JsonCallbackSerializer(jw);
-
-            ser.SerializeObject(oo);
-        }
-
-        [Benchmark(Baseline = true)]
         public void GeneratedSerializer()
         {
             var options = new JsonSerializerOptions();
             var ms = new MemoryStream();
             var jw = new Utf8JsonWriter(ms);
+            var ser = new JsonDictionarySerializer();
 
-            oo.SerializeJson(jw, options);
+            ser.SerializeObject(oo, jw);
+            // oo.SerializeJson(jw, options);
+
         }
 
-        [Benchmark]
+        [Benchmark(Baseline = true)]
         public byte[] TypedElementSerializer()
         {
             return oo.ToJsonBytes();
