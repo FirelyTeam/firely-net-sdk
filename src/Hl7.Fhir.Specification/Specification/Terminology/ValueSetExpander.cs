@@ -8,12 +8,10 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
@@ -51,11 +49,11 @@ namespace Hl7.Fhir.Specification.Terminology
             {
                 await handleCompose(source).ConfigureAwait(false);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Expansion failed - remove (partial) expansion
                 source.Expansion = null;
-                throw e;
+                throw;
             }
             
         }
