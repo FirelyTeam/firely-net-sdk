@@ -292,12 +292,12 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("detail"))
           {
             value = Detail;
-            return Detail is not null && PocoDictionary.HasCorrectSuffix(key, Detail.TypeName, 6);
+            return Detail is not null && ElementName.HasCorrectSuffix(key, "detail", Detail.TypeName);
           }
           else if (key.StartsWith("due"))
           {
             value = Due;
-            return Due is not null && PocoDictionary.HasCorrectSuffix(key, Due.TypeName, 3);
+            return Due is not null && ElementName.HasCorrectSuffix(key, "due", Due.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -308,8 +308,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
-        if (Detail is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("detail", Detail),Detail);
-        if (Due is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("due", Due),Due);
+        if (Detail is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("detail", Detail),Detail);
+        if (Due is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("due", Due),Due);
       }
 
     }
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("start"))
         {
           value = Start;
-          return Start is not null && PocoDictionary.HasCorrectSuffix(key, Start.TypeName, 5);
+          return Start is not null && ElementName.HasCorrectSuffix(key, "start", Start.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Start is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("start", Start),Start);
+      if (Start is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("start", Start),Start);
       if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);

@@ -1753,7 +1753,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("source"))
         {
           value = Source;
-          return Source is not null && PocoDictionary.HasCorrectSuffix(key, Source.TypeName, 6);
+          return Source is not null && ElementName.HasCorrectSuffix(key, "source", Source.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -1773,7 +1773,7 @@ namespace Hl7.Fhir.Model
       if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
       if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
       if (Organization?.Any() == true) yield return new KeyValuePair<string,object>("organization",Organization);
-      if (Source is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("source", Source),Source);
+      if (Source is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("source", Source),Source);
       if (Policy?.Any() == true) yield return new KeyValuePair<string,object>("policy",Policy);
       if (PolicyRuleElement is not null) yield return new KeyValuePair<string,object>("policyRule",PolicyRuleElement);
       if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);

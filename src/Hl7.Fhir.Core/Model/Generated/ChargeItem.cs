@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (PerformingOrganization is not null) yield return new KeyValuePair<string,object>("performingOrganization",PerformingOrganization);
       if (RequestingOrganization is not null) yield return new KeyValuePair<string,object>("requestingOrganization",RequestingOrganization);

@@ -702,12 +702,12 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("allowed"))
           {
             value = Allowed;
-            return Allowed is not null && PocoDictionary.HasCorrectSuffix(key, Allowed.TypeName, 7);
+            return Allowed is not null && ElementName.HasCorrectSuffix(key, "allowed", Allowed.TypeName);
           }
           else if (key.StartsWith("used"))
           {
             value = Used;
-            return Used is not null && PocoDictionary.HasCorrectSuffix(key, Used.TypeName, 4);
+            return Used is not null && ElementName.HasCorrectSuffix(key, "used", Used.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -718,8 +718,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Allowed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("allowed", Allowed),Allowed);
-        if (Used is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("used", Used),Used);
+        if (Allowed is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("allowed", Allowed),Allowed);
+        if (Used is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("used", Used),Used);
       }
 
     }

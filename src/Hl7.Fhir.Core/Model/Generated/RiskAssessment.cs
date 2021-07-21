@@ -304,12 +304,12 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("probability"))
           {
             value = Probability;
-            return Probability is not null && PocoDictionary.HasCorrectSuffix(key, Probability.TypeName, 11);
+            return Probability is not null && ElementName.HasCorrectSuffix(key, "probability", Probability.TypeName);
           }
           else if (key.StartsWith("when"))
           {
             value = When;
-            return When is not null && PocoDictionary.HasCorrectSuffix(key, When.TypeName, 4);
+            return When is not null && ElementName.HasCorrectSuffix(key, "when", When.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -320,10 +320,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
-        if (Probability is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("probability", Probability),Probability);
+        if (Probability is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("probability", Probability),Probability);
         if (QualitativeRisk is not null) yield return new KeyValuePair<string,object>("qualitativeRisk",QualitativeRisk);
         if (RelativeRiskElement is not null) yield return new KeyValuePair<string,object>("relativeRisk",RelativeRiskElement);
-        if (When is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("when", When),When);
+        if (When is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("when", When),When);
         if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
       }
 
@@ -811,12 +811,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         else if (key.StartsWith("reason"))
         {
           value = Reason;
-          return Reason is not null && PocoDictionary.HasCorrectSuffix(key, Reason.TypeName, 6);
+          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -834,10 +834,10 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
       if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Reason is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("reason", Reason),Reason);
+      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
       if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
       if (Prediction?.Any() == true) yield return new KeyValuePair<string,object>("prediction",Prediction);
       if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);

@@ -791,12 +791,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("code"))
         {
           value = Code;
-          return Code is not null && PocoDictionary.HasCorrectSuffix(key, Code.TypeName, 4);
+          return Code is not null && ElementName.HasCorrectSuffix(key, "code", Code.TypeName);
         }
         else if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -814,10 +814,10 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Intent is not null) yield return new KeyValuePair<string,object>("intent",Intent);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Code is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("code", Code),Code);
+      if (Code is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("code", Code),Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);

@@ -269,12 +269,12 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("who"))
           {
             value = Who;
-            return Who is not null && PocoDictionary.HasCorrectSuffix(key, Who.TypeName, 3);
+            return Who is not null && ElementName.HasCorrectSuffix(key, "who", Who.TypeName);
           }
           else if (key.StartsWith("onBehalfOf"))
           {
             value = OnBehalfOf;
-            return OnBehalfOf is not null && PocoDictionary.HasCorrectSuffix(key, OnBehalfOf.TypeName, 10);
+            return OnBehalfOf is not null && ElementName.HasCorrectSuffix(key, "onBehalfOf", OnBehalfOf.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -285,8 +285,8 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
-        if (Who is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("who", Who),Who);
-        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onBehalfOf", OnBehalfOf),OnBehalfOf);
+        if (Who is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("who", Who),Who);
+        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onBehalfOf", OnBehalfOf),OnBehalfOf);
         if (RelatedAgentType is not null) yield return new KeyValuePair<string,object>("relatedAgentType",RelatedAgentType);
       }
 
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("what"))
           {
             value = What;
-            return What is not null && PocoDictionary.HasCorrectSuffix(key, What.TypeName, 4);
+            return What is not null && ElementName.HasCorrectSuffix(key, "what", What.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (RoleElement is not null) yield return new KeyValuePair<string,object>("role",RoleElement);
-        if (What is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("what", What),What);
+        if (What is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("what", What),What);
         if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
       }
 

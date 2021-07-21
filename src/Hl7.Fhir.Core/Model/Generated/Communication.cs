@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("content"))
           {
             value = Content;
-            return Content is not null && PocoDictionary.HasCorrectSuffix(key, Content.TypeName, 7);
+            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
       }
 
     }

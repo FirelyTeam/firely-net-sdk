@@ -479,17 +479,17 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("asNeeded"))
         {
           value = AsNeeded;
-          return AsNeeded is not null && PocoDictionary.HasCorrectSuffix(key, AsNeeded.TypeName, 8);
+          return AsNeeded is not null && ElementName.HasCorrectSuffix(key, "asNeeded", AsNeeded.TypeName);
         }
         else if (key.StartsWith("dose"))
         {
           value = Dose;
-          return Dose is not null && PocoDictionary.HasCorrectSuffix(key, Dose.TypeName, 4);
+          return Dose is not null && ElementName.HasCorrectSuffix(key, "dose", Dose.TypeName);
         }
         else if (key.StartsWith("rate"))
         {
           value = Rate;
-          return Rate is not null && PocoDictionary.HasCorrectSuffix(key, Rate.TypeName, 4);
+          return Rate is not null && ElementName.HasCorrectSuffix(key, "rate", Rate.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -504,15 +504,15 @@ namespace Hl7.Fhir.Model
       if (AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);
       if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
       if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
+      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("asNeeded", AsNeeded),AsNeeded);
       if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
       if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
       if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
-      if (Dose is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("dose", Dose),Dose);
+      if (Dose is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("dose", Dose),Dose);
       if (MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",MaxDosePerPeriod);
       if (MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",MaxDosePerAdministration);
       if (MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",MaxDosePerLifetime);
-      if (Rate is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("rate", Rate),Rate);
+      if (Rate is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("rate", Rate),Rate);
     }
 
   }

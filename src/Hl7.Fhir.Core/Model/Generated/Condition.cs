@@ -885,12 +885,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("onset"))
         {
           value = Onset;
-          return Onset is not null && PocoDictionary.HasCorrectSuffix(key, Onset.TypeName, 5);
+          return Onset is not null && ElementName.HasCorrectSuffix(key, "onset", Onset.TypeName);
         }
         else if (key.StartsWith("abatement"))
         {
           value = Abatement;
-          return Abatement is not null && PocoDictionary.HasCorrectSuffix(key, Abatement.TypeName, 9);
+          return Abatement is not null && ElementName.HasCorrectSuffix(key, "abatement", Abatement.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -909,8 +909,8 @@ namespace Hl7.Fhir.Model
       if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Onset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
-      if (Abatement is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("abatement", Abatement),Abatement);
+      if (Onset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onset", Onset),Onset);
+      if (Abatement is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("abatement", Abatement),Abatement);
       if (AssertedDateElement is not null) yield return new KeyValuePair<string,object>("assertedDate",AssertedDateElement);
       if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
       if (Stage is not null) yield return new KeyValuePair<string,object>("stage",Stage);

@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("item"))
           {
             value = Item;
-            return Item is not null && PocoDictionary.HasCorrectSuffix(key, Item.TypeName, 4);
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
         if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
       }
 
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("effective"))
         {
           value = Effective;
-          return Effective is not null && PocoDictionary.HasCorrectSuffix(key, Effective.TypeName, 9);
+          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Assessor is not null) yield return new KeyValuePair<string,object>("assessor",Assessor);
       if (Previous is not null) yield return new KeyValuePair<string,object>("previous",Previous);

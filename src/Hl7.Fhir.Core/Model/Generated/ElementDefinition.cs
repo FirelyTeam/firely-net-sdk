@@ -1286,7 +1286,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("value"))
           {
             value = Value;
-            return Value is not null && PocoDictionary.HasCorrectSuffix(key, Value.TypeName, 5);
+            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
       }
 
     }
@@ -1859,7 +1859,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("valueSet"))
           {
             value = ValueSet;
-            return ValueSet is not null && PocoDictionary.HasCorrectSuffix(key, ValueSet.TypeName, 8);
+            return ValueSet is not null && ElementName.HasCorrectSuffix(key, "valueSet", ValueSet.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1871,7 +1871,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (StrengthElement is not null) yield return new KeyValuePair<string,object>("strength",StrengthElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (ValueSet is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("valueSet", ValueSet),ValueSet);
+        if (ValueSet is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("valueSet", ValueSet),ValueSet);
       }
 
     }
@@ -3227,27 +3227,27 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("defaultValue"))
         {
           value = DefaultValue;
-          return DefaultValue is not null && PocoDictionary.HasCorrectSuffix(key, DefaultValue.TypeName, 12);
+          return DefaultValue is not null && ElementName.HasCorrectSuffix(key, "defaultValue", DefaultValue.TypeName);
         }
         else if (key.StartsWith("fixed"))
         {
           value = Fixed;
-          return Fixed is not null && PocoDictionary.HasCorrectSuffix(key, Fixed.TypeName, 5);
+          return Fixed is not null && ElementName.HasCorrectSuffix(key, "fixed", Fixed.TypeName);
         }
         else if (key.StartsWith("pattern"))
         {
           value = Pattern;
-          return Pattern is not null && PocoDictionary.HasCorrectSuffix(key, Pattern.TypeName, 7);
+          return Pattern is not null && ElementName.HasCorrectSuffix(key, "pattern", Pattern.TypeName);
         }
         else if (key.StartsWith("minValue"))
         {
           value = MinValue;
-          return MinValue is not null && PocoDictionary.HasCorrectSuffix(key, MinValue.TypeName, 8);
+          return MinValue is not null && ElementName.HasCorrectSuffix(key, "minValue", MinValue.TypeName);
         }
         else if (key.StartsWith("maxValue"))
         {
           value = MaxValue;
-          return MaxValue is not null && PocoDictionary.HasCorrectSuffix(key, MaxValue.TypeName, 8);
+          return MaxValue is not null && ElementName.HasCorrectSuffix(key, "maxValue", MaxValue.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -3273,14 +3273,14 @@ namespace Hl7.Fhir.Model
       if (Base is not null) yield return new KeyValuePair<string,object>("base",Base);
       if (ContentReferenceElement is not null) yield return new KeyValuePair<string,object>("contentReference",ContentReferenceElement);
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
-      if (DefaultValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("defaultValue", DefaultValue),DefaultValue);
+      if (DefaultValue is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("defaultValue", DefaultValue),DefaultValue);
       if (MeaningWhenMissingElement is not null) yield return new KeyValuePair<string,object>("meaningWhenMissing",MeaningWhenMissingElement);
       if (OrderMeaningElement is not null) yield return new KeyValuePair<string,object>("orderMeaning",OrderMeaningElement);
-      if (Fixed is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("fixed", Fixed),Fixed);
-      if (Pattern is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("pattern", Pattern),Pattern);
+      if (Fixed is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("fixed", Fixed),Fixed);
+      if (Pattern is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("pattern", Pattern),Pattern);
       if (Example?.Any() == true) yield return new KeyValuePair<string,object>("example",Example);
-      if (MinValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("minValue", MinValue),MinValue);
-      if (MaxValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("maxValue", MaxValue),MaxValue);
+      if (MinValue is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("minValue", MinValue),MinValue);
+      if (MaxValue is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("maxValue", MaxValue),MaxValue);
       if (MaxLengthElement is not null) yield return new KeyValuePair<string,object>("maxLength",MaxLengthElement);
       if (ConditionElement?.Any() == true) yield return new KeyValuePair<string,object>("condition",ConditionElement);
       if (Constraint?.Any() == true) yield return new KeyValuePair<string,object>("constraint",Constraint);

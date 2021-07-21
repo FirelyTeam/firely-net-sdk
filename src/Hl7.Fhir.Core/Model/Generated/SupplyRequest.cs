@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("item"))
           {
             value = Item;
-            return Item is not null && PocoDictionary.HasCorrectSuffix(key, Item.TypeName, 4);
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
       }
 
     }
@@ -775,12 +775,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         else if (key.StartsWith("reason"))
         {
           value = Reason;
-          return Reason is not null && PocoDictionary.HasCorrectSuffix(key, Reason.TypeName, 6);
+          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -795,11 +795,11 @@ namespace Hl7.Fhir.Model
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       if (OrderedItem is not null) yield return new KeyValuePair<string,object>("orderedItem",OrderedItem);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",Supplier);
-      if (Reason is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("reason", Reason),Reason);
+      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
       if (DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",DeliverFrom);
       if (DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",DeliverTo);
     }

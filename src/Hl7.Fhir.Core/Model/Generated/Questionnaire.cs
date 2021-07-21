@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("initial"))
           {
             value = Initial;
-            return Initial is not null && PocoDictionary.HasCorrectSuffix(key, Initial.TypeName, 7);
+            return Initial is not null && ElementName.HasCorrectSuffix(key, "initial", Initial.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
         if (MaxLengthElement is not null) yield return new KeyValuePair<string,object>("maxLength",MaxLengthElement);
         if (Options is not null) yield return new KeyValuePair<string,object>("options",Options);
         if (Option?.Any() == true) yield return new KeyValuePair<string,object>("option",Option);
-        if (Initial is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("initial", Initial),Initial);
+        if (Initial is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("initial", Initial),Initial);
         if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
       }
 
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("answer"))
           {
             value = Answer;
-            return Answer is not null && PocoDictionary.HasCorrectSuffix(key, Answer.TypeName, 6);
+            return Answer is not null && ElementName.HasCorrectSuffix(key, "answer", Answer.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (QuestionElement is not null) yield return new KeyValuePair<string,object>("question",QuestionElement);
         if (HasAnswerElement is not null) yield return new KeyValuePair<string,object>("hasAnswer",HasAnswerElement);
-        if (Answer is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("answer", Answer),Answer);
+        if (Answer is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("answer", Answer),Answer);
       }
 
     }
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("value"))
           {
             value = Value;
-            return Value is not null && PocoDictionary.HasCorrectSuffix(key, Value.TypeName, 5);
+            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1087,7 +1087,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
       }
 
     }

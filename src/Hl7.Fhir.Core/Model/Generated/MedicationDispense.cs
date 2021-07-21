@@ -1114,12 +1114,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("medication"))
         {
           value = Medication;
-          return Medication is not null && PocoDictionary.HasCorrectSuffix(key, Medication.TypeName, 10);
+          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
         }
         else if (key.StartsWith("notDoneReason"))
         {
           value = NotDoneReason;
-          return NotDoneReason is not null && PocoDictionary.HasCorrectSuffix(key, NotDoneReason.TypeName, 13);
+          return NotDoneReason is not null && ElementName.HasCorrectSuffix(key, "notDoneReason", NotDoneReason.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
       if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
       if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
       if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
       if (NotDoneElement is not null) yield return new KeyValuePair<string,object>("notDone",NotDoneElement);
-      if (NotDoneReason is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("notDoneReason", NotDoneReason),NotDoneReason);
+      if (NotDoneReason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("notDoneReason", NotDoneReason),NotDoneReason);
       if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 

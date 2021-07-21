@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("valueSet"))
           {
             value = ValueSet;
-            return ValueSet is not null && PocoDictionary.HasCorrectSuffix(key, ValueSet.TypeName, 8);
+            return ValueSet is not null && ElementName.HasCorrectSuffix(key, "valueSet", ValueSet.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (StrengthElement is not null) yield return new KeyValuePair<string,object>("strength",StrengthElement);
-        if (ValueSet is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("valueSet", ValueSet),ValueSet);
+        if (ValueSet is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("valueSet", ValueSet),ValueSet);
       }
 
     }

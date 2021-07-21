@@ -313,12 +313,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("who"))
         {
           value = Who;
-          return Who is not null && PocoDictionary.HasCorrectSuffix(key, Who.TypeName, 3);
+          return Who is not null && ElementName.HasCorrectSuffix(key, "who", Who.TypeName);
         }
         else if (key.StartsWith("onBehalfOf"))
         {
           value = OnBehalfOf;
-          return OnBehalfOf is not null && PocoDictionary.HasCorrectSuffix(key, OnBehalfOf.TypeName, 10);
+          return OnBehalfOf is not null && ElementName.HasCorrectSuffix(key, "onBehalfOf", OnBehalfOf.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -330,8 +330,8 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (WhenElement is not null) yield return new KeyValuePair<string,object>("when",WhenElement);
-      if (Who is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("who", Who),Who);
-      if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onBehalfOf", OnBehalfOf),OnBehalfOf);
+      if (Who is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("who", Who),Who);
+      if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onBehalfOf", OnBehalfOf),OnBehalfOf);
       if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
       if (BlobElement is not null) yield return new KeyValuePair<string,object>("blob",BlobElement);
     }

@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("item"))
           {
             value = Item;
-            return Item is not null && PocoDictionary.HasCorrectSuffix(key, Item.TypeName, 4);
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
         if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("item"))
           {
             value = Item;
-            return Item is not null && PocoDictionary.HasCorrectSuffix(key, Item.TypeName, 4);
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -559,7 +559,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 

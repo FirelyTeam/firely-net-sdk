@@ -670,12 +670,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("medication"))
         {
           value = Medication;
-          return Medication is not null && PocoDictionary.HasCorrectSuffix(key, Medication.TypeName, 10);
+          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
         }
         else if (key.StartsWith("effective"))
         {
           value = Effective;
-          return Effective is not null && PocoDictionary.HasCorrectSuffix(key, Effective.TypeName, 9);
+          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -691,8 +691,8 @@ namespace Hl7.Fhir.Model
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("medication", Medication),Medication);
-      if (Effective is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("effective", Effective),Effective);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
       if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
       if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);

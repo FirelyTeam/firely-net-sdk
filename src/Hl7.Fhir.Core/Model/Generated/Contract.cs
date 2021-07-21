@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("entity"))
           {
             value = Entity;
-            return Entity is not null && PocoDictionary.HasCorrectSuffix(key, Entity.TypeName, 6);
+            return Entity is not null && ElementName.HasCorrectSuffix(key, "entity", Entity.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Entity is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("entity", Entity),Entity);
+        if (Entity is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("entity", Entity),Entity);
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (EffectiveTimeElement is not null) yield return new KeyValuePair<string,object>("effectiveTime",EffectiveTimeElement);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
@@ -1633,7 +1633,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("entity"))
           {
             value = Entity;
-            return Entity is not null && PocoDictionary.HasCorrectSuffix(key, Entity.TypeName, 6);
+            return Entity is not null && ElementName.HasCorrectSuffix(key, "entity", Entity.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1643,7 +1643,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Entity is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("entity", Entity),Entity);
+        if (Entity is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("entity", Entity),Entity);
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (EffectiveTimeElement is not null) yield return new KeyValuePair<string,object>("effectiveTime",EffectiveTimeElement);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
@@ -1762,7 +1762,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("content"))
           {
             value = Content;
-            return Content is not null && PocoDictionary.HasCorrectSuffix(key, Content.TypeName, 7);
+            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1772,7 +1772,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
       }
 
     }
@@ -1884,7 +1884,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("content"))
           {
             value = Content;
-            return Content is not null && PocoDictionary.HasCorrectSuffix(key, Content.TypeName, 7);
+            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1894,7 +1894,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
       }
 
     }
@@ -2006,7 +2006,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("content"))
           {
             value = Content;
-            return Content is not null && PocoDictionary.HasCorrectSuffix(key, Content.TypeName, 7);
+            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -2016,7 +2016,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
       }
 
     }
@@ -2636,7 +2636,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("binding"))
         {
           value = Binding;
-          return Binding is not null && PocoDictionary.HasCorrectSuffix(key, Binding.TypeName, 7);
+          return Binding is not null && ElementName.HasCorrectSuffix(key, "binding", Binding.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -2665,7 +2665,7 @@ namespace Hl7.Fhir.Model
       if (Signer?.Any() == true) yield return new KeyValuePair<string,object>("signer",Signer);
       if (ValuedItem?.Any() == true) yield return new KeyValuePair<string,object>("valuedItem",ValuedItem);
       if (Term?.Any() == true) yield return new KeyValuePair<string,object>("term",Term);
-      if (Binding is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("binding", Binding),Binding);
+      if (Binding is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("binding", Binding),Binding);
       if (Friendly?.Any() == true) yield return new KeyValuePair<string,object>("friendly",Friendly);
       if (Legal?.Any() == true) yield return new KeyValuePair<string,object>("legal",Legal);
       if (Rule?.Any() == true) yield return new KeyValuePair<string,object>("rule",Rule);

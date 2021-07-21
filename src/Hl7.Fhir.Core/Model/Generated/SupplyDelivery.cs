@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("item"))
           {
             value = Item;
-            return Item is not null && PocoDictionary.HasCorrectSuffix(key, Item.TypeName, 4);
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Item is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
       }
 
     }
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (SuppliedItem is not null) yield return new KeyValuePair<string,object>("suppliedItem",SuppliedItem);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
       if (Supplier is not null) yield return new KeyValuePair<string,object>("supplier",Supplier);
       if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
       if (Receiver?.Any() == true) yield return new KeyValuePair<string,object>("receiver",Receiver);

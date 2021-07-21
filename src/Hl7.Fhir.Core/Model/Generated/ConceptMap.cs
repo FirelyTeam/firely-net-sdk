@@ -2025,12 +2025,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("source"))
         {
           value = Source;
-          return Source is not null && PocoDictionary.HasCorrectSuffix(key, Source.TypeName, 6);
+          return Source is not null && ElementName.HasCorrectSuffix(key, "source", Source.TypeName);
         }
         else if (key.StartsWith("target"))
         {
           value = Target;
-          return Target is not null && PocoDictionary.HasCorrectSuffix(key, Target.TypeName, 6);
+          return Target is not null && ElementName.HasCorrectSuffix(key, "target", Target.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -2055,8 +2055,8 @@ namespace Hl7.Fhir.Model
       if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
-      if (Source is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("source", Source),Source);
-      if (Target is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("target", Target),Target);
+      if (Source is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("source", Source),Source);
+      if (Target is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("target", Target),Target);
       if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
     }
 

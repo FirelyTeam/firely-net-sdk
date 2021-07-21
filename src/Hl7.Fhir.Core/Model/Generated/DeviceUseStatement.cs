@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("timing"))
         {
           value = Timing;
-          return Timing is not null && PocoDictionary.HasCorrectSuffix(key, Timing.TypeName, 6);
+          return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (WhenUsed is not null) yield return new KeyValuePair<string,object>("whenUsed",WhenUsed);
-      if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+      if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
       if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
       if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
       if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);

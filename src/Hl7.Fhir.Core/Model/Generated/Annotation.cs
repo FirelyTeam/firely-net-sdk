@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("author"))
         {
           value = Author;
-          return Author is not null && PocoDictionary.HasCorrectSuffix(key, Author.TypeName, 6);
+          return Author is not null && ElementName.HasCorrectSuffix(key, "author", Author.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Author is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("author", Author),Author);
+      if (Author is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("author", Author),Author);
       if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
       if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
     }

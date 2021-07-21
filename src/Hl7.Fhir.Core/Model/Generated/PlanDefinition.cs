@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("detail"))
           {
             value = Detail;
-            return Detail is not null && PocoDictionary.HasCorrectSuffix(key, Detail.TypeName, 6);
+            return Detail is not null && ElementName.HasCorrectSuffix(key, "detail", Detail.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
-        if (Detail is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("detail", Detail),Detail);
+        if (Detail is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("detail", Detail),Detail);
         if (Due is not null) yield return new KeyValuePair<string,object>("due",Due);
       }
 
@@ -1273,7 +1273,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("timing"))
           {
             value = Timing;
-            return Timing is not null && PocoDictionary.HasCorrectSuffix(key, Timing.TypeName, 6);
+            return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
         if (Input?.Any() == true) yield return new KeyValuePair<string,object>("input",Input);
         if (Output?.Any() == true) yield return new KeyValuePair<string,object>("output",Output);
         if (RelatedAction?.Any() == true) yield return new KeyValuePair<string,object>("relatedAction",RelatedAction);
-        if (Timing is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("timing", Timing),Timing);
+        if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
         if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (GroupingBehaviorElement is not null) yield return new KeyValuePair<string,object>("groupingBehavior",GroupingBehaviorElement);
@@ -1746,7 +1746,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("offset"))
           {
             value = Offset;
-            return Offset is not null && PocoDictionary.HasCorrectSuffix(key, Offset.TypeName, 6);
+            return Offset is not null && ElementName.HasCorrectSuffix(key, "offset", Offset.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1758,7 +1758,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ActionIdElement is not null) yield return new KeyValuePair<string,object>("actionId",ActionIdElement);
         if (RelationshipElement is not null) yield return new KeyValuePair<string,object>("relationship",RelationshipElement);
-        if (Offset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("offset", Offset),Offset);
+        if (Offset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("offset", Offset),Offset);
       }
 
     }

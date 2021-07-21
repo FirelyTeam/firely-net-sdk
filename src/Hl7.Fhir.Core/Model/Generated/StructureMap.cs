@@ -1857,7 +1857,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("defaultValue"))
           {
             value = DefaultValue;
-            return DefaultValue is not null && PocoDictionary.HasCorrectSuffix(key, DefaultValue.TypeName, 12);
+            return DefaultValue is not null && ElementName.HasCorrectSuffix(key, "defaultValue", DefaultValue.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -1871,7 +1871,7 @@ namespace Hl7.Fhir.Model
         if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (DefaultValue is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("defaultValue", DefaultValue),DefaultValue);
+        if (DefaultValue is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("defaultValue", DefaultValue),DefaultValue);
         if (ElementElement is not null) yield return new KeyValuePair<string,object>("element",ElementElement);
         if (ListModeElement is not null) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
         if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
@@ -2380,7 +2380,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("value"))
           {
             value = Value;
-            return Value is not null && PocoDictionary.HasCorrectSuffix(key, Value.TypeName, 5);
+            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -2390,7 +2390,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Value is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("value", Value),Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
       }
 
     }

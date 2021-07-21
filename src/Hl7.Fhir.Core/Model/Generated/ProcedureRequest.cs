@@ -938,12 +938,12 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("occurrence"))
         {
           value = Occurrence;
-          return Occurrence is not null && PocoDictionary.HasCorrectSuffix(key, Occurrence.TypeName, 10);
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
         }
         else if (key.StartsWith("asNeeded"))
         {
           value = AsNeeded;
-          return AsNeeded is not null && PocoDictionary.HasCorrectSuffix(key, AsNeeded.TypeName, 8);
+          return AsNeeded is not null && ElementName.HasCorrectSuffix(key, "asNeeded", AsNeeded.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -966,8 +966,8 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("occurrence", Occurrence),Occurrence);
-      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("asNeeded", AsNeeded),AsNeeded);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("asNeeded", AsNeeded),AsNeeded);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);

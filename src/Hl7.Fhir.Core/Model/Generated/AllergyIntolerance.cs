@@ -1055,7 +1055,7 @@ namespace Hl7.Fhir.Model
         if (key.StartsWith("onset"))
         {
           value = Onset;
-          return Onset is not null && PocoDictionary.HasCorrectSuffix(key, Onset.TypeName, 5);
+          return Onset is not null && ElementName.HasCorrectSuffix(key, "onset", Onset.TypeName);
         }
         return base.TryGetValue(key, out value);
       }
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
       if (CriticalityElement is not null) yield return new KeyValuePair<string,object>("criticality",CriticalityElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Onset is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("onset", Onset),Onset);
+      if (Onset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onset", Onset),Onset);
       if (AssertedDateElement is not null) yield return new KeyValuePair<string,object>("assertedDate",AssertedDateElement);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
       if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);

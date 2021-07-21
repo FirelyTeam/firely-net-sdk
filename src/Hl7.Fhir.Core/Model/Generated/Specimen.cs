@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("collected"))
           {
             value = Collected;
-            return Collected is not null && PocoDictionary.HasCorrectSuffix(key, Collected.TypeName, 9);
+            return Collected is not null && ElementName.HasCorrectSuffix(key, "collected", Collected.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
-        if (Collected is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("collected", Collected),Collected);
+        if (Collected is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("collected", Collected),Collected);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("time"))
           {
             value = Time;
-            return Time is not null && PocoDictionary.HasCorrectSuffix(key, Time.TypeName, 4);
+            return Time is not null && ElementName.HasCorrectSuffix(key, "time", Time.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
         if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
-        if (Time is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("time", Time),Time);
+        if (Time is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("time", Time),Time);
       }
 
     }
@@ -736,7 +736,7 @@ namespace Hl7.Fhir.Model
           if (key.StartsWith("additive"))
           {
             value = Additive;
-            return Additive is not null && PocoDictionary.HasCorrectSuffix(key, Additive.TypeName, 8);
+            return Additive is not null && ElementName.HasCorrectSuffix(key, "additive", Additive.TypeName);
           }
           return base.TryGetValue(key, out value);
         }
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
         if (SpecimenQuantity is not null) yield return new KeyValuePair<string,object>("specimenQuantity",SpecimenQuantity);
-        if (Additive is not null) yield return new KeyValuePair<string,object>(PocoDictionary.ComposeChoiceElementName("additive", Additive),Additive);
+        if (Additive is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("additive", Additive),Additive);
       }
 
     }
