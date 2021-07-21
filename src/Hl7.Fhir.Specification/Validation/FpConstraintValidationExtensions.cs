@@ -9,7 +9,6 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
@@ -32,16 +31,6 @@ namespace Hl7.Fhir.Validation
             if (!definition.Constraint.Any()) return outcome;
             if (v.Settings.SkipConstraintValidation) return outcome;
 
-            // Determine %resource: if the current instance is a resource, %resource is simply
-            // a pointer to the current data. If the data is a datatype, %resource is the parent resource
-            // the datatype is part of.
-            var resource = instance.AtResource ? instance : instance.ResourceContext;
-
-            // Determine %rootResource: this is the parent of the current %resource, not being the
-            // container bundle. So, this only differs from %resource, when %resource is a contained resource
-            // within a DomainResource
-            var rootResource = resource is ScopedNode sn ? sn.ResourceContext : resource;
-
             foreach (var constraintElement in definition.Constraint)
             {
                 // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
@@ -49,14 +38,19 @@ namespace Hl7.Fhir.Validation
                 // of FP up, which could do comparisons between quantities.
                 if (constraintElement.Key == "rng-2") continue;
 
+                if (constraintElement.Key == "ref-1" && constraintElement.Expression == "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))")
+                {
+                    constraintElement.Expression = "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))";
+                }
+
                 bool success = false;
-               
+
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance, 
-                        new FhirEvaluationContext(resource: resource, rootResource: rootResource)
-                        { ElementResolver = callExternalResolver } );
+                    success = compiled.Predicate(instance,
+                        new FhirEvaluationContext(instance)
+                        { ElementResolver = callExternalResolver });
                 }
                 catch (Exception e)
                 {
