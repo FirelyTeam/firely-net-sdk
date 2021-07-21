@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 // https://msdn.microsoft.com/en-us/library/ms235408(v=vs.90).aspx 
 [assembly: CLSCompliant(true)]
 
-#if DEBUG
+#if DEBUG || PROFILE_RELEASE
 [assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests")]
 #endif
 

@@ -39,7 +39,7 @@
   <PropertyGroup>
     <LangVersion>9.0</LangVersion>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <Configurations>Debug;Release;FullDebug</Configurations>
+    <Configurations>Debug;Release;FullDebug;ProfileRelease</Configurations>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
@@ -48,6 +48,11 @@
      <NoWarn>1591</NoWarn>
      <Optimize>false</Optimize>
      <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'ProfileRelease' ">
+    <DefineConstants>$(DefineConstants);PROFILE_RELEASE</DefineConstants>
+    <NoWarn>1591</NoWarn>    <!-- Missing XML comments -->
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
