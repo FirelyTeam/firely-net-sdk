@@ -104,7 +104,7 @@ stages:
         targetPath: $(System.DefaultWorkingDirectory)/bin
         artifactName: TestBuild
     
-    - template: templates/apply-signingkey-steps-template.yml
+    - template: templates/sign-dlls-template.yml
     
     - task: DotNetCoreCLI@2
       displayName: Pack
