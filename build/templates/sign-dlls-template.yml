@@ -19,13 +19,17 @@ steps:
         $sdkfiles   =  Get-ChildItem -Path $(Build.SourcesDirectory)\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
         $commonfiles = Get-ChildItem -Path $(Build.SourcesDirectory)\common\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
 
+        Write-Verbose "Last exitcode before signing: $lastexitcode"
         foreach ($file in ($sdkfiles + $commonfiles))
         {
-          Write-Host "File: $file"
+          Write-Verbose "Signing file: $file"
 
           & '$(Build.SourcesDirectory)\build\tools\sn.exe' -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
+          Write-Verbose "Last exitcode after signing file: $lastexitcode"
         }
-        if ($lastexitcode -lt 8) { $global:lastexitcode = 0 }
+        Write-Verbose "Last exitcode after signing all files: $lastexitcode"
+        # suppress exitcode 
+        if ($lastexitcode -lt 2) { $global:lastexitcode = 0 }
     displayName: Signing the dlls
     name: signing
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
