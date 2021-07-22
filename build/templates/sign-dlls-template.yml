@@ -25,6 +25,7 @@ steps:
 
           & '$(Build.SourcesDirectory)\build\tools\sn.exe' -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
         }
+        if ($lastexitcode -lt 8) { $global:lastexitcode = 0 }
     displayName: Signing the dlls
     name: signing
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
