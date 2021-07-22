@@ -20,7 +20,7 @@ steps:
         $commonfiles = Get-ChildItem -Path $(Build.SourcesDirectory)\common\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
         foreach ($file in ($sdkfiles + $commonfiles))
         {
-          sn.exe -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
+          $Env:BUILD_SOURCESDIRECTORY\build\tools\sn.exe -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
         }
     displayName: Signing the dlls
     name: signing
