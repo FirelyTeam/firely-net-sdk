@@ -19,12 +19,11 @@ steps:
         $sdkfiles   =  Get-ChildItem -Path $(Build.SourcesDirectory)\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
         $commonfiles = Get-ChildItem -Path $(Build.SourcesDirectory)\common\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
 
-        Write-Host "File: Sn.exe location: $(Build.SourcesDirectory)\build\tools\sn.exe"
         foreach ($file in ($sdkfiles + $commonfiles))
         {
           Write-Host "File: $file"
 
-          $(Build.SourcesDirectory)\build\tools\sn.exe -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
+          & '$(Build.SourcesDirectory)\build\tools\sn.exe' -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
         }
     displayName: Signing the dlls
     name: signing
