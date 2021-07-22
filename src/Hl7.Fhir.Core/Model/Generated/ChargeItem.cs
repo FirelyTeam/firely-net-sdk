@@ -215,6 +215,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -808,6 +831,123 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "definition":
+          value = DefinitionElement;
+          return DefinitionElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "performingOrganization":
+          value = PerformingOrganization;
+          return PerformingOrganization is not null;
+        case "requestingOrganization":
+          value = RequestingOrganization;
+          return RequestingOrganization is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "bodysite":
+          value = Bodysite;
+          return Bodysite?.Any() == true;
+        case "factorOverride":
+          value = FactorOverrideElement;
+          return FactorOverrideElement is not null;
+        case "priceOverride":
+          value = PriceOverride;
+          return PriceOverride is not null;
+        case "overrideReason":
+          value = OverrideReasonElement;
+          return OverrideReasonElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "enteredDate":
+          value = EnteredDateElement;
+          return EnteredDateElement is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "service":
+          value = Service;
+          return Service?.Any() == true;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (DefinitionElement?.Any() == true) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (PerformingOrganization is not null) yield return new KeyValuePair<string,object>("performingOrganization",PerformingOrganization);
+      if (RequestingOrganization is not null) yield return new KeyValuePair<string,object>("requestingOrganization",RequestingOrganization);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Bodysite?.Any() == true) yield return new KeyValuePair<string,object>("bodysite",Bodysite);
+      if (FactorOverrideElement is not null) yield return new KeyValuePair<string,object>("factorOverride",FactorOverrideElement);
+      if (PriceOverride is not null) yield return new KeyValuePair<string,object>("priceOverride",PriceOverride);
+      if (OverrideReasonElement is not null) yield return new KeyValuePair<string,object>("overrideReason",OverrideReasonElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (EnteredDateElement is not null) yield return new KeyValuePair<string,object>("enteredDate",EnteredDateElement);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Service?.Any() == true) yield return new KeyValuePair<string,object>("service",Service);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
     }
 
   }

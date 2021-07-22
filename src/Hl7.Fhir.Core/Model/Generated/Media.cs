@@ -572,6 +572,103 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "subtype":
+          value = Subtype;
+          return Subtype is not null;
+        case "view":
+          value = View;
+          return View is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "operator":
+          value = Operator;
+          return Operator is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "height":
+          value = HeightElement;
+          return HeightElement is not null;
+        case "width":
+          value = WidthElement;
+          return WidthElement is not null;
+        case "frames":
+          value = FramesElement;
+          return FramesElement is not null;
+        case "duration":
+          value = DurationElement;
+          return DurationElement is not null;
+        case "content":
+          value = Content;
+          return Content is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (Subtype is not null) yield return new KeyValuePair<string,object>("subtype",Subtype);
+      if (View is not null) yield return new KeyValuePair<string,object>("view",View);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
+      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
+      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
+      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
+      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
   }
 
 }

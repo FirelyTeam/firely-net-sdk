@@ -291,6 +291,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "agent":
+            value = Agent;
+            return Agent is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Agent is not null) yield return new KeyValuePair<string,object>("agent",Agent);
+        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+      }
+
     }
 
     /// <summary>
@@ -472,6 +495,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "validityPeriod":
+            value = ValidityPeriod;
+            return ValidityPeriod is not null;
+          case "numberOfRepeatsAllowed":
+            value = NumberOfRepeatsAllowedElement;
+            return NumberOfRepeatsAllowedElement is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "expectedSupplyDuration":
+            value = ExpectedSupplyDuration;
+            return ExpectedSupplyDuration is not null;
+          case "performer":
+            value = Performer;
+            return Performer is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+        if (NumberOfRepeatsAllowedElement is not null) yield return new KeyValuePair<string,object>("numberOfRepeatsAllowed",NumberOfRepeatsAllowedElement);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (ExpectedSupplyDuration is not null) yield return new KeyValuePair<string,object>("expectedSupplyDuration",ExpectedSupplyDuration);
+        if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      }
+
     }
 
     /// <summary>
@@ -596,6 +654,29 @@ namespace Hl7.Fhir.Model
           if (AllowedElement != null) yield return new ElementValue("allowed", AllowedElement);
           if (Reason != null) yield return new ElementValue("reason", Reason);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "allowed":
+            value = AllowedElement;
+            return AllowedElement is not null;
+          case "reason":
+            value = Reason;
+            return Reason is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AllowedElement is not null) yield return new KeyValuePair<string,object>("allowed",AllowedElement);
+        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       }
 
     }
@@ -1197,6 +1278,127 @@ namespace Hl7.Fhir.Model
         foreach (var elem in DetectedIssue) { if (elem != null) yield return new ElementValue("detectedIssue", elem); }
         foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definition":
+          value = Definition;
+          return Definition?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "medication":
+          value = Medication;
+          return Medication is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "dosageInstruction":
+          value = DosageInstruction;
+          return DosageInstruction?.Any() == true;
+        case "dispenseRequest":
+          value = DispenseRequest;
+          return DispenseRequest is not null;
+        case "substitution":
+          value = Substitution;
+          return Substitution is not null;
+        case "priorPrescription":
+          value = PriorPrescription;
+          return PriorPrescription is not null;
+        case "detectedIssue":
+          value = DetectedIssue;
+          return DetectedIssue?.Any() == true;
+        case "eventHistory":
+          value = EventHistory;
+          return EventHistory?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("medication"))
+        {
+          value = Medication;
+          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
+      if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
+      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (DosageInstruction?.Any() == true) yield return new KeyValuePair<string,object>("dosageInstruction",DosageInstruction);
+      if (DispenseRequest is not null) yield return new KeyValuePair<string,object>("dispenseRequest",DispenseRequest);
+      if (Substitution is not null) yield return new KeyValuePair<string,object>("substitution",Substitution);
+      if (PriorPrescription is not null) yield return new KeyValuePair<string,object>("priorPrescription",PriorPrescription);
+      if (DetectedIssue?.Any() == true) yield return new KeyValuePair<string,object>("detectedIssue",DetectedIssue);
+      if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

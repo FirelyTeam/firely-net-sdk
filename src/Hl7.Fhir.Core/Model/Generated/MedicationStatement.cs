@@ -603,6 +603,108 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category is not null;
+        case "medication":
+          value = Medication;
+          return Medication is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "dateAsserted":
+          value = DateAssertedElement;
+          return DateAssertedElement is not null;
+        case "informationSource":
+          value = InformationSource;
+          return InformationSource is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "taken":
+          value = TakenElement;
+          return TakenElement is not null;
+        case "reasonNotTaken":
+          value = ReasonNotTaken;
+          return ReasonNotTaken?.Any() == true;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "dosage":
+          value = Dosage;
+          return Dosage?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("medication"))
+        {
+          value = Medication;
+          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
+        }
+        else if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
+      if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
+      if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (TakenElement is not null) yield return new KeyValuePair<string,object>("taken",TakenElement);
+      if (ReasonNotTaken?.Any() == true) yield return new KeyValuePair<string,object>("reasonNotTaken",ReasonNotTaken);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
+    }
+
   }
 
 }

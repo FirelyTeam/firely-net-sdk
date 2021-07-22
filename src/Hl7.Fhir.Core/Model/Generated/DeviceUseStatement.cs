@@ -406,6 +406,75 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "whenUsed":
+          value = WhenUsed;
+          return WhenUsed is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "recordedOn":
+          value = RecordedOnElement;
+          return RecordedOnElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "indication":
+          value = Indication;
+          return Indication?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("timing"))
+        {
+          value = Timing;
+          return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (WhenUsed is not null) yield return new KeyValuePair<string,object>("whenUsed",WhenUsed);
+      if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
+      if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+    }
+
   }
 
 }

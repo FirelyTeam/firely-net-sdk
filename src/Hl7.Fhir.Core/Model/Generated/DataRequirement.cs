@@ -257,6 +257,51 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "valueSet":
+            value = ValueSet;
+            return ValueSet is not null;
+          case "valueCode":
+            value = ValueCodeElement;
+            return ValueCodeElement?.Any() == true;
+          case "valueCoding":
+            value = ValueCoding;
+            return ValueCoding?.Any() == true;
+          case "valueCodeableConcept":
+            value = ValueCodeableConcept;
+            return ValueCodeableConcept?.Any() == true;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("valueSet"))
+          {
+            value = ValueSet;
+            return ValueSet is not null && ElementName.HasCorrectSuffix(key, "valueSet", ValueSet.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (ValueSet is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("valueSet", ValueSet),ValueSet);
+        if (ValueCodeElement?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCodeElement);
+        if (ValueCoding?.Any() == true) yield return new KeyValuePair<string,object>("valueCoding",ValueCoding);
+        if (ValueCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("valueCodeableConcept",ValueCodeableConcept);
+      }
+
     }
 
     /// <summary>
@@ -383,6 +428,39 @@ namespace Hl7.Fhir.Model
           if (PathElement != null) yield return new ElementValue("path", PathElement);
           if (Value != null) yield return new ElementValue("value", Value);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("value"))
+          {
+            value = Value;
+            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
       }
 
     }
@@ -591,6 +669,41 @@ namespace Hl7.Fhir.Model
         foreach (var elem in CodeFilter) { if (elem != null) yield return new ElementValue("codeFilter", elem); }
         foreach (var elem in DateFilter) { if (elem != null) yield return new ElementValue("dateFilter", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "profile":
+          value = ProfileElement;
+          return ProfileElement?.Any() == true;
+        case "mustSupport":
+          value = MustSupportElement;
+          return MustSupportElement?.Any() == true;
+        case "codeFilter":
+          value = CodeFilter;
+          return CodeFilter?.Any() == true;
+        case "dateFilter":
+          value = DateFilter;
+          return DateFilter?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
+      if (MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
+      if (CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
+      if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
     }
 
   }

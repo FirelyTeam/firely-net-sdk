@@ -840,6 +840,91 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "bounds":
+            value = Bounds;
+            return Bounds is not null;
+          case "count":
+            value = CountElement;
+            return CountElement is not null;
+          case "countMax":
+            value = CountMaxElement;
+            return CountMaxElement is not null;
+          case "duration":
+            value = DurationElement;
+            return DurationElement is not null;
+          case "durationMax":
+            value = DurationMaxElement;
+            return DurationMaxElement is not null;
+          case "durationUnit":
+            value = DurationUnitElement;
+            return DurationUnitElement is not null;
+          case "frequency":
+            value = FrequencyElement;
+            return FrequencyElement is not null;
+          case "frequencyMax":
+            value = FrequencyMaxElement;
+            return FrequencyMaxElement is not null;
+          case "period":
+            value = PeriodElement;
+            return PeriodElement is not null;
+          case "periodMax":
+            value = PeriodMaxElement;
+            return PeriodMaxElement is not null;
+          case "periodUnit":
+            value = PeriodUnitElement;
+            return PeriodUnitElement is not null;
+          case "dayOfWeek":
+            value = DayOfWeekElement;
+            return DayOfWeekElement?.Any() == true;
+          case "timeOfDay":
+            value = TimeOfDayElement;
+            return TimeOfDayElement?.Any() == true;
+          case "when":
+            value = WhenElement;
+            return WhenElement?.Any() == true;
+          case "offset":
+            value = OffsetElement;
+            return OffsetElement is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("bounds"))
+          {
+            value = Bounds;
+            return Bounds is not null && ElementName.HasCorrectSuffix(key, "bounds", Bounds.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Bounds is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("bounds", Bounds),Bounds);
+        if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
+        if (CountMaxElement is not null) yield return new KeyValuePair<string,object>("countMax",CountMaxElement);
+        if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
+        if (DurationMaxElement is not null) yield return new KeyValuePair<string,object>("durationMax",DurationMaxElement);
+        if (DurationUnitElement is not null) yield return new KeyValuePair<string,object>("durationUnit",DurationUnitElement);
+        if (FrequencyElement is not null) yield return new KeyValuePair<string,object>("frequency",FrequencyElement);
+        if (FrequencyMaxElement is not null) yield return new KeyValuePair<string,object>("frequencyMax",FrequencyMaxElement);
+        if (PeriodElement is not null) yield return new KeyValuePair<string,object>("period",PeriodElement);
+        if (PeriodMaxElement is not null) yield return new KeyValuePair<string,object>("periodMax",PeriodMaxElement);
+        if (PeriodUnitElement is not null) yield return new KeyValuePair<string,object>("periodUnit",PeriodUnitElement);
+        if (DayOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("dayOfWeek",DayOfWeekElement);
+        if (TimeOfDayElement?.Any() == true) yield return new KeyValuePair<string,object>("timeOfDay",TimeOfDayElement);
+        if (WhenElement?.Any() == true) yield return new KeyValuePair<string,object>("when",WhenElement);
+        if (OffsetElement is not null) yield return new KeyValuePair<string,object>("offset",OffsetElement);
+      }
+
     }
 
     /// <summary>
@@ -969,6 +1054,33 @@ namespace Hl7.Fhir.Model
         if (Repeat != null) yield return new ElementValue("repeat", Repeat);
         if (Code != null) yield return new ElementValue("code", Code);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "event":
+          value = EventElement;
+          return EventElement?.Any() == true;
+        case "repeat":
+          value = Repeat;
+          return Repeat is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (EventElement?.Any() == true) yield return new KeyValuePair<string,object>("event",EventElement);
+      if (Repeat is not null) yield return new KeyValuePair<string,object>("repeat",Repeat);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
     }
 
   }

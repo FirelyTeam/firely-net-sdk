@@ -319,6 +319,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "nutrient":
+            value = Nutrient;
+            return Nutrient?.Any() == true;
+          case "texture":
+            value = Texture;
+            return Texture?.Any() == true;
+          case "fluidConsistencyType":
+            value = FluidConsistencyType;
+            return FluidConsistencyType?.Any() == true;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
+        if (Texture?.Any() == true) yield return new KeyValuePair<string,object>("texture",Texture);
+        if (FluidConsistencyType?.Any() == true) yield return new KeyValuePair<string,object>("fluidConsistencyType",FluidConsistencyType);
+        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -426,6 +465,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
     }
 
     /// <summary>
@@ -531,6 +593,29 @@ namespace Hl7.Fhir.Model
           if (Modifier != null) yield return new ElementValue("modifier", Modifier);
           if (FoodType != null) yield return new ElementValue("foodType", FoodType);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "foodType":
+            value = FoodType;
+            return FoodType is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (FoodType is not null) yield return new KeyValuePair<string,object>("foodType",FoodType);
       }
 
     }
@@ -729,6 +814,41 @@ namespace Hl7.Fhir.Model
           if (Quantity != null) yield return new ElementValue("quantity", Quantity);
           if (InstructionElement != null) yield return new ElementValue("instruction", InstructionElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "productName":
+            value = ProductNameElement;
+            return ProductNameElement is not null;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
       }
 
     }
@@ -1019,6 +1139,57 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "baseFormulaType":
+            value = BaseFormulaType;
+            return BaseFormulaType is not null;
+          case "baseFormulaProductName":
+            value = BaseFormulaProductNameElement;
+            return BaseFormulaProductNameElement is not null;
+          case "additiveType":
+            value = AdditiveType;
+            return AdditiveType is not null;
+          case "additiveProductName":
+            value = AdditiveProductNameElement;
+            return AdditiveProductNameElement is not null;
+          case "caloricDensity":
+            value = CaloricDensity;
+            return CaloricDensity is not null;
+          case "routeofAdministration":
+            value = RouteofAdministration;
+            return RouteofAdministration is not null;
+          case "administration":
+            value = Administration;
+            return Administration?.Any() == true;
+          case "maxVolumeToDeliver":
+            value = MaxVolumeToDeliver;
+            return MaxVolumeToDeliver is not null;
+          case "administrationInstruction":
+            value = AdministrationInstructionElement;
+            return AdministrationInstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (BaseFormulaType is not null) yield return new KeyValuePair<string,object>("baseFormulaType",BaseFormulaType);
+        if (BaseFormulaProductNameElement is not null) yield return new KeyValuePair<string,object>("baseFormulaProductName",BaseFormulaProductNameElement);
+        if (AdditiveType is not null) yield return new KeyValuePair<string,object>("additiveType",AdditiveType);
+        if (AdditiveProductNameElement is not null) yield return new KeyValuePair<string,object>("additiveProductName",AdditiveProductNameElement);
+        if (CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",CaloricDensity);
+        if (RouteofAdministration is not null) yield return new KeyValuePair<string,object>("routeofAdministration",RouteofAdministration);
+        if (Administration?.Any() == true) yield return new KeyValuePair<string,object>("administration",Administration);
+        if (MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",MaxVolumeToDeliver);
+        if (AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",AdministrationInstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -1144,6 +1315,43 @@ namespace Hl7.Fhir.Model
           if (Quantity != null) yield return new ElementValue("quantity", Quantity);
           if (Rate != null) yield return new ElementValue("rate", Rate);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "schedule":
+            value = Schedule;
+            return Schedule is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "rate":
+            value = Rate;
+            return Rate is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("rate"))
+          {
+            value = Rate;
+            return Rate is not null && ElementName.HasCorrectSuffix(key, "rate", Rate.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Rate is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("rate", Rate),Rate);
       }
 
     }
@@ -1470,6 +1678,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Supplement) { if (elem != null) yield return new ElementValue("supplement", elem); }
         if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "dateTime":
+          value = DateTimeElement;
+          return DateTimeElement is not null;
+        case "orderer":
+          value = Orderer;
+          return Orderer is not null;
+        case "allergyIntolerance":
+          value = AllergyIntolerance;
+          return AllergyIntolerance?.Any() == true;
+        case "foodPreferenceModifier":
+          value = FoodPreferenceModifier;
+          return FoodPreferenceModifier?.Any() == true;
+        case "excludeFoodModifier":
+          value = ExcludeFoodModifier;
+          return ExcludeFoodModifier?.Any() == true;
+        case "oralDiet":
+          value = OralDiet;
+          return OralDiet is not null;
+        case "supplement":
+          value = Supplement;
+          return Supplement?.Any() == true;
+        case "enteralFormula":
+          value = EnteralFormula;
+          return EnteralFormula is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",DateTimeElement);
+      if (Orderer is not null) yield return new KeyValuePair<string,object>("orderer",Orderer);
+      if (AllergyIntolerance?.Any() == true) yield return new KeyValuePair<string,object>("allergyIntolerance",AllergyIntolerance);
+      if (FoodPreferenceModifier?.Any() == true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",FoodPreferenceModifier);
+      if (ExcludeFoodModifier?.Any() == true) yield return new KeyValuePair<string,object>("excludeFoodModifier",ExcludeFoodModifier);
+      if (OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",OralDiet);
+      if (Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",Supplement);
+      if (EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",EnteralFormula);
     }
 
   }

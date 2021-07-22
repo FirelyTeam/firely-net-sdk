@@ -273,6 +273,60 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "probability":
+            value = Probability;
+            return Probability is not null;
+          case "qualitativeRisk":
+            value = QualitativeRisk;
+            return QualitativeRisk is not null;
+          case "relativeRisk":
+            value = RelativeRiskElement;
+            return RelativeRiskElement is not null;
+          case "when":
+            value = When;
+            return When is not null;
+          case "rationale":
+            value = RationaleElement;
+            return RationaleElement is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("probability"))
+          {
+            value = Probability;
+            return Probability is not null && ElementName.HasCorrectSuffix(key, "probability", Probability.TypeName);
+          }
+          else if (key.StartsWith("when"))
+          {
+            value = When;
+            return When is not null && ElementName.HasCorrectSuffix(key, "when", When.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (Probability is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("probability", Probability),Probability);
+        if (QualitativeRisk is not null) yield return new KeyValuePair<string,object>("qualitativeRisk",QualitativeRisk);
+        if (RelativeRiskElement is not null) yield return new KeyValuePair<string,object>("relativeRisk",RelativeRiskElement);
+        if (When is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("when", When),When);
+        if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
+      }
+
     }
 
     /// <summary>
@@ -694,6 +748,100 @@ namespace Hl7.Fhir.Model
         if (MitigationElement != null) yield return new ElementValue("mitigation", MitigationElement);
         if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn is not null;
+        case "parent":
+          value = Parent;
+          return Parent is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "condition":
+          value = Condition;
+          return Condition is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "reason":
+          value = Reason;
+          return Reason is not null;
+        case "basis":
+          value = Basis;
+          return Basis?.Any() == true;
+        case "prediction":
+          value = Prediction;
+          return Prediction?.Any() == true;
+        case "mitigation":
+          value = MitigationElement;
+          return MitigationElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("occurrence"))
+        {
+          value = Occurrence;
+          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
+        }
+        else if (key.StartsWith("reason"))
+        {
+          value = Reason;
+          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn is not null) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
+      if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
+      if (Prediction?.Any() == true) yield return new KeyValuePair<string,object>("prediction",Prediction);
+      if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }
 
   }

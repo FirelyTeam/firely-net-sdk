@@ -282,6 +282,60 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "when":
+          value = WhenElement;
+          return WhenElement is not null;
+        case "who":
+          value = Who;
+          return Who is not null;
+        case "onBehalfOf":
+          value = OnBehalfOf;
+          return OnBehalfOf is not null;
+        case "contentType":
+          value = ContentTypeElement;
+          return ContentTypeElement is not null;
+        case "blob":
+          value = BlobElement;
+          return BlobElement is not null;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("who"))
+        {
+          value = Who;
+          return Who is not null && ElementName.HasCorrectSuffix(key, "who", Who.TypeName);
+        }
+        else if (key.StartsWith("onBehalfOf"))
+        {
+          value = OnBehalfOf;
+          return OnBehalfOf is not null && ElementName.HasCorrectSuffix(key, "onBehalfOf", OnBehalfOf.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (WhenElement is not null) yield return new KeyValuePair<string,object>("when",WhenElement);
+      if (Who is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("who", Who),Who);
+      if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onBehalfOf", OnBehalfOf),OnBehalfOf);
+      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+      if (BlobElement is not null) yield return new KeyValuePair<string,object>("blob",BlobElement);
+    }
+
   }
 
 }

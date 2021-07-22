@@ -205,6 +205,43 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "time":
+          value = TimeElement;
+          return TimeElement is not null;
+        case "text":
+          value = TextElement;
+          return TextElement is not null;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("author"))
+        {
+          value = Author;
+          return Author is not null && ElementName.HasCorrectSuffix(key, "author", Author.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Author is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("author", Author),Author);
+      if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+    }
+
   }
 
 }

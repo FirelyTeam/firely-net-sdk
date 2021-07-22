@@ -192,6 +192,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "item":
+            value = Item;
+            return Item?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -319,6 +342,39 @@ namespace Hl7.Fhir.Model
           if (Item != null) yield return new ElementValue("item", Item);
           if (BasisElement != null) yield return new ElementValue("basis", BasisElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "basis":
+            value = BasisElement;
+            return BasisElement is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("item"))
+          {
+            value = Item;
+            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
+        if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
       }
 
     }
@@ -837,6 +893,107 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "effective":
+          value = Effective;
+          return Effective is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "assessor":
+          value = Assessor;
+          return Assessor is not null;
+        case "previous":
+          value = Previous;
+          return Previous is not null;
+        case "problem":
+          value = Problem;
+          return Problem?.Any() == true;
+        case "investigation":
+          value = Investigation;
+          return Investigation?.Any() == true;
+        case "protocol":
+          value = ProtocolElement;
+          return ProtocolElement?.Any() == true;
+        case "summary":
+          value = SummaryElement;
+          return SummaryElement is not null;
+        case "finding":
+          value = Finding;
+          return Finding?.Any() == true;
+        case "prognosisCodeableConcept":
+          value = PrognosisCodeableConcept;
+          return PrognosisCodeableConcept?.Any() == true;
+        case "prognosisReference":
+          value = PrognosisReference;
+          return PrognosisReference?.Any() == true;
+        case "action":
+          value = Action;
+          return Action?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("effective"))
+        {
+          value = Effective;
+          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Assessor is not null) yield return new KeyValuePair<string,object>("assessor",Assessor);
+      if (Previous is not null) yield return new KeyValuePair<string,object>("previous",Previous);
+      if (Problem?.Any() == true) yield return new KeyValuePair<string,object>("problem",Problem);
+      if (Investigation?.Any() == true) yield return new KeyValuePair<string,object>("investigation",Investigation);
+      if (ProtocolElement?.Any() == true) yield return new KeyValuePair<string,object>("protocol",ProtocolElement);
+      if (SummaryElement is not null) yield return new KeyValuePair<string,object>("summary",SummaryElement);
+      if (Finding?.Any() == true) yield return new KeyValuePair<string,object>("finding",Finding);
+      if (PrognosisCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("prognosisCodeableConcept",PrognosisCodeableConcept);
+      if (PrognosisReference?.Any() == true) yield return new KeyValuePair<string,object>("prognosisReference",PrognosisReference);
+      if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

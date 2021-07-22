@@ -360,6 +360,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "outcomeCodeableConcept":
+            value = OutcomeCodeableConcept;
+            return OutcomeCodeableConcept?.Any() == true;
+          case "outcomeReference":
+            value = OutcomeReference;
+            return OutcomeReference?.Any() == true;
+          case "progress":
+            value = Progress;
+            return Progress?.Any() == true;
+          case "reference":
+            value = Reference;
+            return Reference is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (OutcomeCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCodeableConcept",OutcomeCodeableConcept);
+        if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+        if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);
+        if (Reference is not null) yield return new KeyValuePair<string,object>("reference",Reference);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -810,6 +845,100 @@ namespace Hl7.Fhir.Model
           if (Quantity != null) yield return new ElementValue("quantity", Quantity);
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "definition":
+            value = Definition;
+            return Definition is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "reasonCode":
+            value = ReasonCode;
+            return ReasonCode?.Any() == true;
+          case "reasonReference":
+            value = ReasonReference;
+            return ReasonReference?.Any() == true;
+          case "goal":
+            value = Goal;
+            return Goal?.Any() == true;
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "statusReason":
+            value = StatusReasonElement;
+            return StatusReasonElement is not null;
+          case "prohibited":
+            value = ProhibitedElement;
+            return ProhibitedElement is not null;
+          case "scheduled":
+            value = Scheduled;
+            return Scheduled is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "performer":
+            value = Performer;
+            return Performer?.Any() == true;
+          case "product":
+            value = Product;
+            return Product is not null;
+          case "dailyAmount":
+            value = DailyAmount;
+            return DailyAmount is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("scheduled"))
+          {
+            value = Scheduled;
+            return Scheduled is not null && ElementName.HasCorrectSuffix(key, "scheduled", Scheduled.TypeName);
+          }
+          else if (key.StartsWith("product"))
+          {
+            value = Product;
+            return Product is not null && ElementName.HasCorrectSuffix(key, "product", Product.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+        if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+        if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+        if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
+        if (ProhibitedElement is not null) yield return new KeyValuePair<string,object>("prohibited",ProhibitedElement);
+        if (Scheduled is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("scheduled", Scheduled),Scheduled);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+        if (Product is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("product", Product),Product);
+        if (DailyAmount is not null) yield return new KeyValuePair<string,object>("dailyAmount",DailyAmount);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       }
 
     }
@@ -1340,6 +1469,101 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Activity) { if (elem != null) yield return new ElementValue("activity", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definition":
+          value = Definition;
+          return Definition?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "careTeam":
+          value = CareTeam;
+          return CareTeam?.Any() == true;
+        case "addresses":
+          value = Addresses;
+          return Addresses?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "goal":
+          value = Goal;
+          return Goal?.Any() == true;
+        case "activity":
+          value = Activity;
+          return Activity?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
+      if (CareTeam?.Any() == true) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
+      if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
+      if (Activity?.Any() == true) yield return new KeyValuePair<string,object>("activity",Activity);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

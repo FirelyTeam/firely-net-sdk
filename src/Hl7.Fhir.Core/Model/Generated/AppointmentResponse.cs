@@ -336,6 +336,53 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "appointment":
+          value = Appointment;
+          return Appointment is not null;
+        case "start":
+          value = StartElement;
+          return StartElement is not null;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "participantType":
+          value = ParticipantType;
+          return ParticipantType?.Any() == true;
+        case "actor":
+          value = Actor;
+          return Actor is not null;
+        case "participantStatus":
+          value = ParticipantStatusElement;
+          return ParticipantStatusElement is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Appointment is not null) yield return new KeyValuePair<string,object>("appointment",Appointment);
+      if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ParticipantType?.Any() == true) yield return new KeyValuePair<string,object>("participantType",ParticipantType);
+      if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (ParticipantStatusElement is not null) yield return new KeyValuePair<string,object>("participantStatus",ParticipantStatusElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+    }
+
   }
 
 }

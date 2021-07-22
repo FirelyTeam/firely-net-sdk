@@ -627,6 +627,103 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "label":
+            value = LabelElement;
+            return LabelElement is not null;
+          case "title":
+            value = TitleElement;
+            return TitleElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "textEquivalent":
+            value = TextEquivalentElement;
+            return TextEquivalentElement is not null;
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          case "documentation":
+            value = Documentation;
+            return Documentation?.Any() == true;
+          case "condition":
+            value = Condition;
+            return Condition?.Any() == true;
+          case "relatedAction":
+            value = RelatedAction;
+            return RelatedAction?.Any() == true;
+          case "timing":
+            value = Timing;
+            return Timing is not null;
+          case "participant":
+            value = Participant;
+            return Participant?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "groupingBehavior":
+            value = GroupingBehaviorElement;
+            return GroupingBehaviorElement is not null;
+          case "selectionBehavior":
+            value = SelectionBehaviorElement;
+            return SelectionBehaviorElement is not null;
+          case "requiredBehavior":
+            value = RequiredBehaviorElement;
+            return RequiredBehaviorElement is not null;
+          case "precheckBehavior":
+            value = PrecheckBehaviorElement;
+            return PrecheckBehaviorElement is not null;
+          case "cardinalityBehavior":
+            value = CardinalityBehaviorElement;
+            return CardinalityBehaviorElement is not null;
+          case "resource":
+            value = Resource;
+            return Resource is not null;
+          case "action":
+            value = Action;
+            return Action?.Any() == true;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("timing"))
+          {
+            value = Timing;
+            return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+        if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (TextEquivalentElement is not null) yield return new KeyValuePair<string,object>("textEquivalent",TextEquivalentElement);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+        if (Documentation?.Any() == true) yield return new KeyValuePair<string,object>("documentation",Documentation);
+        if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+        if (RelatedAction?.Any() == true) yield return new KeyValuePair<string,object>("relatedAction",RelatedAction);
+        if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
+        if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (GroupingBehaviorElement is not null) yield return new KeyValuePair<string,object>("groupingBehavior",GroupingBehaviorElement);
+        if (SelectionBehaviorElement is not null) yield return new KeyValuePair<string,object>("selectionBehavior",SelectionBehaviorElement);
+        if (RequiredBehaviorElement is not null) yield return new KeyValuePair<string,object>("requiredBehavior",RequiredBehaviorElement);
+        if (PrecheckBehaviorElement is not null) yield return new KeyValuePair<string,object>("precheckBehavior",PrecheckBehaviorElement);
+        if (CardinalityBehaviorElement is not null) yield return new KeyValuePair<string,object>("cardinalityBehavior",CardinalityBehaviorElement);
+        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+        if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
+      }
+
     }
 
     /// <summary>
@@ -844,6 +941,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "kind":
+            value = KindElement;
+            return KindElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "language":
+            value = LanguageElement;
+            return LanguageElement is not null;
+          case "expression":
+            value = ExpressionElement;
+            return ExpressionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
+        if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+      }
+
     }
 
     /// <summary>
@@ -1008,6 +1136,43 @@ namespace Hl7.Fhir.Model
           if (RelationshipElement != null) yield return new ElementValue("relationship", RelationshipElement);
           if (Offset != null) yield return new ElementValue("offset", Offset);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "actionId":
+            value = ActionIdElement;
+            return ActionIdElement is not null;
+          case "relationship":
+            value = RelationshipElement;
+            return RelationshipElement is not null;
+          case "offset":
+            value = Offset;
+            return Offset is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("offset"))
+          {
+            value = Offset;
+            return Offset is not null && ElementName.HasCorrectSuffix(key, "offset", Offset.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ActionIdElement is not null) yield return new KeyValuePair<string,object>("actionId",ActionIdElement);
+        if (RelationshipElement is not null) yield return new KeyValuePair<string,object>("relationship",RelationshipElement);
+        if (Offset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("offset", Offset),Offset);
       }
 
     }
@@ -1434,6 +1599,91 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in Action) { if (elem != null) yield return new ElementValue("action", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definition":
+          value = Definition;
+          return Definition?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "reason":
+          value = Reason;
+          return Reason is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "action":
+          value = Action;
+          return Action?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("reason"))
+        {
+          value = Reason;
+          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
     }
 
   }

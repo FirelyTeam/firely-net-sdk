@@ -276,6 +276,47 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "eventName":
+          value = EventNameElement;
+          return EventNameElement is not null;
+        case "eventTiming":
+          value = EventTiming;
+          return EventTiming is not null;
+        case "eventData":
+          value = EventData;
+          return EventData is not null;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("eventTiming"))
+        {
+          value = EventTiming;
+          return EventTiming is not null && ElementName.HasCorrectSuffix(key, "eventTiming", EventTiming.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",EventNameElement);
+      if (EventTiming is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("eventTiming", EventTiming),EventTiming);
+      if (EventData is not null) yield return new KeyValuePair<string,object>("eventData",EventData);
+    }
+
   }
 
 }

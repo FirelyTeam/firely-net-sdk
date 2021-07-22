@@ -209,6 +209,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "resource":
+            value = Resource;
+            return Resource is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
+      }
+
     }
 
     /// <summary>
@@ -340,6 +363,33 @@ namespace Hl7.Fhir.Model
         if (Author != null) yield return new ElementValue("author", Author);
         foreach (var elem in Item) { if (elem != null) yield return new ElementValue("item", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "item":
+          value = Item;
+          return Item?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Item?.Any() == true) yield return new KeyValuePair<string,object>("item",Item);
     }
 
   }

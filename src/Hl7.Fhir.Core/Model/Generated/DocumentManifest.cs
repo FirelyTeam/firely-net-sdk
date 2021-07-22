@@ -146,6 +146,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "p":
+            value = P;
+            return P is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("p"))
+          {
+            value = P;
+            return P is not null && ElementName.HasCorrectSuffix(key, "p", P.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (P is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("p", P),P);
+      }
+
     }
 
     /// <summary>
@@ -253,6 +282,29 @@ namespace Hl7.Fhir.Model
           if (Identifier != null) yield return new ElementValue("identifier", Identifier);
           if (Ref != null) yield return new ElementValue("ref", Ref);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "ref":
+            value = Ref;
+            return Ref is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Ref is not null) yield return new KeyValuePair<string,object>("ref",Ref);
       }
 
     }
@@ -612,6 +664,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
         foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "masterIdentifier":
+          value = MasterIdentifier;
+          return MasterIdentifier is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "recipient":
+          value = Recipient;
+          return Recipient?.Any() == true;
+        case "source":
+          value = SourceElement;
+          return SourceElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "content":
+          value = Content;
+          return Content?.Any() == true;
+        case "related":
+          value = Related;
+          return Related?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (MasterIdentifier is not null) yield return new KeyValuePair<string,object>("masterIdentifier",MasterIdentifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
+      if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
+      if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
     }
 
   }

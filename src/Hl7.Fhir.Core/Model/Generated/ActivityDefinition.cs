@@ -180,6 +180,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+      }
+
     }
 
     /// <summary>
@@ -393,6 +416,37 @@ namespace Hl7.Fhir.Model
           if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
           if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "language":
+            value = LanguageElement;
+            return LanguageElement is not null;
+          case "expression":
+            value = ExpressionElement;
+            return ExpressionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
+        if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
       }
 
     }
@@ -1305,6 +1359,172 @@ namespace Hl7.Fhir.Model
         if (Transform != null) yield return new ElementValue("transform", Transform);
         foreach (var elem in DynamicValue) { if (elem != null) yield return new ElementValue("dynamicValue", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "usage":
+          value = UsageElement;
+          return UsageElement is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "topic":
+          value = Topic;
+          return Topic?.Any() == true;
+        case "contributor":
+          value = Contributor;
+          return Contributor?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "library":
+          value = Library;
+          return Library?.Any() == true;
+        case "kind":
+          value = KindElement;
+          return KindElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "product":
+          value = Product;
+          return Product is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "dosage":
+          value = Dosage;
+          return Dosage?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite?.Any() == true;
+        case "transform":
+          value = Transform;
+          return Transform is not null;
+        case "dynamicValue":
+          value = DynamicValue;
+          return DynamicValue?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("timing"))
+        {
+          value = Timing;
+          return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
+        }
+        else if (key.StartsWith("product"))
+        {
+          value = Product;
+          return Product is not null && ElementName.HasCorrectSuffix(key, "product", Product.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
+      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
+      if (Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",Contributor);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (Library?.Any() == true) yield return new KeyValuePair<string,object>("library",Library);
+      if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Product is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("product", Product),Product);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
+      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Transform is not null) yield return new KeyValuePair<string,object>("transform",Transform);
+      if (DynamicValue?.Any() == true) yield return new KeyValuePair<string,object>("dynamicValue",DynamicValue);
     }
 
   }

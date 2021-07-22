@@ -273,6 +273,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "population":
+            value = Population;
+            return Population?.Any() == true;
+          case "measureScore":
+            value = MeasureScoreElement;
+            return MeasureScoreElement is not null;
+          case "stratifier":
+            value = Stratifier;
+            return Stratifier?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
+        if (MeasureScoreElement is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScoreElement);
+        if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
+      }
+
     }
 
     /// <summary>
@@ -436,6 +467,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "count":
+            value = CountElement;
+            return CountElement is not null;
+          case "patients":
+            value = Patients;
+            return Patients is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
+        if (Patients is not null) yield return new KeyValuePair<string,object>("patients",Patients);
+      }
+
     }
 
     /// <summary>
@@ -542,6 +604,29 @@ namespace Hl7.Fhir.Model
           if (Identifier != null) yield return new ElementValue("identifier", Identifier);
           foreach (var elem in Stratum) { if (elem != null) yield return new ElementValue("stratum", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "stratum":
+            value = Stratum;
+            return Stratum?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Stratum?.Any() == true) yield return new KeyValuePair<string,object>("stratum",Stratum);
       }
 
     }
@@ -707,6 +792,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "value":
+            value = ValueElement;
+            return ValueElement is not null;
+          case "population":
+            value = Population;
+            return Population?.Any() == true;
+          case "measureScore":
+            value = MeasureScoreElement;
+            return MeasureScoreElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+        if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
+        if (MeasureScoreElement is not null) yield return new KeyValuePair<string,object>("measureScore",MeasureScoreElement);
+      }
+
     }
 
     /// <summary>
@@ -868,6 +980,37 @@ namespace Hl7.Fhir.Model
           if (CountElement != null) yield return new ElementValue("count", CountElement);
           if (Patients != null) yield return new ElementValue("patients", Patients);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "count":
+            value = CountElement;
+            return CountElement is not null;
+          case "patients":
+            value = Patients;
+            return Patients is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
+        if (Patients is not null) yield return new KeyValuePair<string,object>("patients",Patients);
       }
 
     }
@@ -1175,6 +1318,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
         if (EvaluatedResources != null) yield return new ElementValue("evaluatedResources", EvaluatedResources);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "measure":
+          value = Measure;
+          return Measure is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "reportingOrganization":
+          value = ReportingOrganization;
+          return ReportingOrganization is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "group":
+          value = Group;
+          return Group?.Any() == true;
+        case "evaluatedResources":
+          value = EvaluatedResources;
+          return EvaluatedResources is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (ReportingOrganization is not null) yield return new KeyValuePair<string,object>("reportingOrganization",ReportingOrganization);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
+      if (EvaluatedResources is not null) yield return new KeyValuePair<string,object>("evaluatedResources",EvaluatedResources);
     }
 
   }

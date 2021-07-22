@@ -234,6 +234,47 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "onset":
+            value = Onset;
+            return Onset is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("onset"))
+          {
+            value = Onset;
+            return Onset is not null && ElementName.HasCorrectSuffix(key, "onset", Onset.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (Onset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onset", Onset),Onset);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -745,6 +786,113 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definition":
+          value = Definition;
+          return Definition?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "notDone":
+          value = NotDoneElement;
+          return NotDoneElement is not null;
+        case "notDoneReason":
+          value = NotDoneReason;
+          return NotDoneReason is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "relationship":
+          value = Relationship;
+          return Relationship is not null;
+        case "gender":
+          value = GenderElement;
+          return GenderElement is not null;
+        case "born":
+          value = Born;
+          return Born is not null;
+        case "age":
+          value = Age;
+          return Age is not null;
+        case "estimatedAge":
+          value = EstimatedAgeElement;
+          return EstimatedAgeElement is not null;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "condition":
+          value = Condition;
+          return Condition?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("born"))
+        {
+          value = Born;
+          return Born is not null && ElementName.HasCorrectSuffix(key, "born", Born.TypeName);
+        }
+        else if (key.StartsWith("age"))
+        {
+          value = Age;
+          return Age is not null && ElementName.HasCorrectSuffix(key, "age", Age.TypeName);
+        }
+        else if (key.StartsWith("deceased"))
+        {
+          value = Deceased;
+          return Deceased is not null && ElementName.HasCorrectSuffix(key, "deceased", Deceased.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (NotDoneElement is not null) yield return new KeyValuePair<string,object>("notDone",NotDoneElement);
+      if (NotDoneReason is not null) yield return new KeyValuePair<string,object>("notDoneReason",NotDoneReason);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+      if (Born is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("born", Born),Born);
+      if (Age is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("age", Age),Age);
+      if (EstimatedAgeElement is not null) yield return new KeyValuePair<string,object>("estimatedAge",EstimatedAgeElement);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("deceased", Deceased),Deceased);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
     }
 
   }

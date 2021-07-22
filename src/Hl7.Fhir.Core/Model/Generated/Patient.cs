@@ -307,6 +307,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "relationship":
+            value = Relationship;
+            return Relationship?.Any() == true;
+          case "name":
+            value = Name;
+            return Name is not null;
+          case "telecom":
+            value = Telecom;
+            return Telecom?.Any() == true;
+          case "address":
+            value = Address;
+            return Address is not null;
+          case "gender":
+            value = GenderElement;
+            return GenderElement is not null;
+          case "organization":
+            value = Organization;
+            return Organization is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
+        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+        if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+        if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+        if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+        if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -433,6 +476,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "species":
+            value = Species;
+            return Species is not null;
+          case "breed":
+            value = Breed;
+            return Breed is not null;
+          case "genderStatus":
+            value = GenderStatus;
+            return GenderStatus is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
+        if (Breed is not null) yield return new KeyValuePair<string,object>("breed",Breed);
+        if (GenderStatus is not null) yield return new KeyValuePair<string,object>("genderStatus",GenderStatus);
+      }
+
     }
 
     /// <summary>
@@ -557,6 +627,29 @@ namespace Hl7.Fhir.Model
           if (Language != null) yield return new ElementValue("language", Language);
           if (PreferredElement != null) yield return new ElementValue("preferred", PreferredElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "language":
+            value = Language;
+            return Language is not null;
+          case "preferred":
+            value = PreferredElement;
+            return PreferredElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
+        if (PreferredElement is not null) yield return new KeyValuePair<string,object>("preferred",PreferredElement);
       }
 
     }
@@ -687,6 +780,29 @@ namespace Hl7.Fhir.Model
           if (Other != null) yield return new ElementValue("other", Other);
           if (TypeElement != null) yield return new ElementValue("type", TypeElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "other":
+            value = Other;
+            return Other is not null;
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Other is not null) yield return new KeyValuePair<string,object>("other",Other);
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       }
 
     }
@@ -1123,6 +1239,104 @@ namespace Hl7.Fhir.Model
         if (ManagingOrganization != null) yield return new ElementValue("managingOrganization", ManagingOrganization);
         foreach (var elem in Link) { if (elem != null) yield return new ElementValue("link", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "name":
+          value = Name;
+          return Name?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "gender":
+          value = GenderElement;
+          return GenderElement is not null;
+        case "birthDate":
+          value = BirthDateElement;
+          return BirthDateElement is not null;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
+        case "address":
+          value = Address;
+          return Address?.Any() == true;
+        case "maritalStatus":
+          value = MaritalStatus;
+          return MaritalStatus is not null;
+        case "multipleBirth":
+          value = MultipleBirth;
+          return MultipleBirth is not null;
+        case "photo":
+          value = Photo;
+          return Photo?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "animal":
+          value = Animal;
+          return Animal is not null;
+        case "communication":
+          value = Communication;
+          return Communication?.Any() == true;
+        case "generalPractitioner":
+          value = GeneralPractitioner;
+          return GeneralPractitioner?.Any() == true;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "link":
+          value = Link;
+          return Link?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("deceased"))
+        {
+          value = Deceased;
+          return Deceased is not null && ElementName.HasCorrectSuffix(key, "deceased", Deceased.TypeName);
+        }
+        else if (key.StartsWith("multipleBirth"))
+        {
+          value = MultipleBirth;
+          return MultipleBirth is not null && ElementName.HasCorrectSuffix(key, "multipleBirth", MultipleBirth.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+      if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("deceased", Deceased),Deceased);
+      if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
+      if (MaritalStatus is not null) yield return new KeyValuePair<string,object>("maritalStatus",MaritalStatus);
+      if (MultipleBirth is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("multipleBirth", MultipleBirth),MultipleBirth);
+      if (Photo?.Any() == true) yield return new KeyValuePair<string,object>("photo",Photo);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Animal is not null) yield return new KeyValuePair<string,object>("animal",Animal);
+      if (Communication?.Any() == true) yield return new KeyValuePair<string,object>("communication",Communication);
+      if (GeneralPractitioner?.Any() == true) yield return new KeyValuePair<string,object>("generalPractitioner",GeneralPractitioner);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Link?.Any() == true) yield return new KeyValuePair<string,object>("link",Link);
     }
 
   }

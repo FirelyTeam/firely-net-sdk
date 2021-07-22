@@ -424,6 +424,97 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "sequence":
+          value = SequenceElement;
+          return SequenceElement is not null;
+        case "text":
+          value = TextElement;
+          return TextElement is not null;
+        case "additionalInstruction":
+          value = AdditionalInstruction;
+          return AdditionalInstruction?.Any() == true;
+        case "patientInstruction":
+          value = PatientInstructionElement;
+          return PatientInstructionElement is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "asNeeded":
+          value = AsNeeded;
+          return AsNeeded is not null;
+        case "site":
+          value = Site;
+          return Site is not null;
+        case "route":
+          value = Route;
+          return Route is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "dose":
+          value = Dose;
+          return Dose is not null;
+        case "maxDosePerPeriod":
+          value = MaxDosePerPeriod;
+          return MaxDosePerPeriod is not null;
+        case "maxDosePerAdministration":
+          value = MaxDosePerAdministration;
+          return MaxDosePerAdministration is not null;
+        case "maxDosePerLifetime":
+          value = MaxDosePerLifetime;
+          return MaxDosePerLifetime is not null;
+        case "rate":
+          value = Rate;
+          return Rate is not null;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("asNeeded"))
+        {
+          value = AsNeeded;
+          return AsNeeded is not null && ElementName.HasCorrectSuffix(key, "asNeeded", AsNeeded.TypeName);
+        }
+        else if (key.StartsWith("dose"))
+        {
+          value = Dose;
+          return Dose is not null && ElementName.HasCorrectSuffix(key, "dose", Dose.TypeName);
+        }
+        else if (key.StartsWith("rate"))
+        {
+          value = Rate;
+          return Rate is not null && ElementName.HasCorrectSuffix(key, "rate", Rate.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if (AdditionalInstruction?.Any() == true) yield return new KeyValuePair<string,object>("additionalInstruction",AdditionalInstruction);
+      if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
+      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+      if (AsNeeded is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("asNeeded", AsNeeded),AsNeeded);
+      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
+      if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (Dose is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("dose", Dose),Dose);
+      if (MaxDosePerPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerPeriod",MaxDosePerPeriod);
+      if (MaxDosePerAdministration is not null) yield return new KeyValuePair<string,object>("maxDosePerAdministration",MaxDosePerAdministration);
+      if (MaxDosePerLifetime is not null) yield return new KeyValuePair<string,object>("maxDosePerLifetime",MaxDosePerLifetime);
+      if (Rate is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("rate", Rate),Rate);
+    }
+
   }
 
 }

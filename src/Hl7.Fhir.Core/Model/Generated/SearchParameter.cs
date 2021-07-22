@@ -356,6 +356,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "definition":
+            value = Definition;
+            return Definition is not null;
+          case "expression":
+            value = ExpressionElement;
+            return ExpressionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
+        if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+      }
+
     }
 
     /// <summary>
@@ -1190,6 +1213,117 @@ namespace Hl7.Fhir.Model
         foreach (var elem in ChainElement) { if (elem != null) yield return new ElementValue("chain", elem); }
         foreach (var elem in Component) { if (elem != null) yield return new ElementValue("component", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "code":
+          value = CodeElement;
+          return CodeElement is not null;
+        case "base":
+          value = BaseElement;
+          return BaseElement?.Any() == true;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "derivedFrom":
+          value = DerivedFromElement;
+          return DerivedFromElement is not null;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "expression":
+          value = ExpressionElement;
+          return ExpressionElement is not null;
+        case "xpath":
+          value = XpathElement;
+          return XpathElement is not null;
+        case "xpathUsage":
+          value = XpathUsageElement;
+          return XpathUsageElement is not null;
+        case "target":
+          value = TargetElement;
+          return TargetElement?.Any() == true;
+        case "comparator":
+          value = ComparatorElement;
+          return ComparatorElement?.Any() == true;
+        case "modifier":
+          value = ModifierElement;
+          return ModifierElement?.Any() == true;
+        case "chain":
+          value = ChainElement;
+          return ChainElement?.Any() == true;
+        case "component":
+          value = Component;
+          return Component?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+      if (BaseElement?.Any() == true) yield return new KeyValuePair<string,object>("base",BaseElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (DerivedFromElement is not null) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFromElement);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+      if (XpathElement is not null) yield return new KeyValuePair<string,object>("xpath",XpathElement);
+      if (XpathUsageElement is not null) yield return new KeyValuePair<string,object>("xpathUsage",XpathUsageElement);
+      if (TargetElement?.Any() == true) yield return new KeyValuePair<string,object>("target",TargetElement);
+      if (ComparatorElement?.Any() == true) yield return new KeyValuePair<string,object>("comparator",ComparatorElement);
+      if (ModifierElement?.Any() == true) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
+      if (ChainElement?.Any() == true) yield return new KeyValuePair<string,object>("chain",ChainElement);
+      if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
     }
 
   }

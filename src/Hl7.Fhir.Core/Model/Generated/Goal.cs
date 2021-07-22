@@ -270,6 +270,48 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "measure":
+            value = Measure;
+            return Measure is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          case "due":
+            value = Due;
+            return Due is not null;
+          default:
+            return choiceMatches(out value);
+        };
+
+        bool choiceMatches(out object value)
+        {
+          if (key.StartsWith("detail"))
+          {
+            value = Detail;
+            return Detail is not null && ElementName.HasCorrectSuffix(key, "detail", Detail.TypeName);
+          }
+          else if (key.StartsWith("due"))
+          {
+            value = Due;
+            return Due is not null && ElementName.HasCorrectSuffix(key, "due", Due.TypeName);
+          }
+          return base.TryGetValue(key, out value);
+        }
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Measure is not null) yield return new KeyValuePair<string,object>("measure",Measure);
+        if (Detail is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("detail", Detail),Detail);
+        if (Due is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("due", Due),Due);
+      }
+
     }
 
     /// <summary>
@@ -669,6 +711,91 @@ namespace Hl7.Fhir.Model
         foreach (var elem in OutcomeCode) { if (elem != null) yield return new ElementValue("outcomeCode", elem); }
         foreach (var elem in OutcomeReference) { if (elem != null) yield return new ElementValue("outcomeReference", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "priority":
+          value = Priority;
+          return Priority is not null;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "start":
+          value = Start;
+          return Start is not null;
+        case "target":
+          value = Target;
+          return Target is not null;
+        case "statusDate":
+          value = StatusDateElement;
+          return StatusDateElement is not null;
+        case "statusReason":
+          value = StatusReasonElement;
+          return StatusReasonElement is not null;
+        case "expressedBy":
+          value = ExpressedBy;
+          return ExpressedBy is not null;
+        case "addresses":
+          value = Addresses;
+          return Addresses?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "outcomeCode":
+          value = OutcomeCode;
+          return OutcomeCode?.Any() == true;
+        case "outcomeReference":
+          value = OutcomeReference;
+          return OutcomeReference?.Any() == true;
+        default:
+          return choiceMatches(out value);
+      };
+
+      bool choiceMatches(out object value)
+      {
+        if (key.StartsWith("start"))
+        {
+          value = Start;
+          return Start is not null && ElementName.HasCorrectSuffix(key, "start", Start.TypeName);
+        }
+        return base.TryGetValue(key, out value);
+      }
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Start is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("start", Start),Start);
+      if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
+      if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
+      if (ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",ExpressedBy);
+      if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
+      if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
     }
 
   }
