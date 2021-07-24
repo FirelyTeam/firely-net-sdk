@@ -1275,6 +1275,35 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void TestInvalidStructureDefinitionIdIsRejected()
+        {
+            var sd = new StructureDefinition();
+            sd.Id = "id_with_underscore";
+            sd.Url = "http://example.org/fhir/canonical";
+            sd.Name = "ProfileWithInvalidId";
+            sd.Status = PublicationStatus.Draft;
+            sd.Abstract = false;
+            sd.Kind = StructureDefinition.StructureDefinitionKind.Resource;
+            sd.Type = "Patient";
+            sd.BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Patient";
+            sd.Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition
+                    {
+                        ElementId = "Patient",
+                        Path = "Patient"
+                    }
+                }
+            };
+
+
+            var result = _validator.Validate(sd);
+            Assert.False(result.Success);
+        }
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;
