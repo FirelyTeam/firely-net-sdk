@@ -43,6 +43,11 @@ namespace Hl7.Fhir.Validation
                 if (discriminatorSpecs.Any())
                 {
                     var discriminators = discriminatorSpecs.Select(ds => DiscriminatorFactory.Build(ds, resolver, location, root, validator));
+
+                    if (discriminators.All(d => d is ComprehensiveDiscriminator))
+                    {
+                        throw new IncorrectElementDefinitionException($"There is nothing to discriminate on at {location}.");
+                    }
                     subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray());
                 }
                 else
