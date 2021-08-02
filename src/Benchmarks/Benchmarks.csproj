@@ -3,6 +3,8 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>Firely.Sdk.Benchmarks</AssemblyName>
+    <RootNamespace>Firely.Sdk.Benchmarks</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

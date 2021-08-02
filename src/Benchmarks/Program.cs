@@ -1,6 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 
-namespace Benchmarks
+namespace Firely.Sdk.Benchmarks
 {
     public class Program
     {

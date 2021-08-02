@@ -3,7 +3,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 
-namespace Benchmarks
+namespace Firely.Sdk.Benchmarks
 {
     [MemoryDiagnoser]
     public class ModelInspectorBenchmarks
