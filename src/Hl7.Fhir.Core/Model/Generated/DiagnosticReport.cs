@@ -907,18 +907,8 @@ namespace Hl7.Fhir.Model
           value = PresentedForm;
           return PresentedForm?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("effective"))
-        {
-          value = Effective;
-          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -932,7 +922,7 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);

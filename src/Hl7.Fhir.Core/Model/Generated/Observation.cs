@@ -673,18 +673,8 @@ namespace Hl7.Fhir.Model
             value = ReferenceRange;
             return ReferenceRange?.Any() == true;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("value"))
-          {
-            value = Value;
-            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -692,7 +682,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
         if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
         if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
         if (ReferenceRange?.Any() == true) yield return new KeyValuePair<string,object>("referenceRange",ReferenceRange);
@@ -1282,23 +1272,8 @@ namespace Hl7.Fhir.Model
           value = Component;
           return Component?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("effective"))
-        {
-          value = Effective;
-          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
-        }
-        else if (key.StartsWith("value"))
-        {
-          value = Value;
-          return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1312,10 +1287,10 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
       if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
+      if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
       if (Interpretation is not null) yield return new KeyValuePair<string,object>("interpretation",Interpretation);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);

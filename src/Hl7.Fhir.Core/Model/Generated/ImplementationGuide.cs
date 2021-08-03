@@ -773,18 +773,8 @@ namespace Hl7.Fhir.Model
             value = ExampleFor;
             return ExampleFor is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("source"))
-          {
-            value = Source;
-            return Source is not null && ElementName.HasCorrectSuffix(key, "source", Source.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -795,7 +785,7 @@ namespace Hl7.Fhir.Model
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (AcronymElement is not null) yield return new KeyValuePair<string,object>("acronym",AcronymElement);
-        if (Source is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("source", Source),Source);
+        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
         if (ExampleFor is not null) yield return new KeyValuePair<string,object>("exampleFor",ExampleFor);
       }
 

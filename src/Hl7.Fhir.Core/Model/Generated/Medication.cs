@@ -242,25 +242,15 @@ namespace Hl7.Fhir.Model
             value = Amount;
             return Amount is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("item"))
-          {
-            value = Item;
-            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
         if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
@@ -541,25 +531,15 @@ namespace Hl7.Fhir.Model
             value = Amount;
             return Amount is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("item"))
-          {
-            value = Item;
-            return Item is not null && ElementName.HasCorrectSuffix(key, "item", Item.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Item is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("item", Item),Item);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
         if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 

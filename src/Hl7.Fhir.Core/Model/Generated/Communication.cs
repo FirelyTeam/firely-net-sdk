@@ -154,25 +154,15 @@ namespace Hl7.Fhir.Model
             value = Content;
             return Content is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("content"))
-          {
-            value = Content;
-            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
       }
 
     }

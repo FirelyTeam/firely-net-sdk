@@ -456,18 +456,8 @@ namespace Hl7.Fhir.Model
             value = Rate;
             return Rate is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("rate"))
-          {
-            value = Rate;
-            return Rate is not null && ElementName.HasCorrectSuffix(key, "rate", Rate.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -479,7 +469,7 @@ namespace Hl7.Fhir.Model
         if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (Dose is not null) yield return new KeyValuePair<string,object>("dose",Dose);
-        if (Rate is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("rate", Rate),Rate);
+        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
       }
 
     }
@@ -1040,23 +1030,8 @@ namespace Hl7.Fhir.Model
           value = EventHistory;
           return EventHistory?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("medication"))
-        {
-          value = Medication;
-          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
-        }
-        else if (key.StartsWith("effective"))
-        {
-          value = Effective;
-          return Effective is not null && ElementName.HasCorrectSuffix(key, "effective", Effective.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1068,11 +1043,11 @@ namespace Hl7.Fhir.Model
       if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
-      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
-      if (Effective is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("effective", Effective),Effective);
+      if (Effective is not null) yield return new KeyValuePair<string,object>("effective",Effective);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (NotGivenElement is not null) yield return new KeyValuePair<string,object>("notGiven",NotGivenElement);
       if (ReasonNotGiven?.Any() == true) yield return new KeyValuePair<string,object>("reasonNotGiven",ReasonNotGiven);

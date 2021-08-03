@@ -293,18 +293,8 @@ namespace Hl7.Fhir.Model
           value = EventData;
           return EventData is not null;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("eventTiming"))
-        {
-          value = EventTiming;
-          return EventTiming is not null && ElementName.HasCorrectSuffix(key, "eventTiming", EventTiming.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -313,7 +303,7 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
       if (EventNameElement is not null) yield return new KeyValuePair<string,object>("eventName",EventNameElement);
-      if (EventTiming is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("eventTiming", EventTiming),EventTiming);
+      if (EventTiming is not null) yield return new KeyValuePair<string,object>("eventTiming",EventTiming);
       if (EventData is not null) yield return new KeyValuePair<string,object>("eventData",EventData);
     }
 

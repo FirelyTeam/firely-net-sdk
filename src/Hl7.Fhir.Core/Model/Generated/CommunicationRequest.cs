@@ -154,25 +154,15 @@ namespace Hl7.Fhir.Model
             value = Content;
             return Content is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("content"))
-          {
-            value = Content;
-            return Content is not null && ElementName.HasCorrectSuffix(key, "content", Content.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Content is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("content", Content),Content);
+        if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
       }
 
     }
@@ -879,18 +869,8 @@ namespace Hl7.Fhir.Model
           value = Note;
           return Note?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("occurrence"))
-        {
-          value = Occurrence;
-          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -910,7 +890,7 @@ namespace Hl7.Fhir.Model
       if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",Payload);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);

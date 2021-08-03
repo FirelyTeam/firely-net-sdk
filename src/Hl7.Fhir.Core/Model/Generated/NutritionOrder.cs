@@ -1331,18 +1331,8 @@ namespace Hl7.Fhir.Model
             value = Rate;
             return Rate is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("rate"))
-          {
-            value = Rate;
-            return Rate is not null && ElementName.HasCorrectSuffix(key, "rate", Rate.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -1351,7 +1341,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Rate is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("rate", Rate),Rate);
+        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
       }
 
     }
