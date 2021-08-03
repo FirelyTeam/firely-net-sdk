@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | completed | entered-in-error | cancelled
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | original-order | encoded | reflex-order
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=150)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Intent

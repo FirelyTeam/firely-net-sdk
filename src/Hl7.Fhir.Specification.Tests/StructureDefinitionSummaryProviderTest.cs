@@ -114,6 +114,7 @@ namespace Hl7.Fhir.Specification.Tests
                 // * The poco generator generates "in summary" for id, but this is not reflected in the
                 //   structuredefinition either.
                 left.InSummary.Should().Be(right.InSummary, context + ": InSummary differs");
+                left.IsModifier.Should().Be(right.IsModifier, context + ": IsModifier differs");
                 left.IsChoiceElement.Should().Be(right.IsChoiceElement, context + ": IsChoiceElement differs");
                 left.IsCollection.Should().Be(right.IsCollection, context + ": IsCollection differs");
                 left.IsRequired.Should().Be(right.IsRequired, context + ": IsRequired differs");

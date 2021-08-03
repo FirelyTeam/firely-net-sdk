@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this item is actually marked as deleted
       /// </summary>
-      [FhirElement("deleted", Order=50)]
+      [FhirElement("deleted", IsModifier=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DeletedElement
       {
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | retired | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// working | snapshot | changes
     /// </summary>
-    [FhirElement("mode", InSummary=true, Order=110)]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error | intended | stopped | on-hold
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// y | n | unk | na
     /// </summary>
-    [FhirElement("taken", InSummary=true, Order=210)]
+    [FhirElement("taken", InSummary=true, IsModifier=true, Order=210)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

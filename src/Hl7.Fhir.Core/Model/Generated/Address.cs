@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// home | work | temp | old - purpose of this address
     /// </summary>
-    [FhirElement("use", InSummary=true, Order=30)]
+    [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement

@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | completed | entered-in-error | cancelled
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order +
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=150)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if procedure should not be performed
     /// </summary>
-    [FhirElement("doNotPerform", InSummary=true, Order=170)]
+    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
     {

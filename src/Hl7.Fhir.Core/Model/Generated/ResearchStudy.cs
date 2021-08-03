@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | in-progress | suspended | stopped | completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | on-hold | completed | entered-in-error | stopped | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if medication not administered
     /// </summary>
-    [FhirElement("notGiven", InSummary=true, Order=200)]
+    [FhirElement("notGiven", InSummary=true, IsModifier=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean NotGivenElement
     {

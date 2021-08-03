@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// working | snapshot | changes
       /// </summary>
-      [FhirElement("mode", InSummary=true, Order=70)]
+      [FhirElement("mode", InSummary=true, IsModifier=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1054,7 +1054,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// As defined by affinity domain
     /// </summary>
-    [FhirElement("confidentiality", InSummary=true, Order=180)]
+    [FhirElement("confidentiality", InSummary=true, IsModifier=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.ConfidentialityClassification> ConfidentialityElement
