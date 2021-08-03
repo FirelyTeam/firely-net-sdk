@@ -8,11 +8,11 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.1|AnyCPU'">
-		<DefineConstants>DEBUG;TRACE;USE_CODE_GEN</DefineConstants>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='FullDebug|netcoreapp2.1|AnyCPU'">
-		<DefineConstants>DEBUG;TRACE;USE_CODE_GEN</DefineConstants>
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
 		<Optimize>false</Optimize>
 		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
