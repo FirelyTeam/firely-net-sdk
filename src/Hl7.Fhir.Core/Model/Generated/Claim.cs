@@ -859,23 +859,8 @@ namespace Hl7.Fhir.Model
             value = Reason;
             return Reason is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("timing"))
-          {
-            value = Timing;
-            return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
-          }
-          else if (key.StartsWith("value"))
-          {
-            value = Value;
-            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -885,8 +870,8 @@ namespace Hl7.Fhir.Model
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
         if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
-        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
+        if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
         if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       }
 
@@ -1074,18 +1059,8 @@ namespace Hl7.Fhir.Model
             value = PackageCode;
             return PackageCode is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("diagnosis"))
-          {
-            value = Diagnosis;
-            return Diagnosis is not null && ElementName.HasCorrectSuffix(key, "diagnosis", Diagnosis.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -1093,7 +1068,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
-        if (Diagnosis is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("diagnosis", Diagnosis),Diagnosis);
+        if (Diagnosis is not null) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (PackageCode is not null) yield return new KeyValuePair<string,object>("packageCode",PackageCode);
       }
@@ -1278,18 +1253,8 @@ namespace Hl7.Fhir.Model
             value = Procedure;
             return Procedure is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("procedure"))
-          {
-            value = Procedure;
-            return Procedure is not null && ElementName.HasCorrectSuffix(key, "procedure", Procedure.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -1298,7 +1263,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-        if (Procedure is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("procedure", Procedure),Procedure);
+        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
       }
 
     }
@@ -1764,18 +1729,8 @@ namespace Hl7.Fhir.Model
             value = Location;
             return Location is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("location"))
-          {
-            value = Location;
-            return Location is not null && ElementName.HasCorrectSuffix(key, "location", Location.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -1784,7 +1739,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-        if (Location is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("location", Location),Location);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
       }
 
     }
@@ -2432,23 +2387,8 @@ namespace Hl7.Fhir.Model
             value = Detail;
             return Detail?.Any() == true;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("serviced"))
-          {
-            value = Serviced;
-            return Serviced is not null && ElementName.HasCorrectSuffix(key, "serviced", Serviced.TypeName);
-          }
-          else if (key.StartsWith("location"))
-          {
-            value = Location;
-            return Location is not null && ElementName.HasCorrectSuffix(key, "location", Location.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -2465,8 +2405,8 @@ namespace Hl7.Fhir.Model
         if (Service is not null) yield return new KeyValuePair<string,object>("service",Service);
         if (Modifier?.Any() == true) yield return new KeyValuePair<string,object>("modifier",Modifier);
         if (ProgramCode?.Any() == true) yield return new KeyValuePair<string,object>("programCode",ProgramCode);
-        if (Serviced is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("serviced", Serviced),Serviced);
-        if (Location is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("location", Location),Location);
+        if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (UnitPrice is not null) yield return new KeyValuePair<string,object>("unitPrice",UnitPrice);
         if (FactorElement is not null) yield return new KeyValuePair<string,object>("factor",FactorElement);

@@ -251,18 +251,8 @@ namespace Hl7.Fhir.Model
             value = Note;
             return Note?.Any() == true;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("onset"))
-          {
-            value = Onset;
-            return Onset is not null && ElementName.HasCorrectSuffix(key, "onset", Onset.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -271,7 +261,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
-        if (Onset is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("onset", Onset),Onset);
+        if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       }
 
@@ -847,28 +837,8 @@ namespace Hl7.Fhir.Model
           value = Condition;
           return Condition?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("born"))
-        {
-          value = Born;
-          return Born is not null && ElementName.HasCorrectSuffix(key, "born", Born.TypeName);
-        }
-        else if (key.StartsWith("age"))
-        {
-          value = Age;
-          return Age is not null && ElementName.HasCorrectSuffix(key, "age", Age.TypeName);
-        }
-        else if (key.StartsWith("deceased"))
-        {
-          value = Deceased;
-          return Deceased is not null && ElementName.HasCorrectSuffix(key, "deceased", Deceased.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -885,10 +855,10 @@ namespace Hl7.Fhir.Model
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
       if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
-      if (Born is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("born", Born),Born);
-      if (Age is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("age", Age),Age);
+      if (Born is not null) yield return new KeyValuePair<string,object>("born",Born);
+      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
       if (EstimatedAgeElement is not null) yield return new KeyValuePair<string,object>("estimatedAge",EstimatedAgeElement);
-      if (Deceased is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("deceased", Deceased),Deceased);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
       if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);

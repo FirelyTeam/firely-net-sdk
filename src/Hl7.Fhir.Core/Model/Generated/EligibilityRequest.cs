@@ -503,18 +503,8 @@ namespace Hl7.Fhir.Model
           value = BenefitSubCategory;
           return BenefitSubCategory is not null;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("serviced"))
-        {
-          value = Serviced;
-          return Serviced is not null && ElementName.HasCorrectSuffix(key, "serviced", Serviced.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -525,7 +515,7 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
-      if (Serviced is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("serviced", Serviced),Serviced);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
       if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
       if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);

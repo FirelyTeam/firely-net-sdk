@@ -272,18 +272,8 @@ namespace Hl7.Fhir.Model
             value = BodySite;
             return BodySite is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("collected"))
-          {
-            value = Collected;
-            return Collected is not null && ElementName.HasCorrectSuffix(key, "collected", Collected.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -291,7 +281,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
-        if (Collected is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("collected", Collected),Collected);
+        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
@@ -480,18 +470,8 @@ namespace Hl7.Fhir.Model
             value = Time;
             return Time is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("time"))
-          {
-            value = Time;
-            return Time is not null && ElementName.HasCorrectSuffix(key, "time", Time.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -501,7 +481,7 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
         if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
-        if (Time is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("time", Time),Time);
+        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
       }
 
     }
@@ -728,18 +708,8 @@ namespace Hl7.Fhir.Model
             value = Additive;
             return Additive is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("additive"))
-          {
-            value = Additive;
-            return Additive is not null && ElementName.HasCorrectSuffix(key, "additive", Additive.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -751,7 +721,7 @@ namespace Hl7.Fhir.Model
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
         if (SpecimenQuantity is not null) yield return new KeyValuePair<string,object>("specimenQuantity",SpecimenQuantity);
-        if (Additive is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("additive", Additive),Additive);
+        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
       }
 
     }

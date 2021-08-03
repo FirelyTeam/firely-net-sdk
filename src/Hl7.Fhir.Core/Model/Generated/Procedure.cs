@@ -1029,18 +1029,8 @@ namespace Hl7.Fhir.Model
           value = UsedCode;
           return UsedCode?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("performed"))
-        {
-          value = Performed;
-          return Performed is not null && ElementName.HasCorrectSuffix(key, "performed", Performed.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1058,7 +1048,7 @@ namespace Hl7.Fhir.Model
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Performed is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("performed", Performed),Performed);
+      if (Performed is not null) yield return new KeyValuePair<string,object>("performed",Performed);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
       if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);

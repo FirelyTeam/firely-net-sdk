@@ -900,23 +900,8 @@ namespace Hl7.Fhir.Model
             value = DescriptionElement;
             return DescriptionElement is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("scheduled"))
-          {
-            value = Scheduled;
-            return Scheduled is not null && ElementName.HasCorrectSuffix(key, "scheduled", Scheduled.TypeName);
-          }
-          else if (key.StartsWith("product"))
-          {
-            value = Product;
-            return Product is not null && ElementName.HasCorrectSuffix(key, "product", Product.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -932,10 +917,10 @@ namespace Hl7.Fhir.Model
         if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
         if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
         if (ProhibitedElement is not null) yield return new KeyValuePair<string,object>("prohibited",ProhibitedElement);
-        if (Scheduled is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("scheduled", Scheduled),Scheduled);
+        if (Scheduled is not null) yield return new KeyValuePair<string,object>("scheduled",Scheduled);
         if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
         if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-        if (Product is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("product", Product),Product);
+        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
         if (DailyAmount is not null) yield return new KeyValuePair<string,object>("dailyAmount",DailyAmount);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);

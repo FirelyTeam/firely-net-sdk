@@ -631,18 +631,8 @@ namespace Hl7.Fhir.Model
           value = Note;
           return Note?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("occurrence"))
-        {
-          value = Occurrence;
-          return Occurrence is not null && ElementName.HasCorrectSuffix(key, "occurrence", Occurrence.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -656,7 +646,7 @@ namespace Hl7.Fhir.Model
       if (View is not null) yield return new KeyValuePair<string,object>("view",View);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
-      if (Occurrence is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("occurrence", Occurrence),Occurrence);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
       if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
       if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
       if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);

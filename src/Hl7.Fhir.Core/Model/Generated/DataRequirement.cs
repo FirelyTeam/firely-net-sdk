@@ -277,18 +277,8 @@ namespace Hl7.Fhir.Model
             value = ValueCodeableConcept;
             return ValueCodeableConcept?.Any() == true;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("valueSet"))
-          {
-            value = ValueSet;
-            return ValueSet is not null && ElementName.HasCorrectSuffix(key, "valueSet", ValueSet.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -296,7 +286,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (ValueSet is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("valueSet", ValueSet),ValueSet);
+        if (ValueSet is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSet);
         if (ValueCodeElement?.Any() == true) yield return new KeyValuePair<string,object>("valueCode",ValueCodeElement);
         if (ValueCoding?.Any() == true) yield return new KeyValuePair<string,object>("valueCoding",ValueCoding);
         if (ValueCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("valueCodeableConcept",ValueCodeableConcept);
@@ -441,18 +431,8 @@ namespace Hl7.Fhir.Model
             value = Value;
             return Value is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("value"))
-          {
-            value = Value;
-            return Value is not null && ElementName.HasCorrectSuffix(key, "value", Value.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -460,7 +440,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
-        if (Value is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("value", Value),Value);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
     }

@@ -1468,23 +1468,8 @@ namespace Hl7.Fhir.Model
           value = DynamicValue;
           return DynamicValue?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("timing"))
-        {
-          value = Timing;
-          return Timing is not null && ElementName.HasCorrectSuffix(key, "timing", Timing.TypeName);
-        }
-        else if (key.StartsWith("product"))
-        {
-          value = Product;
-          return Product is not null && ElementName.HasCorrectSuffix(key, "product", Product.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1516,10 +1501,10 @@ namespace Hl7.Fhir.Model
       if (Library?.Any() == true) yield return new KeyValuePair<string,object>("library",Library);
       if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-      if (Timing is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("timing", Timing),Timing);
+      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (Product is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("product", Product),Product);
+      if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
       if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
       if (Dosage?.Any() == true) yield return new KeyValuePair<string,object>("dosage",Dosage);
       if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);

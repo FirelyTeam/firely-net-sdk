@@ -1357,18 +1357,8 @@ namespace Hl7.Fhir.Model
           value = EventHistory;
           return EventHistory?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("medication"))
-        {
-          value = Medication;
-          return Medication is not null && ElementName.HasCorrectSuffix(key, "medication", Medication.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1383,7 +1373,7 @@ namespace Hl7.Fhir.Model
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (Medication is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("medication", Medication),Medication);
+      if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);

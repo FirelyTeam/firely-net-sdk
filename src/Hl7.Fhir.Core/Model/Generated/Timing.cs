@@ -890,25 +890,15 @@ namespace Hl7.Fhir.Model
             value = OffsetElement;
             return OffsetElement is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("bounds"))
-          {
-            value = Bounds;
-            return Bounds is not null && ElementName.HasCorrectSuffix(key, "bounds", Bounds.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Bounds is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("bounds", Bounds),Bounds);
+        if (Bounds is not null) yield return new KeyValuePair<string,object>("bounds",Bounds);
         if (CountElement is not null) yield return new KeyValuePair<string,object>("count",CountElement);
         if (CountMaxElement is not null) yield return new KeyValuePair<string,object>("countMax",CountMaxElement);
         if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);

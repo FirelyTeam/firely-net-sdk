@@ -533,18 +533,8 @@ namespace Hl7.Fhir.Model
           value = DataRequirement;
           return DataRequirement?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("reason"))
-        {
-          value = Reason;
-          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -559,7 +549,7 @@ namespace Hl7.Fhir.Model
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",OccurrenceDateTimeElement);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
+      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (EvaluationMessage?.Any() == true) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
       if (OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",OutputParameters);

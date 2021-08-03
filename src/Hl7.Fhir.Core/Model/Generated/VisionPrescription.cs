@@ -1023,18 +1023,8 @@ namespace Hl7.Fhir.Model
           value = Dispense;
           return Dispense?.Any() == true;
         default:
-          return choiceMatches(out value);
+          return base.TryGetValue(key, out value);
       };
-
-      bool choiceMatches(out object value)
-      {
-        if (key.StartsWith("reason"))
-        {
-          value = Reason;
-          return Reason is not null && ElementName.HasCorrectSuffix(key, "reason", Reason.TypeName);
-        }
-        return base.TryGetValue(key, out value);
-      }
 
     }
 
@@ -1047,7 +1037,7 @@ namespace Hl7.Fhir.Model
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
       if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
-      if (Reason is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("reason", Reason),Reason);
+      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Dispense?.Any() == true) yield return new KeyValuePair<string,object>("dispense",Dispense);
     }
 

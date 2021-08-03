@@ -373,18 +373,8 @@ namespace Hl7.Fhir.Model
             value = Substance;
             return Substance is not null;
           default:
-            return choiceMatches(out value);
+            return base.TryGetValue(key, out value);
         };
-
-        bool choiceMatches(out object value)
-        {
-          if (key.StartsWith("substance"))
-          {
-            value = Substance;
-            return Substance is not null && ElementName.HasCorrectSuffix(key, "substance", Substance.TypeName);
-          }
-          return base.TryGetValue(key, out value);
-        }
 
       }
 
@@ -392,7 +382,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
-        if (Substance is not null) yield return new KeyValuePair<string,object>(ElementName.AddSuffixToElementName("substance", Substance),Substance);
+        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
       }
 
     }
