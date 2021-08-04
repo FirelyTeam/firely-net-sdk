@@ -14,12 +14,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Rest;
-using System.IO;
-using T = System.Threading.Tasks;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -123,7 +119,7 @@ namespace Hl7.Fhir.Tests.Serialization
             l.Id = "testId";
             l.Language = "testLang";
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(l, Fhir.Rest.SummaryType.Count);
-            
+
             Assert.IsFalse(summaryElements.Contains("<language"));
             Assert.IsTrue(summaryElements.Contains("<type>"));
             Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
@@ -157,7 +153,7 @@ namespace Hl7.Fhir.Tests.Serialization
             });
 
             result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
-            
+
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
@@ -171,7 +167,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
             };
             var elements = new[] { "photo" };
-            
+
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));
