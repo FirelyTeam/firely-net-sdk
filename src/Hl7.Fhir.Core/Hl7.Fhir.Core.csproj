@@ -61,3 +61,49 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
 </Project>
+
+	<PropertyGroup>
+		<TargetFrameworks>net5.0;net45;netstandard1.6</TargetFrameworks>
+	</PropertyGroup>
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\firely-net-sdk.targets" />
+	<Import Project="..\platforms.props" />
+
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.R4</PackageId>
+		<Title>HL7 FHIR Core support SDK for R4</Title>	
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4 (4.0.1)</Summary>
+		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
+		<AssemblyName>Hl7.Fhir.R4.Core</AssemblyName>
+		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
+		<RootNamespace>Hl7.Fhir</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net45'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net45'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+		<Reference Include="System.Net.Http"/>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+		<PackageReference Include="System.Net.Requests" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+	</ItemGroup>
+</Project>
