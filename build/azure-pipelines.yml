@@ -39,7 +39,6 @@ stages:
       clean: true
       submodules: true
       fetchDepth: 1
-    - template: templates/apply-signingkey-steps-template.yml
     - template: templates/apply-versioning-steps-template.yml
     
     - powershell: |
@@ -104,6 +103,8 @@ stages:
       inputs:
         targetPath: $(System.DefaultWorkingDirectory)/bin
         artifactName: TestBuild
+    
+    - template: templates/sign-dlls-template.yml
     
     - task: DotNetCoreCLI@2
       displayName: Pack

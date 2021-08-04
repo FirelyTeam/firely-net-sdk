@@ -27,14 +27,6 @@
     <None Include="..\..\icon-fhir-32.png" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Although netstandard1.1 support codegen using the Expression class, we need at least
-  one version of our library that does not require it, since iOS does not have support for it.
-  Considering netstd1.1 is our lowest common denominator, I've chosen that version to not use
-  codegen -->
-  <PropertyGroup Condition=" '$(TargetFramework)' != 'netstandard1.1' ">
-    <DefineConstants>$(DefineConstants);USE_CODE_GEN</DefineConstants>
-  </PropertyGroup>
-
   <!-- Compiler settings -->
   <PropertyGroup>
     <LangVersion>9.0</LangVersion>
@@ -52,7 +44,8 @@
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
     <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
