@@ -1,66 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;netstandard1.6</TargetFrameworks>
-  </PropertyGroup>
-
-  <Import Project="..\firely-net-sdk.props" />
-  <Import Project="..\firely-net-sdk.targets" />
-  <Import Project="..\platforms.props" />
-
-
-   <PropertyGroup>
-    <PackageId>Hl7.Fhir.R4B</PackageId>
-    <Title>HL7 FHIR Core support SDK for R4B</Title>	
-    <Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4B (4.1.0)</Summary>
-    <Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
-    <AssemblyName>Hl7.Fhir.R4B.Core</AssemblyName>
-    <PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
-    <RootNamespace>Hl7.Fhir</RootNamespace>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
-    <PackageReference Include="Microsoft.Bcl" Version="1.1.10" />
-    <PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' and '$(TargetFramework)' != 'net40' ">
-    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="Model\Source\expansions.xml" />
-    <None Include="Model\Source\profiles-resources.xml" />
-    <None Include="Model\Source\profiles-types.xml" />
-    <None Include="Model\Source\search-parameters.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
-    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
-    <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-</Project>
 
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;net45;netstandard1.6</TargetFrameworks>
@@ -72,11 +10,11 @@
 
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.R4</PackageId>
-		<Title>HL7 FHIR Core support SDK for R4</Title>	
-		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4 (4.0.1)</Summary>
+		<PackageId>Hl7.Fhir.R4B</PackageId>
+		<Title>HL7 FHIR Core support SDK for R4B</Title>	
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4B (4.1.0)</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
-		<AssemblyName>Hl7.Fhir.R4.Core</AssemblyName>
+		<AssemblyName>Hl7.Fhir.R4B.Core</AssemblyName>
 		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
 		<RootNamespace>Hl7.Fhir</RootNamespace>
 	</PropertyGroup>
