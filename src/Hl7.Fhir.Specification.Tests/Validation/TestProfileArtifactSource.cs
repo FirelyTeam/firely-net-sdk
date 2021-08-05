@@ -37,8 +37,40 @@ namespace Hl7.Fhir.Validation
             buildMiPatient(),
             slicingWithCodeableConcept(),
             slicingWithQuantity(),
-            buildPatientWithExistsSlicing()
+            buildPatientWithExistsSlicing(),
+            buildTranslatableCodeableConcept(),
+            buildObservationWithTranslatableCode(),
         };
+
+        private static StructureDefinition buildTranslatableCodeableConcept()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable", "CodeableConceptTranslatable",
+                                  "Test CodeableConcept with an extension on CodeableConcept.text", FHIRAllTypes.CodeableConcept);
+
+            var cons = result.Differential.Element;
+            var ed = new ElementDefinition("CodeableConcept.text")
+            {
+                ElementId = "CodeableConcept.text",
+            };
+            ed.AddExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable", new FhirBoolean(true));
+            cons.Add(ed);
+
+            return result;
+        }
+
+        private static StructureDefinition buildObservationWithTranslatableCode()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode", "ObservationWithTranslatableCode",
+                       "Test Observation with a profiled CodeableConcept for Observation.code", FHIRAllTypes.Observation);
+
+            var cons = result.Differential.Element;
+            cons.Add(new ElementDefinition("Observation.code")
+            {
+                ElementId = "Observation.code"
+            }.OfType(FHIRAllTypes.CodeableConcept, "http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable"));
+
+            return result;
+        }
 
         private static StructureDefinition slicingWithCodeableConcept()
         {
