@@ -7389,7 +7389,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Differential = new StructureDefinition.DifferentialComponent
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{                   
+                Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -7417,7 +7417,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent
                             {
                                 Code = "Extension",
-                                Profile = "http://example.org/fhir/StructureDefinition/MyExtension"                                
+                                Profile = "http://example.org/fhir/StructureDefinition/MyExtension"
                             }
                         }
                     }
@@ -7450,7 +7450,7 @@ namespace Hl7.Fhir.Specification.Tests
             generator.PrepareElement += (sender, e) =>
             {
                 if (e.Element.Path == ElementId)
-                {                   
+                {
                     Debug.WriteLine($"Element:{ElementId} BaseElement:{e?.BaseElement?.ElementId}");
                 }
             };
@@ -7461,6 +7461,29 @@ namespace Hl7.Fhir.Specification.Tests
             // Assert
             element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
             element.Comment.Should().BeNull();
+        }
+
+		[TestMethod]
+        public async T.Task CheckCardinalityOfProfiledType()
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
+            var sut = await resolver.ResolveByCanonicalUriAsync("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode") as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sut);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            const string codeId = "Observation.code";
+
+            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
+            var sutCode = elements.Single(x => x.ElementId == codeId);
+
+            sutCode.Max.Should().Be(sdCode.Max);
+            sutCode.Min.Should().Be(sdCode.Min);
         }
     }
 }
