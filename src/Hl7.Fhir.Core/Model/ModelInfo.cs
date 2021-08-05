@@ -28,7 +28,6 @@
 
 */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
@@ -475,15 +474,11 @@ namespace Hl7.Fhir.Model
             return CanonicalUriForFhirCoreType(type.GetLiteral());
         }
 
-        // The lazy here is not used for purposes of performance (delaying creation of the versioned provider, which
-        // is cheap anyway), but to use the framework to have a nicely multithread-aware singleton.
-        private static readonly Lazy<ModelInspector> _versionedProvider
-            = new Lazy<ModelInspector>(createVersionedProvider);
-
-        private static ModelInspector createVersionedProvider() =>
-            ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
-
-        internal static ModelInspector ModelInspector => _versionedProvider.Value;
+        /// <summary>
+        /// Gets the <see cref="ModelInspector"/> providing metadata for the resources and
+        /// datatypes in this release of FHIR.
+        /// </summary>
+        public static ModelInspector ModelInspector => ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
 
         public static readonly Type[] OpenTypes =
         {
