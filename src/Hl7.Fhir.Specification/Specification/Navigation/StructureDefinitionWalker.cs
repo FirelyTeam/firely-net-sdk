@@ -157,15 +157,14 @@ namespace Hl7.Fhir.Specification
                 var reference = Current.ShallowCopy();
 
                 if (!reference.JumpToNameReference(name))
-                    new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
+                    throw new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
                 return new[] { new StructureDefinitionWalker(reference, _resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
             {
                 return Current.Current.Type
-                    .Select(t => (profile: t.GetTypeProfile(), targetProfiles: t.TargetProfile))
-                    .Distinct()     // no use returning multiple "reference" profiles when they only differ in targetReference
-                    .Select(c => FromCanonical(c.profile, new[] { c.targetProfiles }));
+                    .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
+                    .Select(group => FromCanonical(group.Key, group.ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
