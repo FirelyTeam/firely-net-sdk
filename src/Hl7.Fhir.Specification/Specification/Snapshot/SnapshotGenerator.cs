@@ -640,13 +640,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [MS 20210614] When we can't find a CommonTypeCode assume "Element" for .id and .extension
                 var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
-               
+
                 // Different profiles for common base type => expand the common base type (w/o custom profile)
                 // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
                 var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
                 StructureDefinition typeStructure = await getStructureForTypeRef(defn, typeRef, true).ConfigureAwait(false);
                 return await expandElementType(nav, typeStructure).ConfigureAwait(false);
-               
+
                 // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
                 // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
@@ -1332,6 +1332,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Rebase before merging
                                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                                 rebasedRootElem.Path = diff.Path;
+                                rebasedRootElem.Min = diff.Current.Min;
+                                rebasedRootElem.Max = diff.Current.Max;
 
                                 // Merge the type profile root element; no need to expand children
                                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
