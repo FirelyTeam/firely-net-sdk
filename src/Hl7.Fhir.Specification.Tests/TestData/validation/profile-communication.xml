@@ -3,7 +3,7 @@
 	<url value="http://example.com/fhir/StructureDefinition/profile-communication"/>
 	<name value="SomeCommunication"/>
 	<status value="draft"/>
-	<fhirVersion value="4.0.1"/>
+	<fhirVersion value="3.0.2"/>
 	<kind value="resource"/>
 	<abstract value="false"/>
 	<type value="Communication"/>
@@ -35,8 +35,11 @@
 			<type>
 				<code value="Reference"/>
 				<targetProfile value="http://hl7.org/fhir/StructureDefinition/DocumentReference"/>
-				<targetProfile value="http://hl7.org/fhir/StructureDefinition/Task"/>
 			</type>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/Task"/>
+      </type>
 		</element>
     
 		<element id="Communication.payload:String">
