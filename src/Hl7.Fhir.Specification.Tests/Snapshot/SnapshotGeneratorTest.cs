@@ -9012,7 +9012,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Differential = new StructureDefinition.DifferentialComponent
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{                   
+                Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -9057,6 +9057,29 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.value[x].extension").Should().HaveCount(2, "Elements are in the snapshot");
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.extension").Should().HaveCount(1, "Only the root extension should be there");
+        }
+
+        [TestMethod]
+        public async T.Task CheckCardinalityOfProfiledType()
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
+            var sut = await resolver.ResolveByCanonicalUriAsync("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode") as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sut);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            const string codeId = "Observation.code";
+
+            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
+            var sutCode = elements.Single(x => x.ElementId == codeId);
+
+            sutCode.Max.Should().Be(sdCode.Max);
+            sutCode.Min.Should().Be(sdCode.Min);
         }
     }
 }
