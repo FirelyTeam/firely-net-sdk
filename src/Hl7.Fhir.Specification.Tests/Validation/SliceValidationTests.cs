@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -51,6 +52,31 @@ namespace Hl7.Fhir.Specification.Tests
 		 *          telecom:other/home [0..1]
 		 *          telecom:other/work [0..1]
 	    */
+
+        [Fact]
+        public void TestMixedTypeSlicingProfile()
+        {
+            var sliceDefs = createSliceDefs("http://example.com/fhir/StructureDefinition/profile-communication", "Communication.payload");
+
+            sliceDefs.Should().BeOfType<SliceGroupBucket>().Which.ChildSlices.Length.Should().Be(3);
+
+            var sliceGroup = sliceDefs as SliceGroupBucket;
+
+            sliceGroup.ChildSlices[0].Should().Match<DiscriminatorBucket>(s =>
+                    s.Cardinality.Max == "1" &&
+                    s.Name == "Communication.payload:CodeableConcept"
+                  );
+
+            sliceGroup.ChildSlices[1].Should().Match<DiscriminatorBucket>(s =>
+                    s.Cardinality.Max == "20" &&
+                    s.Name == "Communication.payload:DocumentReference"
+                  );
+
+            sliceGroup.ChildSlices[2].Should().Match<DiscriminatorBucket>(s =>
+                    s.Cardinality.Max == "11" &&
+                    s.Name == "Communication.payload:Task"
+                  );
+        }
 
         [Fact]
         public void TestSliceSetup()
