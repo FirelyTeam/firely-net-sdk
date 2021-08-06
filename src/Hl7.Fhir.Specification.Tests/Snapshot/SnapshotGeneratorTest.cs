@@ -7485,5 +7485,30 @@ namespace Hl7.Fhir.Specification.Tests
             sutCode.Max.Should().Be(sdCode.Max);
             sutCode.Min.Should().Be(sdCode.Min);
         }
+
+        [TestMethod]
+        public async T.Task TestDontInheritInvariantsFromDataType()
+        {
+
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new CachedResolver(zipSource);
+            var sd = await resolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient);
+
+
+            var generator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+
+            // Act
+            await generator.UpdateAsync(sd);
+
+            // Assert
+            // no elements have ele-1 as constraint
+            var element = sd.Snapshot.Element.Where(e => e.Constraint.Any(c => c.Key == "ele-1"));
+            element.Should().BeEmpty();
+
+            //The root does inherit the "dom" invariants from the baseProfile
+            var rootConstraints = sd.Snapshot.Element[0].Constraint;
+            rootConstraints.Should().Contain(c => c.Key == "dom-2");
+
+        }
     }
 }
