@@ -7434,6 +7434,36 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestExtensionValueXCommentShouldBeNull()
+        {
+            const string ElementId = "Extension.value[x]";
+
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new MultiResolver(zipSource);
+            var sd = await resolver.FindStructureDefinitionForCoreTypeAsync(nameof(Extension));
+
+            var element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+
+            var generator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+
+            generator.PrepareElement += (sender, e) =>
+            {
+                if (e.Element.Path == ElementId)
+                {
+                    Debug.WriteLine($"Element:{ElementId} BaseElement:{e?.BaseElement?.ElementId}");
+                }
+            };
+
+            // Act
+            await generator.UpdateAsync(sd);
+
+            // Assert
+            element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+        }
+
+		[TestMethod]
         public async T.Task CheckCardinalityOfProfiledType()
         {
             var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));

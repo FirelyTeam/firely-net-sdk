@@ -718,13 +718,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var newElement = (ElementDefinition)baseElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-                newElement.Base = null;
-
-                //Remove type specific constraints on polymorph type elements.
-                if (diff.Current.Type.Count > 1)
-                {
-                    removeNewTypeConstraint(newElement, typeStructure);
-                }
+                newElement.Base = null;               
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
