@@ -757,28 +757,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             await mergeElement(snap, diff).ConfigureAwait(false);
         }
 
-        private void removeNewTypeConstraint(ElementDefinition element, StructureDefinition typeStructure)
-        {
-            if (typeStructure?.Differential?.Element != null && !element.Constraint.IsNullOrEmpty())
-            {
-                List<ElementDefinition.ConstraintComponent> newConstraints = null;
-
-                //See if there are new constraints introduced by the type
-                var nav = new ElementDefinitionNavigator(typeStructure.Differential.Element);
-                if (nav.MoveToFirstChild())
-                {
-                    if (nav.Current.IsRootElement())
-                        newConstraints = nav.Current.Constraint;
-                }
-                //If there are any newly introduced constraints, remove them from the new element.
-                if (newConstraints != null)
-                {
-                    var keys = newConstraints.Select(c => c.Key);
-                    element.Constraint.RemoveAll(c => keys.Contains(c.Key));
-                }
-            }
-        }
-
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
         private async T.Task mergeElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
