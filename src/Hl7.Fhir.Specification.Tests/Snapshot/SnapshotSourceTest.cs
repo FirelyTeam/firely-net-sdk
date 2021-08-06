@@ -62,10 +62,13 @@ namespace Hl7.Fhir.Specification.Tests
             // [2] Element.extension : Extension < Element
             //
             // Verify that the "ele-1" constraint & condition, introduced by diff root element [0],
-            // is correctly propagated to snapshot child elements [1] and [2]
-            foreach (var elem in elems)
+            // is correctly propagated to the snapshot, but not to the child elements.
+            assert_ele1(elems[0]);
+            for (int i = 1; i < elems.Count; i++)
             {
-                assert_ele1(elem);
+                var elem = elems[i];
+                Assert.IsFalse(elem.Constraint.Any());
+                Assert.IsFalse(elem.Condition.Any());
             }
         }
 

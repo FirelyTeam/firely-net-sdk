@@ -6999,8 +6999,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("MedicationAdministration.dosage.rate[x]"));
             Assert.IsNotNull(nav.Current);
 
-            //verify that rate[x] contains ele-1 but not rat-1
-            Assert.IsTrue(nav.Current.Constraint.Any(c => c.Key == "ele-1"));
+            //verify that rate[x] doesn't contain rat-1          
             Assert.IsFalse(nav.Current.Constraint.Any(c => c.Key == "rat-1"));
 
         }
