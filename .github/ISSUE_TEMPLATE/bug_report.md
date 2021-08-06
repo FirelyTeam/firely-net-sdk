@@ -9,6 +9,8 @@ assignees: ''
 
 :information_source: Do you want to ask something or start a discussion, then go [here](https://github.com/FirelyTeam/firely-net-sdk/discussions)
 
+:information_source: Is your bug report about Firely Server Facade, please send an email to [server@fire.ly](mailto:server@fire.ly) or submit a bug report to Jira if you are a paying customer.
+
 **Describe the bug**
 A clear and concise description of what the bug is. 
 
