@@ -718,7 +718,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var newElement = (ElementDefinition)baseElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-                newElement.Base = null;               
+                newElement.Base = null;
+                newElement.Constraint = new List<ElementDefinition.ConstraintComponent> { }; 
+                newElement.Condition = new List<string> { };
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
