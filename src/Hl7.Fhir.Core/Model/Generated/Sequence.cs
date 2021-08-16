@@ -360,6 +360,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ReferenceSeqComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ReferenceSeqComponent;
@@ -639,6 +640,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VariantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VariantComponent;
@@ -1130,6 +1132,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QualityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QualityComponent;
@@ -1451,6 +1454,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepositoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RepositoryComponent;
@@ -1831,6 +1835,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Sequence());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Sequence;

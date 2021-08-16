@@ -134,6 +134,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParticipantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParticipantComponent;
@@ -341,6 +342,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DynamicValueComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DynamicValueComponent;
@@ -1133,6 +1135,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ActivityDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ActivityDefinition;

@@ -394,6 +394,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OriginComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OriginComponent;
@@ -521,6 +522,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DestinationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DestinationComponent;
@@ -630,6 +632,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MetadataComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MetadataComponent;
@@ -774,6 +777,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LinkComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LinkComponent;
@@ -1064,6 +1068,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CapabilityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CapabilityComponent;
@@ -1243,6 +1248,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FixtureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FixtureComponent;
@@ -1583,6 +1589,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VariableComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VariableComponent;
@@ -1718,6 +1725,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RuleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RuleComponent;
@@ -1862,6 +1870,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RuleParamComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RuleParamComponent;
@@ -1973,6 +1982,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RulesetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RulesetComponent;
@@ -2100,6 +2110,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RulesetRuleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RulesetRuleComponent;
@@ -2244,6 +2255,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RulesetRuleParamComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RulesetRuleParamComponent;
@@ -2338,6 +2350,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SetupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SetupComponent;
@@ -2441,6 +2454,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SetupActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SetupActionComponent;
@@ -3000,6 +3014,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OperationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OperationComponent;
@@ -3201,6 +3216,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RequestHeaderComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RequestHeaderComponent;
@@ -4018,6 +4034,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AssertComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AssertComponent;
@@ -4233,6 +4250,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActionAssertRuleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActionAssertRuleComponent;
@@ -4378,6 +4396,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActionAssertRuleParamComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActionAssertRuleParamComponent;
@@ -4505,6 +4524,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActionAssertRulesetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActionAssertRulesetComponent;
@@ -4632,6 +4652,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActionAssertRulesetRuleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActionAssertRulesetRuleComponent;
@@ -4777,6 +4798,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParamComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParamComponent;
@@ -4935,6 +4957,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TestComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TestComponent;
@@ -5046,6 +5069,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TestActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TestActionComponent;
@@ -5140,6 +5164,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TeardownComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TeardownComponent;
@@ -5230,6 +5255,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TeardownActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TeardownActionComponent;
@@ -5817,6 +5843,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new TestScript());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as TestScript;
