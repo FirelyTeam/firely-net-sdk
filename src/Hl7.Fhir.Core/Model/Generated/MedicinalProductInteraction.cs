@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InteractantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InteractantComponent;
@@ -286,6 +287,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductInteraction());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductInteraction;

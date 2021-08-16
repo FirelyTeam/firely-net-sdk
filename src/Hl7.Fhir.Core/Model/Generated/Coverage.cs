@@ -166,6 +166,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ClassComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ClassComponent;
@@ -295,6 +296,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CostToBeneficiaryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CostToBeneficiaryComponent;
@@ -407,6 +409,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ExemptionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ExemptionComponent;
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Coverage());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Coverage;

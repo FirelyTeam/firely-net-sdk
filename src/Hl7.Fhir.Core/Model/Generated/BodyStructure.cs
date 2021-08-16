@@ -227,6 +227,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new BodyStructure());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as BodyStructure;

@@ -196,6 +196,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TargetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TargetComponent;
@@ -565,6 +566,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Goal());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Goal;

@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new BatchIdentifierComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as BatchIdentifierComponent;
@@ -379,6 +380,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackageItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackageItemComponent;
@@ -641,6 +643,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductPackaged());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductPackaged;

@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GeneComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GeneComponent;
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GeneElementComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GeneElementComponent;
@@ -402,6 +404,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ClassificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ClassificationComponent;
@@ -606,6 +609,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TargetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TargetComponent;
@@ -788,6 +792,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceReferenceInformation());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubstanceReferenceInformation;

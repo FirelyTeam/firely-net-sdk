@@ -1240,6 +1240,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Money());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Money;

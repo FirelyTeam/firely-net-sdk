@@ -385,6 +385,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SlicingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SlicingComponent;
@@ -539,6 +540,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DiscriminatorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DiscriminatorComponent;
@@ -717,6 +719,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new BaseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as BaseComponent;
@@ -966,6 +969,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TypeRefComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TypeRefComponent;
@@ -1107,6 +1111,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ExampleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ExampleComponent;
@@ -1414,6 +1419,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ConstraintComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ConstraintComponent;
@@ -1611,6 +1617,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ElementDefinitionBindingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ElementDefinitionBindingComponent;
@@ -1824,6 +1831,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MappingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MappingComponent;
@@ -2700,6 +2708,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ElementDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ElementDefinition;

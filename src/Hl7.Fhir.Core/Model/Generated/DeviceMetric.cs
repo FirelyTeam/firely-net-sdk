@@ -378,6 +378,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CalibrationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CalibrationComponent;
@@ -653,6 +654,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DeviceMetric());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DeviceMetric;
