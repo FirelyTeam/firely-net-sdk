@@ -221,6 +221,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActorComponent;
@@ -451,6 +452,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InstanceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InstanceComponent;
@@ -594,6 +596,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VersionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VersionComponent;
@@ -738,6 +741,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContainedInstanceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContainedInstanceComponent;
@@ -907,6 +911,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProcessComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProcessComponent;
@@ -1074,6 +1079,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StepComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StepComponent;
@@ -1428,6 +1434,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OperationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OperationComponent;
@@ -1601,6 +1608,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AlternativeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AlternativeComponent;
@@ -2063,6 +2071,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ExampleScenario());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ExampleScenario;

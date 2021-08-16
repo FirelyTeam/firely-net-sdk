@@ -410,6 +410,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CharacteristicComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CharacteristicComponent;
@@ -1305,6 +1306,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ResearchElementDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ResearchElementDefinition;

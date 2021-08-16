@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DoseAndRateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DoseAndRateComponent;
@@ -442,6 +443,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Dosage());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Dosage;

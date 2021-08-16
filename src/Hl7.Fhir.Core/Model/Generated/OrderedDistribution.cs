@@ -134,6 +134,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new IntervalComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as IntervalComponent;
@@ -323,6 +324,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new OrderedDistribution());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as OrderedDistribution;

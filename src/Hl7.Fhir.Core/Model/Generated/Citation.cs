@@ -337,6 +337,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SummaryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SummaryComponent;
@@ -478,6 +479,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VariantCitationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VariantCitationComponent;
@@ -604,6 +606,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ArticleTitleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ArticleTitleComponent;
@@ -733,6 +736,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new WebLocationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as WebLocationComponent;
@@ -869,6 +873,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AbstractComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AbstractComponent;
@@ -1018,6 +1023,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContributorshipComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContributorshipComponent;
@@ -1350,6 +1356,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContributorshipEntryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContributorshipEntryComponent;
@@ -1544,6 +1551,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContributorshipEntryAffiliationInfoComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContributorshipEntryAffiliationInfoComponent;
@@ -1684,6 +1692,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContributorshipSummaryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContributorshipSummaryComponent;
@@ -2021,6 +2030,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PublicationFormComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PublicationFormComponent;
@@ -2273,6 +2283,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PublicationFormPublishedInComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PublicationFormPublishedInComponent;
@@ -2460,6 +2471,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PublicationFormPeriodicReleaseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PublicationFormPeriodicReleaseComponent;
@@ -2739,6 +2751,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PublicationFormPeriodicReleaseDateOfPublicationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PublicationFormPeriodicReleaseDateOfPublicationComponent;
@@ -2881,6 +2894,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new KeywordListComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as KeywordListComponent;
@@ -3025,6 +3039,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new KeywordListKeywordComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as KeywordListKeywordComponent;
@@ -3329,6 +3344,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MedlineComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MedlineComponent;
@@ -3497,6 +3513,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MedlineDateOnPubMedComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MedlineDateOnPubMedComponent;
@@ -3621,6 +3638,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MedlineRelatedArticleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MedlineRelatedArticleComponent;
@@ -4339,6 +4357,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Citation());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Citation;

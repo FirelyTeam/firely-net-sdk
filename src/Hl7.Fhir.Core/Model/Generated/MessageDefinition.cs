@@ -245,6 +245,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FocusComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FocusComponent;
@@ -379,6 +380,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AllowedResponseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AllowedResponseComponent;
@@ -1050,6 +1052,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MessageDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MessageDefinition;

@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SuppliedItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SuppliedItemComponent;
@@ -430,6 +431,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SupplyDelivery());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SupplyDelivery;

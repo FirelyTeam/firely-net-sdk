@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackageComponent;
@@ -396,6 +397,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PropertyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PropertyComponent;
@@ -506,6 +508,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContainedItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContainedItemComponent;
@@ -848,6 +851,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new PackagedProductDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as PackagedProductDefinition;

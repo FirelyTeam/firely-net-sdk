@@ -319,6 +319,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActivityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActivityComponent;
@@ -778,6 +779,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DetailComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DetailComponent;
@@ -1393,6 +1395,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new CarePlan());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as CarePlan;

@@ -210,6 +210,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PredictionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PredictionComponent;
@@ -593,6 +594,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new RiskAssessment());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as RiskAssessment;

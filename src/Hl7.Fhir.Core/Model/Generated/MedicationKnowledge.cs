@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RelatedMedicationKnowledgeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RelatedMedicationKnowledgeComponent;
@@ -255,6 +256,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MonographComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MonographComponent;
@@ -398,6 +400,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new IngredientComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as IngredientComponent;
@@ -543,6 +546,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CostComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CostComponent;
@@ -672,6 +676,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MonitoringProgramComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MonitoringProgramComponent;
@@ -798,6 +803,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AdministrationGuidelinesComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AdministrationGuidelinesComponent;
@@ -911,6 +917,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DosageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DosageComponent;
@@ -1040,6 +1047,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PatientCharacteristicsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PatientCharacteristicsComponent;
@@ -1149,6 +1157,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MedicineClassificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MedicineClassificationComponent;
@@ -1256,6 +1265,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackagingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackagingComponent;
@@ -1365,6 +1375,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DrugCharacteristicComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DrugCharacteristicComponent;
@@ -1505,6 +1516,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RegulatoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RegulatoryComponent;
@@ -1640,6 +1652,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SubstitutionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SubstitutionComponent;
@@ -1734,6 +1747,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ScheduleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ScheduleComponent;
@@ -1838,6 +1852,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MaxDispenseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MaxDispenseComponent;
@@ -1961,6 +1976,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new KineticsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as KineticsComponent;
@@ -2397,6 +2413,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicationKnowledge());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicationKnowledge;
