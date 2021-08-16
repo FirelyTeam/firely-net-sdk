@@ -189,6 +189,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Contributor());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Contributor;

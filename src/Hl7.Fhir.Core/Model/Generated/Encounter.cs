@@ -223,6 +223,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StatusHistoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StatusHistoryComponent;
@@ -332,6 +333,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ClassHistoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ClassHistoryComponent;
@@ -456,6 +458,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParticipantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParticipantComponent;
@@ -602,6 +605,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DiagnosisComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DiagnosisComponent;
@@ -818,6 +822,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new HospitalizationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as HospitalizationComponent;
@@ -1003,6 +1008,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LocationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LocationComponent;
@@ -1446,6 +1452,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Encounter());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Encounter;

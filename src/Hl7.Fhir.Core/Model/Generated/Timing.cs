@@ -781,6 +781,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepeatComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RepeatComponent;
@@ -960,6 +961,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Timing());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Timing;

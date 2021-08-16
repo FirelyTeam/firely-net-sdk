@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParticipantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParticipantComponent;
@@ -284,6 +285,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SuspectEntityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SuspectEntityComponent;
@@ -407,6 +409,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CausalityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CausalityComponent;
@@ -508,6 +511,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContributingFactorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContributingFactorComponent;
@@ -601,6 +605,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PreventiveActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PreventiveActionComponent;
@@ -694,6 +699,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MitigatingActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MitigatingActionComponent;
@@ -787,6 +793,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SupportingInfoComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SupportingInfoComponent;
@@ -1259,6 +1266,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new AdverseEvent());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as AdverseEvent;

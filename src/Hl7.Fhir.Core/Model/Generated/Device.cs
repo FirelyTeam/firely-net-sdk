@@ -365,6 +365,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new UdiCarrierComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as UdiCarrierComponent;
@@ -527,6 +528,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DeviceNameComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DeviceNameComponent;
@@ -653,6 +655,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SpecializationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SpecializationComponent;
@@ -793,6 +796,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VersionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VersionComponent;
@@ -907,6 +911,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PropertyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PropertyComponent;
@@ -1015,6 +1020,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OperationalStatusComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OperationalStatusComponent;
@@ -1123,6 +1129,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AssociationStatusComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AssociationStatusComponent;
@@ -1815,6 +1822,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Device());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Device;

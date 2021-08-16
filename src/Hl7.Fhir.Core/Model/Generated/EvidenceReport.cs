@@ -174,6 +174,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SubjectComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SubjectComponent;
@@ -332,6 +333,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CharacteristicComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CharacteristicComponent;
@@ -471,6 +473,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RelatesToComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RelatesToComponent;
@@ -766,6 +769,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SectionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SectionComponent;
@@ -1196,6 +1200,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new EvidenceReport());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as EvidenceReport;

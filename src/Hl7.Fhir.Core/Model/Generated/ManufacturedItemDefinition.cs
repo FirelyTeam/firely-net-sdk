@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PropertyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PropertyComponent;
@@ -274,6 +275,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ManufacturedItemDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ManufacturedItemDefinition;

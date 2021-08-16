@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LabelComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LabelComponent;
@@ -254,6 +255,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FocusComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FocusComponent;
@@ -366,6 +368,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ClassificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ClassificationComponent;
@@ -523,6 +526,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AssociatedPartyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AssociatedPartyComponent;
@@ -672,6 +676,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StatusDateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StatusDateComponent;
@@ -851,6 +856,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RecruitmentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RecruitmentComponent;
@@ -1048,6 +1054,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ComparisonGroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ComparisonGroupComponent;
@@ -1203,6 +1210,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ObjectiveComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ObjectiveComponent;
@@ -1363,6 +1371,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OutcomeMeasureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OutcomeMeasureComponent;
@@ -1497,6 +1506,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new WebLocationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as WebLocationComponent;
@@ -2225,6 +2235,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ResearchStudy());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ResearchStudy;

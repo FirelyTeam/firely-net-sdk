@@ -253,6 +253,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PrimarySourceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PrimarySourceComponent;
@@ -522,6 +523,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AttestationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AttestationComponent;
@@ -688,6 +690,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ValidatorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ValidatorComponent;
@@ -1053,6 +1056,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new VerificationResult());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as VerificationResult;
