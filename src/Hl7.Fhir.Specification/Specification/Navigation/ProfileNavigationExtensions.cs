@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -104,7 +105,15 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A <see cref="ElementDefinition.TypeRefComponent"/> instance, or <c>null</c>.</returns>
         public static ElementDefinition.TypeRefComponent PrimaryType(this ElementDefinition defn)
         {
-            return defn.Type != null && defn.Type.Count > 0 ? defn.Type[0] : null;
+            if (defn.Type.IsNullOrEmpty())
+                return null;
+            else if (defn.Type.Count == 1)
+                return defn.Type[0];
+            else  //if there are multiple types (value[x]), try to get a common type, otherwise, use Element as the common datatype             
+            {
+                var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
+                return new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
+            }
         }
 
         /// <summary>Returns the type profile reference of the primary element type, if it exists, or <c>null</c></summary>
