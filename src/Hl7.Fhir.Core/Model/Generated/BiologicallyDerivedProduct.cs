@@ -224,6 +224,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CollectionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CollectionComponent;
@@ -385,6 +386,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProcessingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProcessingComponent;
@@ -520,6 +522,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ManipulationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ManipulationComponent;
@@ -710,6 +713,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StorageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StorageComponent;
@@ -1003,6 +1007,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new BiologicallyDerivedProduct());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as BiologicallyDerivedProduct;

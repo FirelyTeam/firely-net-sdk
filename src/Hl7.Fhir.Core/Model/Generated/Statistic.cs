@@ -229,6 +229,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SampleSizeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SampleSizeComponent;
@@ -456,6 +457,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AttributeEstimateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AttributeEstimateComponent;
@@ -676,6 +678,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AttributeEstimateAttributeEstimateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AttributeEstimateAttributeEstimateComponent;
@@ -815,6 +818,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ModelCharacteristicComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ModelCharacteristicComponent;
@@ -993,6 +997,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ModelCharacteristicVariableComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ModelCharacteristicVariableComponent;
@@ -1222,6 +1227,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Statistic());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Statistic;

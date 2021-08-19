@@ -234,6 +234,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PositionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PositionComponent;
@@ -447,6 +448,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new HoursOfOperationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as HoursOfOperationComponent;
@@ -881,6 +883,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Location());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Location;

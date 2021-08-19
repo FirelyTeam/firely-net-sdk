@@ -201,6 +201,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContraindicationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContraindicationComponent;
@@ -322,6 +323,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OtherTherapyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OtherTherapyComponent;
@@ -504,6 +506,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new IndicationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as IndicationComponent;
@@ -674,6 +677,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InteractionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InteractionComponent;
@@ -783,6 +787,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InteractantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InteractantComponent;
@@ -900,6 +905,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new UndesirableEffectComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as UndesirableEffectComponent;
@@ -1149,6 +1155,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ClinicalUseIssue());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ClinicalUseIssue;

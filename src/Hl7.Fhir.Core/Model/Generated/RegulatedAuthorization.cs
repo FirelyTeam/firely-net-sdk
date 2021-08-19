@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RelatedDateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RelatedDateComponent;
@@ -270,6 +271,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CaseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CaseComponent;
@@ -603,6 +605,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new RegulatedAuthorization());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as RegulatedAuthorization;

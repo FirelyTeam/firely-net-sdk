@@ -211,6 +211,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MessageDestinationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MessageDestinationComponent;
@@ -441,6 +442,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MessageSourceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MessageSourceComponent;
@@ -615,6 +617,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ResponseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ResponseComponent;
@@ -873,6 +876,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MessageHeader());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MessageHeader;
