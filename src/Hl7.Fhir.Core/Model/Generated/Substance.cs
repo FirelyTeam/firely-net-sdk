@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new IngredientComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as IngredientComponent;
@@ -416,6 +417,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Substance());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Substance;

@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new UdiDeviceIdentifierComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as UdiDeviceIdentifierComponent;
@@ -335,6 +336,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DeviceNameComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DeviceNameComponent;
@@ -479,6 +481,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SpecializationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SpecializationComponent;
@@ -607,6 +610,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new HasPartComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as HasPartComponent;
@@ -791,6 +795,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackagingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackagingComponent;
@@ -935,6 +940,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackagingDistributorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackagingDistributorComponent;
@@ -1113,6 +1119,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackagingUdiDeviceIdentifierComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackagingUdiDeviceIdentifierComponent;
@@ -1257,6 +1264,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VersionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VersionComponent;
@@ -1370,6 +1378,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CapabilityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CapabilityComponent;
@@ -1494,6 +1503,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PropertyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PropertyComponent;
@@ -1656,6 +1666,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MaterialComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MaterialComponent;
@@ -2093,6 +2104,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DeviceDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DeviceDefinition;

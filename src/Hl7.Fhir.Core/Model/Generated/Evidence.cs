@@ -176,6 +176,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VariableDefinitionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VariableDefinitionComponent;
@@ -393,6 +394,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CertaintyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CertaintyComponent;
@@ -1001,6 +1003,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Evidence());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Evidence;

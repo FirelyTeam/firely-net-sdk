@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContactComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContactComponent;
@@ -273,6 +274,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NameComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NameComponent;
@@ -408,6 +410,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NamePartComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NamePartComponent;
@@ -531,6 +534,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CountryLanguageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CountryLanguageComponent;
@@ -643,6 +647,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CrossReferenceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CrossReferenceComponent;
@@ -797,6 +802,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OperationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OperationComponent;
@@ -934,6 +940,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PackageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PackageComponent;
@@ -1048,6 +1055,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AdministrableProductComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AdministrableProductComponent;
@@ -1552,6 +1560,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductDefinition;

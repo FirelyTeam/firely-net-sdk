@@ -296,6 +296,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ResourceTriggerComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ResourceTriggerComponent;
@@ -553,6 +554,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QueryCriteriaComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QueryCriteriaComponent;
@@ -724,6 +726,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CanFilterByComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CanFilterByComponent;
@@ -1233,6 +1236,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubscriptionTopic());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubscriptionTopic;

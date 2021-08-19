@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SummaryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SummaryComponent;
@@ -223,6 +224,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ClassificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ClassificationComponent;
@@ -364,6 +366,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StatusDateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StatusDateComponent;
@@ -495,6 +498,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RelatesToComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RelatesToComponent;
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactComponent;
@@ -997,6 +1002,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactVersionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactVersionComponent;
@@ -1138,6 +1144,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactStatusDateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactStatusDateComponent;
@@ -1264,6 +1271,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactTitleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactTitleComponent;
@@ -1404,6 +1412,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactAbstractComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactAbstractComponent;
@@ -1553,6 +1562,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactPartComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactPartComponent;
@@ -1684,6 +1694,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactRelatesToComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactRelatesToComponent;
@@ -2048,6 +2059,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactPublicationFormComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactPublicationFormComponent;
@@ -2272,6 +2284,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactPublicationFormPublishedInComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactPublicationFormPublishedInComponent;
@@ -2455,6 +2468,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactPublicationFormPeriodicReleaseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactPublicationFormPeriodicReleaseComponent;
@@ -2734,6 +2748,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactPublicationFormPeriodicReleaseDateOfPublicationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactPublicationFormPeriodicReleaseDateOfPublicationComponent;
@@ -2875,6 +2890,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactWebLocationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactWebLocationComponent;
@@ -2997,6 +3013,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactClassificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactClassificationComponent;
@@ -3192,6 +3209,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactClassificationWhoClassifiedComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactClassificationWhoClassifiedComponent;
@@ -3345,6 +3363,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactContributorshipComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactContributorshipComponent;
@@ -3674,6 +3693,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactContributorshipEntryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactContributorshipEntryComponent;
@@ -3872,6 +3892,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactContributorshipEntryAffiliationInfoComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactContributorshipEntryAffiliationInfoComponent;
@@ -4002,6 +4023,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactContributorshipEntryContributionInstanceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactContributorshipEntryContributionInstanceComponent;
@@ -4138,6 +4160,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CitedArtifactContributorshipSummaryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CitedArtifactContributorshipSummaryComponent;
@@ -4814,6 +4837,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Citation());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Citation;

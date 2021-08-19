@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MonomerSetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MonomerSetComponent;
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StartingMaterialComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StartingMaterialComponent;
@@ -416,6 +418,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepeatComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RepeatComponent;
@@ -607,6 +610,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepeatUnitComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RepeatUnitComponent;
@@ -808,6 +812,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DegreeOfPolymerisationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DegreeOfPolymerisationComponent;
@@ -969,6 +974,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StructuralRepresentationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StructuralRepresentationComponent;
@@ -1162,6 +1168,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstancePolymer());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubstancePolymer;
