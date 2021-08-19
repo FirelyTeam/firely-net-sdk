@@ -252,6 +252,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PolicyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PolicyComponent;
@@ -412,6 +413,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VerificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VerificationComponent;
@@ -676,6 +678,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new provisionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as provisionComponent;
@@ -823,6 +826,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new provisionActorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as provisionActorComponent;
@@ -953,6 +957,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new provisionDataComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as provisionDataComponent;
@@ -1255,6 +1260,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Consent());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Consent;

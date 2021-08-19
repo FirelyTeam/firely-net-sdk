@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NameComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NameComponent;
@@ -280,6 +281,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NamePartComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NamePartComponent;
@@ -403,6 +405,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CountryLanguageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CountryLanguageComponent;
@@ -593,6 +596,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ManufacturingBusinessOperationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ManufacturingBusinessOperationComponent;
@@ -808,6 +812,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SpecialDesignationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SpecialDesignationComponent;
@@ -1218,6 +1223,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProduct());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProduct;

@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EvidenceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EvidenceComponent;
@@ -288,6 +289,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MitigationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MitigationComponent;
@@ -613,6 +615,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DetectedIssue());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DetectedIssue;

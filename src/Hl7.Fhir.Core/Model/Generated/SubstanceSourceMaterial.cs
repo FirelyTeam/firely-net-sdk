@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FractionDescriptionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FractionDescriptionComponent;
@@ -342,6 +343,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OrganismComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OrganismComponent;
@@ -491,6 +493,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AuthorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AuthorComponent;
@@ -712,6 +715,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new HybridComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as HybridComponent;
@@ -859,6 +863,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OrganismGeneralComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OrganismGeneralComponent;
@@ -974,6 +979,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PartDescriptionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PartDescriptionComponent;
@@ -1282,6 +1288,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceSourceMaterial());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubstanceSourceMaterial;

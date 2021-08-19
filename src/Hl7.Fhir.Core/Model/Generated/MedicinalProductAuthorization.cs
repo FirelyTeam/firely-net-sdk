@@ -158,6 +158,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new JurisdictionalAuthorizationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as JurisdictionalAuthorizationComponent;
@@ -309,6 +310,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProcedureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProcedureComponent;
@@ -689,6 +691,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductAuthorization());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductAuthorization;

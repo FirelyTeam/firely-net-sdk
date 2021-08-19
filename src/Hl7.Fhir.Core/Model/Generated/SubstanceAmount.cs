@@ -114,6 +114,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ReferenceRangeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ReferenceRangeComponent;
@@ -256,6 +257,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceAmount());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubstanceAmount;

@@ -119,6 +119,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OtherTherapyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OtherTherapyComponent;
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductContraindication());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductContraindication;

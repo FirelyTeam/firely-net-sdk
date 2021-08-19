@@ -204,6 +204,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SampleSizeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SampleSizeComponent;
@@ -383,6 +384,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ResultsByExposureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ResultsByExposureComponent;
@@ -591,6 +593,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EffectEstimateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EffectEstimateComponent;
@@ -796,6 +799,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PrecisionEstimateComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PrecisionEstimateComponent;
@@ -928,6 +932,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CertaintyComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CertaintyComponent;
@@ -1055,6 +1060,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CertaintySubcomponentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CertaintySubcomponentComponent;
@@ -1777,6 +1783,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new EffectEvidenceSynthesis());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as EffectEvidenceSynthesis;
