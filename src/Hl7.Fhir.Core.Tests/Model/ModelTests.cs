@@ -16,6 +16,7 @@ using System.Xml.Linq;
 using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Validation;
 using Hl7.Fhir.Serialization;
+using FluentAssertions;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -628,6 +629,18 @@ namespace Hl7.Fhir.Tests.Model
         public void TestCheckMinorVersionCompatibilityWithNull()
         {
             ModelInfo.CheckMinorVersionCompatibility(null);
+        }
+
+        [TestMethod]
+        public void TestHumanNameFluentInitializers()
+        {
+            var pat = new Patient();
+            pat.Name.Add(new HumanName().WithPrefix("Mr.").WithGiven("Henry").AndFamily("Levin").WithSuffix("The 7th"));
+
+            pat.Name.FirstOrDefault().Prefix.Should().ContainSingle("Mr.");
+            pat.Name.FirstOrDefault().Given.Should().ContainSingle("Henry");
+            pat.Name.FirstOrDefault().Family.Should().Be("Levin");
+            pat.Name.FirstOrDefault().Suffix.Should().ContainSingle("The 7th");
         }
     }
 }
