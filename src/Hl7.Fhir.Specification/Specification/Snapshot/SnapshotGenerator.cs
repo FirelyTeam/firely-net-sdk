@@ -803,13 +803,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Path = newElement.Path,
                     Min = diff.Current.Min, // newElement.Min,
                     Max = diff.Current.Max, // newElement.Max
-                };
-
-                //Remove type specific constraints on polymorph type elements.
-                if (diff.Current.Type.Count > 1)
-                {
-                    removeNewTypeConstraint(newElement, typeStructure);
-                }
+                };              
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, targetElement);
