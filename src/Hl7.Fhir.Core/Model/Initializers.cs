@@ -53,6 +53,22 @@ namespace Hl7.Fhir.Model
             return this;
         }
 
+        public HumanName WithPrefix(string prefix)
+        {
+            if (this.PrefixElement == null) this.PrefixElement = new List<FhirString>();
+            this.PrefixElement.Add(new FhirString(prefix));
+
+            return this;
+        }
+
+        public HumanName WithSuffix(string prefix)
+        {
+            if (this.SuffixElement == null) this.SuffixElement = new List<FhirString>();
+            this.SuffixElement.Add(new FhirString(prefix));
+
+            return this;
+        }
+
         public HumanName AndFamily(string family)
         {
             this.Family = family;
