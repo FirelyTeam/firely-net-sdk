@@ -182,6 +182,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ApplicabilityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ApplicabilityComponent;
@@ -295,6 +296,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PropertyGroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PropertyGroupComponent;
@@ -468,6 +470,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PriceComponentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PriceComponentComponent;
@@ -1095,6 +1098,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ChargeItemDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ChargeItemDefinition;

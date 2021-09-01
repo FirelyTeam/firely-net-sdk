@@ -254,6 +254,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SubunitComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SubunitComponent;
@@ -467,6 +468,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LinkageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LinkageComponent;
@@ -632,6 +634,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SugarComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SugarComponent;
@@ -809,6 +812,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SubstanceNucleicAcid());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SubstanceNucleicAcid;

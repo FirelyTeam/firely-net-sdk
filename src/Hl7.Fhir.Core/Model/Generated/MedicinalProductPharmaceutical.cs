@@ -115,6 +115,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CharacteristicsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CharacteristicsComponent;
@@ -294,6 +295,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RouteOfAdministrationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RouteOfAdministrationComponent;
@@ -423,6 +425,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TargetSpeciesComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TargetSpeciesComponent;
@@ -564,6 +567,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new WithdrawalPeriodComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as WithdrawalPeriodComponent;
@@ -742,6 +746,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MedicinalProductPharmaceutical());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MedicinalProductPharmaceutical;

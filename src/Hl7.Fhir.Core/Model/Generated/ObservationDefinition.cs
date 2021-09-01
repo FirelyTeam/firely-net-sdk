@@ -282,6 +282,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QuantitativeDetailsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QuantitativeDetailsComponent;
@@ -538,6 +539,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QualifiedIntervalComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QualifiedIntervalComponent;
@@ -878,6 +880,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ObservationDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ObservationDefinition;

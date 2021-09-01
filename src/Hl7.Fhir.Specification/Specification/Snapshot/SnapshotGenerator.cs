@@ -45,8 +45,8 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using T = System.Threading.Tasks;
 using System.Linq;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // e.g. Extension : BaseDefinition => Element : Element.extension => Extension
             // Then snapshot root is already generated and annotated to differential.Element[0]
             //Debug.WriteLineIf(diffRoot.HasSnapshotElementAnnotation(), $"[{nameof(SnapshotGenerator)}.{nameof(generate)} (before merge)] diff root is annotated with cached snapshot root...");
-            
+
             await merge(nav, diff).ConfigureAwait(false);
 
             result = nav.ToListOfElements();
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity))
                     {
                         addIssueInvalidSliceNameOnRootElement(elem, sd);
-                    }                        
+                    }
                     elem.SliceName = null;
                 }
             }
@@ -620,13 +620,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // [MS 20210614] When we can't find a CommonTypeCode assume "Element" for .id and .extension
                 var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
-               
+
                 // Different profiles for common base type => expand the common base type (w/o custom profile)
                 // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
                 var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
                 StructureDefinition typeStructure = await getStructureForTypeRef(defn, typeRef, true).ConfigureAwait(false);
                 return await expandElementType(nav, typeStructure).ConfigureAwait(false);
-               
+
                 // Alternatively, we could try to expand the most specific common base profile, e.g. (Backbone)Element
                 // TODO: Determine the intersection, i.e. the most specific common type that all types are derived from
 
@@ -758,9 +758,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Create a new resource element without a base element definition (for core type & resource profiles)
         private async T.Task createNewElement(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
         {
-            var (targetElement,typeStructure) = await getBaseElementForElementType(diff.Current).ConfigureAwait(false);
+            var (targetElement, typeStructure) = await getBaseElementForElementType(diff.Current).ConfigureAwait(false);
             addConstraintSource(targetElement, typeStructure?.Url);
-                        
+
             if (targetElement != null)
             {
                 // New element with type profile
@@ -777,13 +777,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Path = newElement.Path,
                     Min = diff.Current.Min, // newElement.Min,
                     Max = diff.Current.Max, // newElement.Max
-                };
-
-                //Remove type specific constraints on polymorph type elements.
-                if (diff.Current.Type.Count > 1)
-                {
-                    removeNewTypeConstraint(newElement, typeStructure);
-                }
+                };              
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, targetElement);
@@ -858,11 +852,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         private static void addConstraintSource(ElementDefinition targetElement, string url)
-        {           
+        {
             foreach (var constraint in targetElement?.Constraint.Where(c => string.IsNullOrEmpty(c.Source)) ?? Enumerable.Empty<ElementDefinition.ConstraintComponent>())
             {
                 constraint.Source = url;
-            }            
+            }
         }
 
         // Recursively merge the currently selected element and (grand)children from differential into snapshot
@@ -1123,8 +1117,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 typeStructure = await AsyncResolver.FindStructureDefinitionAsync(primaryDiffTypeProfile).ConfigureAwait(false);
-                
-                if(_settings.GenerateSnapshotForExternalProfiles)
+
+                if (_settings.GenerateSnapshotForExternalProfiles)
                     await ensureSnapshot(typeStructure, primaryDiffTypeProfile).ConfigureAwait(false);
 
                 // [WMR 20170224] Verify that the resolved StructureDefinition is compatible with the element type
@@ -1306,6 +1300,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Rebase before merging
                                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                                 rebasedRootElem.Path = diff.Path;
+                                rebasedRootElem.Min = diff.Current.Min;
+                                rebasedRootElem.Max = diff.Current.Max;
 
                                 // Merge the type profile root element; no need to expand children
                                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
@@ -2207,9 +2203,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         private async T.Task<(ElementDefinition, StructureDefinition typeProfile)> getBaseElementForTypeRef(ElementDefinition elementDef, ElementDefinition.TypeRefComponent typeRef)
         {
             var typeProfile = await getStructureForTypeRef(elementDef, typeRef, false).ConfigureAwait(false);
-            
-            return typeProfile != null ? 
-                (await getSnapshotRootElement(typeProfile, typeProfile.Url, elementDef.Path).ConfigureAwait(false), typeProfile) 
+
+            return typeProfile != null ?
+                (await getSnapshotRootElement(typeProfile, typeProfile.Url, elementDef.Path).ConfigureAwait(false), typeProfile)
                 : default;
         }
 
@@ -2294,7 +2290,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Otherwise, cloning & expanding the result will pick up incorrect root element from original... WRONG!
 #endif
                 // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url) ;
+                ElementDefnMerger.InitializeConstraintSource(snapRoot.Constraint, sd.Url);
 
                 // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - use root element definition from differential: #{clonedDiffRoot.GetHashCode()}");
                 return snapRoot;

@@ -6,6 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -26,28 +29,45 @@ namespace Hl7.Fhir.Specification
     /// </summary>
     public class StructureDefinitionWalker
     {
-        public IResourceResolver Resolver => _resolver as IResourceResolver;
+        public IResourceResolver? Resolver => _resolver as IResourceResolver;
         public IAsyncResourceResolver AsyncResolver => _resolver.AsAsync();
 
 #pragma warning disable CS0618 // Type or member is obsolete
         private readonly ISyncOrAsyncResourceResolver _resolver;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         public readonly ElementDefinitionNavigator Current;
 
+        /// <summary>
+        /// When walked into a Reference, the targetprofiles are copied to here
+        /// </summary>
+        private readonly string[]? _targetProfile;
+
+#pragma warning disable CS0618 // Type or member is obsolete
         public StructureDefinitionWalker(StructureDefinition sd, ISyncOrAsyncResourceResolver resolver)
+#pragma warning restore CS0618 // Type or member is obsolete
             : this(ElementDefinitionNavigator.ForSnapshot(sd), resolver)
         {
             // nothing more
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         public StructureDefinitionWalker(ElementDefinitionNavigator element, ISyncOrAsyncResourceResolver resolver)
-        {
 #pragma warning restore CS0618 // Type or member is obsolete
+        {
             Current = element.ShallowCopy();
             _resolver = resolver;
 
             // Make sure there is always a current item
             if (Current.AtRoot) Current.MoveToFirstChild();
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        public StructureDefinitionWalker(ElementDefinitionNavigator element, IEnumerable<string> targetProfiles, ISyncOrAsyncResourceResolver resolver) :
+#pragma warning restore CS0618 // Type or member is obsolete
+            this(element, resolver)
+        {
+            _targetProfile = targetProfiles?.ToArray();
         }
 
         public StructureDefinitionWalker(StructureDefinitionWalker other)
@@ -56,16 +76,18 @@ namespace Hl7.Fhir.Specification
             _resolver = other._resolver;
         }
 
-        public StructureDefinitionWalker FromCanonical(string canonical) =>
-            TaskHelper.Await(() => FromCanonicalAsync(canonical));
+        public StructureDefinitionWalker FromCanonical(string canonical, IEnumerable<string>? targetProfiles = null) =>
+            TaskHelper.Await(() => FromCanonicalAsync(canonical, targetProfiles));
 
-        public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical)
+        public async T.Task<StructureDefinitionWalker> FromCanonicalAsync(string canonical, IEnumerable<string>? targetProfiles = null)
         {
             var sd = await AsyncResolver.FindStructureDefinitionAsync(canonical).ConfigureAwait(false);
             if (sd == null)
                 throw new StructureDefinitionWalkerException($"Cannot walk into unknown StructureDefinition with canonical '{canonical}' at '{Current.CanonicalPath()}'");
 
-            return new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), _resolver);
+            return (targetProfiles is not null)
+                ? new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), targetProfiles, _resolver)
+                : new StructureDefinitionWalker(ElementDefinitionNavigator.ForSnapshot(sd), _resolver);
         }
 
 
@@ -91,7 +113,7 @@ namespace Hl7.Fhir.Specification
                 throw new StructureDefinitionWalkerException($"Child with name '{childName}' is sliced to more than one choice and cannot be used as a discriminator at '{Current.CanonicalPath()}' ");
         }
 
-        private IEnumerable<ElementDefinitionNavigator> childDefinitions(string childName = null)
+        private IEnumerable<ElementDefinitionNavigator> childDefinitions(string? childName = null)
         {
             var canonicals = Current.Current.Type.Select(t => t.GetTypeProfile()).Distinct().ToArray();
             if (canonicals.Length > 1)
@@ -135,15 +157,14 @@ namespace Hl7.Fhir.Specification
                 var reference = Current.ShallowCopy();
 
                 if (!reference.JumpToNameReference(name))
-                    new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
+                    throw new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
                 return new[] { new StructureDefinitionWalker(reference, _resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
             {
                 return Current.Current.Type
-                    .Select(t => t.GetTypeProfile())
-                    .Distinct()     // no use returning multiple "reference" profiles when they only differ in targetReference
-                    .Select(c => FromCanonical(c));
+                    .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
+                    .Select(group => FromCanonical(group.Key, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
@@ -170,7 +191,7 @@ namespace Hl7.Fhir.Specification
             // types into their definitions:
             // 1) The root node of an SD for a type or constraint on the type => derive the base type
             // 2) At a non-root BackboneElement or Element => use the TypeRef.Type (After the expand, this can be only 1)
-            string typeCanonical(ElementDefinitionNavigator nav) =>
+            string? typeCanonical(ElementDefinitionNavigator nav) =>
                nav.Current.IsRootElement() ?
                     nav.StructureDefinition.Type
                     : nav.Current.Type.FirstOrDefault()?.Code;
@@ -184,6 +205,11 @@ namespace Hl7.Fhir.Specification
         /// <exception cref="StructureDefinitionWalkerException">Thrown when the ElementDefinition's type is not a Reference.</exception>
         public IEnumerable<StructureDefinitionWalker> Resolve()
         {
+            if (_targetProfile is not null)
+            {
+                return _targetProfile.Select(p => FromCanonical(p));
+            }
+
             if (!Current.Current.Type.Any(t => t.IsReference()))
                 throw new StructureDefinitionWalkerException($"resolve() should only be called on elements of type Reference at '{Current.CanonicalPath()}'.");
 
@@ -283,3 +309,5 @@ namespace Hl7.Fhir.Specification
             me.Select(w => w.Extension(canonical));
     }
 }
+
+#nullable restore

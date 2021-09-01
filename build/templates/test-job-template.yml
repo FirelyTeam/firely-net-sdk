@@ -3,8 +3,6 @@
 parameters:
 - name: testRunTitle
   default: 'Test'
-- name: buildConfiguration
-  default: 'Debug'
 - name: projects
 
 steps:
@@ -19,5 +17,5 @@ steps:
   inputs:
     command: test
     projects: ${{ parameters.projects }}
-    arguments: '--configuration ${{ parameters.buildConfiguration }} --no-build -f netcoreapp2.1 --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
+    arguments: '-f $(TEST_TARGETFRAMEWORK) --filter TestCategory!=IntegrationTest&TestCategory!=FhirClient --collect "Code coverage"'
     testRunTitle: ${{ parameters.testRunTitle }}

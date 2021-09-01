@@ -221,5 +221,23 @@ namespace Hl7.Fhir.Specification.Tests
                               result.Issue[0].Details.Text);
 
         }
+
+        //MS 2021-16-08: Tests issue https://github.com/FirelyTeam/firely-net-sdk/issues/1857
+        [Fact]
+        public void TestCurrenciesValidation()
+        {
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            {
+                ValueSet = new Canonical("http://hl7.org/fhir/ValueSet/currencies"),
+                Strength = BindingStrength.Required
+            };
+
+            var val = binding.ToValidatable();
+            var vc = new ValidationContext() { TerminologyService = _termService };
+
+            var v = new Money() { Value = 1, Currency = Money.Currencies.EUR };
+            var node = v.ToTypedElement();
+            Assert.True(val.Validate(node, vc).Success);
+        }
     }
 }

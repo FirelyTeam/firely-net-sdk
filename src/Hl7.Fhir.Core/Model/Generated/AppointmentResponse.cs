@@ -266,6 +266,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new AppointmentResponse());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as AppointmentResponse;
