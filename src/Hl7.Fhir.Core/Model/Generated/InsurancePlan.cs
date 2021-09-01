@@ -171,6 +171,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContactComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContactComponent;
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CoverageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CoverageComponent;
@@ -450,6 +452,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CoverageBenefitComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CoverageBenefitComponent;
@@ -561,6 +564,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LimitComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LimitComponent;
@@ -733,6 +737,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PlanComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PlanComponent;
@@ -920,6 +925,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GeneralCostComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GeneralCostComponent;
@@ -1037,6 +1043,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SpecificCostComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SpecificCostComponent;
@@ -1146,6 +1153,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PlanBenefitComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PlanBenefitComponent;
@@ -1283,6 +1291,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CostComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CostComponent;
@@ -1627,6 +1636,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new InsurancePlan());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as InsurancePlan;

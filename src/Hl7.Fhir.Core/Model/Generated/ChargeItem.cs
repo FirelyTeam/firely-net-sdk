@@ -169,6 +169,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PerformerComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PerformerComponent;
@@ -747,6 +748,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ChargeItem());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ChargeItem;

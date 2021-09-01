@@ -481,6 +481,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StructureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StructureComponent;
@@ -728,6 +729,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GroupComponent;
@@ -954,6 +956,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InputComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InputComponent;
@@ -1165,6 +1168,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RuleComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RuleComponent;
@@ -1598,6 +1602,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SourceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SourceComponent;
@@ -1923,6 +1928,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TargetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TargetComponent;
@@ -2039,6 +2045,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParameterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParameterComponent;
@@ -2180,6 +2187,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DependentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DependentComponent;
@@ -2671,6 +2679,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new StructureMap());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as StructureMap;

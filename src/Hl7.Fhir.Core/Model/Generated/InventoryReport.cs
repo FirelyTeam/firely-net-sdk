@@ -219,6 +219,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InventoryListingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InventoryListingComponent;
@@ -478,6 +479,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ItemsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ItemsComponent;
@@ -767,6 +769,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new InventoryReport());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as InventoryReport;

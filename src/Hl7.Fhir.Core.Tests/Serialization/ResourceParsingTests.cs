@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
+using FluentAssertions;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -369,6 +370,22 @@ namespace Hl7.Fhir.Tests.Serialization
             var parser = new FhirXmlParser();
 
             ExceptionAssert.Throws<StructuralTypeException>(() => parser.Parse<Patient>(xml));
+        }
+
+        //test for https://github.com/FirelyTeam/firely-net-sdk/issues/1858
+        [TestMethod]
+        public async Tasks.Task CanReadSimilarValueXElements()
+        {
+            var json = TestDataHelper.ReadTestData("test-similar-valuex.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the data and no errors occur
+            var i = await pser.ParseAsync<Ingredient>(json);
+        
+            (i.Substance.Strength[0].Presentation as Quantity).Value.Should().Be(1);
+            (i.Substance.Strength[0].PresentationHighLimit as Quantity).Value.Should().Be(2);
+            (i.Substance.Strength[0].Concentration as CodeableConcept).Text.Should().Be("text");
+            (i.Substance.Strength[0].ConcentrationHighLimit as Ratio).Numerator.Value.Should().Be(3);
         }
     }
 }

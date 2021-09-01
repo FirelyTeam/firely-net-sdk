@@ -9019,7 +9019,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Differential = new StructureDefinition.DifferentialComponent
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{                   
+                Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -9064,6 +9064,59 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.value[x].extension").Should().HaveCount(2, "Elements are in the snapshot");
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.extension").Should().HaveCount(1, "Only the root extension should be there");
+        }
+
+        [TestMethod]
+        public async T.Task TestExtensionValueXCommentShouldBeNull()
+        {
+            const string ElementId = "Extension.value[x]";
+
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new MultiResolver(zipSource);
+            var sd = await resolver.FindStructureDefinitionForCoreTypeAsync(nameof(Extension));
+
+            var element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+
+            var generator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+
+            generator.PrepareElement += (sender, e) =>
+            {
+                if (e.Element.Path == ElementId)
+                {
+                    Debug.WriteLine($"Element:{ElementId} BaseElement:{e?.BaseElement?.ElementId}");
+                }
+            };
+
+            // Act
+            await generator.UpdateAsync(sd);
+
+            // Assert
+            element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async T.Task CheckCardinalityOfProfiledType()
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
+            var sut = await resolver.ResolveByCanonicalUriAsync("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode") as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sut);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            const string codeId = "Observation.code";
+
+            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
+            var sutCode = elements.Single(x => x.ElementId == codeId);
+
+            sutCode.Max.Should().Be(sdCode.Max);
+            sutCode.Min.Should().Be(sdCode.Min);
         }
     }
 }

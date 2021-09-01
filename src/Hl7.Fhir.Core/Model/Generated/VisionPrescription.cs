@@ -523,6 +523,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LensSpecificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LensSpecificationComponent;
@@ -717,6 +718,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PrismComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PrismComponent;
@@ -963,6 +965,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new VisionPrescription());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as VisionPrescription;

@@ -230,6 +230,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GroupComponent;
@@ -379,6 +380,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PopulationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PopulationComponent;
@@ -492,6 +494,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StratifierComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StratifierComponent;
@@ -633,6 +636,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StratifierGroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StratifierGroupComponent;
@@ -752,6 +756,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ComponentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ComponentComponent;
@@ -893,6 +898,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StratifierGroupPopulationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StratifierGroupPopulationComponent;
@@ -1267,6 +1273,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MeasureReport());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MeasureReport;

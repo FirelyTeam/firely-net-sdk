@@ -206,6 +206,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProgressComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProgressComponent;
@@ -480,6 +481,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ResearchSubject());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ResearchSubject;

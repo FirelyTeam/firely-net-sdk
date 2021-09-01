@@ -188,6 +188,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GoalComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GoalComponent;
@@ -331,6 +332,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TargetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TargetComponent;
@@ -475,6 +477,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActorComponent;
@@ -621,6 +624,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OptionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OptionComponent;
@@ -1336,6 +1340,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ActionComponent;
@@ -1567,6 +1572,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ConditionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ConditionComponent;
@@ -1724,6 +1730,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InputComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InputComponent;
@@ -1885,6 +1892,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OutputComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OutputComponent;
@@ -2051,6 +2059,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RelatedActionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RelatedActionComponent;
@@ -2243,6 +2252,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParticipantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParticipantComponent;
@@ -2380,6 +2390,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DynamicValueComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DynamicValueComponent;
@@ -3147,6 +3158,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new PlanDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as PlanDefinition;

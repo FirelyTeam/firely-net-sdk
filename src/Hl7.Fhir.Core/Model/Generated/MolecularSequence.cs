@@ -464,6 +464,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ReferenceSeqComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ReferenceSeqComponent;
@@ -747,6 +748,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VariantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VariantComponent;
@@ -1252,6 +1254,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QualityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QualityComponent;
@@ -1614,6 +1617,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RocComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RocComponent;
@@ -1907,6 +1911,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RepositoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RepositoryComponent;
@@ -2108,6 +2113,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new StructureVariantComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as StructureVariantComponent;
@@ -2263,6 +2269,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OuterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OuterComponent;
@@ -2406,6 +2413,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new InnerComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as InnerComponent;
@@ -2786,6 +2794,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new MolecularSequence());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as MolecularSequence;

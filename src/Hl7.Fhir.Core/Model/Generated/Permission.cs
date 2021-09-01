@@ -168,6 +168,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProcessingActivityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProcessingActivityComponent;
@@ -283,6 +284,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new JustificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as JustificationComponent;
@@ -534,6 +536,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Permission());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Permission;
