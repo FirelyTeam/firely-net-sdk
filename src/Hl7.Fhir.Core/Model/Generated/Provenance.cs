@@ -190,6 +190,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AgentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AgentComponent;
@@ -344,6 +345,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EntityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EntityComponent;
@@ -601,6 +603,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Provenance());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Provenance;

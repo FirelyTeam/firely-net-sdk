@@ -1,0 +1,36 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/templates/signing-dlls-template-template.yml
+
+steps:
+  - task: DownloadSecureFile@1
+    displayName: Download Signing key file
+    inputs:
+      secureFile: 47f5a9d4-7009-4fe1-9cb2-c0d6122ded23
+      retryCount: 
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  - task: CopyFiles@2
+    displayName: Copy key file to $(Build.SourcesDirectory)/src
+    inputs:
+      SourceFolder: $(Agent.TempDirectory)
+      Contents: FhirNetApi.snk
+      TargetFolder: $(Build.SourcesDirectory)/src
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  - powershell: |
+        $sdkfiles   =  Get-ChildItem -Path $(Build.SourcesDirectory)\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
+        $commonfiles = Get-ChildItem -Path $(Build.SourcesDirectory)\common\src\Hl7.Fhir*\bin\Release\*\Hl7.Fhir*.dll -Exclude Hl7.Fhir*Tests
+
+        Write-Verbose "Last exitcode before signing: $lastexitcode"
+        foreach ($file in ($sdkfiles + $commonfiles))
+        {
+          Write-Verbose "Signing file: $file"
+
+          & '$(Build.SourcesDirectory)\build\tools\sn.exe' -R $file $(Build.SourcesDirectory)\src\FhirNetApi.snk
+          Write-Verbose "Last exitcode after signing file: $lastexitcode"
+        }
+        Write-Verbose "Last exitcode after signing all files: $lastexitcode"
+        # suppress exitcode 
+        if ($lastexitcode -lt 2) { $global:lastexitcode = 0 }
+    displayName: Signing the dlls
+    name: signing
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  

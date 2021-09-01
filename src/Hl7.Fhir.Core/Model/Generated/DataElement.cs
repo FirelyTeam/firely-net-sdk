@@ -261,6 +261,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MappingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MappingComponent;
@@ -730,6 +731,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DataElement());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DataElement;

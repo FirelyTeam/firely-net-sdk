@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Terminology
                     // does, try get the VS from there, and retry by sending the vs inline
                     var url = parameters.GetSingleValue<FhirUri>("url")?.Value;
                     var valueSet = await _localService.FindValueset(url).ConfigureAwait(false);
-                    if (valueSet == null) throw vse;
+                    if (valueSet == null) throw;
 
                     parameters.Remove("valueSet");
                     parameters.Add("valueSet", valueSet);
@@ -112,12 +112,12 @@ namespace Hl7.Fhir.Specification.Terminology
                     return _fallbackService.ValidateCode(canonical, context, valueSet, code, system, version, display,
                         coding, codeableConcept, date, @abstract, displayLanguage);
                 }
-                catch (ValueSetUnknownException vse)
+                catch (ValueSetUnknownException)
                 {
                     // The fall back service does not know the valueset. If our local service
                     // does, try get the VS from there, and retry by sending the vs inline
                     valueSet = TaskHelper.Await(() => _localService.FindValueset(canonical));
-                    if (valueSet == null) throw vse;
+                    if (valueSet == null) throw;
 
                     return _fallbackService.ValidateCode(null, context, valueSet, code, system, version, display,
                         coding, codeableConcept, date, @abstract, displayLanguage);

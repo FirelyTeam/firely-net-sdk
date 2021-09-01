@@ -434,6 +434,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AgentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AgentComponent;
@@ -614,6 +615,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NetworkComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NetworkComponent;
@@ -755,6 +757,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SourceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SourceComponent;
@@ -1036,6 +1039,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EntityComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EntityComponent;
@@ -1213,6 +1217,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DetailComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DetailComponent;
@@ -1500,6 +1505,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new AuditEvent());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as AuditEvent;

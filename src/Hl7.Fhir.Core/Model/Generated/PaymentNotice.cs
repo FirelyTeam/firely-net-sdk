@@ -279,6 +279,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new PaymentNotice());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as PaymentNotice;

@@ -299,6 +299,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MappingComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MappingComponent;
@@ -401,6 +402,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SnapshotComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SnapshotComponent;
@@ -491,6 +493,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DifferentialComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DifferentialComponent;
@@ -1269,6 +1272,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new StructureDefinition());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as StructureDefinition;
