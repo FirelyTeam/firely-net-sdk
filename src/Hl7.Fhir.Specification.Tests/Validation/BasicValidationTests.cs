@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
-            var careplan =  await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
+            var careplan = await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
@@ -1193,6 +1193,32 @@ namespace Hl7.Fhir.Specification.Tests
             var result = _validator.Validate(bundle);
 
             Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void ValidateExtensionCardinality()
+        {
+            var patient = new Patient();
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor", new FhirBoolean(true));
+
+            var report = _validator.Validate(patient);
+            Assert.False(report.Success, "because patient-congregation has cardinality of 0..1");
+            Assert.Equal(1, report.Errors);
+            Assert.Equal(0, report.Warnings);
+
+            patient.RemoveExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation");
+            report = _validator.Validate(patient);
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code3"));
+            report = _validator.Validate(patient);
+            Assert.True(report.Success, "because patient-disability has cardinality of 0..*");
+            Assert.Equal(0, report.Warnings);
         }
 
         // Verify aggregated element constraints
