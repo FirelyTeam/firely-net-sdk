@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28729.10
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31710.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2836B1CC-7AAF-46AB-BEA8-98DFEA170414}"
 	ProjectSection(SolutionItems) = preProject
@@ -48,6 +48,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Poco.Tests", "common\src\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj", "{88E59825-ADF2-4B46-892F-BCC95B68559F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "src\Benchmarks\Benchmarks.csproj", "{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Firely.Fhir.Packages", "common\src\Firely.Fhir.Packages\Firely.Fhir.Packages.csproj", "{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Firely.Fhir.Packages.Tests", "common\src\Firely.Fhir.Packages.Tests\Firely.Fhir.Packages.Tests.csproj", "{FD3F1071-9EA0-446F-ACF7-87EB934584B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -146,6 +150,18 @@ Global
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +181,8 @@ Global
 		{98390A5A-0F65-4275-ADF1-ADF4BD915FA3} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{88E59825-ADF2-4B46-892F-BCC95B68559F} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E} = {7089FA86-6527-4DFA-8018-AFEF25D74A48}
+		{3DA229F3-AEC8-4ACF-9E6B-377D6FAB45AD} = {8FA8427B-CC6B-41E2-83A4-F635AC311879}
+		{FD3F1071-9EA0-446F-ACF7-87EB934584B9} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD5B5B64-FEB1-4E05-90A1-64F3A1A0EB75}
