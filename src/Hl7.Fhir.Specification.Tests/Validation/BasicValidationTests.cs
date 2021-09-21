@@ -1384,10 +1384,10 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void Issue_1654()
+        public void ValidateWithTargetProfileAndChildDefinitions()
         {
             var visitResolver = new VisitResolver();
-            var resolver = new MultiResolver(visitResolver, _source);
+            var resolver = new MultiResolver(visitResolver, new InMemoryResourceResolver(new Patient() { Id = "example" }), _source);
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, ResolveExternalReferences = true, GenerateSnapshot = true });
 
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Specification.Tests
             var outcome = validator.Validate(observation, new[] { "http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654" });
             Assert.True(outcome.Success);
             Assert.True(visitResolver.Visited(patientReference), "no attempt was made to resolve the example patient");
-            Assert.True(1 == outcome.Warnings, $"Found {outcome.Warnings} warnings, where only 1 warning was exptected because of an unresolved patient");
+            Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
 
         }
 
