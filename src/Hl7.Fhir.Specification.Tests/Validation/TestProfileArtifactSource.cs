@@ -40,26 +40,26 @@ namespace Hl7.Fhir.Validation
             buildPatientWithExistsSlicing(),
             buildTranslatableCodeableConcept(),
             buildObservationWithTranslatableCode(),
-            buildObservationWithTargetProfiles()
+            buildObservationWithTargetProfilesAndChildDefs()
         };
 
-        private static StructureDefinition buildObservationWithTargetProfiles()
+        private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654", "Observation-issue-1654", "", FHIRAllTypes.Observation);
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654", "Observation-issue-1654",
+                "Observation with targetprofile on subject and children definition under subject as well", FHIRAllTypes.Observation);
 
             var cons = result.Differential.Element;
-            var ed = new ElementDefinition("Observation.subject")
+            cons.Add(new ElementDefinition("Observation.subject")
             {
                 ElementId = "Observation.subject",
-            };
-            ed.OfReference(targetProfile: new[] { "Patient" });
-            cons.Add(ed);
-            ed = new ElementDefinition("Observation.subject.identifier.assigner")
+            }.OfReference(targetProfile: ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)));
+
+            cons.Add(new ElementDefinition("Observation.subject.display")
             {
-                ElementId = "Observation.subject.identifier.assigner",
-            };
-            ed.OfReference(targetProfile: new[] { "Organization" });
-            cons.Add(ed);
+                ElementId = "Observation.subject.display",
+                MaxLength = 10
+
+            });
 
             return result;
         }
