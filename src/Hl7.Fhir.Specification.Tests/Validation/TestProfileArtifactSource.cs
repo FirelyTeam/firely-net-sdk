@@ -58,7 +58,6 @@ namespace Hl7.Fhir.Validation
             {
                 ElementId = "Observation.subject.display",
                 MaxLength = 10
-
             });
 
             return result;
