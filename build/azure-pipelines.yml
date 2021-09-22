@@ -74,6 +74,7 @@ stages:
       inputs:
         command: publish
         projects: |
+         **/Firely.*Tests/*.csproj
          **/Hl7.*Tests/*.csproj
          !**/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
@@ -110,7 +111,7 @@ stages:
       displayName: Pack
       inputs:
         command: pack
-        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
+        searchPatternPack: '**/Hl7.*.csproj;Firely.*.csproj;!**/*Tests.csproj'
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
