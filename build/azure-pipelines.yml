@@ -159,6 +159,7 @@ stages:
             **/common/**/publish/Hl7.Fhir.Support.Tests.dll
             **/common/**/publish/HL7.FhirPath.Tests.dll
             **/common/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
+            **/common/**/publish/Firely.Fhir.Packages.Tests.dll
   - job:
     displayName: Tests FhirPath Core test project
     steps:
