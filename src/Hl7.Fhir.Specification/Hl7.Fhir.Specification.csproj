@@ -22,10 +22,11 @@
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+		<ProjectReference Include="..\..\common\src\Firely.Fhir.Packages\Firely.Fhir.Packages.csproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-		<Reference Include="System.Net.Http"/>
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +34,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="hl7.fhir.r3.core-3.0.2.tgz" />
+	  <None Remove="hl7.fhir.r4.core.tgz" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="hl7.fhir.r3.core-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		  <PackagePath>contentFiles\any\any</PackagePath>
+	      <PackageCopyToOutput>true</PackageCopyToOutput>
+		  <PackageFlatten>true</PackageFlatten>
+		</Content>
 		<Content Include="specification.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
