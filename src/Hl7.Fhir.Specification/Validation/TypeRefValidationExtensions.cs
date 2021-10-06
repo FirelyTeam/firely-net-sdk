@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Validation
 
             validator.Trace(outcome, "Validating against constraints specified by the element's defined type", Issue.PROCESSING_PROGRESS, instance);
 
-            if (definition.Type.Any(tr => tr.Code == null))
+            if(definition.Type.Any(tr => tr.Code == null))
                 validator.Trace(outcome, "ElementDefinition contains a type with an empty type code", Issue.PROFILE_ELEMENTDEF_CONTAINS_NULL_TYPE, instance);
 
             // Check if this is a choice: there are multiple distinct Codes to choose from
@@ -44,8 +45,8 @@ namespace Hl7.Fhir.Validation
                         // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
-                        var applicableChoices = typeRefs.Where(tr => !tr.Code.StartsWith("http:"))
-                                        .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value,
+                        var applicableChoices = typeRefs.Where(tr=> !tr.Code.StartsWith("http:"))
+                                        .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value, 
                                             instanceType.Value));
 
                         // Instance typename must be one of the applicable types in the choice
@@ -77,8 +78,8 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-
-        internal static OperationOutcome ValidateTypeReferences(this Validator validator,
+     
+        internal static OperationOutcome ValidateTypeReferences(this Validator validator, 
             IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
@@ -87,7 +88,7 @@ namespace Hl7.Fhir.Validation
             //better separate the fetching of the instance from the validation, so we do not run the rest of the validation (multiple times!)
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr));
+            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance,tr));
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
@@ -101,26 +102,10 @@ namespace Hl7.Fhir.Validation
                 var validations = tr.GetDeclaredProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile));
                 var result = validator.Combine(BatchValidationMode.Any, instance, validations);
 
-                result.Add(validateTargetProfiles(validator, instance, tr));
+                // If this is a reference, also validate the reference against the targetProfile
+                if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
+                    result.Add( validator.ValidateResourceReference(instance, tr) );
 
-                return result;
-            }
-        }
-
-        internal static OperationOutcome ValidateTargetProfiles(this Validator validator, ElementDefinition definition, ScopedNode instance)
-        {
-            var typeRefs = definition.Type.Where(tr => tr.Code != null);
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTargetProfiles(validator, instance, tr));
-            return validator.Combine(BatchValidationMode.Any, instance, validations);
-        }
-
-        private static Func<OperationOutcome> createValidatorForTargetProfiles(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
-        {
-            return validate;
-
-            OperationOutcome validate()
-            {
-                var result = validateTargetProfiles(validator, instance, tr);
                 return result;
             }
         }
@@ -134,17 +119,6 @@ namespace Hl7.Fhir.Validation
                 return validator.Validate(instance, declaredProfile, statedCanonicals: null, statedProfiles: null);
             }
         }
-        
-        private static OperationOutcome validateTargetProfiles(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
-        {
-            var result = new OperationOutcome();
-
-            // If this is a reference, also validate the reference against the targetProfile
-            if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
-                result.Add(validator.ValidateResourceReference(instance, tr));
-
-            return result;
-        }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef)
         {
@@ -155,7 +129,7 @@ namespace Hl7.Fhir.Validation
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
 
-
+            
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
                 out ElementDefinition.AggregationMode? encounteredKind, outcome);
@@ -254,7 +228,7 @@ namespace Hl7.Fhir.Validation
             if (identity.Form == ResourceIdentityForm.Local)
             {
                 referenceKind = ElementDefinition.AggregationMode.Contained;
-                if (result == null)
+                if(result == null)
                     validator.Trace(outcome, $"Contained reference ({reference}) is not resolvable", Issue.CONTENT_CONTAINED_REFERENCE_NOT_RESOLVABLE, instance);
             }
             else
