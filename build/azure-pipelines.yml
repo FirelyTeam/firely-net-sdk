@@ -42,7 +42,7 @@ stages:
     - template: templates/apply-versioning-steps-template.yml
     
     - powershell: |
-         [xml]$xml = Get-Content ./src/firely-net-sdk.props
+         [xml]$xml = Get-Content ./src/fhir-net-api.props
          #Get the variable RunFhirPathTests
          [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
          $RunFhirPathTests = $RunFhirPathTests.Trim()
