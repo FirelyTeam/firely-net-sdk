@@ -7,7 +7,7 @@ steps:
   inputs:
     targetType: filePath
     filePath: $(Build.SourcesDirectory)/build/RetrieveVersion.ps1
-    arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props
+    arguments: -propFile $(Build.SourcesDirectory)/src/fhir-net-api.props
 - powershell: |
      if ($Env:isTagBranch -eq $false)
      {  
@@ -20,10 +20,10 @@ steps:
   inputs:
     targetType: filePath
     filePath: $(Build.SourcesDirectory)/build/UpdateVersion.ps1
-    arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"
+    arguments: -propFile $(Build.SourcesDirectory)/src/fhir-net-api.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"
 - task: PowerShell@2
   displayName: Setting version for common projects
   inputs:
     targetType: filePath
     filePath: $(Build.SourcesDirectory)/build/UpdateVersion.ps1
-    arguments: -propFile $(Build.SourcesDirectory)/common/src/firely-net-common.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"
+    arguments: -propFile $(Build.SourcesDirectory)/common/src/fhir-net-common.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"
