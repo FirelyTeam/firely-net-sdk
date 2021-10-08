@@ -1,0 +1,382 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/azure-pipelines.yml
+
+trigger:
+  branches:
+    include:
+    - develop
+    - develop-*
+    - release/*
+    - release-*
+    - hotfix/*
+    - hotfix-*
+    - refs/tags/v*
+  batch: True
+
+name: $(date:yyyyMMdd)$(rev:.r)
+
+variables:
+- template: build-variables.yml
+- template: pipeline-variables.yml
+  
+pool:
+  vmImage: windows-latest
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: develop-stu3
+
+stages:
+- stage: build
+  displayName: Build
+  jobs:
+  - job: restoreAndBuild
+    displayName: 'Build Artifacts'
+    steps:
+    - checkout: self
+      clean: true
+      submodules: true
+      fetchDepth: 1
+    - template: templates/apply-versioning-steps-template.yml
+    
+    - powershell: |
+         [xml]$xml = Get-Content ./src/firely-net-sdk.props
+         #Get the variable RunFhirPathTests
+         [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
+         $RunFhirPathTests = $RunFhirPathTests.Trim()
+         Write-Host "RunFhirPathTests: $RunFhirPathTests"
+         Write-Host "##vso[task.setvariable variable=RunFhirPathTests;isOutput=true]$RunFhirPathTests"
+      displayName: Extract variable RunFhirPathTests
+      name: obtainFhirPathTest
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
+      inputs:
+        version: $(NET_CORE_SDK)
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: ./Hl7.Fhir.sln
+        verbosityRestore: Minimal
+        arguments: --configuration $(buildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: build
+        projects: ./Hl7.Fhir.sln
+        arguments: --configuration $(buildConfiguration) --no-restore
+
+    - task: DotNetCoreCLI@2
+      displayName: Create Test artifacts
+      inputs:
+        command: publish
+        projects: |
+         **/Hl7.*Tests/*.csproj
+         !**/Hl7.FhirPath.R4.Tests/*.csproj
+        publishWebProjects: false
+        zipAfterPublish: false
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+
+    - task: DotNetCoreCLI@2
+      displayName: Create Test artifacts for FhirPath R4
+      inputs:
+        command: publish
+        projects: '**/Hl7.FhirPath.R4.Tests/*.csproj'
+        publishWebProjects: false
+        zipAfterPublish: false
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+      condition: and(succeeded(), eq(variables['obtainFhirPathTest.RunFhirPathTests'], 'true'))
+
+    - task: CopyFiles@2
+      displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
+      inputs:
+        sourceFolder: $(System.DefaultWorkingDirectory)
+        Contents: '**/bin/$(buildConfiguration)/*/publish/**'
+        flattenFolders: false
+        TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
+
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Test artifacts
+      inputs:
+        targetPath: $(System.DefaultWorkingDirectory)/bin
+        artifactName: TestBuild
+    
+    - template: templates/sign-dlls-template.yml
+    
+    - task: DotNetCoreCLI@2
+      displayName: Pack
+      inputs:
+        command: pack
+        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
+        configurationToPack: $(buildConfiguration)
+        nobuild: true
+        verbosityPack: Normal
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: NuGetPackages
+    - bash: |
+        echo $(Build.SourceBranchName)
+
+        IFS='-'
+        read -a version <<<"$(Build.SourceBranchName)"
+
+        release=${version[1]}
+        echo $release
+
+        currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
+        previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
+        title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
+
+        echo $currenttag
+        echo $previoustag
+        echo $title_release
+
+        echo "##vso[task.setvariable variable=current_tag;isOutput=true]$currenttag"
+        echo "##vso[task.setvariable variable=previous_tag;isOutput=true]$previoustag"
+        echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
+      name: tagnames
+      displayName: Determine tagnames
+
+- stage: test
+  displayName: Test
+  dependsOn: build
+  variables:
+    RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
+  jobs:
+  - job:
+    displayName: Tests common test projects
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests common test projects
+          projects: |
+            **/common/**/publish/Hl7.Fhir.Support.Tests.dll
+            **/common/**/publish/HL7.FhirPath.Tests.dll
+  - job:
+    displayName: Tests FhirPath Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests FhirPath Core test project
+          projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
+    condition: and(succeeded(), eq(variables['RunFhirPathTests'], 'true'))
+  - job:
+    displayName: Tests Serialization test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization test project
+          projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
+  - job:
+    displayName: Tests Specification test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification test project
+          projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
+  - job:
+    displayName: Tests Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Core test project
+          projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
+  - job:
+    displayName: Tests ElementModel test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests ElementModel test project
+          projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
+
+- stage: deploy_myget
+  displayName: Deploy to MyGet
+  dependsOn: test
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  jobs:
+  - deployment: myget
+    displayName: MyGet
+    environment: MyGet
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: current
+              artifact: NuGetPackages
+              displayName: Download artifact NuGetPackages
+            - task: NuGetCommand@2
+              displayName: 'MyGet push'
+              inputs:
+                  command: push
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                  nuGetFeedType: external
+                  publishFeedCredentials: MyGet
+                  verbosityPush: Normal    
+            
+- stage: deploy_git
+  displayName: Deploy to GitHub
+  dependsOn: test
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  jobs:
+  - deployment: gitHub
+    displayName: GitHub Packages
+    environment: GitHub
+    variables:
+      GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in UI of Azure Devops
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: current
+              artifact: NuGetPackages
+              displayName: Download artifact NuGetPackages
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push all packages'
+              condition: and(succeeded(), eq(variables.isTagBranch, false)) 
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push STU3 packages only and common packages'
+              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-stu3'))) 
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push R4 packages only'
+              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r4'))) 
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R4*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push R4B packages only'
+              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r4B'))) 
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R4B*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+            - task: DotNetCoreCLI@2
+              displayName: 'GitHub push R5 packages only'
+              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r5'))) 
+              inputs:
+                command: custom
+                custom: nuget
+                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R5*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
+
+- stage: deploy_nuget 
+  displayName: Deploy to NuGet
+  dependsOn:
+    - deploy_myget
+    - build
+  condition: and(succeeded(), eq(variables.isTagBranch, true)) 
+  jobs:
+  - deployment: nuget
+    displayName: NuGet
+    environment: NuGet
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: current
+              artifact: NuGetPackages
+              displayName: Download artifact NuGetPackages
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push DSTU2 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
+              inputs:
+                  command: push
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
+                  nuGetFeedType: external
+                  publishFeedCredentials: NuGet
+                  verbosityPush: normal    
+                  includeSymbols: false
+            
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push STU3 packages only and common packages'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R4 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+            
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R4B packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4B')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal  
+                includeSymbols: false  
+
+            - task: NuGetCommand@2
+              displayName: 'NuGet Push R5 packages only'
+              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
+              inputs:
+                command: push
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
+                nuGetFeedType: external
+                publishFeedCredentials: NuGet
+                verbosityPush: normal 
+                includeSymbols: false  
+            
+  - deployment: relNotes
+    displayName: Release Notes
+    environment: NuGet
+    variables:
+      - name: curTag
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
+      - name: prevTag
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.previous_tag'] ]
+      - name: releaseTitle
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: none
+            - task: GitHubRelease@1
+              displayName: 'GitHub release notes (create)'  
+              inputs:
+                gitHubConnection: 'GitHub Fhir-net-api'
+                repositoryName: '$(Build.Repository.Name)'
+                action: 'create'
+                target: '$(Build.SourceVersion)'
+                tagSource: userSpecifiedTag
+                tag: '$(curTag)'
+                title: '$(releaseTitle)'
+                isDraft: true
+                changeLogCompareToRelease: lastNonDraftReleaseByTag
+                changeLogCompareToReleaseTag: '$(prevTag)'
+                changeLogType: issueBased
+                changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
+    

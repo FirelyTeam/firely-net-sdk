@@ -1,0 +1,29 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/templates/apply-versioning-steps-template.yml
+
+steps:
+- task: PowerShell@2
+  displayName: Retrieve current version
+  inputs:
+    targetType: filePath
+    filePath: $(Build.SourcesDirectory)/build/RetrieveVersion.ps1
+    arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props
+- powershell: |
+     if ($Env:isTagBranch -eq $false)
+     {  
+        # append a build number when we are not releasing
+        Write-Host "##vso[task.setvariable variable=CurrentSuffix]$Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER"
+     }
+  displayName: 'Setting suffix'
+- task: PowerShell@2
+  displayName: Setting version
+  inputs:
+    targetType: filePath
+    filePath: $(Build.SourcesDirectory)/build/UpdateVersion.ps1
+    arguments: -propFile $(Build.SourcesDirectory)/src/firely-net-sdk.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"
+- task: PowerShell@2
+  displayName: Setting version for common projects
+  inputs:
+    targetType: filePath
+    filePath: $(Build.SourcesDirectory)/build/UpdateVersion.ps1
+    arguments: -propFile $(Build.SourcesDirectory)/common/src/firely-net-common.props -newVersion $(CurrentVersion) -suffix "$(CurrentSuffix)"

@@ -3,10 +3,10 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>1.9.1</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>Ewout Kramer (ewout@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
-    <Copyright>Copyright 2013-2020 Firely.  Contains materials (C) HL7 International</Copyright>
+    <Copyright>Copyright 2013-2021 Firely.  Contains materials (C) HL7 International</Copyright>
     <PackageProjectUrl>https://github.com/FirelyTeam/fhir-net-api</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FirelyTeam/fhir-net-api</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -40,10 +40,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\FhirNetApi.snk</AssemblyOriginatorKeyFile>
-    <IncludeSymbols>True</IncludeSymbols>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<SignAssembly>True</SignAssembly>
+	<DelaySign>true</DelaySign>
+	<AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
+	<IncludeSymbols>True</IncludeSymbols>
+	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
