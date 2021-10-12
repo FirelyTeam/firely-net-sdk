@@ -40,7 +40,28 @@ namespace Hl7.Fhir.Validation
             buildPatientWithExistsSlicing(),
             buildTranslatableCodeableConcept(),
             buildObservationWithTranslatableCode(),
+            buildObservationWithTargetProfilesAndChildDefs()
         };
+
+        private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654", "Observation-issue-1654",
+                "Observation with targetprofile on subject and children definition under subject as well", FHIRAllTypes.Observation);
+
+            var cons = result.Differential.Element;
+            cons.Add(new ElementDefinition("Observation.subject")
+            {
+                ElementId = "Observation.subject",
+            }.OfReference(targetProfile: ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)));
+
+            cons.Add(new ElementDefinition("Observation.subject.display")
+            {
+                ElementId = "Observation.subject.display",
+                MaxLength = 10
+            });
+
+            return result;
+        }
 
         private static StructureDefinition buildTranslatableCodeableConcept()
         {

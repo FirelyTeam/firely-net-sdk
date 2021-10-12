@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var careplanXml = File.ReadAllText(Path.Combine("TestData", "validation", "careplan-example-integrated.xml"));
 
-            var careplan =  await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
+            var careplan = await (new FhirXmlParser()).ParseAsync<CarePlan>(careplanXml);
             Assert.NotNull(careplan);
             var careplanSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.CarePlan);
             var report = _validator.Validate(careplan, careplanSd);
@@ -1195,6 +1195,32 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(result.Success);
         }
 
+        [Fact]
+        public void ValidateExtensionCardinality()
+        {
+            var patient = new Patient();
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor", new FhirBoolean(true));
+
+            var report = _validator.Validate(patient);
+            Assert.False(report.Success, "because patient-congregation has cardinality of 0..1");
+            Assert.Equal(1, report.Errors);
+            Assert.Equal(0, report.Warnings);
+
+            patient.RemoveExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation");
+            report = _validator.Validate(patient);
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code3"));
+            report = _validator.Validate(patient);
+            Assert.True(report.Success, "because patient-disability has cardinality of 0..*");
+            Assert.Equal(0, report.Warnings);
+        }
+
         // Verify aggregated element constraints
         private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
@@ -1219,6 +1245,49 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
+
+        [Fact]
+        public void ValidateWithTargetProfileAndChildDefinitions()
+        {
+            var visitResolver = new VisitResolver();
+            var resolver = new MultiResolver(visitResolver, new InMemoryResourceResolver(new Patient() { Id = "example" }), _source);
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, ResolveExternalReferences = true, GenerateSnapshot = true });
+
+            var patientReference = "Patient/example";
+
+            var observation = new Observation()
+            {
+                Status = ObservationStatus.Registered,
+                Code = new CodeableConcept("system", "code"),
+                Subject = new ResourceReference(patientReference)
+            };
+
+            var outcome = validator.Validate(observation, new[] { "http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654" });
+            Assert.True(outcome.Success);
+            Assert.True(visitResolver.Visited(patientReference), "no attempt was made to resolve the example patient");
+            Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
+
+        }
+
+        class VisitResolver : IResourceResolver
+        {
+            private List<string> _visits = new List<string>();
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            internal bool Visited(string uri) => _visits.Contains(uri);
+        }
 
         private class ClearSnapshotResolver : IResourceResolver
         {
