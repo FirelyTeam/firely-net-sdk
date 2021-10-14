@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Validation
 
 
         internal static OperationOutcome ValidateTypeReferences(this Validator validator,
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, bool validateProfiles = true)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -87,52 +87,31 @@ namespace Hl7.Fhir.Validation
             //better separate the fetching of the instance from the validation, so we do not run the rest of the validation (multiple times!)
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr));
+            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr, validateProfiles));
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
+        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr,
+            bool validateProfiles)
         {
             return validate;
 
             OperationOutcome validate()
             {
-                // First, call Validate() for the current element (the reference itself) against the profile
-                var result = validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null);
+                OperationOutcome result = new();
 
-                result.Add(validateTargetProfiles(validator, instance, tr));
+                if (validateProfiles)
+                {
+                    // First, call Validate() for the current element (the reference itself) against the profile
+                    result.Add(validator.Validate(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null));
+                }
+
+                // If this is a reference, also validate the reference against the targetProfile
+                if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
+                    result.Add(validator.ValidateResourceReference(instance, tr));
 
                 return result;
             }
-        }
-
-        internal static OperationOutcome ValidateTargetProfiles(this Validator validator, ElementDefinition definition, ScopedNode instance)
-        {
-            var typeRefs = definition.Type.Where(tr => tr.Code != null);
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTargetProfiles(validator, instance, tr));
-            return validator.Combine(BatchValidationMode.Any, instance, validations);
-        }
-
-        private static Func<OperationOutcome> createValidatorForTargetProfiles(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
-        {
-            return validate;
-
-            OperationOutcome validate()
-            {
-                var result = validateTargetProfiles(validator, instance, tr);
-                return result;
-            }
-        }
-
-        private static OperationOutcome validateTargetProfiles(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr)
-        {
-            var result = new OperationOutcome();
-
-            // If this is a reference, also validate the reference against the targetProfile
-            if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
-                result.Add(validator.ValidateResourceReference(instance, tr));
-
-            return result;
         }
 
         internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef)
