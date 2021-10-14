@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Validation
             validator.Trace(outcome, "Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
 
             // validate the type on the parent of children. If this is a reference type, it will follow that reference as well
-            outcome.Add(validator.ValidateTargetProfiles(definition.Current, instance));
+            outcome.Add(validator.ValidateTypeReferences(definition.Current.Type, instance, validateProfiles: false));
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
