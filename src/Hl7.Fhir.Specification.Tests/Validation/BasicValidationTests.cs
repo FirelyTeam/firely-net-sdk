@@ -1274,6 +1274,32 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(1, report.Warnings);            // 1x cannot resolve external reference
         }
 
+        [Fact]
+        public void ValidateExtensionCardinality()
+        {
+            var patient = new Patient();
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation", new FhirString("place2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-cadavericDonor", new FhirBoolean(true));
+
+            var report = _validator.Validate(patient);
+            Assert.False(report.Success, "because patient-congregation has cardinality of 0..1");
+            Assert.Equal(1, report.Errors);
+            Assert.Equal(0, report.Warnings);
+
+            patient.RemoveExtension("http://hl7.org/fhir/StructureDefinition/patient-congregation");
+            report = _validator.Validate(patient);
+            Assert.True(report.Success);
+            Assert.Equal(0, report.Warnings);
+
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code1"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code2"));
+            patient.AddExtension("http://hl7.org/fhir/StructureDefinition/patient-disability", new CodeableConcept("system", "code3"));
+            report = _validator.Validate(patient);
+            Assert.True(report.Success, "because patient-disability has cardinality of 0..*");
+            Assert.Equal(0, report.Warnings);
+        }
+
         // Verify aggregated element constraints
         private static void assertElementConstraints(List<ElementDefinition> patientElems)
         {
@@ -1311,6 +1337,76 @@ namespace Hl7.Fhir.Specification.Tests
             var value = new Markdown("Non-breaking" + '\u00A0' + "space");
             var result = _validator.Validate(value);
             Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void ConditionCon3ConstraintTest()
+        {
+            // the invariant con-3 of condition is wrong in the specification (R4). For now we fixed this in profiles-resources.xml. The correct FhirPath is
+            // "clinicalStatus.exists() or verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.coding.where($this.code='problem-list-item').empty()"
+            // So when the profiles-resources.xml has been overwritten and this unit test is failing, then the above FP expression should be set again (snapshot and 
+            // differential
+            // MV 28-06-2021
+
+            var condition = new Condition
+            {
+                Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Testing the con-3 invariant</div>", Status = Narrative.NarrativeStatus.Additional },
+                Subject = new ResourceReference("Patient/1"),
+                Category = new List<CodeableConcept> { new CodeableConcept("http://terminology.hl7.org/CodeSystem/condition-category", "encounter-diagnosis") },
+            };
+
+            var settings = new ValidationSettings
+            {
+                ConstraintBestPractices = ConstraintBestPractices.Enabled,
+                ResourceResolver = new CachedResolver(ZipSource.CreateValidationSource())
+            };
+
+            var validator = new Validator(settings);
+            var result = validator.Validate(condition);
+            Assert.True(result.Success);
+        }
+
+        [Fact]
+        public void ValidateWithTargetProfileAndChildDefinitions()
+        {
+            var visitResolver = new VisitResolver();
+            var resolver = new MultiResolver(visitResolver, new InMemoryResourceResolver(new Patient() { Id = "example" }), _source);
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, ResolveExternalReferences = true, GenerateSnapshot = true });
+
+            var patientReference = "Patient/example";
+
+            var observation = new Observation()
+            {
+                Status = ObservationStatus.Registered,
+                Code = new CodeableConcept("system", "code"),
+                Subject = new ResourceReference(patientReference)
+            };
+
+            var outcome = validator.Validate(observation, new[] { "http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654" });
+            Assert.True(outcome.Success);
+            Assert.True(visitResolver.Visited(patientReference), "no attempt was made to resolve the example patient");
+            Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
+
+        }
+
+        class VisitResolver : IResourceResolver
+        {
+            private List<string> _visits = new List<string>();
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            internal bool Visited(string uri) => _visits.Contains(uri);
         }
 
         private class ClearSnapshotResolver : IResourceResolver
