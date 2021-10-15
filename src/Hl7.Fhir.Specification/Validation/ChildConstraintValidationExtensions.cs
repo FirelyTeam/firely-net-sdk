@@ -6,13 +6,18 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
 using System;
 using System.Linq;
+
 
 namespace Hl7.Fhir.Validation
 {
@@ -44,13 +49,13 @@ namespace Hl7.Fhir.Validation
             // Recursively validate my children
             foreach (var match in matchResult.Matches)
             {
-                outcome.Add(validator.ValidateMatch(match, instance));
+                outcome.Add(validator.validateMatch(match, instance));
             }
 
             return outcome;
         }
 
-        private static OperationOutcome ValidateMatch(this Validator validator, Match match, ScopedNode parent)
+        private static OperationOutcome validateMatch(this Validator validator, Match match, ScopedNode parent)
         {
             var outcome = new OperationOutcome();
 
@@ -67,6 +72,14 @@ namespace Hl7.Fhir.Validation
 
             var resolver = validator?.Settings?.ResourceResolver ??
                 throw Error.Argument("Discriminator validation needs a ResourceResolver to be set in the ValidationSettings.");
+
+            if (isExtension(definition))
+            {
+                outcome.Add(validateExtensionCardinality(validator, match, parent, definition, resolver));
+            }
+
+            static bool isExtension(ElementDefinition def)
+                    => def.Type.FirstOrDefault()?.Code == "Extension";
 
             try
             {
@@ -86,7 +99,7 @@ namespace Hl7.Fhir.Validation
 
             foreach (var element in match.InstanceElements)
             {
-                var success = bucket.Add(element);
+                var _ = bucket.Add(element);
 
                 // For the "root" slice group (=the original core element that was sliced, not resliced)
                 // any element that does not match is an error
@@ -96,6 +109,38 @@ namespace Hl7.Fhir.Validation
             outcome.Add(bucket.Validate(validator, parent));
 
             return outcome;
+        }
+
+        private static OperationOutcome validateExtensionCardinality(Validator validator, Match match, ScopedNode parent, ElementDefinition definition, IResourceResolver resolver)
+        {
+            var outcome = new OperationOutcome();
+
+            var groups = match.InstanceElements.GroupBy(instance => getStringValue(instance, "url"));
+
+            foreach (var group in groups)
+            {
+#pragma warning disable CS0618 // Type or member is obsolete
+                var extension = group.Key is not null ? resolver.FindExtensionDefinition(group.Key) : null;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+                // extension could not be resolved. This error will be raised somewhere else. Continue for now.
+                if (extension is null) continue;
+
+                var nav = ElementDefinitionNavigator.ForSnapshot(extension);
+                nav.MoveToFirstChild();
+                var cardinality = Cardinality.FromElementDefinition(nav.Current);
+
+                if (!cardinality.InRange(group.Count()))
+                {
+                    validator.Trace(outcome, $"Instance count for extension '{extension.Name}' ('{definition.Path}') is {group.Count()}, which is not within the specified cardinality of {cardinality}",
+                                            Issue.CONTENT_INCORRECT_OCCURRENCE, parent);
+                }
+            }
+
+            return outcome;
+
+            static string? getStringValue(ITypedElement instance, string childName) =>
+                instance.Children(childName).Select(s => s.Value).OfType<string>().SingleOrDefault();
         }
     }
 }
