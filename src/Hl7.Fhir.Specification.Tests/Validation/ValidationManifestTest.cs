@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,7 +18,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class ValidationManifestTest
     {
         private static Validator _testValidator;
-        private static DirectorySource _dirSource;        
+        private static DirectorySource _dirSource;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -28,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var settings = ValidationSettings.CreateDefault();
             settings.GenerateSnapshot = true;
-            settings.GenerateSnapshotSettings = new Snapshot.SnapshotGeneratorSettings()
+            settings.GenerateSnapshotSettings = new SnapshotGeneratorSettings
                                                 {
                                                     ForceRegenerateSnapshots = true,
                                                     GenerateSnapshotForExternalProfiles = true,

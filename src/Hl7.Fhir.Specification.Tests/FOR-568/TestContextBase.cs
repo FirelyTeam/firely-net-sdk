@@ -1,0 +1,47 @@
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+
+namespace Hl7.Fhir.Specification.Tests
+{
+    public class TestContextBase : IDisposable
+    {
+        private readonly string _tempPath;
+
+        public IResourceResolver Resolver { get; }
+
+        public TestContextBase(string sourceFolder)
+        {
+            _tempPath = Path.Combine(Path.GetTempPath(), sourceFolder);
+
+            if (Directory.Exists(_tempPath))
+                Directory.Delete(_tempPath, true);
+
+            ZipFile.ExtractToDirectory($"{sourceFolder}\\Resources.zip", _tempPath);
+
+            var dirSource = new DirectorySource(_tempPath, new DirectorySourceSettings { IncludeSubDirectories = true });
+            var zipSource = ZipSource.CreateValidationSource();
+
+            Resolver = new CachedResolver(new MultiResolver(zipSource, dirSource));
+        }
+
+        public T GetResource<T>(string url) where T : class
+        {
+            var resource = Resolver.ResolveByCanonicalUri(url) as T;
+
+            resource.Should().NotBeNull();
+
+            return resource;
+        }
+
+        public virtual void Dispose()
+        {
+            Directory.Delete(_tempPath, true);
+        }
+    }
+}
