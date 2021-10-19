@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\firely-net-sdk.targets" />
   <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
