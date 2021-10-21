@@ -7463,7 +7463,7 @@ namespace Hl7.Fhir.Specification.Tests
             element.Comment.Should().BeNull();
         }
 
-		[TestMethod]
+        [TestMethod]
         public async T.Task CheckCardinalityOfProfiledType()
         {
             var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
@@ -7484,6 +7484,62 @@ namespace Hl7.Fhir.Specification.Tests
 
             sutCode.Max.Should().Be(sdCode.Max);
             sutCode.Min.Should().Be(sdCode.Min);
+        }
+
+        [TestMethod]
+        public async T.Task DiscriminatorBaseElementWithExpansionTest()
+        {
+            var parentId = "Patient.address";
+            var elementId = "Patient.address.country.extension:countryCode.value[x]:valueCodeableConcept.coding";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://example.com/fhir/StructureDefinition/issue-1892-patient");
+
+            var generator = new SnapshotGenerator(_testResolver, _settings);
+            generator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+                {
+                    e.Element.Should().NotBeNull();
+
+                    if (e.Element.Annotation<TestAnnotation>() != null)
+                        e.Element.RemoveAnnotations<TestAnnotation>();
+
+                    e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+                };
+
+            var elements = await generator.GenerateAsync(sd);
+
+            generator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            elements = generator.ExpandElementAsync(elements, parentElement).Result.ToList();
+
+            // Assert
+            var slicingElement = elements.Single(x => x.ElementId == elementId);
+
+            slicingElement.Slicing.Should().NotBeNull();
+            slicingElement.Slicing.Discriminator.Should().HaveCount(1);
+            slicingElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            slicingElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+
+            var baseElement = slicingElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Slicing.Should().NotBeNull();
+            baseElement.Slicing.Discriminator.Should().HaveCount(1);
+            baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+        }
+
+        private sealed class TestAnnotation
+        {
+            public TestAnnotation(StructureDefinition baseStructure, ElementDefinition baseElemDef)
+            {
+                BaseStructureDefinition = baseStructure;
+                BaseElementDefinition = baseElemDef;
+            }
+
+            public StructureDefinition BaseStructureDefinition { get; }
+            public ElementDefinition BaseElementDefinition { get; }
         }
     }
 }

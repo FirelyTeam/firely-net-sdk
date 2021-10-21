@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 var newElement = (ElementDefinition)baseElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
-                newElement.Base = null;               
+                newElement.Base = null;
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, baseElement);
@@ -1728,10 +1728,13 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Create the slicing entry by cloning the base Extension element
             var elem = baseExtensionElement != null ? (ElementDefinition)baseExtensionElement.DeepCopy() : new ElementDefinition();
-            // Initialize slicing component to sensible defaults
-            elem.Slicing = new ElementDefinition.SlicingComponent()
+            // [MV 2021-10-20] Only in the case of an extension the default discriminator is added
+            if (elem.IsExtension())
             {
-                Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                // Initialize slicing component to sensible defaults
+                elem.Slicing = new ElementDefinition.SlicingComponent()
+                {
+                    Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
                 {
                     new ElementDefinition.DiscriminatorComponent
                     {
@@ -1739,9 +1742,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                         Path = "url"
                     }
                 },
-                Ordered = false,
-                Rules = ElementDefinition.SlicingRules.Open
-            };
+                    Ordered = false,
+                    Rules = ElementDefinition.SlicingRules.Open
+                };
+            }
             return elem;
         }
 
