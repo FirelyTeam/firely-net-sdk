@@ -2,7 +2,7 @@
   
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
-    <VersionPrefix>3.5.1</VersionPrefix>
+    <VersionPrefix>3.6.1</VersionPrefix>
     <VersionSuffix>alpha</VersionSuffix>
     <Authors>Firely (info@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
