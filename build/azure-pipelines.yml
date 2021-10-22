@@ -27,6 +27,10 @@ resources:
   - repository: self
     type: git
     ref: develop-stu3
+  - repository: templates
+    type: github
+    name: FirelyTeam/azure-pipeline-templates
+    endpoint: FirelyTeam 
 
 stages:
 - stage: build
@@ -239,45 +243,12 @@ stages:
       runOnce:
         deploy:
             steps:
-            - download: current
-              artifact: NuGetPackages
-              displayName: Download artifact NuGetPackages
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push all packages'
-              condition: and(succeeded(), eq(variables.isTagBranch, false)) 
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push STU3 packages only and common packages'
-              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-stu3'))) 
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push R4 packages only'
-              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r4'))) 
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R4*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push R4B packages only'
-              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r4B'))) 
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R4B*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push R5 packages only'
-              condition: and(succeeded(), and(eq(variables.isTagBranch, true), endswith(variables['Build.SourceBranch'], '-r5'))) 
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*R5*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-
+            - template: push-nuget-package.yml@templates  # Template reference
+              parameters:
+                artifact: NuGetPackages
+                source: https://nuget.pkg.github.com/FirelyTeam/index.json
+                apiKey: $(GITHUB_PACKAGES_APIKEY)    
+                
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
   dependsOn:
