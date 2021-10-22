@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,12 @@ namespace Hl7.Fhir.Specification.Tests
 
             ZipFile.ExtractToDirectory($"{sourceFolder}\\Resources.zip", _tempPath);
 
-            var dirSource = new DirectorySource(_tempPath, new DirectorySourceSettings { IncludeSubDirectories = true });
+            var parserSettings = ParserSettings.CreateDefault();
+
+            parserSettings.AcceptUnknownMembers = true;
+            parserSettings.AllowUnrecognizedEnums = true;
+
+            var dirSource = new DirectorySource(_tempPath, new DirectorySourceSettings { IncludeSubDirectories = true, ParserSettings = parserSettings });
             var zipSource = ZipSource.CreateValidationSource();
 
             Resolver = new CachedResolver(new MultiResolver(zipSource, dirSource));
