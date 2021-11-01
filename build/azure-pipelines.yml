@@ -228,7 +228,7 @@ stages:
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
   dependsOn:
-    - deploy_myget
+    - deploy_git
     - build
   condition: and(succeeded(), eq(variables.isTagBranch, true)) 
   jobs:
