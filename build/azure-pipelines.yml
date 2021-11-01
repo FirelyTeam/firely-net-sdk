@@ -205,30 +205,6 @@ stages:
           testRunTitle: Tests ElementModel test project
           projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
 
-- stage: deploy_myget
-  displayName: Deploy to MyGet
-  dependsOn: test
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
-  jobs:
-  - deployment: myget
-    displayName: MyGet
-    environment: MyGet
-    strategy:
-      runOnce:
-        deploy:
-            steps:
-            - download: current
-              artifact: NuGetPackages
-              displayName: Download artifact NuGetPackages
-            - task: NuGetCommand@2
-              displayName: 'MyGet push'
-              inputs:
-                  command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
-                  nuGetFeedType: external
-                  publishFeedCredentials: MyGet
-                  verbosityPush: Normal    
-            
 - stage: deploy_git
   displayName: Deploy to GitHub
   dependsOn: test
