@@ -6,12 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -40,7 +38,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
 
             if (entry.Resource != null)
@@ -69,12 +67,12 @@ namespace Hl7.Fhir.Rest
                     IfModifiedSince = entry.Request.IfModifiedSince,
                     IfNoneExist = entry.Request.IfNoneExist,
                     IfNoneMatch = entry.Request.IfNoneMatch
-                }                
+                }
             };
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
 
             if (entry.Resource != null)
@@ -91,32 +89,32 @@ namespace Hl7.Fhir.Rest
 
         private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp, InteractionType type)
         {
-            switch(bundleHttp)
+            switch (bundleHttp)
             {
                 case Bundle.HTTPVerb.POST:
-                {
-                    return HTTPVerb.POST;
-                }
+                    {
+                        return HTTPVerb.POST;
+                    }
                 case Bundle.HTTPVerb.GET:
-                {
-                    return HTTPVerb.GET;
-                }
+                    {
+                        return HTTPVerb.GET;
+                    }
                 case Bundle.HTTPVerb.DELETE:
-                {
-                    return HTTPVerb.DELETE;
-                }
+                    {
+                        return HTTPVerb.DELETE;
+                    }
                 case Bundle.HTTPVerb.PUT:
-                {
+                    {
                         //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
                         return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
-                }
+                    }
                 default:
-                {
-                    return null;
-                }
+                    {
+                        return null;
+                    }
             }
         }
-        
+
         private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
@@ -137,7 +135,7 @@ namespace Hl7.Fhir.Rest
                 List<KeyValuePair<string, string>> bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
-                    bodyParameters.Add(new KeyValuePair<string,string>(parameter.Name, parameter.Value.ToString()));
+                    bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
                 }
                 if (bodyParameters.Count > 0)
                 {
