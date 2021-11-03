@@ -315,7 +315,7 @@ stages:
             - task: GitHubRelease@1
               displayName: 'GitHub release notes (create)'  
               inputs:
-                gitHubConnection: 'GitHub Fhir-net-api'
+                gitHubConnection: 'FirelyTeam'
                 repositoryName: '$(Build.Repository.Name)'
                 action: 'create'
                 target: '$(Build.SourceVersion)'
