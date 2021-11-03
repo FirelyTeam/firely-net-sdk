@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost));
+                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost));
             }
 
             return result;
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost).ConfigureAwait(false);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost).ConfigureAwait(false);
             }
 
             return result;
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -151,14 +151,14 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                request.RequestBodyContent = format == ResourceFormat.Xml ?
+                request.RequestBodyContent = settings.PreferredFormat == ResourceFormat.Xml ?
                     await new FhirXmlSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false) :
                     await new FhirJsonSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(format, ModelInfo.Version);
+                request.ContentType = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
         }
     }

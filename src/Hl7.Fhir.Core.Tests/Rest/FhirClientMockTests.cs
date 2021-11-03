@@ -143,11 +143,6 @@ namespace Hl7.Fhir.Core.Tests.Rest
         [DataRow(false, DisplayName = "Don't use FhirVersion in Accept header")]
         public async System.Threading.Tasks.Task AcceptHeaderTest(bool useFhirVersionHeader)
         {
-            var item = new QuestionnaireResponse.ItemComponent();
-
-            item.LinkId = "myLinkId";
-            item.Answer.Add(new QuestionnaireResponse.AnswerComponent() { Value = new FhirBoolean(true) });
-
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
             {
