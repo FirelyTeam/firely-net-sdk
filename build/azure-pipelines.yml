@@ -74,7 +74,6 @@ stages:
       inputs:
         command: publish
         projects: |
-         **/Firely.*Tests/*.csproj
          **/Hl7.*Tests/*.csproj
          !**/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
@@ -111,7 +110,7 @@ stages:
       displayName: Pack
       inputs:
         command: pack
-        searchPatternPack: '**/Hl7.*.csproj;Firely.*.csproj;!**/*Tests.csproj'
+        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
@@ -160,7 +159,6 @@ stages:
             **/common/**/publish/Hl7.Fhir.Support.Tests.dll
             **/common/**/publish/HL7.FhirPath.Tests.dll
             **/common/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
-            **/common/**/publish/Firely.Fhir.Packages.Tests.dll
   - job:
     displayName: Tests FhirPath Core test project
     steps:
