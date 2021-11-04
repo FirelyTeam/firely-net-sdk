@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-		<Reference Include="System.Net.Http"/>
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +33,24 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Content Include="hl7.fhir.r3.core-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="hl7.fhir.r3.corexml-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="hl7.fhir.r3.expansions-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
 		<Content Include="specification.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
