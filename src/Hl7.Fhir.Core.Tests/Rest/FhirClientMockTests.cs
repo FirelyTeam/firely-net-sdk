@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -135,6 +136,47 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             Assert.AreEqual("/fhir/*/Bundle/example", client.LastResult.Location);
         }
+
+
+        [DataTestMethod]
+        [DataRow(true, DisplayName = "Use FhirVersion in Accept header")]
+        [DataRow(false, DisplayName = "Don't use FhirVersion in Accept header")]
+        public async System.Threading.Tasks.Task AcceptHeaderTest(bool useFhirVersionHeader)
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Bundle"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry"),
+            };
+
+            mock
+             .Protected()
+                         .As<IHttpResponseMessage>()
+                         .Setup(m => m.SendAsync(
+                            It.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient?name=henry")),
+                            It.IsAny<CancellationToken>()))
+                         .ReturnsAsync(response);
+
+            using var client = new FhirClient("http://example.com", new FhirClientSettings
+            {
+                VerifyFhirVersion = false,
+                UseFhirVersionInAcceptHeader = useFhirVersionHeader
+            }, mock.Object);
+
+            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+
+            mock
+                .Protected()
+                .As<IHttpResponseMessage>()
+                .Verify(m => m.SendAsync(
+                    It.Is<HttpRequestMessage>(h => findInAcceptHeader(h.Headers.Accept, "fhirVersion", useFhirVersionHeader)),
+                    It.IsAny<CancellationToken>()));
+        }
+
+        private static bool findInAcceptHeader(HttpHeaderValueCollection<MediaTypeWithQualityHeaderValue> acceptHeader, string headerName, bool exists)
+            => acceptHeader.SelectMany(a => a.Parameters).Any(p => p.Name == headerName) == exists;
 
         public static IEnumerable<object[]> GetData()
         {
