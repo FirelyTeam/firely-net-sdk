@@ -55,7 +55,6 @@ stages:
       displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
       inputs:
         version: $(NET_CORE_SDK)
-        includePreviewVersions: true
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
