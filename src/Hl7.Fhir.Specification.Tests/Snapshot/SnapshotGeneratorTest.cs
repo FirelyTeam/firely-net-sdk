@@ -7529,6 +7529,25 @@ namespace Hl7.Fhir.Specification.Tests
             baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
             baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
         }
+        [DataTestMethod]
+        [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
+        [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
+        public async T.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync(url) as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var extensionElement = elements.SingleOrDefault(x => x.ElementId == elementId);
+
+            extensionElement.Should().NotBeNull();
+        }
 
         private sealed class TestAnnotation
         {
