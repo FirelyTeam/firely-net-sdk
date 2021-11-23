@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
             c.ObjectValue = "maleX";
-            Assert.IsNull(c.Value);
+            Assert.ThrowsException<InvalidCastException>(() => c.Value);
 
             c.Value = AdministrativeGender.Other;
             Assert.AreEqual("other", c.ObjectValue);
