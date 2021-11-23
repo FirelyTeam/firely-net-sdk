@@ -27,7 +27,6 @@
   
 */
 
-using Hl7.Fhir.Introspection;
 using System;
 using System.Linq;
 
@@ -74,7 +73,7 @@ namespace Hl7.Fhir.Model
         }
     }
 
-    public partial class CompartmentDefinition : IConformanceResource
+    public partial class CompartmentDefinition : IVersionableConformanceResource
     {
 
     }
