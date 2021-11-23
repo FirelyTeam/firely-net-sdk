@@ -7532,7 +7532,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
-        public async T.Task Forge580(string url, string elementId)
+        public async T.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
         {
             var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
             var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
