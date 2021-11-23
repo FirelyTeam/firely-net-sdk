@@ -40,7 +40,11 @@ namespace Hl7.Fhir.Validation
             buildPatientWithExistsSlicing(),
             buildTranslatableCodeableConcept(),
             buildObservationWithTranslatableCode(),
-            buildObservationWithTargetProfilesAndChildDefs()
+            buildObservationWithTargetProfilesAndChildDefs(),
+            buildPatientWithDeceasedConstraints("RequiredBoolean"),
+            buildPatientWithDeceasedConstraints(),
+            buildBoolean(),
+            buildMyExtension()
         };
 
         private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
@@ -574,6 +578,59 @@ namespace Hl7.Fhir.Validation
             return result;
         }
 
+        private static StructureDefinition buildMyExtension()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MyRangeExtension", "My Rage Extension",
+                "An extension with a value of type Range", FHIRAllTypes.Extension);
 
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Extension").OfType(FHIRAllTypes.Extension));
+            cons.Add(new ElementDefinition("Extension.url").Value(new FhirUri("http://validationtest.org/fhir/StructureDefinition/MyRangeExtension")));
+            cons.Add(new ElementDefinition("Extension.value[x]").OfType(FHIRAllTypes.Range));
+
+            return result;
+        }
+
+        private static StructureDefinition buildBoolean()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RequiredBoolean", "Required Boolean",
+                "A boolean type where the value is required", FHIRAllTypes.Boolean);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Boolean").OfType(FHIRAllTypes.Boolean));
+            cons.Add(new ElementDefinition("Boolean.value").Required());
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithDeceasedConstraints(string profile = null)
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient" + profile, "DeceasedPatient",
+                    "Test Patient with extra deceased constraints", FHIRAllTypes.Patient);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
+
+            if (profile is not null)
+            {
+                cons.Add(new ElementDefinition("Patient.deceased[x]")
+                    .OfType(FHIRAllTypes.Boolean, new[] { "http://validationtest.org/fhir/StructureDefinition/RequiredBoolean" })
+                    .OrType(FHIRAllTypes.DateTime));
+            }
+
+            var slicingIntro = new ElementDefinition("Patient.deceased[x].extension")
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Open, (ElementDefinition.DiscriminatorType.Value, "url"));
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Patient.deceased[x].extension")
+            {
+                ElementId = "Patient.deceased[x].extension:range",
+                SliceName = "range",
+            }.OfType(FHIRAllTypes.Extension, new[] { "http://validationtest.org/fhir/StructureDefinition/MyRangeExtension" }));
+            return result;
+        }
     }
 }
