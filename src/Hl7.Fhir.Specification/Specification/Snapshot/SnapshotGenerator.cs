@@ -966,19 +966,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var diffTypes = diff.Current.Type;
             var distinctTypeCodeCnt = diffTypes.DistinctTypeCodes().Count;
-            if (distinctTypeCodeCnt == 0)
+            if (distinctTypeCodeCnt != 1)
             {
                 // Element has no type constraints, nothing to merge
                 // return true to continue merging child constraints
-                return true;
-            }
-            else if (distinctTypeCodeCnt > 1)
-            {
+                // OR
                 // Element specifies multiple type codes, cannot expand children
-                // return false to prevent merging child constraints
-
-                // return false;
-                // [MV 20211123] return true to continue merging diff child constraints
+                // return true to continue merging diff child constraints
                 return true;
             }
 
