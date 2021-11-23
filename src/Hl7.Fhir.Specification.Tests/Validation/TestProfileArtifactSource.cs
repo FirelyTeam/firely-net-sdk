@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Validation
             if (profile is not null)
             {
                 cons.Add(new ElementDefinition("Patient.deceased[x]")
-                    .OfType(FHIRAllTypes.Boolean, new[] { "http://validationtest.org/fhir/StructureDefinition/RequiredBoolean" })
+                    .OfType(FHIRAllTypes.Boolean, "http://validationtest.org/fhir/StructureDefinition/RequiredBoolean")
                     .OrType(FHIRAllTypes.DateTime));
             }
 
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Validation
             {
                 ElementId = "Patient.deceased[x].extension:range",
                 SliceName = "range",
-            }.OfType(FHIRAllTypes.Extension, new[] { "http://validationtest.org/fhir/StructureDefinition/MyRangeExtension" }));
+            }.OfType(FHIRAllTypes.Extension, "http://validationtest.org/fhir/StructureDefinition/MyRangeExtension"));
             return result;
         }
     }
