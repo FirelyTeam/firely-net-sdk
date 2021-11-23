@@ -976,6 +976,9 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 // Element specifies multiple type codes, cannot expand children
                 // return false to prevent merging child constraints
+
+                // return false;
+                // [MV 20211123] return true to continue merging diff child constraints
                 return true;
             }
 
