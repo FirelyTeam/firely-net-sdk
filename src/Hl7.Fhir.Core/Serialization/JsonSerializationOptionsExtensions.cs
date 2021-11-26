@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Serialization
         public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, SerializationFilter? filter = default)
         {
             options.Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
-            options.Converters.Add(new JsonFhirConverter(typeof(ModelInfo).Assembly, filter));
+            options.Converters.Add(new FhirJsonConverter(typeof(ModelInfo).Assembly, filter));
             return options;
         }
     }
