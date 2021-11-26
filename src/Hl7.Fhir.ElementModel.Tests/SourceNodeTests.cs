@@ -9,12 +9,14 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
-using System.Linq;
 using Hl7.Fhir.Serialization;
-using System.IO;
+using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace Hl7.FhirPath.Tests
 {
@@ -28,7 +30,7 @@ namespace Hl7.FhirPath.Tests
             var annotatedNode = SourceNode.Valued("id", "myId1");
             annotatedNode.AddAnnotation("a string annotation");
 
-            patient = SourceNode.Node("Patient", 
+            patient = SourceNode.Node("Patient",
                 SourceNode.Resource("contained", "Observation", SourceNode.Valued("valueBoolean", "true")),
                 SourceNode.Valued("active", "true",
                    annotatedNode,
@@ -102,7 +104,7 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(7, patient["active"].DescendantsAndSelf().Count());
             Assert.AreEqual(2, patient["active"]["extension"].Count());
         }
-   
+
         [TestMethod]
         public void KeepsAnnotations()
         {
@@ -129,7 +131,7 @@ namespace Hl7.FhirPath.Tests
             var root = SourceNode.Node("TestRoot", child1);
             root.ResourceType = "TestR";
             var annotationTypes = new[] { typeof(string) };
-            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy:annotationTypes);
+            var copiedRoot = SourceNode.FromNode(root, recursive: false, annotationsToCopy: annotationTypes);
 
             Assert.IsFalse(copiedRoot.Children().Any());
             Assert.AreEqual(root.Name, copiedRoot.Name);
@@ -147,7 +149,31 @@ namespace Hl7.FhirPath.Tests
             Assert.AreEqual(child1.Name, copiedChild.Name);
             Assert.AreEqual(child1.Location, copiedChild.Location);
             Assert.AreEqual(child1.Text, copiedChild.Text);
-            Assert.AreEqual("The first annotation",(copiedChild as IAnnotated).Annotation<string>());
+            Assert.AreEqual("The first annotation", (copiedChild as IAnnotated).Annotation<string>());
+        }
+
+        /// <summary>
+        /// this test checks if no more <![CDATA[Lazy<T>]]> objects are created in <![CDATA[DomNode<T>]]>
+        /// </summary>
+        [TestMethod]
+        public void NoLazyObjectsAnymore()
+        {
+            string json = "{ \"resourceType\": \"Patient\", \"active\": true, \"contact\": [{\"organization\": {\"reference\": \"Organization/1\", \"display\": \"Walt Disney Corporation\" }, \"period\": { \"start\": \"0001-01-01\", \"end\": \"2018\" } } ],}";
+            var jsonNode = FhirJsonNode.Parse(json);
+            var nodes = SourceNode.FromNode(jsonNode);
+
+            int nrOfCreatedObjects = 0;
+
+            nodes.Visit((_, n) => countInitializations(n));
+
+            nrOfCreatedObjects.Should().Be(0);
+
+            void countInitializations(ISourceNode node)
+            {
+                var fieldInfo = node.GetType().BaseType.GetField("_annotations", BindingFlags.Instance | BindingFlags.NonPublic);
+
+                if (fieldInfo.GetValue(node) is not null) nrOfCreatedObjects++;
+            }
         }
     }
 }
