@@ -19,7 +19,7 @@ using System.Xml.Linq;
 using boolean = System.Boolean;
 using DecimalType = Hl7.Fhir.Model.FhirDecimal; // System.Decimal;
 using Model = Hl7.Fhir.Model;
-using P = Hl7.Fhir.ElementModel.Types; 
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.FhirPath.R4.Tests
 {
@@ -72,7 +72,7 @@ namespace Hl7.FhirPath.R4.Tests
             Assert.IsTrue(input.IsBoolean(expression, value, new EvaluationContext(container)));
         }
 
-        enum ErrorType
+        private enum ErrorType
         {
             Syntax,
             Semantics
@@ -100,10 +100,9 @@ namespace Hl7.FhirPath.R4.Tests
             }
         }
 
-        Dictionary<string, Model.DomainResource> _cache = new Dictionary<string, Model.DomainResource>();
-
-        int numFailed = 0;
-        int totalTests = 0;
+        private Dictionary<string, Model.DomainResource> _cache = new Dictionary<string, Model.DomainResource>();
+        private int numFailed = 0;
+        private int totalTests = 0;
 
         [TestMethod, TestCategory("FhirPathFromSpec")]
         public void TestPublishedTests()
@@ -121,6 +120,13 @@ namespace Hl7.FhirPath.R4.Tests
                 "testQuantity7", "testQuantity8", "testQuantity9", "testQuantity10", "testQuantity11",
                 "testAggregate1", "testAggregate2", "testAggregate3", "testAggregate4",
                 "testEquality7", "testNEquality24", "testNotEquivalent22",
+
+                // Since we now keep definite and calendar quantities apart internally, converting
+                // a quantity to a string will yield the original input ((1 week).toString() = '1 week'). This unittest
+                // suggests a normalization that is not described in the spec.
+                // See https://chat.fhir.org/#narrow/stream/179266-fhirpath/topic/Date.20Time.20operations, specifically
+                // to Bryn's response "((2 minutes).toString() gives 2 'minutes' on the Java-based engine)"
+                "testQuantityLiteralWeekToString",
 
                 // this tests the reflection capabilities, that we do not have yet
                 "testType1", "testType2", "testType3", "testType4", "testType9", "testType10", "testType15", "testType16",
