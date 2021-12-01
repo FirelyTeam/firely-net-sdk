@@ -9155,6 +9155,7 @@ namespace Hl7.Fhir.Specification.Tests
             baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
             baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
         }
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]

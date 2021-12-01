@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     Path = newElement.Path,
                     Min = diff.Current.Min, // newElement.Min,
                     Max = diff.Current.Max, // newElement.Max
-                };              
+                };
 
                 // [WMR 20160915] NEW: Notify subscribers
                 OnPrepareElement(newElement, typeStructure, targetElement);
@@ -1052,17 +1052,14 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             var diffTypes = diff.Current.Type;
             var distinctTypeCodeCnt = diffTypes.DistinctTypeCodes().Count;
-            if (distinctTypeCodeCnt == 0)
+            if (distinctTypeCodeCnt != 1)
             {
                 // Element has no type constraints, nothing to merge
                 // return true to continue merging child constraints
-                return true;
-            }
-            else if (distinctTypeCodeCnt > 1)
-            {
+                // OR
                 // Element specifies multiple type codes, cannot expand children
-                // return false to prevent merging child constraints
-                return false;
+                // return true to continue merging diff child constraints
+                return true;
             }
 
             // [WMR 20171004] New
@@ -1978,21 +1975,18 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Create the slicing entry by cloning the base Extension element
             var elem = baseExtensionElement != null ? (ElementDefinition)baseExtensionElement.DeepCopy() : new ElementDefinition();
-            // Initialize slicing component to sensible defaults
-            elem.Slicing = new ElementDefinition.SlicingComponent()
+            // [MV 2021-10-20] Only in the case of an extension the default discriminator is added
+            if (elem.IsExtension())
             {
-                //Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
-                //{
-                //    new ElementDefinition.DiscriminatorComponent
-                //    {
-                //        Type = ElementDefinition.DiscriminatorType.Value,
-                //        Path = "url"
-                //    }
-                //},
-                Discriminator = ElementDefinition.DiscriminatorComponent.ForExtensionSlice().ToList(),
-                Ordered = false,
-                Rules = ElementDefinition.SlicingRules.Open
-            };
+                // Initialize slicing component to sensible defaults
+
+                elem.Slicing = new ElementDefinition.SlicingComponent()
+                {
+                    Discriminator = ElementDefinition.DiscriminatorComponent.ForExtensionSlice().ToList(),
+                    Ordered = false,
+                    Rules = ElementDefinition.SlicingRules.Open
+                };
+            }
             return elem;
         }
 

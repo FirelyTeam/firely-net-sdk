@@ -75,10 +75,7 @@
             "binding":{
                "strength":"extensible",
                "description":"LandGBACodelijst",
-               "valueSetReference":{
-                  "reference":"http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000",
-                  "display":"LandGBACodelijst"
-               }
+               "valueSet":"http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.1--20171231000000"
             }
          },
          {
@@ -91,10 +88,7 @@
             "binding":{
                "strength":"extensible",
                "description":"LandISOCodelijst",
-               "valueSetReference":{
-                  "reference":"http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000",
-                  "display":"LandISOCodelijst"
-               }
+               "valueSet":"http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.20.5.2--20171231000000"
             }
          }
       ]
