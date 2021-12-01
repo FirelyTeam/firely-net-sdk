@@ -1975,18 +1975,21 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             // Create the slicing entry by cloning the base Extension element
             var elem = baseExtensionElement != null ? (ElementDefinition)baseExtensionElement.DeepCopy() : new ElementDefinition();
-            // [MV 2021-10-20] Only in the case of an extension the default discriminator is added
-            if (elem.IsExtension())
+            // Initialize slicing component to sensible defaults
+            elem.Slicing = new ElementDefinition.SlicingComponent()
             {
-                // Initialize slicing component to sensible defaults
-
-                elem.Slicing = new ElementDefinition.SlicingComponent()
-                {
-                    Discriminator = ElementDefinition.DiscriminatorComponent.ForExtensionSlice().ToList(),
-                    Ordered = false,
-                    Rules = ElementDefinition.SlicingRules.Open
-                };
-            }
+                //Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
+                //{
+                //    new ElementDefinition.DiscriminatorComponent
+                //    {
+                //        Type = ElementDefinition.DiscriminatorType.Value,
+                //        Path = "url"
+                //    }
+                //},
+                Discriminator = ElementDefinition.DiscriminatorComponent.ForExtensionSlice().ToList(),
+                Ordered = false,
+                Rules = ElementDefinition.SlicingRules.Open
+            };
             return elem;
         }
 
