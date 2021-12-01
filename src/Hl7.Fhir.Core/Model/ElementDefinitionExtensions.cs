@@ -34,6 +34,13 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
+        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string profile)
+        {
+            ed.OfType(type, new[] { profile });
+
+            return ed;
+        }
+
         public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string[] profile = null)
         {
             ed.Type.Clear();

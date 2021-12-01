@@ -1382,6 +1382,49 @@ namespace Hl7.Fhir.Specification.Tests
             internal bool Visited(string uri) => _visits.Contains(uri);
         }
 
+        [Fact]
+        public void ValidateWithTargetProfileAndChildDefinitions()
+        {
+            var visitResolver = new VisitResolver();
+            var resolver = new MultiResolver(visitResolver, new InMemoryResourceResolver(new Patient() { Id = "example" }), _source);
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, ResolveExternalReferences = true, GenerateSnapshot = true });
+
+            var patientReference = "Patient/example";
+
+            var observation = new Observation()
+            {
+                Status = ObservationStatus.Registered,
+                Code = new CodeableConcept("system", "code"),
+                Subject = new ResourceReference(patientReference)
+            };
+
+            var outcome = validator.Validate(observation, new[] { "http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654" });
+            Assert.True(outcome.Success);
+            Assert.True(visitResolver.Visited(patientReference), "no attempt was made to resolve the example patient");
+            Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
+
+        }
+
+        class VisitResolver : IResourceResolver
+        {
+            private List<string> _visits = new List<string>();
+
+            public Resource ResolveByCanonicalUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            public Resource ResolveByUri(string uri)
+            {
+                _visits.Add(uri);
+                return null;
+            }
+
+            internal bool Visited(string uri) => _visits.Contains(uri);
+        }
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;
