@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void TestIdValidation()
         {
-            Id id = new Id("az23");
+            Id id = new("az23");
 
             DotNetAttributeValidation.Validate(id);
             DotNetAttributeValidation.Validate(id, true);        // recursive checking shouldnt matter
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Tests.Validation
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(p, recurse: true));
         }
 
-        private void validateErrorOrFail(object instance, bool recurse = false, string membername = null)
+        private static void validateErrorOrFail(object instance, bool recurse = false, string membername = null)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Tests.Validation
             var illUuidUrl = "urn:uuid:ooknietgoed";
             var oidWithZero = "urn:oid:1.2.0.3.4";
 
-            FhirUri uri = new FhirUri(oidUrl);
+            FhirUri uri = new(oidUrl);
 #if NET40
             Validator.ValidateObject(uri, new ValidationContext(uri, null, null), true);
 #else
@@ -120,9 +120,10 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void TestAllowedChoices()
         {
-            Patient p = new Patient();
-
-            p.Deceased = new FhirBoolean(true);
+            Patient p = new()
+            {
+                Deceased = new FhirBoolean(true)
+            };
             DotNetAttributeValidation.Validate(p);
 
             // Deceased can either be boolean or dateTime, not FhirUri
@@ -134,7 +135,7 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void TestCardinality()
         {
-            OperationOutcome oo = new OperationOutcome();
+            OperationOutcome oo = new();
             validateErrorOrFail(oo, true);
 
             oo.Issue = new List<OperationOutcome.IssueComponent>();
@@ -156,8 +157,10 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void TestEmptyCollectionValidation()
         {
-            var p = new Patient();
-            p.Identifier = new List<Identifier>();
+            var p = new Patient
+            {
+                Identifier = new List<Identifier>()
+            };
             p.Identifier.Add(null);
 
             validateErrorOrFail(p);
@@ -166,12 +169,16 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]
         public void ContainedResourcesAreValidatedToo()
         {
-            Patient p = new Patient();
-            // Deceased can either be boolean or dateTime, not FhirUri
-            p.Deceased = new FhirUri();
+            Patient p = new()
+            {
+                // Deceased can either be boolean or dateTime, not FhirUri
+                Deceased = new FhirUri()
+            };
 
-            var pr = new Patient();
-            pr.Contained = new List<Resource> { p };
+            var pr = new Patient
+            {
+                Contained = new List<Resource> { p }
+            };
 
             validateErrorOrFail(pr, true);
             DotNetAttributeValidation.Validate(pr);
@@ -191,8 +198,10 @@ namespace Hl7.Fhir.Tests.Validation
             patn.Contained = null;
             DotNetAttributeValidation.Validate(pat);
 
-            patn.Text = new Narrative();
-            patn.Text.Div = "<div>Narrative in contained resource</div>";
+            patn.Text = new Narrative
+            {
+                Div = "<div>Narrative in contained resource</div>"
+            };
 
             // Contained resources should not contain narrative
             validateErrorOrFail(pat);
@@ -213,8 +222,10 @@ namespace Hl7.Fhir.Tests.Validation
             DotNetAttributeValidation.Validate(enc, true);  // recursive checking shouldnt matter
 
             // Hide an incorrect datetime deep into the Encounter
-            FhirDateTime dt = new FhirDateTime();
-            dt.Value = "Ewout Kramer";  // clearly, a wrong datetime
+            FhirDateTime dt = new()
+            {
+                Value = "Ewout Kramer"  // clearly, a wrong datetime
+            };
 
             enc.Period = new Period() { StartElement = dt };
 
@@ -228,9 +239,10 @@ namespace Hl7.Fhir.Tests.Validation
         [TestMethod]    // XHtml validation not available in portable library
         public void TestXhtmlValidation()
         {
-            var p = new Patient();
-
-            p.Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated };
+            var p = new Patient
+            {
+                Text = new Narrative() { Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should be valid</p></div>", Status = Narrative.NarrativeStatus.Generated }
+            };
             DotNetAttributeValidation.Validate(p, true);
 
             p.Text.Div = "<div xmlns='http://www.w3.org/1999/xhtml'><p>should not be valid<p></div>";

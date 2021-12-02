@@ -24,9 +24,15 @@
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net45'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net45'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
 		<Reference Include="System.Net.Http"/>
 	</ItemGroup>
+
 
 	<ItemGroup>
 		<FhirConformance Include="data\*.*" />
