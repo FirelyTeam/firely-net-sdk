@@ -11,7 +11,7 @@
     <RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageIconUrl>https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/icon-fhir-32.png</PackageIconUrl>
-    <PackageReleaseNotes>See ]https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
