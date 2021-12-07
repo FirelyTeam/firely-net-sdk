@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Tests.Validation
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(p, recurse: true));
         }
 
-        private static void validateErrorOrFail(object instance, bool recurse = false, string membername = null)
+        private static void validateErrorOrFail(Base instance, bool recurse = false, string membername = null)
         {
             try
             {
