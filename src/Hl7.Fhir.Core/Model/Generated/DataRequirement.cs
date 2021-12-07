@@ -199,6 +199,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CodeFilterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CodeFilterComponent;
@@ -374,6 +375,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DateFilterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DateFilterComponent;
@@ -593,6 +595,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DataRequirement());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DataRequirement;

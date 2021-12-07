@@ -211,6 +211,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CharacteristicComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CharacteristicComponent;
@@ -392,6 +393,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new MemberComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as MemberComponent;
@@ -711,6 +713,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Group());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Group;

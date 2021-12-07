@@ -170,6 +170,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OrderedItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OrderedItemComponent;
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RequesterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RequesterComponent;
@@ -630,6 +632,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new SupplyRequest());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as SupplyRequest;

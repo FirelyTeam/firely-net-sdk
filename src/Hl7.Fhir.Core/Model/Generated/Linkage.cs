@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ItemComponent;
@@ -315,6 +316,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Linkage());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Linkage;

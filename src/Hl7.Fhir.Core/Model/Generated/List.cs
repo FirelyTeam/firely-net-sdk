@@ -209,6 +209,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EntryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EntryComponent;
@@ -581,6 +582,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new List());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as List;

@@ -553,10 +553,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> TypeHistoryAsync(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Task<Bundle> TypeHistoryAsync(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return internalHistoryAsync(resourceType, null, since, pageSize, summary);
         }
+
         /// <summary>
         /// Retrieve the version history for a specific resource type
         /// </summary>
@@ -566,7 +567,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return TypeHistoryAsync(resourceType, since, pageSize, summary).WaitResult();
         }
@@ -580,11 +581,12 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
+        public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
             string collection = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
+
         /// <summary>
         /// Retrieve the version history for a specific resource type
         /// </summary>
@@ -594,7 +596,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False) where TResource : Resource, new()
+        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
             return TypeHistoryAsync<TResource>(since, pageSize, summary).WaitResult();
         }
@@ -608,13 +610,14 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> HistoryAsync(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Task<Bundle> HistoryAsync(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
             var id = verifyResourceIdentity(location, needId: true, needVid: false);
             return internalHistoryAsync(id.ResourceType, id.Id, since, pageSize, summary);
         }
+
         /// <summary>
         /// Retrieve the version history for a resource at a given location
         /// </summary>
@@ -624,7 +627,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(location, since, pageSize, summary).WaitResult();
         }
@@ -638,10 +641,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> HistoryAsync(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Task<Bundle> HistoryAsync(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(new Uri(location, UriKind.Relative), since, pageSize, summary);
         }
+
         /// <summary>
         /// Retrieve the version history for a resource at a given location
         /// </summary>
@@ -651,7 +655,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(location, since, pageSize, summary).WaitResult();
         }
@@ -661,26 +665,28 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
-        /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
+        /// <param name="summary">Optional. Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> WholeSystemHistoryAsync(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Task<Bundle> WholeSystemHistoryAsync(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return internalHistoryAsync(null, null, since, pageSize, summary);
         }
+
         /// <summary>
         /// Retrieve the full version history of the server
         /// </summary>
         /// <param name="since">Optional. Returns only changes after the given date</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
-        /// <param name="summary">Indicates whether the returned resources should just contain the minimal set of elements</param>
+        /// <param name="summary">Optional. Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return WholeSystemHistoryAsync(since, pageSize, summary).WaitResult();
         }
-        private Task<Bundle> internalHistoryAsync(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType summary = SummaryType.False)
+
+        private Task<Bundle> internalHistoryAsync(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             TransactionBuilder history;
 
@@ -692,11 +698,6 @@ namespace Hl7.Fhir.Rest
                 history = new TransactionBuilder(Endpoint).ResourceHistory(resourceType, id, summary, pageSize, since);
 
             return executeAsync<Bundle>(history.ToBundle(), HttpStatusCode.OK);
-        }
-        private Bundle internalHistory(string resourceType = null, string id = null, DateTimeOffset? since = null,
-            int? pageSize = null, SummaryType summary = SummaryType.False)
-        {
-            return internalHistoryAsync(resourceType, id, since, pageSize, summary).WaitResult();
         }
 
         #endregion
