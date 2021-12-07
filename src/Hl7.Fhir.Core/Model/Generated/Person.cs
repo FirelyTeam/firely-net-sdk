@@ -170,6 +170,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LinkComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LinkComponent;
@@ -461,6 +462,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Person());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Person;

@@ -132,6 +132,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProcessNoteComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProcessNoteComponent;
@@ -472,6 +473,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ProcessResponse());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ProcessResponse;

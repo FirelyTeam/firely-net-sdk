@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 	<PropertyGroup>
-		<TargetFrameworks>net5.0;net45</TargetFrameworks>
+		<TargetFrameworks>net5.0;net452;netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
 
 	<Import Project="..\firely-net-sdk.props" />
@@ -24,7 +24,7 @@
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
 		<Reference Include="System.Net.Http"/>
 	</ItemGroup>
 
