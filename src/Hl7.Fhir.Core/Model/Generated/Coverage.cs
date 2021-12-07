@@ -470,6 +470,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GroupComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GroupComponent;
@@ -985,6 +986,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Coverage());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Coverage;

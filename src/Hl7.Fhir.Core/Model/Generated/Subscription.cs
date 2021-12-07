@@ -291,6 +291,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ChannelComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ChannelComponent;
@@ -605,6 +606,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Subscription());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Subscription;
