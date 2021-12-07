@@ -6,20 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
-using Hl7.Fhir.Introspection;
-using Newtonsoft.Json.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Rest;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -30,6 +26,21 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         private readonly FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
         private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+
+        [TestMethod]
+        public void TestConstructSystemTextJsonSerializer()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions().ForFhir();
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+
+
+            var jsonText = JsonSerializer.Serialize(p, options);
+            Assert.IsTrue(jsonText.Contains("birthDate"));
+        }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
         public async T.Task TestSummary()
@@ -61,7 +72,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 LinkId = "linkid",
                 Text = "TEXT"
             });
-            
+
             Assert.IsNull(q.Meta, "Meta element has not been created.");
             var qfull = await FhirXmlSerializer.SerializeToStringAsync(q);
             Assert.IsNull(q.Meta, "Meta element should not be introduced here.");
@@ -124,11 +135,11 @@ namespace Hl7.Fhir.Tests.Serialization
             l.Id = "testId";
             l.Language = "testLang";
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(l, Fhir.Rest.SummaryType.Count);
-            
+
             Assert.IsFalse(summaryElements.Contains("<language"));
             Assert.IsTrue(summaryElements.Contains("<type>"));
             Assert.IsTrue(summaryElements.Contains("<id value=\"testId\""));
-            
+
             var customMaskingNode = new MaskingNode(new ScopedNode(l.ToTypedElement()), new MaskingNodeSettings
             {
                 IncludeMandatory = true,
@@ -158,7 +169,7 @@ namespace Hl7.Fhir.Tests.Serialization
             });
 
             result = await customMaskingNodeForBundle.ToXmlAsync(settings: new FhirXmlSerializationSettings());
-            
+
             Assert.IsTrue(result.Contains("<type value=\"collection\""));
             Assert.IsFalse(result.Contains("<id value=\"bundle-id\""));
         }
@@ -172,7 +183,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
             };
             var elements = new[] { "photo" };
-            
+
             var summaryElements = await FhirXmlSerializer.SerializeToStringAsync(p, Fhir.Rest.SummaryType.False, elements: elements);
             Assert.IsFalse(summaryElements.Contains("<birthDate"));
             Assert.IsTrue(summaryElements.Contains("<photo"));

@@ -24,7 +24,7 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
 		<Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Net.Http"/>
+		<Reference Include="System.Net.Http"/>
 	</ItemGroup>
 
 	<ItemGroup>
