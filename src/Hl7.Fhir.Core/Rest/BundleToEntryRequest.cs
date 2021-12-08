@@ -6,12 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
@@ -40,7 +38,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
 
             if (entry.Resource != null)
@@ -49,7 +47,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost));
+                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost));
             }
 
             return result;
@@ -69,12 +67,12 @@ namespace Hl7.Fhir.Rest
                     IfModifiedSince = entry.Request.IfModifiedSince,
                     IfNoneExist = entry.Request.IfNoneExist,
                     IfNoneMatch = entry.Request.IfNoneMatch
-                }                
+                }
             };
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings.PreferredFormat, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
 
             if (entry.Resource != null)
@@ -83,7 +81,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings.PreferredFormat, searchUsingPost).ConfigureAwait(false);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost).ConfigureAwait(false);
             }
 
             return result;
@@ -91,33 +89,33 @@ namespace Hl7.Fhir.Rest
 
         private static HTTPVerb? bundleHttpVerbToRestHttpVerb(Bundle.HTTPVerb? bundleHttp, InteractionType type)
         {
-            switch(bundleHttp)
+            switch (bundleHttp)
             {
                 case Bundle.HTTPVerb.POST:
-                {
-                    return HTTPVerb.POST;
-                }
+                    {
+                        return HTTPVerb.POST;
+                    }
                 case Bundle.HTTPVerb.GET:
-                {
-                    return HTTPVerb.GET;
-                }
+                    {
+                        return HTTPVerb.GET;
+                    }
                 case Bundle.HTTPVerb.DELETE:
-                {
-                    return HTTPVerb.DELETE;
-                }
+                    {
+                        return HTTPVerb.DELETE;
+                    }
                 case Bundle.HTTPVerb.PUT:
-                {
+                    {
                         //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
                         return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
-                }
+                    }
                 default:
-                {
-                    return null;
-                }
+                    {
+                        return null;
+                    }
             }
         }
-        
-        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, ResourceFormat format, bool searchUsingPost)
+
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, bool searchUsingPost)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -137,7 +135,7 @@ namespace Hl7.Fhir.Rest
                 List<KeyValuePair<string, string>> bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
-                    bodyParameters.Add(new KeyValuePair<string,string>(parameter.Name, parameter.Value.ToString()));
+                    bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
                 }
                 if (bodyParameters.Count > 0)
                 {
@@ -153,14 +151,14 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                request.RequestBodyContent = format == ResourceFormat.Xml ?
+                request.RequestBodyContent = settings.PreferredFormat == ResourceFormat.Xml ?
                     await new FhirXmlSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false) :
                     await new FhirJsonSerializer().SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(format, ModelInfo.Version);
+                request.ContentType = ContentType.BuildContentType(settings, ModelInfo.Version);
             }
         }
     }

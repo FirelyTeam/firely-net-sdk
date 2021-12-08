@@ -293,6 +293,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new UniqueIdComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as UniqueIdComponent;
@@ -740,6 +741,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new NamingSystem());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as NamingSystem;
