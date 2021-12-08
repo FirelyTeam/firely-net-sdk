@@ -391,6 +391,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new UdiComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as UdiComponent;
@@ -913,6 +914,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Device());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Device;

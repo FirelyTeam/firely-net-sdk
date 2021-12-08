@@ -214,6 +214,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FixedVersionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FixedVersionComponent;
@@ -389,6 +390,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ExcludedSystemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ExcludedSystemComponent;
@@ -519,6 +521,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationComponent;
@@ -636,6 +639,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationIncludeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationIncludeComponent;
@@ -776,6 +780,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationIncludeDesignationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationIncludeDesignationComponent;
@@ -893,6 +898,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationExcludeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationExcludeComponent;
@@ -1033,6 +1039,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationExcludeDesignationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationExcludeDesignationComponent;
@@ -1720,6 +1727,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ExpansionProfile());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ExpansionProfile;

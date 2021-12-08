@@ -257,6 +257,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new OralDietComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as OralDietComponent;
@@ -419,6 +420,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NutrientComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NutrientComponent;
@@ -549,6 +551,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TextureComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TextureComponent;
@@ -758,6 +761,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SupplementComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SupplementComponent;
@@ -1065,6 +1069,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new EnteralFormulaComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as EnteralFormulaComponent;
@@ -1267,6 +1272,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AdministrationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AdministrationComponent;
@@ -1584,6 +1590,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new NutritionOrder());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as NutritionOrder;
