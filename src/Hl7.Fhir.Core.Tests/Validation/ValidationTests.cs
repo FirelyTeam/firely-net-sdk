@@ -46,6 +46,20 @@ namespace Hl7.Fhir.Tests.Validation
             DotNetAttributeValidation.Validate(hn);
         }
 
+        [TestMethod]
+        public void ValidatesResourceTag()
+        {
+            var p = new Patient
+            {
+                Meta = new Meta()
+                {
+                }
+            };
+
+            p.Meta.Tag.Add(new Coding("http://system", "  illegal    _  code "));
+
+            Assert.IsFalse(DotNetAttributeValidation.TryValidate(p, recurse: true));
+        }
 
         private void validateErrorOrFail(object instance, bool recurse = false, string membername = null)
         {
