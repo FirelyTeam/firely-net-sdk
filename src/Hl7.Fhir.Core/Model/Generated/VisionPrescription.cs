@@ -571,6 +571,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DispenseComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DispenseComponent;
@@ -924,6 +925,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new VisionPrescription());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as VisionPrescription;

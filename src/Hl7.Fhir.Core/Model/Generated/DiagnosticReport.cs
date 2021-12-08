@@ -187,6 +187,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PerformerComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PerformerComponent;
@@ -338,6 +339,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ImageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ImageComponent;
@@ -745,6 +747,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new DiagnosticReport());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as DiagnosticReport;

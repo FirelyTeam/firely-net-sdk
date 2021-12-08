@@ -146,6 +146,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new QualificationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as QualificationComponent;
@@ -453,6 +454,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Practitioner());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Practitioner;

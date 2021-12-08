@@ -257,6 +257,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RecommendationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RecommendationComponent;
@@ -463,6 +464,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DateCriterionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DateCriterionComponent;
@@ -677,6 +679,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ProtocolComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ProtocolComponent;
@@ -829,6 +832,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ImmunizationRecommendation());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ImmunizationRecommendation;
