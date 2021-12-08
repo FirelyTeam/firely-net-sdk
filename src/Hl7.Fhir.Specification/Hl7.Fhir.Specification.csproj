@@ -28,12 +28,10 @@
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net45'">
-		<Reference Include="System.ComponentModel.DataAnnotations" />
 	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
 		<Reference Include="System.Net.Http"/>
 	</ItemGroup>
-
 
 	<ItemGroup>
 		<FhirConformance Include="data\*.*" />
