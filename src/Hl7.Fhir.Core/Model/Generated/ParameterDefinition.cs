@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to access the parameter value
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=30)]
+    [FhirElement("name", InSummary=true, Order=30 )]
     [DataMember]
     public Hl7.Fhir.Model.Code NameElement
     {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in | out
     /// </summary>
-    [FhirElement("use", InSummary=true, Order=40)]
+    [FhirElement("use", InSummary=true, Order=40 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What type of value
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=80)]
+    [FhirElement("type", InSummary=true, Order=80 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

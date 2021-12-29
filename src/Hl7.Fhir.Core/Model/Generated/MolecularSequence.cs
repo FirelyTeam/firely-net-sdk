@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// sense | antisense
       /// </summary>
-      [FhirElement("orientation", InSummary=true, Order=60)]
+      [FhirElement("orientation", InSummary=true, Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.orientationType> OrientationElement
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// watson | crick
       /// </summary>
-      [FhirElement("strand", InSummary=true, Order=100)]
+      [FhirElement("strand", InSummary=true, Order=100 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.strandType> StrandElement
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// indel | snp | unknown
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1702,7 +1702,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// directlink | openapi | login | oauth | other
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2465,7 +2465,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique ID for this particular sequence. This is a FHIR-defined id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -2479,7 +2479,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// aa | dna | rna
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, Order=100 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.sequenceType> TypeElement

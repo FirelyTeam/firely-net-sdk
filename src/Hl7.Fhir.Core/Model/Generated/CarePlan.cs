@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Appointment | CommunicationRequest | DeviceRequest | MedicationRequest | NutritionOrder | Task | ServiceRequest | VisionPrescription
       /// </summary>
-      [FhirElement("kind", Order=40)]
+      [FhirElement("kind", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityKind> KindElement
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-started | scheduled | in-progress | on-hold | completed | cancelled | stopped | unknown | entered-in-error
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=110)]
+      [FhirElement("status", InSummary=true, Order=110 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this plan
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150)]
+    [FhirElement("status", InSummary=true, Order=150 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=160)]
+    [FhirElement("intent", InSummary=true, Order=160 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1083,7 +1083,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of plan
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=170)]
+    [FhirElement("category", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Summary of nature of plan
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=190)]
+    [FhirElement("description", InSummary=true, Order=190, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the care plan is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=200)]
+    [FhirElement("subject", InSummary=true, Order=200, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=210)]
+    [FhirElement("encounter", InSummary=true, Order=210, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period plan covers
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=220)]
+    [FhirElement("period", InSummary=true, Order=220, FiveWs= new string[] {"FiveWs.planned"})]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1203,7 +1203,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date record was first recorded
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=230)]
+    [FhirElement("created", InSummary=true, Order=230, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -1234,7 +1234,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is the designated responsible party
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=240)]
+    [FhirElement("author", InSummary=true, Order=240, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Device","RelatedPerson","Organization","CareTeam")]
     [DataMember]
@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's involved in plan?
     /// </summary>
-    [FhirElement("careTeam", Order=260)]
+    [FhirElement("careTeam", Order=260, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Health issues this plan addresses
     /// </summary>
-    [FhirElement("addresses", InSummary=true, Order=270)]
+    [FhirElement("addresses", InSummary=true, Order=270, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]

@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// match | include | outcome - why this is in the result set
       /// </summary>
-      [FhirElement("mode", InSummary=true, Order=40)]
+      [FhirElement("mode", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH
       /// </summary>
-      [FhirElement("method", InSummary=true, Order=40)]
+      [FhirElement("method", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Persistent identifier for the bundle
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=50)]
+    [FhirElement("identifier", InSummary=true, Order=50, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1229,7 +1229,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=60)]
+    [FhirElement("type", InSummary=true, Order=60 , FiveWs= new string[] {"FiveWs.class"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1262,7 +1262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the bundle was assembled
     /// </summary>
-    [FhirElement("timestamp", InSummary=true, Order=70)]
+    [FhirElement("timestamp", InSummary=true, Order=70, FiveWs= new string[] {"FiveWs.init"})]
     [DataMember]
     public Hl7.Fhir.Model.Instant TimestampElement
     {

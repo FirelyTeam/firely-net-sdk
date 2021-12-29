@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | abandoned | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When event occurred
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs= new string[] {"FiveWs.done[x]"})]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]

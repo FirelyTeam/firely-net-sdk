@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this group's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.status"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// person | animal | practitioner | device | medication | substance
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110 , FiveWs= new string[] {"FiveWs.class"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive or actual
     /// </summary>
-    [FhirElement("actual", InSummary=true, Order=120)]
+    [FhirElement("actual", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Group members
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

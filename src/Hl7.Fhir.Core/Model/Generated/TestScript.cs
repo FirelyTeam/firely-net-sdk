@@ -1882,7 +1882,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource type
       /// </summary>
-      [FhirElement("resource", Order=50)]
+      [FhirElement("resource", Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
@@ -1976,7 +1976,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mime type to accept in the payload of the response, with charset etc.
       /// </summary>
-      [FhirElement("accept", Order=80)]
+      [FhirElement("accept", Order=80 )]
       [DataMember]
       public Hl7.Fhir.Model.Code AcceptElement
       {
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mime type of the request payload contents, with charset etc.
       /// </summary>
-      [FhirElement("contentType", Order=90)]
+      [FhirElement("contentType", Order=90 )]
       [DataMember]
       public Hl7.Fhir.Model.Code ContentTypeElement
       {
@@ -2101,7 +2101,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// delete | get | options | patch | post | put | head
       /// </summary>
-      [FhirElement("method", Order=120)]
+      [FhirElement("method", Order=120 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> MethodElement
@@ -2729,7 +2729,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// response | request
       /// </summary>
-      [FhirElement("direction", Order=60)]
+      [FhirElement("direction", Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType> DirectionElement
@@ -2854,7 +2854,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mime type to compare against the 'Content-Type' header
       /// </summary>
-      [FhirElement("contentType", Order=100)]
+      [FhirElement("contentType", Order=100 )]
       [DataMember]
       public Hl7.Fhir.Model.Code ContentTypeElement
       {
@@ -3009,7 +3009,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// equals | notEquals | in | notIn | greaterThan | lessThan | empty | notEmpty | contains | notContains | eval
       /// </summary>
-      [FhirElement("operator", Order=150)]
+      [FhirElement("operator", Order=150 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
@@ -3072,7 +3072,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// delete | get | options | patch | post | put | head
       /// </summary>
-      [FhirElement("requestMethod", Order=170)]
+      [FhirElement("requestMethod", Order=170 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
@@ -3135,7 +3135,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource type
       /// </summary>
-      [FhirElement("resource", Order=190)]
+      [FhirElement("resource", Order=190 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
@@ -3167,7 +3167,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// okay | created | noContent | notModified | bad | forbidden | notFound | methodNotAllowed | conflict | gone | preconditionFailed | unprocessable
       /// </summary>
-      [FhirElement("response", Order=200)]
+      [FhirElement("response", Order=200 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
@@ -3977,7 +3977,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this test script, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -4009,7 +4009,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the test script
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -4022,7 +4022,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the test script
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.version"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -4116,7 +4116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, Order=140 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -4149,7 +4149,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -4180,7 +4180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -4211,7 +4211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.witness"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -4297,7 +4297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this test script is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {

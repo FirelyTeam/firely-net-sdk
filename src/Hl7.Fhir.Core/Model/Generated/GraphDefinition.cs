@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of resource this link refers to
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// condition | requirement
       /// </summary>
-      [FhirElement("use", Order=40)]
+      [FhirElement("use", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Patient | Encounter | RelatedPerson | Practitioner | Device
       /// </summary>
-      [FhirElement("code", Order=50)]
+      [FhirElement("code", Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// identical | matching | different | custom
       /// </summary>
-      [FhirElement("rule", Order=60)]
+      [FhirElement("rule", Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this graph definition, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the graph definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.version"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, Order=120 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=130)]
+    [FhirElement("experimental", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150)]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.witness"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1138,7 +1138,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this graph definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=200)]
+    [FhirElement("purpose", Order=200, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of resource at which the graph starts
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=210)]
+    [FhirElement("start", InSummary=true, Order=210 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the filter
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
       /// </summary>
-      [FhirElement("operator", InSummary=true, Order=60)]
+      [FhirElement("operator", InSummary=true, Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -417,7 +417,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// code | Coding | string | integer | boolean | dateTime | decimal
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=70)]
+      [FhirElement("type", InSummary=true, Order=70 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies concept
       /// </summary>
-      [FhirElement("code", Order=40)]
+      [FhirElement("code", Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -874,7 +874,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human language of the designation
       /// </summary>
-      [FhirElement("language", Order=40)]
+      [FhirElement("language", Order=40 )]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to CodeSystem.property.code
       /// </summary>
-      [FhirElement("code", Order=40)]
+      [FhirElement("code", Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -1154,7 +1154,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this code system, represented as a URI (globally unique) (Coding.system)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -1185,7 +1185,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the code system (business identifier)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the code system (Coding.version)
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.version"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, Order=140 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1325,7 +1325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1356,7 +1356,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1387,7 +1387,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.witness"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1473,7 +1473,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this code system is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -1561,7 +1561,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// grouped-by | is-a | part-of | classified-with
     /// </summary>
-    [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
+    [FhirElement("hierarchyMeaning", InSummary=true, Order=260 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
@@ -1655,7 +1655,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// not-present | example | fragment | complete | supplement
     /// </summary>
-    [FhirElement("content", InSummary=true, Order=290)]
+    [FhirElement("content", InSummary=true, Order=290 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

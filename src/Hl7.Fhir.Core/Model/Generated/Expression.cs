@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// text/cql | text/fhirpath | application/x-fhir-query | etc.
     /// </summary>
-    [FhirElement("language", InSummary=true, Order=50)]
+    [FhirElement("language", InSummary=true, Order=50 )]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code LanguageElement

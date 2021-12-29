@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | alternate | historical
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this linkage assertion is active or not
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=90)]
+    [FhirElement("active", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.status"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for linkages
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=100)]
+    [FhirElement("author", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]

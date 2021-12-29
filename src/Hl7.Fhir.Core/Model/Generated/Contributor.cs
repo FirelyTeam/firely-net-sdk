@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// author | editor | reviewer | endorser
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30)]
+    [FhirElement("type", InSummary=true, Order=30 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

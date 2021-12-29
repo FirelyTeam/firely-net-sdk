@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// personal | professional | legal | official
       /// </summary>
-      [FhirElement("mode", Order=40)]
+      [FhirElement("mode", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who attested the composition
       /// </summary>
-      [FhirElement("party", Order=60)]
+      [FhirElement("party", Order=60, FiveWs= new string[] {"FiveWs.witness"})]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaces | transforms | signs | appends
       /// </summary>
-      [FhirElement("code", Order=40)]
+      [FhirElement("code", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who and/or what authored the section
       /// </summary>
-      [FhirElement("author", Order=60)]
+      [FhirElement("author", Order=60, FiveWs= new string[] {"FiveWs.author"})]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
       [Cardinality(Min=0,Max=-1)]
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// working | snapshot | changes
       /// </summary>
-      [FhirElement("mode", Order=90)]
+      [FhirElement("mode", Order=90 , FiveWs= new string[] {"FiveWs.class"})]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version-independent identifier for the Composition
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of composition (LOINC if possible)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of Composition
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what the composition is about
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -1004,7 +1004,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context of the Composition
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=140)]
+    [FhirElement("encounter", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition editing time
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.done[x]"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1051,7 +1051,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what authored the composition
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=160)]
+    [FhirElement("author", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
     [Cardinality(Min=1,Max=-1)]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// As defined by affinity domain
     /// </summary>
-    [FhirElement("confidentiality", InSummary=true, Order=180)]
+    [FhirElement("confidentiality", InSummary=true, Order=180 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification> ConfidentialityElement

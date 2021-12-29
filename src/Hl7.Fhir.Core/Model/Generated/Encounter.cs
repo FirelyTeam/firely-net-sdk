@@ -171,7 +171,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
       /// </summary>
-      [FhirElement("status", Order=40)]
+      [FhirElement("status", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Persons involved in the encounter other than the patient
       /// </summary>
-      [FhirElement("individual", InSummary=true, Order=60)]
+      [FhirElement("individual", InSummary=true, Order=60, FiveWs= new string[] {"FiveWs.who"})]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","RelatedPerson")]
       [DataMember]
@@ -539,7 +539,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The diagnosis or procedure relevant to the encounter
       /// </summary>
-      [FhirElement("condition", InSummary=true, Order=40)]
+      [FhirElement("condition", InSummary=true, Order=40, FiveWs= new string[] {"FiveWs.why[x]"})]
       [CLSCompliant(false)]
       [References("Condition","Procedure")]
       [Cardinality(Min=1,Max=1)]
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Location the encounter takes place
       /// </summary>
-      [FhirElement("location", Order=40)]
+      [FhirElement("location", Order=40, FiveWs= new string[] {"FiveWs.where[x]"})]
       [CLSCompliant(false)]
       [References("Location")]
       [Cardinality(Min=1,Max=1)]
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// planned | active | reserved | completed
       /// </summary>
-      [FhirElement("status", Order=50)]
+      [FhirElement("status", Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier(s) by which this encounter is known
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | arrived | triaged | in-progress | onleave | finished | cancelled +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of patient encounter
     /// </summary>
-    [FhirElement("class", InSummary=true, Order=120)]
+    [FhirElement("class", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Class
@@ -1169,7 +1169,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific type of encounter
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=140)]
+    [FhirElement("type", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1196,7 +1196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the urgency of the encounter
     /// </summary>
-    [FhirElement("priority", Order=160)]
+    [FhirElement("priority", Order=160, FiveWs= new string[] {"FiveWs.grade"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -1209,7 +1209,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient or group present at the encounter
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=170)]
+    [FhirElement("subject", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -1224,7 +1224,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Episode(s) of care that this encounter should be recorded against
     /// </summary>
-    [FhirElement("episodeOfCare", InSummary=true, Order=180)]
+    [FhirElement("episodeOfCare", InSummary=true, Order=180, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("EpisodeOfCare")]
     [Cardinality(Min=0,Max=-1)]
@@ -1286,7 +1286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The start and end time of the encounter
     /// </summary>
-    [FhirElement("period", Order=220)]
+    [FhirElement("period", Order=220, FiveWs= new string[] {"FiveWs.done[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1312,7 +1312,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded reason the encounter takes place
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=240)]
+    [FhirElement("reasonCode", InSummary=true, Order=240, FiveWs= new string[] {"FiveWs.why[x]"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1326,7 +1326,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the encounter takes place (reference)
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=250)]
+    [FhirElement("reasonReference", InSummary=true, Order=250, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("Condition","Procedure","Observation","ImmunizationRecommendation")]
     [Cardinality(Min=0,Max=-1)]

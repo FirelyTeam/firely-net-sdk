@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person, Location/HealthcareService or Device
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs= new string[] {"FiveWs.who"})]
       [CLSCompliant(false)]
       [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | optional | information-only
       /// </summary>
-      [FhirElement("required", InSummary=true, Order=60)]
+      [FhirElement("required", InSummary=true, Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// accepted | declined | tentative | needs-action
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=70)]
+      [FhirElement("status", InSummary=true, Order=70 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=140)]
+    [FhirElement("specialty", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize
     /// </summary>
-    [FhirElement("priority", Order=180)]
+    [FhirElement("priority", Order=180, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt PriorityElement
     {
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support the appointment
     /// </summary>
-    [FhirElement("supportingInformation", Order=200)]
+    [FhirElement("supportingInformation", Order=200, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to take place
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=210)]
+    [FhirElement("start", InSummary=true, Order=210, FiveWs= new string[] {"FiveWs.init"})]
     [DataMember]
     public Hl7.Fhir.Model.Instant StartElement
     {
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to conclude
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=220)]
+    [FhirElement("end", InSummary=true, Order=220, FiveWs= new string[] {"FiveWs.done[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {

@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential
     /// </summary>
-    [FhirElement("actuality", InSummary=true, Order=100)]
+    [FhirElement("actuality", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.class"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// product-problem | product-quality | product-use-error | wrong-dose | incorrect-prescribing-information | wrong-technique | wrong-route-of-administration | wrong-rate | wrong-duration | wrong-time | expired-drug | medical-device-use-error | problem-different-manufacturer | unsafe-physical-environment
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of the event itself in relation to the subject
     /// </summary>
-    [FhirElement("event", InSummary=true, Order=120)]
+    [FhirElement("event", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Event
     {
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject impacted by event
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.who"})]
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson")]
     [Cardinality(Min=1,Max=1)]
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=140)]
+    [FhirElement("encounter", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.init"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event was recorded
     /// </summary>
-    [FhirElement("recordedDate", InSummary=true, Order=170)]
+    [FhirElement("recordedDate", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
     {
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=230)]
+    [FhirElement("recorder", InSummary=true, Order=230, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]

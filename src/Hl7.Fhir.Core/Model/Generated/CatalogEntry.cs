@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// triggers | is-replaced-by
       /// </summary>
-      [FhirElement("relationtype", Order=40)]
+      [FhirElement("relationtype", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", Order=150)]
+    [FhirElement("status", Order=150 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

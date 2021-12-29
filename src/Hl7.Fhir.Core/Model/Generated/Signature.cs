@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical format of the signed resources
     /// </summary>
-    [FhirElement("targetFormat", Order=70)]
+    [FhirElement("targetFormat", Order=70 )]
     [DataMember]
     public Hl7.Fhir.Model.Code TargetFormatElement
     {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical format of the signature
     /// </summary>
-    [FhirElement("sigFormat", Order=80)]
+    [FhirElement("sigFormat", Order=80 )]
     [DataMember]
     public Hl7.Fhir.Model.Code SigFormatElement
     {

@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deny | permit
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// instance | related | dependents | authoredby
       /// </summary>
-      [FhirElement("meaning", InSummary=true, Order=40)]
+      [FhirElement("meaning", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for this record (external references)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | proposed | active | rejected | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the consent applies to
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130)]
+    [FhirElement("patient", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Consent was created or indexed
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=140)]
+    [FhirElement("dateTime", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is agreeing to the policy and rules
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=150)]
+    [FhirElement("performer", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
@@ -1146,7 +1146,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Custodian of the consent
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=160)]
+    [FhirElement("organization", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.witness"})]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]

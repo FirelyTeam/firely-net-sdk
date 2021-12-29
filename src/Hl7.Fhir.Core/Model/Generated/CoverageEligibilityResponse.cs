@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Performing practitioner
       /// </summary>
-      [FhirElement("provider", Order=70)]
+      [FhirElement("provider", Order=70, FiveWs= new string[] {"FiveWs.source"})]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for coverage eligiblity request
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// auth-requirements | benefits | discovery | validation
     /// </summary>
-    [FhirElement("purpose", InSummary=true, Order=110)]
+    [FhirElement("purpose", InSummary=true, Order=110 , FiveWs= new string[] {"FiveWs.class"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -979,7 +979,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended recipient of products and services
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Estimated date or dates of service
     /// </summary>
-    [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs= new string[] {"FiveWs.done[x]"})]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=140)]
+    [FhirElement("created", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.recorded"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -1042,7 +1042,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party responsible for the request
     /// </summary>
-    [FhirElement("requestor", Order=150)]
+    [FhirElement("requestor", Order=150, FiveWs= new string[] {"FiveWs.source"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Eligibility request reference
     /// </summary>
-    [FhirElement("request", InSummary=true, Order=160)]
+    [FhirElement("request", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("CoverageEligibilityRequest")]
     [Cardinality(Min=1,Max=1)]
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// queued | complete | error | partial
     /// </summary>
-    [FhirElement("outcome", InSummary=true, Order=170)]
+    [FhirElement("outcome", InSummary=true, Order=170 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

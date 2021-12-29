@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// queued | complete | error | partial
     /// </summary>
-    [FhirElement("outcome", Order=120)]
+    [FhirElement("outcome", Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer
     /// </summary>
-    [FhirElement("organization", Order=150)]
+    [FhirElement("organization", Order=150, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

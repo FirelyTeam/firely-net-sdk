@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// level1 | level2 | level3 | level4
       /// </summary>
-      [FhirElement("assurance", Order=50)]
+      [FhirElement("assurance", Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown
     /// </summary>
-    [FhirElement("gender", InSummary=true, Order=120)]
+    [FhirElement("gender", InSummary=true, Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=170)]
+    [FhirElement("active", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.status"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {

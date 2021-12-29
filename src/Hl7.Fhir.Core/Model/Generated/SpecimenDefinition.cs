@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// preferred | alternate
       /// </summary>
-      [FhirElement("preference", Order=60)]
+      [FhirElement("preference", Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]

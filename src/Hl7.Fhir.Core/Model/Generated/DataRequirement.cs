@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ascending | descending
       /// </summary>
-      [FhirElement("direction", InSummary=true, Order=40)]
+      [FhirElement("direction", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the required data
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30)]
+    [FhirElement("type", InSummary=true, Order=30 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

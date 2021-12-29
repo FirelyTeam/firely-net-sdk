@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=130)]
+    [FhirElement("provider", Order=130, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject to be enrolled
     /// </summary>
-    [FhirElement("candidate", Order=140)]
+    [FhirElement("candidate", Order=140, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]

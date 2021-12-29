@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// display | print | printoper
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for a payment reconciliation
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period covered
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=110)]
+    [FhirElement("period", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.done[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=120)]
+    [FhirElement("created", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.recorded"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party generating payment
     /// </summary>
-    [FhirElement("paymentIssuer", InSummary=true, Order=130)]
+    [FhirElement("paymentIssuer", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.source"})]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to requesting resource
     /// </summary>
-    [FhirElement("request", Order=140)]
+    [FhirElement("request", Order=140, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("Task")]
     [DataMember]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// queued | complete | error | partial
     /// </summary>
-    [FhirElement("outcome", Order=160)]
+    [FhirElement("outcome", Order=160 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement

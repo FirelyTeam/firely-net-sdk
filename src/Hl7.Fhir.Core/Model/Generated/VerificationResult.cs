@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the primary source
       /// </summary>
-      [FhirElement("who", Order=40)]
+      [FhirElement("who", Order=40, FiveWs= new string[] {"FiveWs.who"})]
       [CLSCompliant(false)]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

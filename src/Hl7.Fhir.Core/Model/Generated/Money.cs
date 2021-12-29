@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ISO 4217 Currency Code
     /// </summary>
-    [FhirElement("currency", InSummary=true, Order=40)]
+    [FhirElement("currency", InSummary=true, Order=40 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement

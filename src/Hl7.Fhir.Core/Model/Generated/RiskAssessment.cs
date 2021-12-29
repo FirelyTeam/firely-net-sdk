@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier for the assessment
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, Order=120 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation mechanism
     /// </summary>
-    [FhirElement("method", InSummary=true, Order=130)]
+    [FhirElement("method", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of assessment
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=140)]
+    [FhirElement("code", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what does assessment apply to?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where was assessment performed?
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=160)]
+    [FhirElement("encounter", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When was assessment made?
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs= new string[] {"FiveWs.done[x]"})]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who did assessment?
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=190)]
+    [FhirElement("performer", InSummary=true, Order=190, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device")]
     [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?
     /// </summary>
-    [FhirElement("reasonCode", Order=200)]
+    [FhirElement("reasonCode", Order=200, FiveWs= new string[] {"FiveWs.why[x]"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?
     /// </summary>
-    [FhirElement("reasonReference", Order=210)]
+    [FhirElement("reasonReference", Order=210, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]

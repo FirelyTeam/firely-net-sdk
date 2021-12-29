@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Fixed date for references with no specified version (transitive)
       /// </summary>
-      [FhirElement("lockedDate", InSummary=true, Order=40)]
+      [FhirElement("lockedDate", InSummary=true, Order=40, FiveWs= new string[] {"FiveWs.init"})]
       [DataMember]
       public Hl7.Fhir.Model.Date LockedDateElement
       {
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code or expression from system
       /// </summary>
-      [FhirElement("code", Order=40)]
+      [FhirElement("code", Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human language of the designation
       /// </summary>
-      [FhirElement("language", Order=40)]
+      [FhirElement("language", Order=40 )]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -799,7 +799,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A property/filter defined by the code system
       /// </summary>
-      [FhirElement("property", InSummary=true, Order=40)]
+      [FhirElement("property", InSummary=true, Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code PropertyElement
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
       /// </summary>
-      [FhirElement("op", InSummary=true, Order=50)]
+      [FhirElement("op", InSummary=true, Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1491,7 +1491,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code - if blank, this is not a selectable code
       /// </summary>
-      [FhirElement("code", Order=80)]
+      [FhirElement("code", Order=80 )]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
       {
@@ -1680,7 +1680,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this value set, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -1711,7 +1711,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the value set (business identifier)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1725,7 +1725,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the value set
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.version"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1818,7 +1818,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, Order=140 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1851,7 +1851,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1882,7 +1882,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1913,7 +1913,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.witness"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -2030,7 +2030,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this value set is defined
     /// </summary>
-    [FhirElement("purpose", Order=230)]
+    [FhirElement("purpose", Order=230, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {

@@ -164,5 +164,20 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             }
         }
 
+        [TestMethod]
+        public async Tasks.Task ValidateFiveWs()
+        {
+
+            var json = TestDataHelper.ReadTestData("test-observation.json");
+            var poco = await (new FhirJsonParser()).ParseAsync<Observation>(json);
+
+            var inspector = ModelInfo.ModelInspector;
+            var aResourceMapping = inspector.FindClassMapping(typeof(Observation));
+            var fiveWsProp = aResourceMapping.PropertyMappings.Where(p=>p.FiveWs != null && p.FiveWs.Contains("FiveWs.subject")).First();
+
+            var subjectProp = fiveWsProp.GetValue(poco) as ResourceReference;
+
+            Assert.AreEqual(subjectProp, poco.Subject);
+        }
     }
 }

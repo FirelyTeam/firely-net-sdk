@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// farenheit | celsius | kelvin
       /// </summary>
-      [FhirElement("scale", Order=60)]
+      [FhirElement("scale", Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale> ScaleElement
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// organ | tissue | fluid | cells | biologicalAgent
     /// </summary>
-    [FhirElement("productCategory", Order=100)]
+    [FhirElement("productCategory", Order=100 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory> ProductCategoryElement
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// available | unavailable
     /// </summary>
-    [FhirElement("status", Order=120)]
+    [FhirElement("status", Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus> StatusElement

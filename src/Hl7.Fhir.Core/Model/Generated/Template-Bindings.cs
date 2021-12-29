@@ -35,201 +35,261 @@ using Hl7.Fhir.Utility;
 namespace Hl7.Fhir.Model
 {
   /// <summary>
-  /// Defines behavior for an action or a group for how many times that item may be repeated.
-  /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
-  /// (system: http://hl7.org/fhir/action-cardinality-behavior)
+  /// The presentation types of notes.
+  /// (url: http://hl7.org/fhir/ValueSet/note-type)
+  /// (system: http://hl7.org/fhir/note-type)
   /// </summary>
-  [FhirEnumeration("ActionCardinalityBehavior")]
-  public enum ActionCardinalityBehavior
+  [FhirEnumeration("NoteType")]
+  public enum NoteType
   {
     /// <summary>
-    /// The action may only be selected one time.
-    /// (system: http://hl7.org/fhir/action-cardinality-behavior)
+    /// Display the note.
+    /// (system: http://hl7.org/fhir/note-type)
     /// </summary>
-    [EnumLiteral("single", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Single")]
-    Single,
+    [EnumLiteral("display", "http://hl7.org/fhir/note-type"), Description("Display")]
+    Display,
     /// <summary>
-    /// The action may be selected multiple times.
-    /// (system: http://hl7.org/fhir/action-cardinality-behavior)
+    /// Print the note on the form.
+    /// (system: http://hl7.org/fhir/note-type)
     /// </summary>
-    [EnumLiteral("multiple", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Multiple")]
-    Multiple,
+    [EnumLiteral("print", "http://hl7.org/fhir/note-type"), Description("Print (Form)")]
+    Print,
+    /// <summary>
+    /// Print the note for the operator.
+    /// (system: http://hl7.org/fhir/note-type)
+    /// </summary>
+    [EnumLiteral("printoper", "http://hl7.org/fhir/note-type"), Description("Print (Operator)")]
+    Printoper,
   }
 
   /// <summary>
-  /// Defines the kinds of conditions that can appear on actions.
-  /// (url: http://hl7.org/fhir/ValueSet/action-condition-kind)
-  /// (system: http://hl7.org/fhir/action-condition-kind)
+  /// Codes identifying the lifecycle stage of a request.
+  /// (url: http://hl7.org/fhir/ValueSet/request-status)
+  /// (system: http://hl7.org/fhir/request-status)
   /// </summary>
-  [FhirEnumeration("ActionConditionKind")]
-  public enum ActionConditionKind
+  [FhirEnumeration("RequestStatus")]
+  public enum RequestStatus
   {
     /// <summary>
-    /// The condition describes whether or not a given action is applicable.
-    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// The request has been created but is not yet complete or ready for action.
+    /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("applicability", "http://hl7.org/fhir/action-condition-kind"), Description("Applicability")]
-    Applicability,
+    [EnumLiteral("draft", "http://hl7.org/fhir/request-status"), Description("Draft")]
+    Draft,
     /// <summary>
-    /// The condition is a starting condition for the action.
-    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// The request is in force and ready to be acted upon.
+    /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("start", "http://hl7.org/fhir/action-condition-kind"), Description("Start")]
-    Start,
+    [EnumLiteral("active", "http://hl7.org/fhir/request-status"), Description("Active")]
+    Active,
     /// <summary>
-    /// The condition is a stop, or exit condition for the action.
-    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// The request (and any implicit authorization to act) has been temporarily withdrawn but is expected to resume in the future.
+    /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("stop", "http://hl7.org/fhir/action-condition-kind"), Description("Stop")]
-    Stop,
+    [EnumLiteral("on-hold", "http://hl7.org/fhir/request-status"), Description("On Hold")]
+    OnHold,
+    /// <summary>
+    /// The request (and any implicit authorization to act) has been terminated prior to the known full completion of the intended actions.  No further activity should occur.
+    /// (system: http://hl7.org/fhir/request-status)
+    /// </summary>
+    [EnumLiteral("revoked", "http://hl7.org/fhir/request-status"), Description("Revoked")]
+    Revoked,
+    /// <summary>
+    /// The activity described by the request has been fully performed.  No further activity will occur.
+    /// (system: http://hl7.org/fhir/request-status)
+    /// </summary>
+    [EnumLiteral("completed", "http://hl7.org/fhir/request-status"), Description("Completed")]
+    Completed,
+    /// <summary>
+    /// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be "revoked" rather than "entered-in-error".).
+    /// (system: http://hl7.org/fhir/request-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/request-status"), Description("Entered in Error")]
+    EnteredInError,
+    /// <summary>
+    /// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
+    /// (system: http://hl7.org/fhir/request-status)
+    /// </summary>
+    [EnumLiteral("unknown", "http://hl7.org/fhir/request-status"), Description("Unknown")]
+    Unknown,
   }
 
   /// <summary>
-  /// Defines organization behavior of a group.
-  /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
-  /// (system: http://hl7.org/fhir/action-grouping-behavior)
+  /// Codes identifying the lifecycle stage of an event.
+  /// (url: http://hl7.org/fhir/ValueSet/event-status)
+  /// (system: http://hl7.org/fhir/event-status)
   /// </summary>
-  [FhirEnumeration("ActionGroupingBehavior")]
-  public enum ActionGroupingBehavior
+  [FhirEnumeration("EventStatus")]
+  public enum EventStatus
   {
     /// <summary>
-    /// Any group marked with this behavior should be displayed as a visual group to the end user.
-    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// The core event has not started yet, but some staging activities have begun (e.g. surgical suite preparation).  Preparation stages may be tracked for billing purposes.
+    /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("visual-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Visual Group")]
-    VisualGroup,
+    [EnumLiteral("preparation", "http://hl7.org/fhir/event-status"), Description("Preparation")]
+    Preparation,
     /// <summary>
-    /// A group with this behavior logically groups its sub-elements, and may be shown as a visual group to the end user, but it is not required to do so.
-    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// The event is currently occurring.
+    /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("logical-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Logical Group")]
-    LogicalGroup,
+    [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
+    InProgress,
     /// <summary>
-    /// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are "aspirin, 500 mg, 2 times per day" and "aspirin, 300 mg, 3 times per day". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of "AtMostOne", unless it's a required action, in which case, it would be "ExactlyOne".
-    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
+    /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("sentence-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Sentence Group")]
-    SentenceGroup,
+    [EnumLiteral("not-done", "http://hl7.org/fhir/event-status"), Description("Not Done")]
+    NotDone,
+    /// <summary>
+    /// The event has been temporarily stopped but is expected to resume in the future.
+    /// (system: http://hl7.org/fhir/event-status)
+    /// </summary>
+    [EnumLiteral("on-hold", "http://hl7.org/fhir/event-status"), Description("On Hold")]
+    OnHold,
+    /// <summary>
+    /// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
+    /// (system: http://hl7.org/fhir/event-status)
+    /// </summary>
+    [EnumLiteral("stopped", "http://hl7.org/fhir/event-status"), Description("Stopped")]
+    Stopped,
+    /// <summary>
+    /// The event has now concluded.
+    /// (system: http://hl7.org/fhir/event-status)
+    /// </summary>
+    [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+    Completed,
+    /// <summary>
+    /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
+    /// (system: http://hl7.org/fhir/event-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+    EnteredInError,
+    /// <summary>
+    /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
+    /// (system: http://hl7.org/fhir/event-status)
+    /// </summary>
+    [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
+    Unknown,
   }
 
   /// <summary>
-  /// The type of participant for the action.
-  /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
-  /// (system: http://hl7.org/fhir/action-participant-type)
+  /// Codes providing the status of an observation.
+  /// (url: http://hl7.org/fhir/ValueSet/observation-status)
+  /// (system: http://hl7.org/fhir/observation-status)
   /// </summary>
-  [FhirEnumeration("ActionParticipantType")]
-  public enum ActionParticipantType
+  [FhirEnumeration("ObservationStatus")]
+  public enum ObservationStatus
   {
     /// <summary>
-    /// The participant is the patient under evaluation.
-    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// The existence of the observation is registered, but there is no result yet available.
+    /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("patient", "http://hl7.org/fhir/action-participant-type"), Description("Patient")]
-    Patient,
+    [EnumLiteral("registered", "http://hl7.org/fhir/observation-status"), Description("Registered")]
+    Registered,
     /// <summary>
-    /// The participant is a practitioner involved in the patient's care.
-    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// This is an initial or interim observation: data may be incomplete or unverified.
+    /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("practitioner", "http://hl7.org/fhir/action-participant-type"), Description("Practitioner")]
-    Practitioner,
+    [EnumLiteral("preliminary", "http://hl7.org/fhir/observation-status"), Description("Preliminary")]
+    Preliminary,
     /// <summary>
-    /// The participant is a person related to the patient.
-    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
+    /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("related-person", "http://hl7.org/fhir/action-participant-type"), Description("Related Person")]
-    RelatedPerson,
+    [EnumLiteral("final", "http://hl7.org/fhir/observation-status"), Description("Final")]
+    Final,
     /// <summary>
-    /// The participant is a system or device used in the care of the patient.
-    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections.
+    /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("device", "http://hl7.org/fhir/action-participant-type"), Description("Device")]
-    Device,
+    [EnumLiteral("amended", "http://hl7.org/fhir/observation-status"), Description("Amended")]
+    Amended,
+    /// <summary>
+    /// Subsequent to being Final, the observation has been modified to correct an error in the test result.
+    /// (system: http://hl7.org/fhir/observation-status)
+    /// </summary>
+    [EnumLiteral("corrected", "http://hl7.org/fhir/observation-status"), Description("Corrected")]
+    Corrected,
+    /// <summary>
+    /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+    /// (system: http://hl7.org/fhir/observation-status)
+    /// </summary>
+    [EnumLiteral("cancelled", "http://hl7.org/fhir/observation-status"), Description("Cancelled")]
+    Cancelled,
+    /// <summary>
+    /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
+    /// (system: http://hl7.org/fhir/observation-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/observation-status"), Description("Entered in Error")]
+    EnteredInError,
+    /// <summary>
+    /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
+    /// (system: http://hl7.org/fhir/observation-status)
+    /// </summary>
+    [EnumLiteral("unknown", "http://hl7.org/fhir/observation-status"), Description("Unknown")]
+    Unknown,
   }
 
   /// <summary>
-  /// Defines selection frequency behavior for an action or group.
-  /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
-  /// (system: http://hl7.org/fhir/action-precheck-behavior)
+  /// The processing mode that applies to this list.
+  /// (url: http://hl7.org/fhir/ValueSet/list-mode)
+  /// (system: http://hl7.org/fhir/list-mode)
   /// </summary>
-  [FhirEnumeration("ActionPrecheckBehavior")]
-  public enum ActionPrecheckBehavior
+  [FhirEnumeration("ListMode")]
+  public enum ListMode
   {
     /// <summary>
-    /// An action with this behavior is one of the most frequent action that is, or should be, included by an end user, for the particular context in which the action occurs. The system displaying the action to the end user should consider "pre-checking" such an action as a convenience for the user.
-    /// (system: http://hl7.org/fhir/action-precheck-behavior)
+    /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes.
+    /// (system: http://hl7.org/fhir/list-mode)
     /// </summary>
-    [EnumLiteral("yes", "http://hl7.org/fhir/action-precheck-behavior"), Description("Yes")]
-    Yes,
+    [EnumLiteral("working", "http://hl7.org/fhir/list-mode"), Description("Working List")]
+    Working,
     /// <summary>
-    /// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not "pre-check" such an action.
-    /// (system: http://hl7.org/fhir/action-precheck-behavior)
+    /// This list was prepared as a snapshot. It should not be assumed to be current.
+    /// (system: http://hl7.org/fhir/list-mode)
     /// </summary>
-    [EnumLiteral("no", "http://hl7.org/fhir/action-precheck-behavior"), Description("No")]
-    No,
+    [EnumLiteral("snapshot", "http://hl7.org/fhir/list-mode"), Description("Snapshot List")]
+    Snapshot,
+    /// <summary>
+    /// A point-in-time list that shows what changes have been made or recommended.  E.g. a discharge medication list showing what was added and removed during an encounter.
+    /// (system: http://hl7.org/fhir/list-mode)
+    /// </summary>
+    [EnumLiteral("changes", "http://hl7.org/fhir/list-mode"), Description("Change List")]
+    Changes,
   }
 
   /// <summary>
-  /// Defines the types of relationships between actions.
-  /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
-  /// (system: http://hl7.org/fhir/action-relationship-type)
+  /// Indication of the degree of conformance expectations associated with a binding.
+  /// (url: http://hl7.org/fhir/ValueSet/binding-strength)
+  /// (system: http://hl7.org/fhir/binding-strength)
   /// </summary>
-  [FhirEnumeration("ActionRelationshipType")]
-  public enum ActionRelationshipType
+  [FhirEnumeration("BindingStrength")]
+  public enum BindingStrength
   {
     /// <summary>
-    /// The action must be performed before the start of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// To be conformant, the concept in this element SHALL be from the specified value set.
+    /// (system: http://hl7.org/fhir/binding-strength)
     /// </summary>
-    [EnumLiteral("before-start", "http://hl7.org/fhir/action-relationship-type"), Description("Before Start")]
-    BeforeStart,
+    [EnumLiteral("required", "http://hl7.org/fhir/binding-strength"), Description("Required")]
+    Required,
     /// <summary>
-    /// The action must be performed before the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// To be conformant, the concept in this element SHALL be from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.
+    /// (system: http://hl7.org/fhir/binding-strength)
     /// </summary>
-    [EnumLiteral("before", "http://hl7.org/fhir/action-relationship-type"), Description("Before")]
-    Before,
+    [EnumLiteral("extensible", "http://hl7.org/fhir/binding-strength"), Description("Extensible")]
+    Extensible,
     /// <summary>
-    /// The action must be performed before the end of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
+    /// (system: http://hl7.org/fhir/binding-strength)
     /// </summary>
-    [EnumLiteral("before-end", "http://hl7.org/fhir/action-relationship-type"), Description("Before End")]
-    BeforeEnd,
+    [EnumLiteral("preferred", "http://hl7.org/fhir/binding-strength"), Description("Preferred")]
+    Preferred,
     /// <summary>
-    /// The action must be performed concurrent with the start of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.
+    /// (system: http://hl7.org/fhir/binding-strength)
     /// </summary>
-    [EnumLiteral("concurrent-with-start", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With Start")]
-    ConcurrentWithStart,
-    /// <summary>
-    /// The action must be performed concurrent with the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
-    /// </summary>
-    [EnumLiteral("concurrent", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent")]
-    Concurrent,
-    /// <summary>
-    /// The action must be performed concurrent with the end of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
-    /// </summary>
-    [EnumLiteral("concurrent-with-end", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With End")]
-    ConcurrentWithEnd,
-    /// <summary>
-    /// The action must be performed after the start of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
-    /// </summary>
-    [EnumLiteral("after-start", "http://hl7.org/fhir/action-relationship-type"), Description("After Start")]
-    AfterStart,
-    /// <summary>
-    /// The action must be performed after the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
-    /// </summary>
-    [EnumLiteral("after", "http://hl7.org/fhir/action-relationship-type"), Description("After")]
-    After,
-    /// <summary>
-    /// The action must be performed after the end of the related action.
-    /// (system: http://hl7.org/fhir/action-relationship-type)
-    /// </summary>
-    [EnumLiteral("after-end", "http://hl7.org/fhir/action-relationship-type"), Description("After End")]
-    AfterEnd,
+    [EnumLiteral("example", "http://hl7.org/fhir/binding-strength"), Description("Example")]
+    Example,
   }
 
   /// <summary>
@@ -261,83 +321,65 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// Defines selection behavior of a group.
-  /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
-  /// (system: http://hl7.org/fhir/action-selection-behavior)
+  /// Which type a compartment definition describes.
+  /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
+  /// (system: http://hl7.org/fhir/compartment-type)
   /// </summary>
-  [FhirEnumeration("ActionSelectionBehavior")]
-  public enum ActionSelectionBehavior
+  [FhirEnumeration("CompartmentType")]
+  public enum CompartmentType
   {
     /// <summary>
-    /// Any number of the actions in the group may be chosen, from zero to all.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// The compartment definition is for the patient compartment.
+    /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("any", "http://hl7.org/fhir/action-selection-behavior"), Description("Any")]
-    Any,
+    [EnumLiteral("Patient", "http://hl7.org/fhir/compartment-type"), Description("Patient")]
+    Patient,
     /// <summary>
-    /// All the actions in the group must be selected as a single unit.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// The compartment definition is for the encounter compartment.
+    /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("all", "http://hl7.org/fhir/action-selection-behavior"), Description("All")]
-    All,
+    [EnumLiteral("Encounter", "http://hl7.org/fhir/compartment-type"), Description("Encounter")]
+    Encounter,
     /// <summary>
-    /// All the actions in the group are meant to be chosen as a single unit: either all must be selected by the end user, or none may be selected.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// The compartment definition is for the related-person compartment.
+    /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("all-or-none", "http://hl7.org/fhir/action-selection-behavior"), Description("All Or None")]
-    AllOrNone,
+    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/compartment-type"), Description("RelatedPerson")]
+    RelatedPerson,
     /// <summary>
-    /// The end user must choose one and only one of the selectable actions in the group. The user SHALL NOT choose none of the actions in the group.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// The compartment definition is for the practitioner compartment.
+    /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("exactly-one", "http://hl7.org/fhir/action-selection-behavior"), Description("Exactly One")]
-    ExactlyOne,
+    [EnumLiteral("Practitioner", "http://hl7.org/fhir/compartment-type"), Description("Practitioner")]
+    Practitioner,
     /// <summary>
-    /// The end user may choose zero or at most one of the actions in the group.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// The compartment definition is for the device compartment.
+    /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("at-most-one", "http://hl7.org/fhir/action-selection-behavior"), Description("At Most One")]
-    AtMostOne,
-    /// <summary>
-    /// The end user must choose a minimum of one, and as many additional as desired.
-    /// (system: http://hl7.org/fhir/action-selection-behavior)
-    /// </summary>
-    [EnumLiteral("one-or-more", "http://hl7.org/fhir/action-selection-behavior"), Description("One Or More")]
-    OneOrMore,
+    [EnumLiteral("Device", "http://hl7.org/fhir/compartment-type"), Description("Device")]
+    Device,
   }
 
   /// <summary>
-  /// The gender of a person used for administrative purposes.
-  /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
-  /// (system: http://hl7.org/fhir/administrative-gender)
+  /// Observation values that indicate what change in a measurement value or score is indicative of an improvement in the measured item or scored issue.
+  /// (url: http://hl7.org/fhir/ValueSet/measure-improvement-notation)
+  /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
   /// </summary>
-  [FhirEnumeration("AdministrativeGender")]
-  public enum AdministrativeGender
+  [FhirEnumeration("MeasureImprovementNotation")]
+  public enum MeasureImprovementNotation
   {
     /// <summary>
-    /// Male.
-    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// Improvement is indicated as an increase in the score or measurement (e.g. Higher score indicates better quality).
+    /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
     /// </summary>
-    [EnumLiteral("male", "http://hl7.org/fhir/administrative-gender"), Description("Male")]
-    Male,
+    [EnumLiteral("increase", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Increased score indicates improvement")]
+    Increase,
     /// <summary>
-    /// Female.
-    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// Improvement is indicated as a decrease in the score or measurement (e.g. Lower score indicates better quality).
+    /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
     /// </summary>
-    [EnumLiteral("female", "http://hl7.org/fhir/administrative-gender"), Description("Female")]
-    Female,
-    /// <summary>
-    /// Other.
-    /// (system: http://hl7.org/fhir/administrative-gender)
-    /// </summary>
-    [EnumLiteral("other", "http://hl7.org/fhir/administrative-gender"), Description("Other")]
-    Other,
-    /// <summary>
-    /// Unknown.
-    /// (system: http://hl7.org/fhir/administrative-gender)
-    /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/administrative-gender"), Description("Unknown")]
-    Unknown,
+    [EnumLiteral("decrease", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Decreased score indicates improvement")]
+    Decrease,
   }
 
   /// <summary>
@@ -1631,40 +1673,6 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// Indication of the degree of conformance expectations associated with a binding.
-  /// (url: http://hl7.org/fhir/ValueSet/binding-strength)
-  /// (system: http://hl7.org/fhir/binding-strength)
-  /// </summary>
-  [FhirEnumeration("BindingStrength")]
-  public enum BindingStrength
-  {
-    /// <summary>
-    /// To be conformant, the concept in this element SHALL be from the specified value set.
-    /// (system: http://hl7.org/fhir/binding-strength)
-    /// </summary>
-    [EnumLiteral("required", "http://hl7.org/fhir/binding-strength"), Description("Required")]
-    Required,
-    /// <summary>
-    /// To be conformant, the concept in this element SHALL be from the specified value set if any of the codes within the value set can apply to the concept being communicated.  If the value set does not cover the concept (based on human review), alternate codings (or, data type allowing, text) may be included instead.
-    /// (system: http://hl7.org/fhir/binding-strength)
-    /// </summary>
-    [EnumLiteral("extensible", "http://hl7.org/fhir/binding-strength"), Description("Extensible")]
-    Extensible,
-    /// <summary>
-    /// Instances are encouraged to draw from the specified codes for interoperability purposes but are not required to do so to be considered conformant.
-    /// (system: http://hl7.org/fhir/binding-strength)
-    /// </summary>
-    [EnumLiteral("preferred", "http://hl7.org/fhir/binding-strength"), Description("Preferred")]
-    Preferred,
-    /// <summary>
-    /// Instances are not expected or even encouraged to draw from the specified value set.  The value set merely provides examples of the types of concepts intended to be included.
-    /// (system: http://hl7.org/fhir/binding-strength)
-    /// </summary>
-    [EnumLiteral("example", "http://hl7.org/fhir/binding-strength"), Description("Example")]
-    Example,
-  }
-
-  /// <summary>
   /// How a capability statement is intended to be used.
   /// (url: http://hl7.org/fhir/ValueSet/capability-statement-kind)
   /// (system: http://hl7.org/fhir/capability-statement-kind)
@@ -1693,71 +1701,81 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// The purpose of the Claim: predetermination, preauthorization, claim.
-  /// (url: http://hl7.org/fhir/ValueSet/claim-use)
-  /// (system: http://hl7.org/fhir/claim-use)
+  /// Defines behavior for an action or a group for how many times that item may be repeated.
+  /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
+  /// (system: http://hl7.org/fhir/action-cardinality-behavior)
   /// </summary>
-  [FhirEnumeration("Use")]
-  public enum Use
+  [FhirEnumeration("ActionCardinalityBehavior")]
+  public enum ActionCardinalityBehavior
   {
     /// <summary>
-    /// The treatment is complete and this represents a Claim for the services.
-    /// (system: http://hl7.org/fhir/claim-use)
+    /// The action may only be selected one time.
+    /// (system: http://hl7.org/fhir/action-cardinality-behavior)
     /// </summary>
-    [EnumLiteral("claim", "http://hl7.org/fhir/claim-use"), Description("Claim")]
-    Claim,
+    [EnumLiteral("single", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Single")]
+    Single,
     /// <summary>
-    /// The treatment is proposed and this represents a Pre-authorization for the services.
-    /// (system: http://hl7.org/fhir/claim-use)
+    /// The action may be selected multiple times.
+    /// (system: http://hl7.org/fhir/action-cardinality-behavior)
     /// </summary>
-    [EnumLiteral("preauthorization", "http://hl7.org/fhir/claim-use"), Description("Preauthorization")]
-    Preauthorization,
-    /// <summary>
-    /// The treatment is proposed and this represents a Pre-determination for the services.
-    /// (system: http://hl7.org/fhir/claim-use)
-    /// </summary>
-    [EnumLiteral("predetermination", "http://hl7.org/fhir/claim-use"), Description("Predetermination")]
-    Predetermination,
+    [EnumLiteral("multiple", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Multiple")]
+    Multiple,
   }
 
   /// <summary>
-  /// Which type a compartment definition describes.
-  /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
-  /// (system: http://hl7.org/fhir/compartment-type)
+  /// Defines selection frequency behavior for an action or group.
+  /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
+  /// (system: http://hl7.org/fhir/action-precheck-behavior)
   /// </summary>
-  [FhirEnumeration("CompartmentType")]
-  public enum CompartmentType
+  [FhirEnumeration("ActionPrecheckBehavior")]
+  public enum ActionPrecheckBehavior
   {
     /// <summary>
-    /// The compartment definition is for the patient compartment.
-    /// (system: http://hl7.org/fhir/compartment-type)
+    /// An action with this behavior is one of the most frequent action that is, or should be, included by an end user, for the particular context in which the action occurs. The system displaying the action to the end user should consider "pre-checking" such an action as a convenience for the user.
+    /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
-    [EnumLiteral("Patient", "http://hl7.org/fhir/compartment-type"), Description("Patient")]
-    Patient,
+    [EnumLiteral("yes", "http://hl7.org/fhir/action-precheck-behavior"), Description("Yes")]
+    Yes,
     /// <summary>
-    /// The compartment definition is for the encounter compartment.
-    /// (system: http://hl7.org/fhir/compartment-type)
+    /// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not "pre-check" such an action.
+    /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
-    [EnumLiteral("Encounter", "http://hl7.org/fhir/compartment-type"), Description("Encounter")]
-    Encounter,
+    [EnumLiteral("no", "http://hl7.org/fhir/action-precheck-behavior"), Description("No")]
+    No,
+  }
+
+  /// <summary>
+  /// The Participation status of an appointment.
+  /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
+  /// (system: http://hl7.org/fhir/participationstatus)
+  /// </summary>
+  [FhirEnumeration("ParticipationStatus")]
+  public enum ParticipationStatus
+  {
     /// <summary>
-    /// The compartment definition is for the related-person compartment.
-    /// (system: http://hl7.org/fhir/compartment-type)
+    /// The participant has accepted the appointment.
+    /// (system: http://hl7.org/fhir/participationstatus)
     /// </summary>
-    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/compartment-type"), Description("RelatedPerson")]
-    RelatedPerson,
+    [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
+    Accepted,
     /// <summary>
-    /// The compartment definition is for the practitioner compartment.
-    /// (system: http://hl7.org/fhir/compartment-type)
+    /// The participant has declined the appointment and will not participate in the appointment.
+    /// (system: http://hl7.org/fhir/participationstatus)
     /// </summary>
-    [EnumLiteral("Practitioner", "http://hl7.org/fhir/compartment-type"), Description("Practitioner")]
-    Practitioner,
+    [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
+    Declined,
     /// <summary>
-    /// The compartment definition is for the device compartment.
-    /// (system: http://hl7.org/fhir/compartment-type)
+    /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
+    /// (system: http://hl7.org/fhir/participationstatus)
     /// </summary>
-    [EnumLiteral("Device", "http://hl7.org/fhir/compartment-type"), Description("Device")]
-    Device,
+    [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
+    Tentative,
+    /// <summary>
+    /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
+    /// (system: http://hl7.org/fhir/participationstatus)
+    /// </summary>
+    [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
+    NeedsAction,
   }
 
   /// <summary>
@@ -1792,6 +1810,520 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [EnumLiteral("entered-in-error", "http://hl7.org/fhir/composition-status"), Description("Entered in Error")]
     EnteredInError,
+  }
+
+  /// <summary>
+  /// The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive).
+  /// (url: http://hl7.org/fhir/ValueSet/variable-type)
+  /// (system: http://hl7.org/fhir/variable-type)
+  /// </summary>
+  [FhirEnumeration("EvidenceVariableType")]
+  public enum EvidenceVariableType
+  {
+    /// <summary>
+    /// The variable is dichotomous, such as present or absent.
+    /// (system: http://hl7.org/fhir/variable-type)
+    /// </summary>
+    [EnumLiteral("dichotomous", "http://hl7.org/fhir/variable-type"), Description("Dichotomous")]
+    Dichotomous,
+    /// <summary>
+    /// The variable is a continuous result such as a quantity.
+    /// (system: http://hl7.org/fhir/variable-type)
+    /// </summary>
+    [EnumLiteral("continuous", "http://hl7.org/fhir/variable-type"), Description("Continuous")]
+    Continuous,
+    /// <summary>
+    /// The variable is described narratively rather than quantitatively.
+    /// (system: http://hl7.org/fhir/variable-type)
+    /// </summary>
+    [EnumLiteral("descriptive", "http://hl7.org/fhir/variable-type"), Description("Descriptive")]
+    Descriptive,
+  }
+
+  /// <summary>
+  /// Defines organization behavior of a group.
+  /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
+  /// (system: http://hl7.org/fhir/action-grouping-behavior)
+  /// </summary>
+  [FhirEnumeration("ActionGroupingBehavior")]
+  public enum ActionGroupingBehavior
+  {
+    /// <summary>
+    /// Any group marked with this behavior should be displayed as a visual group to the end user.
+    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// </summary>
+    [EnumLiteral("visual-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Visual Group")]
+    VisualGroup,
+    /// <summary>
+    /// A group with this behavior logically groups its sub-elements, and may be shown as a visual group to the end user, but it is not required to do so.
+    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// </summary>
+    [EnumLiteral("logical-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Logical Group")]
+    LogicalGroup,
+    /// <summary>
+    /// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are "aspirin, 500 mg, 2 times per day" and "aspirin, 300 mg, 3 times per day". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of "AtMostOne", unless it's a required action, in which case, it would be "ExactlyOne".
+    /// (system: http://hl7.org/fhir/action-grouping-behavior)
+    /// </summary>
+    [EnumLiteral("sentence-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Sentence Group")]
+    SentenceGroup,
+  }
+
+  /// <summary>
+  /// Defines the types of relationships between actions.
+  /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
+  /// (system: http://hl7.org/fhir/action-relationship-type)
+  /// </summary>
+  [FhirEnumeration("ActionRelationshipType")]
+  public enum ActionRelationshipType
+  {
+    /// <summary>
+    /// The action must be performed before the start of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("before-start", "http://hl7.org/fhir/action-relationship-type"), Description("Before Start")]
+    BeforeStart,
+    /// <summary>
+    /// The action must be performed before the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("before", "http://hl7.org/fhir/action-relationship-type"), Description("Before")]
+    Before,
+    /// <summary>
+    /// The action must be performed before the end of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("before-end", "http://hl7.org/fhir/action-relationship-type"), Description("Before End")]
+    BeforeEnd,
+    /// <summary>
+    /// The action must be performed concurrent with the start of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("concurrent-with-start", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With Start")]
+    ConcurrentWithStart,
+    /// <summary>
+    /// The action must be performed concurrent with the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("concurrent", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent")]
+    Concurrent,
+    /// <summary>
+    /// The action must be performed concurrent with the end of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("concurrent-with-end", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With End")]
+    ConcurrentWithEnd,
+    /// <summary>
+    /// The action must be performed after the start of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("after-start", "http://hl7.org/fhir/action-relationship-type"), Description("After Start")]
+    AfterStart,
+    /// <summary>
+    /// The action must be performed after the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("after", "http://hl7.org/fhir/action-relationship-type"), Description("After")]
+    After,
+    /// <summary>
+    /// The action must be performed after the end of the related action.
+    /// (system: http://hl7.org/fhir/action-relationship-type)
+    /// </summary>
+    [EnumLiteral("after-end", "http://hl7.org/fhir/action-relationship-type"), Description("After End")]
+    AfterEnd,
+  }
+
+  /// <summary>
+  /// The type of participant for the action.
+  /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
+  /// (system: http://hl7.org/fhir/action-participant-type)
+  /// </summary>
+  [FhirEnumeration("ActionParticipantType")]
+  public enum ActionParticipantType
+  {
+    /// <summary>
+    /// The participant is the patient under evaluation.
+    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// </summary>
+    [EnumLiteral("patient", "http://hl7.org/fhir/action-participant-type"), Description("Patient")]
+    Patient,
+    /// <summary>
+    /// The participant is a practitioner involved in the patient's care.
+    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// </summary>
+    [EnumLiteral("practitioner", "http://hl7.org/fhir/action-participant-type"), Description("Practitioner")]
+    Practitioner,
+    /// <summary>
+    /// The participant is a person related to the patient.
+    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// </summary>
+    [EnumLiteral("related-person", "http://hl7.org/fhir/action-participant-type"), Description("Related Person")]
+    RelatedPerson,
+    /// <summary>
+    /// The participant is a system or device used in the care of the patient.
+    /// (system: http://hl7.org/fhir/action-participant-type)
+    /// </summary>
+    [EnumLiteral("device", "http://hl7.org/fhir/action-participant-type"), Description("Device")]
+    Device,
+  }
+
+  /// <summary>
+  /// This value set includes Status codes.
+  /// (url: http://hl7.org/fhir/ValueSet/fm-status)
+  /// (system: http://hl7.org/fhir/fm-status)
+  /// </summary>
+  [FhirEnumeration("FinancialResourceStatusCodes")]
+  public enum FinancialResourceStatusCodes
+  {
+    /// <summary>
+    /// The instance is currently in-force.
+    /// (system: http://hl7.org/fhir/fm-status)
+    /// </summary>
+    [EnumLiteral("active", "http://hl7.org/fhir/fm-status"), Description("Active")]
+    Active,
+    /// <summary>
+    /// The instance is withdrawn, rescinded or reversed.
+    /// (system: http://hl7.org/fhir/fm-status)
+    /// </summary>
+    [EnumLiteral("cancelled", "http://hl7.org/fhir/fm-status"), Description("Cancelled")]
+    Cancelled,
+    /// <summary>
+    /// A new instance the contents of which is not complete.
+    /// (system: http://hl7.org/fhir/fm-status)
+    /// </summary>
+    [EnumLiteral("draft", "http://hl7.org/fhir/fm-status"), Description("Draft")]
+    Draft,
+    /// <summary>
+    /// The instance was entered in error.
+    /// (system: http://hl7.org/fhir/fm-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/fm-status"), Description("Entered in Error")]
+    EnteredInError,
+  }
+
+  /// <summary>
+  /// Defines selection behavior of a group.
+  /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
+  /// (system: http://hl7.org/fhir/action-selection-behavior)
+  /// </summary>
+  [FhirEnumeration("ActionSelectionBehavior")]
+  public enum ActionSelectionBehavior
+  {
+    /// <summary>
+    /// Any number of the actions in the group may be chosen, from zero to all.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("any", "http://hl7.org/fhir/action-selection-behavior"), Description("Any")]
+    Any,
+    /// <summary>
+    /// All the actions in the group must be selected as a single unit.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("all", "http://hl7.org/fhir/action-selection-behavior"), Description("All")]
+    All,
+    /// <summary>
+    /// All the actions in the group are meant to be chosen as a single unit: either all must be selected by the end user, or none may be selected.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("all-or-none", "http://hl7.org/fhir/action-selection-behavior"), Description("All Or None")]
+    AllOrNone,
+    /// <summary>
+    /// The end user must choose one and only one of the selectable actions in the group. The user SHALL NOT choose none of the actions in the group.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("exactly-one", "http://hl7.org/fhir/action-selection-behavior"), Description("Exactly One")]
+    ExactlyOne,
+    /// <summary>
+    /// The end user may choose zero or at most one of the actions in the group.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("at-most-one", "http://hl7.org/fhir/action-selection-behavior"), Description("At Most One")]
+    AtMostOne,
+    /// <summary>
+    /// The end user must choose a minimum of one, and as many additional as desired.
+    /// (system: http://hl7.org/fhir/action-selection-behavior)
+    /// </summary>
+    [EnumLiteral("one-or-more", "http://hl7.org/fhir/action-selection-behavior"), Description("One Or More")]
+    OneOrMore,
+  }
+
+  /// <summary>
+  /// The status of the document reference.
+  /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
+  /// (system: http://hl7.org/fhir/document-reference-status)
+  /// </summary>
+  [FhirEnumeration("DocumentReferenceStatus")]
+  public enum DocumentReferenceStatus
+  {
+    /// <summary>
+    /// This is the current reference for this document.
+    /// (system: http://hl7.org/fhir/document-reference-status)
+    /// </summary>
+    [EnumLiteral("current", "http://hl7.org/fhir/document-reference-status"), Description("Current")]
+    Current,
+    /// <summary>
+    /// This reference has been superseded by another reference.
+    /// (system: http://hl7.org/fhir/document-reference-status)
+    /// </summary>
+    [EnumLiteral("superseded", "http://hl7.org/fhir/document-reference-status"), Description("Superseded")]
+    Superseded,
+    /// <summary>
+    /// This reference was created in error.
+    /// (system: http://hl7.org/fhir/document-reference-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/document-reference-status"), Description("Entered in Error")]
+    EnteredInError,
+  }
+
+  /// <summary>
+  /// HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
+  /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
+  /// (system: http://hl7.org/fhir/messageheader-response-request)
+  /// </summary>
+  [FhirEnumeration("messageheader-response-request")]
+  public enum messageheader_response_request
+  {
+    /// <summary>
+    /// initiator expects a response for this message.
+    /// (system: http://hl7.org/fhir/messageheader-response-request)
+    /// </summary>
+    [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
+    Always,
+    /// <summary>
+    /// initiator expects a response only if in error.
+    /// (system: http://hl7.org/fhir/messageheader-response-request)
+    /// </summary>
+    [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
+    OnError,
+    /// <summary>
+    /// initiator does not expect a response.
+    /// (system: http://hl7.org/fhir/messageheader-response-request)
+    /// </summary>
+    [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
+    Never,
+    /// <summary>
+    /// initiator expects a response only if successful.
+    /// (system: http://hl7.org/fhir/messageheader-response-request)
+    /// </summary>
+    [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
+    OnSuccess,
+  }
+
+  /// <summary>
+  /// The type of name the device is referred by.
+  /// (url: http://hl7.org/fhir/ValueSet/device-nametype)
+  /// (system: http://hl7.org/fhir/device-nametype)
+  /// </summary>
+  [FhirEnumeration("DeviceNameType")]
+  public enum DeviceNameType
+  {
+    /// <summary>
+    /// UDI Label name.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("udi-label-name", "http://hl7.org/fhir/device-nametype"), Description("UDI Label name")]
+    UdiLabelName,
+    /// <summary>
+    /// User Friendly name.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("user-friendly-name", "http://hl7.org/fhir/device-nametype"), Description("User Friendly name")]
+    UserFriendlyName,
+    /// <summary>
+    /// Patient Reported name.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("patient-reported-name", "http://hl7.org/fhir/device-nametype"), Description("Patient Reported name")]
+    PatientReportedName,
+    /// <summary>
+    /// Manufacturer name.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("manufacturer-name", "http://hl7.org/fhir/device-nametype"), Description("Manufacturer name")]
+    ManufacturerName,
+    /// <summary>
+    /// Model name.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("model-name", "http://hl7.org/fhir/device-nametype"), Description("Model name")]
+    ModelName,
+    /// <summary>
+    /// other.
+    /// (system: http://hl7.org/fhir/device-nametype)
+    /// </summary>
+    [EnumLiteral("other", "http://hl7.org/fhir/device-nametype"), Description("other")]
+    Other,
+  }
+
+  /// <summary>
+  /// Possible group measure aggregates (E.g. Mean, Median).
+  /// (url: http://hl7.org/fhir/ValueSet/group-measure)
+  /// (system: http://hl7.org/fhir/group-measure)
+  /// </summary>
+  [FhirEnumeration("GroupMeasure")]
+  public enum GroupMeasure
+  {
+    /// <summary>
+    /// Aggregated using Mean of participant values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("mean", "http://hl7.org/fhir/group-measure"), Description("Mean")]
+    Mean,
+    /// <summary>
+    /// Aggregated using Median of participant values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("median", "http://hl7.org/fhir/group-measure"), Description("Median")]
+    Median,
+    /// <summary>
+    /// Aggregated using Mean of study mean values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("mean-of-mean", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Means")]
+    MeanOfMean,
+    /// <summary>
+    /// Aggregated using Mean of study median values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("mean-of-median", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Medins")]
+    MeanOfMedian,
+    /// <summary>
+    /// Aggregated using Median of study mean values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("median-of-mean", "http://hl7.org/fhir/group-measure"), Description("Median of Study Means")]
+    MedianOfMean,
+    /// <summary>
+    /// Aggregated using Median of study median values.
+    /// (system: http://hl7.org/fhir/group-measure)
+    /// </summary>
+    [EnumLiteral("median-of-median", "http://hl7.org/fhir/group-measure"), Description("Median of Study Medians")]
+    MedianOfMedian,
+  }
+
+  /// <summary>
+  /// Defines the kinds of conditions that can appear on actions.
+  /// (url: http://hl7.org/fhir/ValueSet/action-condition-kind)
+  /// (system: http://hl7.org/fhir/action-condition-kind)
+  /// </summary>
+  [FhirEnumeration("ActionConditionKind")]
+  public enum ActionConditionKind
+  {
+    /// <summary>
+    /// The condition describes whether or not a given action is applicable.
+    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// </summary>
+    [EnumLiteral("applicability", "http://hl7.org/fhir/action-condition-kind"), Description("Applicability")]
+    Applicability,
+    /// <summary>
+    /// The condition is a starting condition for the action.
+    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// </summary>
+    [EnumLiteral("start", "http://hl7.org/fhir/action-condition-kind"), Description("Start")]
+    Start,
+    /// <summary>
+    /// The condition is a stop, or exit condition for the action.
+    /// (system: http://hl7.org/fhir/action-condition-kind)
+    /// </summary>
+    [EnumLiteral("stop", "http://hl7.org/fhir/action-condition-kind"), Description("Stop")]
+    Stop,
+  }
+
+  /// <summary>
+  /// Data types allowed to be used for search parameters.
+  /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
+  /// (system: http://hl7.org/fhir/search-param-type)
+  /// </summary>
+  [FhirEnumeration("SearchParamType")]
+  public enum SearchParamType
+  {
+    /// <summary>
+    /// Search parameter SHALL be a number (a whole number, or a decimal).
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("number", "http://hl7.org/fhir/search-param-type"), Description("Number")]
+    Number,
+    /// <summary>
+    /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("date", "http://hl7.org/fhir/search-param-type"), Description("Date/DateTime")]
+    Date,
+    /// <summary>
+    /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("string", "http://hl7.org/fhir/search-param-type"), Description("String")]
+    String,
+    /// <summary>
+    /// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("token", "http://hl7.org/fhir/search-param-type"), Description("Token")]
+    Token,
+    /// <summary>
+    /// A reference to another resource (Reference or canonical).
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("reference", "http://hl7.org/fhir/search-param-type"), Description("Reference")]
+    Reference,
+    /// <summary>
+    /// A composite search parameter that combines a search on two values together.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("composite", "http://hl7.org/fhir/search-param-type"), Description("Composite")]
+    Composite,
+    /// <summary>
+    /// A search parameter that searches on a quantity.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("quantity", "http://hl7.org/fhir/search-param-type"), Description("Quantity")]
+    Quantity,
+    /// <summary>
+    /// A search parameter that searches on a URI (RFC 3986).
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("uri", "http://hl7.org/fhir/search-param-type"), Description("URI")]
+    Uri,
+    /// <summary>
+    /// Special logic applies to this parameter per the description of the search parameter.
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [EnumLiteral("special", "http://hl7.org/fhir/search-param-type"), Description("Special")]
+    Special,
+  }
+
+  /// <summary>
+  /// The clinical priority of a diagnostic order.
+  /// (url: http://hl7.org/fhir/ValueSet/request-priority)
+  /// (system: http://hl7.org/fhir/request-priority)
+  /// </summary>
+  [FhirEnumeration("RequestPriority")]
+  public enum RequestPriority
+  {
+    /// <summary>
+    /// The request has normal priority.
+    /// (system: http://hl7.org/fhir/request-priority)
+    /// </summary>
+    [EnumLiteral("routine", "http://hl7.org/fhir/request-priority"), Description("Routine")]
+    Routine,
+    /// <summary>
+    /// The request should be actioned promptly - higher priority than routine.
+    /// (system: http://hl7.org/fhir/request-priority)
+    /// </summary>
+    [EnumLiteral("urgent", "http://hl7.org/fhir/request-priority"), Description("Urgent")]
+    Urgent,
+    /// <summary>
+    /// The request should be actioned as soon as possible - higher priority than urgent.
+    /// (system: http://hl7.org/fhir/request-priority)
+    /// </summary>
+    [EnumLiteral("asap", "http://hl7.org/fhir/request-priority"), Description("ASAP")]
+    Asap,
+    /// <summary>
+    /// The request should be actioned immediately - highest possible priority.  E.g. an emergency.
+    /// (system: http://hl7.org/fhir/request-priority)
+    /// </summary>
+    [EnumLiteral("stat", "http://hl7.org/fhir/request-priority"), Description("STAT")]
+    Stat,
   }
 
   /// <summary>
@@ -1865,103 +2397,385 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// Used to specify why the normally expected content of the data element is missing.
-  /// (url: http://hl7.org/fhir/ValueSet/data-absent-reason)
-  /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+  /// All published FHIR Versions.
+  /// (url: http://hl7.org/fhir/ValueSet/FHIR-version)
+  /// (system: http://hl7.org/fhir/FHIR-version)
   /// </summary>
-  [FhirEnumeration("DataAbsentReason")]
-  public enum DataAbsentReason
+  [FhirEnumeration("FHIRVersion")]
+  public enum FHIRVersion
   {
     /// <summary>
-    /// The value is expected to exist but is not known.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// Oldest archived version of FHIR.
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Unknown")]
-    Unknown,
+    [EnumLiteral("0.01", "http://hl7.org/fhir/FHIR-version"), Description("0.01")]
+    N0_01,
     /// <summary>
-    /// The source was asked but does not know the value.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// 1st Draft for Comment (Sept 2012 Ballot).
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("asked-unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Asked But Unknown")]
-    AskedUnknown,
+    [EnumLiteral("0.05", "http://hl7.org/fhir/FHIR-version"), Description("0.05")]
+    N0_05,
     /// <summary>
-    /// There is reason to expect (from the workflow) that the value may become known.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// 2nd Draft for Comment (January 2013 Ballot).
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("temp-unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Temporarily Unknown")]
-    TempUnknown,
+    [EnumLiteral("0.06", "http://hl7.org/fhir/FHIR-version"), Description("0.06")]
+    N0_06,
     /// <summary>
-    /// The workflow didn't lead to this value being known.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 1 Ballot version.
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("not-asked", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Asked")]
-    NotAsked,
+    [EnumLiteral("0.11", "http://hl7.org/fhir/FHIR-version"), Description("0.11")]
+    N0_11,
     /// <summary>
-    /// The source was asked but declined to answer.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 1 Official version.
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("asked-declined", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Asked But Declined")]
-    AskedDeclined,
+    [EnumLiteral("0.0.80", "http://hl7.org/fhir/FHIR-version"), Description("0.0.80")]
+    N0_0_80,
     /// <summary>
-    /// The information is not available due to security, privacy or related reasons.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 1 Official version Technical Errata #1.
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("masked", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Masked")]
-    Masked,
+    [EnumLiteral("0.0.81", "http://hl7.org/fhir/FHIR-version"), Description("0.0.81")]
+    N0_0_81,
     /// <summary>
-    /// There is no proper value for this element (e.g. last menstrual period for a male).
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 1 Official version Technical Errata #2.
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("not-applicable", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Applicable")]
-    NotApplicable,
+    [EnumLiteral("0.0.82", "http://hl7.org/fhir/FHIR-version"), Description("0.0.82")]
+    N0_0_82,
     /// <summary>
-    /// The source system wasn't capable of supporting this element.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// Draft For Comment (January 2015 Ballot).
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("unsupported", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Unsupported")]
-    Unsupported,
+    [EnumLiteral("0.4.0", "http://hl7.org/fhir/FHIR-version"), Description("0.4.0")]
+    N0_4_0,
     /// <summary>
-    /// The content of the data is represented in the resource narrative.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 2 Ballot version (May 2015 Ballot).
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("as-text", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("As Text")]
-    AsText,
+    [EnumLiteral("0.5.0", "http://hl7.org/fhir/FHIR-version"), Description("0.5.0")]
+    N0_5_0,
     /// <summary>
-    /// Some system or workflow process error means that the information is not available.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// DSTU 2 QA Preview + CQIF Ballot (Sep 2015).
+    /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
-    [EnumLiteral("error", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Error")]
+    [EnumLiteral("1.0.0", "http://hl7.org/fhir/FHIR-version"), Description("1.0.0")]
+    N1_0_0,
+    /// <summary>
+    /// DSTU 2 (Official version).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.0.1", "http://hl7.org/fhir/FHIR-version"), Description("1.0.1")]
+    N1_0_1,
+    /// <summary>
+    /// DSTU 2 (Official version) with 1 technical errata.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.0.2", "http://hl7.org/fhir/FHIR-version"), Description("1.0.2")]
+    N1_0_2,
+    /// <summary>
+    /// GAO Ballot + draft changes to main FHIR standard.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.1.0", "http://hl7.org/fhir/FHIR-version"), Description("1.1.0")]
+    N1_1_0,
+    /// <summary>
+    /// CQF on FHIR Ballot + Connectathon 12 (Montreal).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.4.0", "http://hl7.org/fhir/FHIR-version"), Description("1.4.0")]
+    N1_4_0,
+    /// <summary>
+    /// FHIR STU3 Ballot + Connectathon 13 (Baltimore).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.6.0", "http://hl7.org/fhir/FHIR-version"), Description("1.6.0")]
+    N1_6_0,
+    /// <summary>
+    /// FHIR STU3 Candidate + Connectathon 14 (San Antonio).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("1.8.0", "http://hl7.org/fhir/FHIR-version"), Description("1.8.0")]
+    N1_8_0,
+    /// <summary>
+    /// FHIR Release 3 (STU).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("3.0.0", "http://hl7.org/fhir/FHIR-version"), Description("3.0.0")]
+    N3_0_0,
+    /// <summary>
+    /// FHIR Release 3 (STU) with 1 technical errata.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("3.0.1", "http://hl7.org/fhir/FHIR-version"), Description("3.0.1")]
+    N3_0_1,
+    /// <summary>
+    /// R4 Ballot #1.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("3.3.0", "http://hl7.org/fhir/FHIR-version"), Description("3.3.0")]
+    N3_3_0,
+    /// <summary>
+    /// R4 Ballot #2.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("3.5.0", "http://hl7.org/fhir/FHIR-version"), Description("3.5.0")]
+    N3_5_0,
+    /// <summary>
+    /// FHIR Release 4 (Normative + STU).
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
+    N4_0_0,
+    /// <summary>
+    /// FHIR Release 4 Technical Correction.
+    /// (system: http://hl7.org/fhir/FHIR-version)
+    /// </summary>
+    [EnumLiteral("4.0.1", "http://hl7.org/fhir/FHIR-version"), Description("4.0.1")]
+    N4_0_1,
+  }
+
+  /// <summary>
+  /// This value set includes Claim Processing Outcome codes.
+  /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
+  /// (system: http://hl7.org/fhir/remittance-outcome)
+  /// </summary>
+  [FhirEnumeration("ClaimProcessingCodes")]
+  public enum ClaimProcessingCodes
+  {
+    /// <summary>
+    /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
+    /// (system: http://hl7.org/fhir/remittance-outcome)
+    /// </summary>
+    [EnumLiteral("queued", "http://hl7.org/fhir/remittance-outcome"), Description("Queued")]
+    Queued,
+    /// <summary>
+    /// The processing has completed without errors
+    /// (system: http://hl7.org/fhir/remittance-outcome)
+    /// </summary>
+    [EnumLiteral("complete", "http://hl7.org/fhir/remittance-outcome"), Description("Processing Complete")]
+    Complete,
+    /// <summary>
+    /// One or more errors have been detected in the Claim
+    /// (system: http://hl7.org/fhir/remittance-outcome)
+    /// </summary>
+    [EnumLiteral("error", "http://hl7.org/fhir/remittance-outcome"), Description("Error")]
     Error,
     /// <summary>
-    /// The numeric value is undefined or unrepresentable due to a floating point processing error.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// No errors have been detected in the Claim and some of the adjudication has been performed.
+    /// (system: http://hl7.org/fhir/remittance-outcome)
     /// </summary>
-    [EnumLiteral("not-a-number", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not a Number (NaN)")]
-    NotANumber,
+    [EnumLiteral("partial", "http://hl7.org/fhir/remittance-outcome"), Description("Partial Processing")]
+    Partial,
+  }
+
+  /// <summary>
+  /// The type of relationship between documents.
+  /// (url: http://hl7.org/fhir/ValueSet/document-relationship-type)
+  /// (system: http://hl7.org/fhir/document-relationship-type)
+  /// </summary>
+  [FhirEnumeration("DocumentRelationshipType")]
+  public enum DocumentRelationshipType
+  {
     /// <summary>
-    /// The numeric value is excessively low and unrepresentable due to a floating point processing error.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// This document logically replaces or supersedes the target document.
+    /// (system: http://hl7.org/fhir/document-relationship-type)
     /// </summary>
-    [EnumLiteral("negative-infinity", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Negative Infinity (NINF)")]
-    NegativeInfinity,
+    [EnumLiteral("replaces", "http://hl7.org/fhir/document-relationship-type"), Description("Replaces")]
+    Replaces,
     /// <summary>
-    /// The numeric value is excessively high and unrepresentable due to a floating point processing error.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// This document was generated by transforming the target document (e.g. format or language conversion).
+    /// (system: http://hl7.org/fhir/document-relationship-type)
     /// </summary>
-    [EnumLiteral("positive-infinity", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Positive Infinity (PINF)")]
-    PositiveInfinity,
+    [EnumLiteral("transforms", "http://hl7.org/fhir/document-relationship-type"), Description("Transforms")]
+    Transforms,
     /// <summary>
-    /// The value is not available because the observation procedure (test, etc.) was not performed.
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// This document is a signature of the target document.
+    /// (system: http://hl7.org/fhir/document-relationship-type)
     /// </summary>
-    [EnumLiteral("not-performed", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Performed")]
-    NotPerformed,
+    [EnumLiteral("signs", "http://hl7.org/fhir/document-relationship-type"), Description("Signs")]
+    Signs,
     /// <summary>
-    /// The value is not permitted in this context (e.g. due to profiles, or the base data types).
-    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// This document adds additional information to the target document.
+    /// (system: http://hl7.org/fhir/document-relationship-type)
     /// </summary>
-    [EnumLiteral("not-permitted", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Permitted")]
-    NotPermitted,
+    [EnumLiteral("appends", "http://hl7.org/fhir/document-relationship-type"), Description("Appends")]
+    Appends,
+  }
+
+  /// <summary>
+  /// The purpose of the Claim: predetermination, preauthorization, claim.
+  /// (url: http://hl7.org/fhir/ValueSet/claim-use)
+  /// (system: http://hl7.org/fhir/claim-use)
+  /// </summary>
+  [FhirEnumeration("Use")]
+  public enum Use
+  {
+    /// <summary>
+    /// The treatment is complete and this represents a Claim for the services.
+    /// (system: http://hl7.org/fhir/claim-use)
+    /// </summary>
+    [EnumLiteral("claim", "http://hl7.org/fhir/claim-use"), Description("Claim")]
+    Claim,
+    /// <summary>
+    /// The treatment is proposed and this represents a Pre-authorization for the services.
+    /// (system: http://hl7.org/fhir/claim-use)
+    /// </summary>
+    [EnumLiteral("preauthorization", "http://hl7.org/fhir/claim-use"), Description("Preauthorization")]
+    Preauthorization,
+    /// <summary>
+    /// The treatment is proposed and this represents a Pre-determination for the services.
+    /// (system: http://hl7.org/fhir/claim-use)
+    /// </summary>
+    [EnumLiteral("predetermination", "http://hl7.org/fhir/claim-use"), Description("Predetermination")]
+    Predetermination,
+  }
+
+  /// <summary>
+  /// The gender of a person used for administrative purposes.
+  /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
+  /// (system: http://hl7.org/fhir/administrative-gender)
+  /// </summary>
+  [FhirEnumeration("AdministrativeGender")]
+  public enum AdministrativeGender
+  {
+    /// <summary>
+    /// Male.
+    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// </summary>
+    [EnumLiteral("male", "http://hl7.org/fhir/administrative-gender"), Description("Male")]
+    Male,
+    /// <summary>
+    /// Female.
+    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// </summary>
+    [EnumLiteral("female", "http://hl7.org/fhir/administrative-gender"), Description("Female")]
+    Female,
+    /// <summary>
+    /// Other.
+    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// </summary>
+    [EnumLiteral("other", "http://hl7.org/fhir/administrative-gender"), Description("Other")]
+    Other,
+    /// <summary>
+    /// Unknown.
+    /// (system: http://hl7.org/fhir/administrative-gender)
+    /// </summary>
+    [EnumLiteral("unknown", "http://hl7.org/fhir/administrative-gender"), Description("Unknown")]
+    Unknown,
+  }
+
+  /// <summary>
+  /// Codes indicating the kind of the price component.
+  /// (url: http://hl7.org/fhir/ValueSet/invoice-priceComponentType)
+  /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+  /// </summary>
+  [FhirEnumeration("InvoicePriceComponentType")]
+  public enum InvoicePriceComponentType
+  {
+    /// <summary>
+    /// the amount is the base price used for calculating the total price before applying surcharges, discount or taxes.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("base", "http://hl7.org/fhir/invoice-priceComponentType"), Description("base price")]
+    Base,
+    /// <summary>
+    /// the amount is a surcharge applied on the base price.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("surcharge", "http://hl7.org/fhir/invoice-priceComponentType"), Description("surcharge")]
+    Surcharge,
+    /// <summary>
+    /// the amount is a deduction applied on the base price.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("deduction", "http://hl7.org/fhir/invoice-priceComponentType"), Description("deduction")]
+    Deduction,
+    /// <summary>
+    /// the amount is a discount applied on the base price.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("discount", "http://hl7.org/fhir/invoice-priceComponentType"), Description("discount")]
+    Discount,
+    /// <summary>
+    /// the amount is the tax component of the total price.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("tax", "http://hl7.org/fhir/invoice-priceComponentType"), Description("tax")]
+    Tax,
+    /// <summary>
+    /// the amount is of informational character, it has not been applied in the calculation of the total price.
+    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
+    /// </summary>
+    [EnumLiteral("informational", "http://hl7.org/fhir/invoice-priceComponentType"), Description("informational")]
+    Informational,
+  }
+
+  /// <summary>
+  /// Codes indicating the degree of authority/intentionality associated with a request.
+  /// (url: http://hl7.org/fhir/ValueSet/request-intent)
+  /// (system: http://hl7.org/fhir/request-intent)
+  /// </summary>
+  [FhirEnumeration("RequestIntent")]
+  public enum RequestIntent
+  {
+    /// <summary>
+    /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+    Proposal,
+    /// <summary>
+    /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+    Plan,
+    /// <summary>
+    /// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("directive", "http://hl7.org/fhir/request-intent"), Description("Directive")]
+    Directive,
+    /// <summary>
+    /// The request represents a request/demand and authorization for action by a Practitioner.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+    Order,
+    /// <summary>
+    /// The request represents an original authorization for action.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("original-order", "http://hl7.org/fhir/request-intent"), Description("Original Order")]
+    OriginalOrder,
+    /// <summary>
+    /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("reflex-order", "http://hl7.org/fhir/request-intent"), Description("Reflex Order")]
+    ReflexOrder,
+    /// <summary>
+    /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("filler-order", "http://hl7.org/fhir/request-intent"), Description("Filler Order")]
+    FillerOrder,
+    /// <summary>
+    /// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("instance-order", "http://hl7.org/fhir/request-intent"), Description("Instance Order")]
+    InstanceOrder,
+    /// <summary>
+    /// The request represents a component or option for a RequestGroup that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestGroup]]] for additional information on how this status is used.
+    /// (system: http://hl7.org/fhir/request-intent)
+    /// </summary>
+    [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+    Option,
   }
 
   /// <summary>
@@ -3295,850 +4109,6 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// The type of name the device is referred by.
-  /// (url: http://hl7.org/fhir/ValueSet/device-nametype)
-  /// (system: http://hl7.org/fhir/device-nametype)
-  /// </summary>
-  [FhirEnumeration("DeviceNameType")]
-  public enum DeviceNameType
-  {
-    /// <summary>
-    /// UDI Label name.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("udi-label-name", "http://hl7.org/fhir/device-nametype"), Description("UDI Label name")]
-    UdiLabelName,
-    /// <summary>
-    /// User Friendly name.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("user-friendly-name", "http://hl7.org/fhir/device-nametype"), Description("User Friendly name")]
-    UserFriendlyName,
-    /// <summary>
-    /// Patient Reported name.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("patient-reported-name", "http://hl7.org/fhir/device-nametype"), Description("Patient Reported name")]
-    PatientReportedName,
-    /// <summary>
-    /// Manufacturer name.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("manufacturer-name", "http://hl7.org/fhir/device-nametype"), Description("Manufacturer name")]
-    ManufacturerName,
-    /// <summary>
-    /// Model name.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("model-name", "http://hl7.org/fhir/device-nametype"), Description("Model name")]
-    ModelName,
-    /// <summary>
-    /// other.
-    /// (system: http://hl7.org/fhir/device-nametype)
-    /// </summary>
-    [EnumLiteral("other", "http://hl7.org/fhir/device-nametype"), Description("other")]
-    Other,
-  }
-
-  /// <summary>
-  /// The status of the document reference.
-  /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
-  /// (system: http://hl7.org/fhir/document-reference-status)
-  /// </summary>
-  [FhirEnumeration("DocumentReferenceStatus")]
-  public enum DocumentReferenceStatus
-  {
-    /// <summary>
-    /// This is the current reference for this document.
-    /// (system: http://hl7.org/fhir/document-reference-status)
-    /// </summary>
-    [EnumLiteral("current", "http://hl7.org/fhir/document-reference-status"), Description("Current")]
-    Current,
-    /// <summary>
-    /// This reference has been superseded by another reference.
-    /// (system: http://hl7.org/fhir/document-reference-status)
-    /// </summary>
-    [EnumLiteral("superseded", "http://hl7.org/fhir/document-reference-status"), Description("Superseded")]
-    Superseded,
-    /// <summary>
-    /// This reference was created in error.
-    /// (system: http://hl7.org/fhir/document-reference-status)
-    /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/document-reference-status"), Description("Entered in Error")]
-    EnteredInError,
-  }
-
-  /// <summary>
-  /// The type of relationship between documents.
-  /// (url: http://hl7.org/fhir/ValueSet/document-relationship-type)
-  /// (system: http://hl7.org/fhir/document-relationship-type)
-  /// </summary>
-  [FhirEnumeration("DocumentRelationshipType")]
-  public enum DocumentRelationshipType
-  {
-    /// <summary>
-    /// This document logically replaces or supersedes the target document.
-    /// (system: http://hl7.org/fhir/document-relationship-type)
-    /// </summary>
-    [EnumLiteral("replaces", "http://hl7.org/fhir/document-relationship-type"), Description("Replaces")]
-    Replaces,
-    /// <summary>
-    /// This document was generated by transforming the target document (e.g. format or language conversion).
-    /// (system: http://hl7.org/fhir/document-relationship-type)
-    /// </summary>
-    [EnumLiteral("transforms", "http://hl7.org/fhir/document-relationship-type"), Description("Transforms")]
-    Transforms,
-    /// <summary>
-    /// This document is a signature of the target document.
-    /// (system: http://hl7.org/fhir/document-relationship-type)
-    /// </summary>
-    [EnumLiteral("signs", "http://hl7.org/fhir/document-relationship-type"), Description("Signs")]
-    Signs,
-    /// <summary>
-    /// This document adds additional information to the target document.
-    /// (system: http://hl7.org/fhir/document-relationship-type)
-    /// </summary>
-    [EnumLiteral("appends", "http://hl7.org/fhir/document-relationship-type"), Description("Appends")]
-    Appends,
-  }
-
-  /// <summary>
-  /// Codes identifying the lifecycle stage of an event.
-  /// (url: http://hl7.org/fhir/ValueSet/event-status)
-  /// (system: http://hl7.org/fhir/event-status)
-  /// </summary>
-  [FhirEnumeration("EventStatus")]
-  public enum EventStatus
-  {
-    /// <summary>
-    /// The core event has not started yet, but some staging activities have begun (e.g. surgical suite preparation).  Preparation stages may be tracked for billing purposes.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("preparation", "http://hl7.org/fhir/event-status"), Description("Preparation")]
-    Preparation,
-    /// <summary>
-    /// The event is currently occurring.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
-    InProgress,
-    /// <summary>
-    /// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("not-done", "http://hl7.org/fhir/event-status"), Description("Not Done")]
-    NotDone,
-    /// <summary>
-    /// The event has been temporarily stopped but is expected to resume in the future.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("on-hold", "http://hl7.org/fhir/event-status"), Description("On Hold")]
-    OnHold,
-    /// <summary>
-    /// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("stopped", "http://hl7.org/fhir/event-status"), Description("Stopped")]
-    Stopped,
-    /// <summary>
-    /// The event has now concluded.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
-    Completed,
-    /// <summary>
-    /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
-    EnteredInError,
-    /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
-    /// (system: http://hl7.org/fhir/event-status)
-    /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
-    Unknown,
-  }
-
-  /// <summary>
-  /// All published FHIR Versions.
-  /// (url: http://hl7.org/fhir/ValueSet/FHIR-version)
-  /// (system: http://hl7.org/fhir/FHIR-version)
-  /// </summary>
-  [FhirEnumeration("FHIRVersion")]
-  public enum FHIRVersion
-  {
-    /// <summary>
-    /// Oldest archived version of FHIR.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.01", "http://hl7.org/fhir/FHIR-version"), Description("0.01")]
-    N0_01,
-    /// <summary>
-    /// 1st Draft for Comment (Sept 2012 Ballot).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.05", "http://hl7.org/fhir/FHIR-version"), Description("0.05")]
-    N0_05,
-    /// <summary>
-    /// 2nd Draft for Comment (January 2013 Ballot).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.06", "http://hl7.org/fhir/FHIR-version"), Description("0.06")]
-    N0_06,
-    /// <summary>
-    /// DSTU 1 Ballot version.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.11", "http://hl7.org/fhir/FHIR-version"), Description("0.11")]
-    N0_11,
-    /// <summary>
-    /// DSTU 1 Official version.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.0.80", "http://hl7.org/fhir/FHIR-version"), Description("0.0.80")]
-    N0_0_80,
-    /// <summary>
-    /// DSTU 1 Official version Technical Errata #1.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.0.81", "http://hl7.org/fhir/FHIR-version"), Description("0.0.81")]
-    N0_0_81,
-    /// <summary>
-    /// DSTU 1 Official version Technical Errata #2.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.0.82", "http://hl7.org/fhir/FHIR-version"), Description("0.0.82")]
-    N0_0_82,
-    /// <summary>
-    /// Draft For Comment (January 2015 Ballot).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.4.0", "http://hl7.org/fhir/FHIR-version"), Description("0.4.0")]
-    N0_4_0,
-    /// <summary>
-    /// DSTU 2 Ballot version (May 2015 Ballot).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("0.5.0", "http://hl7.org/fhir/FHIR-version"), Description("0.5.0")]
-    N0_5_0,
-    /// <summary>
-    /// DSTU 2 QA Preview + CQIF Ballot (Sep 2015).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.0.0", "http://hl7.org/fhir/FHIR-version"), Description("1.0.0")]
-    N1_0_0,
-    /// <summary>
-    /// DSTU 2 (Official version).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.0.1", "http://hl7.org/fhir/FHIR-version"), Description("1.0.1")]
-    N1_0_1,
-    /// <summary>
-    /// DSTU 2 (Official version) with 1 technical errata.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.0.2", "http://hl7.org/fhir/FHIR-version"), Description("1.0.2")]
-    N1_0_2,
-    /// <summary>
-    /// GAO Ballot + draft changes to main FHIR standard.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.1.0", "http://hl7.org/fhir/FHIR-version"), Description("1.1.0")]
-    N1_1_0,
-    /// <summary>
-    /// CQF on FHIR Ballot + Connectathon 12 (Montreal).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.4.0", "http://hl7.org/fhir/FHIR-version"), Description("1.4.0")]
-    N1_4_0,
-    /// <summary>
-    /// FHIR STU3 Ballot + Connectathon 13 (Baltimore).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.6.0", "http://hl7.org/fhir/FHIR-version"), Description("1.6.0")]
-    N1_6_0,
-    /// <summary>
-    /// FHIR STU3 Candidate + Connectathon 14 (San Antonio).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("1.8.0", "http://hl7.org/fhir/FHIR-version"), Description("1.8.0")]
-    N1_8_0,
-    /// <summary>
-    /// FHIR Release 3 (STU).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("3.0.0", "http://hl7.org/fhir/FHIR-version"), Description("3.0.0")]
-    N3_0_0,
-    /// <summary>
-    /// FHIR Release 3 (STU) with 1 technical errata.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("3.0.1", "http://hl7.org/fhir/FHIR-version"), Description("3.0.1")]
-    N3_0_1,
-    /// <summary>
-    /// R4 Ballot #1.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("3.3.0", "http://hl7.org/fhir/FHIR-version"), Description("3.3.0")]
-    N3_3_0,
-    /// <summary>
-    /// R4 Ballot #2.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("3.5.0", "http://hl7.org/fhir/FHIR-version"), Description("3.5.0")]
-    N3_5_0,
-    /// <summary>
-    /// FHIR Release 4 (Normative + STU).
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("4.0.0", "http://hl7.org/fhir/FHIR-version"), Description("4.0.0")]
-    N4_0_0,
-    /// <summary>
-    /// FHIR Release 4 Technical Correction.
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("4.0.1", "http://hl7.org/fhir/FHIR-version"), Description("4.0.1")]
-    N4_0_1,
-  }
-
-  /// <summary>
-  /// This value set includes Status codes.
-  /// (url: http://hl7.org/fhir/ValueSet/fm-status)
-  /// (system: http://hl7.org/fhir/fm-status)
-  /// </summary>
-  [FhirEnumeration("FinancialResourceStatusCodes")]
-  public enum FinancialResourceStatusCodes
-  {
-    /// <summary>
-    /// The instance is currently in-force.
-    /// (system: http://hl7.org/fhir/fm-status)
-    /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/fm-status"), Description("Active")]
-    Active,
-    /// <summary>
-    /// The instance is withdrawn, rescinded or reversed.
-    /// (system: http://hl7.org/fhir/fm-status)
-    /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/fm-status"), Description("Cancelled")]
-    Cancelled,
-    /// <summary>
-    /// A new instance the contents of which is not complete.
-    /// (system: http://hl7.org/fhir/fm-status)
-    /// </summary>
-    [EnumLiteral("draft", "http://hl7.org/fhir/fm-status"), Description("Draft")]
-    Draft,
-    /// <summary>
-    /// The instance was entered in error.
-    /// (system: http://hl7.org/fhir/fm-status)
-    /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/fm-status"), Description("Entered in Error")]
-    EnteredInError,
-  }
-
-  /// <summary>
-  /// Possible group measure aggregates (E.g. Mean, Median).
-  /// (url: http://hl7.org/fhir/ValueSet/group-measure)
-  /// (system: http://hl7.org/fhir/group-measure)
-  /// </summary>
-  [FhirEnumeration("GroupMeasure")]
-  public enum GroupMeasure
-  {
-    /// <summary>
-    /// Aggregated using Mean of participant values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("mean", "http://hl7.org/fhir/group-measure"), Description("Mean")]
-    Mean,
-    /// <summary>
-    /// Aggregated using Median of participant values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("median", "http://hl7.org/fhir/group-measure"), Description("Median")]
-    Median,
-    /// <summary>
-    /// Aggregated using Mean of study mean values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("mean-of-mean", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Means")]
-    MeanOfMean,
-    /// <summary>
-    /// Aggregated using Mean of study median values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("mean-of-median", "http://hl7.org/fhir/group-measure"), Description("Mean of Study Medins")]
-    MeanOfMedian,
-    /// <summary>
-    /// Aggregated using Median of study mean values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("median-of-mean", "http://hl7.org/fhir/group-measure"), Description("Median of Study Means")]
-    MedianOfMean,
-    /// <summary>
-    /// Aggregated using Median of study median values.
-    /// (system: http://hl7.org/fhir/group-measure)
-    /// </summary>
-    [EnumLiteral("median-of-median", "http://hl7.org/fhir/group-measure"), Description("Median of Study Medians")]
-    MedianOfMedian,
-  }
-
-  /// <summary>
-  /// Codes indicating the kind of the price component.
-  /// (url: http://hl7.org/fhir/ValueSet/invoice-priceComponentType)
-  /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-  /// </summary>
-  [FhirEnumeration("InvoicePriceComponentType")]
-  public enum InvoicePriceComponentType
-  {
-    /// <summary>
-    /// the amount is the base price used for calculating the total price before applying surcharges, discount or taxes.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("base", "http://hl7.org/fhir/invoice-priceComponentType"), Description("base price")]
-    Base,
-    /// <summary>
-    /// the amount is a surcharge applied on the base price.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("surcharge", "http://hl7.org/fhir/invoice-priceComponentType"), Description("surcharge")]
-    Surcharge,
-    /// <summary>
-    /// the amount is a deduction applied on the base price.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("deduction", "http://hl7.org/fhir/invoice-priceComponentType"), Description("deduction")]
-    Deduction,
-    /// <summary>
-    /// the amount is a discount applied on the base price.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("discount", "http://hl7.org/fhir/invoice-priceComponentType"), Description("discount")]
-    Discount,
-    /// <summary>
-    /// the amount is the tax component of the total price.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("tax", "http://hl7.org/fhir/invoice-priceComponentType"), Description("tax")]
-    Tax,
-    /// <summary>
-    /// the amount is of informational character, it has not been applied in the calculation of the total price.
-    /// (system: http://hl7.org/fhir/invoice-priceComponentType)
-    /// </summary>
-    [EnumLiteral("informational", "http://hl7.org/fhir/invoice-priceComponentType"), Description("informational")]
-    Informational,
-  }
-
-  /// <summary>
-  /// The processing mode that applies to this list.
-  /// (url: http://hl7.org/fhir/ValueSet/list-mode)
-  /// (system: http://hl7.org/fhir/list-mode)
-  /// </summary>
-  [FhirEnumeration("ListMode")]
-  public enum ListMode
-  {
-    /// <summary>
-    /// This list is the master list, maintained in an ongoing fashion with regular updates as the real world list it is tracking changes.
-    /// (system: http://hl7.org/fhir/list-mode)
-    /// </summary>
-    [EnumLiteral("working", "http://hl7.org/fhir/list-mode"), Description("Working List")]
-    Working,
-    /// <summary>
-    /// This list was prepared as a snapshot. It should not be assumed to be current.
-    /// (system: http://hl7.org/fhir/list-mode)
-    /// </summary>
-    [EnumLiteral("snapshot", "http://hl7.org/fhir/list-mode"), Description("Snapshot List")]
-    Snapshot,
-    /// <summary>
-    /// A point-in-time list that shows what changes have been made or recommended.  E.g. a discharge medication list showing what was added and removed during an encounter.
-    /// (system: http://hl7.org/fhir/list-mode)
-    /// </summary>
-    [EnumLiteral("changes", "http://hl7.org/fhir/list-mode"), Description("Change List")]
-    Changes,
-  }
-
-  /// <summary>
-  /// Observation values that indicate what change in a measurement value or score is indicative of an improvement in the measured item or scored issue.
-  /// (url: http://hl7.org/fhir/ValueSet/measure-improvement-notation)
-  /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
-  /// </summary>
-  [FhirEnumeration("MeasureImprovementNotation")]
-  public enum MeasureImprovementNotation
-  {
-    /// <summary>
-    /// Improvement is indicated as an increase in the score or measurement (e.g. Higher score indicates better quality).
-    /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
-    /// </summary>
-    [EnumLiteral("increase", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Increased score indicates improvement")]
-    Increase,
-    /// <summary>
-    /// Improvement is indicated as a decrease in the score or measurement (e.g. Lower score indicates better quality).
-    /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
-    /// </summary>
-    [EnumLiteral("decrease", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Decreased score indicates improvement")]
-    Decrease,
-  }
-
-  /// <summary>
-  /// HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
-  /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
-  /// (system: http://hl7.org/fhir/messageheader-response-request)
-  /// </summary>
-  [FhirEnumeration("messageheader-response-request")]
-  public enum messageheader_response_request
-  {
-    /// <summary>
-    /// initiator expects a response for this message.
-    /// (system: http://hl7.org/fhir/messageheader-response-request)
-    /// </summary>
-    [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
-    Always,
-    /// <summary>
-    /// initiator expects a response only if in error.
-    /// (system: http://hl7.org/fhir/messageheader-response-request)
-    /// </summary>
-    [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
-    OnError,
-    /// <summary>
-    /// initiator does not expect a response.
-    /// (system: http://hl7.org/fhir/messageheader-response-request)
-    /// </summary>
-    [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
-    Never,
-    /// <summary>
-    /// initiator expects a response only if successful.
-    /// (system: http://hl7.org/fhir/messageheader-response-request)
-    /// </summary>
-    [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
-    OnSuccess,
-  }
-
-  /// <summary>
-  /// The presentation types of notes.
-  /// (url: http://hl7.org/fhir/ValueSet/note-type)
-  /// (system: http://hl7.org/fhir/note-type)
-  /// </summary>
-  [FhirEnumeration("NoteType")]
-  public enum NoteType
-  {
-    /// <summary>
-    /// Display the note.
-    /// (system: http://hl7.org/fhir/note-type)
-    /// </summary>
-    [EnumLiteral("display", "http://hl7.org/fhir/note-type"), Description("Display")]
-    Display,
-    /// <summary>
-    /// Print the note on the form.
-    /// (system: http://hl7.org/fhir/note-type)
-    /// </summary>
-    [EnumLiteral("print", "http://hl7.org/fhir/note-type"), Description("Print (Form)")]
-    Print,
-    /// <summary>
-    /// Print the note for the operator.
-    /// (system: http://hl7.org/fhir/note-type)
-    /// </summary>
-    [EnumLiteral("printoper", "http://hl7.org/fhir/note-type"), Description("Print (Operator)")]
-    Printoper,
-  }
-
-  /// <summary>
-  /// Codes providing the status of an observation.
-  /// (url: http://hl7.org/fhir/ValueSet/observation-status)
-  /// (system: http://hl7.org/fhir/observation-status)
-  /// </summary>
-  [FhirEnumeration("ObservationStatus")]
-  public enum ObservationStatus
-  {
-    /// <summary>
-    /// The existence of the observation is registered, but there is no result yet available.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("registered", "http://hl7.org/fhir/observation-status"), Description("Registered")]
-    Registered,
-    /// <summary>
-    /// This is an initial or interim observation: data may be incomplete or unverified.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("preliminary", "http://hl7.org/fhir/observation-status"), Description("Preliminary")]
-    Preliminary,
-    /// <summary>
-    /// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("final", "http://hl7.org/fhir/observation-status"), Description("Final")]
-    Final,
-    /// <summary>
-    /// Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("amended", "http://hl7.org/fhir/observation-status"), Description("Amended")]
-    Amended,
-    /// <summary>
-    /// Subsequent to being Final, the observation has been modified to correct an error in the test result.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("corrected", "http://hl7.org/fhir/observation-status"), Description("Corrected")]
-    Corrected,
-    /// <summary>
-    /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/observation-status"), Description("Cancelled")]
-    Cancelled,
-    /// <summary>
-    /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/observation-status"), Description("Entered in Error")]
-    EnteredInError,
-    /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
-    /// (system: http://hl7.org/fhir/observation-status)
-    /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/observation-status"), Description("Unknown")]
-    Unknown,
-  }
-
-  /// <summary>
-  /// Whether an operation parameter is an input or an output parameter.
-  /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-use)
-  /// (system: http://hl7.org/fhir/operation-parameter-use)
-  /// </summary>
-  [FhirEnumeration("OperationParameterUse")]
-  public enum OperationParameterUse
-  {
-    /// <summary>
-    /// This is an input parameter.
-    /// (system: http://hl7.org/fhir/operation-parameter-use)
-    /// </summary>
-    [EnumLiteral("in", "http://hl7.org/fhir/operation-parameter-use"), Description("In")]
-    In,
-    /// <summary>
-    /// This is an output parameter.
-    /// (system: http://hl7.org/fhir/operation-parameter-use)
-    /// </summary>
-    [EnumLiteral("out", "http://hl7.org/fhir/operation-parameter-use"), Description("Out")]
-    Out,
-  }
-
-  /// <summary>
-  /// The Participation status of an appointment.
-  /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
-  /// (system: http://hl7.org/fhir/participationstatus)
-  /// </summary>
-  [FhirEnumeration("ParticipationStatus")]
-  public enum ParticipationStatus
-  {
-    /// <summary>
-    /// The participant has accepted the appointment.
-    /// (system: http://hl7.org/fhir/participationstatus)
-    /// </summary>
-    [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
-    Accepted,
-    /// <summary>
-    /// The participant has declined the appointment and will not participate in the appointment.
-    /// (system: http://hl7.org/fhir/participationstatus)
-    /// </summary>
-    [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
-    Declined,
-    /// <summary>
-    /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
-    /// (system: http://hl7.org/fhir/participationstatus)
-    /// </summary>
-    [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
-    Tentative,
-    /// <summary>
-    /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
-    /// (system: http://hl7.org/fhir/participationstatus)
-    /// </summary>
-    [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
-    NeedsAction,
-  }
-
-  /// <summary>
-  /// This value set includes Claim Processing Outcome codes.
-  /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
-  /// (system: http://hl7.org/fhir/remittance-outcome)
-  /// </summary>
-  [FhirEnumeration("ClaimProcessingCodes")]
-  public enum ClaimProcessingCodes
-  {
-    /// <summary>
-    /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
-    /// (system: http://hl7.org/fhir/remittance-outcome)
-    /// </summary>
-    [EnumLiteral("queued", "http://hl7.org/fhir/remittance-outcome"), Description("Queued")]
-    Queued,
-    /// <summary>
-    /// The processing has completed without errors
-    /// (system: http://hl7.org/fhir/remittance-outcome)
-    /// </summary>
-    [EnumLiteral("complete", "http://hl7.org/fhir/remittance-outcome"), Description("Processing Complete")]
-    Complete,
-    /// <summary>
-    /// One or more errors have been detected in the Claim
-    /// (system: http://hl7.org/fhir/remittance-outcome)
-    /// </summary>
-    [EnumLiteral("error", "http://hl7.org/fhir/remittance-outcome"), Description("Error")]
-    Error,
-    /// <summary>
-    /// No errors have been detected in the Claim and some of the adjudication has been performed.
-    /// (system: http://hl7.org/fhir/remittance-outcome)
-    /// </summary>
-    [EnumLiteral("partial", "http://hl7.org/fhir/remittance-outcome"), Description("Partial Processing")]
-    Partial,
-  }
-
-  /// <summary>
-  /// Codes indicating the degree of authority/intentionality associated with a request.
-  /// (url: http://hl7.org/fhir/ValueSet/request-intent)
-  /// (system: http://hl7.org/fhir/request-intent)
-  /// </summary>
-  [FhirEnumeration("RequestIntent")]
-  public enum RequestIntent
-  {
-    /// <summary>
-    /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
-    Proposal,
-    /// <summary>
-    /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
-    Plan,
-    /// <summary>
-    /// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("directive", "http://hl7.org/fhir/request-intent"), Description("Directive")]
-    Directive,
-    /// <summary>
-    /// The request represents a request/demand and authorization for action by a Practitioner.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
-    Order,
-    /// <summary>
-    /// The request represents an original authorization for action.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("original-order", "http://hl7.org/fhir/request-intent"), Description("Original Order")]
-    OriginalOrder,
-    /// <summary>
-    /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("reflex-order", "http://hl7.org/fhir/request-intent"), Description("Reflex Order")]
-    ReflexOrder,
-    /// <summary>
-    /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("filler-order", "http://hl7.org/fhir/request-intent"), Description("Filler Order")]
-    FillerOrder,
-    /// <summary>
-    /// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("instance-order", "http://hl7.org/fhir/request-intent"), Description("Instance Order")]
-    InstanceOrder,
-    /// <summary>
-    /// The request represents a component or option for a RequestGroup that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestGroup]]] for additional information on how this status is used.
-    /// (system: http://hl7.org/fhir/request-intent)
-    /// </summary>
-    [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
-    Option,
-  }
-
-  /// <summary>
-  /// The clinical priority of a diagnostic order.
-  /// (url: http://hl7.org/fhir/ValueSet/request-priority)
-  /// (system: http://hl7.org/fhir/request-priority)
-  /// </summary>
-  [FhirEnumeration("RequestPriority")]
-  public enum RequestPriority
-  {
-    /// <summary>
-    /// The request has normal priority.
-    /// (system: http://hl7.org/fhir/request-priority)
-    /// </summary>
-    [EnumLiteral("routine", "http://hl7.org/fhir/request-priority"), Description("Routine")]
-    Routine,
-    /// <summary>
-    /// The request should be actioned promptly - higher priority than routine.
-    /// (system: http://hl7.org/fhir/request-priority)
-    /// </summary>
-    [EnumLiteral("urgent", "http://hl7.org/fhir/request-priority"), Description("Urgent")]
-    Urgent,
-    /// <summary>
-    /// The request should be actioned as soon as possible - higher priority than urgent.
-    /// (system: http://hl7.org/fhir/request-priority)
-    /// </summary>
-    [EnumLiteral("asap", "http://hl7.org/fhir/request-priority"), Description("ASAP")]
-    Asap,
-    /// <summary>
-    /// The request should be actioned immediately - highest possible priority.  E.g. an emergency.
-    /// (system: http://hl7.org/fhir/request-priority)
-    /// </summary>
-    [EnumLiteral("stat", "http://hl7.org/fhir/request-priority"), Description("STAT")]
-    Stat,
-  }
-
-  /// <summary>
-  /// Codes identifying the lifecycle stage of a request.
-  /// (url: http://hl7.org/fhir/ValueSet/request-status)
-  /// (system: http://hl7.org/fhir/request-status)
-  /// </summary>
-  [FhirEnumeration("RequestStatus")]
-  public enum RequestStatus
-  {
-    /// <summary>
-    /// The request has been created but is not yet complete or ready for action.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("draft", "http://hl7.org/fhir/request-status"), Description("Draft")]
-    Draft,
-    /// <summary>
-    /// The request is in force and ready to be acted upon.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/request-status"), Description("Active")]
-    Active,
-    /// <summary>
-    /// The request (and any implicit authorization to act) has been temporarily withdrawn but is expected to resume in the future.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("on-hold", "http://hl7.org/fhir/request-status"), Description("On Hold")]
-    OnHold,
-    /// <summary>
-    /// The request (and any implicit authorization to act) has been terminated prior to the known full completion of the intended actions.  No further activity should occur.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("revoked", "http://hl7.org/fhir/request-status"), Description("Revoked")]
-    Revoked,
-    /// <summary>
-    /// The activity described by the request has been fully performed.  No further activity will occur.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("completed", "http://hl7.org/fhir/request-status"), Description("Completed")]
-    Completed,
-    /// <summary>
-    /// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be "revoked" rather than "entered-in-error".).
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/request-status"), Description("Entered in Error")]
-    EnteredInError,
-    /// <summary>
-    /// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
-    /// (system: http://hl7.org/fhir/request-status)
-    /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/request-status"), Description("Unknown")]
-    Unknown,
-  }
-
-  /// <summary>
   /// One of the resource types defined as part of this version of FHIR.
   /// (url: http://hl7.org/fhir/ValueSet/resource-types)
   /// (system: http://hl7.org/fhir/resource-types)
@@ -5039,95 +5009,125 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
-  /// Data types allowed to be used for search parameters.
-  /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
-  /// (system: http://hl7.org/fhir/search-param-type)
+  /// Used to specify why the normally expected content of the data element is missing.
+  /// (url: http://hl7.org/fhir/ValueSet/data-absent-reason)
+  /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
   /// </summary>
-  [FhirEnumeration("SearchParamType")]
-  public enum SearchParamType
+  [FhirEnumeration("DataAbsentReason")]
+  public enum DataAbsentReason
   {
     /// <summary>
-    /// Search parameter SHALL be a number (a whole number, or a decimal).
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The value is expected to exist but is not known.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("number", "http://hl7.org/fhir/search-param-type"), Description("Number")]
-    Number,
+    [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Unknown")]
+    Unknown,
     /// <summary>
-    /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The source was asked but does not know the value.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("date", "http://hl7.org/fhir/search-param-type"), Description("Date/DateTime")]
-    Date,
+    [EnumLiteral("asked-unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Asked But Unknown")]
+    AskedUnknown,
     /// <summary>
-    /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// There is reason to expect (from the workflow) that the value may become known.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("string", "http://hl7.org/fhir/search-param-type"), Description("String")]
-    String,
+    [EnumLiteral("temp-unknown", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Temporarily Unknown")]
+    TempUnknown,
     /// <summary>
-    /// Search parameter on a coded element or identifier. May be used to search through the text, display, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The workflow didn't lead to this value being known.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("token", "http://hl7.org/fhir/search-param-type"), Description("Token")]
-    Token,
+    [EnumLiteral("not-asked", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Asked")]
+    NotAsked,
     /// <summary>
-    /// A reference to another resource (Reference or canonical).
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The source was asked but declined to answer.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("reference", "http://hl7.org/fhir/search-param-type"), Description("Reference")]
-    Reference,
+    [EnumLiteral("asked-declined", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Asked But Declined")]
+    AskedDeclined,
     /// <summary>
-    /// A composite search parameter that combines a search on two values together.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The information is not available due to security, privacy or related reasons.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("composite", "http://hl7.org/fhir/search-param-type"), Description("Composite")]
-    Composite,
+    [EnumLiteral("masked", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Masked")]
+    Masked,
     /// <summary>
-    /// A search parameter that searches on a quantity.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// There is no proper value for this element (e.g. last menstrual period for a male).
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("quantity", "http://hl7.org/fhir/search-param-type"), Description("Quantity")]
-    Quantity,
+    [EnumLiteral("not-applicable", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Applicable")]
+    NotApplicable,
     /// <summary>
-    /// A search parameter that searches on a URI (RFC 3986).
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The source system wasn't capable of supporting this element.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("uri", "http://hl7.org/fhir/search-param-type"), Description("URI")]
-    Uri,
+    [EnumLiteral("unsupported", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Unsupported")]
+    Unsupported,
     /// <summary>
-    /// Special logic applies to this parameter per the description of the search parameter.
-    /// (system: http://hl7.org/fhir/search-param-type)
+    /// The content of the data is represented in the resource narrative.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
     /// </summary>
-    [EnumLiteral("special", "http://hl7.org/fhir/search-param-type"), Description("Special")]
-    Special,
+    [EnumLiteral("as-text", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("As Text")]
+    AsText,
+    /// <summary>
+    /// Some system or workflow process error means that the information is not available.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("error", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Error")]
+    Error,
+    /// <summary>
+    /// The numeric value is undefined or unrepresentable due to a floating point processing error.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("not-a-number", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not a Number (NaN)")]
+    NotANumber,
+    /// <summary>
+    /// The numeric value is excessively low and unrepresentable due to a floating point processing error.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("negative-infinity", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Negative Infinity (NINF)")]
+    NegativeInfinity,
+    /// <summary>
+    /// The numeric value is excessively high and unrepresentable due to a floating point processing error.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("positive-infinity", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Positive Infinity (PINF)")]
+    PositiveInfinity,
+    /// <summary>
+    /// The value is not available because the observation procedure (test, etc.) was not performed.
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("not-performed", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Performed")]
+    NotPerformed,
+    /// <summary>
+    /// The value is not permitted in this context (e.g. due to profiles, or the base data types).
+    /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)
+    /// </summary>
+    [EnumLiteral("not-permitted", "http://terminology.hl7.org/CodeSystem/data-absent-reason"), Description("Not Permitted")]
+    NotPermitted,
   }
 
   /// <summary>
-  /// The possible types of variables for exposures or outcomes (E.g. Dichotomous, Continuous, Descriptive).
-  /// (url: http://hl7.org/fhir/ValueSet/variable-type)
-  /// (system: http://hl7.org/fhir/variable-type)
+  /// Whether an operation parameter is an input or an output parameter.
+  /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-use)
+  /// (system: http://hl7.org/fhir/operation-parameter-use)
   /// </summary>
-  [FhirEnumeration("EvidenceVariableType")]
-  public enum EvidenceVariableType
+  [FhirEnumeration("OperationParameterUse")]
+  public enum OperationParameterUse
   {
     /// <summary>
-    /// The variable is dichotomous, such as present or absent.
-    /// (system: http://hl7.org/fhir/variable-type)
+    /// This is an input parameter.
+    /// (system: http://hl7.org/fhir/operation-parameter-use)
     /// </summary>
-    [EnumLiteral("dichotomous", "http://hl7.org/fhir/variable-type"), Description("Dichotomous")]
-    Dichotomous,
+    [EnumLiteral("in", "http://hl7.org/fhir/operation-parameter-use"), Description("In")]
+    In,
     /// <summary>
-    /// The variable is a continuous result such as a quantity.
-    /// (system: http://hl7.org/fhir/variable-type)
+    /// This is an output parameter.
+    /// (system: http://hl7.org/fhir/operation-parameter-use)
     /// </summary>
-    [EnumLiteral("continuous", "http://hl7.org/fhir/variable-type"), Description("Continuous")]
-    Continuous,
-    /// <summary>
-    /// The variable is described narratively rather than quantitatively.
-    /// (system: http://hl7.org/fhir/variable-type)
-    /// </summary>
-    [EnumLiteral("descriptive", "http://hl7.org/fhir/variable-type"), Description("Descriptive")]
-    Descriptive,
+    [EnumLiteral("out", "http://hl7.org/fhir/operation-parameter-use"), Description("Out")]
+    Out,
   }
 
 }

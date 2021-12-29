@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// reference | critical | absolute
       /// </summary>
-      [FhirElement("category", Order=40)]
+      [FhirElement("category", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> CategoryElement
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown
       /// </summary>
-      [FhirElement("gender", Order=80)]
+      [FhirElement("gender", Order=80 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category of observation
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=90)]
+    [FhirElement("category", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.what[x]"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Quantity | CodeableConcept | string | boolean | integer | Range | Ratio | SampledData | time | dateTime | Period
     /// </summary>
-    [FhirElement("permittedDataType", Order=120)]
+    [FhirElement("permittedDataType", Order=120 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

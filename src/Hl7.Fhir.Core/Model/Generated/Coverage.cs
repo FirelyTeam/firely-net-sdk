@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for the coverage
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage category such as medical or accident
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Owner of the policy
     /// </summary>
-    [FhirElement("policyHolder", InSummary=true, Order=120)]
+    [FhirElement("policyHolder", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Organization")]
     [DataMember]
@@ -536,7 +536,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subscriber to the policy
     /// </summary>
-    [FhirElement("subscriber", InSummary=true, Order=130)]
+    [FhirElement("subscriber", InSummary=true, Order=130, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson")]
     [DataMember]
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ID assigned to the subscriber
     /// </summary>
-    [FhirElement("subscriberId", InSummary=true, Order=140)]
+    [FhirElement("subscriberId", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SubscriberIdElement
     {
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan beneficiary
     /// </summary>
-    [FhirElement("beneficiary", InSummary=true, Order=150)]
+    [FhirElement("beneficiary", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage start and end dates
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=180)]
+    [FhirElement("period", InSummary=true, Order=180, FiveWs= new string[] {"FiveWs.done[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issuer of the policy
     /// </summary>
-    [FhirElement("payor", InSummary=true, Order=190)]
+    [FhirElement("payor", InSummary=true, Order=190, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Organization","Patient","RelatedPerson")]
     [Cardinality(Min=1,Max=-1)]

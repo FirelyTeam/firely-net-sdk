@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// male | female | other | unknown
       /// </summary>
-      [FhirElement("gender", Order=80)]
+      [FhirElement("gender", Order=80 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaced-by | replaces | refer | seealso
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=50)]
+      [FhirElement("type", InSummary=true, Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for this patient
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this patient's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.status"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown
     /// </summary>
-    [FhirElement("gender", InSummary=true, Order=130)]
+    [FhirElement("gender", InSummary=true, Order=130 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement

@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this endpoint across multiple systems
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/Profile/Standard to be used with this endpoint connection
     /// </summary>
-    [FhirElement("connectionType", InSummary=true, Order=110)]
+    [FhirElement("connectionType", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.class"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ConnectionType
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name that this endpoint can be identified by
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120)]
+    [FhirElement("name", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval the endpoint is expected to be operational
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=150)]
+    [FhirElement("period", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.done[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
     /// </summary>
-    [FhirElement("payloadMimeType", InSummary=true, Order=170)]
+    [FhirElement("payloadMimeType", InSummary=true, Order=170 )]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement

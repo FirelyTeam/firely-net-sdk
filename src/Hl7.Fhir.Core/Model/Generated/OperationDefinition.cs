@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name in Parameters.parameter.name or in URL
       /// </summary>
-      [FhirElement("name", Order=40)]
+      [FhirElement("name", Order=40 )]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code NameElement
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// in | out
       /// </summary>
-      [FhirElement("use", Order=50)]
+      [FhirElement("use", Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What type this parameter has
       /// </summary>
-      [FhirElement("type", Order=90)]
+      [FhirElement("type", Order=90 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// number | date | string | token | reference | composite | quantity | uri | special
       /// </summary>
-      [FhirElement("searchType", Order=110)]
+      [FhirElement("searchType", Order=110 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> SearchTypeElement
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | extensible | preferred | example
       /// </summary>
-      [FhirElement("strength", Order=40)]
+      [FhirElement("strength", Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this operation definition, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the operation definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs= new string[] {"FiveWs.version"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, Order=130 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1099,7 +1099,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// operation | query
     /// </summary>
-    [FhirElement("kind", InSummary=true, Order=140)]
+    [FhirElement("kind", InSummary=true, Order=140 , FiveWs= new string[] {"FiveWs.class"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1132,7 +1132,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1194,7 +1194,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.witness"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1280,7 +1280,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this operation definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -1324,7 +1324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to invoke the operation
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=240)]
+    [FhirElement("code", InSummary=true, Order=240 )]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
@@ -1400,7 +1400,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Types this operation applies to
     /// </summary>
-    [FhirElement("resource", InSummary=true, Order=270)]
+    [FhirElement("resource", InSummary=true, Order=270 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

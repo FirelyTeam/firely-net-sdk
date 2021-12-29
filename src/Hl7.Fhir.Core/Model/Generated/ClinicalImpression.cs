@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.identifier"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 , FiveWs= new string[] {"FiveWs.status"})]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of assessment performed
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=120)]
+    [FhirElement("code", InSummary=true, Order=120, FiveWs= new string[] {"FiveWs.what[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient or group assessed
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs= new string[] {"FiveWs.subject[x]","FiveWs.subject"})]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs= new string[] {"FiveWs.context"})]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time of assessment
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs= new string[] {"FiveWs.done[x]"})]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the assessment was documented
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=170)]
+    [FhirElement("date", InSummary=true, Order=170, FiveWs= new string[] {"FiveWs.recorded"})]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The clinician performing the assessment
     /// </summary>
-    [FhirElement("assessor", InSummary=true, Order=180)]
+    [FhirElement("assessor", InSummary=true, Order=180, FiveWs= new string[] {"FiveWs.author"})]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relevant impressions of patient state
     /// </summary>
-    [FhirElement("problem", InSummary=true, Order=200)]
+    [FhirElement("problem", InSummary=true, Order=200, FiveWs= new string[] {"FiveWs.why[x]"})]
     [CLSCompliant(false)]
     [References("Condition","AllergyIntolerance")]
     [Cardinality(Min=0,Max=-1)]

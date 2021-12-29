@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// closed | open | openAtEnd
       /// </summary>
-      [FhirElement("rules", InSummary=true, Order=60)]
+      [FhirElement("rules", InSummary=true, Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// value | exists | pattern | type | profile
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=30)]
+      [FhirElement("type", InSummary=true, Order=30 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -884,7 +884,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// contained | referenced | bundled - how aggregated
       /// </summary>
-      [FhirElement("aggregation", InSummary=true, Order=60)]
+      [FhirElement("aggregation", InSummary=true, Order=60 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -917,7 +917,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// either | independent | specific
       /// </summary>
-      [FhirElement("versioning", InSummary=true, Order=70)]
+      [FhirElement("versioning", InSummary=true, Order=70 )]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// error | warning
       /// </summary>
-      [FhirElement("severity", InSummary=true, Order=50)]
+      [FhirElement("severity", InSummary=true, Order=50 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1504,7 +1504,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | extensible | preferred | example
       /// </summary>
-      [FhirElement("strength", InSummary=true, Order=30)]
+      [FhirElement("strength", InSummary=true, Order=30 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1718,7 +1718,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Computable language of mapping
       /// </summary>
-      [FhirElement("language", InSummary=true, Order=40)]
+      [FhirElement("language", InSummary=true, Order=40 )]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1923,7 +1923,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// xmlAttr | xmlText | typeAttr | cdaText | xhtml
     /// </summary>
-    [FhirElement("representation", InSummary=true, Order=50)]
+    [FhirElement("representation", InSummary=true, Order=50 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

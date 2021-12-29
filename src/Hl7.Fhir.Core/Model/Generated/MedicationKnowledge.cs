@@ -2032,7 +2032,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code that identifies this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=90)]
+    [FhirElement("code", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.class"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2045,7 +2045,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100 )]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
@@ -2077,7 +2077,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=110)]
+    [FhirElement("manufacturer", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.actor"})]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who participated
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=60)]
+      [FhirElement("who", InSummary=true, Order=60, FiveWs= new string[] {"FiveWs.actor"})]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// derivation | revision | quotation | source | removal
       /// </summary>
-      [FhirElement("role", InSummary=true, Order=40)]
+      [FhirElement("role", InSummary=true, Order=40 )]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target Reference(s) (usually version specific)
     /// </summary>
-    [FhirElement("target", InSummary=true, Order=90)]
+    [FhirElement("target", InSummary=true, Order=90, FiveWs= new string[] {"FiveWs.what[x]"})]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred
     /// </summary>
-    [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice, FiveWs= new string[] {"FiveWs.done[x]"})]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity was recorded / updated
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=110)]
+    [FhirElement("recorded", InSummary=true, Order=110, FiveWs= new string[] {"FiveWs.recorded"})]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant RecordedElement
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the activity occurred, if relevant
     /// </summary>
-    [FhirElement("location", Order=130)]
+    [FhirElement("location", Order=130, FiveWs= new string[] {"FiveWs.where[x]"})]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the activity is occurring
     /// </summary>
-    [FhirElement("reason", Order=140)]
+    [FhirElement("reason", Order=140, FiveWs= new string[] {"FiveWs.why[x]"})]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Activity that occurred
     /// </summary>
-    [FhirElement("activity", Order=150)]
+    [FhirElement("activity", Order=150, FiveWs= new string[] {"FiveWs.why[x]"})]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Activity
     {
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved
     /// </summary>
-    [FhirElement("agent", Order=160)]
+    [FhirElement("agent", Order=160, FiveWs= new string[] {"FiveWs.who"})]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent

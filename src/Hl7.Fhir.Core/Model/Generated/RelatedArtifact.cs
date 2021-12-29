@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30)]
+    [FhirElement("type", InSummary=true, Order=30 )]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
