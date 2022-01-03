@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,6 +74,11 @@
               <xs:documentation xml:lang="en">Identifier for a person within a particular scope.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Whether this person's record is in active use.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="unbounded" type="HumanName">
             <xs:annotation>
               <xs:documentation xml:lang="en">A name associated with the person.</xs:documentation>
@@ -94,12 +99,24 @@
               <xs:documentation xml:lang="en">The birth date for the person.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates if the individual is deceased or not.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="deceasedBoolean" type="boolean"/>
+            <xs:element name="deceasedDateTime" type="dateTime"/>
+          </xs:choice>
           <xs:element name="address" minOccurs="0" maxOccurs="unbounded" type="Address">
             <xs:annotation>
               <xs:documentation xml:lang="en">One or more addresses for the person.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="photo" minOccurs="0" maxOccurs="1" type="Attachment">
+          <xs:element name="maritalStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">This field contains a person's most recent marital (civil) status.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="photo" minOccurs="0" maxOccurs="unbounded" type="Attachment">
             <xs:annotation>
               <xs:documentation xml:lang="en">An image that can be displayed as a thumbnail of the person to enhance the identification of the individual.</xs:documentation>
            </xs:annotation>
@@ -109,14 +126,35 @@
               <xs:documentation xml:lang="en">The organization that is the custodian of the person record.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="active" minOccurs="0" maxOccurs="1" type="boolean">
+          <xs:element name="communication" type="Person.Communication" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this person's record is in active use.</xs:documentation>
+              <xs:documentation xml:lang="en">A language which may be used to communicate with the person about his or her health.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="link" type="Person.Link" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Link to a resource that concerns the same actual person.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Person.Communication">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Demographics and administrative information about a person independent of a specific health-related context.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="language" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The ISO-639-1 alpha 2 code in lower case for the language, optionally followed by a hyphen and the ISO-3166-1 alpha 2 code for the region in upper case; e.g. &quot;en&quot; for English, or &quot;en-US&quot; for American English versus &quot;en-EN&quot; for England English.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="preferred" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates whether or not the person prefers this language (over other languages he masters up a certain level).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -144,7 +182,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="IdentityAssuranceLevel-list">
+  <xs:simpleType name="IdentityAssuranceLevelEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="level1">
         <xs:annotation>
@@ -175,7 +213,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="IdentityAssuranceLevel-list" use="optional"/>
+        <xs:attribute name="value" type="IdentityAssuranceLevelEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

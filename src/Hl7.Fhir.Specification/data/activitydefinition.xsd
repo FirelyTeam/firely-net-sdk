@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -364,7 +364,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionParticipantType-list">
+  <xs:simpleType name="ActionParticipantTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="careteam">
         <xs:annotation>
@@ -425,11 +425,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionParticipantType-list" use="optional"/>
+        <xs:attribute name="value" type="ActionParticipantTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="RequestIntent-list">
+  <xs:simpleType name="RequestIntentEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="proposal">
         <xs:annotation>
@@ -485,11 +485,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="RequestIntent-list" use="optional"/>
+        <xs:attribute name="value" type="RequestIntentEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="RequestPriority-list">
+  <xs:simpleType name="RequestPriorityEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="routine">
         <xs:annotation>
@@ -520,7 +520,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="RequestPriority-list" use="optional"/>
+        <xs:attribute name="value" type="RequestPriorityEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

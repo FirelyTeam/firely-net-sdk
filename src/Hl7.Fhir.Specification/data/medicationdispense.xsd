@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -94,6 +94,11 @@
               <xs:documentation xml:lang="en">Indicates the reason why a dispense was not performed.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="statusChanged" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date (and maybe time) when the status of the dispense record changed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates the type of medication dispense (for example, drug classification like ATC, where meds would be administered, legal category of the medication.).</xs:documentation>
@@ -101,7 +106,7 @@
           </xs:element>
           <xs:element name="medication" minOccurs="1" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifies the medication being administered. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifies the medication supplied. This is either a link to a resource representing the details of the medication or a simple attribute carrying a code that identifies the medication from a known list of medications.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
@@ -147,6 +152,11 @@
           <xs:element name="daysSupply" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The amount of medication expressed as a timing amount.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="recorded" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date (and maybe time) when the dispense activity started if whenPrepared or whenHandedOver is not populated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="whenPrepared" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -255,7 +265,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="MedicationDispenseStatusCodes-list">
+  <xs:simpleType name="MedicationDispenseStatusCodesEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="preparation">
         <xs:annotation>
@@ -306,12 +316,12 @@
   </xs:simpleType>
   <xs:complexType name="MedicationDispenseStatusCodes">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A coded concept specifying the state of the dispense event.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="MedicationDispenseStatusCodes-list" use="optional"/>
+        <xs:attribute name="value" type="MedicationDispenseStatusCodesEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

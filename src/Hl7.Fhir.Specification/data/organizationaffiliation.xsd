@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="OrganizationAffiliation" type="OrganizationAffiliation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines an affiliation/assotiation/relationship between 2 distinct oganizations, that is not a part-of relationship/sub-division relationship.</xs:documentation>
+      <xs:documentation xml:lang="en">Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="OrganizationAffiliation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Defines an affiliation/assotiation/relationship between 2 distinct oganizations, that is not a part-of relationship/sub-division relationship.</xs:documentation>
+      <xs:documentation xml:lang="en">Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>

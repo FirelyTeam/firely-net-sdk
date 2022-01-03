@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,7 +79,7 @@
               <xs:documentation xml:lang="en">The name used to display by default when the device is referenced. Based on intent of use by the resource creator, this may reflect one of the names in Device.deviceName, or may be another simple name.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="definition" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reference to the definition for the device.</xs:documentation>
            </xs:annotation>
@@ -99,9 +99,9 @@
               <xs:documentation xml:lang="en">Reason for the status of the Device record. For example, why is the record not active.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="distinctIdentifier" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="biologicalSource" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The distinct identification string as required by regulation for a human cell, tissue, or cellular and tissue-based product.</xs:documentation>
+              <xs:documentation xml:lang="en">An identifier that supports traceability to the biological entity that is the source of biological material in the product.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="manufacturer" minOccurs="0" maxOccurs="1" type="string">
@@ -149,12 +149,6 @@
               <xs:documentation xml:lang="en">The kind or type of device. A device instance may have more than one type - in which case those are the types that apply to the specific instance of the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="specialization" type="Device.Specialization" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The device function, including in some cases whether or not the functionality conforms to some standard. For example, a PHD blood pressure specialization indicates that the device conforms to the IEEE 11073-10407 Blood Pressure Specialization. This is NOT an alternate name or an additional descriptive name given by the manufacturer. That would be found in the deviceName element.
-In the PHD case, there are 11073 10101 nomenclature codes that define the specialization standards and that will be used, for example, in the PHD case for the specialization.systemType element. The specialization.version would be the version of the standard if the systemType referred to a standard.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="version" type="Device.Version" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The actual design of the device or software version running on the device.</xs:documentation>
@@ -165,7 +159,7 @@ In the PHD case, there are 11073 10101 nomenclature codes that define the specia
               <xs:documentation xml:lang="en">The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Patient information, if the device is affixed to, or associated to a patient for their specific use, irrespective of the procedure, use, observation, or other activity that the device is involved in.</xs:documentation>
            </xs:annotation>
@@ -200,6 +194,16 @@ In the PHD case, there are 11073 10101 nomenclature codes that define the specia
               <xs:documentation xml:lang="en">A network address on which the device may be contacted directly.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="endpoint" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Technical endpoints providing access to services provided by the device defined at this resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="link" type="Device.Link" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An associated device, attached to, used with, communicating with or linking a previous or new device model to the focal device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
               <xs:documentation xml:lang="en">Descriptive information, usage information or implantation information that is not captured in an existing element.</xs:documentation>
@@ -226,27 +230,23 @@ In the PHD case, there are 11073 10101 nomenclature codes that define the specia
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="deviceIdentifier" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="deviceIdentifier" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The device identifier (DI) is a mandatory, fixed portion of a UDI that identifies the labeler and the specific version or model of a device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="issuer" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Organization that is charged with issuing UDIs for devices.  For example, the US FDA issuers include :
-1) GS1: 
-http://hl7.org/fhir/NamingSystem/gs1-di, 
-2) HIBCC:
-http://hl7.org/fhir/NamingSystem/hibcc-dI, 
-3) ICCBBA for blood containers:
-http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 
-4) ICCBA for other devices:
-http://hl7.org/fhir/NamingSystem/iccbba-other-di.</xs:documentation>
+              <xs:documentation xml:lang="en">Organization that is charged with issuing UDIs for devices. For example, the US FDA issuers include: 
+1) GS1: http://hl7.org/fhir/NamingSystem/gs1-di, 
+2) HIBCC: http://hl7.org/fhir/NamingSystem/hibcc-diI, 
+3) ICCBBA for blood containers: http://hl7.org/fhir/NamingSystem/iccbba-blood-di, 
+4) ICCBA for other devices: http://hl7.org/fhir/NamingSystem/iccbba-other-di # Informationsstelle für Arzneispezialitäten (IFA GmbH) (EU only): http://hl7.org/fhir/NamingSystem/ifa-gmbh-di.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="jurisdiction" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identity of the authoritative source for UDI generation within a  jurisdiction.  All UDIs are globally unique within a single namespace with the appropriate repository uri as the system.  For example,  UDIs of devices managed in the U.S. by the FDA, the value is  http://hl7.org/fhir/NamingSystem/fda-udi.</xs:documentation>
+              <xs:documentation xml:lang="en">The identity of the authoritative source for UDI generation within a jurisdiction. All UDIs are globally unique within a single namespace with the appropriate repository uri as the system. For example, UDIs of devices managed in the U.S. by the FDA, the value is http://hl7.org/fhir/NamingSystem/us-fda-udi or in the European Union by the European Commission http://hl7.org/fhir/NamingSystem/eu-ec-udi.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="carrierAIDC" minOccurs="0" maxOccurs="1" type="base64Binary">
@@ -283,28 +283,7 @@ http://hl7.org/fhir/NamingSystem/iccbba-other-di.</xs:documentation>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DeviceNameType">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of deviceName. Note that ManufactureDeviceName means that the name is the name as given by the manufacturer, not the name of the manufacturer.
-UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | ModelName.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Device.Specialization">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="systemType" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The standard that is used to operate and communicate.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the standard that is used to operate and communicate.</xs:documentation>
+RegisteredName | UserFriendlyName | PatientReportedName.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -351,10 +330,15 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Property value - can be a code or quantity.</xs:documentation>
+              <xs:documentation xml:lang="en">Property value - can be a code, quantity, boolean, string or attachment.</xs:documentation>
             </xs:annotation>
             <xs:element name="valueQuantity" type="Quantity"/>
             <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueString" type="string"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueInteger" type="integer"/>
+            <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueAttachment" type="Attachment"/>
           </xs:choice>
         </xs:sequence>
       </xs:extension>
@@ -367,7 +351,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="value" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="value" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">on |off | standby.</xs:documentation>
            </xs:annotation>
@@ -388,7 +372,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="value" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="value" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">implanted|explanted|attached.</xs:documentation>
            </xs:annotation>
@@ -402,7 +386,28 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="FHIRDeviceStatus-list">
+  <xs:complexType name="Device.Link">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A type of a manufactured item that is used in the provision of healthcare without being substantially changed through that activity. The device may be a medical or non-medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="relation" minOccurs="1" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type indicates the relationship of the related device to the device instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relatedDevice" minOccurs="1" maxOccurs="1" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to the linked device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="FHIRDeviceStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="active">
         <xs:annotation>
@@ -419,11 +424,6 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="unknown">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Unknown</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="FHIRDeviceStatus">
@@ -433,15 +433,15 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="FHIRDeviceStatus-list" use="optional"/>
+        <xs:attribute name="value" type="FHIRDeviceStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceNameType-list">
+  <xs:simpleType name="DeviceNameTypeEnum">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="udi-label-name">
+      <xs:enumeration value="registered-name">
         <xs:annotation>
-          <xs:documentation xml:lang="en">UDI Label name</xs:documentation>
+          <xs:documentation xml:lang="en">Registered name</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="user-friendly-name">
@@ -454,21 +454,6 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
           <xs:documentation xml:lang="en">Patient Reported name</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="manufacturer-name">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Manufacturer name</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="model-name">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Model name</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="other">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">other</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="DeviceNameType">
@@ -478,11 +463,11 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceNameType-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceNameTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="UDIEntryType-list">
+  <xs:simpleType name="UDIEntryTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="barcode">
         <xs:annotation>
@@ -528,7 +513,7 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="UDIEntryType-list" use="optional"/>
+        <xs:attribute name="value" type="UDIEntryTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -84,7 +84,7 @@
               <xs:documentation xml:lang="en">A high level category e.g. medicinal product, raw material, shipping/transport container, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="packageFor" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The product that this is a pack for.</xs:documentation>
            </xs:annotation>
@@ -101,7 +101,7 @@
           </xs:element>
           <xs:element name="containedItemQuantity" minOccurs="0" maxOccurs="unbounded" type="Quantity">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A total of the amount of items in the package, per item type. This can be considered as the pack size. This attribite is repeatable so that the different item types in one pack type can be counted (e.g. a count of vials and count of syringes). Repeats are not to be used to represent differerent pack sizes (e.g. 20 pack vs 50 pack) - which would be different resource instances. This attribute differs from  containedItem.amount in that it can give a single count of all tablet types in a pack, even when these are different manufactured items.</xs:documentation>
+              <xs:documentation xml:lang="en">A total of the amount of items in the package, per item type. This can be considered as the pack size. This attribute differs from containedItem.amount in that it can give a single aggregated count of all tablet types in a pack, even when these are different manufactured items. For example a pill pack of 21 tablets plus 7 sugar tablets, can be denoted here as '28 tablets'. This attribute is repeatable so that the different item types in one pack type can be counted (e.g. a count of vials and count of syringes). Each repeat must have different units, so that it is clear what the different sets of counted items are, and it is not intended to allow different counts of similar items (e.g. not '2 tubes and 3 tubes'). Repeats are not to be used to represent different pack sizes (e.g. 20 pack vs. 50 pack) - which would be different instances of this resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
@@ -109,7 +109,7 @@
               <xs:documentation xml:lang="en">Textual description. Note that this is not the name of the package or product.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="legalStatusOfSupply" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="legalStatusOfSupply" type="PackagedProductDefinition.LegalStatusOfSupply" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The legal status of supply of the packaged item as classified by the regulator.</xs:documentation>
            </xs:annotation>
@@ -129,11 +129,6 @@
               <xs:documentation xml:lang="en">States whether a drug product is supplied with another item such as a diluent or adjuvant.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="marketingAuthorization" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An authorization for this package type.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="manufacturer" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Manufacturer of this package type. When there are multiple it means these are all possible manufacturers.</xs:documentation>
@@ -147,6 +142,27 @@
           <xs:element name="package" type="PackagedProductDefinition.Package" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">A packaging item, as a container for medically related items, possibly with other packaging items within, or a packaging component, such as bottle cap (which is not a device or a medication manufactured item).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PackagedProductDefinition.LegalStatusOfSupply">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A medically related item or items, in a container or package.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The actual status of supply. In what situation this package type may be supplied for use.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The place where the legal status of supply applies. When not specified, this indicates it is unknown in this context.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -207,7 +223,7 @@
           </xs:element>
           <xs:element name="package" type="PackagedProductDefinition.Package" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Allows containers within containers.</xs:documentation>
+              <xs:documentation xml:lang="en">Allows containers (and parts of containers) parwithin containers, still a single packaged product.  See also PackagedProductDefinition.package.containedItem.item(PackagedProductDefinition).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -247,18 +263,16 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
+          <xs:element name="item" minOccurs="1" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The actual item(s) of medication, as manufactured, or a device (typically, but not necessarily, a co-packaged one), or other medically related item (such as food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package. This also allows another packaged product to be included, which is solely for the case where a package of other entire packages is wanted - such as a wholesale or distribution pack.</xs:documentation>
+              <xs:documentation xml:lang="en">The actual item(s) of medication, as manufactured, or a device (typically, but not necessarily, a co-packaged one), or other medically related item (such as food, biologicals, raw materials, medical fluids, gases etc.), as contained in the package. This also allows another whole packaged product to be included, which is solely for the case where a package of other entire packages is wanted - such as a wholesale or distribution pack (for layers within one package, use PackagedProductDefinition.package.package).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="amount" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The number of this type of item within this packaging.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="amountQuantity" type="Quantity"/>
-            <xs:element name="amountInteger" type="integer"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

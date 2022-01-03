@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -109,9 +109,14 @@
               <xs:documentation xml:lang="en">The dose form for a single part product, or combined form of a multiple part product.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="route" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The path by which the product is taken into or makes contact with the body. In some regions this is referred to as the licenced or approved route. See also AdministrableProductDefinition resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="indication" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Description of indication(s) for this product, used when structured indications are not required. In cases where structured indications are required, they are captured using the ClinicalUseIssue resource. An indication is a medical situation for which using the product is appropriate.</xs:documentation>
+              <xs:documentation xml:lang="en">Description of indication(s) for this product, used when structured indications are not required. In cases where structured indications are required, they are captured using the ClinicalUseDefinition resource. An indication is a medical situation for which using the product is appropriate.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="legalStatusOfSupply" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -129,7 +134,7 @@
               <xs:documentation xml:lang="en">Whether the Medicinal Product is subject to special measures for regulatory reasons.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="paediatricUseIndicator" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="pediatricUseIndicator" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">If authorised for use in children.</xs:documentation>
            </xs:annotation>
@@ -139,22 +144,22 @@
               <xs:documentation xml:lang="en">Allows the product to be classified by various systems.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="characteristic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Allows the key product features to be recorded, such as &quot;sugar free&quot;, &quot;modified release&quot;, &quot;parallel import&quot;.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="marketingStatus" minOccurs="0" maxOccurs="unbounded" type="MarketingStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">Marketing status of the medicinal product, in contrast to marketing authorization.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="ingredient" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
+          <xs:element name="packagedMedicinalProduct" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The ingredients of this medicinal product - when not detailed in other resources. This is only needed if the ingredients are not specified by the AdministrableProductDefinition or via the PackagedProductDefinition references above. In cases where those levels of detail are not used, the ingredients may be specified directly here.</xs:documentation>
+              <xs:documentation xml:lang="en">Package representation for the product. See also the PackagedProductDefinition resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="impurity" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="ingredient" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The ingredients of this medicinal product - when not detailed in other resources. This is only needed if the ingredients are not specified by incoming references from the Ingredient resource, or indirectly via incoming AdministrableProductDefinition, PackagedProductDefinition or ManufacturedItemDefinition references. In cases where those levels of detail are not used, the ingredients may be specified directly here as codes.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="impurity" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Any component of the drug product which is not the chemical entity defined as the drug substance or an excipient in the drug product. This includes process-related impurities and contaminants, product-related impurities including degradation products.</xs:documentation>
            </xs:annotation>
@@ -166,7 +171,7 @@
           </xs:element>
           <xs:element name="masterFile" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A master file for to the medicinal product (e.g. Pharmacovigilance System Master File).</xs:documentation>
+              <xs:documentation xml:lang="en">A master file for the medicinal product (e.g. Pharmacovigilance System Master File). Drug master files (DMFs) are documents submitted to regulatory agencies to provide confidential detailed information about facilities, processes or articles used in the manufacturing, processing, packaging and storing of drug products.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="contact" type="MedicinalProductDefinition.Contact" minOccurs="0" maxOccurs="unbounded">
@@ -177,6 +182,11 @@
           <xs:element name="clinicalTrial" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Clinical trials or studies that this product is involved in.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" minOccurs="0" maxOccurs="unbounded" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code that this product is known by, usually within some formal terminology. Products (types of medications) tend to be known by identifiers during development and within regulatory process. However when they are prescribed they tend to be identified by codes. The same product may be have multiple codes, applied to it by multiple organizations.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" type="MedicinalProductDefinition.Name" minOccurs="1" maxOccurs="unbounded">
@@ -194,14 +204,9 @@
               <xs:documentation xml:lang="en">A manufacturing or administrative process or step associated with (or performed on) the medicinal product.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="package" type="MedicinalProductDefinition.Package" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="characteristic" type="MedicinalProductDefinition.Characteristic" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Package representation for the product.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="administrableProduct" type="MedicinalProductDefinition.AdministrableProduct" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The product in its final form, mixed from its components if necessary, and ready to be administered to the patient. Also known as the 'Pharmaceutical Product'. Can repeat, for cases where the product has components that result in more than one administrable item.</xs:documentation>
+              <xs:documentation xml:lang="en">Allows the key product features to be recorded, such as &quot;sugar free&quot;, &quot;modified release&quot;, &quot;parallel import&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -337,7 +342,7 @@
         <xs:sequence>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of manufacturing operation e.g. manufacturing itself, re-packaging. This may be a subtype of some other wider scope of authorized operation, referenced by the authorization attribute.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of manufacturing operation e.g. manufacturing itself, re-packaging. For the authorization of this, a RegulatedAuthorization would point to the same plan or activity referenced here.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="effectiveDate" minOccurs="0" maxOccurs="1" type="Period">
@@ -350,11 +355,6 @@
               <xs:documentation xml:lang="en">The organization or establishment responsible for (or associated with) the particular process or step, examples include the manufacturer, importer, agent.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="authorization" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An authorization for this process, either as a logical reference, holding just an identifier, or a full reference to a resource that captures the details. The authorization may possibly apply to several products or a wider scope of process of which this is a part.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="confidentialityIndicator" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Specifies whether this particular business or manufacturing process is considered proprietary or confidential.</xs:documentation>
@@ -364,51 +364,28 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="MedicinalProductDefinition.Package">
+  <xs:complexType name="MedicinalProductDefinition.Characteristic">
     <xs:annotation>
       <xs:documentation xml:lang="en">Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A descriptive type for this package, such as box, carton or bottle.</xs:documentation>
+              <xs:documentation xml:lang="en">A code expressing the type of characteristic.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The amount of items, or of substance, in the package.</xs:documentation>
+              <xs:documentation xml:lang="en">A value for the characteristic.</xs:documentation>
             </xs:annotation>
-            <xs:element name="sizeQuantity" type="Quantity"/>
-            <xs:element name="sizeInteger" type="integer"/>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueDate" type="date"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueAttachment" type="Attachment"/>
           </xs:choice>
-          <xs:element name="package" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Full package representation for the product.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="MedicinalProductDefinition.AdministrableProduct">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs).</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="route" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The path by which the product is taken into or makes contact with the body. In some regions this is referred to as the licenced or approved route.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="product" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Full description of the administrable product.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

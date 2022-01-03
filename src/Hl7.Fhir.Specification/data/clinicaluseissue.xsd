@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,7 +79,7 @@
               <xs:documentation xml:lang="en">indication | contraindication | interaction | undesirable-effect | warning.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A categorisation of the issue, primarily for dividing warnings into subject heading areas such as &quot;Pregnancy and Lactation&quot;, &quot;Overdose&quot;, &quot;Effects on Ability to Drive and Use Machines&quot;.</xs:documentation>
            </xs:annotation>
@@ -258,7 +258,7 @@
               <xs:documentation xml:lang="en">The incidence of the interaction, e.g. theoretical, observed.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="management" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="management" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Actions for managing the interaction.</xs:documentation>
            </xs:annotation>
@@ -308,46 +308,6 @@
            </xs:annotation>
           </xs:element>
         </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ClinicalUseIssueType-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="indication">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Indication</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="contraindication">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Contraindication</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="interaction">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Interaction</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="undesirable-effect">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Undesirable Effect</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="warning">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Warning</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ClinicalUseIssueType">
-    <xs:annotation>
-      <xs:documentation xml:lang="en"></xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ClinicalUseIssueType-list" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -261,7 +261,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GraphCompartmentUse-list">
+  <xs:simpleType name="GraphCompartmentUseEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="condition">
         <xs:annotation>
@@ -282,11 +282,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="GraphCompartmentUse-list" use="optional"/>
+        <xs:attribute name="value" type="GraphCompartmentUseEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GraphCompartmentRule-list">
+  <xs:simpleType name="GraphCompartmentRuleEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="identical">
         <xs:annotation>
@@ -317,7 +317,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="GraphCompartmentRule-list" use="optional"/>
+        <xs:attribute name="value" type="GraphCompartmentRuleEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

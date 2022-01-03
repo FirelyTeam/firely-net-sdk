@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="EvidenceReport" type="EvidenceReport">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="EvidenceReport">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -167,7 +167,7 @@
   </xs:complexType>
   <xs:complexType name="EvidenceReport.Subject">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -188,7 +188,7 @@
   </xs:complexType>
   <xs:complexType name="EvidenceReport.Characteristic">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -224,7 +224,7 @@
   </xs:complexType>
   <xs:complexType name="EvidenceReport.RelatesTo">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -234,20 +234,49 @@
               <xs:documentation xml:lang="en">The type of relationship that this composition has with anther composition or document.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:element name="target" type="EvidenceReport.Target" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The target composition/document of this relationship.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="targetIdentifier" type="Identifier"/>
-            <xs:element name="targetReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EvidenceReport.Target">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Target of the relationship URL.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Target of the relationship Identifier.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="display" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Target of the relationship Display.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="resource" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Target of the relationship Resource reference.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="EvidenceReport.Section">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
+      <xs:documentation xml:lang="en">The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -316,7 +345,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ReportRelationshipType-list">
+  <xs:simpleType name="ReportRelationshipTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="replaces">
         <xs:annotation>
@@ -367,7 +396,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ReportRelationshipType-list" use="optional"/>
+        <xs:attribute name="value" type="ReportRelationshipTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

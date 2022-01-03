@@ -2312,4 +2312,45 @@
       </NamingSystem>
     </resource>
   </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/PassportNumbers" />
+    <resource>
+      <NamingSystem>
+        <id value="PassportNumbers" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/NamingSystem/PassportNumbers" />
+        <name value="Passport Numbers" />
+        <status value="active" />
+        <kind value="root" />
+        <date value="2021-02-11" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="PPN" />
+          </coding>
+        </type>
+        <description value="[XXX] is a 3-letter country code defined by ISO 3166. See [Using ISO 3166 Codes with FHIR](iso3166.html)." />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.330" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/passport-[XXX]" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
 </Bundle>

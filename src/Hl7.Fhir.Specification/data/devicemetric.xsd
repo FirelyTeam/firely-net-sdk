@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -149,7 +149,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricCalibrationType-list">
+  <xs:simpleType name="DeviceMetricCalibrationTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="unspecified">
         <xs:annotation>
@@ -180,11 +180,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricCalibrationType-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceMetricCalibrationTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricColor-list">
+  <xs:simpleType name="DeviceMetricColorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="black">
         <xs:annotation>
@@ -235,11 +235,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricColor-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceMetricColorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricCalibrationState-list">
+  <xs:simpleType name="DeviceMetricCalibrationStateEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="not-calibrated">
         <xs:annotation>
@@ -270,11 +270,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricCalibrationState-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceMetricCalibrationStateEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricOperationalStatus-list">
+  <xs:simpleType name="DeviceMetricOperationalStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="on">
         <xs:annotation>
@@ -305,11 +305,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricOperationalStatus-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceMetricOperationalStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceMetricCategory-list">
+  <xs:simpleType name="DeviceMetricCategoryEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="measurement">
         <xs:annotation>
@@ -340,7 +340,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceMetricCategory-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceMetricCategoryEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -81,7 +81,7 @@
             <xs:element name="occurredPeriod" type="Period"/>
             <xs:element name="occurredDateTime" type="dateTime"/>
           </xs:choice>
-          <xs:element name="recorded" minOccurs="1" maxOccurs="1" type="instant">
+          <xs:element name="recorded" minOccurs="0" maxOccurs="1" type="instant">
             <xs:annotation>
               <xs:documentation xml:lang="en">The instant of time at which the activity was recorded.</xs:documentation>
            </xs:annotation>
@@ -96,9 +96,9 @@
               <xs:documentation xml:lang="en">Where the activity occurred, if relevant.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="authorization" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The reason that the activity was taking place.</xs:documentation>
+              <xs:documentation xml:lang="en">The authorization (e.g., PurposeOfUse) that was used during the event being recorded.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="activity" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -144,7 +144,7 @@
         <xs:sequence>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The primary act of participation of the agent with respect to the activity.</xs:documentation>
+              <xs:documentation xml:lang="en">The Functional Role of the agent with respect to the activity.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="role" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -154,7 +154,7 @@
           </xs:element>
           <xs:element name="who" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The individual, device or organization that participated in the event.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates who or what performed in the event.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="onBehalfOf" minOccurs="0" maxOccurs="1" type="Reference">
@@ -185,14 +185,14 @@
           </xs:element>
           <xs:element name="agent" type="Provenance.Agent" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The entity is attributed to an agent to express the agent's responsibility for that entity, possibly along with other agents. This description can be understood as shorthand for saying that the agent was responsible for the activity which generated the entity.</xs:documentation>
+              <xs:documentation xml:lang="en">The entity is attributed to an agent to express the agent's responsibility for that entity, possibly along with other agents. This description can be understood as shorthand for saying that the agent was responsible for the activity which used the entity.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ProvenanceEntityRole-list">
+  <xs:simpleType name="ProvenanceEntityRoleEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="derivation">
         <xs:annotation>
@@ -214,6 +214,11 @@
           <xs:documentation xml:lang="en">Source</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="instantiates">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Instantiates</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="removal">
         <xs:annotation>
           <xs:documentation xml:lang="en">Removal</xs:documentation>
@@ -228,7 +233,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ProvenanceEntityRole-list" use="optional"/>
+        <xs:attribute name="value" type="ProvenanceEntityRoleEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

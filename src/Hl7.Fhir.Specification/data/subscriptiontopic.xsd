@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="SubscriptionTopic" type="SubscriptionTopic">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="SubscriptionTopic">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -109,7 +109,7 @@
               <xs:documentation xml:lang="en">For draft definitions, indicates the date of initial creation.  For active definitions, represents the date of activation.  For withdrawn definitions, indicates the date of withdrawal.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="publisher" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Helps establish the &quot;authority/credibility&quot; of the SubscriptionTopic.  May also allow for contact.</xs:documentation>
            </xs:annotation>
@@ -161,7 +161,22 @@
           </xs:element>
           <xs:element name="resourceTrigger" type="SubscriptionTopic.ResourceTrigger" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The criteria for including updates to a nominated resource in the subscription topic.  Thie criteria may be just a human readable description and/or a full FHIR search string or FHIRPath expression.</xs:documentation>
+              <xs:documentation xml:lang="en">A definition of a resource-based event that triggers a notification based on the SubscriptionTopic. The criteria may be just a human readable description and/or a full FHIR search string or FHIRPath expression. Multiple triggers are considered OR joined (e.g., a resource update matching ANY of the definitions will trigger a notification).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="eventTrigger" type="SubscriptionTopic.EventTrigger" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Event definition which can be used to trigger the SubscriptionTopic.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="canFilterBy" type="SubscriptionTopic.CanFilterBy" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">List of properties by which Subscriptions on the SubscriptionTopic can be filtered. May be defined Search Parameters (e.g., Encounter.patient) or parameters defined within this SubscriptionTopic context (e.g., hub.event).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="notificationShape" type="SubscriptionTopic.NotificationShape" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">List of properties to describe the shape (e.g., resources) included in notifications from this Subscription Topic.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -170,24 +185,24 @@
   </xs:complexType>
   <xs:complexType name="SubscriptionTopic.ResourceTrigger">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The human readable description of what triggers inclusion into this subscription topic -  for example, &quot;Beginning of a clinical encounter&quot;.</xs:documentation>
+              <xs:documentation xml:lang="en">The human readable description of this resource trigger for the SubscriptionTopic -  for example, &quot;An Encounter enters the 'in-progress' state&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="resourceType" minOccurs="0" maxOccurs="1" type="uri">
+          <xs:element name="resource" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">URL of the Resource that is the type used in this trigger.  Relative URLs are relative to the StructureDefinition root of the implemented FHIR version (e.g., http://hl7.org/fhir/StructureDefinition). For example, &quot;Patient&quot; maps to http://hl7.org/fhir/StructureDefinition/Patient.  For more information, see &lt;a href=&quot;elementdefinition-definitions.html#ElementDefinition.type.code&quot;&gt;ElementDefinition.type.code&lt;/a&gt;.</xs:documentation>
+              <xs:documentation xml:lang="en">URL of the Resource that is the type used in this resource trigger.  Relative URLs are relative to the StructureDefinition root of the implemented FHIR version (e.g., http://hl7.org/fhir/StructureDefinition). For example, &quot;Patient&quot; maps to http://hl7.org/fhir/StructureDefinition/Patient.  For more information, see &lt;a href=&quot;elementdefinition-definitions.html#ElementDefinition.type.code&quot;&gt;ElementDefinition.type.code&lt;/a&gt;.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="methodCriteria" minOccurs="0" maxOccurs="unbounded" type="InteractionTrigger">
+          <xs:element name="supportedInteraction" minOccurs="0" maxOccurs="unbounded" type="InteractionTrigger">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The REST interaction based rules that the server should use to determine when to trigger a notification for this topic.</xs:documentation>
+              <xs:documentation xml:lang="en">The FHIR RESTful interaction which can be used to trigger a notification for the SubscriptionTopic. Multiple values are considered OR joined (e.g., CREATE or UPDATE).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="queryCriteria" type="SubscriptionTopic.QueryCriteria" minOccurs="0" maxOccurs="1">
@@ -195,14 +210,9 @@
               <xs:documentation xml:lang="en">The FHIR query based rules that the server should use to determine when to trigger a notification for this subscription topic.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="fhirPathCriteria" minOccurs="0" maxOccurs="unbounded" type="string">
+          <xs:element name="fhirPathCriteria" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The FHIRPath based rules that the server should use to determine when to trigger a notification for this topic.  If there are multiple, FHIRPath filters are joined with AND.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="canFilterBy" type="SubscriptionTopic.CanFilterBy" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">List of properties by which Subscriptions on the subscription topic can be filtered.</xs:documentation>
+              <xs:documentation xml:lang="en">The FHIRPath based rules that the server should use to determine when to trigger a notification for this topic.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -211,29 +221,29 @@
   </xs:complexType>
   <xs:complexType name="SubscriptionTopic.QueryCriteria">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
           <xs:element name="previous" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The FHIR query based rules are applied to the previous resource state.</xs:documentation>
+              <xs:documentation xml:lang="en">The FHIR query based rules are applied to the previous resource state (e.g., state before an update).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="resultForCreate" minOccurs="0" maxOccurs="1" type="CriteriaNotExistsBehavior">
             <xs:annotation>
-              <xs:documentation xml:lang="en">What behavior a server will exhibit if the previous state of a resource does NOT exist (e.g., during a CREATE).</xs:documentation>
+              <xs:documentation xml:lang="en">What behavior a server will exhibit if the previous state of a resource does NOT exist (e.g., prior to a create).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="current" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The FHIR query based rules are applied to the current resource state.</xs:documentation>
+              <xs:documentation xml:lang="en">The FHIR query based rules are applied to the current resource state (e.g., state after an update).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="resultForDelete" minOccurs="0" maxOccurs="1" type="CriteriaNotExistsBehavior">
             <xs:annotation>
-              <xs:documentation xml:lang="en">What behavior a server will exhibit if the current state of a resource does NOT exist (e.g., during a DELETE).</xs:documentation>
+              <xs:documentation xml:lang="en">What behavior a server will exhibit if the current state of a resource does NOT exist (e.g., after a DELETE).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="requireBoth" minOccurs="0" maxOccurs="1" type="boolean">
@@ -245,33 +255,90 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="SubscriptionTopic.CanFilterBy">
+  <xs:complexType name="SubscriptionTopic.EventTrigger">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.</xs:documentation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="searchParamName" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A search parameter (like &quot;patient&quot;) which is a label for the filter.</xs:documentation>
+              <xs:documentation xml:lang="en">The human readable description of an event to trigger a notification for the SubscriptionTopic - for example, &quot;Patient Admission, as defined in HL7v2 via message ADT^A01&quot;. Multiple values are considered OR joined (e.g., matching any single event listed).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="searchModifier" minOccurs="0" maxOccurs="unbounded" type="code">
+          <xs:element name="event" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Allowable operators to apply when determining matches (Search Modifiers).</xs:documentation>
+              <xs:documentation xml:lang="en">A well-defined event which can be used to trigger notifications from the SubscriptionTopic.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="documentation" minOccurs="0" maxOccurs="1" type="markdown">
+          <xs:element name="resource" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Description of how this filter parameter is intended to be used.</xs:documentation>
+              <xs:documentation xml:lang="en">URL of the Resource that is the focus type used in this event trigger.  Relative URLs are relative to the StructureDefinition root of the implemented FHIR version (e.g., http://hl7.org/fhir/StructureDefinition). For example, &quot;Patient&quot; maps to http://hl7.org/fhir/StructureDefinition/Patient.  For more information, see &lt;a href=&quot;elementdefinition-definitions.html#ElementDefinition.type.code&quot;&gt;ElementDefinition.type.code&lt;/a&gt;.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="InteractionTrigger-list">
+  <xs:complexType name="SubscriptionTopic.CanFilterBy">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Description of how this filtering parameter is intended to be used.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="resource" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">URL of the Resource that is the type used in this filter. This is the &quot;focus&quot; of the topic (or one of them if there are more than one). It will be the same, a generality, or a specificity of SubscriptionTopic.resourceTrigger.resource or SubscriptionTopic.eventTrigger.resource when they are present.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="filterParameter" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Either the canonical URL to a search parameter (like &quot;http://hl7.org/fhir/SearchParameter/encounter-patient&quot;) or topic-defined parameter (like &quot;hub.event&quot;) which is a label for the filter.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="modifier" minOccurs="0" maxOccurs="unbounded" type="code">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Allowable operators to apply when determining matches (Search Modifiers).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubscriptionTopic.NotificationShape">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Describes a stream of resource state changes or events and annotated with labels useful to filter projections from this topic.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="resource" minOccurs="1" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">URL of the Resource that is the type used in this shape. This is the &quot;focus&quot; of the topic (or one of them if there are more than one) and the root resource for this shape definition. It will be the same, a generality, or a specificity of SubscriptionTopic.resourceTrigger.resource or SubscriptionTopic.eventTrigger.resource when they are present.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="include" minOccurs="0" maxOccurs="unbounded" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Search-style _include directives, rooted in the resource for this shape. Servers SHOULD include resources listed here, if they exist and the user is authorized to receive them.  Clients SHOULD be prepared to receive these additional resources, but SHALL function properly without them.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="revInclude" minOccurs="0" maxOccurs="unbounded" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Search-style _revinclude directives, rooted in the resource for this shape. Servers SHOULD include resources listed here, if they exist and the user is authorized to receive them.  Clients SHOULD be prepared to receive these additional resources, but SHALL function properly without them.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="InteractionTriggerEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="create">
         <xs:annotation>
@@ -297,11 +364,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="InteractionTrigger-list" use="optional"/>
+        <xs:attribute name="value" type="InteractionTriggerEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CriteriaNotExistsBehavior-list">
+  <xs:simpleType name="CriteriaNotExistsBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="test-passes">
         <xs:annotation>
@@ -322,7 +389,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CriteriaNotExistsBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="CriteriaNotExistsBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

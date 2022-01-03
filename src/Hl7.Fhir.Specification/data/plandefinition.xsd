@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -301,6 +301,10 @@
             <xs:element name="detailQuantity" type="Quantity"/>
             <xs:element name="detailRange" type="Range"/>
             <xs:element name="detailCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="detailString" type="string"/>
+            <xs:element name="detailBoolean" type="boolean"/>
+            <xs:element name="detailInteger" type="integer"/>
+            <xs:element name="detailRatio" type="Ratio"/>
           </xs:choice>
           <xs:element name="due" minOccurs="0" maxOccurs="1" type="Duration">
             <xs:annotation>
@@ -370,9 +374,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="linkId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An identifier that is unique within the PlanDefinition to allow linkage within the realized CarePlan and/or RequestGroup.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="prefix" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A user-visible prefix for the action.</xs:documentation>
+              <xs:documentation xml:lang="en">A user-visible prefix for the action. For example a section or item numbering such as 1. or A.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
@@ -499,7 +508,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail, or a PlanDefinition that describes a series of actions to be taken.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail, a PlanDefinition that describes a series of actions to be taken, a Questionnaire that should be filled out, or an ObservationDefinition that specifies what observation should be captured.</xs:documentation>
             </xs:annotation>
             <xs:element name="definitionCanonical" type="canonical"/>
             <xs:element name="definitionUri" type="uri"/>
@@ -681,7 +690,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionRequiredBehavior-list">
+  <xs:simpleType name="ActionRequiredBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="must">
         <xs:annotation>
@@ -707,11 +716,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionRequiredBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionRequiredBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionRelationshipType-list">
+  <xs:simpleType name="ActionRelationshipTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="before-start">
         <xs:annotation>
@@ -767,11 +776,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionRelationshipType-list" use="optional"/>
+        <xs:attribute name="value" type="ActionRelationshipTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionGroupingBehavior-list">
+  <xs:simpleType name="ActionGroupingBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="visual-group">
         <xs:annotation>
@@ -797,11 +806,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionGroupingBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionGroupingBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionSelectionBehavior-list">
+  <xs:simpleType name="ActionSelectionBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="any">
         <xs:annotation>
@@ -842,11 +851,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionSelectionBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionSelectionBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionCardinalityBehavior-list">
+  <xs:simpleType name="ActionCardinalityBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="single">
         <xs:annotation>
@@ -867,11 +876,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionCardinalityBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionCardinalityBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionPrecheckBehavior-list">
+  <xs:simpleType name="ActionPrecheckBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="yes">
         <xs:annotation>
@@ -892,11 +901,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionPrecheckBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionPrecheckBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionConditionKind-list">
+  <xs:simpleType name="ActionConditionKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="applicability">
         <xs:annotation>
@@ -922,7 +931,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionConditionKind-list" use="optional"/>
+        <xs:attribute name="value" type="ActionConditionKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,14 +69,24 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional information to describe the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Unique instance identifiers assigned to a device by the software, manufacturers, other organizations or owners. For example: handle ID.</xs:documentation>
+              <xs:documentation xml:lang="en">Unique instance identifiers assigned to a device by the software, manufacturers, other organizations or owners. For example: handle ID. The identifier is typically valued if the udiDeviceIdentifier, partNumber or modelNumber is not valued and represents a different type of identifier.  However, it is permissible to still include those identifiers in DeviceDefinition.identifier with the appropriate identifier.type.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="udiDeviceIdentifier" type="DeviceDefinition.UdiDeviceIdentifier" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Unique device identifier (UDI) assigned to device label or package.  Note that the Device may include multiple udiCarriers as it either may include just the udiCarrier for the jurisdiction it is sold, or for multiple jurisdictions it could have been sold.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="partNumber" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The part number or catalog number of the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
@@ -96,12 +106,12 @@
               <xs:documentation xml:lang="en">The model number for the device for example as defined by the manufacturer or labeler, or other agency.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="classification" type="DeviceDefinition.Classification" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">What kind of device or device system this is.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="specialization" type="DeviceDefinition.Specialization" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="specialization" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
               <xs:documentation xml:lang="en">The capabilities supported on a  device, the standards to which the device conforms for a particular purpose, and used for the communication.</xs:documentation>
            </xs:annotation>
@@ -131,24 +141,14 @@
               <xs:documentation xml:lang="en">Shelf Life and storage information.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="physicalCharacteristics" minOccurs="0" maxOccurs="1" type="ProdCharacteristic">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Physical characteristics to define or specify the product - for example dimensions, color etc. These can be defined by the manufacturer or labeler, or can be used to specify characteristics when ordering.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="languageCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Language code for the human-readable text strings produced by the device (all supported).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="capability" type="DeviceDefinition.Capability" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Additional capabilities that the device is defined or required to have e.g. &quot;water resistant&quot;, &quot;long life&quot;.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="property" type="DeviceDefinition.Property" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The actual configuration settings of a device as it actually operates, e.g., regulation status, time properties.</xs:documentation>
+              <xs:documentation xml:lang="en">The potential, valid configuration settings of a device, e.g., regulation status, time properties.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="owner" minOccurs="0" maxOccurs="1" type="Reference">
@@ -161,9 +161,9 @@
               <xs:documentation xml:lang="en">Contact details for an organization or a particular human that is responsible for the device.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="onlineInformation" minOccurs="0" maxOccurs="1" type="uri">
+          <xs:element name="link" type="DeviceDefinition.Link" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Access to on-line information about the device.</xs:documentation>
+              <xs:documentation xml:lang="en">An associated device, attached to, used with, communicating with or linking a previous or new device model to the focal device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -181,6 +181,26 @@
               <xs:documentation xml:lang="en">A substance used to create the material(s) of which the device is made.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="productionIdentifierInUDI" minOccurs="0" maxOccurs="unbounded" type="code">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the production identifier(s) that are expected to appear in the UDI carrier on the device label.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="guideline" type="DeviceDefinition.Guideline" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Information aimed at providing directions for the usage of this model of device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="correctiveAction" type="DeviceDefinition.CorrectiveAction" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Tracking of latest field safety corrective action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="chargeItem" type="DeviceDefinition.ChargeItem" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Billing code or reference associated with the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -194,7 +214,7 @@
         <xs:sequence>
           <xs:element name="deviceIdentifier" minOccurs="1" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdication porvided in the DeviceDefinition.udiDeviceIdentifier.</xs:documentation>
+              <xs:documentation xml:lang="en">The identifier that is to be associated with every Device that references this DeviceDefintiion for the issuer and jurisdiction provided in the DeviceDefinition.udiDeviceIdentifier.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="issuer" minOccurs="1" maxOccurs="1" type="uri">
@@ -205,6 +225,32 @@
           <xs:element name="jurisdiction" minOccurs="1" maxOccurs="1" type="uri">
             <xs:annotation>
               <xs:documentation xml:lang="en">The jurisdiction to which the deviceIdentifier applies.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="marketDistribution" type="DeviceDefinition.MarketDistribution" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The organization that assigns the identifier algorithm.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.MarketDistribution">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="marketPeriod" minOccurs="1" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Begin and end dates for the commercial distribution of the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subJurisdiction" minOccurs="1" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">National state or territory to which the marketDistribution recers, typically where the device is commercialized.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -226,28 +272,28 @@
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="DeviceNameType">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of deviceName.
-UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | ModelName.</xs:documentation>
+RegisteredName | UserFriendlyName | PatientReportedName.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="DeviceDefinition.Specialization">
+  <xs:complexType name="DeviceDefinition.Classification">
     <xs:annotation>
       <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="systemType" minOccurs="1" maxOccurs="1" type="string">
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The standard that is used to operate and communicate.</xs:documentation>
+              <xs:documentation xml:lang="en">A classification or risk class of the device model.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="justification" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the standard that is used to operate and communicate.</xs:documentation>
+              <xs:documentation xml:lang="en">Further information qualifying this classification of the device model.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -359,6 +405,32 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
               <xs:documentation xml:lang="en">The jurisdiction to which the deviceIdentifier applies.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="marketDistribution" type="DeviceDefinition.MarketDistribution1" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The organization that assigns the identifier algorithm.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.MarketDistribution1">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="marketPeriod" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Begin and end dates for the commercial distribution of the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subJurisdiction" minOccurs="0" maxOccurs="1" type="uri">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">National state or territory to which the marketDistribution refers, typically where the device is commercialized.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -389,27 +461,6 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="DeviceDefinition.Capability">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The type of capability - whether it is a physical attribute, a customization needed. For exampl e &quot;water ingress protection&quot;.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The actual capability of the device e.g. IP67.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:complexType name="DeviceDefinition.Property">
     <xs:annotation>
       <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
@@ -419,17 +470,40 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
         <xs:sequence>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Code that specifies the property DeviceDefinitionPropetyCode (Extensible).</xs:documentation>
+              <xs:documentation xml:lang="en">Code that specifies the property.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="valueQuantity" minOccurs="0" maxOccurs="unbounded" type="Quantity">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Property value as a quantity.</xs:documentation>
+              <xs:documentation xml:lang="en">Property value - the data type depends on the property type.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueString" type="string"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueInteger" type="integer"/>
+            <xs:element name="valueRange" type="Range"/>
+            <xs:element name="valueAttachment" type="Attachment"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.Link">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="relation" minOccurs="1" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type indicates the relationship of the related device to the device instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="valueCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="relatedDevice" minOccurs="1" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Property value as a code, e.g., NTP4 (synced to NTP).</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to the linked device.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -459,6 +533,139 @@ UDILabelName | UserFriendlyName | PatientReportedName | ManufactureDeviceName | 
            </xs:annotation>
           </xs:element>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.Guideline">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The circumstances that form the setting for using the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="usageInstruction" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Detailed written and visual directions for the user on how to use the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relatedArtifact" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A source of information or reference for this guideline.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="indication" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A clinical condition for which the device was designed to be used.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="contraindication" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A specific situation when a device should not be used because it may cause harm.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="warning" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specific hazard alert information that a user needs to know before using the device.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="intendedUse" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A description of the general purpose or medical use of the device or its function.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.CorrectiveAction">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="recall" minOccurs="1" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Whether the last corrective action known for this device was a recall.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="scope" minOccurs="0" maxOccurs="1" type="DeviceCorrectiveActionScope">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The scope of the corrective action - whether the action targeted all units of a given device model, or only a specific set of batches identified by lot numbers, or individually identified devices identified by the serial name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="period" minOccurs="1" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Start and end dates of the  corrective action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DeviceDefinition.ChargeItem">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The characteristics, operational status and capabilities of a medical-related component of a medical device.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="chargeItemCode" minOccurs="1" maxOccurs="1" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The code or reference for the charge item.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="count" minOccurs="1" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Coefficient applicable to the billing code.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="effectivePeriod" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A specific time period in which this charge item applies.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="useContext" minOccurs="0" maxOccurs="unbounded" type="UsageContext">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The context to which this charge item applies.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="DeviceCorrectiveActionScopeEnum">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="model">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Model</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="lot-numbers">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Lot Numbers</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="serial-numbers">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Serial Numbers</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DeviceCorrectiveActionScope">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DeviceCorrectiveActionScopeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -91,12 +91,12 @@
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance or a device.</xs:documentation>
+              <xs:documentation xml:lang="en">Where the specimen came from. This may be from patient(s), from a location (e.g., the source of an environmental sample), or a sampling of a substance, a biologically-derived product, or a device.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="receivedTime" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Time when specimen was received for processing or testing.</xs:documentation>
+              <xs:documentation xml:lang="en">Time when specimen is received by the testing laboratory for processing or testing.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="parent" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -172,7 +172,17 @@
               <xs:documentation xml:lang="en">A coded value specifying the technique that is used to perform the procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="device" minOccurs="0" maxOccurs="1" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A coded value specifying the technique that is used to perform the procedure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="procedure" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The procedure event during which the specimen was collected (e.g. the surgery leading to the collection of a pathology sample).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Anatomical location from which the specimen was collected (if subject is a patient). This is the target site.  This element is not used for environmental specimens.</xs:documentation>
            </xs:annotation>
@@ -200,9 +210,9 @@
               <xs:documentation xml:lang="en">Textual description of procedure.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="procedure" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="method" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A coded value specifying the procedure used to process the specimen.</xs:documentation>
+              <xs:documentation xml:lang="en">A coded value specifying the method used to process the specimen.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="additive" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -238,6 +248,11 @@
               <xs:documentation xml:lang="en">Textual description of the container.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="location" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The location of the container holding the specimen.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of container associated with the specimen (e.g. slide, aliquot, etc.).</xs:documentation>
@@ -264,7 +279,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SpecimenStatus-list">
+  <xs:simpleType name="SpecimenStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="available">
         <xs:annotation>
@@ -295,7 +310,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SpecimenStatus-list" use="optional"/>
+        <xs:attribute name="value" type="SpecimenStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

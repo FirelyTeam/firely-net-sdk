@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -155,7 +155,7 @@ Deceased patients may also be marked as inactive for the same reasons, but may b
           </xs:element>
           <xs:element name="link" type="Patient.Link" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Link to another patient resource that concerns the same actual patient.</xs:documentation>
+              <xs:documentation xml:lang="en">Link to another patient or RelatedPErson resource that concerns the same actual patient.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -250,7 +250,7 @@ Deceased patients may also be marked as inactive for the same reasons, but may b
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="LinkType-list">
+  <xs:simpleType name="LinkTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="replaced-by">
         <xs:annotation>
@@ -285,7 +285,7 @@ Deceased patients may also be marked as inactive for the same reasons, but may b
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="LinkType-list" use="optional"/>
+        <xs:attribute name="value" type="LinkTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
