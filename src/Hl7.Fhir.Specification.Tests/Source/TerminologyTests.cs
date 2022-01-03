@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(28, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0
+            Assert.Equal(32, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0, +4 for 5.0.0-snapshot1
         }
 
         [Fact]
