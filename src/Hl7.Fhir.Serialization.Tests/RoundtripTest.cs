@@ -381,10 +381,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.EndsWith("-questionnaire.json") && !file.EndsWith("operation-structuredefinition-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
                 return true; //
-
-            if (file.Contains("medicationexample0301(med0301)")) // version 5.0.0-snapshot1: identifier contains no value (only id)
-                return true;
-
             return false;
         }
 
