@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
     [FhirEnumeration("CharacteristicCombination")]
-    public enum CharacteristicCombination
+    public enum CharacteristicCombinationCode
     {
       /// <summary>
       /// Combine characteristics with AND.
@@ -161,20 +161,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination> CodeElement
+      public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode> CodeElement
       {
         get { return _CodeElement; }
         set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination> _CodeElement;
+      private Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode> _CodeElement;
 
       /// <summary>
       /// all-of | any-of | at-least | at-most | net-effect
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination? Code
+      public Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode? Code
       {
         get { return CodeElement != null ? CodeElement.Value : null; }
         set
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             CodeElement = null;
           else
-            CodeElement = new Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination>(value);
+            CodeElement = new Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode>(value);
           OnPropertyChanged("Code");
         }
       }
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombination>)CodeElement.DeepCopy();
+        if(CodeElement != null) dest.CodeElement = (Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode>)CodeElement.DeepCopy();
         if(ThresholdElement != null) dest.ThresholdElement = (Hl7.Fhir.Model.PositiveInt)ThresholdElement.DeepCopy();
         return dest;
       }
@@ -1330,7 +1330,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
     [DataMember]
-    public Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationComponent CharacteristicCombination1
+    public Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationComponent CharacteristicCombination
     {
       get { return _CharacteristicCombination; }
       set { _CharacteristicCombination = value; OnPropertyChanged("CharacteristicCombination"); }
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
       if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(ActualElement != null) dest.ActualElement = (Hl7.Fhir.Model.FhirBoolean)ActualElement.DeepCopy();
-      if(CharacteristicCombination1 != null) dest.CharacteristicCombination1 = (Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationComponent)CharacteristicCombination1.DeepCopy();
+      if(CharacteristicCombination != null) dest.CharacteristicCombination = (Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationComponent)CharacteristicCombination.DeepCopy();
       if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent>(Characteristic.DeepCopy());
       if(HandlingElement != null) dest.HandlingElement = (Code<Hl7.Fhir.Model.EvidenceVariableHandling>)HandlingElement.DeepCopy();
       if(Category != null) dest.Category = new List<Hl7.Fhir.Model.EvidenceVariable.CategoryComponent>(Category.DeepCopy());
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Endorser, otherT.Endorser)) return false;
       if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.Matches(ActualElement, otherT.ActualElement)) return false;
-      if( !DeepComparable.Matches(CharacteristicCombination1, otherT.CharacteristicCombination1)) return false;
+      if( !DeepComparable.Matches(CharacteristicCombination, otherT.CharacteristicCombination)) return false;
       if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
       if( !DeepComparable.Matches(HandlingElement, otherT.HandlingElement)) return false;
       if( !DeepComparable.Matches(Category, otherT.Category)) return false;
@@ -1501,7 +1501,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Endorser, otherT.Endorser)) return false;
       if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.IsExactly(ActualElement, otherT.ActualElement)) return false;
-      if( !DeepComparable.IsExactly(CharacteristicCombination1, otherT.CharacteristicCombination1)) return false;
+      if( !DeepComparable.IsExactly(CharacteristicCombination, otherT.CharacteristicCombination)) return false;
       if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
       if( !DeepComparable.IsExactly(HandlingElement, otherT.HandlingElement)) return false;
       if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
@@ -1535,7 +1535,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Endorser) { if (elem != null) yield return elem; }
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
         if (ActualElement != null) yield return ActualElement;
-        if (CharacteristicCombination1 != null) yield return CharacteristicCombination1;
+        if (CharacteristicCombination != null) yield return CharacteristicCombination;
         foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
         if (HandlingElement != null) yield return HandlingElement;
         foreach (var elem in Category) { if (elem != null) yield return elem; }
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
         if (ActualElement != null) yield return new ElementValue("actual", ActualElement);
-        if (CharacteristicCombination1 != null) yield return new ElementValue("characteristicCombination", CharacteristicCombination1);
+        if (CharacteristicCombination != null) yield return new ElementValue("characteristicCombination", CharacteristicCombination);
         foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
         if (HandlingElement != null) yield return new ElementValue("handling", HandlingElement);
         foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
