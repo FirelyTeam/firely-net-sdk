@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -626,7 +626,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CapabilityStatementKind-list">
+  <xs:simpleType name="CapabilityStatementKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="instance">
         <xs:annotation>
@@ -647,16 +647,16 @@
   </xs:simpleType>
   <xs:complexType name="CapabilityStatementKind">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How a capability statement is intended to be used.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CapabilityStatementKind-list" use="optional"/>
+        <xs:attribute name="value" type="CapabilityStatementKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="EventCapabilityMode-list">
+  <xs:simpleType name="EventCapabilityModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="sender">
         <xs:annotation>
@@ -672,16 +672,16 @@
   </xs:simpleType>
   <xs:complexType name="EventCapabilityMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The mode of a message capability statement.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="EventCapabilityMode-list" use="optional"/>
+        <xs:attribute name="value" type="EventCapabilityModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ResourceVersionPolicy-list">
+  <xs:simpleType name="ResourceVersionPolicyEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="no-version">
         <xs:annotation>
@@ -702,16 +702,16 @@
   </xs:simpleType>
   <xs:complexType name="ResourceVersionPolicy">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How the system supports versioning for a resource.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ResourceVersionPolicy-list" use="optional"/>
+        <xs:attribute name="value" type="ResourceVersionPolicyEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DocumentMode-list">
+  <xs:simpleType name="DocumentModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="producer">
         <xs:annotation>
@@ -727,16 +727,16 @@
   </xs:simpleType>
   <xs:complexType name="DocumentMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Whether the application produces or consumes documents.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DocumentMode-list" use="optional"/>
+        <xs:attribute name="value" type="DocumentModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="RestfulCapabilityMode-list">
+  <xs:simpleType name="RestfulCapabilityModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="client">
         <xs:annotation>
@@ -752,16 +752,16 @@
   </xs:simpleType>
   <xs:complexType name="RestfulCapabilityMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The mode of a RESTful capability statement.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="RestfulCapabilityMode-list" use="optional"/>
+        <xs:attribute name="value" type="RestfulCapabilityModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="TypeRestfulInteraction-list">
+  <xs:simpleType name="TypeRestfulInteractionEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="read">
         <xs:annotation>
@@ -812,16 +812,16 @@
   </xs:simpleType>
   <xs:complexType name="TypeRestfulInteraction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Operations supported by REST at the type or instance level.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="TypeRestfulInteraction-list" use="optional"/>
+        <xs:attribute name="value" type="TypeRestfulInteractionEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SystemRestfulInteraction-list">
+  <xs:simpleType name="SystemRestfulInteractionEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="transaction">
         <xs:annotation>
@@ -847,16 +847,16 @@
   </xs:simpleType>
   <xs:complexType name="SystemRestfulInteraction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Operations supported by REST at the system level.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SystemRestfulInteraction-list" use="optional"/>
+        <xs:attribute name="value" type="SystemRestfulInteractionEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConditionalReadStatus-list">
+  <xs:simpleType name="ConditionalReadStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="not-supported">
         <xs:annotation>
@@ -882,16 +882,16 @@
   </xs:simpleType>
   <xs:complexType name="ConditionalReadStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A code that indicates how the server supports conditional read.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConditionalReadStatus-list" use="optional"/>
+        <xs:attribute name="value" type="ConditionalReadStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ReferenceHandlingPolicy-list">
+  <xs:simpleType name="ReferenceHandlingPolicyEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="literal">
         <xs:annotation>
@@ -922,16 +922,16 @@
   </xs:simpleType>
   <xs:complexType name="ReferenceHandlingPolicy">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A set of flags that defines how references are supported.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ReferenceHandlingPolicy-list" use="optional"/>
+        <xs:attribute name="value" type="ReferenceHandlingPolicyEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConditionalDeleteStatus-list">
+  <xs:simpleType name="ConditionalDeleteStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="not-supported">
         <xs:annotation>
@@ -952,12 +952,12 @@
   </xs:simpleType>
   <xs:complexType name="ConditionalDeleteStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A code that indicates how the server supports conditional delete.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConditionalDeleteStatus-list" use="optional"/>
+        <xs:attribute name="value" type="ConditionalDeleteStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

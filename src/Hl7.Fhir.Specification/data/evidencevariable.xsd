@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -298,7 +298,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GroupMeasure-list">
+  <xs:simpleType name="GroupMeasureEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="mean">
         <xs:annotation>
@@ -339,11 +339,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="GroupMeasure-list" use="optional"/>
+        <xs:attribute name="value" type="GroupMeasureEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CharacteristicCombination-list">
+  <xs:simpleType name="CharacteristicCombinationEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="intersection">
         <xs:annotation>
@@ -364,42 +364,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CharacteristicCombination-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="EvidenceVariableHandling-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="continuous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">continuous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="dichotomous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">dichotomous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ordinal">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ordinal variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="polychotomous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">polychotomous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="EvidenceVariableHandling">
-    <xs:annotation>
-      <xs:documentation xml:lang="en"></xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="EvidenceVariableHandling-list" use="optional"/>
+        <xs:attribute name="value" type="CharacteristicCombinationEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -2,7 +2,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
   <meta>
-    <lastUpdated value="2021-03-11T17:06:20.662+11:00" />
+    <lastUpdated value="2021-12-20T14:08:35.086+11:00" />
   </meta>
   <type value="collection" />
   <entry>
@@ -17,11 +17,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.AdministrativeGender" />
         <title value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0001" />
@@ -32,32 +32,32 @@
             <code value="male" />
             <target>
               <code value="M" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="female" />
             <target>
               <code value="F" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="other" />
             <target>
               <code value="A" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
             <target>
               <code value="O" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
           </element>
           <element>
             <code value="unknown" />
             <target>
               <code value="U" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -76,11 +76,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AdministrativeGender" />
         <title value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AdministrativeGender" />
@@ -91,28 +91,28 @@
             <code value="male" />
             <target>
               <code value="M" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="female" />
             <target>
               <code value="F" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="other" />
             <target>
               <code value="UN" />
-              <equivalence value="narrower" />
+              <relationship value="source-is-narrower-than-target" />
             </target>
           </element>
           <element>
             <code value="unknown" />
             <target>
               <code value="UNK" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -131,11 +131,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.DataAbsentReason" />
         <title value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-NullFlavor" />
@@ -146,63 +146,63 @@
             <code value="unknown" />
             <target>
               <code value="UNK" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="asked-unknown" />
             <target>
               <code value="ASKU" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp-unknown" />
             <target>
               <code value="NAV" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-asked" />
             <target>
               <code value="NASK" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="masked" />
             <target>
               <code value="MSK" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-applicable" />
             <target>
               <code value="NA" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="negative-infinity" />
             <target>
               <code value="NINF" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="positive-infinity" />
             <target>
               <code value="PINF" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-permitted" />
             <target>
               <code value="OTH" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -221,11 +221,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.DocumentReferenceStatus" />
         <title value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/document-reference-status" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
@@ -236,21 +236,21 @@
             <code value="current" />
             <target>
               <code value="active" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="superseded" />
             <target>
               <code value="obsolete" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="entered-in-error" />
             <target>
               <code value="nullified" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -269,11 +269,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.NameUse" />
         <title value="v2 map for NameUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -294,53 +294,53 @@
             <code value="usual" />
             <target>
               <code value="D" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="official" />
             <target>
               <code value="L" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TEMP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="nickname" />
             <target>
               <code value="N" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="anonymous" />
             <target>
               <code value="S" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="NOUSE" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
             <target>
               <code value="BAD" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
           </element>
           <element>
             <code value="maiden" />
             <target>
               <code value="M" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -359,11 +359,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.NameUse" />
         <title value="v3 map for NameUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -384,49 +384,49 @@
             <code value="usual" />
             <target>
               <code value="C" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="official" />
             <target>
               <code value="OR" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="T" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="nickname" />
             <target>
               <code value="P" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="anonymous" />
             <target>
               <code value="ANON" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="maiden" />
             <target>
               <code value="M" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -445,11 +445,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.AddressUse" />
         <title value="v2 map for AddressUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -470,28 +470,28 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="O" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="C" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="BA" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
               <comment value="unclear about old addresses" />
             </target>
           </element>
@@ -499,7 +499,7 @@
             <code value="billing" />
             <target>
               <code value="BI" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -518,11 +518,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AddressUse" />
         <title value="v3 map for AddressUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -543,33 +543,33 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TMP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
               <comment value="Bad or Old" />
             </target>
             <target>
               <code value="BAD" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
               <comment value="Bad or Old" />
             </target>
           </element>
@@ -589,11 +589,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AddressType" />
         <title value="v3 map for AddressType" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -614,14 +614,14 @@
             <code value="postal" />
             <target>
               <code value="PST" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="physical" />
             <target>
               <code value="PHYS" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -640,11 +640,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.ContactPointSystem" />
         <title value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -665,21 +665,21 @@
             <code value="phone" />
             <target>
               <code value="PH" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="fax" />
             <target>
               <code value="FX" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="email" />
             <target>
               <code value="Internet" />
-              <equivalence value="narrower" />
+              <relationship value="source-is-narrower-than-target" />
               <comment value="for email addresses" />
             </target>
           </element>
@@ -687,14 +687,14 @@
             <code value="pager" />
             <target>
               <code value="BP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="url" />
             <target>
               <code value="Internet" />
-              <equivalence value="narrower" />
+              <relationship value="source-is-narrower-than-target" />
               <comment value="for non-email kinds of addresses" />
             </target>
           </element>
@@ -714,11 +714,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.ContactPointUse" />
         <title value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -739,29 +739,29 @@
             <code value="home" />
             <target>
               <code value="PRN" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
             <target>
               <code value="ORN" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
             <target>
               <code value="VHN" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WPN" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="mobile" />
             <target>
               <code value="PRS" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>
@@ -780,11 +780,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.ContactPointUse" />
         <title value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -805,33 +805,33 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TMP" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
               <comment value="Old and Bad" />
             </target>
             <target>
               <code value="BAD" />
-              <equivalence value="wider" />
+              <relationship value="source-is-broader-than-target" />
               <comment value="Old and Bad" />
             </target>
           </element>
@@ -839,7 +839,7 @@
             <code value="mobile" />
             <target>
               <code value="MC" />
-              <equivalence value="equivalent" />
+              <relationship value="equivalent" />
             </target>
           </element>
         </group>

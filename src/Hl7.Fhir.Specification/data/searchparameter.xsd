@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -224,7 +224,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="XPathUsageType-list">
+  <xs:simpleType name="XPathUsageTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="normal">
         <xs:annotation>
@@ -255,16 +255,16 @@
   </xs:simpleType>
   <xs:complexType name="XPathUsageType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How a search parameter relates to the set of elements returned by evaluating its xpath query.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="XPathUsageType-list" use="optional"/>
+        <xs:attribute name="value" type="XPathUsageTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SearchModifierCode-list">
+  <xs:simpleType name="SearchModifierCodeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="missing">
         <xs:annotation>
@@ -330,16 +330,16 @@
   </xs:simpleType>
   <xs:complexType name="SearchModifierCode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A supported modifier for a search parameter.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SearchModifierCode-list" use="optional"/>
+        <xs:attribute name="value" type="SearchModifierCodeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SearchComparator-list">
+  <xs:simpleType name="SearchComparatorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="eq">
         <xs:annotation>
@@ -390,12 +390,12 @@
   </xs:simpleType>
   <xs:complexType name="SearchComparator">
     <xs:annotation>
-      <xs:documentation xml:lang="en">What Search Comparator Codes are supported in search.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SearchComparator-list" use="optional"/>
+        <xs:attribute name="value" type="SearchComparatorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

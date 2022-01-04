@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -332,7 +332,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="FHIRAllTypes-list">
+  <xs:simpleType name="FHIRAllTypesEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="Address">
         <xs:annotation>
@@ -474,11 +474,6 @@
           <xs:documentation xml:lang="en">Narrative</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="OrderedDistribution">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">OrderedDistribution</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ParameterDefinition">
         <xs:annotation>
           <xs:documentation xml:lang="en">ParameterDefinition</xs:documentation>
@@ -519,6 +514,11 @@
           <xs:documentation xml:lang="en">Ratio</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="RatioRange">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">RatioRange</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Reference">
         <xs:annotation>
           <xs:documentation xml:lang="en">Reference</xs:documentation>
@@ -542,11 +542,6 @@
       <xs:enumeration value="SimpleQuantity">
         <xs:annotation>
           <xs:documentation xml:lang="en">SimpleQuantity</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Statistic">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Statistic</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Timing">
@@ -664,6 +659,41 @@
           <xs:documentation xml:lang="en">XHTML</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Resource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Resource</xs:documentation>
+          <xs:documentation xml:lang="en">Resource</xs:documentation>
+          <xs:documentation xml:lang="es">Recurso</xs:documentation>
+          <xs:documentation xml:lang="zh">资源</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Binary">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Binary</xs:documentation>
+          <xs:documentation xml:lang="en">Binary</xs:documentation>
+          <xs:documentation xml:lang="it">Binario</xs:documentation>
+          <xs:documentation xml:lang="fr">Binaire</xs:documentation>
+          <xs:documentation xml:lang="es">Binario</xs:documentation>
+          <xs:documentation xml:lang="zh">二进制资源</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Bundle">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Bundle</xs:documentation>
+          <xs:documentation xml:lang="en">Bundle</xs:documentation>
+          <xs:documentation xml:lang="fr">Paquet</xs:documentation>
+          <xs:documentation xml:lang="es">Paquete</xs:documentation>
+          <xs:documentation xml:lang="zh">捆束</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DomainResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
+          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
+          <xs:documentation xml:lang="es">RecursoDeDominio</xs:documentation>
+          <xs:documentation xml:lang="zh">领域资源</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Account">
         <xs:annotation>
           <xs:documentation xml:lang="en">Account</xs:documentation>
@@ -744,16 +774,6 @@
           <xs:documentation xml:lang="zh">初级资源</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Binary">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Binary</xs:documentation>
-          <xs:documentation xml:lang="en">Binary</xs:documentation>
-          <xs:documentation xml:lang="it">Binario</xs:documentation>
-          <xs:documentation xml:lang="fr">Binaire</xs:documentation>
-          <xs:documentation xml:lang="es">Binario</xs:documentation>
-          <xs:documentation xml:lang="zh">二进制资源</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="BiologicallyDerivedProduct">
         <xs:annotation>
           <xs:documentation xml:lang="en">BiologicallyDerivedProduct</xs:documentation>
@@ -768,15 +788,6 @@
           <xs:documentation xml:lang="fr">MorphologieDeCorps</xs:documentation>
           <xs:documentation xml:lang="es">EstructuraDelCuerpo</xs:documentation>
           <xs:documentation xml:lang="zh">身体结构</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Bundle">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Bundle</xs:documentation>
-          <xs:documentation xml:lang="en">Bundle</xs:documentation>
-          <xs:documentation xml:lang="fr">Paquet</xs:documentation>
-          <xs:documentation xml:lang="es">Paquete</xs:documentation>
-          <xs:documentation xml:lang="zh">捆束</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CapabilityStatement">
@@ -860,10 +871,10 @@
           <xs:documentation xml:lang="zh">临床印象</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ClinicalUseIssue">
+      <xs:enumeration value="ClinicalUseDefinition">
         <xs:annotation>
-          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
-          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CodeSystem">
@@ -1062,14 +1073,6 @@
           <xs:documentation xml:lang="fr">RéférenceDocument</xs:documentation>
           <xs:documentation xml:lang="es">ReferenciaDocumento</xs:documentation>
           <xs:documentation xml:lang="zh">文档引用</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="DomainResource">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
-          <xs:documentation xml:lang="en">DomainResource</xs:documentation>
-          <xs:documentation xml:lang="es">RecursoDeDominio</xs:documentation>
-          <xs:documentation xml:lang="zh">领域资源</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Encounter">
@@ -1524,14 +1527,6 @@
           <xs:documentation xml:lang="en">PackagedProductDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Parameters">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Parameters</xs:documentation>
-          <xs:documentation xml:lang="en">Parameters</xs:documentation>
-          <xs:documentation xml:lang="es">Parametros</xs:documentation>
-          <xs:documentation xml:lang="zh">参数</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Patient">
         <xs:annotation>
           <xs:documentation xml:lang="en">Patient</xs:documentation>
@@ -1690,14 +1685,6 @@
           <xs:documentation xml:lang="zh">研究主题</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Resource">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Resource</xs:documentation>
-          <xs:documentation xml:lang="en">Resource</xs:documentation>
-          <xs:documentation xml:lang="es">Recurso</xs:documentation>
-          <xs:documentation xml:lang="zh">资源</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="RiskAssessment">
         <xs:annotation>
           <xs:documentation xml:lang="en">RiskAssessment</xs:documentation>
@@ -1789,6 +1776,18 @@
           <xs:documentation xml:lang="fr">Souscription</xs:documentation>
           <xs:documentation xml:lang="zh">订阅</xs:documentation>
           <xs:documentation xml:lang="es">Suscripción</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubscriptionStatus">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionStatus</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubscriptionTopic">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Substance">
@@ -1883,6 +1882,14 @@
           <xs:documentation xml:lang="zh">视力处方</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Parameters">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Parameters</xs:documentation>
+          <xs:documentation xml:lang="en">Parameters</xs:documentation>
+          <xs:documentation xml:lang="es">Parametros</xs:documentation>
+          <xs:documentation xml:lang="zh">参数</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Type">
         <xs:annotation>
           <xs:documentation xml:lang="en">Type</xs:documentation>
@@ -1902,11 +1909,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="FHIRAllTypes-list" use="optional"/>
+        <xs:attribute name="value" type="FHIRAllTypesEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="OperationParameterUse-list">
+  <xs:simpleType name="OperationParameterUseEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="in">
         <xs:annotation>
@@ -1922,16 +1929,16 @@
   </xs:simpleType>
   <xs:complexType name="OperationParameterUse">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Whether an operation parameter is an input or an output parameter.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="OperationParameterUse-list" use="optional"/>
+        <xs:attribute name="value" type="OperationParameterUseEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="OperationKind-list">
+  <xs:simpleType name="OperationKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="operation">
         <xs:annotation>
@@ -1947,12 +1954,12 @@
   </xs:simpleType>
   <xs:complexType name="OperationKind">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Whether an operation is a normal operation or a query.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="OperationKind-list" use="optional"/>
+        <xs:attribute name="value" type="OperationKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

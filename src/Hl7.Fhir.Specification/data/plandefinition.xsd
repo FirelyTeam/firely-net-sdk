@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -554,7 +554,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionRequiredBehavior-list">
+  <xs:simpleType name="ActionRequiredBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="must">
         <xs:annotation>
@@ -580,11 +580,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionRequiredBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionRequiredBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionRelationshipType-list">
+  <xs:simpleType name="ActionRelationshipTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="before-start">
         <xs:annotation>
@@ -640,11 +640,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionRelationshipType-list" use="optional"/>
+        <xs:attribute name="value" type="ActionRelationshipTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionGroupingBehavior-list">
+  <xs:simpleType name="ActionGroupingBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="visual-group">
         <xs:annotation>
@@ -670,11 +670,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionGroupingBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionGroupingBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionSelectionBehavior-list">
+  <xs:simpleType name="ActionSelectionBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="any">
         <xs:annotation>
@@ -715,11 +715,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionSelectionBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionSelectionBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionCardinalityBehavior-list">
+  <xs:simpleType name="ActionCardinalityBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="single">
         <xs:annotation>
@@ -740,11 +740,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionCardinalityBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionCardinalityBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionPrecheckBehavior-list">
+  <xs:simpleType name="ActionPrecheckBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="yes">
         <xs:annotation>
@@ -765,11 +765,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionPrecheckBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="ActionPrecheckBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ActionConditionKind-list">
+  <xs:simpleType name="ActionConditionKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="applicability">
         <xs:annotation>
@@ -795,7 +795,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ActionConditionKind-list" use="optional"/>
+        <xs:attribute name="value" type="ActionConditionKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

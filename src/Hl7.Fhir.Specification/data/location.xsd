@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -215,7 +215,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="LocationMode-list">
+  <xs:simpleType name="LocationModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="instance">
         <xs:annotation>
@@ -231,16 +231,16 @@
   </xs:simpleType>
   <xs:complexType name="LocationMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether a resource instance represents a specific location or a class of locations.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="LocationMode-list" use="optional"/>
+        <xs:attribute name="value" type="LocationModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="LocationStatus-list">
+  <xs:simpleType name="LocationStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="active">
         <xs:annotation>
@@ -261,12 +261,12 @@
   </xs:simpleType>
   <xs:complexType name="LocationStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether the location is still in use.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="LocationStatus-list" use="optional"/>
+        <xs:attribute name="value" type="LocationStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
