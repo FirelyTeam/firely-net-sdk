@@ -32,32 +32,32 @@
             <code value="male" />
             <target>
               <code value="M" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="female" />
             <target>
               <code value="F" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="other" />
             <target>
               <code value="A" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="O" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
             <code value="unknown" />
             <target>
               <code value="U" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -91,28 +91,28 @@
             <code value="male" />
             <target>
               <code value="M" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="female" />
             <target>
               <code value="F" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="other" />
             <target>
               <code value="UN" />
-              <relationship value="source-is-narrower-than-target" />
+              <equivalence value="narrower" />
             </target>
           </element>
           <element>
             <code value="unknown" />
             <target>
               <code value="UNK" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -146,63 +146,63 @@
             <code value="unknown" />
             <target>
               <code value="UNK" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="asked-unknown" />
             <target>
               <code value="ASKU" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp-unknown" />
             <target>
               <code value="NAV" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-asked" />
             <target>
               <code value="NASK" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="masked" />
             <target>
               <code value="MSK" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-applicable" />
             <target>
               <code value="NA" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="negative-infinity" />
             <target>
               <code value="NINF" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="positive-infinity" />
             <target>
               <code value="PINF" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="not-permitted" />
             <target>
               <code value="OTH" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -236,21 +236,21 @@
             <code value="current" />
             <target>
               <code value="active" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="superseded" />
             <target>
               <code value="obsolete" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="entered-in-error" />
             <target>
               <code value="nullified" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -294,53 +294,53 @@
             <code value="usual" />
             <target>
               <code value="D" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="official" />
             <target>
               <code value="L" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TEMP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="nickname" />
             <target>
               <code value="N" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="anonymous" />
             <target>
               <code value="S" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="NOUSE" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="BAD" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
             <code value="maiden" />
             <target>
               <code value="M" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -384,49 +384,49 @@
             <code value="usual" />
             <target>
               <code value="C" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="official" />
             <target>
               <code value="OR" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="T" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="nickname" />
             <target>
               <code value="P" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="anonymous" />
             <target>
               <code value="ANON" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="maiden" />
             <target>
               <code value="M" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -470,36 +470,36 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="O" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="C" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="BA" />
-              <relationship value="source-is-broader-than-target" />
               <comment value="unclear about old addresses" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
             <code value="billing" />
             <target>
               <code value="BI" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -543,34 +543,34 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TMP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <relationship value="source-is-broader-than-target" />
               <comment value="Bad or Old" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="BAD" />
-              <relationship value="source-is-broader-than-target" />
               <comment value="Bad or Old" />
+              <equivalence value="wider" />
             </target>
           </element>
         </group>
@@ -614,14 +614,14 @@
             <code value="postal" />
             <target>
               <code value="PST" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="physical" />
             <target>
               <code value="PHYS" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -665,37 +665,37 @@
             <code value="phone" />
             <target>
               <code value="PH" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="fax" />
             <target>
               <code value="FX" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="email" />
             <target>
               <code value="Internet" />
-              <relationship value="source-is-narrower-than-target" />
               <comment value="for email addresses" />
+              <equivalence value="narrower" />
             </target>
           </element>
           <element>
             <code value="pager" />
             <target>
               <code value="BP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="url" />
             <target>
               <code value="Internet" />
-              <relationship value="source-is-narrower-than-target" />
               <comment value="for non-email kinds of addresses" />
+              <equivalence value="narrower" />
             </target>
           </element>
         </group>
@@ -739,29 +739,29 @@
             <code value="home" />
             <target>
               <code value="PRN" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="ORN" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="VHN" />
-              <relationship value="source-is-broader-than-target" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WPN" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="mobile" />
             <target>
               <code value="PRS" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>
@@ -805,41 +805,41 @@
             <code value="home" />
             <target>
               <code value="H" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="work" />
             <target>
               <code value="WP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="temp" />
             <target>
               <code value="TMP" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
           <element>
             <code value="old" />
             <target>
               <code value="OLD" />
-              <relationship value="source-is-broader-than-target" />
               <comment value="Old and Bad" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="BAD" />
-              <relationship value="source-is-broader-than-target" />
               <comment value="Old and Bad" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
             <code value="mobile" />
             <target>
               <code value="MC" />
-              <relationship value="equivalent" />
+              <equivalence value="equivalent" />
             </target>
           </element>
         </group>

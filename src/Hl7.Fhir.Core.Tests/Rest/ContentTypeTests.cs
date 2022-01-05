@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestBuildingContentType()
         {
             var type = ContentType.BuildContentType(ResourceFormat.Json, ModelInfo.Version);
-            Assert.AreEqual("application/fhir+json; charset=utf-8; fhirVersion=4.1", type);
+            Assert.AreEqual("application/fhir+json; charset=utf-8; fhirVersion=4.3", type);
         }
     }
 }

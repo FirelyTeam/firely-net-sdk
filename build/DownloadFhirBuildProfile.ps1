@@ -250,6 +250,56 @@ function ChangeValueElementOfFhirType($name)
 	$xml.Save($filename)
 }
 
+function CorrectConceptmap($name)
+{
+	# Correction for R4B (4.3.0-snapshot1):
+	# Change node <relationship> to <equivalence> for resource ConceptMap
+	
+	if (!$name.EndsWith('.xml'))
+	{
+		return;
+	}
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$relationships = $xml.SelectNodes('//ns:ConceptMap/ns:group/ns:element/ns:target/ns:relationship', $ns)
+	
+	foreach ($relationship in $relationships)
+	{
+		$correctedElement = $xml.CreateElement("equivalence", $ns.LookupNamespace("ns"))
+		
+		$equivalenceValue = $relationship.Value
+		if ($equivalenceValue -eq "source-is-broader-than-target")
+		{
+			$equivalenceValue = "wider"
+		}
+		if ($equivalenceValue -eq "source-is-narrower-than-target")
+		{
+			$equivalenceValue = "narrower"
+		}
+		$correctedElement.SetAttribute("value", $equivalenceValue) | Out-null
+		
+		$childNodes = $relationship.ChildNodes;
+		
+		foreach ($childNode in $childNodes)
+		{
+			$newChild = $childNode.CloneNode("False")
+			$correctedElement.AppendChild($newChild)| Out-null
+		}
+		
+		$relationship.ParentNode.AppendChild($correctedElement) | Out-null
+        $relationship.ParentNode.RemoveChild($relationship) | Out-null
+	}
+	
+	Write-Output "Change node <relationship> to <equivalence> for resource ConceptMap"
+	
+	$xml.Save($filename)
+}
+
 
 foreach($file in $allFiles)			
 {
@@ -267,6 +317,12 @@ foreach($file in $allFiles)
 			RemoveDefinitonExtension $file
 			ChangeValueElement $file
 		}
+	}
+	
+	# Corrections for R4B (4.3.0-snapshot1)
+	if ($server.EndsWith("4.3.0-snapshot1/"))
+	{
+		CorrectConceptmap $file
 	}
 	
 	# Corrections for R5 (4.6.0)
