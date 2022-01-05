@@ -58,8 +58,6 @@ namespace Hl7.Fhir.Test.Validation
             {
                 foreach (var entry in zip.Entries)
                 {
-
-
                     Stream file = entry.Open();
                     using (file)
                     {
