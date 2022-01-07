@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -501,7 +501,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="strandType-list">
+  <xs:simpleType name="strandTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="watson">
         <xs:annotation>
@@ -517,16 +517,16 @@
   </xs:simpleType>
   <xs:complexType name="strandType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Type for strand.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="strandType-list" use="optional"/>
+        <xs:attribute name="value" type="strandTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="orientationType-list">
+  <xs:simpleType name="orientationTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="sense">
         <xs:annotation>
@@ -542,16 +542,16 @@
   </xs:simpleType>
   <xs:complexType name="orientationType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Type for orientation.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="orientationType-list" use="optional"/>
+        <xs:attribute name="value" type="orientationTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="repositoryType-list">
+  <xs:simpleType name="repositoryTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="directlink">
         <xs:annotation>
@@ -582,16 +582,16 @@
   </xs:simpleType>
   <xs:complexType name="repositoryType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Type for access of external URI.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="repositoryType-list" use="optional"/>
+        <xs:attribute name="value" type="repositoryTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="qualityType-list">
+  <xs:simpleType name="qualityTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="indel">
         <xs:annotation>
@@ -612,16 +612,16 @@
   </xs:simpleType>
   <xs:complexType name="qualityType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Type for quality report.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="qualityType-list" use="optional"/>
+        <xs:attribute name="value" type="qualityTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="sequenceType-list">
+  <xs:simpleType name="sequenceTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="aa">
         <xs:annotation>
@@ -647,7 +647,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="sequenceType-list" use="optional"/>
+        <xs:attribute name="value" type="sequenceTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

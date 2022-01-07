@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -119,6 +119,7 @@
             <xs:element name="valueAnnotation" type="Annotation"/>
             <xs:element name="valueAttachment" type="Attachment"/>
             <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueCodeableReference" type="CodeableReference"/>
             <xs:element name="valueCoding" type="Coding"/>
             <xs:element name="valueContactPoint" type="ContactPoint"/>
             <xs:element name="valueCount" type="Count"/>
@@ -131,6 +132,7 @@
             <xs:element name="valueQuantity" type="Quantity"/>
             <xs:element name="valueRange" type="Range"/>
             <xs:element name="valueRatio" type="Ratio"/>
+            <xs:element name="valueRatioRange" type="RatioRange"/>
             <xs:element name="valueReference" type="Reference"/>
             <xs:element name="valueSampledData" type="SampledData"/>
             <xs:element name="valueSignature" type="Signature"/>

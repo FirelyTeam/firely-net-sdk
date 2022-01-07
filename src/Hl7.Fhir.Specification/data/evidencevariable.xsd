@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -169,9 +169,9 @@
               <xs:documentation xml:lang="en">True if the actual variable measured, false if a conceptual representation of the intended variable.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="characteristicCombination" minOccurs="0" maxOccurs="1" type="CharacteristicCombination">
+          <xs:element name="characteristicCombination" type="EvidenceVariable.CharacteristicCombination" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Used to specify if two or more characteristics are combined with OR or AND.</xs:documentation>
+              <xs:documentation xml:lang="en">Used to specify how two or more characteristics are combined.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="characteristic" type="EvidenceVariable.Characteristic" minOccurs="0" maxOccurs="unbounded">
@@ -181,12 +181,33 @@
           </xs:element>
           <xs:element name="handling" minOccurs="0" maxOccurs="1" type="EvidenceVariableHandling">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Used for an outcome to classify.</xs:documentation>
+              <xs:documentation xml:lang="en">continuous | dichotomous | ordinal | polychotomous.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" type="EvidenceVariable.Category" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A grouping (or set of values) described along with other groupings to specify the set of groupings allowed for the variable.</xs:documentation>
+              <xs:documentation xml:lang="en">A grouping for ordinal or polychotomous variables.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="EvidenceVariable.CharacteristicCombination">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CharacteristicCombination">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to specify if two or more characteristics are combined with OR or AND.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="threshold" minOccurs="0" maxOccurs="1" type="positiveInt">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides the value of &quot;n&quot; when &quot;at-least&quot; or &quot;at-most&quot; codes are used.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -203,6 +224,11 @@
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A short, natural language description of the characteristic that could be used to communicate the criteria to an end-user.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to expressing the type of characteristic.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="1" maxOccurs="1" >
@@ -229,21 +255,21 @@
               <xs:documentation xml:lang="en">When true, members with this characteristic are excluded from the element.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="timeFromStart" type="EvidenceVariable.TimeFromStart" minOccurs="0" maxOccurs="1">
+          <xs:element name="timeFromEvent" type="EvidenceVariable.TimeFromEvent" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates duration, period, or point of observation from the participant's study entry.</xs:documentation>
+              <xs:documentation xml:lang="en">Observation time from study specified event.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="groupMeasure" minOccurs="0" maxOccurs="1" type="GroupMeasure">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates how elements are aggregated within the study effective period.</xs:documentation>
+              <xs:documentation xml:lang="en">Value or set of values that define the grouping.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="EvidenceVariable.TimeFromStart">
+  <xs:complexType name="EvidenceVariable.TimeFromEvent">
     <xs:annotation>
       <xs:documentation xml:lang="en">The EvidenceVariable resource describes an element that knowledge (Evidence) is about.</xs:documentation>
     </xs:annotation>
@@ -252,7 +278,12 @@
         <xs:sequence>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A short, natural language description.</xs:documentation>
+              <xs:documentation xml:lang="en">Human readable description.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="event" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The event used as a base point (reference point) in time.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="quantity" minOccurs="0" maxOccurs="1" type="Quantity">
@@ -283,12 +314,12 @@
         <xs:sequence>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A human-readable title or representation of the grouping.</xs:documentation>
+              <xs:documentation xml:lang="en">Description of the grouping.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Value or set of values that define the grouping.</xs:documentation>
+              <xs:documentation xml:lang="en">Definition of the grouping.</xs:documentation>
             </xs:annotation>
             <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
             <xs:element name="valueQuantity" type="Quantity"/>
@@ -298,7 +329,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="GroupMeasure-list">
+  <xs:simpleType name="GroupMeasureEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="mean">
         <xs:annotation>
@@ -339,20 +370,35 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="GroupMeasure-list" use="optional"/>
+        <xs:attribute name="value" type="GroupMeasureEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CharacteristicCombination-list">
+  <xs:simpleType name="CharacteristicCombinationEnum">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="intersection">
+      <xs:enumeration value="all-of">
         <xs:annotation>
-          <xs:documentation xml:lang="en">intersection</xs:documentation>
+          <xs:documentation xml:lang="en">All of</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="union">
+      <xs:enumeration value="any-of">
         <xs:annotation>
-          <xs:documentation xml:lang="en">union</xs:documentation>
+          <xs:documentation xml:lang="en">Any of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="at-least">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">At least</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="at-most">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">At most</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="net-effect">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Net effect</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -364,42 +410,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CharacteristicCombination-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="EvidenceVariableHandling-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="continuous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">continuous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="dichotomous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">dichotomous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ordinal">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ordinal variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="polychotomous">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">polychotomous variable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="EvidenceVariableHandling">
-    <xs:annotation>
-      <xs:documentation xml:lang="en"></xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="EvidenceVariableHandling-list" use="optional"/>
+        <xs:attribute name="value" type="CharacteristicCombinationEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

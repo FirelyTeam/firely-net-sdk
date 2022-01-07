@@ -156,13 +156,13 @@
     <sch:rule context="f:ChargeItem/f:service/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:ChargeItem/f:productReference">
+    <sch:rule context="f:ChargeItem/f:product/f:reference">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:ChargeItem/f:productReference/f:identifier/f:period">
+    <sch:rule context="f:ChargeItem/f:product/f:reference/f:identifier/f:period">
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="f:ChargeItem/f:productReference/f:identifier/f:assigner">
+    <sch:rule context="f:ChargeItem/f:product/f:reference/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:ChargeItem/f:account">

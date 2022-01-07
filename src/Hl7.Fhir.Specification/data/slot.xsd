@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -89,7 +89,7 @@
               <xs:documentation xml:lang="en">The specialty of a practitioner that would be required to perform the service requested in this appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="appointmentType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="appointmentType" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The style of appointment or patient that may be booked in the slot (not service type).</xs:documentation>
            </xs:annotation>
@@ -128,7 +128,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SlotStatus-list">
+  <xs:simpleType name="SlotStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="busy">
         <xs:annotation>
@@ -164,7 +164,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SlotStatus-list" use="optional"/>
+        <xs:attribute name="value" type="SlotStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

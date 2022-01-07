@@ -52,18 +52,6 @@
     <sch:rule context="f:MedicationKnowledge/f:author/f:identifier//f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:sponsor">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:sponsor/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:sponsor/f:identifier//f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:amount">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
     <sch:rule context="f:MedicationKnowledge/f:relatedMedicationKnowledge/f:reference">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -82,15 +70,6 @@
     <sch:rule context="f:MedicationKnowledge/f:associatedMedication/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:associatedDefinition">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:associatedDefinition/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:associatedDefinition/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
     <sch:rule context="f:MedicationKnowledge/f:monograph/f:source">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
@@ -98,36 +77,6 @@
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
     </sch:rule>
     <sch:rule context="f:MedicationKnowledge/f:monograph/f:source/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:item/f:reference">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:item/f:reference/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:item/f:reference/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:strengthRatio">
-      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:strengthRatio/f:numerator">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:strengthRatio/f:denominator">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:ingredient/f:strengthQuantity">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:device">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:device/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:device/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:MedicationKnowledge/f:cost/f:effectiveDate">
@@ -228,11 +177,14 @@
     <sch:rule context="f:MedicationKnowledge/f:indicationGuideline/f:dosingGuideline/f:patientCharacteristic/f:valueRange/f:high">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:drugCharacteristic/f:valueQuantity">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    <sch:rule context="f:MedicationKnowledge/f:packaging/f:packagedProduct">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:drugCharacteristic/f:valueAttachment">
-      <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
+    <sch:rule context="f:MedicationKnowledge/f:packaging/f:packagedProduct/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:packaging/f:packagedProduct/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:MedicationKnowledge/f:clinicalUseIssue">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
@@ -258,11 +210,41 @@
     <sch:rule context="f:MedicationKnowledge/f:regulatory/f:maxDispense/f:period">
       <sch:assert test="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')">drt-1: There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:kineticCharacteristic/f:valueQuantity">
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:definition">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:definition/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:definition/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:item/f:reference">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:item/f:reference/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:item/f:reference/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:strengthRatio">
+      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:strengthRatio/f:numerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:MedicationKnowledge/f:kineticCharacteristic/f:valueDuration">
-      <sch:assert test="(f:code or not(f:value)) and (not(exists(f:system)) or f:system/@value='http://unitsofmeasure.org')">drt-1: There SHALL be a code if there is a value and it SHALL be an expression of time.  If system is present, it SHALL be UCUM.</sch:assert>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:strengthRatio/f:denominator">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:ingredient/f:strengthQuantity">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:drugCharacteristic/f:valueQuantity">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:MedicationKnowledge/f:definitional/f:drugCharacteristic/f:valueAttachment">
+      <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>

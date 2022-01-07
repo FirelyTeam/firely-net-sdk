@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -179,7 +179,7 @@
               <xs:documentation xml:lang="en">Who endorsed the Citation.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="summary" minOccurs="0" maxOccurs="unbounded" type="ContactDetail">
+          <xs:element name="summary" type="Citation.Summary" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">A human-readable display of the citation.</xs:documentation>
            </xs:annotation>
@@ -204,7 +204,7 @@
               <xs:documentation xml:lang="en">An effective date or period for a status of the citation.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatesTo" type="Citation.RelatesTo" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="relatedArtifact" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
               <xs:documentation xml:lang="en">Artifact related to the Citation Resource.</xs:documentation>
            </xs:annotation>
@@ -212,6 +212,27 @@
           <xs:element name="citedArtifact" type="Citation.CitedArtifact" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The article or artifact being described.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Citation.Summary">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="style" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Format for display of the citation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="text" minOccurs="1" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The human-readable display of the citation.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -261,36 +282,6 @@
               <xs:documentation xml:lang="en">When the status started and/or ended.</xs:documentation>
            </xs:annotation>
           </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Citation.RelatesTo">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="relationshipType" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">How the Citation resource relates to the target artifact.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="targetClassifier" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The clasification of the related artifact.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The article or artifact that the Citation Resource is related to.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="targetUri" type="uri"/>
-            <xs:element name="targetIdentifier" type="Identifier"/>
-            <xs:element name="targetReference" type="Reference"/>
-            <xs:element name="targetAttachment" type="Attachment"/>
-          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -347,7 +338,7 @@
               <xs:documentation xml:lang="en">The component of the article or artifact.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="relatesTo" type="Citation.RelatesTo1" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="relatesTo" minOccurs="0" maxOccurs="unbounded" type="RelatedArtifact">
             <xs:annotation>
               <xs:documentation xml:lang="en">The artifact related to the cited artifact.</xs:documentation>
            </xs:annotation>
@@ -435,7 +426,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="type" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Used to express the reason or specific aspect for the title.</xs:documentation>
            </xs:annotation>
@@ -507,36 +498,6 @@
               <xs:documentation xml:lang="en">The citation for the full article or artifact.</xs:documentation>
            </xs:annotation>
           </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Citation.RelatesTo1">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="relationshipType" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">How the cited artifact resource relates to the target artifact.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="targetClassifier" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The clasification of the related artifact.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The article or artifact that the cited artifact is related to.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="targetUri" type="uri"/>
-            <xs:element name="targetIdentifier" type="Identifier"/>
-            <xs:element name="targetReference" type="Reference"/>
-            <xs:element name="targetAttachment" type="Attachment"/>
-          </xs:choice>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -722,7 +683,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="classifier" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Code the reason for different URLs, e.g. abstract and full-text.</xs:documentation>
            </xs:annotation>
@@ -815,7 +776,7 @@
               <xs:documentation xml:lang="en">An individual entity named in the author list or contributor list.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="summary" type="Citation.Summary" minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="summary" type="Citation.Summary1" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Used to record a display of the author/contributor list without separate coding for each list member.</xs:documentation>
            </xs:annotation>
@@ -886,9 +847,9 @@
               <xs:documentation xml:lang="en">Indication of which contributor is the corresponding contributor for the role.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="listOrder" minOccurs="0" maxOccurs="1" type="positiveInt">
+          <xs:element name="rankingOrder" minOccurs="0" maxOccurs="1" type="positiveInt">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Used to code order of authors.</xs:documentation>
+              <xs:documentation xml:lang="en">Provides a numerical ranking to represent the degree of contributorship relative to other contributors, such as 1 for first author and 2 for second author.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -942,7 +903,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="Citation.Summary">
+  <xs:complexType name="Citation.Summary1">
     <xs:annotation>
       <xs:documentation xml:lang="en">The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.</xs:documentation>
     </xs:annotation>

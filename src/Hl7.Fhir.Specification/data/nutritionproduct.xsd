@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -224,11 +224,16 @@
               <xs:documentation xml:lang="en">The time after which the product is no longer expected to be in proper condition, or its use is not advised or not allowed.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="biologicalSource" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An identifier that supports traceability to the biological entity that is the source of biological material in the product.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="NutritionProductStatus-list">
+  <xs:simpleType name="NutritionProductStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="active">
         <xs:annotation>
@@ -254,7 +259,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="NutritionProductStatus-list" use="optional"/>
+        <xs:attribute name="value" type="NutritionProductStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -119,6 +119,19 @@
     </sch:rule>
     <sch:rule context="f:Citation/f:relatedArtifact/f:document">
       <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
+      <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:relatedArtifact/f:resourceReference">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:relatedArtifact/f:resourceReference/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:relatedArtifact/f:resourceReference/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:Citation/f:note/f:authorReference">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
@@ -131,24 +144,6 @@
     </sch:rule>
     <sch:rule context="f:Citation/f:statusDate/f:period">
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetIdentifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetIdentifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetReference">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetReference/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetReference/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:relatesTo/f:targetAttachment">
-      <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
     </sch:rule>
     <sch:rule context="f:Citation/f:citedArtifact/f:identifier/f:period">
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
@@ -183,23 +178,17 @@
     <sch:rule context="f:Citation/f:citedArtifact/f:part/f:baseCitation/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetIdentifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetIdentifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetReference">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetReference/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetReference/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:targetAttachment">
+    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:document">
       <sch:assert test="not(exists(f:data)) or exists(f:contentType)">att-1: If the Attachment has data, it SHALL have a contentType</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:resourceReference">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:resourceReference/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Citation/f:citedArtifact/f:relatesTo/f:resourceReference/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:Citation/f:citedArtifact/f:publicationForm/f:publishedIn/f:identifier/f:period">
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower or equal value than end</sch:assert>

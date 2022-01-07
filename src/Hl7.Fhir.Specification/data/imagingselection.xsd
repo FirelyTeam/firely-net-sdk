@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
+
+  Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
+  valid. Implementers will still need to be familiar with the content of the specification and with
+  any profiles that apply to the resources in order to make a conformant implementation.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="1.0">
+  <xs:include schemaLocation="fhir-base.xsd"/>
+  <xs:element name="ImagingSelection" type="ImagingSelection">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ImagingSelection">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DomainResource">
+        <xs:sequence>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A unique identifier assigned to this imaging selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A list of the diagnostic requests that resulted in this imaging selection being performed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The patient, or group of patients, location, device, organization, procedure or practitioner this imaging selection is about and into whose or what record the imaging selection is placed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="issued" minOccurs="0" maxOccurs="1" type="instant">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date and time this imaging selection was created.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="performer" type="ImagingSelection.Performer" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Author – human or machine.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the imaging selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="studyUid" minOccurs="0" maxOccurs="1" type="oid">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The Study Instance UID for the DICOM Study from which the images were selected.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="derivedFrom" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The imaging study from which the imaging selection is made.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="endpoint" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The network service providing retrieval access to the selected images, frames, etc. See implementation notes for information about using DICOM endpoints.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="seriesUid" minOccurs="0" maxOccurs="1" type="oid">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The Series Instance UID for the DICOM Series from which the images were selected.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="frameOfReferenceUid" minOccurs="0" maxOccurs="1" type="oid">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The Frame of Reference UID identifying the coordinate system that conveys spatial and/or temporal information for the selected images or frames.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="bodySite" minOccurs="0" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The anatomic structures examined. See DICOM Part 16 Annex L (http://dicom.nema.org/medical/dicom/current/output/chtml/part16/chapter_L.html) for DICOM to SNOMED-CT mappings.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="instance" type="ImagingSelection.Instance" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Each imaging selection includes one or more selected DICOM SOP instances.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="imageRegion" type="ImagingSelection.ImageRegion" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Each imaging selection might includes one or more image regions. Image regions are specified by a region type and a set of 2D or 3D coordinates.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ImagingSelection.Performer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="function" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Distinguishes the type of involvement of the performer.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="actor" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Author – human or machine.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ImagingSelection.Instance">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="uid" minOccurs="1" maxOccurs="1" type="oid">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The SOP Instance UID for the selected DICOM instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="sopClass" minOccurs="0" maxOccurs="1" type="Coding">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The SOP Class UID for the selected DICOM instance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="frameList" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The set of frames within a multi-frame SOP Instance that are included in the imaging selection.       Encoded as a comma separated list of one or more non duplicate frame numbers.       If this is absent, all frames within the referenced SOP Instance are included in the selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="observationUid" minOccurs="0" maxOccurs="unbounded" type="oid">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The unique identifier for the observation Content Item (and its subsidiary Content Items, if any) that are included in the imaging selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="segmentList" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The set of segments within a segmentation SOP Instance that are included in the imaging selection.       Encoded as a comma separated list of one or more non duplicate segment numbers.       If this is absent, all segments within the referenced segmentation SOP Instance are included in the selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="roiList" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The set of regions of interest (ROI) within a radiotherapy structure set instance that are included in the imaging selection.       Encoded as a comma separated list of one or more non duplicate ROI numbers.       If this is absent, all ROIs within the referenced radiotherapy structure set SOP Instance are included in the selection.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ImagingSelection.ImageRegion">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="regionType" minOccurs="1" maxOccurs="1" type="ImagingSelectionGraphicType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specifies the type of image region.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="coordinateType" minOccurs="1" maxOccurs="1" type="ImagingSelectionCoordinateType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specifies the type of coordinate system that define the image region.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="coordinates" minOccurs="1" maxOccurs="unbounded" type="decimal">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The coordinates describing the image region.       If coordinateType is 2D this specifies sequence of (x,y) coordinates in the coordinate system of the image specified by the instance.uid element that contains this image region.       If coordinateType is 3D this specifies sequence of (x,y,z) coordinates in the coordinate system specified by the frameOfReferenceUid element.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ImagingSelectionCoordinateTypeEnum">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="2d">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">2D</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="3d">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">3D</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ImagingSelectionCoordinateType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ImagingSelectionCoordinateTypeEnum" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="ImagingSelectionGraphicTypeEnum">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="POINT">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">POINT</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MULTIPOINT">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MULTIPOINT</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="POLYLINE">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">POLYLINE</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="POLYGON">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">POLYGON</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ELLIPSE">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ELLIPSE</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ELLIPSOID">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ELLIPSOID</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ImagingSelectionGraphicType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="ImagingSelectionGraphicTypeEnum" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

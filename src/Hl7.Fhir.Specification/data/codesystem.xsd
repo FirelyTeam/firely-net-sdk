@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -360,7 +360,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="FilterOperator-list">
+  <xs:simpleType name="FilterOperatorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="=">
         <xs:annotation>
@@ -426,11 +426,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="FilterOperator-list" use="optional"/>
+        <xs:attribute name="value" type="FilterOperatorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="PropertyType-list">
+  <xs:simpleType name="PropertyTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="code">
         <xs:annotation>
@@ -476,11 +476,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="PropertyType-list" use="optional"/>
+        <xs:attribute name="value" type="PropertyTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CodeSystemHierarchyMeaning-list">
+  <xs:simpleType name="CodeSystemHierarchyMeaningEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="grouped-by">
         <xs:annotation>
@@ -511,11 +511,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CodeSystemHierarchyMeaning-list" use="optional"/>
+        <xs:attribute name="value" type="CodeSystemHierarchyMeaningEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CodeSystemContentMode-list">
+  <xs:simpleType name="CodeSystemContentModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="not-present">
         <xs:annotation>
@@ -551,7 +551,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CodeSystemContentMode-list" use="optional"/>
+        <xs:attribute name="value" type="CodeSystemContentModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

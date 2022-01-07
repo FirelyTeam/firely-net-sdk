@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -270,7 +270,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="HTTPVerb-list">
+  <xs:simpleType name="HTTPVerbEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="GET">
         <xs:annotation>
@@ -311,11 +311,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="HTTPVerb-list" use="optional"/>
+        <xs:attribute name="value" type="HTTPVerbEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="BundleType-list">
+  <xs:simpleType name="BundleTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="document">
         <xs:annotation>
@@ -376,11 +376,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="BundleType-list" use="optional"/>
+        <xs:attribute name="value" type="BundleTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SearchEntryMode-list">
+  <xs:simpleType name="SearchEntryModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="match">
         <xs:annotation>
@@ -406,7 +406,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SearchEntryMode-list" use="optional"/>
+        <xs:attribute name="value" type="SearchEntryModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

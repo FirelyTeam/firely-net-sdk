@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/2021May/";
+$server = "http://hl7.org/fhir/5.0.0-snapshot1/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -224,6 +224,33 @@ function ExtractXsdZipFile($destPath)
 	Copy-Item -Path $extractPath\* -Destination $destPath
 }
 
+function ChangeValueElementOfFhirType($name)
+{
+	# Correction for R5 (5.0.0-snapshot1):
+	# Change type of value[x] of the extension structuredefinition-fhir-type to url
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$typeNodes = $xml.SelectNodes('//ns:StructureDefinition[ns:id[@value = "structuredefinition-fhir-type"]]//ns:element[@id = "Extension.value[x]"]/ns:type', $ns)
+	
+	foreach ($typeNode in $typeNodes)
+	{
+		$codeElement = $typeNode.FirstChild
+		$correctedCodeElement = $xml.CreateElement("code", $ns.LookupNamespace("ns"))
+		$correctedCodeElement.SetAttribute("value", "url") | Out-null
+		$typeNode.ReplaceChild($correctedCodeElement, $codeElement)  | Out-null
+	}
+	
+	Write-Output "Changed type of 'value[x]' of structuredefinition-fhir-type from 'uri' to 'url'"
+	
+	$xml.Save($filename)
+}
+
+
 foreach($file in $allFiles)			
 {
 	GetSpecFile $file
@@ -251,6 +278,16 @@ foreach($file in $allFiles)
 			RemoveDefinitonExtension $file
 		}
 	}
+	
+	# Corrections for R5 (5.0.0-snapshot1)
+	if ($server.EndsWith("5.0.0-snapshot1/"))
+	{
+		if ($file.EndsWith('extension-definitions.xml'))
+		{
+			ChangeValueElementOfFhirType $file
+		}
+	}
+
 }
 
 

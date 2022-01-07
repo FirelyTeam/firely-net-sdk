@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,7 +79,7 @@
               <xs:documentation xml:lang="en">The overall status of the Appointment. Each of the participants has their own participation status which indicates their involvement in the process, however this status indicates the shared status.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="cancelationReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="cancellationReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The coded reason for the appointment being cancelled. This is often used in reporting/billing/futher processing to determine if further actions are required, or specific fees apply.</xs:documentation>
            </xs:annotation>
@@ -119,6 +119,11 @@
               <xs:documentation xml:lang="en">The brief description of the appointment as would be shown on a subject line in a meeting request, or appointment list. Detailed or expanded information should be put in the comment field.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="replaces" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Appointment replaced by this Appointment in cases where there is a cancellation, the details of the cancellation can be found in the cancellationReason property (on the referenced resource).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="supportingInformation" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Additional information to support the appointment provided when making the appointment.</xs:documentation>
@@ -144,24 +149,34 @@
               <xs:documentation xml:lang="en">The slots from the participants' schedules that will be filled by the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="account" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The set of accounts that is expected to be used for billing the activities that result from this Appointment.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="created" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date that this appointment was initially created. This could be different to the meta.lastModified value on the initial entry, as this could have been before the resource was created on the FHIR server, and should remain unchanged over the lifespan of the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Additional comments about the appointment.</xs:documentation>
+              <xs:documentation xml:lang="en">Additional notes/comments about the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="patientInstruction" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="patientInstruction" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">While Appointment.comment contains information for internal use, Appointment.patientInstructions is used to capture patient facing information about the Appointment (e.g. please bring your referral or fast from 8pm night before).</xs:documentation>
+              <xs:documentation xml:lang="en">While Appointment.note contains information for internal use, Appointment.patientInstructions is used to capture patient facing information about the Appointment (e.g. please bring your referral or fast from 8pm night before).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The service request this appointment is allocated to assess (e.g. incoming referral or procedure request).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The patient or group associated with the appointment, if they are to be present (usually) then they should also be included in the participant backbone element.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="participant" type="Appointment.Participant" minOccurs="1" maxOccurs="unbounded">
@@ -192,14 +207,19 @@ The duration (usually in minutes) could also be provided to indicate the length 
               <xs:documentation xml:lang="en">Role of participant in the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Participation period of the actor.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="actor" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">A Person, Location/HealthcareService or Device that is participating in the appointment.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="required" minOccurs="0" maxOccurs="1" type="ParticipantRequired">
+          <xs:element name="required" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Whether this participant is required to be present at the meeting. This covers a use-case where two doctors need to meet to discuss the results for a specific patient, and the patient is not required to be present.</xs:documentation>
+              <xs:documentation xml:lang="en">Whether this participant is required to be present at the meeting. If false, the participant is optional.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ParticipationStatus">
@@ -207,46 +227,11 @@ The duration (usually in minutes) could also be provided to indicate the length 
               <xs:documentation xml:lang="en">Participation status of the actor.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Participation period of the actor.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ParticipantRequired-list">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="required">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Required</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="optional">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Optional</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="information-only">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Information Only</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ParticipantRequired">
-    <xs:annotation>
-      <xs:documentation xml:lang="en"></xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="Element">
-        <xs:attribute name="value" type="ParticipantRequired-list" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="AppointmentStatus-list">
+  <xs:simpleType name="AppointmentStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="proposed">
         <xs:annotation>
@@ -307,11 +292,11 @@ The duration (usually in minutes) could also be provided to indicate the length 
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AppointmentStatus-list" use="optional"/>
+        <xs:attribute name="value" type="AppointmentStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ParticipationStatus-list">
+  <xs:simpleType name="ParticipationStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="accepted">
         <xs:annotation>
@@ -342,7 +327,7 @@ The duration (usually in minutes) could also be provided to indicate the length 
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ParticipationStatus-list" use="optional"/>
+        <xs:attribute name="value" type="ParticipationStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

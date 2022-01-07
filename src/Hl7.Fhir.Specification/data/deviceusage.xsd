@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -89,7 +89,7 @@
               <xs:documentation xml:lang="en">This attribute indicates a category for the statement - The device statement may be made in an inpatient or outpatient settting (inpatient | outpatient | community | patientspecified).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="patient" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The patient who used the device.</xs:documentation>
            </xs:annotation>
@@ -156,7 +156,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DeviceUsageStatus-list">
+  <xs:simpleType name="DeviceUsageStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="active">
         <xs:annotation>
@@ -166,6 +166,11 @@
       <xs:enumeration value="completed">
         <xs:annotation>
           <xs:documentation xml:lang="en">Completed</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="not-done">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not done</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="entered-in-error">
@@ -197,7 +202,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DeviceUsageStatus-list" use="optional"/>
+        <xs:attribute name="value" type="DeviceUsageStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

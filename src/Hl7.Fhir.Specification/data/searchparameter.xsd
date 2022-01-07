@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -224,7 +224,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="XPathUsageType-list">
+  <xs:simpleType name="XPathUsageTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="normal">
         <xs:annotation>
@@ -260,11 +260,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="XPathUsageType-list" use="optional"/>
+        <xs:attribute name="value" type="XPathUsageTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SearchModifierCode-list">
+  <xs:simpleType name="SearchModifierCodeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="missing">
         <xs:annotation>
@@ -335,11 +335,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SearchModifierCode-list" use="optional"/>
+        <xs:attribute name="value" type="SearchModifierCodeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SearchComparator-list">
+  <xs:simpleType name="SearchComparatorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="eq">
         <xs:annotation>
@@ -395,7 +395,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SearchComparator-list" use="optional"/>
+        <xs:attribute name="value" type="SearchComparatorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

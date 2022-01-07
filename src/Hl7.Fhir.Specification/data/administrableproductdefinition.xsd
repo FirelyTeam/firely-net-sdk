@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,32 +74,37 @@
               <xs:documentation xml:lang="en">An identifier for the administrable product.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subject" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The medicinal product that this is an administrable form of. This is not a reference to the item(s) that make up this administrable form - it is the whole product.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of this administrable product. Enables tracking the life-cycle of the content.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="formOf" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The medicinal product that this is a prepared administrable form of. This element is not a reference to the item(s) that make up this administrable form (for which see AdministrableProductDefinition.producedFrom). It is medicinal product as a whole, which may have several components (as well as packaging, devices etc.), that are given to the patient in this final administrable form. A single medicinal product may have several different administrable products (e.g. a tablet and a cream), and these could have different administrable forms (e.g. tablet as oral solid, or tablet crushed).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="administrableDoseForm" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The administrable dose form, i.e. the dose form of the final product after necessary reconstitution or processing.</xs:documentation>
+              <xs:documentation xml:lang="en">The dose form of the final product after necessary reconstitution or processing. Contrasts to the manufactured dose form (see ManufacturedItemDefinition). If the manufactured form was 'powder for solution for injection', the administrable dose form could be 'solution for injection' (once mixed with another item having manufactured form 'solvent for solution for injection').</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="unitOfPresentation" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The units of presentation for the administrable product, for example 'tablet'.</xs:documentation>
+              <xs:documentation xml:lang="en">The presentation type in which this item is given to a patient. e.g. for a spray - 'puff' (as in 'contains 100 mcg per puff'), or for a liquid - 'vial' (as in 'contains 5 ml per vial').</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="producedFrom" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The manufactured item(s) that this administrable product is produced from. Either a single item, or several that are mixed before administration (e.g. a power item and a solution item). Note that these are not raw ingredients.</xs:documentation>
+              <xs:documentation xml:lang="en">The constituent manufactured item(s) that this administrable product is produced from. Either a single item, or several that are mixed before administration (e.g. a power item and a solvent item, to make a consumable solution). Note the items this is produced from are not raw ingredients (see AdministrableProductDefinition.ingredient), but manufactured medication items (ManufacturedItemDefinitions), which may be combined or prepared and transformed for patient use. The constituent items that this administrable form is produced from are all part of the product (for which see AdministrableProductDefinition.formOf).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="ingredient" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="ingredient" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The ingredients of this administrable medicinal product. Sometimes it may be appropriate to specify these via the associated manufactured item(s).</xs:documentation>
+              <xs:documentation xml:lang="en">The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton (via AdministrableProductDefinition.producedFrom) to state which component items are used to make this, or using by incoming references from the Ingredient resource, to state in detail which substances exist within this. This element allows a basic coded ingredient to be used.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="device" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="device" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">A device that is integral to the medicinal product, in effect being considered as an &quot;ingredient&quot; of the medicinal product. This is not intended for devices that are just co-packaged.</xs:documentation>
            </xs:annotation>

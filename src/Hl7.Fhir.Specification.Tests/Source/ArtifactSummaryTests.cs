@@ -306,8 +306,9 @@ namespace Hl7.Fhir.Specification.Tests
             // [MV 20200203] R4.0.1 (after reducing dataelements.xml)
             // [MV 20200826] R4.5.0 summery count from 5148 to 3994, resourcetypes from 967 to 964 
             // [MV 20210525] R4.6.0 summery count from 3680 to 3709, resourcetypes from 650 to 685 
-            Assert.AreEqual(3709, summaries.Count);
-            Assert.AreEqual(685, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            // [MV 20220103] 5.0.0-snapshot1 summery count from 3709 to 3845, resourcetypes from 685 to 696
+            Assert.AreEqual(3845, summaries.Count);
+            Assert.AreEqual(696, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 

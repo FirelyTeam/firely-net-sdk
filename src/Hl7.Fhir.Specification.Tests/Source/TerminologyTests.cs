@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(28, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0
+            Assert.Equal(32, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0, +4 for 5.0.0-snapshot1
         }
 
         [Fact]
@@ -315,9 +315,9 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<FhirOperationException>( async () => await svc.ValueSetValidateCode(inParams));
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
 
-        }       
+        }
 
         [Fact]
         public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
@@ -331,12 +331,12 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Name = "code",
                         Value = new Code("DE")
-                    },                  
+                    },
                 }
             };
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            
+
         }
 
 
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
 #pragma warning disable CS0618 // obsolete, but used for testing purposes
-            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context:"Partient.gender", code: "test");
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context: "Partient.gender", code: "test");
 #pragma warning restore CS0618 
 
             Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 target =>
                                 {
                                     Assert.Equal("128599005", target.Code);
-                                    Assert.Equal(ConceptMap.ConceptMapRelationship.Equivalent, target.Relationship);
+                                    Assert.Equal(ConceptMapRelationship.Equivalent, target.Relationship);
                                 });
                         });
                 });
@@ -876,7 +876,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
-        }       
+        }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public void FallbackServiceValidateCodeTest()
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
 #pragma warning restore CS0618 // Type or member is obsolete
             Assert.True(result.Success);
-        }       
+        }
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {

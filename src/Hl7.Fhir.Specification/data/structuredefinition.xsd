@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -151,7 +151,7 @@
           </xs:element>
           <xs:element name="fhirVersion" minOccurs="0" maxOccurs="1" type="FHIRVersion">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The version of the FHIR specification on which this StructureDefinition is based - this is the formal version of the specification, without the revision number, e.g. [publication].[major].[minor], which is 4.6.0. for this version.</xs:documentation>
+              <xs:documentation xml:lang="en">The version of the FHIR specification on which this StructureDefinition is based - this is the formal version of the specification, without the revision number, e.g. [publication].[major].[minor], which is 5.0.0-snapshot1. for this version.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="mapping" type="StructureDefinition.Mapping" minOccurs="0" maxOccurs="unbounded">
@@ -292,7 +292,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureDefinitionKind-list">
+  <xs:simpleType name="StructureDefinitionKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="primitive-type">
         <xs:annotation>
@@ -323,11 +323,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureDefinitionKind-list" use="optional"/>
+        <xs:attribute name="value" type="StructureDefinitionKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="TypeDerivationRule-list">
+  <xs:simpleType name="TypeDerivationRuleEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="specialization">
         <xs:annotation>
@@ -348,11 +348,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="TypeDerivationRule-list" use="optional"/>
+        <xs:attribute name="value" type="TypeDerivationRuleEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ExtensionContextType-list">
+  <xs:simpleType name="ExtensionContextTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="fhirpath">
         <xs:annotation>
@@ -378,7 +378,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ExtensionContextType-list" use="optional"/>
+        <xs:attribute name="value" type="ExtensionContextTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

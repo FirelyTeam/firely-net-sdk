@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -136,6 +136,11 @@
               <xs:documentation xml:lang="en">[Observations](observation.html)  that are part of this diagnostic report.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Comments about the diagnostic report.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="imagingStudy" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">One or more links to full details of any imaging performed during the diagnostic investigation. Typically, this is imaging performed by DICOM enabled modalities, but this is not required. A fully enabled PACS viewer can use this information to provide views of the source images.</xs:documentation>
@@ -143,7 +148,7 @@
           </xs:element>
           <xs:element name="media" type="DiagnosticReport.Media" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A list of key images associated with this report. The images are generally created during the diagnostic process, and may be directly of the patient, or of treated specimens (i.e. slides of interest).</xs:documentation>
+              <xs:documentation xml:lang="en">A list of key images or data associated with this report. The images or data are generally created during the diagnostic process, and may be directly of the patient, or of treated specimens (i.e. slides of interest).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="composition" minOccurs="0" maxOccurs="1" type="Reference">
@@ -179,19 +184,19 @@
         <xs:sequence>
           <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A comment about the image. Typically, this is used to provide an explanation for why the image is included, or to draw the viewer's attention to important features.</xs:documentation>
+              <xs:documentation xml:lang="en">A comment about the image or data. Typically, this is used to provide an explanation for why the image or data is included, or to draw the viewer's attention to important features.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="link" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Reference to the image source.</xs:documentation>
+              <xs:documentation xml:lang="en">Reference to the image or data source.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DiagnosticReportStatus-list">
+  <xs:simpleType name="DiagnosticReportStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="registered">
         <xs:annotation>
@@ -252,7 +257,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DiagnosticReportStatus-list" use="optional"/>
+        <xs:attribute name="value" type="DiagnosticReportStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -247,7 +247,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="MessageSignificanceCategory-list">
+  <xs:simpleType name="MessageSignificanceCategoryEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="consequence">
         <xs:annotation>
@@ -273,11 +273,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="MessageSignificanceCategory-list" use="optional"/>
+        <xs:attribute name="value" type="MessageSignificanceCategoryEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="messageheaderResponseRequest-list">
+  <xs:simpleType name="messageheaderResponseRequestEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="always">
         <xs:annotation>
@@ -303,12 +303,12 @@
   </xs:simpleType>
   <xs:complexType name="messageheaderResponseRequest">
     <xs:annotation>
-      <xs:documentation xml:lang="en">HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="messageheaderResponseRequest-list" use="optional"/>
+        <xs:attribute name="value" type="messageheaderResponseRequestEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
