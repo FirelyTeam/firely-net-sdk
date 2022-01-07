@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,7 +69,7 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">A business identifier assigned to a particular completed (or partially completed) questionnaire.</xs:documentation>
            </xs:annotation>
@@ -106,17 +106,17 @@
           </xs:element>
           <xs:element name="authored" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date and/or time that this set of answers were last changed.</xs:documentation>
+              <xs:documentation xml:lang="en">The date and/or time that this questionnaire response was last modified by the user - e.g. changing answers or revising status.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="author" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Person who received the answers to the questions in the QuestionnaireResponse and recorded them in the system.</xs:documentation>
+              <xs:documentation xml:lang="en">The individual or device that received the answers to the questions in the QuestionnaireResponse and recorded them in the system.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="source" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The person who answered the questions about the subject.</xs:documentation>
+              <xs:documentation xml:lang="en">The individual or device that answered the questions about the subject.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="item" type="QuestionnaireResponse.Item" minOccurs="0" maxOccurs="unbounded">
@@ -171,7 +171,7 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
               <xs:documentation xml:lang="en">The answer (or one of the answers) provided by the respondent to the question.</xs:documentation>
             </xs:annotation>
@@ -197,7 +197,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="QuestionnaireResponseStatus-list">
+  <xs:simpleType name="QuestionnaireResponseStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="in-progress">
         <xs:annotation>
@@ -233,7 +233,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="QuestionnaireResponseStatus-list" use="optional"/>
+        <xs:attribute name="value" type="QuestionnaireResponseStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

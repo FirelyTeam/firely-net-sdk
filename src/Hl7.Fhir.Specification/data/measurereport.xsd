@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -321,7 +321,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SubmitDataUpdateType-list">
+  <xs:simpleType name="SubmitDataUpdateTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="incremental">
         <xs:annotation>
@@ -342,11 +342,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SubmitDataUpdateType-list" use="optional"/>
+        <xs:attribute name="value" type="SubmitDataUpdateTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="MeasureReportStatus-list">
+  <xs:simpleType name="MeasureReportStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="complete">
         <xs:annotation>
@@ -367,16 +367,16 @@
   </xs:simpleType>
   <xs:complexType name="MeasureReportStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The status of the measure report.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasureReportStatus-list" use="optional"/>
+        <xs:attribute name="value" type="MeasureReportStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="MeasureReportType-list">
+  <xs:simpleType name="MeasureReportTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="individual">
         <xs:annotation>
@@ -402,12 +402,12 @@
   </xs:simpleType>
   <xs:complexType name="MeasureReportType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The type of the measure report.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="MeasureReportType-list" use="optional"/>
+        <xs:attribute name="value" type="MeasureReportTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

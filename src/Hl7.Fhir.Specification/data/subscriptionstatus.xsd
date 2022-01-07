@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -89,12 +89,17 @@
               <xs:documentation xml:lang="en">The total number of actual events represented within this notification.  For handshake and heartbeat notifications, this will be zero or not present.  For event-notifications, this number may be one or more, depending on server batching.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="notificationEvent" type="SubscriptionStatus.NotificationEvent" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Detailed information about events relevant to this subscription notification.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="subscription" minOccurs="1" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reference to the Subscription which generated this notification.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="topic" minOccurs="1" maxOccurs="1" type="canonical">
+          <xs:element name="topic" minOccurs="0" maxOccurs="1" type="canonical">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reference to the SubscriptionTopic for the Subscription which generated this notification.</xs:documentation>
            </xs:annotation>
@@ -108,7 +113,38 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="SubscriptionNotificationType-list">
+  <xs:complexType name="SubscriptionStatus.NotificationEvent">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The SubscriptionStatus resource describes the state of a Subscription during notifications.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="eventNumber" minOccurs="1" maxOccurs="1" type="integer64">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The sequential number of this event in this subscription context.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="timestamp" minOccurs="0" maxOccurs="1" type="instant">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The actual time this event occured on the server.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="focus" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The focus of this event. While this will usually be a reference to the focus resource of the event, it MAY contain a reference to a non-FHIR object.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="additionalContext" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Additional context information for this event. Generally, this will contain references to additional resources included with the event (e.g., the Patient relevant to an Encounter), however it MAY refer to non-FHIR objects.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="SubscriptionNotificationTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="handshake">
         <xs:annotation>
@@ -130,6 +166,11 @@
           <xs:documentation xml:lang="en">Query Status</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="query-event">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Query Event</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="SubscriptionNotificationType">
@@ -139,7 +180,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="SubscriptionNotificationType-list" use="optional"/>
+        <xs:attribute name="value" type="SubscriptionNotificationTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

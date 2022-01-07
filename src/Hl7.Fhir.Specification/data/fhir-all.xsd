@@ -26,9 +26,9 @@ Copyright (c) 2011+, HL7, Inc
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  POSSIBILITY OF SUCH DAMAGE.
 
- Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0
+ Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1
 -->
-<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="4.6.0">
+<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="5.0.0-snapshot1">
   <xs:include schemaLocation="account.xsd"/>
   <xs:include schemaLocation="activitydefinition.xsd"/>
   <xs:include schemaLocation="administrableproductdefinition.xsd"/>
@@ -36,6 +36,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="allergyintolerance.xsd"/>
   <xs:include schemaLocation="appointment.xsd"/>
   <xs:include schemaLocation="appointmentresponse.xsd"/>
+  <xs:include schemaLocation="artifactassessment.xsd"/>
   <xs:include schemaLocation="auditevent.xsd"/>
   <xs:include schemaLocation="basic.xsd"/>
   <xs:include schemaLocation="binary.xsd"/>
@@ -46,13 +47,13 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="capabilitystatement2.xsd"/>
   <xs:include schemaLocation="careplan.xsd"/>
   <xs:include schemaLocation="careteam.xsd"/>
-  <xs:include schemaLocation="catalogentry.xsd"/>
   <xs:include schemaLocation="chargeitem.xsd"/>
   <xs:include schemaLocation="chargeitemdefinition.xsd"/>
   <xs:include schemaLocation="citation.xsd"/>
   <xs:include schemaLocation="claim.xsd"/>
   <xs:include schemaLocation="claimresponse.xsd"/>
   <xs:include schemaLocation="clinicalimpression.xsd"/>
+  <xs:include schemaLocation="clinicalusedefinition.xsd"/>
   <xs:include schemaLocation="clinicaluseissue.xsd"/>
   <xs:include schemaLocation="codesystem.xsd"/>
   <xs:include schemaLocation="communication.xsd"/>
@@ -60,6 +61,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="compartmentdefinition.xsd"/>
   <xs:include schemaLocation="composition.xsd"/>
   <xs:include schemaLocation="conceptmap.xsd"/>
+  <xs:include schemaLocation="conceptmap2.xsd"/>
   <xs:include schemaLocation="condition.xsd"/>
   <xs:include schemaLocation="conditiondefinition.xsd"/>
   <xs:include schemaLocation="consent.xsd"/>
@@ -70,6 +72,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="detectedissue.xsd"/>
   <xs:include schemaLocation="device.xsd"/>
   <xs:include schemaLocation="devicedefinition.xsd"/>
+  <xs:include schemaLocation="devicedispense.xsd"/>
   <xs:include schemaLocation="devicemetric.xsd"/>
   <xs:include schemaLocation="devicerequest.xsd"/>
   <xs:include schemaLocation="deviceusage.xsd"/>
@@ -94,6 +97,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="group.xsd"/>
   <xs:include schemaLocation="guidanceresponse.xsd"/>
   <xs:include schemaLocation="healthcareservice.xsd"/>
+  <xs:include schemaLocation="imagingselection.xsd"/>
   <xs:include schemaLocation="imagingstudy.xsd"/>
   <xs:include schemaLocation="immunization.xsd"/>
   <xs:include schemaLocation="immunizationevaluation.xsd"/>

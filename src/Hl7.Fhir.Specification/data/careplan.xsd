@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -322,7 +322,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CarePlanActivityKind-list">
+  <xs:simpleType name="CarePlanActivityKindEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="Appointment">
         <xs:annotation>
@@ -408,11 +408,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CarePlanActivityKind-list" use="optional"/>
+        <xs:attribute name="value" type="CarePlanActivityKindEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CarePlanActivityStatus-list">
+  <xs:simpleType name="CarePlanActivityStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="not-started">
         <xs:annotation>
@@ -468,11 +468,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CarePlanActivityStatus-list" use="optional"/>
+        <xs:attribute name="value" type="CarePlanActivityStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="CarePlanIntent-list">
+  <xs:simpleType name="CarePlanIntentEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="proposal">
         <xs:annotation>
@@ -508,11 +508,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="CarePlanIntent-list" use="optional"/>
+        <xs:attribute name="value" type="CarePlanIntentEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="RequestStatus-list">
+  <xs:simpleType name="RequestStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="draft">
         <xs:annotation>
@@ -558,7 +558,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="RequestStatus-list" use="optional"/>
+        <xs:attribute name="value" type="RequestStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

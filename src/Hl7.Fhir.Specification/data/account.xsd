@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -77,6 +77,11 @@
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="AccountStatus">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates whether the account is presently used/usable or not.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="billingStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The BillingStatus tracks the lifecycle of the account through the billing process. It indicates how transactions are treated when they are allocated to the account.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -177,7 +182,7 @@ A coverage may only be responsible for specific types of charges, and the sequen
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AccountStatus-list">
+  <xs:simpleType name="AccountStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="active">
         <xs:annotation>
@@ -213,7 +218,7 @@ A coverage may only be responsible for specific types of charges, and the sequen
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AccountStatus-list" use="optional"/>
+        <xs:attribute name="value" type="AccountStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

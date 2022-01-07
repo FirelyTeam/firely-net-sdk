@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -121,7 +121,7 @@ For resource issues, this will be a simple XPath limited to element names, repet
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="IssueType-list">
+  <xs:simpleType name="IssueTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="invalid">
         <xs:annotation>
@@ -287,11 +287,11 @@ For resource issues, this will be a simple XPath limited to element names, repet
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="IssueType-list" use="optional"/>
+        <xs:attribute name="value" type="IssueTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="IssueSeverity-list">
+  <xs:simpleType name="IssueSeverityEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="fatal">
         <xs:annotation>
@@ -322,7 +322,7 @@ For resource issues, this will be a simple XPath limited to element names, repet
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="IssueSeverity-list" use="optional"/>
+        <xs:attribute name="value" type="IssueSeverityEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

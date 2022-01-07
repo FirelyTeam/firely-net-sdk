@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -375,7 +375,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="QuestionnaireItemType-list">
+  <xs:simpleType name="QuestionnaireItemTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="group">
         <xs:annotation>
@@ -466,11 +466,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="QuestionnaireItemType-list" use="optional"/>
+        <xs:attribute name="value" type="QuestionnaireItemTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="EnableWhenBehavior-list">
+  <xs:simpleType name="EnableWhenBehaviorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="all">
         <xs:annotation>
@@ -491,11 +491,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="EnableWhenBehavior-list" use="optional"/>
+        <xs:attribute name="value" type="EnableWhenBehaviorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="QuestionnaireItemOperator-list">
+  <xs:simpleType name="QuestionnaireItemOperatorEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="exists">
         <xs:annotation>
@@ -541,11 +541,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="QuestionnaireItemOperator-list" use="optional"/>
+        <xs:attribute name="value" type="QuestionnaireItemOperatorEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="QuestionnaireAnswerConstraint-list">
+  <xs:simpleType name="QuestionnaireAnswerConstraintEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="optionsOnly">
         <xs:annotation>
@@ -571,11 +571,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="QuestionnaireAnswerConstraint-list" use="optional"/>
+        <xs:attribute name="value" type="QuestionnaireAnswerConstraintEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="QuestionnaireItemDisabledDisplay-list">
+  <xs:simpleType name="QuestionnaireItemDisabledDisplayEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="hidden">
         <xs:annotation>
@@ -596,7 +596,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="QuestionnaireItemDisabledDisplay-list" use="optional"/>
+        <xs:attribute name="value" type="QuestionnaireItemDisabledDisplayEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

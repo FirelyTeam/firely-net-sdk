@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/2021May/";
+$server = "http://hl7.org/fhir/5.0.0-snapshot1/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -224,6 +224,83 @@ function ExtractXsdZipFile($destPath)
 	Copy-Item -Path $extractPath\* -Destination $destPath
 }
 
+function ChangeValueElementOfFhirType($name)
+{
+	# Correction for R5 (5.0.0-snapshot1):
+	# Change type of value[x] of the extension structuredefinition-fhir-type to url
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$typeNodes = $xml.SelectNodes('//ns:StructureDefinition[ns:id[@value = "structuredefinition-fhir-type"]]//ns:element[@id = "Extension.value[x]"]/ns:type', $ns)
+	
+	foreach ($typeNode in $typeNodes)
+	{
+		$codeElement = $typeNode.FirstChild
+		$correctedCodeElement = $xml.CreateElement("code", $ns.LookupNamespace("ns"))
+		$correctedCodeElement.SetAttribute("value", "url") | Out-null
+		$typeNode.ReplaceChild($correctedCodeElement, $codeElement)  | Out-null
+	}
+	
+	Write-Output "Changed type of 'value[x]' of structuredefinition-fhir-type from 'uri' to 'url'"
+	
+	$xml.Save($filename)
+}
+
+function CorrectConceptmap($name)
+{
+	# Correction for R4B (4.3.0-snapshot1):
+	# Change node <relationship> to <equivalence> for resource ConceptMap
+	
+	if (!$name.EndsWith('.xml'))
+	{
+		return;
+	}
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$relationships = $xml.SelectNodes('//ns:ConceptMap/ns:group/ns:element/ns:target/ns:relationship', $ns)
+	
+	foreach ($relationship in $relationships)
+	{
+		$correctedElement = $xml.CreateElement("equivalence", $ns.LookupNamespace("ns"))
+		
+		$equivalenceValue = $relationship.Value
+		if ($equivalenceValue -eq "source-is-broader-than-target")
+		{
+			$equivalenceValue = "wider"
+		}
+		if ($equivalenceValue -eq "source-is-narrower-than-target")
+		{
+			$equivalenceValue = "narrower"
+		}
+		$correctedElement.SetAttribute("value", $equivalenceValue) | Out-null
+		
+		$childNodes = $relationship.ChildNodes;
+		
+		foreach ($childNode in $childNodes)
+		{
+			$newChild = $childNode.CloneNode("False")
+			$correctedElement.AppendChild($newChild)| Out-null
+		}
+		
+		$relationship.ParentNode.AppendChild($correctedElement) | Out-null
+        $relationship.ParentNode.RemoveChild($relationship) | Out-null
+	}
+	
+	Write-Output "Change node <relationship> to <equivalence> for resource ConceptMap"
+	
+	$xml.Save($filename)
+}
+
+
 foreach($file in $allFiles)			
 {
 	GetSpecFile $file
@@ -242,6 +319,12 @@ foreach($file in $allFiles)
 		}
 	}
 	
+	# Corrections for R4B (4.3.0-snapshot1)
+	if ($server.EndsWith("4.3.0-snapshot1/"))
+	{
+		CorrectConceptmap $file
+	}
+	
 	# Corrections for R5 (4.6.0)
 	if ($server.EndsWith("2021May/"))
 	{
@@ -251,6 +334,16 @@ foreach($file in $allFiles)
 			RemoveDefinitonExtension $file
 		}
 	}
+	
+	# Corrections for R5 (5.0.0-snapshot1)
+	if ($server.EndsWith("5.0.0-snapshot1/"))
+	{
+		if ($file.EndsWith('extension-definitions.xml'))
+		{
+			ChangeValueElementOfFhirType $file
+		}
+	}
+
 }
 
 

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -334,62 +334,11 @@
               <xs:documentation xml:lang="en">Specified type for the element. This works as a condition on the mapping - use for polymorphic elements.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="defaultValue" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">A value to use if there is no existing value in the source object.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="defaultValueBase64Binary" type="base64Binary"/>
-            <xs:element name="defaultValueBoolean" type="boolean"/>
-            <xs:element name="defaultValueCanonical" type="canonical"/>
-            <xs:element name="defaultValueCode" type="code"/>
-            <xs:element name="defaultValueDate" type="date"/>
-            <xs:element name="defaultValueDateTime" type="dateTime"/>
-            <xs:element name="defaultValueDecimal" type="decimal"/>
-            <xs:element name="defaultValueId" type="id"/>
-            <xs:element name="defaultValueInstant" type="instant"/>
-            <xs:element name="defaultValueInteger" type="integer"/>
-            <xs:element name="defaultValueInteger64" type="integer64"/>
-            <xs:element name="defaultValueMarkdown" type="markdown"/>
-            <xs:element name="defaultValueOid" type="oid"/>
-            <xs:element name="defaultValuePositiveInt" type="positiveInt"/>
-            <xs:element name="defaultValueString" type="string"/>
-            <xs:element name="defaultValueTime" type="time"/>
-            <xs:element name="defaultValueUnsignedInt" type="unsignedInt"/>
-            <xs:element name="defaultValueUri" type="uri"/>
-            <xs:element name="defaultValueUrl" type="url"/>
-            <xs:element name="defaultValueUuid" type="uuid"/>
-            <xs:element name="defaultValueAddress" type="Address"/>
-            <xs:element name="defaultValueAge" type="Age"/>
-            <xs:element name="defaultValueAnnotation" type="Annotation"/>
-            <xs:element name="defaultValueAttachment" type="Attachment"/>
-            <xs:element name="defaultValueCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="defaultValueCoding" type="Coding"/>
-            <xs:element name="defaultValueContactPoint" type="ContactPoint"/>
-            <xs:element name="defaultValueCount" type="Count"/>
-            <xs:element name="defaultValueDistance" type="Distance"/>
-            <xs:element name="defaultValueDuration" type="Duration"/>
-            <xs:element name="defaultValueHumanName" type="HumanName"/>
-            <xs:element name="defaultValueIdentifier" type="Identifier"/>
-            <xs:element name="defaultValueMoney" type="Money"/>
-            <xs:element name="defaultValuePeriod" type="Period"/>
-            <xs:element name="defaultValueQuantity" type="Quantity"/>
-            <xs:element name="defaultValueRange" type="Range"/>
-            <xs:element name="defaultValueRatio" type="Ratio"/>
-            <xs:element name="defaultValueReference" type="Reference"/>
-            <xs:element name="defaultValueSampledData" type="SampledData"/>
-            <xs:element name="defaultValueSignature" type="Signature"/>
-            <xs:element name="defaultValueTiming" type="Timing"/>
-            <xs:element name="defaultValueContactDetail" type="ContactDetail"/>
-            <xs:element name="defaultValueContributor" type="Contributor"/>
-            <xs:element name="defaultValueDataRequirement" type="DataRequirement"/>
-            <xs:element name="defaultValueExpression" type="Expression"/>
-            <xs:element name="defaultValueParameterDefinition" type="ParameterDefinition"/>
-            <xs:element name="defaultValueRelatedArtifact" type="RelatedArtifact"/>
-            <xs:element name="defaultValueTriggerDefinition" type="TriggerDefinition"/>
-            <xs:element name="defaultValueUsageContext" type="UsageContext"/>
-            <xs:element name="defaultValueDosage" type="Dosage"/>
-            <xs:element name="defaultValueMeta" type="Meta"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="element" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">Optional field for this source.</xs:documentation>
@@ -486,6 +435,9 @@
             <xs:element name="valueBoolean" type="boolean"/>
             <xs:element name="valueInteger" type="integer"/>
             <xs:element name="valueDecimal" type="decimal"/>
+            <xs:element name="valueDate" type="date"/>
+            <xs:element name="valueTime" type="time"/>
+            <xs:element name="valueDateTime" type="dateTime"/>
           </xs:choice>
         </xs:sequence>
       </xs:extension>
@@ -503,16 +455,16 @@
               <xs:documentation xml:lang="en">Name of a rule or group to apply.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="variable" minOccurs="1" maxOccurs="unbounded" type="string">
+          <xs:element name="parameter" type="StructureMap.Parameter" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Variable to pass to the rule or group.</xs:documentation>
+              <xs:documentation xml:lang="en">Parameter to pass to the rule or group.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapInputMode-list">
+  <xs:simpleType name="StructureMapInputModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="source">
         <xs:annotation>
@@ -533,11 +485,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapInputMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapInputModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapTargetListMode-list">
+  <xs:simpleType name="StructureMapTargetListModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="first">
         <xs:annotation>
@@ -568,11 +520,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapTargetListMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapTargetListModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapTransform-list">
+  <xs:simpleType name="StructureMapTransformEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="create">
         <xs:annotation>
@@ -668,11 +620,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapTransform-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapTransformEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapSourceListMode-list">
+  <xs:simpleType name="StructureMapSourceListModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="first">
         <xs:annotation>
@@ -708,11 +660,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapSourceListMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapSourceListModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapGroupTypeMode-list">
+  <xs:simpleType name="StructureMapGroupTypeModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="types">
         <xs:annotation>
@@ -733,11 +685,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapGroupTypeMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapGroupTypeModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapModelMode-list">
+  <xs:simpleType name="StructureMapModelModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="source">
         <xs:annotation>
@@ -768,7 +720,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapModelMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapModelModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

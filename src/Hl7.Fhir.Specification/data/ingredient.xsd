@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,6 +74,16 @@
               <xs:documentation xml:lang="en">The identifier(s) of this Ingredient that are assigned by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="status" minOccurs="1" maxOccurs="1" type="PublicationStatus">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of this ingredient. Enables tracking the life-cycle of the content.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="for" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The product which this ingredient is a constituent part of.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="role" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A classification of the ingredient identifying its purpose within the product, e.g. active, inactive.</xs:documentation>
@@ -89,29 +99,40 @@
               <xs:documentation xml:lang="en">A classification of the ingredient according to where in the physical item it tends to be used, such the outer shell of a tablet, inner body or ink.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A general description of the ingredient, or any supporting text. May be used for an unstructured list of excipients.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="allergenicIndicator" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
               <xs:documentation xml:lang="en">If the ingredient is a known or suspected allergen.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="manufacturer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="manufacturer" type="Ingredient.Manufacturer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The organization that manufactures this ingredient.</xs:documentation>
+              <xs:documentation xml:lang="en">An organization that manufactures this ingredient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="substance" type="Ingredient.Substance" minOccurs="0" maxOccurs="1">
+          <xs:element name="substance" type="Ingredient.Substance" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The substance that comprises this ingredient.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="specifiedSubstance" type="Ingredient.SpecifiedSubstance" minOccurs="0" maxOccurs="unbounded">
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Ingredient.Manufacturer">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">An ingredient of a manufactured item or pharmaceutical product.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A specified substance that comprises this ingredient.</xs:documentation>
+              <xs:documentation xml:lang="en">The way in which this manufacturer is associated with the ingredient. For example whether it is a possible one (others allowed), or an exclusive authorized one for this ingredient. Note that this is not the manufacturing process role.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="manufacturer" minOccurs="1" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An organization that manufactures this ingredient.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -132,7 +153,7 @@
           </xs:element>
           <xs:element name="strength" type="Ingredient.Strength" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item. When there is a range of strengths, this represents the lower limit.</xs:documentation>
+              <xs:documentation xml:lang="en">The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -151,15 +172,9 @@
               <xs:documentation xml:lang="en">The quantity of substance in the unit of presentation, or in the volume (or mass) of the single pharmaceutical product or manufactured item.</xs:documentation>
             </xs:annotation>
             <xs:element name="presentationRatio" type="Ratio"/>
+            <xs:element name="presentationRatioRange" type="RatioRange"/>
             <xs:element name="presentationCodeableConcept" type="CodeableConcept"/>
             <xs:element name="presentationQuantity" type="Quantity"/>
-          </xs:choice>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An upper limit for the quantity of substance in the unit of presentation. When there is a range of strengths, this represents the upper limit.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="presentationHighLimitRatio" type="Ratio"/>
-            <xs:element name="presentationHighLimitQuantity" type="Quantity"/>
           </xs:choice>
           <xs:element name="presentationText" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
@@ -171,15 +186,9 @@
               <xs:documentation xml:lang="en">The strength per unitary volume (or mass).</xs:documentation>
             </xs:annotation>
             <xs:element name="concentrationRatio" type="Ratio"/>
+            <xs:element name="concentrationRatioRange" type="RatioRange"/>
             <xs:element name="concentrationCodeableConcept" type="CodeableConcept"/>
             <xs:element name="concentrationQuantity" type="Quantity"/>
-          </xs:choice>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">An upper limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the lower limit.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="concentrationHighLimitRatio" type="Ratio"/>
-            <xs:element name="concentrationHighLimitQuantity" type="Quantity"/>
           </xs:choice>
           <xs:element name="concentrationText" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
@@ -224,17 +233,11 @@
           </xs:element>
           <xs:choice minOccurs="1" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Strength expressed in terms of a reference substance. When there is a range of strengths, this represents the lower limit.</xs:documentation>
+              <xs:documentation xml:lang="en">Strength expressed in terms of a reference substance.</xs:documentation>
             </xs:annotation>
             <xs:element name="strengthRatio" type="Ratio"/>
+            <xs:element name="strengthRatioRange" type="RatioRange"/>
             <xs:element name="strengthQuantity" type="Quantity"/>
-          </xs:choice>
-          <xs:choice minOccurs="0" maxOccurs="1" >
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Strength expressed in terms of a reference substance. When there is a range of strengths, this represents the upper limit.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="strengthHighLimitRatio" type="Ratio"/>
-            <xs:element name="strengthHighLimitQuantity" type="Quantity"/>
           </xs:choice>
           <xs:element name="measurementPoint" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
@@ -244,38 +247,6 @@
           <xs:element name="country" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The country or countries for which the strength range applies.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:complexType name="Ingredient.SpecifiedSubstance">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">An ingredient of a manufactured item or pharmaceutical product.</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableReference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Substance as a 'specified substance', implying extra substance related characteristics.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="group" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The group of specified substance, e.g. group 1 to 4, where the group categorises the level of 
-description of the substance according to standardised sets of properties.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="confidentiality" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Confidentiality level of the specified substance as the ingredient.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="strength" type="Ingredient.Strength" minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Quantity of the substance or specified substance present in the manufactured item or pharmaceutical product.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

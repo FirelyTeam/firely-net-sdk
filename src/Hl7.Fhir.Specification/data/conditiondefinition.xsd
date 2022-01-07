@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -325,7 +325,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConditionQuestionnairePurpose-list">
+  <xs:simpleType name="ConditionQuestionnairePurposeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="preadmit">
         <xs:annotation>
@@ -351,11 +351,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConditionQuestionnairePurpose-list" use="optional"/>
+        <xs:attribute name="value" type="ConditionQuestionnairePurposeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConditionPreconditionType-list">
+  <xs:simpleType name="ConditionPreconditionTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="sensitive">
         <xs:annotation>
@@ -376,7 +376,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConditionPreconditionType-list" use="optional"/>
+        <xs:attribute name="value" type="ConditionPreconditionTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,19 +79,14 @@
               <xs:documentation xml:lang="en">Indicates the current state of this Consent resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="scope" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A selector of the type of consent being presented with the base being Privacy, Treatment,  or Research.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="category" minOccurs="1" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A classification of the type of consents found in the statement. This element supports indexing and retrieval of consent statements.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The patient/healthcare practitioner to whom this consent applies.</xs:documentation>
+              <xs:documentation xml:lang="en">The patient/healthcare practitioner or group of persons to whom this consent applies.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="dateTime" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -99,9 +94,14 @@
               <xs:documentation xml:lang="en">Date and time the consent instance was agreed to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="performer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="grantor" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Either the Grantor, which is the entity responsible for granting the rights listed in a Consent Directive or the Grantee, which is the entity responsible for complying with the Consent Directive, including any obligations or limitations on authorizations and enforcement of prohibitions.</xs:documentation>
+              <xs:documentation xml:lang="en">The entity responsible for granting the rights listed in a Consent Directive.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="grantee" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The entity responsible for complying with the Consent Directive, including any obligations or limitations on authorizations and enforcement of prohibitions.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="manager" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -262,6 +262,11 @@
               <xs:documentation xml:lang="en">The resources controlled by this rule if specific resources are referenced.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="expression" minOccurs="0" maxOccurs="1" type="Expression">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A computable (FHIRPath or other) definition of what is controlled by this consent.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="provision" type="Consent.Provision" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Rules which provide exceptions to the base rule or subrules.</xs:documentation>
@@ -278,12 +283,12 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="role" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">How the individual is involved in the resources content that is described in the exception.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reference" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="reference" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The resource that identifies the actor. To identify actors by type, use group to identify a set of actors by some property they share (e.g. 'admitting officers').</xs:documentation>
            </xs:annotation>
@@ -313,7 +318,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConsentProvisionType-list">
+  <xs:simpleType name="ConsentProvisionTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="deny">
         <xs:annotation>
@@ -334,11 +339,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConsentProvisionType-list" use="optional"/>
+        <xs:attribute name="value" type="ConsentProvisionTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConsentDataMeaning-list">
+  <xs:simpleType name="ConsentDataMeaningEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="instance">
         <xs:annotation>
@@ -369,11 +374,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConsentDataMeaning-list" use="optional"/>
+        <xs:attribute name="value" type="ConsentDataMeaningEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ConsentState-list">
+  <xs:simpleType name="ConsentStateEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="draft">
         <xs:annotation>
@@ -409,7 +414,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ConsentState-list" use="optional"/>
+        <xs:attribute name="value" type="ConsentStateEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

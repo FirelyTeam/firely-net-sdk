@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Apr 15, 2021 12:25+1000 for FHIR v4.6.0 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="AllergyIntolerance" type="AllergyIntolerance">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.</xs:documentation>
+      <xs:documentation xml:lang="en">Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="AllergyIntolerance">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.</xs:documentation>
+      <xs:documentation xml:lang="en">Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -160,7 +160,7 @@
   </xs:complexType>
   <xs:complexType name="AllergyIntolerance.Reaction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.</xs:documentation>
+      <xs:documentation xml:lang="en">Risk of harmful or undesirable physiological response which is specific to an individual and associated with exposure to a substance.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -204,7 +204,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AllergyIntoleranceCriticality-list">
+  <xs:simpleType name="AllergyIntoleranceCriticalityEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="low">
         <xs:annotation>
@@ -230,11 +230,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AllergyIntoleranceCriticality-list" use="optional"/>
+        <xs:attribute name="value" type="AllergyIntoleranceCriticalityEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AllergyIntoleranceType-list">
+  <xs:simpleType name="AllergyIntoleranceTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="allergy">
         <xs:annotation>
@@ -255,11 +255,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AllergyIntoleranceType-list" use="optional"/>
+        <xs:attribute name="value" type="AllergyIntoleranceTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AllergyIntoleranceCategory-list">
+  <xs:simpleType name="AllergyIntoleranceCategoryEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="food">
         <xs:annotation>
@@ -290,11 +290,11 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AllergyIntoleranceCategory-list" use="optional"/>
+        <xs:attribute name="value" type="AllergyIntoleranceCategoryEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AllergyIntoleranceSeverity-list">
+  <xs:simpleType name="AllergyIntoleranceSeverityEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="mild">
         <xs:annotation>
@@ -320,7 +320,7 @@
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AllergyIntoleranceSeverity-list" use="optional"/>
+        <xs:attribute name="value" type="AllergyIntoleranceSeverityEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
