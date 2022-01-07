@@ -2,7 +2,7 @@
 <Bundle xmlns="http://hl7.org/fhir">
   <id value="conceptmaps" />
   <meta>
-    <lastUpdated value="2021-03-11T17:06:20.662+11:00" />
+    <lastUpdated value="2021-12-20T14:08:35.086+11:00" />
   </meta>
   <type value="collection" />
   <entry>
@@ -17,11 +17,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.AdministrativeGender" />
         <title value="v2 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0001" />
@@ -76,11 +76,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AdministrativeGender" />
         <title value="v3 map for AdministrativeGender" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AdministrativeGender" />
@@ -131,11 +131,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.DataAbsentReason" />
         <title value="v3 map for DataAbsentReason" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-NullFlavor" />
@@ -221,11 +221,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.DocumentReferenceStatus" />
         <title value="v3 map for DocumentReferenceStatus" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <sourceCanonical value="http://hl7.org/fhir/ValueSet/document-reference-status" />
         <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
@@ -269,11 +269,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.NameUse" />
         <title value="v2 map for NameUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -359,11 +359,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.NameUse" />
         <title value="v3 map for NameUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -445,11 +445,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.AddressUse" />
         <title value="v2 map for AddressUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -491,8 +491,8 @@
             <code value="old" />
             <target>
               <code value="BA" />
-              <equivalence value="wider" />
               <comment value="unclear about old addresses" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>
@@ -518,11 +518,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AddressUse" />
         <title value="v3 map for AddressUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -564,13 +564,13 @@
             <code value="old" />
             <target>
               <code value="OLD" />
-              <equivalence value="wider" />
               <comment value="Bad or Old" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="BAD" />
-              <equivalence value="wider" />
               <comment value="Bad or Old" />
+              <equivalence value="wider" />
             </target>
           </element>
         </group>
@@ -589,11 +589,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.AddressType" />
         <title value="v3 map for AddressType" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -640,11 +640,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.ContactPointSystem" />
         <title value="v2 map for ContactPointSystem" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -679,8 +679,8 @@
             <code value="email" />
             <target>
               <code value="Internet" />
-              <equivalence value="narrower" />
               <comment value="for email addresses" />
+              <equivalence value="narrower" />
             </target>
           </element>
           <element>
@@ -694,8 +694,8 @@
             <code value="url" />
             <target>
               <code value="Internet" />
-              <equivalence value="narrower" />
               <comment value="for non-email kinds of addresses" />
+              <equivalence value="narrower" />
             </target>
           </element>
         </group>
@@ -714,11 +714,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v2.ContactPointUse" />
         <title value="v2 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -780,11 +780,11 @@
           </div>
         </text>
         <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
-        <version value="4.1.0" />
+        <version value="4.3.0-snapshot1" />
         <name value="v3.ContactPointUse" />
         <title value="v3 map for ContactPointUse" />
         <status value="draft" />
-        <date value="2021-03-11T17:06:20+11:00" />
+        <date value="2021-12-20T14:08:35+11:00" />
         <publisher value="HL7 (FHIR Project)" />
         <contact>
           <telecom>
@@ -826,13 +826,13 @@
             <code value="old" />
             <target>
               <code value="OLD" />
-              <equivalence value="wider" />
               <comment value="Old and Bad" />
+              <equivalence value="wider" />
             </target>
             <target>
               <code value="BAD" />
-              <equivalence value="wider" />
               <comment value="Old and Bad" />
+              <equivalence value="wider" />
             </target>
           </element>
           <element>

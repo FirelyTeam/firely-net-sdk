@@ -26,9 +26,9 @@ Copyright (c) 2011+, HL7, Inc
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
  POSSIBILITY OF SUCH DAMAGE.
 
- Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0
+ Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1
 -->
-<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="4.1.0">
+<xs:schema xmlns="http://hl7.org/fhir" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="4.3.0-snapshot1">
   <xs:include schemaLocation="account.xsd"/>
   <xs:include schemaLocation="activitydefinition.xsd"/>
   <xs:include schemaLocation="administrableproductdefinition.xsd"/>
@@ -52,7 +52,7 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="claim.xsd"/>
   <xs:include schemaLocation="claimresponse.xsd"/>
   <xs:include schemaLocation="clinicalimpression.xsd"/>
-  <xs:include schemaLocation="clinicaluseissue.xsd"/>
+  <xs:include schemaLocation="clinicalusedefinition.xsd"/>
   <xs:include schemaLocation="codesystem.xsd"/>
   <xs:include schemaLocation="communication.xsd"/>
   <xs:include schemaLocation="communicationrequest.xsd"/>
@@ -157,6 +157,8 @@ Copyright (c) 2011+, HL7, Inc
   <xs:include schemaLocation="structuredefinition.xsd"/>
   <xs:include schemaLocation="structuremap.xsd"/>
   <xs:include schemaLocation="subscription.xsd"/>
+  <xs:include schemaLocation="subscriptionstatus.xsd"/>
+  <xs:include schemaLocation="subscriptiontopic.xsd"/>
   <xs:include schemaLocation="substance.xsd"/>
   <xs:include schemaLocation="substancedefinition.xsd"/>
   <xs:include schemaLocation="supplydelivery.xsd"/>

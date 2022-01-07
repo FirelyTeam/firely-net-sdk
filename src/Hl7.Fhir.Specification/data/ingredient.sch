@@ -43,13 +43,22 @@
     <sch:rule context="f:Ingredient/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:manufacturer">
+    <sch:rule context="f:Ingredient/f:for">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:manufacturer/f:identifier/f:period">
+    <sch:rule context="f:Ingredient/f:for/f:identifier/f:period">
       <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower value than end</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:manufacturer/f:identifier//f:assigner">
+    <sch:rule context="f:Ingredient/f:for/f:identifier/f:assigner">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:manufacturer/f:manufacturer">
+      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:manufacturer/f:manufacturer/f:identifier/f:period">
+      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower value than end</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:manufacturer/f:manufacturer/f:identifier//f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
     <sch:rule context="f:Ingredient/f:substance/f:code/f:reference">
@@ -61,40 +70,48 @@
     <sch:rule context="f:Ingredient/f:substance/f:code/f:reference/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentation">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatio">
       <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentation/f:numerator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatio/f:numerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentation/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatio/f:denominator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationHighLimit">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatioRange">
+      <sch:assert test="not(exists(f:lowNumerator/f:value/@value)) or not(exists(f:highNumerator/f:value/@value)) or (number(f:lowNumerator/f:value/@value) &lt;= number(f:highNumerator/f:value/@value))">inv-2: If present, lowNumerator SHALL have a lower value than highNumerator</sch:assert>
+      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">inv-1: One of lowNumerator or highNumerator and denominator SHALL be present, or all are absent. If all are absent, there SHALL be some extension present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatioRange/f:lowNumerator">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatioRange/f:highNumerator">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationRatioRange/f:denominator">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
+    </sch:rule>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatio">
       <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationHighLimit/f:numerator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatio/f:numerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:presentationHighLimit/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatio/f:denominator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentration">
-      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatioRange">
+      <sch:assert test="not(exists(f:lowNumerator/f:value/@value)) or not(exists(f:highNumerator/f:value/@value)) or (number(f:lowNumerator/f:value/@value) &lt;= number(f:highNumerator/f:value/@value))">inv-2: If present, lowNumerator SHALL have a lower value than highNumerator</sch:assert>
+      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">inv-1: One of lowNumerator or highNumerator and denominator SHALL be present, or all are absent. If all are absent, there SHALL be some extension present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentration/f:numerator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatioRange/f:lowNumerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentration/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatioRange/f:highNumerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationHighLimit">
-      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationHighLimit/f:numerator">
-      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationHighLimit/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:concentrationRatioRange/f:denominator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
     <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:substance/f:reference">
@@ -106,32 +123,27 @@
     <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:substance/f:reference/f:identifier/f:assigner">
       <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strength">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatio">
       <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strength/f:numerator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatio/f:numerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strength/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatio/f:denominator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthHighLimit">
-      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">rat-1: Numerator and denominator SHALL both be present, or both are absent. If both are absent, there SHALL be some extension present</sch:assert>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatioRange">
+      <sch:assert test="not(exists(f:lowNumerator/f:value/@value)) or not(exists(f:highNumerator/f:value/@value)) or (number(f:lowNumerator/f:value/@value) &lt;= number(f:highNumerator/f:value/@value))">inv-2: If present, lowNumerator SHALL have a lower value than highNumerator</sch:assert>
+      <sch:assert test="(count(f:numerator) = count(f:denominator)) and ((count(f:numerator) &gt; 0) or (count(f:extension) &gt; 0))">inv-1: One of lowNumerator or highNumerator and denominator SHALL be present, or all are absent. If all are absent, there SHALL be some extension present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthHighLimit/f:numerator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatioRange/f:lowNumerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthHighLimit/f:denominator">
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatioRange/f:highNumerator">
       <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
-    <sch:rule context="f:Ingredient/f:specifiedSubstance/f:code/f:reference">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Ingredient/f:specifiedSubstance/f:code/f:reference/f:identifier/f:period">
-      <sch:assert test="not(exists(f:start/@value)) or not(exists(f:end/@value)) or (xs:dateTime(f:start/@value) &lt;= xs:dateTime(f:end/@value))">per-1: If present, start SHALL have a lower value than end</sch:assert>
-    </sch:rule>
-    <sch:rule context="f:Ingredient/f:specifiedSubstance/f:code/f:reference/f:identifier/f:assigner">
-      <sch:assert test="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])">ref-1: SHALL have a contained resource if a local reference is provided</sch:assert>
+    <sch:rule context="f:Ingredient/f:substance/f:strength/f:referenceStrength/f:strengthRatioRange/f:denominator">
+      <sch:assert test="not(exists(f:code)) or exists(f:system)">qty-3: If a code for the unit is present, the system SHALL also be present</sch:assert>
     </sch:rule>
   </sch:pattern>
 </sch:schema>

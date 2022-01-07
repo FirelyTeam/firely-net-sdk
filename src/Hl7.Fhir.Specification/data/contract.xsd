@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Thu, Mar 11, 2021 17:06+1100 for FHIR v4.1.0 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -912,7 +912,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ContractResourceStatusCodes-list">
+  <xs:simpleType name="ContractResourceStatusCodesEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="amended">
         <xs:annotation>
@@ -993,16 +993,16 @@
   </xs:simpleType>
   <xs:complexType name="ContractResourceStatusCodes">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A code specifying the state of the resource instance.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ContractResourceStatusCodes-list" use="optional"/>
+        <xs:attribute name="value" type="ContractResourceStatusCodesEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ContractResourcePublicationStatusCodes-list">
+  <xs:simpleType name="ContractResourcePublicationStatusCodesEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="amended">
         <xs:annotation>
@@ -1083,12 +1083,12 @@
   </xs:simpleType>
   <xs:complexType name="ContractResourcePublicationStatusCodes">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Status of the publication of contract content.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ContractResourcePublicationStatusCodes-list" use="optional"/>
+        <xs:attribute name="value" type="ContractResourcePublicationStatusCodesEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
