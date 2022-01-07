@@ -49,7 +49,6 @@ namespace Hl7.Fhir.Tests.Rest
         private static string patientId = "pat1" + ModelInfo.Version;
         private static string locationId = "loc1" + ModelInfo.Version;
 
-#if !NETCOREAPP2_1
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
@@ -62,16 +61,6 @@ namespace Hl7.Fhir.Tests.Rest
 
             CreateItems();
         }
-#else
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-            CreateItems();
-        }
-
-#endif
-
 
         private static void CreateItems()
         {
@@ -316,7 +305,7 @@ namespace Hl7.Fhir.Tests.Rest
                 await testReadClientAsync(client);
             }
         }
-        
+
         private async T.Task testReadClientAsync(BaseFhirClient client)
         {
             var loc = client.Read<Location>("Location/" + locationId);
