@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestConstraintBestPractices()
         {
-            var validator = new Validator(new ValidationSettings { ResourceResolver = _source });
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ConstraintsToIgnore = Array.Empty<string>() });
 
             Patient p = new Patient
             {
