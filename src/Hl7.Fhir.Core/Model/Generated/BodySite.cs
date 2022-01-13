@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this body site record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {

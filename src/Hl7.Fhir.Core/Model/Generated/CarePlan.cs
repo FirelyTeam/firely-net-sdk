@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-started | scheduled | in-progress | on-hold | completed | cancelled | unknown
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=100)]
+      [FhirElement("status", IsModifier=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Do NOT do
       /// </summary>
-      [FhirElement("prohibited", InSummary=true, Order=120)]
+      [FhirElement("prohibited", IsModifier=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ProhibitedElement
       {
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | completed | entered-in-error | cancelled | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1044,7 +1044,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=150)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

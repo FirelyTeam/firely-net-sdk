@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The taking of a family member's history did not occur
     /// </summary>
-    [FhirElement("notDone", InSummary=true, Order=120)]
+    [FhirElement("notDone", InSummary=true, IsModifier=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean NotDoneElement
     {
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Age is estimated?
     /// </summary>
-    [FhirElement("estimatedAge", InSummary=true, Order=210)]
+    [FhirElement("estimatedAge", InSummary=true, IsModifier=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean EstimatedAgeElement
     {

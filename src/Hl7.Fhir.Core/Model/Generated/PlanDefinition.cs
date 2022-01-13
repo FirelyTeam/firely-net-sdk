@@ -2290,7 +2290,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2323,7 +2323,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=160)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {

@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=150)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

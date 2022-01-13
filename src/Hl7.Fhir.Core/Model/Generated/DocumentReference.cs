@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationships to other documents
     /// </summary>
-    [FhirElement("relatesTo", InSummary=true, Order=210)]
+    [FhirElement("relatesTo", InSummary=true, IsModifier=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent> RelatesTo

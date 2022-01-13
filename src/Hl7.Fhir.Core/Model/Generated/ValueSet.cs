@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Select codes/concepts by their properties (including relationships)
       /// </summary>
-      [FhirElement("filter", InSummary=true, Order=70)]
+      [FhirElement("filter", InSummary=true, IsModifier=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ValueSet.FilterComponent> Filter
@@ -2075,7 +2075,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2108,7 +2108,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {

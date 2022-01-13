@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | resolved
     /// </summary>
-    [FhirElement("clinicalStatus", InSummary=true, Order=100)]
+    [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceClinicalStatus> ClinicalStatusElement
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unconfirmed | confirmed | refuted | entered-in-error
     /// </summary>
-    [FhirElement("verificationStatus", InSummary=true, Order=110)]
+    [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

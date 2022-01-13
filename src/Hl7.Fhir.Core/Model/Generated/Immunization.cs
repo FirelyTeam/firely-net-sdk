@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag for whether immunization was given
     /// </summary>
-    [FhirElement("notGiven", InSummary=true, Order=110)]
+    [FhirElement("notGiven", InSummary=true, IsModifier=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean NotGivenElement

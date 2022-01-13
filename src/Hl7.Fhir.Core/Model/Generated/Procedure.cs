@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if procedure was not performed as scheduled
     /// </summary>
-    [FhirElement("notDone", InSummary=true, Order=140)]
+    [FhirElement("notDone", InSummary=true, IsModifier=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean NotDoneElement
     {

@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | accepted | planned | in-progress | on-target | ahead-of-target | behind-target | sustaining | achieved | on-hold | cancelled | entered-in-error | rejected
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=170)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {

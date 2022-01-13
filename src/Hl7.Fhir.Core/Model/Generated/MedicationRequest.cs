@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether substitution is allowed or not
       /// </summary>
-      [FhirElement("allowed", InSummary=true, Order=40)]
+      [FhirElement("allowed", IsModifier=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AllowedElement
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | on-hold | cancelled | completed | entered-in-error | stopped | draft | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus> StatusElement
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order | instance-order
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=140)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

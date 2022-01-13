@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | inactive
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// instance | kind
     /// </summary>
-    [FhirElement("mode", InSummary=true, Order=150)]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement

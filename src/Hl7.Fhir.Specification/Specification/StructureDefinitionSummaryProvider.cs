@@ -51,9 +51,9 @@ namespace Hl7.Fhir.Specification
             }
 
             var sd = await _resolver.FindStructureDefinitionAsync(mappedCanonical).ConfigureAwait(false);
-            
-            return sd is null ? 
-                null 
+
+            return sd is null ?
+                null
                 : (IStructureDefinitionSummary)new StructureDefinitionComplexTypeSerializationInfo(ElementDefinitionNavigator.ForSnapshot(sd));
         }
 
@@ -201,6 +201,9 @@ namespace Hl7.Fhir.Specification
         public bool IsCollection => _definition.IsRepeating();
 
         public bool InSummary => _definition.IsSummary ?? false;
+
+        /// <inheritdoc/>
+        public bool IsModifier => _definition.IsModifier ?? false;
 
         public bool IsRequired => (_definition.Min ?? 0) >= 1;
 

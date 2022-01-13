@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Resource
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, IsModifier=true, Order=100)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

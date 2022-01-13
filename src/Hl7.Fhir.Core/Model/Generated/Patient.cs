@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this patient's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates if the individual is deceased or not
     /// </summary>
-    [FhirElement("deceased", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("deceased", InSummary=true, IsModifier=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This patient is known to be an animal (non-human)
     /// </summary>
-    [FhirElement("animal", InSummary=true, Order=210)]
+    [FhirElement("animal", InSummary=true, IsModifier=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Patient.AnimalComponent Animal
     {
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to another patient resource that concerns the same actual person
     /// </summary>
-    [FhirElement("link", InSummary=true, Order=250)]
+    [FhirElement("link", InSummary=true, IsModifier=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Patient.LinkComponent> Link

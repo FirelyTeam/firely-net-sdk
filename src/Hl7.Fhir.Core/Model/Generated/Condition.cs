@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | recurrence | inactive | remission | resolved
     /// </summary>
-    [FhirElement("clinicalStatus", InSummary=true, Order=100)]
+    [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// provisional | differential | confirmed | refuted | entered-in-error | unknown
     /// </summary>
-    [FhirElement("verificationStatus", InSummary=true, Order=110)]
+    [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
