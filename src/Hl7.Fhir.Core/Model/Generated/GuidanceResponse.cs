@@ -489,6 +489,81 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "requestIdentifier":
+          value = RequestIdentifier;
+          return RequestIdentifier is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "module":
+          value = Module;
+          return Module is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrenceDateTime":
+          value = OccurrenceDateTimeElement;
+          return OccurrenceDateTimeElement is not null;
+        case "performer":
+          value = Performer;
+          return Performer is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "evaluationMessage":
+          value = EvaluationMessage;
+          return EvaluationMessage?.Any() == true;
+        case "outputParameters":
+          value = OutputParameters;
+          return OutputParameters is not null;
+        case "result":
+          value = Result;
+          return Result is not null;
+        case "dataRequirement":
+          value = DataRequirement;
+          return DataRequirement?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (RequestIdentifier is not null) yield return new KeyValuePair<string,object>("requestIdentifier",RequestIdentifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Module is not null) yield return new KeyValuePair<string,object>("module",Module);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",OccurrenceDateTimeElement);
+      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (EvaluationMessage?.Any() == true) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
+      if (OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",OutputParameters);
+      if (Result is not null) yield return new KeyValuePair<string,object>("result",Result);
+      if (DataRequirement?.Any() == true) yield return new KeyValuePair<string,object>("dataRequirement",DataRequirement);
+    }
+
   }
 
 }

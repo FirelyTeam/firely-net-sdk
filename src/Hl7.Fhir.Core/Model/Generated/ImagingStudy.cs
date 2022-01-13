@@ -481,6 +481,69 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "uid":
+            value = UidElement;
+            return UidElement is not null;
+          case "number":
+            value = NumberElement;
+            return NumberElement is not null;
+          case "modality":
+            value = Modality;
+            return Modality is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "numberOfInstances":
+            value = NumberOfInstancesElement;
+            return NumberOfInstancesElement is not null;
+          case "endpoint":
+            value = Endpoint;
+            return Endpoint?.Any() == true;
+          case "bodySite":
+            value = BodySite;
+            return BodySite is not null;
+          case "laterality":
+            value = Laterality;
+            return Laterality is not null;
+          case "specimen":
+            value = Specimen;
+            return Specimen?.Any() == true;
+          case "started":
+            value = StartedElement;
+            return StartedElement is not null;
+          case "performer":
+            value = Performer;
+            return Performer?.Any() == true;
+          case "instance":
+            value = Instance;
+            return Instance?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
+        if (NumberElement is not null) yield return new KeyValuePair<string,object>("number",NumberElement);
+        if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",NumberOfInstancesElement);
+        if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+        if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+        if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
+        if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
+        if (StartedElement is not null) yield return new KeyValuePair<string,object>("started",StartedElement);
+        if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+        if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      }
+
     }
 
     /// <summary>
@@ -590,6 +653,29 @@ namespace Hl7.Fhir.Model
           if (Function != null) yield return new ElementValue("function", Function);
           if (Actor != null) yield return new ElementValue("actor", Actor);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -792,6 +878,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "uid":
+            value = UidElement;
+            return UidElement is not null;
+          case "sopClass":
+            value = SopClass;
+            return SopClass is not null;
+          case "number":
+            value = NumberElement;
+            return NumberElement is not null;
+          case "title":
+            value = TitleElement;
+            return TitleElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
+        if (SopClass is not null) yield return new KeyValuePair<string,object>("sopClass",SopClass);
+        if (NumberElement is not null) yield return new KeyValuePair<string,object>("number",NumberElement);
+        if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      }
+
     }
 
     /// <summary>
@@ -811,7 +928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | available | cancelled | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1330,6 +1447,101 @@ namespace Hl7.Fhir.Model
         if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in Series) { if (elem != null) yield return new ElementValue("series", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "modality":
+          value = Modality;
+          return Modality?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "started":
+          value = StartedElement;
+          return StartedElement is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "referrer":
+          value = Referrer;
+          return Referrer is not null;
+        case "interpreter":
+          value = Interpreter;
+          return Interpreter?.Any() == true;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        case "numberOfSeries":
+          value = NumberOfSeriesElement;
+          return NumberOfSeriesElement is not null;
+        case "numberOfInstances":
+          value = NumberOfInstancesElement;
+          return NumberOfInstancesElement is not null;
+        case "procedureReference":
+          value = ProcedureReference;
+          return ProcedureReference is not null;
+        case "procedureCode":
+          value = ProcedureCode;
+          return ProcedureCode?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "series":
+          value = Series;
+          return Series?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Modality?.Any() == true) yield return new KeyValuePair<string,object>("modality",Modality);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (StartedElement is not null) yield return new KeyValuePair<string,object>("started",StartedElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Referrer is not null) yield return new KeyValuePair<string,object>("referrer",Referrer);
+      if (Interpreter?.Any() == true) yield return new KeyValuePair<string,object>("interpreter",Interpreter);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (NumberOfSeriesElement is not null) yield return new KeyValuePair<string,object>("numberOfSeries",NumberOfSeriesElement);
+      if (NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",NumberOfInstancesElement);
+      if (ProcedureReference is not null) yield return new KeyValuePair<string,object>("procedureReference",ProcedureReference);
+      if (ProcedureCode?.Any() == true) yield return new KeyValuePair<string,object>("procedureCode",ProcedureCode);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Series?.Any() == true) yield return new KeyValuePair<string,object>("series",Series);
     }
 
   }

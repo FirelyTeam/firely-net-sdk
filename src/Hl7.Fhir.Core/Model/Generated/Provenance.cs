@@ -243,6 +243,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "role":
+            value = Role;
+            return Role?.Any() == true;
+          case "who":
+            value = Who;
+            return Who is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
+        if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
+        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+      }
+
     }
 
     /// <summary>
@@ -391,6 +422,33 @@ namespace Hl7.Fhir.Model
           if (What != null) yield return new ElementValue("what", What);
           foreach (var elem in Agent) { if (elem != null) yield return new ElementValue("agent", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "role":
+            value = RoleElement;
+            return RoleElement is not null;
+          case "what":
+            value = What;
+            return What is not null;
+          case "agent":
+            value = Agent;
+            return Agent?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RoleElement is not null) yield return new KeyValuePair<string,object>("role",RoleElement);
+        if (What is not null) yield return new KeyValuePair<string,object>("what",What);
+        if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
       }
 
     }
@@ -679,6 +737,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", elem); }
         foreach (var elem in Signature) { if (elem != null) yield return new ElementValue("signature", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "target":
+          value = Target;
+          return Target?.Any() == true;
+        case "occurred":
+          value = Occurred;
+          return Occurred is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
+        case "policy":
+          value = PolicyElement;
+          return PolicyElement?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "activity":
+          value = Activity;
+          return Activity is not null;
+        case "agent":
+          value = Agent;
+          return Agent?.Any() == true;
+        case "entity":
+          value = Entity;
+          return Entity?.Any() == true;
+        case "signature":
+          value = Signature;
+          return Signature?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
+      if (Occurred is not null) yield return new KeyValuePair<string,object>("occurred",Occurred);
+      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
+      if (PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",PolicyElement);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Activity is not null) yield return new KeyValuePair<string,object>("activity",Activity);
+      if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
+      if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
+      if (Signature?.Any() == true) yield return new KeyValuePair<string,object>("signature",Signature);
     }
 
   }

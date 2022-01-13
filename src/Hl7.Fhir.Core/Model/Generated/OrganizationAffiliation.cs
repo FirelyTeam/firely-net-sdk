@@ -366,6 +366,69 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "organization":
+          value = Organization;
+          return Organization is not null;
+        case "participatingOrganization":
+          value = ParticipatingOrganization;
+          return ParticipatingOrganization is not null;
+        case "network":
+          value = Network;
+          return Network?.Any() == true;
+        case "code":
+          value = Code;
+          return Code?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "healthcareService":
+          value = HealthcareService;
+          return HealthcareService?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+      if (ParticipatingOrganization is not null) yield return new KeyValuePair<string,object>("participatingOrganization",ParticipatingOrganization);
+      if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+      if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
+      if (HealthcareService?.Any() == true) yield return new KeyValuePair<string,object>("healthcareService",HealthcareService);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+    }
+
   }
 
 }

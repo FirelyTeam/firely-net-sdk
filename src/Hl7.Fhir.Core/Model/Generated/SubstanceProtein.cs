@@ -359,6 +359,53 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "subunit":
+            value = SubunitElement;
+            return SubunitElement is not null;
+          case "sequence":
+            value = SequenceElement;
+            return SequenceElement is not null;
+          case "length":
+            value = LengthElement;
+            return LengthElement is not null;
+          case "sequenceAttachment":
+            value = SequenceAttachment;
+            return SequenceAttachment is not null;
+          case "nTerminalModificationId":
+            value = NTerminalModificationId;
+            return NTerminalModificationId is not null;
+          case "nTerminalModification":
+            value = NTerminalModificationElement;
+            return NTerminalModificationElement is not null;
+          case "cTerminalModificationId":
+            value = CTerminalModificationId;
+            return CTerminalModificationId is not null;
+          case "cTerminalModification":
+            value = CTerminalModificationElement;
+            return CTerminalModificationElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SubunitElement is not null) yield return new KeyValuePair<string,object>("subunit",SubunitElement);
+        if (SequenceElement is not null) yield return new KeyValuePair<string,object>("sequence",SequenceElement);
+        if (LengthElement is not null) yield return new KeyValuePair<string,object>("length",LengthElement);
+        if (SequenceAttachment is not null) yield return new KeyValuePair<string,object>("sequenceAttachment",SequenceAttachment);
+        if (NTerminalModificationId is not null) yield return new KeyValuePair<string,object>("nTerminalModificationId",NTerminalModificationId);
+        if (NTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("nTerminalModification",NTerminalModificationElement);
+        if (CTerminalModificationId is not null) yield return new KeyValuePair<string,object>("cTerminalModificationId",CTerminalModificationId);
+        if (CTerminalModificationElement is not null) yield return new KeyValuePair<string,object>("cTerminalModification",CTerminalModificationElement);
+      }
+
     }
 
     /// <summary>
@@ -526,6 +573,37 @@ namespace Hl7.Fhir.Model
         foreach (var elem in DisulfideLinkageElement) { if (elem != null) yield return new ElementValue("disulfideLinkage", elem); }
         foreach (var elem in Subunit) { if (elem != null) yield return new ElementValue("subunit", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "sequenceType":
+          value = SequenceType;
+          return SequenceType is not null;
+        case "numberOfSubunits":
+          value = NumberOfSubunitsElement;
+          return NumberOfSubunitsElement is not null;
+        case "disulfideLinkage":
+          value = DisulfideLinkageElement;
+          return DisulfideLinkageElement?.Any() == true;
+        case "subunit":
+          value = Subunit;
+          return Subunit?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (SequenceType is not null) yield return new KeyValuePair<string,object>("sequenceType",SequenceType);
+      if (NumberOfSubunitsElement is not null) yield return new KeyValuePair<string,object>("numberOfSubunits",NumberOfSubunitsElement);
+      if (DisulfideLinkageElement?.Any() == true) yield return new KeyValuePair<string,object>("disulfideLinkage",DisulfideLinkageElement);
+      if (Subunit?.Any() == true) yield return new KeyValuePair<string,object>("subunit",Subunit);
     }
 
   }

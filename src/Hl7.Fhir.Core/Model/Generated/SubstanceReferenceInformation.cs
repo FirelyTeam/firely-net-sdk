@@ -182,6 +182,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "geneSequenceOrigin":
+            value = GeneSequenceOrigin;
+            return GeneSequenceOrigin is not null;
+          case "gene":
+            value = Gene;
+            return Gene is not null;
+          case "source":
+            value = Source;
+            return Source?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (GeneSequenceOrigin is not null) yield return new KeyValuePair<string,object>("geneSequenceOrigin",GeneSequenceOrigin);
+        if (Gene is not null) yield return new KeyValuePair<string,object>("gene",Gene);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
     }
 
     /// <summary>
@@ -309,6 +336,33 @@ namespace Hl7.Fhir.Model
           if (Element != null) yield return new ElementValue("element", Element);
           foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "element":
+            value = Element;
+            return Element is not null;
+          case "source":
+            value = Source;
+            return Source?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Element is not null) yield return new KeyValuePair<string,object>("element",Element);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -457,6 +511,37 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Subtype) { if (elem != null) yield return new ElementValue("subtype", elem); }
           foreach (var elem in Source) { if (elem != null) yield return new ElementValue("source", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "domain":
+            value = Domain;
+            return Domain is not null;
+          case "classification":
+            value = Classification;
+            return Classification is not null;
+          case "subtype":
+            value = Subtype;
+            return Subtype?.Any() == true;
+          case "source":
+            value = Source;
+            return Source?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
+        if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+        if (Subtype?.Any() == true) yield return new KeyValuePair<string,object>("subtype",Subtype);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
       }
 
     }
@@ -680,6 +765,53 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "target":
+            value = Target;
+            return Target is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "interaction":
+            value = Interaction;
+            return Interaction is not null;
+          case "organism":
+            value = Organism;
+            return Organism is not null;
+          case "organismType":
+            value = OrganismType;
+            return OrganismType is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          case "amountType":
+            value = AmountType;
+            return AmountType is not null;
+          case "source":
+            value = Source;
+            return Source?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
+        if (Organism is not null) yield return new KeyValuePair<string,object>("organism",Organism);
+        if (OrganismType is not null) yield return new KeyValuePair<string,object>("organismType",OrganismType);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (AmountType is not null) yield return new KeyValuePair<string,object>("amountType",AmountType);
+        if (Source?.Any() == true) yield return new KeyValuePair<string,object>("source",Source);
+      }
+
     }
 
     /// <summary>
@@ -849,6 +981,41 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Classification) { if (elem != null) yield return new ElementValue("classification", elem); }
         foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        case "gene":
+          value = Gene;
+          return Gene?.Any() == true;
+        case "geneElement":
+          value = GeneElement;
+          return GeneElement?.Any() == true;
+        case "classification":
+          value = Classification;
+          return Classification?.Any() == true;
+        case "target":
+          value = Target;
+          return Target?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      if (Gene?.Any() == true) yield return new KeyValuePair<string,object>("gene",Gene);
+      if (GeneElement?.Any() == true) yield return new KeyValuePair<string,object>("geneElement",GeneElement);
+      if (Classification?.Any() == true) yield return new KeyValuePair<string,object>("classification",Classification);
+      if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
     }
 
   }

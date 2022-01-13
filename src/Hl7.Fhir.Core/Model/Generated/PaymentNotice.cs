@@ -401,6 +401,69 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "request":
+          value = Request;
+          return Request is not null;
+        case "response":
+          value = Response;
+          return Response is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "provider":
+          value = Provider;
+          return Provider is not null;
+        case "payment":
+          value = Payment;
+          return Payment is not null;
+        case "paymentDate":
+          value = PaymentDateElement;
+          return PaymentDateElement is not null;
+        case "payee":
+          value = Payee;
+          return Payee is not null;
+        case "recipient":
+          value = Recipient;
+          return Recipient is not null;
+        case "amount":
+          value = Amount;
+          return Amount is not null;
+        case "paymentStatus":
+          value = PaymentStatus;
+          return PaymentStatus is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Request is not null) yield return new KeyValuePair<string,object>("request",Request);
+      if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+      if (Payment is not null) yield return new KeyValuePair<string,object>("payment",Payment);
+      if (PaymentDateElement is not null) yield return new KeyValuePair<string,object>("paymentDate",PaymentDateElement);
+      if (Payee is not null) yield return new KeyValuePair<string,object>("payee",Payee);
+      if (Recipient is not null) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (PaymentStatus is not null) yield return new KeyValuePair<string,object>("paymentStatus",PaymentStatus);
+    }
+
   }
 
 }
