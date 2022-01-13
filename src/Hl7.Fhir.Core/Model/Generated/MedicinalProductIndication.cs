@@ -166,6 +166,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "therapyRelationshipType":
+            value = TherapyRelationshipType;
+            return TherapyRelationshipType is not null;
+          case "medication":
+            value = Medication;
+            return Medication is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TherapyRelationshipType is not null) yield return new KeyValuePair<string,object>("therapyRelationshipType",TherapyRelationshipType);
+        if (Medication is not null) yield return new KeyValuePair<string,object>("medication",Medication);
+      }
+
     }
 
     /// <summary>
@@ -394,6 +417,57 @@ namespace Hl7.Fhir.Model
         foreach (var elem in UndesirableEffect) { if (elem != null) yield return new ElementValue("undesirableEffect", elem); }
         foreach (var elem in Population) { if (elem != null) yield return new ElementValue("population", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "diseaseSymptomProcedure":
+          value = DiseaseSymptomProcedure;
+          return DiseaseSymptomProcedure is not null;
+        case "diseaseStatus":
+          value = DiseaseStatus;
+          return DiseaseStatus is not null;
+        case "comorbidity":
+          value = Comorbidity;
+          return Comorbidity?.Any() == true;
+        case "intendedEffect":
+          value = IntendedEffect;
+          return IntendedEffect is not null;
+        case "duration":
+          value = Duration;
+          return Duration is not null;
+        case "otherTherapy":
+          value = OtherTherapy;
+          return OtherTherapy?.Any() == true;
+        case "undesirableEffect":
+          value = UndesirableEffect;
+          return UndesirableEffect?.Any() == true;
+        case "population":
+          value = Population;
+          return Population?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
+      if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
+      if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
+      if (IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",IntendedEffect);
+      if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+      if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+      if (UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
+      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
     }
 
   }

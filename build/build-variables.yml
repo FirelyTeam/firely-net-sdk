@@ -3,7 +3,7 @@
 # Variables used during builds.
 
 variables:
-  NET_CORE_SDK: 5.0.x
+  NET_CORE_SDK: 6.0.x
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
-  TEST_TARGETFRAMEWORK: net5.0
+  TEST_TARGETFRAMEWORK: net6.0
   buildConfiguration: Release

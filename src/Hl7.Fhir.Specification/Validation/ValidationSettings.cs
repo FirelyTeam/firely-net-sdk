@@ -86,7 +86,6 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public string[] ConstraintsToIgnore { get; set; } = new string[] { "dom-6", "rng-2" };
 
-
         /// <summary>
         /// If a reference is encountered that references to a resource outside of the current instance being validated,
         /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the

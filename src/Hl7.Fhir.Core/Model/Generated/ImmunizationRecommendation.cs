@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Vaccine recommendation status
       /// </summary>
-      [FhirElement("forecastStatus", InSummary=true, Order=70)]
+      [FhirElement("forecastStatus", InSummary=true, IsModifier=true, Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ForecastStatus
@@ -392,6 +392,69 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "vaccineCode":
+            value = VaccineCode;
+            return VaccineCode?.Any() == true;
+          case "targetDisease":
+            value = TargetDisease;
+            return TargetDisease is not null;
+          case "contraindicatedVaccineCode":
+            value = ContraindicatedVaccineCode;
+            return ContraindicatedVaccineCode?.Any() == true;
+          case "forecastStatus":
+            value = ForecastStatus;
+            return ForecastStatus is not null;
+          case "forecastReason":
+            value = ForecastReason;
+            return ForecastReason?.Any() == true;
+          case "dateCriterion":
+            value = DateCriterion;
+            return DateCriterion?.Any() == true;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "series":
+            value = SeriesElement;
+            return SeriesElement is not null;
+          case "doseNumber":
+            value = DoseNumber;
+            return DoseNumber is not null;
+          case "seriesDoses":
+            value = SeriesDoses;
+            return SeriesDoses is not null;
+          case "supportingImmunization":
+            value = SupportingImmunization;
+            return SupportingImmunization?.Any() == true;
+          case "supportingPatientInformation":
+            value = SupportingPatientInformation;
+            return SupportingPatientInformation?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (VaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+        if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (ContraindicatedVaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
+        if (ForecastStatus is not null) yield return new KeyValuePair<string,object>("forecastStatus",ForecastStatus);
+        if (ForecastReason?.Any() == true) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
+        if (DateCriterion?.Any() == true) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
+        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+        if (SupportingImmunization?.Any() == true) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
+        if (SupportingPatientInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
+      }
+
     }
 
     /// <summary>
@@ -518,6 +581,29 @@ namespace Hl7.Fhir.Model
           if (Code != null) yield return new ElementValue("code", Code);
           if (ValueElement != null) yield return new ElementValue("value", ValueElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = ValueElement;
+            return ValueElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
       }
 
     }
@@ -693,6 +779,41 @@ namespace Hl7.Fhir.Model
         if (Authority != null) yield return new ElementValue("authority", Authority);
         foreach (var elem in Recommendation) { if (elem != null) yield return new ElementValue("recommendation", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "authority":
+          value = Authority;
+          return Authority is not null;
+        case "recommendation":
+          value = Recommendation;
+          return Recommendation?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+      if (Recommendation?.Any() == true) yield return new KeyValuePair<string,object>("recommendation",Recommendation);
     }
 
   }

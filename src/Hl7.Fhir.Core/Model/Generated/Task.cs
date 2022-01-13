@@ -346,6 +346,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "repetitions":
+            value = RepetitionsElement;
+            return RepetitionsElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          case "recipient":
+            value = Recipient;
+            return Recipient?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RepetitionsElement is not null) yield return new KeyValuePair<string,object>("repetitions",RepetitionsElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
+      }
+
     }
 
     /// <summary>
@@ -458,6 +485,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
     }
 
     /// <summary>
@@ -568,6 +618,29 @@ namespace Hl7.Fhir.Model
           if (Type != null) yield return new ElementValue("type", Type);
           if (Value != null) yield return new ElementValue("value", Value);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
     }
@@ -696,7 +769,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | requested | received | accepted | +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1365,6 +1438,145 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Input) { if (elem != null) yield return new ElementValue("input", elem); }
         foreach (var elem in Output) { if (elem != null) yield return new ElementValue("output", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement is not null;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "businessStatus":
+          value = BusinessStatus;
+          return BusinessStatus is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "priority":
+          value = PriorityElement;
+          return PriorityElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "focus":
+          value = Focus;
+          return Focus is not null;
+        case "for":
+          value = For;
+          return For is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "executionPeriod":
+          value = ExecutionPeriod;
+          return ExecutionPeriod is not null;
+        case "authoredOn":
+          value = AuthoredOnElement;
+          return AuthoredOnElement is not null;
+        case "lastModified":
+          value = LastModifiedElement;
+          return LastModifiedElement is not null;
+        case "requester":
+          value = Requester;
+          return Requester is not null;
+        case "performerType":
+          value = PerformerType;
+          return PerformerType?.Any() == true;
+        case "owner":
+          value = Owner;
+          return Owner is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode is not null;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference is not null;
+        case "insurance":
+          value = Insurance;
+          return Insurance?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "relevantHistory":
+          value = RelevantHistory;
+          return RelevantHistory?.Any() == true;
+        case "restriction":
+          value = Restriction;
+          return Restriction is not null;
+        case "input":
+          value = Input;
+          return Input?.Any() == true;
+        case "output":
+          value = Output;
+          return Output?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement is not null) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement is not null) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (BusinessStatus is not null) yield return new KeyValuePair<string,object>("businessStatus",BusinessStatus);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (For is not null) yield return new KeyValuePair<string,object>("for",For);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (ExecutionPeriod is not null) yield return new KeyValuePair<string,object>("executionPeriod",ExecutionPeriod);
+      if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
+      if (LastModifiedElement is not null) yield return new KeyValuePair<string,object>("lastModified",LastModifiedElement);
+      if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
+      if (PerformerType?.Any() == true) yield return new KeyValuePair<string,object>("performerType",PerformerType);
+      if (Owner is not null) yield return new KeyValuePair<string,object>("owner",Owner);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (ReasonCode is not null) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference is not null) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
+      if (Restriction is not null) yield return new KeyValuePair<string,object>("restriction",Restriction);
+      if (Input?.Any() == true) yield return new KeyValuePair<string,object>("input",Input);
+      if (Output?.Any() == true) yield return new KeyValuePair<string,object>("output",Output);
     }
 
   }
