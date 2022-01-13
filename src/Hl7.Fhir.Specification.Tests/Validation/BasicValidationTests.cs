@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void TestConstraintBestPractices()
         {
-            var validator = new Validator(new ValidationSettings { ResourceResolver = _source });
+            var validator = new Validator(new ValidationSettings { ResourceResolver = _source, ConstraintsToIgnore = Array.Empty<string>() });
 
             Patient p = new Patient
             {
@@ -550,17 +550,17 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = validator.Validate(p);
             Assert.True(result.Success);
-            Assert.Equal(0, result.Warnings);
+            Assert.Equal(1, result.Warnings);
             Assert.Equal(0, result.Errors);
 
-            validator.Settings.ConstraintBestPractices = ConstraintBestPractices.Enabled;
+            validator.Settings.ConstraintBestPracticesSeverity = ConstraintBestPracticesSeverity.Error;
             result = validator.Validate(p);
             Assert.False(result.Success);
             Assert.Equal(0, result.Warnings);
             Assert.Equal(1, result.Errors);
             Assert.Contains("Instance failed constraint dom-6 \"A resource should have narrative for robust management\"", result.Issue[0].ToString());
 
-            validator.Settings.ConstraintBestPractices = ConstraintBestPractices.Disabled;
+            validator.Settings.ConstraintBestPracticesSeverity = ConstraintBestPracticesSeverity.Warning;
             result = validator.Validate(p);
             Assert.True(result.Success);
             Assert.Equal(1, result.Warnings);
@@ -1357,7 +1357,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var settings = new ValidationSettings
             {
-                ConstraintBestPractices = ConstraintBestPractices.Enabled,
+                ConstraintBestPracticesSeverity = ConstraintBestPracticesSeverity.Error,
                 ResourceResolver = new CachedResolver(ZipSource.CreateValidationSource())
             };
 

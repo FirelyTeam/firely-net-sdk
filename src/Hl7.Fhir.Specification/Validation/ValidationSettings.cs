@@ -15,11 +15,10 @@ using System;
 
 namespace Hl7.Fhir.Validation
 {
-    public enum ConstraintBestPractices
+    public enum ConstraintBestPracticesSeverity
     {
-        Ignore,
-        Enabled,
-        Disabled
+        Warning,
+        Error
     }
 
     /// <summary>Configuration settings for the <see cref="Validator"/> class.</summary>
@@ -86,6 +85,7 @@ namespace Hl7.Fhir.Validation
         /// A list of constraints to be ignored by the validator. Default values are dom-6 and rng-2
         /// </summary>
         public string[] ConstraintsToIgnore { get; set; } = new string[] { "dom-6", "rng-2" };
+
         /// <summary>
         /// If a reference is encountered that references to a resource outside of the current instance being validated,
         /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the
@@ -104,11 +104,11 @@ namespace Hl7.Fhir.Validation
         public bool EnableXsdValidation { get; set; } // = false;
 
         /// <summary>
-        /// If set to enabled, the validator will treat as error the violations of the invariants marked as best practices, if disabled they will be marked as warnings.
+        /// Choose whether the validator will treat the violations of the invariants marked as best practices  as errors or as warnings.
         /// </summary>
-        public ConstraintBestPractices ConstraintBestPractices { get; set; } // = Ignore;
+        public ConstraintBestPracticesSeverity ConstraintBestPracticesSeverity { get; set; }
 
-       
+
         /// <summary>
         /// Determine where to retrieve the XSD schemas from when when Xsd validation is enabled and run.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Validation
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-            other.ConstraintBestPractices = ConstraintBestPractices;
+            other.ConstraintBestPracticesSeverity = ConstraintBestPracticesSeverity;
             other.GenerateSnapshot = GenerateSnapshot;
             other.GenerateSnapshotSettings = GenerateSnapshotSettings?.Clone();
             other.EnableXsdValidation = EnableXsdValidation;
