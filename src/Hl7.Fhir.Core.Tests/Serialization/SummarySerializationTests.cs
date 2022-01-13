@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -25,6 +26,21 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         private readonly FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
         private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+
+        [TestMethod]
+        public void TestConstructSystemTextJsonSerializer()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions().ForFhir();
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+
+
+            var jsonText = JsonSerializer.Serialize(p, options);
+            Assert.IsTrue(jsonText.Contains("birthDate"));
+        }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
         public async T.Task TestSummary()

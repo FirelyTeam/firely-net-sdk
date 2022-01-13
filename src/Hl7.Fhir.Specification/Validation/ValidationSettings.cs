@@ -75,7 +75,10 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         public bool SkipConstraintValidation { get; set; } // = false;
 
-
+        /// <summary>
+        /// A list of constraints to be ignored by the validator. Default values are dom-6 and rng-2
+        /// </summary>
+        public string[] ConstraintsToIgnore { get; set; } = new string[] { "dom-6", "rng-2" };
         /// <summary>
         /// If a reference is encountered that references to a resource outside of the current instance being validated,
         /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the
@@ -128,6 +131,7 @@ namespace Hl7.Fhir.Validation
             other.FhirPathCompiler = FhirPathCompiler;
             other.ResourceMapping = ResourceMapping;
             other.XsdSchemaCollection = XsdSchemaCollection;
+            other.ConstraintsToIgnore = ConstraintsToIgnore;
         }
 
         /// <summary>Creates a new <see cref="ValidationSettings"/> object that is a copy of the current instance.</summary>
