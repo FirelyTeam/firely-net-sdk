@@ -27,6 +27,10 @@ resources:
   - repository: self
     type: git
     ref: develop-stu3
+  - repository: templates
+    type: github
+    name: FirelyTeam/azure-pipeline-templates
+    endpoint: FirelyTeam 
 
 stages:
 - stage: build
@@ -201,42 +205,30 @@ stages:
           testRunTitle: Tests ElementModel test project
           projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
 
-- stage: deploy_myget
-  displayName: Deploy to MyGet
+- stage: deploy_git
+  displayName: Deploy to GitHub
   dependsOn: test
   condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
   jobs:
-  - deployment: myget
-    displayName: MyGet
-    environment: MyGet
+  - deployment: gitHub
+    displayName: GitHub Packages
+    environment: GitHub
     variables:
       GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in UI of Azure Devops
     strategy:
       runOnce:
         deploy:
             steps:
-            - download: current
-              artifact: NuGetPackages
-              displayName: Download artifact NuGetPackages
-            - task: NuGetCommand@2
-              displayName: 'MyGet push'
-              inputs:
-                  command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
-                  nuGetFeedType: external
-                  publishFeedCredentials: MyGet
-                  verbosityPush: Normal    
-            - task: DotNetCoreCLI@2
-              displayName: 'GitHub push'
-              inputs:
-                command: custom
-                custom: nuget
-                arguments: 'push $(Agent.BuildDirectory)\NuGetPackages\*.nupkg --api-key $(GITHUB_PACKAGES_APIKEY) --source https://nuget.pkg.github.com/FirelyTeam/index.json'
-
+            - template: push-nuget-package.yml@templates  # Template reference
+              parameters:
+                artifact: NuGetPackages
+                source: https://nuget.pkg.github.com/FirelyTeam/index.json
+                apiKey: $(GITHUB_PACKAGES_APIKEY)    
+                
 - stage: deploy_nuget 
   displayName: Deploy to NuGet
   dependsOn:
-    - deploy_myget
+    - deploy_git
     - build
   condition: and(succeeded(), eq(variables.isTagBranch, true)) 
   jobs:

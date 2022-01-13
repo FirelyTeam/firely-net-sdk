@@ -180,6 +180,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ComposeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ComposeComponent;
@@ -394,6 +395,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ConceptSetComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ConceptSetComponent;
@@ -565,6 +567,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ConceptReferenceComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ConceptReferenceComponent;
@@ -727,6 +730,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new DesignationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as DesignationComponent;
@@ -910,6 +914,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FilterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FilterComponent;
@@ -1153,6 +1158,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ExpansionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ExpansionComponent;
@@ -1297,6 +1303,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ParameterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ParameterComponent;
@@ -1598,6 +1605,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ContainsComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ContainsComponent;
@@ -2140,6 +2148,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new ValueSet());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as ValueSet;

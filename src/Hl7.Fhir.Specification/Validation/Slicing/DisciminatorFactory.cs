@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
@@ -31,6 +33,11 @@ namespace Hl7.Fhir.Validation
             var context = $"{root.StructureDefinition.Url}#{location}";
 
             var condition = walkToCondition(root, spec.Path, resolver);
+
+            if (condition is null)
+            {
+                return new ComprehensiveDiscriminator();
+            }
 
             switch (spec.Type.Value)
             {
@@ -94,12 +101,17 @@ namespace Hl7.Fhir.Validation
         private static IDiscriminator buildTypeDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
         {
             var spec = nav.Current;
+            if (spec.IsRootElement())
+            {
+                // When we are at a root of a structuredefinition, then return the type of this structuredefinition.
+                return new TypeDiscriminator(new[] { nav.StructureDefinition.Type }, discriminator, validator);
+            }
+
             var codes = spec.Type.Select(tr => tr.Code).ToArray();
 
-            if (codes.Any())
-                return new TypeDiscriminator(codes, discriminator, validator);
-            else
-                throw new IncorrectElementDefinitionException($"A type discriminator should have at least one 'type' element with a code set on '{nav.CanonicalPath()}'.");
+            return codes.Any()
+                ? new TypeDiscriminator(codes, discriminator, validator)
+                : throw new IncorrectElementDefinitionException($"A type discriminator should have at least one 'type' element with a code set on '{nav.CanonicalPath()}'.");
         }
 
         private static IDiscriminator buildProfileDiscriminator(ElementDefinitionNavigator nav, string discriminator, Validator validator)
@@ -132,17 +144,17 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static ElementDefinitionNavigator walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
+        private static ElementDefinitionNavigator? walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
         {
             var walker = new StructureDefinitionWalker(root, resolver);
             var conditions = walker.Walk(discriminator);
 
             // Well, we could check whether the conditions are Equal, since that's what really matters - they should not differ.
-            if (conditions.Count > 1)
-                throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.");
-
-            return conditions.Single().Current;
+            return conditions.Count > 1
+                ? throw new IncorrectElementDefinitionException($"The discriminator path '{discriminator}' at {root.CanonicalPath()} leads to multiple ElementDefinitions, which is not allowed.")
+                : (conditions.SingleOrDefault()?.Current);
         }
-
     }
 }
+
+#nullable restore

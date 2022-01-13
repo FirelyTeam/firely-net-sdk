@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PractitionerComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PractitionerComponent;
@@ -248,6 +249,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ExplanationComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ExplanationComponent;
@@ -407,6 +409,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ReactionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ReactionComponent;
@@ -678,6 +681,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new VaccinationProtocolComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as VaccinationProtocolComponent;
@@ -1189,6 +1193,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Immunization());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Immunization;

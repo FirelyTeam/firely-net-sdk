@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new CoverageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as CoverageComponent;
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new GuarantorComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as GuarantorComponent;
@@ -605,6 +607,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Account());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Account;

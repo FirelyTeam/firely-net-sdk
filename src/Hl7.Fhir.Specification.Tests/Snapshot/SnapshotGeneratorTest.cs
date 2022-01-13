@@ -7389,7 +7389,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Differential = new StructureDefinition.DifferentialComponent
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{                   
+                Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -7417,7 +7417,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent
                             {
                                 Code = "Extension",
-                                Profile = "http://example.org/fhir/StructureDefinition/MyExtension"                                
+                                Profile = "http://example.org/fhir/StructureDefinition/MyExtension"
                             }
                         }
                     }
@@ -7431,6 +7431,134 @@ namespace Hl7.Fhir.Specification.Tests
 
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.value[x].extension").Should().HaveCount(2, "Elements are in the snapshot");
             structureDef.Snapshot.Element.Where(element => element.Path == "Observation.extension").Should().HaveCount(1, "Only the root extension should be there");
-        }       
+        }
+
+        [TestMethod]
+        public async T.Task TestExtensionValueXCommentShouldBeNull()
+        {
+            const string ElementId = "Extension.value[x]";
+
+            var zipSource = ZipSource.CreateValidationSource();
+            var resolver = new MultiResolver(zipSource);
+            var sd = await resolver.FindStructureDefinitionForCoreTypeAsync(nameof(Extension));
+
+            var element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+
+            var generator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+
+            generator.PrepareElement += (sender, e) =>
+            {
+                if (e.Element.Path == ElementId)
+                {
+                    Debug.WriteLine($"Element:{ElementId} BaseElement:{e?.BaseElement?.ElementId}");
+                }
+            };
+
+            // Act
+            await generator.UpdateAsync(sd);
+
+            // Assert
+            element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
+            element.Comment.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async T.Task CheckCardinalityOfProfiledType()
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
+            var sut = await resolver.ResolveByCanonicalUriAsync("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode") as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sut);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            const string codeId = "Observation.code";
+
+            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
+            var sutCode = elements.Single(x => x.ElementId == codeId);
+
+            sutCode.Max.Should().Be(sdCode.Max);
+            sutCode.Min.Should().Be(sdCode.Min);
+        }
+
+        [TestMethod]
+        public async T.Task DiscriminatorBaseElementWithExpansionTest()
+        {
+            var parentId = "Patient.address";
+            var elementId = "Patient.address.country.extension:countryCode.value[x]:valueCodeableConcept.coding";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://example.com/fhir/StructureDefinition/issue-1892-patient");
+
+            var generator = new SnapshotGenerator(_testResolver, _settings);
+            generator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+                {
+                    e.Element.Should().NotBeNull();
+
+                    if (e.Element.Annotation<TestAnnotation>() != null)
+                        e.Element.RemoveAnnotations<TestAnnotation>();
+
+                    e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+                };
+
+            var elements = await generator.GenerateAsync(sd);
+
+            generator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            elements = generator.ExpandElementAsync(elements, parentElement).Result.ToList();
+
+            // Assert
+            var slicingElement = elements.Single(x => x.ElementId == elementId);
+
+            slicingElement.Slicing.Should().NotBeNull();
+            slicingElement.Slicing.Discriminator.Should().HaveCount(1);
+            slicingElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            slicingElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+
+            var baseElement = slicingElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Slicing.Should().NotBeNull();
+            baseElement.Slicing.Discriminator.Should().HaveCount(1);
+            baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+        }
+        [DataTestMethod]
+        [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
+        [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
+        public async T.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
+        {
+            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync(url) as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var extensionElement = elements.SingleOrDefault(x => x.ElementId == elementId);
+
+            extensionElement.Should().NotBeNull();
+        }
+
+        private sealed class TestAnnotation
+        {
+            public TestAnnotation(StructureDefinition baseStructure, ElementDefinition baseElemDef)
+            {
+                BaseStructureDefinition = baseStructure;
+                BaseElementDefinition = baseElemDef;
+            }
+
+            public StructureDefinition BaseStructureDefinition { get; }
+            public ElementDefinition BaseElementDefinition { get; }
+        }
     }
 }

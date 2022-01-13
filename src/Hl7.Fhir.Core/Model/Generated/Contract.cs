@@ -218,6 +218,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AgentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AgentComponent;
@@ -344,6 +345,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new SignatoryComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as SignatoryComponent;
@@ -596,6 +598,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ValuedItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ValuedItemComponent;
@@ -926,6 +929,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TermComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TermComponent;
@@ -1081,6 +1085,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TermAgentComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TermAgentComponent;
@@ -1329,6 +1334,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new TermValuedItemComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as TermValuedItemComponent;
@@ -1450,6 +1456,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new FriendlyLanguageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as FriendlyLanguageComponent;
@@ -1543,6 +1550,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new LegalLanguageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as LegalLanguageComponent;
@@ -1636,6 +1644,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ComputableLanguageComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ComputableLanguageComponent;
@@ -2083,6 +2092,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new Contract());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as Contract;

@@ -37,8 +37,65 @@ namespace Hl7.Fhir.Validation
             buildMiPatient(),
             slicingWithCodeableConcept(),
             slicingWithQuantity(),
-            buildPatientWithExistsSlicing()
+            buildPatientWithExistsSlicing(),
+            buildTranslatableCodeableConcept(),
+            buildObservationWithTranslatableCode(),
+            buildObservationWithTargetProfilesAndChildDefs(),
+            buildPatientWithDeceasedConstraints("RequiredBoolean"),
+            buildPatientWithDeceasedConstraints(),
+            buildBoolean(),
+            buildMyExtension()
         };
+
+        private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/Observation-issue-1654", "Observation-issue-1654",
+                "Observation with targetprofile on subject and children definition under subject as well", FHIRAllTypes.Observation);
+
+            var cons = result.Differential.Element;
+            cons.Add(new ElementDefinition("Observation.subject")
+            {
+                ElementId = "Observation.subject",
+            }.OfReference(targetProfile: ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient)));
+
+            cons.Add(new ElementDefinition("Observation.subject.display")
+            {
+                ElementId = "Observation.subject.display",
+                MaxLength = 10
+            });
+
+            return result;
+        }
+
+        private static StructureDefinition buildTranslatableCodeableConcept()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable", "CodeableConceptTranslatable",
+                                  "Test CodeableConcept with an extension on CodeableConcept.text", FHIRAllTypes.CodeableConcept);
+
+            var cons = result.Differential.Element;
+            var ed = new ElementDefinition("CodeableConcept.text")
+            {
+                ElementId = "CodeableConcept.text",
+            };
+            ed.AddExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable", new FhirBoolean(true));
+            cons.Add(ed);
+
+            return result;
+        }
+
+        private static StructureDefinition buildObservationWithTranslatableCode()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode", "ObservationWithTranslatableCode",
+                       "Test Observation with a profiled CodeableConcept for Observation.code", FHIRAllTypes.Observation);
+
+            var cons = result.Differential.Element;
+            cons.Add(new ElementDefinition("Observation.code")
+            {
+                ElementId = "Observation.code"
+            }.OfType(FHIRAllTypes.CodeableConcept, "http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable"));
+
+            return result;
+        }
 
         private static StructureDefinition slicingWithCodeableConcept()
         {
@@ -521,6 +578,59 @@ namespace Hl7.Fhir.Validation
             return result;
         }
 
+        private static StructureDefinition buildMyExtension()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MyRangeExtension", "My Rage Extension",
+                "An extension with a value of type Range", FHIRAllTypes.Extension);
 
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Extension").OfType(FHIRAllTypes.Extension));
+            cons.Add(new ElementDefinition("Extension.url").Value(new FhirUri("http://validationtest.org/fhir/StructureDefinition/MyRangeExtension")));
+            cons.Add(new ElementDefinition("Extension.value[x]").OfType(FHIRAllTypes.Range));
+
+            return result;
+        }
+
+        private static StructureDefinition buildBoolean()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/RequiredBoolean", "Required Boolean",
+                "A boolean type where the value is required", FHIRAllTypes.Boolean);
+
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Boolean").OfType(FHIRAllTypes.Boolean));
+            cons.Add(new ElementDefinition("Boolean.value").Required());
+
+            return result;
+        }
+
+        private static StructureDefinition buildPatientWithDeceasedConstraints(string profile = null)
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient" + profile, "DeceasedPatient",
+                    "Test Patient with extra deceased constraints", FHIRAllTypes.Patient);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
+
+            if (profile is not null)
+            {
+                cons.Add(new ElementDefinition("Patient.deceased[x]")
+                    .OfType(FHIRAllTypes.Boolean, "http://validationtest.org/fhir/StructureDefinition/RequiredBoolean")
+                    .OrType(FHIRAllTypes.DateTime));
+            }
+
+            var slicingIntro = new ElementDefinition("Patient.deceased[x].extension")
+                .WithSlicingIntro(ElementDefinition.SlicingRules.Open, (ElementDefinition.DiscriminatorType.Value, "url"));
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("Patient.deceased[x].extension")
+            {
+                ElementId = "Patient.deceased[x].extension:range",
+                SliceName = "range",
+            }.OfType(FHIRAllTypes.Extension, "http://validationtest.org/fhir/StructureDefinition/MyRangeExtension"));
+            return result;
+        }
     }
 }

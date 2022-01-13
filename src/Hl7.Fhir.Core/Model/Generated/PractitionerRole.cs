@@ -216,6 +216,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new AvailableTimeComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as AvailableTimeComponent;
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new NotAvailableComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as NotAvailableComponent;
@@ -667,6 +669,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new PractitionerRole());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as PractitionerRole;

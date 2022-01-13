@@ -180,6 +180,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new ConditionComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as ConditionComponent;
@@ -637,6 +638,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new FamilyMemberHistory());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as FamilyMemberHistory;

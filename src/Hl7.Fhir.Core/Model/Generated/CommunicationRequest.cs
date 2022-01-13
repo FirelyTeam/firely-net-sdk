@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new PayloadComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as PayloadComponent;
@@ -212,6 +213,7 @@ namespace Hl7.Fhir.Model
         return CopyTo(new RequesterComponent());
       }
 
+      ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
         var otherT = other as RequesterComponent;
@@ -644,6 +646,7 @@ namespace Hl7.Fhir.Model
       return CopyTo(new CommunicationRequest());
     }
 
+    ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
       var otherT = other as CommunicationRequest;
