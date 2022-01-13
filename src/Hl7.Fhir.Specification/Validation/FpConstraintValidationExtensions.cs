@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Validation
                 // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
                 // should be removed from STU3/R4 once we get the new normative version
                 // of FP up, which could do comparisons between quantities.
-                if (constraintElement.Key == "rng-2") continue;
+                if (v.Settings.ConstraintsToIgnore.Contains(constraintElement.Key)) continue;
 
                 if (constraintElement.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") == true)
                     if (v.Settings.ConstraintBestPractices == ConstraintBestPractices.Ignore)

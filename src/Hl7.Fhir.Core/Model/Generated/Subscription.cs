@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=90)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=90)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

@@ -43,37 +43,37 @@ using Hl7.Fhir.Validation;
 namespace Hl7.Fhir.Model
 {
   /// <summary>
-  /// A request for a procedure or diagnostic to be performed
+  /// A request for referral or transfer of care
   /// </summary>
   [Serializable]
   [DataContract]
-  [FhirType("ProcedureRequest","http://hl7.org/fhir/StructureDefinition/ProcedureRequest", IsResource=true)]
-  public partial class ProcedureRequest : Hl7.Fhir.Model.DomainResource
+  [FhirType("ReferralRequest","http://hl7.org/fhir/StructureDefinition/ReferralRequest", IsResource=true)]
+  public partial class ReferralRequest : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
     /// FHIR Type Name
     /// </summary>
-    public override string TypeName { get { return "ProcedureRequest"; } }
+    public override string TypeName { get { return "ReferralRequest"; } }
 
     /// <summary>
-    /// Who/what is requesting procedure or diagnostic
+    /// Who/what is requesting service
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("ProcedureRequest#Requester", IsNestedType=true)]
+    [FhirType("ReferralRequest#Requester", IsNestedType=true)]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "ProcedureRequest#Requester"; } }
+      public override string TypeName { get { return "ReferralRequest#Requester"; } }
 
       /// <summary>
       /// Individual making the request
       /// </summary>
       [FhirElement("agent", InSummary=true, Order=40)]
       [CLSCompliant(false)]
-      [References("Device","Practitioner","Organization")]
+      [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference Agent
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifiers assigned to this order
+    /// Business identifier
     /// </summary>
     [FhirElement("identifier", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Identifier> _Identifier;
 
     /// <summary>
-    /// Protocol or definition
+    /// Instantiates protocol or definition
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=100)]
     [CLSCompliant(false)]
@@ -222,11 +222,11 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Definition;
 
     /// <summary>
-    /// What request fulfills
+    /// Request fulfilled by this request
     /// </summary>
     [FhirElement("basedOn", InSummary=true, Order=110)]
     [CLSCompliant(false)]
-    [References("Resource")]
+    [References("ReferralRequest","CarePlan","ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> BasedOn
@@ -238,11 +238,11 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _BasedOn;
 
     /// <summary>
-    /// What request replaces
+    /// Request(s) replaced by this request
     /// </summary>
     [FhirElement("replaces", InSummary=true, Order=120)]
     [CLSCompliant(false)]
-    [References("Resource")]
+    [References("ReferralRequest")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ResourceReference> Replaces
@@ -254,20 +254,20 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _Replaces;
 
     /// <summary>
-    /// Composite Request ID
+    /// Composite request this is part of
     /// </summary>
-    [FhirElement("requisition", InSummary=true, Order=130)]
+    [FhirElement("groupIdentifier", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.Identifier Requisition
+    public Hl7.Fhir.Model.Identifier GroupIdentifier
     {
-      get { return _Requisition; }
-      set { _Requisition = value; OnPropertyChanged("Requisition"); }
+      get { return _GroupIdentifier; }
+      set { _GroupIdentifier = value; OnPropertyChanged("GroupIdentifier"); }
     }
 
-    private Hl7.Fhir.Model.Identifier _Requisition;
+    private Hl7.Fhir.Model.Identifier _GroupIdentifier;
 
     /// <summary>
-    /// draft | active | suspended | completed | entered-in-error | cancelled
+    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
     private Code<Hl7.Fhir.Model.RequestStatus> _StatusElement;
 
     /// <summary>
-    /// draft | active | suspended | completed | entered-in-error | cancelled
+    /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// proposal | plan | order +
+    /// proposal | plan | order
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     private Code<Hl7.Fhir.Model.RequestIntent> _IntentElement;
 
     /// <summary>
-    /// proposal | plan | order +
+    /// proposal | plan | order
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
@@ -333,9 +333,22 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// routine | urgent | asap | stat
+    /// Referral/Transition of care request type
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=160)]
+    [FhirElement("type", InSummary=true, Order=160)]
+    [DataMember]
+    public Hl7.Fhir.Model.CodeableConcept Type
+    {
+      get { return _Type; }
+      set { _Type = value; OnPropertyChanged("Type"); }
+    }
+
+    private Hl7.Fhir.Model.CodeableConcept _Type;
+
+    /// <summary>
+    /// Urgency of referral / transfer of care request
+    /// </summary>
+    [FhirElement("priority", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -347,7 +360,7 @@ namespace Hl7.Fhir.Model
     private Code<Hl7.Fhir.Model.RequestPriority> _PriorityElement;
 
     /// <summary>
-    /// routine | urgent | asap | stat
+    /// Urgency of referral / transfer of care request
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
@@ -365,70 +378,25 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// True if procedure should not be performed
+    /// Actions requested as part of the referral
     /// </summary>
-    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170)]
-    [DataMember]
-    public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
-    {
-      get { return _DoNotPerformElement; }
-      set { _DoNotPerformElement = value; OnPropertyChanged("DoNotPerformElement"); }
-    }
-
-    private Hl7.Fhir.Model.FhirBoolean _DoNotPerformElement;
-
-    /// <summary>
-    /// True if procedure should not be performed
-    /// </summary>
-    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    [IgnoreDataMember]
-    public bool? DoNotPerform
-    {
-      get { return DoNotPerformElement != null ? DoNotPerformElement.Value : null; }
-      set
-      {
-        if (value == null)
-          DoNotPerformElement = null;
-        else
-          DoNotPerformElement = new Hl7.Fhir.Model.FhirBoolean(value);
-        OnPropertyChanged("DoNotPerform");
-      }
-    }
-
-    /// <summary>
-    /// Classification of procedure
-    /// </summary>
-    [FhirElement("category", InSummary=true, Order=180)]
+    [FhirElement("serviceRequested", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    public List<Hl7.Fhir.Model.CodeableConcept> Category
+    public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
     {
-      get { if(_Category==null) _Category = new List<Hl7.Fhir.Model.CodeableConcept>(); return _Category; }
-      set { _Category = value; OnPropertyChanged("Category"); }
+      get { if(_ServiceRequested==null) _ServiceRequested = new List<Hl7.Fhir.Model.CodeableConcept>(); return _ServiceRequested; }
+      set { _ServiceRequested = value; OnPropertyChanged("ServiceRequested"); }
     }
 
-    private List<Hl7.Fhir.Model.CodeableConcept> _Category;
+    private List<Hl7.Fhir.Model.CodeableConcept> _ServiceRequested;
 
     /// <summary>
-    /// What is being requested/ordered
+    /// Patient referred to care or transfer
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=190)]
-    [Cardinality(Min=1,Max=1)]
-    [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept Code
-    {
-      get { return _Code; }
-      set { _Code = value; OnPropertyChanged("Code"); }
-    }
-
-    private Hl7.Fhir.Model.CodeableConcept _Code;
-
-    /// <summary>
-    /// Individual the service is ordered for
-    /// </summary>
-    [FhirElement("subject", InSummary=true, Order=200)]
+    [FhirElement("subject", InSummary=true, Order=190)]
     [CLSCompliant(false)]
-    [References("Patient","Group","Location","Device")]
+    [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference Subject
@@ -440,9 +408,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Subject;
 
     /// <summary>
-    /// Encounter or Episode during which request was created
+    /// Originating encounter
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=210)]
+    [FhirElement("context", InSummary=true, Order=200)]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -455,11 +423,11 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _Context;
 
     /// <summary>
-    /// When procedure should occur
+    /// When the service(s) requested in the referral should occur
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
     public Hl7.Fhir.Model.DataType Occurrence
     {
@@ -470,24 +438,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _Occurrence;
 
     /// <summary>
-    /// Preconditions for procedure or diagnostic
+    /// Date of creation/activation
     /// </summary>
-    [FhirElement("asNeeded", InSummary=true, Order=230, Choice=ChoiceType.DatatypeChoice)]
-    [CLSCompliant(false)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
-    [DataMember]
-    public Hl7.Fhir.Model.DataType AsNeeded
-    {
-      get { return _AsNeeded; }
-      set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
-    }
-
-    private Hl7.Fhir.Model.DataType _AsNeeded;
-
-    /// <summary>
-    /// Date request signed
-    /// </summary>
-    [FhirElement("authoredOn", InSummary=true, Order=240)]
+    [FhirElement("authoredOn", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -498,7 +451,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.FhirDateTime _AuthoredOnElement;
 
     /// <summary>
-    /// Date request signed
+    /// Date of creation/activation
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
@@ -516,50 +469,51 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who/what is requesting procedure or diagnostic
+    /// Who/what is requesting service
     /// </summary>
-    [FhirElement("requester", InSummary=true, Order=250)]
+    [FhirElement("requester", InSummary=true, Order=230)]
     [DataMember]
-    public Hl7.Fhir.Model.ProcedureRequest.RequesterComponent Requester
+    public Hl7.Fhir.Model.ReferralRequest.RequesterComponent Requester
     {
       get { return _Requester; }
       set { _Requester = value; OnPropertyChanged("Requester"); }
     }
 
-    private Hl7.Fhir.Model.ProcedureRequest.RequesterComponent _Requester;
+    private Hl7.Fhir.Model.ReferralRequest.RequesterComponent _Requester;
 
     /// <summary>
-    /// Performer role
+    /// The clinical specialty (discipline) that the referral is requested for
     /// </summary>
-    [FhirElement("performerType", InSummary=true, Order=260)]
+    [FhirElement("specialty", Order=240)]
     [DataMember]
-    public Hl7.Fhir.Model.CodeableConcept PerformerType
+    public Hl7.Fhir.Model.CodeableConcept Specialty
     {
-      get { return _PerformerType; }
-      set { _PerformerType = value; OnPropertyChanged("PerformerType"); }
+      get { return _Specialty; }
+      set { _Specialty = value; OnPropertyChanged("Specialty"); }
     }
 
-    private Hl7.Fhir.Model.CodeableConcept _PerformerType;
+    private Hl7.Fhir.Model.CodeableConcept _Specialty;
 
     /// <summary>
-    /// Requested perfomer
+    /// Receiver of referral / transfer of care request
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=270)]
+    [FhirElement("recipient", InSummary=true, Order=250)]
     [CLSCompliant(false)]
-    [References("Practitioner","Organization","Patient","Device","RelatedPerson","HealthcareService")]
+    [References("Practitioner","Organization","HealthcareService")]
+    [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Performer
+    public List<Hl7.Fhir.Model.ResourceReference> Recipient
     {
-      get { return _Performer; }
-      set { _Performer = value; OnPropertyChanged("Performer"); }
+      get { if(_Recipient==null) _Recipient = new List<Hl7.Fhir.Model.ResourceReference>(); return _Recipient; }
+      set { _Recipient = value; OnPropertyChanged("Recipient"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Performer;
+    private List<Hl7.Fhir.Model.ResourceReference> _Recipient;
 
     /// <summary>
-    /// Explanation/Justification for test
+    /// Reason for referral / transfer of care request
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=280)]
+    [FhirElement("reasonCode", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -571,9 +525,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _ReasonCode;
 
     /// <summary>
-    /// Explanation/Justification for test
+    /// Why is service needed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=290)]
+    [FhirElement("reasonReference", InSummary=true, Order=270)]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
@@ -587,9 +541,40 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _ReasonReference;
 
     /// <summary>
-    /// Additional clinical information
+    /// A textual description of the referral
     /// </summary>
-    [FhirElement("supportingInfo", Order=300)]
+    [FhirElement("description", Order=280)]
+    [DataMember]
+    public Hl7.Fhir.Model.FhirString DescriptionElement
+    {
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
+    }
+
+    private Hl7.Fhir.Model.FhirString _DescriptionElement;
+
+    /// <summary>
+    /// A textual description of the referral
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
+        OnPropertyChanged("Description");
+      }
+    }
+
+    /// <summary>
+    /// Additonal information to support referral or transfer of care request
+    /// </summary>
+    [FhirElement("supportingInfo", Order=290)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -603,39 +588,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ResourceReference> _SupportingInfo;
 
     /// <summary>
-    /// Procedure Samples
+    /// Comments made about referral request
     /// </summary>
-    [FhirElement("specimen", InSummary=true, Order=310)]
-    [CLSCompliant(false)]
-    [References("Specimen")]
-    [Cardinality(Min=0,Max=-1)]
-    [DataMember]
-    public List<Hl7.Fhir.Model.ResourceReference> Specimen
-    {
-      get { if(_Specimen==null) _Specimen = new List<Hl7.Fhir.Model.ResourceReference>(); return _Specimen; }
-      set { _Specimen = value; OnPropertyChanged("Specimen"); }
-    }
-
-    private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
-
-    /// <summary>
-    /// Location on Body
-    /// </summary>
-    [FhirElement("bodySite", InSummary=true, Order=320)]
-    [Cardinality(Min=0,Max=-1)]
-    [DataMember]
-    public List<Hl7.Fhir.Model.CodeableConcept> BodySite
-    {
-      get { if(_BodySite==null) _BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(); return _BodySite; }
-      set { _BodySite = value; OnPropertyChanged("BodySite"); }
-    }
-
-    private List<Hl7.Fhir.Model.CodeableConcept> _BodySite;
-
-    /// <summary>
-    /// Comments
-    /// </summary>
-    [FhirElement("note", Order=330)]
+    [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -647,9 +602,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Annotation> _Note;
 
     /// <summary>
-    /// Request provenance
+    /// Key events in history of request
     /// </summary>
-    [FhirElement("relevantHistory", Order=340)]
+    [FhirElement("relevantHistory", Order=310)]
     [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]
@@ -664,7 +619,7 @@ namespace Hl7.Fhir.Model
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
-      var dest = other as ProcedureRequest;
+      var dest = other as ReferralRequest;
 
       if (dest == null)
       {
@@ -676,26 +631,23 @@ namespace Hl7.Fhir.Model
       if(Definition != null) dest.Definition = new List<Hl7.Fhir.Model.ResourceReference>(Definition.DeepCopy());
       if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(Replaces != null) dest.Replaces = new List<Hl7.Fhir.Model.ResourceReference>(Replaces.DeepCopy());
-      if(Requisition != null) dest.Requisition = (Hl7.Fhir.Model.Identifier)Requisition.DeepCopy();
+      if(GroupIdentifier != null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)GroupIdentifier.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.RequestStatus>)StatusElement.DeepCopy();
       if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.RequestIntent>)IntentElement.DeepCopy();
+      if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
-      if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();
-      if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
-      if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
+      if(ServiceRequested != null) dest.ServiceRequested = new List<Hl7.Fhir.Model.CodeableConcept>(ServiceRequested.DeepCopy());
       if(Subject != null) dest.Subject = (Hl7.Fhir.Model.ResourceReference)Subject.DeepCopy();
       if(Context != null) dest.Context = (Hl7.Fhir.Model.ResourceReference)Context.DeepCopy();
       if(Occurrence != null) dest.Occurrence = (Hl7.Fhir.Model.DataType)Occurrence.DeepCopy();
-      if(AsNeeded != null) dest.AsNeeded = (Hl7.Fhir.Model.DataType)AsNeeded.DeepCopy();
       if(AuthoredOnElement != null) dest.AuthoredOnElement = (Hl7.Fhir.Model.FhirDateTime)AuthoredOnElement.DeepCopy();
-      if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ProcedureRequest.RequesterComponent)Requester.DeepCopy();
-      if(PerformerType != null) dest.PerformerType = (Hl7.Fhir.Model.CodeableConcept)PerformerType.DeepCopy();
-      if(Performer != null) dest.Performer = (Hl7.Fhir.Model.ResourceReference)Performer.DeepCopy();
+      if(Requester != null) dest.Requester = (Hl7.Fhir.Model.ReferralRequest.RequesterComponent)Requester.DeepCopy();
+      if(Specialty != null) dest.Specialty = (Hl7.Fhir.Model.CodeableConcept)Specialty.DeepCopy();
+      if(Recipient != null) dest.Recipient = new List<Hl7.Fhir.Model.ResourceReference>(Recipient.DeepCopy());
       if(ReasonCode != null) dest.ReasonCode = new List<Hl7.Fhir.Model.CodeableConcept>(ReasonCode.DeepCopy());
       if(ReasonReference != null) dest.ReasonReference = new List<Hl7.Fhir.Model.ResourceReference>(ReasonReference.DeepCopy());
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
       if(SupportingInfo != null) dest.SupportingInfo = new List<Hl7.Fhir.Model.ResourceReference>(SupportingInfo.DeepCopy());
-      if(Specimen != null) dest.Specimen = new List<Hl7.Fhir.Model.ResourceReference>(Specimen.DeepCopy());
-      if(BodySite != null) dest.BodySite = new List<Hl7.Fhir.Model.CodeableConcept>(BodySite.DeepCopy());
       if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       if(RelevantHistory != null) dest.RelevantHistory = new List<Hl7.Fhir.Model.ResourceReference>(RelevantHistory.DeepCopy());
       return dest;
@@ -703,13 +655,13 @@ namespace Hl7.Fhir.Model
 
     public override IDeepCopyable DeepCopy()
     {
-      return CopyTo(new ProcedureRequest());
+      return CopyTo(new ReferralRequest());
     }
 
     ///<inheritdoc />
     public override bool Matches(IDeepComparable other)
     {
-      var otherT = other as ProcedureRequest;
+      var otherT = other as ReferralRequest;
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
@@ -717,26 +669,23 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
       if( !DeepComparable.Matches(BasedOn, otherT.BasedOn)) return false;
       if( !DeepComparable.Matches(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.Matches(Requisition, otherT.Requisition)) return false;
+      if( !DeepComparable.Matches(GroupIdentifier, otherT.GroupIdentifier)) return false;
       if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.Matches(IntentElement, otherT.IntentElement)) return false;
+      if( !DeepComparable.Matches(Type, otherT.Type)) return false;
       if( !DeepComparable.Matches(PriorityElement, otherT.PriorityElement)) return false;
-      if( !DeepComparable.Matches(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
-      if( !DeepComparable.Matches(Category, otherT.Category)) return false;
-      if( !DeepComparable.Matches(Code, otherT.Code)) return false;
+      if( !DeepComparable.Matches(ServiceRequested, otherT.ServiceRequested)) return false;
       if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
       if( !DeepComparable.Matches(Context, otherT.Context)) return false;
       if( !DeepComparable.Matches(Occurrence, otherT.Occurrence)) return false;
-      if( !DeepComparable.Matches(AsNeeded, otherT.AsNeeded)) return false;
       if( !DeepComparable.Matches(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
       if( !DeepComparable.Matches(Requester, otherT.Requester)) return false;
-      if( !DeepComparable.Matches(PerformerType, otherT.PerformerType)) return false;
-      if( !DeepComparable.Matches(Performer, otherT.Performer)) return false;
+      if( !DeepComparable.Matches(Specialty, otherT.Specialty)) return false;
+      if( !DeepComparable.Matches(Recipient, otherT.Recipient)) return false;
       if( !DeepComparable.Matches(ReasonCode, otherT.ReasonCode)) return false;
       if( !DeepComparable.Matches(ReasonReference, otherT.ReasonReference)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(SupportingInfo, otherT.SupportingInfo)) return false;
-      if( !DeepComparable.Matches(Specimen, otherT.Specimen)) return false;
-      if( !DeepComparable.Matches(BodySite, otherT.BodySite)) return false;
       if( !DeepComparable.Matches(Note, otherT.Note)) return false;
       if( !DeepComparable.Matches(RelevantHistory, otherT.RelevantHistory)) return false;
 
@@ -745,7 +694,7 @@ namespace Hl7.Fhir.Model
 
     public override bool IsExactly(IDeepComparable other)
     {
-      var otherT = other as ProcedureRequest;
+      var otherT = other as ReferralRequest;
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
@@ -753,26 +702,23 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
       if( !DeepComparable.IsExactly(BasedOn, otherT.BasedOn)) return false;
       if( !DeepComparable.IsExactly(Replaces, otherT.Replaces)) return false;
-      if( !DeepComparable.IsExactly(Requisition, otherT.Requisition)) return false;
+      if( !DeepComparable.IsExactly(GroupIdentifier, otherT.GroupIdentifier)) return false;
       if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.IsExactly(IntentElement, otherT.IntentElement)) return false;
+      if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
       if( !DeepComparable.IsExactly(PriorityElement, otherT.PriorityElement)) return false;
-      if( !DeepComparable.IsExactly(DoNotPerformElement, otherT.DoNotPerformElement)) return false;
-      if( !DeepComparable.IsExactly(Category, otherT.Category)) return false;
-      if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
+      if( !DeepComparable.IsExactly(ServiceRequested, otherT.ServiceRequested)) return false;
       if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
       if( !DeepComparable.IsExactly(Context, otherT.Context)) return false;
       if( !DeepComparable.IsExactly(Occurrence, otherT.Occurrence)) return false;
-      if( !DeepComparable.IsExactly(AsNeeded, otherT.AsNeeded)) return false;
       if( !DeepComparable.IsExactly(AuthoredOnElement, otherT.AuthoredOnElement)) return false;
       if( !DeepComparable.IsExactly(Requester, otherT.Requester)) return false;
-      if( !DeepComparable.IsExactly(PerformerType, otherT.PerformerType)) return false;
-      if( !DeepComparable.IsExactly(Performer, otherT.Performer)) return false;
+      if( !DeepComparable.IsExactly(Specialty, otherT.Specialty)) return false;
+      if( !DeepComparable.IsExactly(Recipient, otherT.Recipient)) return false;
       if( !DeepComparable.IsExactly(ReasonCode, otherT.ReasonCode)) return false;
       if( !DeepComparable.IsExactly(ReasonReference, otherT.ReasonReference)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(SupportingInfo, otherT.SupportingInfo)) return false;
-      if( !DeepComparable.IsExactly(Specimen, otherT.Specimen)) return false;
-      if( !DeepComparable.IsExactly(BodySite, otherT.BodySite)) return false;
       if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
       if( !DeepComparable.IsExactly(RelevantHistory, otherT.RelevantHistory)) return false;
 
@@ -789,26 +735,23 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Definition) { if (elem != null) yield return elem; }
         foreach (var elem in BasedOn) { if (elem != null) yield return elem; }
         foreach (var elem in Replaces) { if (elem != null) yield return elem; }
-        if (Requisition != null) yield return Requisition;
+        if (GroupIdentifier != null) yield return GroupIdentifier;
         if (StatusElement != null) yield return StatusElement;
         if (IntentElement != null) yield return IntentElement;
+        if (Type != null) yield return Type;
         if (PriorityElement != null) yield return PriorityElement;
-        if (DoNotPerformElement != null) yield return DoNotPerformElement;
-        foreach (var elem in Category) { if (elem != null) yield return elem; }
-        if (Code != null) yield return Code;
+        foreach (var elem in ServiceRequested) { if (elem != null) yield return elem; }
         if (Subject != null) yield return Subject;
         if (Context != null) yield return Context;
         if (Occurrence != null) yield return Occurrence;
-        if (AsNeeded != null) yield return AsNeeded;
         if (AuthoredOnElement != null) yield return AuthoredOnElement;
         if (Requester != null) yield return Requester;
-        if (PerformerType != null) yield return PerformerType;
-        if (Performer != null) yield return Performer;
+        if (Specialty != null) yield return Specialty;
+        foreach (var elem in Recipient) { if (elem != null) yield return elem; }
         foreach (var elem in ReasonCode) { if (elem != null) yield return elem; }
         foreach (var elem in ReasonReference) { if (elem != null) yield return elem; }
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in SupportingInfo) { if (elem != null) yield return elem; }
-        foreach (var elem in Specimen) { if (elem != null) yield return elem; }
-        foreach (var elem in BodySite) { if (elem != null) yield return elem; }
         foreach (var elem in Note) { if (elem != null) yield return elem; }
         foreach (var elem in RelevantHistory) { if (elem != null) yield return elem; }
       }
@@ -824,26 +767,23 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
         foreach (var elem in BasedOn) { if (elem != null) yield return new ElementValue("basedOn", elem); }
         foreach (var elem in Replaces) { if (elem != null) yield return new ElementValue("replaces", elem); }
-        if (Requisition != null) yield return new ElementValue("requisition", Requisition);
+        if (GroupIdentifier != null) yield return new ElementValue("groupIdentifier", GroupIdentifier);
         if (StatusElement != null) yield return new ElementValue("status", StatusElement);
         if (IntentElement != null) yield return new ElementValue("intent", IntentElement);
+        if (Type != null) yield return new ElementValue("type", Type);
         if (PriorityElement != null) yield return new ElementValue("priority", PriorityElement);
-        if (DoNotPerformElement != null) yield return new ElementValue("doNotPerform", DoNotPerformElement);
-        foreach (var elem in Category) { if (elem != null) yield return new ElementValue("category", elem); }
-        if (Code != null) yield return new ElementValue("code", Code);
+        foreach (var elem in ServiceRequested) { if (elem != null) yield return new ElementValue("serviceRequested", elem); }
         if (Subject != null) yield return new ElementValue("subject", Subject);
         if (Context != null) yield return new ElementValue("context", Context);
         if (Occurrence != null) yield return new ElementValue("occurrence", Occurrence);
-        if (AsNeeded != null) yield return new ElementValue("asNeeded", AsNeeded);
         if (AuthoredOnElement != null) yield return new ElementValue("authoredOn", AuthoredOnElement);
         if (Requester != null) yield return new ElementValue("requester", Requester);
-        if (PerformerType != null) yield return new ElementValue("performerType", PerformerType);
-        if (Performer != null) yield return new ElementValue("performer", Performer);
+        if (Specialty != null) yield return new ElementValue("specialty", Specialty);
+        foreach (var elem in Recipient) { if (elem != null) yield return new ElementValue("recipient", elem); }
         foreach (var elem in ReasonCode) { if (elem != null) yield return new ElementValue("reasonCode", elem); }
         foreach (var elem in ReasonReference) { if (elem != null) yield return new ElementValue("reasonReference", elem); }
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
-        foreach (var elem in Specimen) { if (elem != null) yield return new ElementValue("specimen", elem); }
-        foreach (var elem in BodySite) { if (elem != null) yield return new ElementValue("bodySite", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in RelevantHistory) { if (elem != null) yield return new ElementValue("relevantHistory", elem); }
       }
@@ -865,27 +805,24 @@ namespace Hl7.Fhir.Model
         case "replaces":
           value = Replaces;
           return Replaces?.Any() == true;
-        case "requisition":
-          value = Requisition;
-          return Requisition is not null;
+        case "groupIdentifier":
+          value = GroupIdentifier;
+          return GroupIdentifier is not null;
         case "status":
           value = StatusElement;
           return StatusElement is not null;
         case "intent":
           value = IntentElement;
           return IntentElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
         case "priority":
           value = PriorityElement;
           return PriorityElement is not null;
-        case "doNotPerform":
-          value = DoNotPerformElement;
-          return DoNotPerformElement is not null;
-        case "category":
-          value = Category;
-          return Category?.Any() == true;
-        case "code":
-          value = Code;
-          return Code is not null;
+        case "serviceRequested":
+          value = ServiceRequested;
+          return ServiceRequested?.Any() == true;
         case "subject":
           value = Subject;
           return Subject is not null;
@@ -895,36 +832,30 @@ namespace Hl7.Fhir.Model
         case "occurrence":
           value = Occurrence;
           return Occurrence is not null;
-        case "asNeeded":
-          value = AsNeeded;
-          return AsNeeded is not null;
         case "authoredOn":
           value = AuthoredOnElement;
           return AuthoredOnElement is not null;
         case "requester":
           value = Requester;
           return Requester is not null;
-        case "performerType":
-          value = PerformerType;
-          return PerformerType is not null;
-        case "performer":
-          value = Performer;
-          return Performer is not null;
+        case "specialty":
+          value = Specialty;
+          return Specialty is not null;
+        case "recipient":
+          value = Recipient;
+          return Recipient?.Any() == true;
         case "reasonCode":
           value = ReasonCode;
           return ReasonCode?.Any() == true;
         case "reasonReference":
           value = ReasonReference;
           return ReasonReference?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "supportingInfo":
           value = SupportingInfo;
           return SupportingInfo?.Any() == true;
-        case "specimen":
-          value = Specimen;
-          return Specimen?.Any() == true;
-        case "bodySite":
-          value = BodySite;
-          return BodySite?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -944,26 +875,23 @@ namespace Hl7.Fhir.Model
       if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
-      if (Requisition is not null) yield return new KeyValuePair<string,object>("requisition",Requisition);
+      if (GroupIdentifier is not null) yield return new KeyValuePair<string,object>("groupIdentifier",GroupIdentifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
-      if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
-      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
-      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (ServiceRequested?.Any() == true) yield return new KeyValuePair<string,object>("serviceRequested",ServiceRequested);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
-      if (AsNeeded is not null) yield return new KeyValuePair<string,object>("asNeeded",AsNeeded);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
-      if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
-      if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Specialty is not null) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
       if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
       if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
-      if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
-      if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (RelevantHistory?.Any() == true) yield return new KeyValuePair<string,object>("relevantHistory",RelevantHistory);
     }

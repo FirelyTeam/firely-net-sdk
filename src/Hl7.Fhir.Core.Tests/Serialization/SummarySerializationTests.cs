@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(patientOne, mode) :
                                     await FhirXmlSerializer.SerializeToStringAsync(patientOne, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(expectedData, actualData);
+                Assert.AreEqual(expectedData, actualData, $"SummaryType.{mode} in file {pair.Key}");
             }
         }
 
