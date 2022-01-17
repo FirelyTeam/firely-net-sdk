@@ -14,7 +14,7 @@
 		<PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<PackageIcon>icon-fhir-32.png</PackageIcon>
+		<PackageIcon>icon-firely-sdk-128.png</PackageIcon>
 		<PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -29,7 +29,7 @@
 
 	<ItemGroup>
 		<None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
-		<None Include="..\..\icon-fhir-32.png" Pack="true" PackagePath=""/>
+		<None Include="..\..\icon-firely-sdk-128.png" Pack="true" PackagePath=""/>
 		<None Include="..\..\README.md" Pack="true" PackagePath=""/>
 	</ItemGroup>
 
