@@ -160,88 +160,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(conceptQuestion.ListConceptProperties(testCs, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).Any());
         }
 
-
-        private void testService(ITerminologyService svc)
-        {
-            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
-            Assert.True(result.Success);
-
-            result = svc.ValidateCode(vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
-            Assert.False(result.Success);
-
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not a Number");
-            Assert.True(result.Success);
-
-            // The spec is not clear on the behaviour of incorrect displays - so don't test it here
-            //result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-            //    display: "Not any Number");
-            //Assert.True(result.Success);
-
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
-            Assert.True(result.Success);
-
-            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
-            
-            var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
-            result = svc.ValidateCode(vsUrl, coding: coding);
-            Assert.True(result.Success);
-
-            coding.Display = "Not a Number";
-            result = svc.ValidateCode(vsUrl, coding: coding);
-            Assert.True(result.Success);
-
-            coding.Code = "NaNX";
-            result = svc.ValidateCode(vsUrl, coding: coding);
-            Assert.False(result.Success);
-            coding.Code = "NaN";
-
-            var cc = new CodeableConcept("http://hl7.org/fhir/data-absent-reason", "NaNX", "Not a Number");
-            result = svc.ValidateCode(vsUrl, codeableConcept: cc);
-            Assert.False(result.Success);
-
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
-            result = svc.ValidateCode(vsUrl, codeableConcept: cc);
-#pragma warning restore CS0618 // Type or member is obsolete
-            DebugDumpOutputXml(result);
-
-            Assert.True(result.Success);
-        }
-
-        private void DebugDumpOutputXml(Base fragment)
-        {
-
-#if DUMP_OUTPUT
-            // commented out, since this will fill up the CI build's output log
-            var doc = System.Xml.Linq.XDocument.Parse(new Serialization.FhirXmlSerializer().SerializeToString(fragment));
-            output.WriteLine(doc.ToString(System.Xml.Linq.SaveOptions.None));
-#endif
-        }
-
-        [Fact]
-        public void LocalTSDisplayIncorrectAsWarning()
-        {
-            var svc = new LocalTerminologyService(_resolver);
-
-            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not a Number");
-#pragma warning restore CS0618 // Type or member is obsolete
-            Assert.True(result.Success);
-            Assert.Equal(0, result.Warnings);
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                        display: "Certainly Not a Number");
-#pragma warning restore CS0618 // Type or member is obsolete
-            Assert.True(result.Success);
-            Assert.Equal(1, result.Warnings);
-        }
-
         [Fact]
         public async void LocalTSDisplayIncorrectAsMessage()
         {
@@ -263,30 +181,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
             Assert.NotNull(result.GetSingleValue<FhirString>("message"));
-        }
-
-        [Fact]
-        public void LocalTermServiceValidateCodeTest()
-        {
-            var svc = new LocalTerminologyService(_resolver);
-
-            // Do common tests for service
-            testService(svc);
-
-            // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
-
-            Assert.True(result.Success);
-
-            // This test is not always correctly done by the external services, so copied here instead
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                    system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode", @abstract: false);
-            Assert.False(result.Success);
-
-            // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
-            Assert.Throws<FhirOperationException>(() => svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
-#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         [Fact]
@@ -316,9 +210,9 @@ namespace Hl7.Fhir.Specification.Tests
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/substance-code")
                 .WithCode(code: "1166006", system: "http://snomed.info/sct");
-            await Assert.ThrowsAsync<FhirOperationException>( async () => await svc.ValueSetValidateCode(inParams));
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
 
-        }       
+        }
 
         [Fact]
         public async T.Task LocalTermServiceValidateCodeWithoutSystemOrContext()
@@ -332,19 +226,19 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         Name = "code",
                         Value = new Code("DE")
-                    },                  
+                    },
                 }
             };
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-            
+
         }
 
 
         [Fact]
         public async T.Task LocalTermServiceUsingDuplicateParameters()
         {
-            var svc = new LocalTerminologyService(_resolver);           
+            var svc = new LocalTerminologyService(_resolver);
             var inParams = new Parameters
             {
                 Parameter = new List<Parameters.ParameterComponent>
@@ -368,19 +262,6 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
-        }
-
-        [Fact]
-        public void TestOperationOutcomes()
-        {
-            var svc = new LocalTerminologyService(_resolver);
-
-#pragma warning disable CS0618 // obsolete, but used for testing purposes
-            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context:"Partient.gender", code: "test");
-#pragma warning restore CS0618 
-
-            Assert.NotNull(outcome?.Issue.FirstOrDefault().Details?.Text);
-
         }
 
 
@@ -621,7 +502,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal("subsumes", ((Code)paramOutcome.Value).Value);
         }
 
-        
+
 
         [Fact(), Trait("TestCategory", "IntegrationTest")]
         public async void ExternalServiceClosureExample()
@@ -877,23 +758,6 @@ namespace Hl7.Fhir.Specification.Tests
             var result = outParams.GetSingleValue<FhirBoolean>("result");
             Assert.NotNull(result);
             Assert.True(result.Value);
-        }       
-
-        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public void FallbackServiceValidateCodeTest()
-        {
-            var client = new FhirClient(_externalTerminologyServerEndpoint);
-            var external = new ExternalTerminologyService(client);
-            var local = new LocalTerminologyService(_resolver);
-            var svc = new FallbackTerminologyService(local, external);
-
-            testService(svc);
-
-            // Now, this should fall back
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
-#pragma warning restore CS0618 // Type or member is obsolete
-            Assert.True(result.Success);
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
@@ -912,26 +776,6 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await svc.ValueSetValidateCode(inParams);
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
         }
-
-        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
-        public async T.Task FallbackServiceValidateCodeTestWithVS()
-        {
-            var client = new FhirClient(_externalTerminologyServerEndpoint);
-            var service = new ExternalTerminologyService(client);
-            var vs = await _resolver.FindValueSetAsync("http://hl7.org/fhir/ValueSet/substance-code");
-            Assert.NotNull(vs);
-
-            // Override the canonical with something the remote server cannot know
-            vs.Url = "http://furore.com/fhir/ValueSet/testVS";
-            var local = new LocalTerminologyService(new IKnowOnlyMyTestVSResolver(vs));
-            var fallback = new FallbackTerminologyService(local, service);
-
-            // Now, this should fall back to external + send our vs (that the server cannot know about)
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
-#pragma warning restore CS0618 // Type or member is obsolete
-            Assert.True(result.Success);
-        }       
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {
