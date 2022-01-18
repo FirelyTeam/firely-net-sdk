@@ -21,6 +21,3 @@ using System.Runtime.CompilerServices;
 
 //Moved ITerminologyService to Hl7.Fhir.Support.Poco
 [assembly: TypeForwardedTo(typeof(ITerminologyService))]
-
-//Moved TerminologyServiceExtensions to Hl7.Fhir.Support.Poco
-[assembly: TypeForwardedTo(typeof(TerminologyServiceExtensions))]

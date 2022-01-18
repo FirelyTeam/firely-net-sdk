@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Source;
@@ -160,6 +161,71 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(conceptQuestion.ListConceptProperties(testCs, CodeSystem.CONCEPTPROPERTY_NOT_SELECTABLE).Any());
         }
 
+
+        private async T.Task testServiceAsync(ITerminologyService svc)
+        {
+            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+            var result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
+            isSuccess(result).Should().BeTrue();
+
+            result = await validateCodedValue(svc, vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
+            isSuccess(result).Should().BeFalse();
+
+            result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+                display: "Not a Number");
+            isSuccess(result).Should().BeTrue();
+
+            // The spec is not clear on the behaviour of incorrect displays - so don't test it here
+            //result = svc.ValidateCode(vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+            //    display: "Not any Number");
+            //Assert.True(result.Success);
+
+            result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
+                system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            isSuccess(result).Should().BeTrue();
+
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
+
+            var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
+            result = await validateCodedValue(svc, vsUrl, coding: coding);
+            isSuccess(result).Should().BeTrue();
+
+            coding.Display = "Not a Number";
+            result = await validateCodedValue(svc, vsUrl, coding: coding);
+            isSuccess(result).Should().BeTrue();
+
+            coding.Code = "NaNX";
+            result = await validateCodedValue(svc, vsUrl, coding: coding);
+            isSuccess(result).Should().BeFalse();
+            coding.Code = "NaN";
+
+            var cc = new CodeableConcept("http://hl7.org/fhir/data-absent-reason", "NaNX", "Not a Number");
+            result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
+            isSuccess(result).Should().BeFalse();
+
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
+            result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
+
+            isSuccess(result).Should().BeTrue();
+        }
+
+        [Fact]
+        public async T.Task LocalTSDisplayIncorrectAsWarningAsync()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
+            var result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+                display: "Not a Number");
+            isSuccess(result).Should().BeTrue();
+            hasWarnings(result).Should().BeFalse();
+
+            result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+                        display: "Certainly Not a Number");
+            isSuccess(result).Should().BeTrue();
+            hasWarnings(result).Should().BeTrue();
+        }
+
         [Fact]
         public async void LocalTSDisplayIncorrectAsMessage()
         {
@@ -170,8 +236,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await svc.ValueSetValidateCode(inParams);
 
-            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
-            Assert.Null(result.GetSingleValue<FhirString>("message"));
+            isSuccess(result).Should().BeTrue();
+            hasWarnings(result).Should().BeFalse();
 
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
@@ -179,9 +245,30 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await svc.ValueSetValidateCode(inParams);
 
-            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
-            Assert.NotNull(result.GetSingleValue<FhirString>("message"));
+            isSuccess(result).Should().BeTrue();
+            hasWarnings(result).Should().BeTrue();
         }
+
+        [Fact]
+        public async T.Task LocalTermServiceValidateCodeTest()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            // Do common tests for service
+            await testServiceAsync(svc);
+
+            // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
+            var result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
+            isSuccess(result).Should().BeTrue();
+
+            // This test is not always correctly done by the external services, so copied here instead
+            result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode", system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            isSuccess(result).Should().BeTrue();
+
+            // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
+            await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
+        }
+
 
         [Fact]
         public async void LocalTermServiceValidateCodeWithParamsTest()
@@ -194,7 +281,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithCode(code: "Y", system: "http://hl7.org/fhir/v2/0136");
 
             var result = await svc.ValueSetValidateCode(inParams);
-            Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
+            isSuccess(result).Should().BeTrue();
 
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
@@ -204,7 +291,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             result = await svc.ValueSetValidateCode(inParams);
 
-            Assert.False(result.GetSingleValue<FhirBoolean>("result")?.Value);
+            isSuccess(result).Should().BeFalse();
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             inParams = new ValidateCodeParameters()
@@ -262,6 +349,17 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await svc.ValueSetValidateCode(inParams));
+        }
+
+        [Fact]
+        public async T.Task TestOperationOutcomesAsync()
+        {
+            var svc = new LocalTerminologyService(_resolver);
+
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+
+            isSuccess(result).Should().BeFalse();
+            getMessage(result).Should().Contain("does not exist in valueset");
         }
 
 
@@ -761,6 +859,21 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async T.Task FallbackServiceValidateCodeTestAsync()
+        {
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
+            var external = new ExternalTerminologyService(client);
+            var local = new LocalTerminologyService(_resolver);
+            var svc = new FallbackTerminologyService(local, external);
+
+            await testServiceAsync(svc);
+
+            // Now, this should fall back
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct");
+            isSuccess(result).Should().BeTrue();
+        }
+
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
         public async void FallbackServiceValidateCodeWithParamsTest()
         {
             var client = new FhirClient(_externalTerminologyServerEndpoint);
@@ -776,6 +889,47 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await svc.ValueSetValidateCode(inParams);
             Assert.True(result.GetSingleValue<FhirBoolean>("result")?.Value);
         }
+
+        [Fact(Skip = "Don't want to run these kind of integration tests anymore"), Trait("TestCategory", "IntegrationTest")]
+        public async T.Task FallbackServiceValidateCodeTestWithVS()
+        {
+            var client = new FhirClient(_externalTerminologyServerEndpoint);
+            var service = new ExternalTerminologyService(client);
+            var vs = await _resolver.FindValueSetAsync("http://hl7.org/fhir/ValueSet/substance-code");
+            Assert.NotNull(vs);
+
+            // Override the canonical with something the remote server cannot know
+            vs.Url = "http://furore.com/fhir/ValueSet/testVS";
+            var local = new LocalTerminologyService(new IKnowOnlyMyTestVSResolver(vs));
+            var fallback = new FallbackTerminologyService(local, service);
+
+            // Now, this should fall back to external + send our vs (that the server cannot know about)
+            var result = await validateCodedValue(fallback, "http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
+            isSuccess(result).Should().BeTrue();
+        }
+
+        #region helper functions
+        private async T.Task<Parameters> validateCodedValue(ITerminologyService service, string url = null, string context = null, string code = null,
+            string system = null, string version = null, string display = null,
+            Coding coding = null, CodeableConcept codeableConcept = null)
+        {
+            var inParams = new ValidateCodeParameters()
+                .WithValueSet(url: url, context: context)
+                .WithCode(code: code, system: system, display: display)
+                .WithCoding(coding: coding)
+                .WithCodeableConcept(codeableConcept: codeableConcept);
+            return await service.ValueSetValidateCode(inParams);
+        }
+
+        private static bool isSuccess(Parameters outcome) => outcome.GetSingleValue<FhirBoolean>("result")?.Value ?? false;
+
+        private static bool hasWarnings(Parameters outcome) =>
+            isSuccess(outcome) && outcome.GetSingleValue<FhirString>("message") is not null;
+
+        private static string? getMessage(Parameters outcome) =>
+            outcome.GetSingleValue<FhirString>("message")?.Value;
+
+        #endregion
 
         private class IKnowOnlyMyTestVSResolver : IAsyncResourceResolver
         {
