@@ -20,6 +20,25 @@ namespace Hl7.Fhir.Serialization.Tests
     public class RoundtripTest
     { 
         [TestMethod]
+        public void ParseDose()
+        {
+            var medicationStatementJson = @"{
+    ""resourceType"": ""MedicationStatement"",
+    ""dosage"": [{
+        ""quantityQuantity"": {
+	        ""value"": 325,
+            ""unit"": ""mg"",
+	        ""system"": ""http://unitsofmeasure.org"",
+	        ""code"": ""mg""
+        }
+    }]
+ }";
+            var parser = new FhirJsonParser(Version.DSTU2);
+            var medicationStatement = parser.Parse<Model.DSTU2.MedicationStatement>(medicationStatementJson);
+            Assert.IsInstanceOfType(medicationStatement.Dosage[0].Quantity, typeof(SimpleQuantity));
+        }
+
+        [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXmlPoco()
         {

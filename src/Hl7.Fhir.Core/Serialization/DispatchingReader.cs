@@ -86,7 +86,11 @@ namespace Hl7.Fhir.Serialization
             // NB: this will return the latest type registered for that name, so supports type mapping/overriding
             // Maybe we should Import the types present on the choice, to make sure they are available. For now
             // assume the caller has Imported all types in the right (overriding) order.
-            result = _inspector.FindClassMappingForFhirDataType(Settings.Version, typeName);
+            if (!mappedProperty.FhirTypeByVersion.TryGetValue(Version.All, out var allowedTypes))
+            {
+                mappedProperty.FhirTypeByVersion.TryGetValue(Settings.Version, out allowedTypes);
+            }
+            result = _inspector.FindClassMappingForFhirDataType(Settings.Version, typeName, allowedTypes);
 
             if (result == null)
                 ComplexTypeReader.RaiseFormatError(

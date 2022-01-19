@@ -10,6 +10,7 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
@@ -18,13 +19,13 @@ namespace Hl7.Fhir.Introspection
     public class ModelInspector
     {
         // Index for easy lookup of resources, key is Tuple<version, upper resourcename, upper profile>
-        private Dictionary<Tuple<Model.Version, string, string>, ClassMapping> _resourceClasses = new Dictionary<Tuple<Model.Version, string, string>, ClassMapping>();
+        private readonly Dictionary<Tuple<Model.Version, string, string>, ClassMapping> _resourceClasses = new Dictionary<Tuple<Model.Version, string, string>, ClassMapping>();
 
         // Index for easy lookup of datatypes, key is Tuple<version, upper typenanme>
-        private Dictionary<Tuple<Model.Version, string>, ClassMapping> _dataTypeClasses = new Dictionary<Tuple<Model.Version, string>, ClassMapping>();
+        private readonly Dictionary<Tuple<Model.Version, string>, List<ClassMapping>> _dataTypeClasses = new Dictionary<Tuple<Model.Version, string>, List<ClassMapping>>();
 
         // Index for easy lookup of classmappings, key is Type
-        private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
+        private readonly Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
 
         public void Import(Assembly assembly)
         {
@@ -70,12 +71,20 @@ namespace Hl7.Fhir.Introspection
                 if (mapping.IsResource)
                 {
                     var key = buildResourceKey(mapping.Version, mapping.Name, mapping.Profile);
-                    _resourceClasses[key] = mapping;
+                    _resourceClasses.Add( key, mapping );
                 }
                 else
                 {
+                    // The same type name (eg Quantity) can correspond to multiple data types (eg SimpleQuantity, Money, Duration etc)
                     var key = Tuple.Create(mapping.Version, mapping.Name.ToUpperInvariant());
-                    _dataTypeClasses[key] = mapping;
+                    if (_dataTypeClasses.TryGetValue(key, out var mappings ))
+                    {
+                        mappings.Add(mapping);
+                    }
+                    else
+                    {
+                        _dataTypeClasses.Add(key, new List<ClassMapping> { mapping });
+                    }
                 }
             }
 
@@ -120,17 +129,49 @@ namespace Hl7.Fhir.Introspection
             return null;
         }
 
-        public ClassMapping FindClassMappingForFhirDataType(Model.Version version, string name)
+        public ClassMapping FindClassMappingForFhirDataType(Model.Version version, string name, Type[] allowedTypes)
         {
+            var allMappings = new List<ClassMapping>();
             var key = Tuple.Create(version, name.ToUpperInvariant());
-            if (_dataTypeClasses.TryGetValue(key, out var entry))
-                return entry;
+            if (_dataTypeClasses.TryGetValue(key, out var versionMappings))
+            {
+                var allowedMapping = FindMapping(versionMappings);
+                if (allowedMapping != null)
+                {
+                    return allowedMapping;
+                }
+                allMappings.AddRange(versionMappings);
+            }
 
             var allVersionsKey = Tuple.Create(Model.Version.All, name.ToUpperInvariant());
-            if (_dataTypeClasses.TryGetValue(allVersionsKey, out entry))
-                return entry;
+            if (_dataTypeClasses.TryGetValue(allVersionsKey, out var allVersionsMappings))
+            {
+                var allowedMapping = FindMapping(allVersionsMappings);
+                if (allowedMapping != null)
+                {
+                    return allowedMapping;
+                }
+                allMappings.AddRange(allVersionsMappings);
+            }
+
+            if (allMappings.Count == 1)
+            {
+                // We did not find a match, but there is only one type, so use that
+                return allMappings[0];
+            }
 
             return null;
+
+            ClassMapping FindMapping( List<ClassMapping> mappings )
+            {
+                // If we know what the allowed types are look for one of those...
+                if (allowedTypes == null || !allowedTypes.Any())
+                {
+                    return mappings.FirstOrDefault(mapping => mapping.NativeType.Name == name);
+                }
+                // Otherwise look for the type with the specified name - so that we use the Quantity overall type instead of the specific variants like SimpleQuantity
+                return mappings.FirstOrDefault(mapping => allowedTypes.Contains(mapping.NativeType));
+            }
         }
 
         public ClassMapping FindClassMappingByType(Model.Version version, string typeName)
@@ -138,7 +179,7 @@ namespace Hl7.Fhir.Introspection
             var result = FindClassMappingForResource(version, typeName);
             if (result != null) return result;
 
-            return FindClassMappingForFhirDataType(version, typeName);
+            return FindClassMappingForFhirDataType(version, typeName, null);
         }
 
         public ClassMapping FindClassMappingByType(Type type)
