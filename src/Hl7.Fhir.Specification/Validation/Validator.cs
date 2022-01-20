@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Validation
 
                 var elementConstraints = definition.Current;
 
-                if (elementConstraints.IsPrimitiveValueConstraint())
+                if (elementConstraints.IsPrimitiveConstraint())
                 {
                     // The "value" property of a FHIR Primitive and Extension.url are the bottom of our recursion chain, 
                     // they don't have a nameReference nor a <type>, the only thing left to do to validate the content is

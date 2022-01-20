@@ -389,15 +389,16 @@ namespace Hl7.Fhir.Model
          */
 
         /// <summary>
+        /// Determines whether this element is FHIR primitive constraint
+        /// </summary>
+        public static bool IsPrimitiveConstraint(this ElementDefinition ed) =>
+           (ed.Type.Count == 1 && ed.Type[0].Code is null) || (ed.Type.Count == 1 && ed.Type[0].Code?.StartsWith("http://hl7.org/fhirpath/System.") == true);
+
+        /// <summary>
         /// Determines whether this element is the <c>Value</c> element of a FHIR primitive.
         /// </summary>
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
-
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
-        }
+        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed) =>
+            ed.Path.EndsWith(".value") && ed.IsPrimitiveConstraint();
 
         /// <summary>
         /// Determines whether this element contains a nested resource.
