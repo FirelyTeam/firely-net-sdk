@@ -1,10 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-	<PropertyGroup>
-		<TargetFrameworks>net5.0;net452;netstandard2.0</TargetFrameworks>
-	</PropertyGroup>
 
 	<Import Project="..\firely-net-sdk.props" />
-	<Import Project="..\firely-net-sdk.targets" />
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.Specification.STU3</PackageId>
@@ -24,12 +20,13 @@
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
-		<Reference Include="System.Net.Http" />
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<FhirConformance Include="data\*.*" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+		<Reference Include="System.Net.Http" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -51,23 +48,18 @@
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackageFlatten>true</PackageFlatten>
 		</Content>
-		<Content Include="specification.zip">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip" >
+			<Link>specification.zip</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackageFlatten>true</PackageFlatten>
 		</Content>
 	</ItemGroup>
-
-	<Target Name="CreateSpecZip" Inputs="@(FhirConformance)" Outputs="specification.zip" BeforeTargets="Compile">
+	
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
 		<Message Text="(Re)creating specification.zip" />
-		<Delete Files="specification.zip" />
-		<!-- <CleanSpecFiles DirectoryName="data" /> -->
-		<ZipDirectory SourceDirectory="data" DestinationFile="specification.zip" />
-	</Target>
-
-	<Target Name="CleanSpecZip" AfterTargets="Clean">
-		<Delete Files="specification.zip" />
+		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
 	</Target>
 
 </Project>

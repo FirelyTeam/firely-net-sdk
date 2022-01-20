@@ -1,12 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-	<PropertyGroup>
-		<TargetFrameworks>net5.0;net452;netstandard2.0</TargetFrameworks>
-	</PropertyGroup>
 
 	<Import Project="..\firely-net-sdk.props" />
-	<Import Project="..\firely-net-sdk.targets" />
 	<Import Project="..\platforms.props" />
-
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.STU3</PackageId>
@@ -24,7 +19,7 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
 		<Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Net.Http"/>
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,7 +28,5 @@
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-		<Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-	</ItemGroup>
+
 </Project>

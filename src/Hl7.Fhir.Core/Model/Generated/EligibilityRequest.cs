@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -452,6 +452,81 @@ namespace Hl7.Fhir.Model
         if (BenefitCategory != null) yield return new ElementValue("benefitCategory", BenefitCategory);
         if (BenefitSubCategory != null) yield return new ElementValue("benefitSubCategory", BenefitSubCategory);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "priority":
+          value = Priority;
+          return Priority is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "serviced":
+          value = Serviced;
+          return Serviced is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "provider":
+          value = Provider;
+          return Provider is not null;
+        case "organization":
+          value = Organization;
+          return Organization is not null;
+        case "insurer":
+          value = Insurer;
+          return Insurer is not null;
+        case "facility":
+          value = Facility;
+          return Facility is not null;
+        case "coverage":
+          value = Coverage;
+          return Coverage is not null;
+        case "businessArrangement":
+          value = BusinessArrangementElement;
+          return BusinessArrangementElement is not null;
+        case "benefitCategory":
+          value = BenefitCategory;
+          return BenefitCategory is not null;
+        case "benefitSubCategory":
+          value = BenefitSubCategory;
+          return BenefitSubCategory is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Serviced is not null) yield return new KeyValuePair<string,object>("serviced",Serviced);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (Provider is not null) yield return new KeyValuePair<string,object>("provider",Provider);
+      if (Organization is not null) yield return new KeyValuePair<string,object>("organization",Organization);
+      if (Insurer is not null) yield return new KeyValuePair<string,object>("insurer",Insurer);
+      if (Facility is not null) yield return new KeyValuePair<string,object>("facility",Facility);
+      if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (BusinessArrangementElement is not null) yield return new KeyValuePair<string,object>("businessArrangement",BusinessArrangementElement);
+      if (BenefitCategory is not null) yield return new KeyValuePair<string,object>("benefitCategory",BenefitCategory);
+      if (BenefitSubCategory is not null) yield return new KeyValuePair<string,object>("benefitSubCategory",BenefitSubCategory);
     }
 
   }
