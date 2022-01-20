@@ -165,13 +165,13 @@ namespace Hl7.Fhir.Specification.Tests
         private async T.Task testServiceAsync(ITerminologyService svc)
         {
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason");
+            var result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
             isSuccess(result).Should().BeTrue();
 
-            result = await validateCodedValue(svc, vsUrl, code: "NaNX", system: "http://hl7.org/fhir/data-absent-reason");
+            result = await validateCodedValue(svc, vsUrl, code: "NaNX", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
             isSuccess(result).Should().BeFalse();
 
-            result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+            result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
                 display: "Not a Number");
             isSuccess(result).Should().BeTrue();
 
@@ -180,17 +180,17 @@ namespace Hl7.Fhir.Specification.Tests
             //    display: "Not any Number");
             //Assert.True(result.Success);
 
-            result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            result = await validateCodedValue(svc, "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
+                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
             isSuccess(result).Should().BeTrue();
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
-            var coding = new Coding("http://hl7.org/fhir/data-absent-reason", "NaN");
+            var coding = new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number");
             result = await validateCodedValue(svc, vsUrl, coding: coding);
             isSuccess(result).Should().BeTrue();
 
-            coding.Display = "Not a Number";
+            coding.Display = "Not a Number (NaN)";
             result = await validateCodedValue(svc, vsUrl, coding: coding);
             isSuccess(result).Should().BeTrue();
 
@@ -199,11 +199,11 @@ namespace Hl7.Fhir.Specification.Tests
             isSuccess(result).Should().BeFalse();
             coding.Code = "NaN";
 
-            var cc = new CodeableConcept("http://hl7.org/fhir/data-absent-reason", "NaNX", "Not a Number");
+            var cc = new CodeableConcept("http://terminology.hl7.org/CodeSystem/data-absent-reason", "NaNX", "Not a Number");
             result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
             isSuccess(result).Should().BeFalse();
 
-            cc.Coding.Add(new Coding("http://hl7.org/fhir/data-absent-reason", "asked"));
+            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "asked-unknown"));
             result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
 
             isSuccess(result).Should().BeTrue();
@@ -215,12 +215,12 @@ namespace Hl7.Fhir.Specification.Tests
             var svc = new LocalTerminologyService(_resolver);
 
             var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
-                display: "Not a Number");
+            var result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
+                display: "Not a Number (NaN)");
             isSuccess(result).Should().BeTrue();
             hasWarnings(result).Should().BeFalse();
 
-            result = await validateCodedValue(svc, vsUrl, code: "NaN", system: "http://hl7.org/fhir/data-absent-reason",
+            result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
                         display: "Certainly Not a Number");
             isSuccess(result).Should().BeTrue();
             hasWarnings(result).Should().BeTrue();
@@ -258,11 +258,13 @@ namespace Hl7.Fhir.Specification.Tests
             await testServiceAsync(svc);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
-            var result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://hl7.org/fhir/v2/0136");
+            var result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");
             isSuccess(result).Should().BeTrue();
 
             // This test is not always correctly done by the external services, so copied here instead
-            result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode", system: "http://hl7.org/fhir/v3/AcknowledgementDetailCode");
+            result = await validateCodedValue(svc, url: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode",
+                code: "_AcknowledgementDetailNotSupportedCode",
+                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
             isSuccess(result).Should().BeTrue();
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
@@ -918,6 +920,7 @@ namespace Hl7.Fhir.Specification.Tests
                 .WithCode(code: code, system: system, display: display)
                 .WithCoding(coding: coding)
                 .WithCodeableConcept(codeableConcept: codeableConcept);
+
             return await service.ValueSetValidateCode(inParams);
         }
 
