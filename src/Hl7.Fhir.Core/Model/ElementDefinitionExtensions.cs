@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
         /// <typeparam name="T">The type of the elements of <paramref name="sequence"/></typeparam>
         /// <param name="sequence">An <see cref="IEnumerable{T}"/> to return the single element of.</param>
         /// <returns>A value of type <typeparamref name="T"/>.</returns>
-        public static T? SafeSingleOrDefault<T>(this IEnumerable<T> sequence)
+        private static T? SafeSingleOrDefault<T>(this IEnumerable<T> sequence)
         {
             var e = sequence.GetEnumerator();
             {
