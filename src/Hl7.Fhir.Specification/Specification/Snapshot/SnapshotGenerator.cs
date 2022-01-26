@@ -2026,7 +2026,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // [WMR 20181212] R4 NEW
             // Resolve target profile if the type specifies a _single_ profile.
             // Return null if the type specifies zero or multiple profiles.
-            var typeProfile = typeRef.GetTypeProfile();
+            var typeProfile = typeRef.Profile.SafeSingleOrDefault();
 
             // [WMR 20161004] Remove configuration setting; always merge type profiles
             // [WMR 20180723] Also expand custom profile on Reference
