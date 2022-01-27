@@ -13,7 +13,6 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,7 +163,7 @@ namespace Hl7.Fhir.Specification
             {
                 return Current.Current.Type
                     .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .Select(group => FromCanonical(group.Key!, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
