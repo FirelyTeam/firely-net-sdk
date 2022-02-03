@@ -65,12 +65,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/example-extensional")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             await expander.ExpandAsync(testVs);
-            Assert.Equal(11, testVs.Expansion.Total);
+            Assert.Equal(4, testVs.Expansion.Total);
         }
 
 
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(22, testVs.Expansion.Total);
+            Assert.Equal(25, testVs.Expansion.Total);
         }
 
         [Fact]
@@ -180,9 +180,9 @@ namespace Hl7.Fhir.Specification.Tests
             //    display: "Not any Number");
             //Assert.True(result.Success);
 
-            result = await validateCodedValue(svc, "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode", code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
-            isSuccess(result).Should().BeTrue();
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+                system: "http://hl7.org/fhir/hacked");
+            Assert.True(result.Success);
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
@@ -262,10 +262,9 @@ namespace Hl7.Fhir.Specification.Tests
             isSuccess(result).Should().BeTrue();
 
             // This test is not always correctly done by the external services, so copied here instead
-            result = await validateCodedValue(svc, url: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode",
-                code: "_AcknowledgementDetailNotSupportedCode",
-                system: "http://terminology.hl7.org/CodeSystem/v3-AcknowledgementDetailCode");
-            isSuccess(result).Should().BeTrue();
+            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+                   system: "http://hl7.org/fhir/hacked", @abstract: false);
+            Assert.False(result.Success);
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
@@ -287,9 +286,9 @@ namespace Hl7.Fhir.Specification.Tests
 
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
-                .WithValueSet(url: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCode")
-                .WithCode(code: "_AcknowledgementDetailNotSupportedCode", system: "http://terminology.hl7.org/ValueSet/v3-AcknowledgementDetailCodee")
-                .WithAbstract(false);
+                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/example-hierarchical")
+                 .WithCode(code: "invalid", system: "http://hl7.org/fhir/hacked")
+                 .WithAbstract(false);
 
             result = await svc.ValueSetValidateCode(inParams);
 
@@ -358,7 +357,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
+#pragma warning disable CS0618 // obsolete, but used for testing purposes
+            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context: "Partient.gender", code: "test");
+#pragma warning restore CS0618 
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in valueset");
@@ -906,8 +907,10 @@ namespace Hl7.Fhir.Specification.Tests
             var fallback = new FallbackTerminologyService(local, service);
 
             // Now, this should fall back to external + send our vs (that the server cannot know about)
-            var result = await validateCodedValue(fallback, "http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
-            isSuccess(result).Should().BeTrue();
+#pragma warning disable CS0618 // Type or member is obsolete
+            var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
+#pragma warning restore CS0618 // Type or member is obsolete
+            Assert.True(result.Success);
         }
 
         #region helper functions

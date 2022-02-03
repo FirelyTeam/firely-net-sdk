@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -166,7 +186,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="DiagnosticReportStatus-list">
+  <xs:simpleType name="DiagnosticReportStatusEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="registered">
         <xs:annotation>
@@ -222,12 +242,12 @@
   </xs:simpleType>
   <xs:complexType name="DiagnosticReportStatus">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The status of the diagnostic report.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="DiagnosticReportStatus-list" use="optional"/>
+        <xs:attribute name="value" type="DiagnosticReportStatusEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

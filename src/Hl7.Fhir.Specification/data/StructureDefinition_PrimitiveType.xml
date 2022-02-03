@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition  xmlns="http://hl7.org/fhir">
+	<id value="PrimitiveType" />
+	<meta>
+	  <lastUpdated value="2020-08-20T17:41:31.970+10:00" />
+	</meta>
+	<text>
+	  <status value="generated" />
+	  <div xmlns="http://www.w3.org/1999/xhtml">
+		<p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+	  </div>
+	</text>
+	<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+	  <valueCode value="normative" />
+	</extension>
+	<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+	  <valueCode value="4.0.0" />
+	</extension>
+	<url value="http://hl7.org/fhir/StructureDefinition/PrimitiveType" />
+	<version value="4.1.0" />
+	<name value="PrimitiveType" />
+	<status value="active" />
+	<date value="2020-08-20T17:41:31+10:00" />
+	<publisher value="HL7 FHIR Standard" />
+	<contact>
+	  <telecom>
+		<system value="url" />
+		<value value="http://hl7.org/fhir" />
+	  </telecom>
+	</contact>
+	<description value="Base StructureDefinition for PrimitiveType Type: The base type for all re-useable types defined that have a simple property." />
+	<fhirVersion value="4.1.0" />
+	<mapping>
+	  <identity value="rim" />
+	  <uri value="http://hl7.org/v3" />
+	  <name value="RIM Mapping" />
+	</mapping>
+	<kind value="complex-type" />
+	<abstract value="true" />
+	<type value="PrimitiveType" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/DataType" />
+	<derivation value="specialization" />
+	<snapshot>
+	  <element id="PrimitiveType">
+		<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+		  <valueCode value="normative" />
+		</extension>
+		<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+		  <valueCode value="4.0.0" />
+		</extension>
+		<path value="PrimitiveType" />
+		<short value="Parent type for DataTypes with a simple value" />
+		<definition value="The base type for all re-useable types defined that have a simple property." />
+		<min value="0" />
+		<max value="*" />
+		<base>
+		  <path value="PrimitiveType" />
+		  <min value="0" />
+		  <max value="*" />
+		</base>
+		<constraint>
+		  <key value="ele-1" />
+		  <severity value="error" />
+		  <human value="All FHIR elements must have a @value or children" />
+		  <expression value="hasValue() or (children().count() &gt; id.count())" />
+		  <xpath value="@value|f:*|h:div" />
+		  <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+		</constraint>
+		<isModifier value="false" />
+		<mapping>
+		  <identity value="rim" />
+		  <map value="n/a" />
+		</mapping>
+	  </element>
+	  <element id="PrimitiveType.id">
+		<path value="PrimitiveType.id" />
+		<representation value="xmlAttr" />
+		<short value="Unique id for inter-element referencing" />
+		<definition value="Unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+		<min value="0" />
+		<max value="1" />
+		<base>
+		  <path value="Element.id" />
+		  <min value="0" />
+		  <max value="1" />
+		</base>
+		<!-- Note: special primitive values have a FHIRPath system type. e.g. this is compiler magic (j) -->
+		<type>
+		  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type">
+			<valueUri value="string" />
+		  </extension>
+		  <code value="http://hl7.org/fhirpath/System.String" />
+		</type>
+		<isModifier value="false" />
+		<isSummary value="false" />
+		<mapping>
+		  <identity value="rim" />
+		  <map value="n/a" />
+		</mapping>
+	  </element>
+	  <element id="PrimitiveType.extension">
+		<path value="PrimitiveType.extension" />
+		<slicing>
+		  <discriminator>
+			<type value="value" />
+			<path value="url" />
+		  </discriminator>
+		  <description value="Extensions are always sliced by (at least) url" />
+		  <rules value="open" />
+		</slicing>
+		<short value="Additional content defined by implementations" />
+		<definition value="May be used to represent additional information that is not part of the basic definition of the element. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+		<comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+		<alias value="extensions" />
+		<alias value="user content" />
+		<min value="0" />
+		<max value="*" />
+		<base>
+		  <path value="Element.extension" />
+		  <min value="0" />
+		  <max value="*" />
+		</base>
+		<type>
+		  <code value="Extension" />
+		</type>
+		<constraint>
+		  <key value="ele-1" />
+		  <severity value="error" />
+		  <human value="All FHIR elements must have a @value or children" />
+		  <expression value="hasValue() or (children().count() &gt; id.count())" />
+		  <xpath value="@value|f:*|h:div" />
+		  <source value="http://hl7.org/fhir/StructureDefinition/Element" />
+		</constraint>
+		<constraint>
+		  <key value="ext-1" />
+		  <severity value="error" />
+		  <human value="Must have either extensions or value[x], not both" />
+		  <expression value="extension.exists() != value.exists()" />
+		  <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &quot;value&quot;)])" />
+		  <source value="http://hl7.org/fhir/StructureDefinition/Extension" />
+		</constraint>
+		<isModifier value="false" />
+		<isSummary value="false" />
+		<mapping>
+		  <identity value="rim" />
+		  <map value="n/a" />
+		</mapping>
+	  </element>
+	</snapshot>
+	<differential>
+	  <element id="PrimitiveType">
+		<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+		  <valueCode value="normative" />
+		</extension>
+		<extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version">
+		  <valueCode value="4.0.0" />
+		</extension>
+		<path value="PrimitiveType" />
+		<short value="Parent type for DataTypes with a simple value" />
+		<definition value="The base type for all re-useable types defined that have a simple property." />
+		<min value="0" />
+		<max value="*" />
+		<mapping>
+		  <identity value="rim" />
+		  <map value="n/a" />
+		</mapping>
+	  </element>
+	</differential>
+  </StructureDefinition>

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -496,7 +516,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapInputMode-list">
+  <xs:simpleType name="StructureMapInputModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="source">
         <xs:annotation>
@@ -512,16 +532,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapInputMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Mode for this instance of data.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapInputMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapInputModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapContextType-list">
+  <xs:simpleType name="StructureMapContextTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="type">
         <xs:annotation>
@@ -537,16 +557,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapContextType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How to interpret the context.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapContextType-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapContextTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapTargetListMode-list">
+  <xs:simpleType name="StructureMapTargetListModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="first">
         <xs:annotation>
@@ -572,16 +592,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapTargetListMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">If field is a list, how to manage the production.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapTargetListMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapTargetListModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapTransform-list">
+  <xs:simpleType name="StructureMapTransformEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="create">
         <xs:annotation>
@@ -672,16 +692,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapTransform">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How data is copied/created.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapTransform-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapTransformEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapSourceListMode-list">
+  <xs:simpleType name="StructureMapSourceListModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="first">
         <xs:annotation>
@@ -712,16 +732,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapSourceListMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">If field is a list, how to manage the source.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapSourceListMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapSourceListModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapGroupTypeMode-list">
+  <xs:simpleType name="StructureMapGroupTypeModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="none">
         <xs:annotation>
@@ -742,16 +762,16 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapGroupTypeMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">If this is the default rule set to apply for the source type, or this combination of types.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapGroupTypeMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapGroupTypeModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="StructureMapModelMode-list">
+  <xs:simpleType name="StructureMapModelModeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="source">
         <xs:annotation>
@@ -777,12 +797,12 @@
   </xs:simpleType>
   <xs:complexType name="StructureMapModelMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">How the referenced structure is used in this mapping.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="StructureMapModelMode-list" use="optional"/>
+        <xs:attribute name="value" type="StructureMapModelModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

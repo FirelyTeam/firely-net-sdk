@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -38,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="ValueSet" type="ValueSet">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="ValueSet">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -145,7 +165,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Compose">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -176,7 +196,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Include">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -212,7 +232,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Concept">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -238,7 +258,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Designation">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -264,7 +284,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Filter">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -290,7 +310,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Expansion">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -331,7 +351,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Parameter">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -359,7 +379,7 @@
   </xs:complexType>
   <xs:complexType name="ValueSet.Contains">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).</xs:documentation>
+      <xs:documentation xml:lang="en">A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [CodeSystem](codesystem.html) definitions and their use in [coded elements](terminologies.html).</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">

@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
   Copyright (c) 2011+, HL7, Inc.
   All rights reserved.
   
@@ -27,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Fri, Nov 1, 2019 09:29+1100 for FHIR v4.0.1 
+  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -300,7 +320,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AuditEventOutcome-list">
+  <xs:simpleType name="AuditEventOutcomeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="0">
         <xs:annotation>
@@ -326,16 +346,16 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventOutcome">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicates whether the event succeeded or failed.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AuditEventOutcome-list" use="optional"/>
+        <xs:attribute name="value" type="AuditEventOutcomeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AuditEventAction-list">
+  <xs:simpleType name="AuditEventActionEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="C">
         <xs:annotation>
@@ -366,16 +386,16 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventAction">
     <xs:annotation>
-      <xs:documentation xml:lang="en">Indicator for type of action performed during the event that generated the event.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AuditEventAction-list" use="optional"/>
+        <xs:attribute name="value" type="AuditEventActionEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="AuditEventAgentNetworkType-list">
+  <xs:simpleType name="AuditEventAgentNetworkTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="1">
         <xs:annotation>
@@ -406,12 +426,12 @@
   </xs:simpleType>
   <xs:complexType name="AuditEventAgentNetworkType">
     <xs:annotation>
-      <xs:documentation xml:lang="en">The type of network access point of this agent in the audit event.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="AuditEventAgentNetworkType-list" use="optional"/>
+        <xs:attribute name="value" type="AuditEventAgentNetworkTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
