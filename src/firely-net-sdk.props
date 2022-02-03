@@ -18,7 +18,7 @@
 		<PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-        <RunFhirPathTests>false</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
+        <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
 	</PropertyGroup>
 
 	<PropertyGroup>
