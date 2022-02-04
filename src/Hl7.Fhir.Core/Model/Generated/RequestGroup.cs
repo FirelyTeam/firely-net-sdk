@@ -742,6 +742,9 @@ namespace Hl7.Fhir.Model
       {
         switch (key)
         {
+          case "linkId":
+            value = LinkIdElement;
+            return LinkIdElement is not null;
           case "prefix":
             value = PrefixElement;
             return PrefixElement is not null;
@@ -763,6 +766,9 @@ namespace Hl7.Fhir.Model
           case "documentation":
             value = Documentation;
             return Documentation?.Any() == true;
+          case "goal":
+            value = Goal;
+            return Goal?.Any() == true;
           case "condition":
             value = Condition;
             return Condition?.Any() == true;
@@ -772,6 +778,9 @@ namespace Hl7.Fhir.Model
           case "timing":
             value = Timing;
             return Timing is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
           case "participant":
             value = Participant;
             return Participant?.Any() == true;
@@ -808,6 +817,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LinkIdElement is not null) yield return new KeyValuePair<string,object>("linkId",LinkIdElement);
         if (PrefixElement is not null) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
         if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
@@ -815,9 +825,11 @@ namespace Hl7.Fhir.Model
         if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (Documentation?.Any() == true) yield return new KeyValuePair<string,object>("documentation",Documentation);
+        if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
         if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
         if (RelatedAction?.Any() == true) yield return new KeyValuePair<string,object>("relatedAction",RelatedAction);
         if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
         if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (GroupingBehaviorElement is not null) yield return new KeyValuePair<string,object>("groupingBehavior",GroupingBehaviorElement);
@@ -1151,9 +1163,9 @@ namespace Hl7.Fhir.Model
       {
         switch (key)
         {
-          case "actionId":
-            value = ActionIdElement;
-            return ActionIdElement is not null;
+          case "targetId":
+            value = TargetIdElement;
+            return TargetIdElement is not null;
           case "relationship":
             value = RelationshipElement;
             return RelationshipElement is not null;
@@ -1169,7 +1181,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (ActionIdElement is not null) yield return new KeyValuePair<string,object>("actionId",ActionIdElement);
+        if (TargetIdElement is not null) yield return new KeyValuePair<string,object>("targetId",TargetIdElement);
         if (RelationshipElement is not null) yield return new KeyValuePair<string,object>("relationship",RelationshipElement);
         if (Offset is not null) yield return new KeyValuePair<string,object>("offset",Offset);
       }
@@ -1357,6 +1369,41 @@ namespace Hl7.Fhir.Model
           if (Function != null) yield return new ElementValue("function", Function);
           if (Actor != null) yield return new ElementValue("actor", Actor);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "typeReference":
+            value = TypeReference;
+            return TypeReference is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (TypeReference is not null) yield return new KeyValuePair<string,object>("typeReference",TypeReference);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -1922,12 +1969,12 @@ namespace Hl7.Fhir.Model
         case "author":
           value = Author;
           return Author is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "goal":
+          value = Goal;
+          return Goal?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -1957,8 +2004,8 @@ namespace Hl7.Fhir.Model
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Action?.Any() == true) yield return new KeyValuePair<string,object>("action",Action);
     }

@@ -735,6 +735,9 @@ namespace Hl7.Fhir.Model
           case "useBy":
             value = UseByElement;
             return UseByElement is not null;
+          case "biologicalSource":
+            value = BiologicalSource;
+            return BiologicalSource is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -749,6 +752,7 @@ namespace Hl7.Fhir.Model
         if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
         if (ExpiryElement is not null) yield return new KeyValuePair<string,object>("expiry",ExpiryElement);
         if (UseByElement is not null) yield return new KeyValuePair<string,object>("useBy",UseByElement);
+        if (BiologicalSource is not null) yield return new KeyValuePair<string,object>("biologicalSource",BiologicalSource);
       }
 
     }

@@ -528,11 +528,11 @@ namespace Hl7.Fhir.Model
           value = SeriesElement;
           return SeriesElement is not null;
         case "doseNumber":
-          value = DoseNumber;
-          return DoseNumber is not null;
+          value = DoseNumberElement;
+          return DoseNumberElement is not null;
         case "seriesDoses":
-          value = SeriesDoses;
-          return SeriesDoses is not null;
+          value = SeriesDosesElement;
+          return SeriesDosesElement is not null;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -553,8 +553,8 @@ namespace Hl7.Fhir.Model
       if (DoseStatusReason?.Any() == true) yield return new KeyValuePair<string,object>("doseStatusReason",DoseStatusReason);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
-      if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
-      if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+      if (DoseNumberElement is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumberElement);
+      if (SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDosesElement);
     }
 
   }

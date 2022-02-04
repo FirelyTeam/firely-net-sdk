@@ -608,6 +608,21 @@ namespace Hl7.Fhir.Model
         case "creation":
           value = CreationElement;
           return CreationElement is not null;
+        case "height":
+          value = HeightElement;
+          return HeightElement is not null;
+        case "width":
+          value = WidthElement;
+          return WidthElement is not null;
+        case "frames":
+          value = FramesElement;
+          return FramesElement is not null;
+        case "duration":
+          value = DurationElement;
+          return DurationElement is not null;
+        case "pages":
+          value = PagesElement;
+          return PagesElement is not null;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -625,6 +640,11 @@ namespace Hl7.Fhir.Model
       if (HashElement is not null) yield return new KeyValuePair<string,object>("hash",HashElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
       if (CreationElement is not null) yield return new KeyValuePair<string,object>("creation",CreationElement);
+      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
+      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
+      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
+      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
+      if (PagesElement is not null) yield return new KeyValuePair<string,object>("pages",PagesElement);
     }
 
   }

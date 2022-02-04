@@ -524,30 +524,39 @@ namespace Hl7.Fhir.Model
         case "status":
           value = StatusElement;
           return StatusElement is not null;
-        case "subject":
-          value = Subject;
-          return Subject is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
         case "derivedFrom":
           value = DerivedFrom;
           return DerivedFrom?.Any() == true;
+        case "context":
+          value = Context;
+          return Context is not null;
         case "timing":
           value = Timing;
           return Timing is not null;
-        case "recordedOn":
-          value = RecordedOnElement;
-          return RecordedOnElement is not null;
-        case "source":
-          value = Source;
-          return Source is not null;
+        case "dateAsserted":
+          value = DateAssertedElement;
+          return DateAssertedElement is not null;
+        case "usageStatus":
+          value = UsageStatus;
+          return UsageStatus is not null;
+        case "usageReason":
+          value = UsageReason;
+          return UsageReason?.Any() == true;
+        case "informationSource":
+          value = InformationSource;
+          return InformationSource is not null;
         case "device":
           value = Device;
           return Device is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "bodySite":
           value = BodySite;
           return BodySite is not null;
@@ -566,14 +575,17 @@ namespace Hl7.Fhir.Model
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
       if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
-      if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
-      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
+      if (UsageStatus is not null) yield return new KeyValuePair<string,object>("usageStatus",UsageStatus);
+      if (UsageReason?.Any() == true) yield return new KeyValuePair<string,object>("usageReason",UsageReason);
+      if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
       if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }

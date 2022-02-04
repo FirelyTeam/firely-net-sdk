@@ -569,6 +569,9 @@ namespace Hl7.Fhir.Model
         case "telecom":
           value = Telecom;
           return Telecom?.Any() == true;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
         case "address":
           value = Address;
           return Address?.Any() == true;
@@ -600,6 +603,7 @@ namespace Hl7.Fhir.Model
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
       if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
       if (Address?.Any() == true) yield return new KeyValuePair<string,object>("address",Address);
       if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
       if (BirthDateElement is not null) yield return new KeyValuePair<string,object>("birthDate",BirthDateElement);

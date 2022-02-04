@@ -1448,21 +1448,15 @@ namespace Hl7.Fhir.Model
         case "numberOfInstances":
           value = NumberOfInstancesElement;
           return NumberOfInstancesElement is not null;
-        case "procedureReference":
-          value = ProcedureReference;
-          return ProcedureReference is not null;
-        case "procedureCode":
-          value = ProcedureCode;
-          return ProcedureCode?.Any() == true;
+        case "procedure":
+          value = Procedure;
+          return Procedure?.Any() == true;
         case "location":
           value = Location;
           return Location is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -1493,11 +1487,9 @@ namespace Hl7.Fhir.Model
       if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
       if (NumberOfSeriesElement is not null) yield return new KeyValuePair<string,object>("numberOfSeries",NumberOfSeriesElement);
       if (NumberOfInstancesElement is not null) yield return new KeyValuePair<string,object>("numberOfInstances",NumberOfInstancesElement);
-      if (ProcedureReference is not null) yield return new KeyValuePair<string,object>("procedureReference",ProcedureReference);
-      if (ProcedureCode?.Any() == true) yield return new KeyValuePair<string,object>("procedureCode",ProcedureCode);
+      if (Procedure?.Any() == true) yield return new KeyValuePair<string,object>("procedure",Procedure);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Series?.Any() == true) yield return new KeyValuePair<string,object>("series",Series);

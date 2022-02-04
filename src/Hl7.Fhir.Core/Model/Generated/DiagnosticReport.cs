@@ -826,12 +826,18 @@ namespace Hl7.Fhir.Model
         case "result":
           value = Result;
           return Result?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
         case "imagingStudy":
           value = ImagingStudy;
           return ImagingStudy?.Any() == true;
         case "media":
           value = Media;
           return Media?.Any() == true;
+        case "composition":
+          value = Composition;
+          return Composition is not null;
         case "conclusion":
           value = ConclusionElement;
           return ConclusionElement is not null;
@@ -863,8 +869,10 @@ namespace Hl7.Fhir.Model
       if (ResultsInterpreter?.Any() == true) yield return new KeyValuePair<string,object>("resultsInterpreter",ResultsInterpreter);
       if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);
       if (Result?.Any() == true) yield return new KeyValuePair<string,object>("result",Result);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (ImagingStudy?.Any() == true) yield return new KeyValuePair<string,object>("imagingStudy",ImagingStudy);
       if (Media?.Any() == true) yield return new KeyValuePair<string,object>("media",Media);
+      if (Composition is not null) yield return new KeyValuePair<string,object>("composition",Composition);
       if (ConclusionElement is not null) yield return new KeyValuePair<string,object>("conclusion",ConclusionElement);
       if (ConclusionCode?.Any() == true) yield return new KeyValuePair<string,object>("conclusionCode",ConclusionCode);
       if (PresentedForm?.Any() == true) yield return new KeyValuePair<string,object>("presentedForm",PresentedForm);

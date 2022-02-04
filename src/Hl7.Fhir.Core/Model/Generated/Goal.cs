@@ -727,6 +727,9 @@ namespace Hl7.Fhir.Model
         case "category":
           value = Category;
           return Category?.Any() == true;
+        case "continuous":
+          value = ContinuousElement;
+          return ContinuousElement is not null;
         case "priority":
           value = Priority;
           return Priority is not null;
@@ -748,21 +751,18 @@ namespace Hl7.Fhir.Model
         case "statusReason":
           value = StatusReasonElement;
           return StatusReasonElement is not null;
-        case "expressedBy":
-          value = ExpressedBy;
-          return ExpressedBy is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
         case "addresses":
           value = Addresses;
           return Addresses?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
-        case "outcomeCode":
-          value = OutcomeCode;
-          return OutcomeCode?.Any() == true;
-        case "outcomeReference":
-          value = OutcomeReference;
-          return OutcomeReference?.Any() == true;
+        case "outcome":
+          value = Outcome;
+          return Outcome?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -776,6 +776,7 @@ namespace Hl7.Fhir.Model
       if (LifecycleStatusElement is not null) yield return new KeyValuePair<string,object>("lifecycleStatus",LifecycleStatusElement);
       if (AchievementStatus is not null) yield return new KeyValuePair<string,object>("achievementStatus",AchievementStatus);
       if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (ContinuousElement is not null) yield return new KeyValuePair<string,object>("continuous",ContinuousElement);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
@@ -783,11 +784,10 @@ namespace Hl7.Fhir.Model
       if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (StatusReasonElement is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReasonElement);
-      if (ExpressedBy is not null) yield return new KeyValuePair<string,object>("expressedBy",ExpressedBy);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
       if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
-      if (OutcomeCode?.Any() == true) yield return new KeyValuePair<string,object>("outcomeCode",OutcomeCode);
-      if (OutcomeReference?.Any() == true) yield return new KeyValuePair<string,object>("outcomeReference",OutcomeReference);
+      if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
     }
 
   }

@@ -3539,15 +3539,9 @@ namespace Hl7.Fhir.Model
           case "performerLinkId":
             value = PerformerLinkIdElement;
             return PerformerLinkIdElement?.Any() == true;
-          case "reasonCode":
-            value = ReasonCode;
-            return ReasonCode?.Any() == true;
-          case "reasonReference":
-            value = ReasonReference;
-            return ReasonReference?.Any() == true;
           case "reason":
-            value = ReasonElement;
-            return ReasonElement?.Any() == true;
+            value = Reason;
+            return Reason?.Any() == true;
           case "reasonLinkId":
             value = ReasonLinkIdElement;
             return ReasonLinkIdElement?.Any() == true;
@@ -3581,9 +3575,7 @@ namespace Hl7.Fhir.Model
         if (PerformerRole is not null) yield return new KeyValuePair<string,object>("performerRole",PerformerRole);
         if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
         if (PerformerLinkIdElement?.Any() == true) yield return new KeyValuePair<string,object>("performerLinkId",PerformerLinkIdElement);
-        if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-        if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-        if (ReasonElement?.Any() == true) yield return new KeyValuePair<string,object>("reason",ReasonElement);
+        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
         if (ReasonLinkIdElement?.Any() == true) yield return new KeyValuePair<string,object>("reasonLinkId",ReasonLinkIdElement);
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
         if (SecurityLabelNumberElement?.Any() == true) yield return new KeyValuePair<string,object>("securityLabelNumber",SecurityLabelNumberElement);

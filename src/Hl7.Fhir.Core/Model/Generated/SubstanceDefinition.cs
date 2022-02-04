@@ -2933,6 +2933,9 @@ namespace Hl7.Fhir.Model
         case "property":
           value = Property;
           return Property?.Any() == true;
+        case "referenceInformation":
+          value = ReferenceInformation;
+          return ReferenceInformation is not null;
         case "molecularWeight":
           value = MolecularWeight;
           return MolecularWeight?.Any() == true;
@@ -2948,6 +2951,15 @@ namespace Hl7.Fhir.Model
         case "relationship":
           value = Relationship;
           return Relationship?.Any() == true;
+        case "nucleicAcid":
+          value = NucleicAcid;
+          return NucleicAcid is not null;
+        case "polymer":
+          value = Polymer;
+          return Polymer is not null;
+        case "protein":
+          value = Protein;
+          return Protein is not null;
         case "sourceMaterial":
           value = SourceMaterial;
           return SourceMaterial is not null;
@@ -2973,11 +2985,15 @@ namespace Hl7.Fhir.Model
       if (Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",Supplier);
       if (Moiety?.Any() == true) yield return new KeyValuePair<string,object>("moiety",Moiety);
       if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+      if (ReferenceInformation is not null) yield return new KeyValuePair<string,object>("referenceInformation",ReferenceInformation);
       if (MolecularWeight?.Any() == true) yield return new KeyValuePair<string,object>("molecularWeight",MolecularWeight);
       if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
       if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
       if (Relationship?.Any() == true) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (NucleicAcid is not null) yield return new KeyValuePair<string,object>("nucleicAcid",NucleicAcid);
+      if (Polymer is not null) yield return new KeyValuePair<string,object>("polymer",Polymer);
+      if (Protein is not null) yield return new KeyValuePair<string,object>("protein",Protein);
       if (SourceMaterial is not null) yield return new KeyValuePair<string,object>("sourceMaterial",SourceMaterial);
     }
 

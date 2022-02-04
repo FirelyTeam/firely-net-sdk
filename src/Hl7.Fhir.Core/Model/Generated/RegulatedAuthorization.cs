@@ -656,6 +656,9 @@ namespace Hl7.Fhir.Model
         case "regulator":
           value = Regulator;
           return Regulator is not null;
+        case "attachedDocument":
+          value = AttachedDocument;
+          return AttachedDocument?.Any() == true;
         case "case":
           value = Case;
           return Case is not null;
@@ -681,6 +684,7 @@ namespace Hl7.Fhir.Model
       if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
       if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
       if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
+      if (AttachedDocument?.Any() == true) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
       if (Case is not null) yield return new KeyValuePair<string,object>("case",Case);
     }
 

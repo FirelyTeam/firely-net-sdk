@@ -1405,6 +1405,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "artifact":
+            value = ArtifactElement;
+            return ArtifactElement is not null;
+          case "conformance":
+            value = Conformance;
+            return Conformance is not null;
+          case "phase":
+            value = Phase;
+            return Phase is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ArtifactElement is not null) yield return new KeyValuePair<string,object>("artifact",ArtifactElement);
+        if (Conformance is not null) yield return new KeyValuePair<string,object>("conformance",Conformance);
+        if (Phase is not null) yield return new KeyValuePair<string,object>("phase",Phase);
+      }
+
     }
 
     /// <summary>
@@ -4119,6 +4146,9 @@ namespace Hl7.Fhir.Model
           case "sourceId":
             value = SourceIdElement;
             return SourceIdElement is not null;
+          case "stopTestOnFail":
+            value = StopTestOnFailElement;
+            return StopTestOnFailElement is not null;
           case "validateProfileId":
             value = ValidateProfileIdElement;
             return ValidateProfileIdElement is not null;
@@ -4156,6 +4186,7 @@ namespace Hl7.Fhir.Model
         if (ResponseElement is not null) yield return new KeyValuePair<string,object>("response",ResponseElement);
         if (ResponseCodeElement is not null) yield return new KeyValuePair<string,object>("responseCode",ResponseCodeElement);
         if (SourceIdElement is not null) yield return new KeyValuePair<string,object>("sourceId",SourceIdElement);
+        if (StopTestOnFailElement is not null) yield return new KeyValuePair<string,object>("stopTestOnFail",StopTestOnFailElement);
         if (ValidateProfileIdElement is not null) yield return new KeyValuePair<string,object>("validateProfileId",ValidateProfileIdElement);
         if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
         if (WarningOnlyElement is not null) yield return new KeyValuePair<string,object>("warningOnly",WarningOnlyElement);
@@ -5380,7 +5411,7 @@ namespace Hl7.Fhir.Model
           return UrlElement is not null;
         case "identifier":
           value = Identifier;
-          return Identifier is not null;
+          return Identifier?.Any() == true;
         case "version":
           value = VersionElement;
           return VersionElement is not null;
@@ -5429,6 +5460,9 @@ namespace Hl7.Fhir.Model
         case "metadata":
           value = Metadata;
           return Metadata is not null;
+        case "scope":
+          value = Scope;
+          return Scope?.Any() == true;
         case "fixture":
           value = Fixture;
           return Fixture?.Any() == true;
@@ -5457,7 +5491,7 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
@@ -5474,6 +5508,7 @@ namespace Hl7.Fhir.Model
       if (Origin?.Any() == true) yield return new KeyValuePair<string,object>("origin",Origin);
       if (Destination?.Any() == true) yield return new KeyValuePair<string,object>("destination",Destination);
       if (Metadata is not null) yield return new KeyValuePair<string,object>("metadata",Metadata);
+      if (Scope?.Any() == true) yield return new KeyValuePair<string,object>("scope",Scope);
       if (Fixture?.Any() == true) yield return new KeyValuePair<string,object>("fixture",Fixture);
       if (Profile?.Any() == true) yield return new KeyValuePair<string,object>("profile",Profile);
       if (Variable?.Any() == true) yield return new KeyValuePair<string,object>("variable",Variable);

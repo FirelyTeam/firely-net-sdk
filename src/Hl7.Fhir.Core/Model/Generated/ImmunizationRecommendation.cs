@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
             return VaccineCode?.Any() == true;
           case "targetDisease":
             value = TargetDisease;
-            return TargetDisease is not null;
+            return TargetDisease?.Any() == true;
           case "contraindicatedVaccineCode":
             value = ContraindicatedVaccineCode;
             return ContraindicatedVaccineCode?.Any() == true;
@@ -454,11 +454,11 @@ namespace Hl7.Fhir.Model
             value = SeriesElement;
             return SeriesElement is not null;
           case "doseNumber":
-            value = DoseNumber;
-            return DoseNumber is not null;
+            value = DoseNumberElement;
+            return DoseNumberElement is not null;
           case "seriesDoses":
-            value = SeriesDoses;
-            return SeriesDoses is not null;
+            value = SeriesDosesElement;
+            return SeriesDosesElement is not null;
           case "supportingImmunization":
             value = SupportingImmunization;
             return SupportingImmunization?.Any() == true;
@@ -475,15 +475,15 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (VaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
-        if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
         if (ContraindicatedVaccineCode?.Any() == true) yield return new KeyValuePair<string,object>("contraindicatedVaccineCode",ContraindicatedVaccineCode);
         if (ForecastStatus is not null) yield return new KeyValuePair<string,object>("forecastStatus",ForecastStatus);
         if (ForecastReason?.Any() == true) yield return new KeyValuePair<string,object>("forecastReason",ForecastReason);
         if (DateCriterion?.Any() == true) yield return new KeyValuePair<string,object>("dateCriterion",DateCriterion);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
-        if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
-        if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
+        if (DoseNumberElement is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumberElement);
+        if (SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDosesElement);
         if (SupportingImmunization?.Any() == true) yield return new KeyValuePair<string,object>("supportingImmunization",SupportingImmunization);
         if (SupportingPatientInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingPatientInformation",SupportingPatientInformation);
       }
@@ -895,6 +895,12 @@ namespace Hl7.Fhir.Model
         case "identifier":
           value = Identifier;
           return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
         case "patient":
           value = Patient;
           return Patient is not null;
@@ -917,6 +923,8 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);

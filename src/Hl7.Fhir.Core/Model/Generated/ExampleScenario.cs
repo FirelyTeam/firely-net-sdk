@@ -2479,12 +2479,12 @@ namespace Hl7.Fhir.Model
         case "jurisdiction":
           value = Jurisdiction;
           return Jurisdiction?.Any() == true;
-        case "copyright":
-          value = Copyright;
-          return Copyright is not null;
         case "purpose":
           value = Purpose;
           return Purpose is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
         case "actor":
           value = Actor;
           return Actor?.Any() == true;
@@ -2517,8 +2517,8 @@ namespace Hl7.Fhir.Model
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
       if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
       if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
       if (Process?.Any() == true) yield return new KeyValuePair<string,object>("process",Process);

@@ -325,9 +325,15 @@ namespace Hl7.Fhir.Model
           case "type":
             value = TypeElement;
             return TypeElement is not null;
+          case "typeReference":
+            value = TypeReference;
+            return TypeReference is not null;
           case "role":
             value = Role;
             return Role is not null;
+          case "function":
+            value = Function;
+            return Function is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -338,7 +344,9 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (TypeReference is not null) yield return new KeyValuePair<string,object>("typeReference",TypeReference);
         if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
       }
 
     }

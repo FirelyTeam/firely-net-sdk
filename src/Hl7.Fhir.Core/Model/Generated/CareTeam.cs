@@ -249,16 +249,16 @@ namespace Hl7.Fhir.Model
         {
           case "role":
             value = Role;
-            return Role?.Any() == true;
+            return Role is not null;
           case "member":
             value = Member;
             return Member is not null;
           case "onBehalfOf":
             value = OnBehalfOf;
             return OnBehalfOf is not null;
-          case "period":
-            value = Period;
-            return Period is not null;
+          case "coverage":
+            value = Coverage;
+            return Coverage is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -268,10 +268,10 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
         if (Member is not null) yield return new KeyValuePair<string,object>("member",Member);
         if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
       }
 
     }
@@ -598,21 +598,15 @@ namespace Hl7.Fhir.Model
         case "subject":
           value = Subject;
           return Subject is not null;
-        case "encounter":
-          value = Encounter;
-          return Encounter is not null;
         case "period":
           value = Period;
           return Period is not null;
         case "participant":
           value = Participant;
           return Participant?.Any() == true;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "managingOrganization":
           value = ManagingOrganization;
           return ManagingOrganization?.Any() == true;
@@ -636,11 +630,9 @@ namespace Hl7.Fhir.Model
       if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
-      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (ManagingOrganization?.Any() == true) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
       if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);

@@ -984,7 +984,7 @@ namespace Hl7.Fhir.Model
           return Service?.Any() == true;
         case "product":
           value = Product;
-          return Product is not null;
+          return Product?.Any() == true;
         case "account":
           value = Account;
           return Account?.Any() == true;
@@ -1025,7 +1025,7 @@ namespace Hl7.Fhir.Model
       if (EnteredDateElement is not null) yield return new KeyValuePair<string,object>("enteredDate",EnteredDateElement);
       if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Service?.Any() == true) yield return new KeyValuePair<string,object>("service",Service);
-      if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+      if (Product?.Any() == true) yield return new KeyValuePair<string,object>("product",Product);
       if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);

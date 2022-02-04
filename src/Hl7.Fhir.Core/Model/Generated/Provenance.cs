@@ -804,12 +804,18 @@ namespace Hl7.Fhir.Model
         case "location":
           value = Location;
           return Location is not null;
-        case "reason":
-          value = Reason;
-          return Reason?.Any() == true;
+        case "authorization":
+          value = Authorization;
+          return Authorization?.Any() == true;
         case "activity":
           value = Activity;
           return Activity is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
         case "agent":
           value = Agent;
           return Agent?.Any() == true;
@@ -833,8 +839,10 @@ namespace Hl7.Fhir.Model
       if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
       if (PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",PolicyElement);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Authorization?.Any() == true) yield return new KeyValuePair<string,object>("authorization",Authorization);
       if (Activity is not null) yield return new KeyValuePair<string,object>("activity",Activity);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
       if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
       if (Signature?.Any() == true) yield return new KeyValuePair<string,object>("signature",Signature);

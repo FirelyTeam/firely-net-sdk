@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if the request is to stop or not to start using the device
     /// </summary>
-    [FhirElement("doNotPerform", InSummary=true, Order=180)]
+    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
     {
@@ -907,9 +907,15 @@ namespace Hl7.Fhir.Model
         case "priority":
           value = PriorityElement;
           return PriorityElement is not null;
+        case "doNotPerform":
+          value = DoNotPerformElement;
+          return DoNotPerformElement is not null;
         case "code":
           value = Code;
           return Code is not null;
+        case "quantity":
+          value = QuantityElement;
+          return QuantityElement is not null;
         case "parameter":
           value = Parameter;
           return Parameter?.Any() == true;
@@ -934,12 +940,9 @@ namespace Hl7.Fhir.Model
         case "performer":
           value = Performer;
           return Performer is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "insurance":
           value = Insurance;
           return Insurance?.Any() == true;
@@ -970,7 +973,9 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
       if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
@@ -979,8 +984,7 @@ namespace Hl7.Fhir.Model
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
       if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);

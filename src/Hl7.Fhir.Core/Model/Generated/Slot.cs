@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
           return Specialty?.Any() == true;
         case "appointmentType":
           value = AppointmentType;
-          return AppointmentType is not null;
+          return AppointmentType?.Any() == true;
         case "schedule":
           value = Schedule;
           return Schedule is not null;
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
       if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
       if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
       if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
-      if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
+      if (AppointmentType?.Any() == true) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
       if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);

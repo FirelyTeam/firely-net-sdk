@@ -652,6 +652,9 @@ namespace Hl7.Fhir.Model
         case "status":
           value = StatusElement;
           return StatusElement is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
         case "category":
           value = Category;
           return Category is not null;
@@ -679,12 +682,9 @@ namespace Hl7.Fhir.Model
         case "supplier":
           value = Supplier;
           return Supplier?.Any() == true;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "deliverFrom":
           value = DeliverFrom;
           return DeliverFrom is not null;
@@ -702,6 +702,7 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
       if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
       if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
@@ -711,8 +712,7 @@ namespace Hl7.Fhir.Model
       if (AuthoredOnElement is not null) yield return new KeyValuePair<string,object>("authoredOn",AuthoredOnElement);
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (Supplier?.Any() == true) yield return new KeyValuePair<string,object>("supplier",Supplier);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (DeliverFrom is not null) yield return new KeyValuePair<string,object>("deliverFrom",DeliverFrom);
       if (DeliverTo is not null) yield return new KeyValuePair<string,object>("deliverTo",DeliverTo);
     }

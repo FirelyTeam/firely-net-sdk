@@ -426,12 +426,18 @@ namespace Hl7.Fhir.Model
           case "retentionTime":
             value = RetentionTime;
             return RetentionTime is not null;
+          case "singleUse":
+            value = SingleUseElement;
+            return SingleUseElement is not null;
           case "rejectionCriterion":
             value = RejectionCriterion;
             return RejectionCriterion?.Any() == true;
           case "handling":
             value = Handling;
             return Handling?.Any() == true;
+          case "testingDestination":
+            value = TestingDestination;
+            return TestingDestination?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -447,8 +453,10 @@ namespace Hl7.Fhir.Model
         if (Container is not null) yield return new KeyValuePair<string,object>("container",Container);
         if (RequirementElement is not null) yield return new KeyValuePair<string,object>("requirement",RequirementElement);
         if (RetentionTime is not null) yield return new KeyValuePair<string,object>("retentionTime",RetentionTime);
+        if (SingleUseElement is not null) yield return new KeyValuePair<string,object>("singleUse",SingleUseElement);
         if (RejectionCriterion?.Any() == true) yield return new KeyValuePair<string,object>("rejectionCriterion",RejectionCriterion);
         if (Handling?.Any() == true) yield return new KeyValuePair<string,object>("handling",Handling);
+        if (TestingDestination?.Any() == true) yield return new KeyValuePair<string,object>("testingDestination",TestingDestination);
       }
 
     }
@@ -1234,7 +1242,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1267,7 +1275,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this SpecimenDefinition is not for real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=160)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1785,9 +1793,66 @@ namespace Hl7.Fhir.Model
     {
       switch (key)
       {
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
         case "identifier":
           value = Identifier;
           return Identifier is not null;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "derivedFromCanonical":
+          value = DerivedFromCanonicalElement;
+          return DerivedFromCanonicalElement?.Any() == true;
+        case "derivedFromUri":
+          value = DerivedFromUriElement;
+          return DerivedFromUriElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = Publisher;
+          return Publisher is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
         case "typeCollected":
           value = TypeCollected;
           return TypeCollected is not null;
@@ -1812,7 +1877,26 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (DerivedFromCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFromCanonical",DerivedFromCanonicalElement);
+      if (DerivedFromUriElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFromUri",DerivedFromUriElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Publisher is not null) yield return new KeyValuePair<string,object>("publisher",Publisher);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
       if (TypeCollected is not null) yield return new KeyValuePair<string,object>("typeCollected",TypeCollected);
       if (PatientPreparation?.Any() == true) yield return new KeyValuePair<string,object>("patientPreparation",PatientPreparation);
       if (TimeAspectElement is not null) yield return new KeyValuePair<string,object>("timeAspect",TimeAspectElement);

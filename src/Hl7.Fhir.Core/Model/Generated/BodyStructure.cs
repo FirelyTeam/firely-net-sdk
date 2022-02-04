@@ -181,6 +181,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "structure":
+            value = Structure;
+            return Structure is not null;
+          case "laterality":
+            value = Laterality;
+            return Laterality is not null;
+          case "qualifier":
+            value = Qualifier;
+            return Qualifier?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
+        if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
+        if (Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",Qualifier);
+      }
+
     }
 
     /// <summary>
@@ -307,6 +334,33 @@ namespace Hl7.Fhir.Model
           if (Laterality != null) yield return new ElementValue("laterality", Laterality);
           foreach (var elem in Qualifier) { if (elem != null) yield return new ElementValue("qualifier", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "structure":
+            value = Structure;
+            return Structure is not null;
+          case "laterality":
+            value = Laterality;
+            return Laterality is not null;
+          case "qualifier":
+            value = Qualifier;
+            return Qualifier?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Structure is not null) yield return new KeyValuePair<string,object>("structure",Structure);
+        if (Laterality is not null) yield return new KeyValuePair<string,object>("laterality",Laterality);
+        if (Qualifier?.Any() == true) yield return new KeyValuePair<string,object>("qualifier",Qualifier);
       }
 
     }
@@ -589,9 +643,12 @@ namespace Hl7.Fhir.Model
         case "location":
           value = Location;
           return Location is not null;
-        case "locationQualifier":
-          value = LocationQualifier;
-          return LocationQualifier?.Any() == true;
+        case "includedStructure":
+          value = IncludedStructure;
+          return IncludedStructure?.Any() == true;
+        case "excludedStructure":
+          value = ExcludedStructure;
+          return ExcludedStructure?.Any() == true;
         case "description":
           value = DescriptionElement;
           return DescriptionElement is not null;
@@ -614,7 +671,8 @@ namespace Hl7.Fhir.Model
       if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
       if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (LocationQualifier?.Any() == true) yield return new KeyValuePair<string,object>("locationQualifier",LocationQualifier);
+      if (IncludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("includedStructure",IncludedStructure);
+      if (ExcludedStructure?.Any() == true) yield return new KeyValuePair<string,object>("excludedStructure",ExcludedStructure);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);

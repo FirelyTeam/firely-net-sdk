@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model
       {
         case "identifier":
           value = Identifier;
-          return Identifier is not null;
+          return Identifier?.Any() == true;
         case "basedOn":
           value = BasedOn;
           return BasedOn?.Any() == true;
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (QuestionnaireElement is not null) yield return new KeyValuePair<string,object>("questionnaire",QuestionnaireElement);

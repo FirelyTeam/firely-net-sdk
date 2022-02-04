@@ -661,15 +661,15 @@ namespace Hl7.Fhir.Model
         case "status":
           value = StatusElement;
           return StatusElement is not null;
-        case "manufacturer":
-          value = Manufacturer;
-          return Manufacturer is not null;
-        case "form":
-          value = Form;
-          return Form is not null;
-        case "amount":
-          value = Amount;
-          return Amount is not null;
+        case "marketingAuthorizationHolder":
+          value = MarketingAuthorizationHolder;
+          return MarketingAuthorizationHolder is not null;
+        case "doseForm":
+          value = DoseForm;
+          return DoseForm is not null;
+        case "totalVolume":
+          value = TotalVolume;
+          return TotalVolume is not null;
         case "ingredient":
           value = Ingredient;
           return Ingredient?.Any() == true;
@@ -688,9 +688,9 @@ namespace Hl7.Fhir.Model
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
-      if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
-      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (MarketingAuthorizationHolder is not null) yield return new KeyValuePair<string,object>("marketingAuthorizationHolder",MarketingAuthorizationHolder);
+      if (DoseForm is not null) yield return new KeyValuePair<string,object>("doseForm",DoseForm);
+      if (TotalVolume is not null) yield return new KeyValuePair<string,object>("totalVolume",TotalVolume);
       if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
       if (Batch is not null) yield return new KeyValuePair<string,object>("batch",Batch);
     }

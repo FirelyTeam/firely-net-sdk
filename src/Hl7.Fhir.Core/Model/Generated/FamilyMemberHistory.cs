@@ -490,6 +490,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "contributedToDeath":
+            value = ContributedToDeathElement;
+            return ContributedToDeathElement is not null;
+          case "performed":
+            value = Performed;
+            return Performed is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (ContributedToDeathElement is not null) yield return new KeyValuePair<string,object>("contributedToDeath",ContributedToDeathElement);
+        if (Performed is not null) yield return new KeyValuePair<string,object>("performed",Performed);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -1046,18 +1081,18 @@ namespace Hl7.Fhir.Model
         case "deceased":
           value = Deceased;
           return Deceased is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
         case "condition":
           value = Condition;
           return Condition?.Any() == true;
+        case "procedure":
+          value = Procedure;
+          return Procedure?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -1081,10 +1116,10 @@ namespace Hl7.Fhir.Model
       if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
       if (EstimatedAgeElement is not null) yield return new KeyValuePair<string,object>("estimatedAge",EstimatedAgeElement);
       if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Procedure?.Any() == true) yield return new KeyValuePair<string,object>("procedure",Procedure);
     }
 
   }

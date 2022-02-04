@@ -923,8 +923,8 @@ namespace Hl7.Fhir.Model
             value = PrefixElement;
             return PrefixElement is not null;
           case "text":
-            value = TextElement;
-            return TextElement is not null;
+            value = Text;
+            return Text is not null;
           case "type":
             value = TypeElement;
             return TypeElement is not null;
@@ -934,6 +934,9 @@ namespace Hl7.Fhir.Model
           case "enableBehavior":
             value = EnableBehaviorElement;
             return EnableBehaviorElement is not null;
+          case "disabledDisplay":
+            value = DisabledDisplayElement;
+            return DisabledDisplayElement is not null;
           case "required":
             value = RequiredElement;
             return RequiredElement is not null;
@@ -946,6 +949,9 @@ namespace Hl7.Fhir.Model
           case "maxLength":
             value = MaxLengthElement;
             return MaxLengthElement is not null;
+          case "answerConstraint":
+            value = AnswerConstraintElement;
+            return AnswerConstraintElement is not null;
           case "answerValueSet":
             value = AnswerValueSetElement;
             return AnswerValueSetElement is not null;
@@ -971,14 +977,16 @@ namespace Hl7.Fhir.Model
         if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
         if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
         if (PrefixElement is not null) yield return new KeyValuePair<string,object>("prefix",PrefixElement);
-        if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+        if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
         if (EnableWhen?.Any() == true) yield return new KeyValuePair<string,object>("enableWhen",EnableWhen);
         if (EnableBehaviorElement is not null) yield return new KeyValuePair<string,object>("enableBehavior",EnableBehaviorElement);
+        if (DisabledDisplayElement is not null) yield return new KeyValuePair<string,object>("disabledDisplay",DisabledDisplayElement);
         if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
         if (RepeatsElement is not null) yield return new KeyValuePair<string,object>("repeats",RepeatsElement);
         if (ReadOnlyElement is not null) yield return new KeyValuePair<string,object>("readOnly",ReadOnlyElement);
         if (MaxLengthElement is not null) yield return new KeyValuePair<string,object>("maxLength",MaxLengthElement);
+        if (AnswerConstraintElement is not null) yield return new KeyValuePair<string,object>("answerConstraint",AnswerConstraintElement);
         if (AnswerValueSetElement is not null) yield return new KeyValuePair<string,object>("answerValueSet",AnswerValueSetElement);
         if (AnswerOption?.Any() == true) yield return new KeyValuePair<string,object>("answerOption",AnswerOption);
         if (Initial?.Any() == true) yield return new KeyValuePair<string,object>("initial",Initial);

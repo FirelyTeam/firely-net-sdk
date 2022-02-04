@@ -269,6 +269,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "subjectState":
+            value = SubjectState;
+            return SubjectState is not null;
+          case "milestone":
+            value = Milestone;
+            return Milestone is not null;
+          case "reason":
+            value = Reason;
+            return Reason is not null;
+          case "startDate":
+            value = StartDateElement;
+            return StartDateElement is not null;
+          case "endDate":
+            value = EndDateElement;
+            return EndDateElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (SubjectState is not null) yield return new KeyValuePair<string,object>("subjectState",SubjectState);
+        if (Milestone is not null) yield return new KeyValuePair<string,object>("milestone",Milestone);
+        if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (StartDateElement is not null) yield return new KeyValuePair<string,object>("startDate",StartDateElement);
+        if (EndDateElement is not null) yield return new KeyValuePair<string,object>("endDate",EndDateElement);
+      }
+
     }
 
     /// <summary>
@@ -566,15 +605,18 @@ namespace Hl7.Fhir.Model
         case "status":
           value = StatusElement;
           return StatusElement is not null;
+        case "progress":
+          value = Progress;
+          return Progress?.Any() == true;
         case "period":
           value = Period;
           return Period is not null;
         case "study":
           value = Study;
           return Study is not null;
-        case "individual":
-          value = Individual;
-          return Individual is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
         case "assignedArm":
           value = AssignedArmElement;
           return AssignedArmElement is not null;
@@ -595,9 +637,10 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (Study is not null) yield return new KeyValuePair<string,object>("study",Study);
-      if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (AssignedArmElement is not null) yield return new KeyValuePair<string,object>("assignedArm",AssignedArmElement);
       if (ActualArmElement is not null) yield return new KeyValuePair<string,object>("actualArm",ActualArmElement);
       if (Consent is not null) yield return new KeyValuePair<string,object>("consent",Consent);

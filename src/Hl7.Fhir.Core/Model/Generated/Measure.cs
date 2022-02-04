@@ -337,6 +337,21 @@ namespace Hl7.Fhir.Model
           case "description":
             value = DescriptionElement;
             return DescriptionElement is not null;
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "basis":
+            value = BasisElement;
+            return BasisElement is not null;
+          case "scoring":
+            value = Scoring;
+            return Scoring is not null;
+          case "scoringUnit":
+            value = ScoringUnit;
+            return ScoringUnit is not null;
+          case "improvementNotation":
+            value = ImprovementNotation;
+            return ImprovementNotation is not null;
           case "population":
             value = Population;
             return Population?.Any() == true;
@@ -354,6 +369,11 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
+        if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
+        if (ScoringUnit is not null) yield return new KeyValuePair<string,object>("scoringUnit",ScoringUnit);
+        if (ImprovementNotation is not null) yield return new KeyValuePair<string,object>("improvementNotation",ImprovementNotation);
         if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
         if (Stratifier?.Any() == true) yield return new KeyValuePair<string,object>("stratifier",Stratifier);
       }
@@ -570,6 +590,12 @@ namespace Hl7.Fhir.Model
           case "criteria":
             value = Criteria;
             return Criteria is not null;
+          case "inputPopulationId":
+            value = InputPopulationIdElement;
+            return InputPopulationIdElement is not null;
+          case "aggregateMethod":
+            value = AggregateMethod;
+            return AggregateMethod is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -582,6 +608,8 @@ namespace Hl7.Fhir.Model
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Criteria is not null) yield return new KeyValuePair<string,object>("criteria",Criteria);
+        if (InputPopulationIdElement is not null) yield return new KeyValuePair<string,object>("inputPopulationId",InputPopulationIdElement);
+        if (AggregateMethod is not null) yield return new KeyValuePair<string,object>("aggregateMethod",AggregateMethod);
       }
 
     }
@@ -2318,6 +2346,9 @@ namespace Hl7.Fhir.Model
         case "subject":
           value = Subject;
           return Subject is not null;
+        case "basis":
+          value = BasisElement;
+          return BasisElement is not null;
         case "date":
           value = DateElement;
           return DateElement is not null;
@@ -2381,6 +2412,9 @@ namespace Hl7.Fhir.Model
         case "scoring":
           value = Scoring;
           return Scoring is not null;
+        case "scoringUnit":
+          value = ScoringUnit;
+          return ScoringUnit is not null;
         case "compositeScoring":
           value = CompositeScoring;
           return CompositeScoring is not null;
@@ -2432,6 +2466,7 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (BasisElement is not null) yield return new KeyValuePair<string,object>("basis",BasisElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
@@ -2453,6 +2488,7 @@ namespace Hl7.Fhir.Model
       if (LibraryElement?.Any() == true) yield return new KeyValuePair<string,object>("library",LibraryElement);
       if (Disclaimer is not null) yield return new KeyValuePair<string,object>("disclaimer",Disclaimer);
       if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
+      if (ScoringUnit is not null) yield return new KeyValuePair<string,object>("scoringUnit",ScoringUnit);
       if (CompositeScoring is not null) yield return new KeyValuePair<string,object>("compositeScoring",CompositeScoring);
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (RiskAdjustmentElement is not null) yield return new KeyValuePair<string,object>("riskAdjustment",RiskAdjustmentElement);

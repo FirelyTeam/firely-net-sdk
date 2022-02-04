@@ -1225,6 +1225,9 @@ namespace Hl7.Fhir.Model
         case "manufacturer":
           value = Manufacturer;
           return Manufacturer?.Any() == true;
+        case "attachedDocument":
+          value = AttachedDocument;
+          return AttachedDocument?.Any() == true;
         case "package":
           value = Package;
           return Package is not null;
@@ -1250,6 +1253,7 @@ namespace Hl7.Fhir.Model
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
       if (CopackagedIndicatorElement is not null) yield return new KeyValuePair<string,object>("copackagedIndicator",CopackagedIndicatorElement);
       if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (AttachedDocument?.Any() == true) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
       if (Package is not null) yield return new KeyValuePair<string,object>("package",Package);
     }
 

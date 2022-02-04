@@ -756,12 +756,9 @@ namespace Hl7.Fhir.Model
         case "performer":
           value = Performer;
           return Performer is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "basis":
           value = Basis;
           return Basis?.Any() == true;
@@ -794,8 +791,7 @@ namespace Hl7.Fhir.Model
       if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
       if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
       if (Prediction?.Any() == true) yield return new KeyValuePair<string,object>("prediction",Prediction);
       if (MitigationElement is not null) yield return new KeyValuePair<string,object>("mitigation",MitigationElement);

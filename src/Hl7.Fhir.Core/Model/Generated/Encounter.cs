@@ -565,9 +565,9 @@ namespace Hl7.Fhir.Model
           case "period":
             value = Period;
             return Period is not null;
-          case "individual":
-            value = Individual;
-            return Individual is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
         if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
-        if (Individual is not null) yield return new KeyValuePair<string,object>("individual",Individual);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -1868,6 +1868,9 @@ namespace Hl7.Fhir.Model
         case "subject":
           value = Subject;
           return Subject is not null;
+        case "subjectStatus":
+          value = SubjectStatus;
+          return SubjectStatus is not null;
         case "episodeOfCare":
           value = EpisodeOfCare;
           return EpisodeOfCare?.Any() == true;
@@ -1880,18 +1883,21 @@ namespace Hl7.Fhir.Model
         case "appointment":
           value = Appointment;
           return Appointment?.Any() == true;
-        case "period":
-          value = Period;
-          return Period is not null;
+        case "actualPeriod":
+          value = ActualPeriod;
+          return ActualPeriod is not null;
+        case "plannedStartDate":
+          value = PlannedStartDateElement;
+          return PlannedStartDateElement is not null;
+        case "plannedEndDate":
+          value = PlannedEndDateElement;
+          return PlannedEndDateElement is not null;
         case "length":
           value = Length;
           return Length is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "diagnosis":
           value = Diagnosis;
           return Diagnosis?.Any() == true;
@@ -1928,14 +1934,16 @@ namespace Hl7.Fhir.Model
       if (ServiceType is not null) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
       if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (SubjectStatus is not null) yield return new KeyValuePair<string,object>("subjectStatus",SubjectStatus);
       if (EpisodeOfCare?.Any() == true) yield return new KeyValuePair<string,object>("episodeOfCare",EpisodeOfCare);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (Appointment?.Any() == true) yield return new KeyValuePair<string,object>("appointment",Appointment);
-      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (ActualPeriod is not null) yield return new KeyValuePair<string,object>("actualPeriod",ActualPeriod);
+      if (PlannedStartDateElement is not null) yield return new KeyValuePair<string,object>("plannedStartDate",PlannedStartDateElement);
+      if (PlannedEndDateElement is not null) yield return new KeyValuePair<string,object>("plannedEndDate",PlannedEndDateElement);
       if (Length is not null) yield return new KeyValuePair<string,object>("length",Length);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
       if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
       if (Hospitalization is not null) yield return new KeyValuePair<string,object>("hospitalization",Hospitalization);

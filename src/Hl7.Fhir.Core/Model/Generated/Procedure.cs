@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
           return StatusReason is not null;
         case "category":
           value = Category;
-          return Category is not null;
+          return Category?.Any() == true;
         case "code":
           value = Code;
           return Code is not null;
@@ -1060,27 +1060,27 @@ namespace Hl7.Fhir.Model
         case "encounter":
           value = Encounter;
           return Encounter is not null;
-        case "performed":
-          value = Performed;
-          return Performed is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
         case "recorder":
           value = Recorder;
           return Recorder is not null;
-        case "asserter":
-          value = Asserter;
-          return Asserter is not null;
+        case "reported":
+          value = Reported;
+          return Reported is not null;
         case "performer":
           value = Performer;
           return Performer?.Any() == true;
         case "location":
           value = Location;
           return Location is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "bodySite":
           value = BodySite;
           return BodySite?.Any() == true;
@@ -1105,12 +1105,12 @@ namespace Hl7.Fhir.Model
         case "focalDevice":
           value = FocalDevice;
           return FocalDevice?.Any() == true;
-        case "usedReference":
-          value = UsedReference;
-          return UsedReference?.Any() == true;
-        case "usedCode":
-          value = UsedCode;
-          return UsedCode?.Any() == true;
+        case "used":
+          value = Used;
+          return Used?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -1127,17 +1127,17 @@ namespace Hl7.Fhir.Model
       if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
-      if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
-      if (Performed is not null) yield return new KeyValuePair<string,object>("performed",Performed);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
       if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
-      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
+      if (Reported is not null) yield return new KeyValuePair<string,object>("reported",Reported);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
       if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (BodySite?.Any() == true) yield return new KeyValuePair<string,object>("bodySite",BodySite);
       if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
       if (Report?.Any() == true) yield return new KeyValuePair<string,object>("report",Report);
@@ -1146,8 +1146,8 @@ namespace Hl7.Fhir.Model
       if (FollowUp?.Any() == true) yield return new KeyValuePair<string,object>("followUp",FollowUp);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (FocalDevice?.Any() == true) yield return new KeyValuePair<string,object>("focalDevice",FocalDevice);
-      if (UsedReference?.Any() == true) yield return new KeyValuePair<string,object>("usedReference",UsedReference);
-      if (UsedCode?.Any() == true) yield return new KeyValuePair<string,object>("usedCode",UsedCode);
+      if (Used?.Any() == true) yield return new KeyValuePair<string,object>("used",Used);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
     }
 
   }

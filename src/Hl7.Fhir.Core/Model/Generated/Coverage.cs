@@ -1026,8 +1026,8 @@ namespace Hl7.Fhir.Model
           value = Subscriber;
           return Subscriber is not null;
         case "subscriberId":
-          value = SubscriberIdElement;
-          return SubscriberIdElement is not null;
+          value = SubscriberId;
+          return SubscriberId is not null;
         case "beneficiary":
           value = Beneficiary;
           return Beneficiary is not null;
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (PolicyHolder is not null) yield return new KeyValuePair<string,object>("policyHolder",PolicyHolder);
       if (Subscriber is not null) yield return new KeyValuePair<string,object>("subscriber",Subscriber);
-      if (SubscriberIdElement is not null) yield return new KeyValuePair<string,object>("subscriberId",SubscriberIdElement);
+      if (SubscriberId is not null) yield return new KeyValuePair<string,object>("subscriberId",SubscriberId);
       if (Beneficiary is not null) yield return new KeyValuePair<string,object>("beneficiary",Beneficiary);
       if (DependentElement is not null) yield return new KeyValuePair<string,object>("dependent",DependentElement);
       if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);

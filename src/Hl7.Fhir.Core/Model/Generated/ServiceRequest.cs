@@ -932,18 +932,12 @@ namespace Hl7.Fhir.Model
         case "performer":
           value = Performer;
           return Performer?.Any() == true;
-        case "locationCode":
-          value = LocationCode;
-          return LocationCode?.Any() == true;
-        case "locationReference":
-          value = LocationReference;
-          return LocationReference?.Any() == true;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "insurance":
           value = Insurance;
           return Insurance?.Any() == true;
@@ -996,10 +990,8 @@ namespace Hl7.Fhir.Model
       if (Requester is not null) yield return new KeyValuePair<string,object>("requester",Requester);
       if (PerformerType is not null) yield return new KeyValuePair<string,object>("performerType",PerformerType);
       if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (LocationCode?.Any() == true) yield return new KeyValuePair<string,object>("locationCode",LocationCode);
-      if (LocationReference?.Any() == true) yield return new KeyValuePair<string,object>("locationReference",LocationReference);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Insurance?.Any() == true) yield return new KeyValuePair<string,object>("insurance",Insurance);
       if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
       if (Specimen?.Any() == true) yield return new KeyValuePair<string,object>("specimen",Specimen);

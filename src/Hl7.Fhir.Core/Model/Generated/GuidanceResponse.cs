@@ -496,12 +496,9 @@ namespace Hl7.Fhir.Model
         case "performer":
           value = Performer;
           return Performer is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -534,8 +531,7 @@ namespace Hl7.Fhir.Model
       if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
       if (OccurrenceDateTimeElement is not null) yield return new KeyValuePair<string,object>("occurrenceDateTime",OccurrenceDateTimeElement);
       if (Performer is not null) yield return new KeyValuePair<string,object>("performer",Performer);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (EvaluationMessage?.Any() == true) yield return new KeyValuePair<string,object>("evaluationMessage",EvaluationMessage);
       if (OutputParameters is not null) yield return new KeyValuePair<string,object>("outputParameters",OutputParameters);

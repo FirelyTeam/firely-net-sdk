@@ -348,6 +348,12 @@ namespace Hl7.Fhir.Model
           case "method":
             value = Method;
             return Method is not null;
+          case "device":
+            value = Device;
+            return Device is not null;
+          case "procedure":
+            value = Procedure;
+            return Procedure is not null;
           case "bodySite":
             value = BodySite;
             return BodySite is not null;
@@ -368,6 +374,8 @@ namespace Hl7.Fhir.Model
         if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
         if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
         if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+        if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
         if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
         if (FastingStatus is not null) yield return new KeyValuePair<string,object>("fastingStatus",FastingStatus);
       }
@@ -546,9 +554,9 @@ namespace Hl7.Fhir.Model
           case "description":
             value = DescriptionElement;
             return DescriptionElement is not null;
-          case "procedure":
-            value = Procedure;
-            return Procedure is not null;
+          case "method":
+            value = Method;
+            return Method is not null;
           case "additive":
             value = Additive;
             return Additive?.Any() == true;
@@ -565,7 +573,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
+        if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
         if (Additive?.Any() == true) yield return new KeyValuePair<string,object>("additive",Additive);
         if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
       }
@@ -802,6 +810,9 @@ namespace Hl7.Fhir.Model
           case "description":
             value = DescriptionElement;
             return DescriptionElement is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
           case "type":
             value = Type;
             return Type is not null;
@@ -825,6 +836,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
         if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
         if (Capacity is not null) yield return new KeyValuePair<string,object>("capacity",Capacity);
         if (SpecimenQuantity is not null) yield return new KeyValuePair<string,object>("specimenQuantity",SpecimenQuantity);

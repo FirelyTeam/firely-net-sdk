@@ -288,6 +288,9 @@ namespace Hl7.Fhir.Model
           case "exclude":
             value = Exclude;
             return Exclude?.Any() == true;
+          case "property":
+            value = PropertyElement;
+            return PropertyElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -301,6 +304,7 @@ namespace Hl7.Fhir.Model
         if (InactiveElement is not null) yield return new KeyValuePair<string,object>("inactive",InactiveElement);
         if (Include?.Any() == true) yield return new KeyValuePair<string,object>("include",Include);
         if (Exclude?.Any() == true) yield return new KeyValuePair<string,object>("exclude",Exclude);
+        if (PropertyElement?.Any() == true) yield return new KeyValuePair<string,object>("property",PropertyElement);
       }
 
     }
@@ -577,6 +581,9 @@ namespace Hl7.Fhir.Model
           case "valueSet":
             value = ValueSetElement;
             return ValueSetElement?.Any() == true;
+          case "copyright":
+            value = CopyrightElement;
+            return CopyrightElement is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -591,6 +598,7 @@ namespace Hl7.Fhir.Model
         if (Concept?.Any() == true) yield return new KeyValuePair<string,object>("concept",Concept);
         if (Filter?.Any() == true) yield return new KeyValuePair<string,object>("filter",Filter);
         if (ValueSetElement?.Any() == true) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
+        if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
       }
 
     }
@@ -1478,6 +1486,9 @@ namespace Hl7.Fhir.Model
           case "parameter":
             value = Parameter;
             return Parameter?.Any() == true;
+          case "property":
+            value = Property;
+            return Property?.Any() == true;
           case "contains":
             value = Contains;
             return Contains?.Any() == true;
@@ -1495,6 +1506,7 @@ namespace Hl7.Fhir.Model
         if (TotalElement is not null) yield return new KeyValuePair<string,object>("total",TotalElement);
         if (OffsetElement is not null) yield return new KeyValuePair<string,object>("offset",OffsetElement);
         if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
+        if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
         if (Contains?.Any() == true) yield return new KeyValuePair<string,object>("contains",Contains);
       }
 
@@ -1793,6 +1805,29 @@ namespace Hl7.Fhir.Model
           if (CodeElement != null) yield return new ElementValue("code", CodeElement);
           if (UriElement != null) yield return new ElementValue("uri", UriElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "uri":
+            value = UriElement;
+            return UriElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+        if (UriElement is not null) yield return new KeyValuePair<string,object>("uri",UriElement);
       }
 
     }
@@ -2165,6 +2200,9 @@ namespace Hl7.Fhir.Model
           case "designation":
             value = Designation;
             return Designation?.Any() == true;
+          case "property":
+            value = Property;
+            return Property?.Any() == true;
           case "contains":
             value = Contains;
             return Contains?.Any() == true;
@@ -2184,6 +2222,7 @@ namespace Hl7.Fhir.Model
         if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
         if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
         if (Designation?.Any() == true) yield return new KeyValuePair<string,object>("designation",Designation);
+        if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
         if (Contains?.Any() == true) yield return new KeyValuePair<string,object>("contains",Contains);
       }
 
@@ -2315,6 +2354,29 @@ namespace Hl7.Fhir.Model
           if (CodeElement != null) yield return new ElementValue("code", CodeElement);
           if (Value != null) yield return new ElementValue("value", Value);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
     }
@@ -2495,6 +2557,33 @@ namespace Hl7.Fhir.Model
           if (InclusionCriteriaElement != null) yield return new ElementValue("inclusionCriteria", InclusionCriteriaElement);
           if (ExclusionCriteriaElement != null) yield return new ElementValue("exclusionCriteria", ExclusionCriteriaElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "focus":
+            value = FocusElement;
+            return FocusElement is not null;
+          case "inclusionCriteria":
+            value = InclusionCriteriaElement;
+            return InclusionCriteriaElement is not null;
+          case "exclusionCriteria":
+            value = ExclusionCriteriaElement;
+            return ExclusionCriteriaElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (FocusElement is not null) yield return new KeyValuePair<string,object>("focus",FocusElement);
+        if (InclusionCriteriaElement is not null) yield return new KeyValuePair<string,object>("inclusionCriteria",InclusionCriteriaElement);
+        if (ExclusionCriteriaElement is not null) yield return new KeyValuePair<string,object>("exclusionCriteria",ExclusionCriteriaElement);
       }
 
     }
@@ -3124,6 +3213,9 @@ namespace Hl7.Fhir.Model
         case "expansion":
           value = Expansion;
           return Expansion is not null;
+        case "scope":
+          value = Scope;
+          return Scope is not null;
         default:
           return base.TryGetValue(key, out value);
       };
@@ -3151,6 +3243,7 @@ namespace Hl7.Fhir.Model
       if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
       if (Compose is not null) yield return new KeyValuePair<string,object>("compose",Compose);
       if (Expansion is not null) yield return new KeyValuePair<string,object>("expansion",Expansion);
+      if (Scope is not null) yield return new KeyValuePair<string,object>("scope",Scope);
     }
 
   }

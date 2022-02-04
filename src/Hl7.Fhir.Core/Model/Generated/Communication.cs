@@ -822,12 +822,9 @@ namespace Hl7.Fhir.Model
         case "sender":
           value = Sender;
           return Sender is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "payload":
           value = Payload;
           return Payload?.Any() == true;
@@ -862,8 +859,7 @@ namespace Hl7.Fhir.Model
       if (ReceivedElement is not null) yield return new KeyValuePair<string,object>("received",ReceivedElement);
       if (Recipient?.Any() == true) yield return new KeyValuePair<string,object>("recipient",Recipient);
       if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
       if (Payload?.Any() == true) yield return new KeyValuePair<string,object>("payload",Payload);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }

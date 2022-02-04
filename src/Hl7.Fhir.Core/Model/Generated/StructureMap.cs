@@ -1858,8 +1858,8 @@ namespace Hl7.Fhir.Model
             value = TypeElement;
             return TypeElement is not null;
           case "defaultValue":
-            value = DefaultValue;
-            return DefaultValue is not null;
+            value = DefaultValueElement;
+            return DefaultValueElement is not null;
           case "element":
             value = ElementElement;
             return ElementElement is not null;
@@ -1891,7 +1891,7 @@ namespace Hl7.Fhir.Model
         if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
         if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
         if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-        if (DefaultValue is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValue);
+        if (DefaultValueElement is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValueElement);
         if (ElementElement is not null) yield return new KeyValuePair<string,object>("element",ElementElement);
         if (ListModeElement is not null) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
         if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
@@ -2217,9 +2217,6 @@ namespace Hl7.Fhir.Model
           case "context":
             value = ContextElement;
             return ContextElement is not null;
-          case "contextType":
-            value = ContextTypeElement;
-            return ContextTypeElement is not null;
           case "element":
             value = ElementElement;
             return ElementElement is not null;
@@ -2248,7 +2245,6 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ContextElement is not null) yield return new KeyValuePair<string,object>("context",ContextElement);
-        if (ContextTypeElement is not null) yield return new KeyValuePair<string,object>("contextType",ContextTypeElement);
         if (ElementElement is not null) yield return new KeyValuePair<string,object>("element",ElementElement);
         if (VariableElement is not null) yield return new KeyValuePair<string,object>("variable",VariableElement);
         if (ListModeElement?.Any() == true) yield return new KeyValuePair<string,object>("listMode",ListModeElement);
@@ -2504,9 +2500,9 @@ namespace Hl7.Fhir.Model
           case "name":
             value = NameElement;
             return NameElement is not null;
-          case "variable":
-            value = VariableElement;
-            return VariableElement?.Any() == true;
+          case "parameter":
+            value = Parameter;
+            return Parameter?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -2517,7 +2513,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-        if (VariableElement?.Any() == true) yield return new KeyValuePair<string,object>("variable",VariableElement);
+        if (Parameter?.Any() == true) yield return new KeyValuePair<string,object>("parameter",Parameter);
       }
 
     }

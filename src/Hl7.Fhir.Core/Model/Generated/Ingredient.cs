@@ -612,6 +612,9 @@ namespace Hl7.Fhir.Model
           case "concentrationText":
             value = ConcentrationTextElement;
             return ConcentrationTextElement is not null;
+          case "basis":
+            value = Basis;
+            return Basis is not null;
           case "measurementPoint":
             value = MeasurementPointElement;
             return MeasurementPointElement is not null;
@@ -634,6 +637,7 @@ namespace Hl7.Fhir.Model
         if (PresentationTextElement is not null) yield return new KeyValuePair<string,object>("presentationText",PresentationTextElement);
         if (Concentration is not null) yield return new KeyValuePair<string,object>("concentration",Concentration);
         if (ConcentrationTextElement is not null) yield return new KeyValuePair<string,object>("concentrationText",ConcentrationTextElement);
+        if (Basis is not null) yield return new KeyValuePair<string,object>("basis",Basis);
         if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
         if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
         if (ReferenceStrength?.Any() == true) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
@@ -1121,6 +1125,9 @@ namespace Hl7.Fhir.Model
         case "function":
           value = Function;
           return Function?.Any() == true;
+        case "group":
+          value = Group;
+          return Group is not null;
         case "allergenicIndicator":
           value = AllergenicIndicatorElement;
           return AllergenicIndicatorElement is not null;
@@ -1144,6 +1151,7 @@ namespace Hl7.Fhir.Model
       if (For?.Any() == true) yield return new KeyValuePair<string,object>("for",For);
       if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
       if (Function?.Any() == true) yield return new KeyValuePair<string,object>("function",Function);
+      if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
       if (AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",AllergenicIndicatorElement);
       if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
       if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);

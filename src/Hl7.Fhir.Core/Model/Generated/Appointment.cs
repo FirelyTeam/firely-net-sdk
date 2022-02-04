@@ -334,6 +334,9 @@ namespace Hl7.Fhir.Model
           case "type":
             value = Type;
             return Type?.Any() == true;
+          case "period":
+            value = Period;
+            return Period is not null;
           case "actor":
             value = Actor;
             return Actor is not null;
@@ -343,9 +346,6 @@ namespace Hl7.Fhir.Model
           case "status":
             value = StatusElement;
             return StatusElement is not null;
-          case "period":
-            value = Period;
-            return Period is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -356,10 +356,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
         if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
         if (RequiredElement is not null) yield return new KeyValuePair<string,object>("required",RequiredElement);
         if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       }
 
     }
@@ -999,9 +999,9 @@ namespace Hl7.Fhir.Model
         case "status":
           value = StatusElement;
           return StatusElement is not null;
-        case "cancelationReason":
-          value = CancelationReason;
-          return CancelationReason is not null;
+        case "cancellationReason":
+          value = CancellationReason;
+          return CancellationReason is not null;
         case "serviceCategory":
           value = ServiceCategory;
           return ServiceCategory?.Any() == true;
@@ -1014,18 +1014,18 @@ namespace Hl7.Fhir.Model
         case "appointmentType":
           value = AppointmentType;
           return AppointmentType is not null;
-        case "reasonCode":
-          value = ReasonCode;
-          return ReasonCode?.Any() == true;
-        case "reasonReference":
-          value = ReasonReference;
-          return ReasonReference?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
         case "priority":
-          value = PriorityElement;
-          return PriorityElement is not null;
+          value = Priority;
+          return Priority is not null;
         case "description":
           value = DescriptionElement;
           return DescriptionElement is not null;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
         case "supportingInformation":
           value = SupportingInformation;
           return SupportingInformation?.Any() == true;
@@ -1041,18 +1041,24 @@ namespace Hl7.Fhir.Model
         case "slot":
           value = Slot;
           return Slot?.Any() == true;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
         case "created":
           value = CreatedElement;
           return CreatedElement is not null;
-        case "comment":
-          value = CommentElement;
-          return CommentElement is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
         case "patientInstruction":
-          value = PatientInstructionElement;
-          return PatientInstructionElement is not null;
+          value = PatientInstruction;
+          return PatientInstruction?.Any() == true;
         case "basedOn":
           value = BasedOn;
           return BasedOn?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
         case "participant":
           value = Participant;
           return Participant?.Any() == true;
@@ -1070,24 +1076,26 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
-      if (CancelationReason is not null) yield return new KeyValuePair<string,object>("cancelationReason",CancelationReason);
+      if (CancellationReason is not null) yield return new KeyValuePair<string,object>("cancellationReason",CancellationReason);
       if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
       if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
       if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
       if (AppointmentType is not null) yield return new KeyValuePair<string,object>("appointmentType",AppointmentType);
-      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
-      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
-      if (PriorityElement is not null) yield return new KeyValuePair<string,object>("priority",PriorityElement);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Priority is not null) yield return new KeyValuePair<string,object>("priority",Priority);
       if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
       if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
       if (StartElement is not null) yield return new KeyValuePair<string,object>("start",StartElement);
       if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
       if (MinutesDurationElement is not null) yield return new KeyValuePair<string,object>("minutesDuration",MinutesDurationElement);
       if (Slot?.Any() == true) yield return new KeyValuePair<string,object>("slot",Slot);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
-      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (PatientInstructionElement is not null) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstructionElement);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (PatientInstruction?.Any() == true) yield return new KeyValuePair<string,object>("patientInstruction",PatientInstruction);
       if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
       if (RequestedPeriod?.Any() == true) yield return new KeyValuePair<string,object>("requestedPeriod",RequestedPeriod);
     }

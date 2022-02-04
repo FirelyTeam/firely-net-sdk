@@ -498,6 +498,57 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "informationType":
+            value = InformationTypeElement;
+            return InformationTypeElement is not null;
+          case "summary":
+            value = Summary;
+            return Summary is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "classifier":
+            value = Classifier;
+            return Classifier?.Any() == true;
+          case "author":
+            value = Author;
+            return Author is not null;
+          case "path":
+            value = PathElement;
+            return PathElement?.Any() == true;
+          case "relatedArtifact":
+            value = RelatedArtifact;
+            return RelatedArtifact?.Any() == true;
+          case "freeToShare":
+            value = FreeToShareElement;
+            return FreeToShareElement is not null;
+          case "component":
+            value = Component;
+            return Component?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (InformationTypeElement is not null) yield return new KeyValuePair<string,object>("informationType",InformationTypeElement);
+        if (Summary is not null) yield return new KeyValuePair<string,object>("summary",Summary);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
+        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+        if (PathElement?.Any() == true) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+        if (FreeToShareElement is not null) yield return new KeyValuePair<string,object>("freeToShare",FreeToShareElement);
+        if (Component?.Any() == true) yield return new KeyValuePair<string,object>("component",Component);
+      }
+
     }
 
     /// <summary>
@@ -836,6 +887,61 @@ namespace Hl7.Fhir.Model
         if (WorkflowStatusElement != null) yield return new ElementValue("workflowStatus", WorkflowStatusElement);
         if (DispositionElement != null) yield return new ElementValue("disposition", DispositionElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "citeAs":
+          value = CiteAs;
+          return CiteAs is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "artifact":
+          value = Artifact;
+          return Artifact is not null;
+        case "content":
+          value = Content;
+          return Content?.Any() == true;
+        case "workflowStatus":
+          value = WorkflowStatusElement;
+          return WorkflowStatusElement is not null;
+        case "disposition":
+          value = DispositionElement;
+          return DispositionElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (CiteAs is not null) yield return new KeyValuePair<string,object>("citeAs",CiteAs);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
+      if (Artifact is not null) yield return new KeyValuePair<string,object>("artifact",Artifact);
+      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
+      if (WorkflowStatusElement is not null) yield return new KeyValuePair<string,object>("workflowStatus",WorkflowStatusElement);
+      if (DispositionElement is not null) yield return new KeyValuePair<string,object>("disposition",DispositionElement);
     }
 
   }
