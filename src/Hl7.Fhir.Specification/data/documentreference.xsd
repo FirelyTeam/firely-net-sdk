@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,25 +58,25 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="DocumentReference" type="DocumentReference">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. Provides metadata about the document so that the document can be discovered and managed. The scope of a document is any seralized object with a mime-type, so includes formal patient centric documents (CDA), cliical notes, scanned paper, and non-patient specific documents like policy text.</xs:documentation>
+      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this &quot;document&quot; encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="DocumentReference">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. Provides metadata about the document so that the document can be discovered and managed. The scope of a document is any seralized object with a mime-type, so includes formal patient centric documents (CDA), cliical notes, scanned paper, and non-patient specific documents like policy text.</xs:documentation>
+      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this &quot;document&quot; encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="masterIdentifier" minOccurs="0" maxOccurs="1" type="Identifier">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Document identifier as assigned by the source of the document. This identifier is specific to this version of the document. This unique identifier may be used elsewhere to identify this version of the document.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">Other identifiers associated with the document, including version independent identifiers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A procedure that is fulfilled in whole or in part by the creation of this media.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="DocumentReferenceStatus">
@@ -104,6 +104,31 @@
               <xs:documentation xml:lang="en">Who or what the document is about. The document can be about a person, (patient or healthcare practitioner), a device (e.g. a machine) or even a group of subjects (such as a document about a herd of farm animals, or a set of patients that share a common exposure).</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="encounter" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Describes the clinical encounter or type of care that the document content is associated with.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="event" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the type Code, such as a &quot;History and Physical Report&quot; in which the procedure being documented is necessarily a &quot;History and Physical&quot; act.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="facilityType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The kind of facility where the patient was seen.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="practiceSetting" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">This property may convey specifics about the practice setting where the content was created, often reflecting the clinical specialty.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The time period over which the service that is described by the document was provided.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="date" minOccurs="0" maxOccurs="1" type="instant">
             <xs:annotation>
               <xs:documentation xml:lang="en">When the document reference was created.</xs:documentation>
@@ -114,9 +139,9 @@
               <xs:documentation xml:lang="en">Identifies who is responsible for adding the information to the document.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="authenticator" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="attester" type="DocumentReference.Attester" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Which person or organization authenticates that this document is valid.</xs:documentation>
+              <xs:documentation xml:lang="en">A participant who has attested to the accuracy of the composition/document.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="custodian" minOccurs="0" maxOccurs="1" type="Reference">
@@ -129,7 +154,7 @@
               <xs:documentation xml:lang="en">Relationships that this document has with other document references that already exist.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
             <xs:annotation>
               <xs:documentation xml:lang="en">Human-readable description of the source document.</xs:documentation>
            </xs:annotation>
@@ -141,12 +166,43 @@
           </xs:element>
           <xs:element name="content" type="DocumentReference.Content" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The document and format referenced. There may be multiple content element repetitions, each with a different format.</xs:documentation>
+              <xs:documentation xml:lang="en">The document and format referenced.  If there are multiple content element repetitions, these must all represent the same document in different format, or attachment metadata.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="context" type="DocumentReference.Context" minOccurs="0" maxOccurs="1">
+          <xs:element name="sourcePatientInfo" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The clinical context in which the document was prepared.</xs:documentation>
+              <xs:documentation xml:lang="en">The Patient Information as known when the document was published. May be a reference to a version specific, or contained.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="related" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Related identifiers or resources associated with the DocumentReference.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DocumentReference.Attester">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this &quot;document&quot; encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="mode" minOccurs="1" maxOccurs="1" type="DocumentAttestationMode">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of attestation the authenticator offers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="time" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">When the composition was attested by the party.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="party" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Who attested the composition in the specified way.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -155,12 +211,12 @@
   </xs:complexType>
   <xs:complexType name="DocumentReference.RelatesTo">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. Provides metadata about the document so that the document can be discovered and managed. The scope of a document is any seralized object with a mime-type, so includes formal patient centric documents (CDA), cliical notes, scanned paper, and non-patient specific documents like policy text.</xs:documentation>
+      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this &quot;document&quot; encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="code" minOccurs="1" maxOccurs="1" type="DocumentRelationshipType">
+          <xs:element name="code" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of relationship that this document has with anther document.</xs:documentation>
            </xs:annotation>
@@ -176,7 +232,7 @@
   </xs:complexType>
   <xs:complexType name="DocumentReference.Content">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. Provides metadata about the document so that the document can be discovered and managed. The scope of a document is any seralized object with a mime-type, so includes formal patient centric documents (CDA), cliical notes, scanned paper, and non-patient specific documents like policy text.</xs:documentation>
+      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this &quot;document&quot; encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -191,53 +247,47 @@
               <xs:documentation xml:lang="en">An identifier of the document encoding, structure, and template that the document conforms to beyond the base format indicated in the mimeType.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Document identifier as assigned by the source of the document. This identifier is specific to this version of the document. This unique identifier may be used elsewhere to identify this version of the document.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="DocumentReference.Context">
+  <xs:simpleType name="DocumentAttestationModeEnum">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="personal">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Personal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="professional">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Professional</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="legal">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Legal</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="official">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Official</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="DocumentAttestationMode">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A reference to a document of any kind for any purpose. Provides metadata about the document so that the document can be discovered and managed. The scope of a document is any seralized object with a mime-type, so includes formal patient centric documents (CDA), cliical notes, scanned paper, and non-patient specific documents like policy text.</xs:documentation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
-        <xs:sequence>
-          <xs:element name="encounter" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Describes the clinical encounter or type of care that the document content is associated with.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="event" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">This list of codes represents the main clinical acts, such as a colonoscopy or an appendectomy, being documented. In some cases, the event is inherent in the type Code, such as a &quot;History and Physical Report&quot; in which the procedure being documented is necessarily a &quot;History and Physical&quot; act.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The time period over which the service that is described by the document was provided.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="facilityType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The kind of facility where the patient was seen.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="practiceSetting" minOccurs="0" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">This property may convey specifics about the practice setting where the content was created, often reflecting the clinical specialty.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="sourcePatientInfo" minOccurs="0" maxOccurs="1" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The Patient Information as known when the document was published. May be a reference to a version specific, or contained.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="related" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Related identifiers or resources associated with the DocumentReference.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-        </xs:sequence>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="DocumentAttestationModeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

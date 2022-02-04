@@ -37,13 +37,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var summaries = fa.ListSummaries();
 
-            // MV 2021-04-23: No longer part of the spec
-            // var summary = summaries.ResolveByCanonicalUri("http://terminology.hl7.org/ValueSet/v2-0292");
-            // Assert.IsNotNull(summary);
-            // var vs = fa.LoadBySummary(summary);
-            // Assert.IsTrue(vs is ValueSet);
-            // Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
-
             var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(summary);
             var vs = fa.LoadBySummary(summary);
@@ -82,13 +75,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
-            // MV 2021-04-23: No longer part of the spec
             // Try to find an additional US profile (they are distributed with the spec for now)
-            // summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            // Assert.IsNotNull(summary);
-            // var us = fa.LoadBySummary(summary);
-            // Assert.IsNotNull(us);
-            // Assert.IsTrue(us is StructureDefinition);
+            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
+            Assert.IsNotNull(summary);
+            var us = fa.LoadBySummary(summary);
+            Assert.IsNotNull(us);
+            Assert.IsTrue(us is StructureDefinition);
         }
 
         [TestMethod]

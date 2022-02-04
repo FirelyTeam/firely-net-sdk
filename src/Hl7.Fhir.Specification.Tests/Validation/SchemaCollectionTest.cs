@@ -6,13 +6,19 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Utility;
+using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System.Diagnostics;
 using System.IO;
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Serialization;
 using System.Xml.Linq;
 using System.Xml.Schema;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -20,7 +26,6 @@ namespace Hl7.Fhir.Specification.Tests
     public class SchemaCollectionTest
     {
         [TestMethod]
-        [Ignore("fhir-single.xsd contains multiple complexType 'fhir:SubscriptionStatus'")]
         public void TestSchemaCompilation()
         {
             var schemas = SchemaCollection.ValidationSchemaSet;
@@ -42,12 +47,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var hasError = false;
             patDoc = XDocument.Parse("<Patient xmlns='http://hl7.org/fhir'><garbage/></Patient>");
-            patDoc.Validate(SchemaCollection.ValidationSchemaSet, (source, args) => hasError = true);
+            patDoc.Validate(SchemaCollection.ValidationSchemaSet, (source,args) => hasError = true);
             Assert.IsTrue(hasError);
         }
 
         [TestMethod]
-        [Ignore("fhir-single.xsd contains multiple complexType 'fhir:SubscriptionStatus'")]
         public void TestSchemaCollectionValidation()
         {
             var s = File.ReadAllText(Path.Combine("TestData", "TestPatient.xml"));

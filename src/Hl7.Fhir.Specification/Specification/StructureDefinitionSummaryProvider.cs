@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
             else
-            {                
+            {
                 var basePath = nav.Current?.Base?.Path;
                 if (basePath == "Resource.id" || nav?.Current?.Path == "Resource.id")
                 {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Specification
 
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
                 }
-                else if(basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
+                else if (basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
                 {
                     // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };

@@ -3,7 +3,7 @@
 	<url value="http://example.com/fhir/StructureDefinition/profile-communication"/>
 	<name value="SomeCommunication"/>
 	<status value="draft"/>
-	<fhirVersion value="4.1.0"/>
+	<fhirVersion value="4.6.0"/>
 	<kind value="resource"/>
 	<abstract value="false"/>
 	<type value="Communication"/>
@@ -30,7 +30,7 @@
 		<element id="Communication.payload.content[x]">
 			<path value="Communication.payload.content[x]"/>
 			<type>
-				<code value="string"/>
+				<code value="CodeableConcept"/>
 			</type>
 			<type>
 				<code value="Reference"/>
@@ -39,15 +39,15 @@
 			</type>
 		</element>
     
-		<element id="Communication.payload:String">
+		<element id="Communication.payload:CodeableConcept">
 			<path value="Communication.payload"/>
-			<sliceName value="String"/>
+			<sliceName value="CodeableConcept"/>
 			<max value="1"/>
 		</element>
-		<element id="Communication.payload:String.content[x]">
+		<element id="Communication.payload:CodeableConcept.content[x]">
 			<path value="Communication.payload.content[x]"/>
 			<type>
-				<code value="string"/>
+				<code value="CodeableConcept"/>
 			</type>
 		</element>
     

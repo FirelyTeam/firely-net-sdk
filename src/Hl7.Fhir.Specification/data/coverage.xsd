@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -94,7 +94,7 @@
               <xs:documentation xml:lang="en">The party who has signed-up for or 'owns' the contractual relationship to the policy or to whom the benefit of the policy for services rendered to them or their family is due.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="subscriberId" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="subscriberId" minOccurs="0" maxOccurs="1" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">The insurer assigned ID for the Subscriber.</xs:documentation>
            </xs:annotation>
@@ -106,7 +106,7 @@
           </xs:element>
           <xs:element name="dependent" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A unique identifier for a dependent under the coverage.</xs:documentation>
+              <xs:documentation xml:lang="en">A designator for a dependent under the coverage.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="relationship" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -167,7 +167,7 @@
         <xs:sequence>
           <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The type of classification for which an insurer-specific class label or number and optional name is provided, for example may be used to identify a class of coverage or employer group, Policy, Plan.</xs:documentation>
+              <xs:documentation xml:lang="en">The type of classification for which an insurer-specific class label or number and optional name is provided.  For example, type may be used to identify a class of coverage or employer group, policy, or plan.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="value" minOccurs="1" maxOccurs="1" type="string">
@@ -226,7 +226,7 @@
           </xs:element>
           <xs:element name="period" minOccurs="0" maxOccurs="1" type="Period">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The timeframe during when the exception is in force.</xs:documentation>
+              <xs:documentation xml:lang="en">The timeframe the exception is in force.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

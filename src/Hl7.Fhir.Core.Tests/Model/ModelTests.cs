@@ -458,13 +458,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNull(ns.Url);
             Assert.IsNull(ns.UrlElement);
 
-            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://nu.nl" });
-            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred = true });
-
-            Assert.AreEqual("http://dan.nl", ns.Url);
-            Assert.AreEqual("http://dan.nl", ns.UrlElement.Value);
-
-            ns.UniqueId[1].Preferred = false;
+            ns.Url = "http://nu.nl";
 
             Assert.AreEqual("http://nu.nl", ns.Url);
             Assert.AreEqual("http://nu.nl", ns.UrlElement.Value);
@@ -734,10 +728,13 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestCheckMinorVersionCompatibiliy()
         {
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.3.0"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("4.3"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.1.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.1"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("5.0.0"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("5.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.6.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.6"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0"));
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.0"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
             Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0"));

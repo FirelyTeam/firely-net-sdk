@@ -12,7 +12,7 @@
 		<item>
 			<linkId value="1.1"/>
 			<text value="Status of surgical margin involvement by tumor (observable entity)"/>
-			<type value="choice"/>
+			<type value="coding"/>
 			<required value="true"/>
       <answerOption>
         <valueCoding>
@@ -51,7 +51,7 @@
         <item>
           <linkId value="1.1.1.1"/>
           <text value="Distance from Closest Margin"/>
-          <type value="choice"/>
+          <type value="coding"/>
           <answerOption>
 						<valueCoding>
 							<code value="D1"/>
@@ -89,7 +89,7 @@
 				<item>
 					<linkId value="1.1.1.2"/>
 					<text value="Specify Margin, if possible"/>
-					<type value="choice"/>
+					<type value="coding"/>
           <answerOption>
 						<valueCoding>
 							<code value="W1"/>
@@ -119,7 +119,7 @@
 			<item>
 				<linkId value="1.1.2.1"/>
 				<text value="Specify Margin(s), if possible"/>
-				<type value="choice"/>
+				<type value="coding"/>
 				<required value="true"/>
         <answerOption>
           <valueCoding>
@@ -168,7 +168,7 @@
 		<item>
 			<linkId value="2.1"/>
 			<text value="Treatment Effect (applicable to carcinomas treated with neoadjuvant therapy)"/>
-			<type value="choice"/>
+			<type value="coding"/>
 			<answerOption>
 				<valueCoding>
 					<code value="E1"/>
@@ -209,7 +209,7 @@
     <item>
       <linkId value="2.2"/>
       <text value="Tumor Description"/>
-      <type value="choice"/>
+      <type value="coding"/>
       <repeats value="true"/>
       <answerOption>
 				<valueCoding>
@@ -238,7 +238,7 @@
 			<item>
 				<linkId value="2.2.1.1"/>
 				<text value="??"/>
-				<type value="choice"/>
+				<type value="coding"/>
 				<repeats value="true"/>
         <answerOption>
           <valueCoding>

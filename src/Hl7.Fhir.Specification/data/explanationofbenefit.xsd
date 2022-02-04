@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -179,7 +179,7 @@
               <xs:documentation xml:lang="en">The business identifier for the instance of the adjudication response: claim, predetermination or preauthorization response.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="outcome" minOccurs="1" maxOccurs="1" type="RemittanceOutcome">
+          <xs:element name="outcome" minOccurs="1" maxOccurs="1" type="ClaimProcessingCodes">
             <xs:annotation>
               <xs:documentation xml:lang="en">The outcome of the claim, predetermination, or preauthorization processing.</xs:documentation>
            </xs:annotation>

@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Tests.Validation
                 Value = "Ewout Kramer"  // clearly, a wrong datetime
             };
 
-            enc.Period = new Period() { StartElement = dt };
+            enc.ActualPeriod = new Period() { StartElement = dt };
 
             // When we do not validate recursively, we should still be ok
             DotNetAttributeValidation.Validate(enc);

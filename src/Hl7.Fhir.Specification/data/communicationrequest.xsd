@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -97,6 +97,11 @@
           <xs:element name="statusReason" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Captures the reason for the current state of the CommunicationRequest.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="intent" minOccurs="1" maxOccurs="1" type="RequestIntent">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates the level of authority/intentionality associated with the CommunicationRequest and where the request fits into the workflow chain.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -153,7 +158,7 @@
           </xs:element>
           <xs:element name="requester" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The device, individual, or organization who initiated the request and has responsibility for its activation.</xs:documentation>
+              <xs:documentation xml:lang="en">The device, individual, or organization who asks for the information to be shared.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="recipient" minOccurs="0" maxOccurs="unbounded" type="Reference">
@@ -161,19 +166,14 @@
               <xs:documentation xml:lang="en">The entity (e.g. person, organization, clinical information system, device, group, or care team) which is the intended target of the communication.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="sender" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="informationProvider" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The entity (e.g. person, organization, clinical information system, or device) which is to be the source of the communication.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Describes why the request is being made in coded or textual form.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates another resource whose existence justifies this request.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -196,9 +196,9 @@
             <xs:annotation>
               <xs:documentation xml:lang="en">The communicated content (or for multi-part communications, one portion of the communication).</xs:documentation>
             </xs:annotation>
-            <xs:element name="contentString" type="string"/>
             <xs:element name="contentAttachment" type="Attachment"/>
             <xs:element name="contentReference" type="Reference"/>
+            <xs:element name="contentCodeableConcept" type="CodeableConcept"/>
           </xs:choice>
         </xs:sequence>
       </xs:extension>

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -239,6 +239,46 @@
        </xs:extension>
      </xs:complexContent>
   </xs:complexType>
+  <xs:simpleType name="ConceptMapRelationshipEnum">
+    <xs:restriction base="code-primitive">
+      <xs:enumeration value="related-to">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Related To</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="equivalent">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Equivalent</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="source-is-narrower-than-target">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Source Is Narrower Than Target</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="source-is-broader-than-target">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Source Is Broader Than Target</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="not-related-to">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Not Related To</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ConceptMapRelationship">
+    <xs:annotation>
+      <xs:documentation xml:lang="en"></xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+       <xs:extension base="Element">
+         <xs:attribute name="value" type="ConceptMapRelationshipEnum" use="optional"/>
+       </xs:extension>
+     </xs:complexContent>
+  </xs:complexType>
   <xs:simpleType name="DefinitionResourceTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="ActivityDefinition">
@@ -356,9 +396,9 @@
           <xs:documentation xml:lang="en">Coverage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="DiagnosticReport">
@@ -436,9 +476,9 @@
           <xs:documentation xml:lang="en">MedicationDispense</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicationStatement">
+      <xs:enumeration value="MedicationUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Observation">
@@ -616,9 +656,9 @@
           <xs:documentation xml:lang="en">Coverage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="DiagnosticReport">
@@ -696,9 +736,9 @@
           <xs:documentation xml:lang="en">MedicationDispense</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicationStatement">
+      <xs:enumeration value="MedicationUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Observation">
@@ -851,6 +891,11 @@
           <xs:documentation xml:lang="en">3.0.1</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="3.0.2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">3.0.2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="3.3.0">
         <xs:annotation>
           <xs:documentation xml:lang="en">3.3.0</xs:documentation>
@@ -876,6 +921,11 @@
           <xs:documentation xml:lang="en">4.1.0</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="4.2.0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.2.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="4.3.0-snapshot1">
         <xs:annotation>
           <xs:documentation xml:lang="en">4.3.0-snapshot1</xs:documentation>
@@ -884,6 +934,31 @@
       <xs:enumeration value="4.3.0-cibuild">
         <xs:annotation>
           <xs:documentation xml:lang="en">4.3.0-cibuild</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4.4.0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.4.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4.5.0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.5.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="4.6.0">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">4.6.0</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5.0.0-snapshot1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">5.0.0-snapshot1</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="5.0.0-cibuild">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">5.0.0-cibuild</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -1032,11 +1107,6 @@
   </xs:complexType>
   <xs:simpleType name="RemittanceOutcomeEnum">
     <xs:restriction base="code-primitive">
-      <xs:enumeration value="queued">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Queued</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="complete">
         <xs:annotation>
           <xs:documentation xml:lang="en">Complete</xs:documentation>
@@ -1200,15 +1270,6 @@
           <xs:documentation xml:lang="zh">账户</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ActivityDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneAttivita</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeActividad</xs:documentation>
-          <xs:documentation xml:lang="zh">活动定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="AdministrableProductDefinition">
         <xs:annotation>
           <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
@@ -1288,12 +1349,269 @@
           <xs:documentation xml:lang="zh">身体结构</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="CanonicalResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CanonicalResource</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="CapabilityStatement">
         <xs:annotation>
           <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
           <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
           <xs:documentation xml:lang="es">DeclaracionDeCapacidad</xs:documentation>
           <xs:documentation xml:lang="zh">能力声明</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CapabilityStatement2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CodeSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="it">SistemaDiCodifica</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeCodigos</xs:documentation>
+          <xs:documentation xml:lang="zh">代码系统</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CompartmentDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeCompartimento</xs:documentation>
+          <xs:documentation xml:lang="zh">逻辑区块定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConceptMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="it">MappaDiConcetti</xs:documentation>
+          <xs:documentation xml:lang="fr">CarteDeConcepts</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeConceptos</xs:documentation>
+          <xs:documentation xml:lang="zh">概念映射</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConceptMap2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConceptMap2</xs:documentation>
+          <xs:documentation xml:lang="en">ConceptMap2</xs:documentation>
+          <xs:documentation xml:lang="it">MappaDiConcetti2</xs:documentation>
+          <xs:documentation xml:lang="fr">CarteDeConcepts2</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeConceptos2</xs:documentation>
+          <xs:documentation xml:lang="zh">概念映射2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExampleScenario">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="it">ScenarioDiEsempio</xs:documentation>
+          <xs:documentation xml:lang="es">EjemploDeEscenario</xs:documentation>
+          <xs:documentation xml:lang="zh">示例场景</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GraphDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionGrafico</xs:documentation>
+          <xs:documentation xml:lang="zh">图形定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImplementationGuide">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="es">GuiaDeImplementacion</xs:documentation>
+          <xs:documentation xml:lang="zh">实施指南</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MessageDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneMessaggio</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionMensaje</xs:documentation>
+          <xs:documentation xml:lang="zh">消息定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MetadataResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MetadataResource</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ActivityDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneAttivita</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeActividad</xs:documentation>
+          <xs:documentation xml:lang="zh">活动定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ArtifactAssessment">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ArtifactAssessment</xs:documentation>
+          <xs:documentation xml:lang="en">ArtifactAssessment</xs:documentation>
+          <xs:documentation xml:lang="it">ArtefattoValutazione</xs:documentation>
+          <xs:documentation xml:lang="es">ArtefactoEvaluacion</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ChargeItemDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Citation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConditionDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EventDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneEvento</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionDeEvento</xs:documentation>
+          <xs:documentation xml:lang="zh">事件定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Evidence">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceVariable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Library">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="es">Librería</xs:documentation>
+          <xs:documentation xml:lang="zh">库</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Measure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="it">Misura</xs:documentation>
+          <xs:documentation xml:lang="es">Medida</xs:documentation>
+          <xs:documentation xml:lang="zh">指标</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PlanDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDePlan</xs:documentation>
+          <xs:documentation xml:lang="zh">计划定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Questionnaire">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="it">Questionario</xs:documentation>
+          <xs:documentation xml:lang="fr">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="zh">调查问卷</xs:documentation>
+          <xs:documentation xml:lang="es">Cuestionario</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NamingSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="fr">SystèmeDeNommage</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeNombres</xs:documentation>
+          <xs:documentation xml:lang="zh">命名系统</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OperationDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneOperazione</xs:documentation>
+          <xs:documentation xml:lang="fr">DéfinitionOpération</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeOperacion</xs:documentation>
+          <xs:documentation xml:lang="zh">操作定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SearchParameter">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="it">ParametroDiRicerca</xs:documentation>
+          <xs:documentation xml:lang="fr">ParamètreRecherche</xs:documentation>
+          <xs:documentation xml:lang="es">ParametroDeBusqueda</xs:documentation>
+          <xs:documentation xml:lang="zh">搜索参数</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneStruttura</xs:documentation>
+          <xs:documentation xml:lang="fr">DéfinitionStructure</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">结构定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">结构映射</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TerminologyCapabilities">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="es">CapacidadTerminologica</xs:documentation>
+          <xs:documentation xml:lang="zh">术语服务能力</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TestScript">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="fr">ScriptTest</xs:documentation>
+          <xs:documentation xml:lang="es">ScriptDePrueba</xs:documentation>
+          <xs:documentation xml:lang="zh">测试脚本</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ValueSet">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="fr">EnsembleValeurs</xs:documentation>
+          <xs:documentation xml:lang="zh">取值集合</xs:documentation>
+          <xs:documentation xml:lang="es">ConjuntoValores / ConjuntoDeValores</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CarePlan">
@@ -1314,32 +1632,12 @@
           <xs:documentation xml:lang="zh">照护团队</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CatalogEntry">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
-          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
-          <xs:documentation xml:lang="es">EntradaDeCatalogo</xs:documentation>
-          <xs:documentation xml:lang="zh">条目定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ChargeItem">
         <xs:annotation>
           <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
           <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
           <xs:documentation xml:lang="es">CargoDeItem</xs:documentation>
           <xs:documentation xml:lang="zh">收费项目</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ChargeItemDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Citation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Citation</xs:documentation>
-          <xs:documentation xml:lang="en">Citation</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Claim">
@@ -1375,13 +1673,10 @@
           <xs:documentation xml:lang="en">ClinicalUseDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CodeSystem">
+      <xs:enumeration value="ClinicalUseIssue">
         <xs:annotation>
-          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
-          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
-          <xs:documentation xml:lang="it">SistemaDiCodifica</xs:documentation>
-          <xs:documentation xml:lang="es">SistemaDeCodigos</xs:documentation>
-          <xs:documentation xml:lang="zh">代码系统</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Communication">
@@ -1404,14 +1699,6 @@
           <xs:documentation xml:lang="zh">通讯请求</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CompartmentDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeCompartimento</xs:documentation>
-          <xs:documentation xml:lang="zh">逻辑区块定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Composition">
         <xs:annotation>
           <xs:documentation xml:lang="en">Composition</xs:documentation>
@@ -1420,16 +1707,6 @@
           <xs:documentation xml:lang="fr">Composition</xs:documentation>
           <xs:documentation xml:lang="es">Composición</xs:documentation>
           <xs:documentation xml:lang="zh">组合式文书</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ConceptMap">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
-          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
-          <xs:documentation xml:lang="it">MappaDiConcetti</xs:documentation>
-          <xs:documentation xml:lang="fr">CarteDeConcepts</xs:documentation>
-          <xs:documentation xml:lang="es">MapaDeConceptos</xs:documentation>
-          <xs:documentation xml:lang="zh">概念映射</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Condition">
@@ -1518,6 +1795,14 @@
           <xs:documentation xml:lang="zh">装置组件</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="DeviceDispense">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceDispense</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceDispense</xs:documentation>
+          <xs:documentation xml:lang="fr">DispensationDeDispositif</xs:documentation>
+          <xs:documentation xml:lang="es">DispensaciónDeDispositivo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="DeviceMetric">
         <xs:annotation>
           <xs:documentation xml:lang="en">DeviceMetric</xs:documentation>
@@ -1537,10 +1822,10 @@
           <xs:documentation xml:lang="zh">装置请求</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
           <xs:documentation xml:lang="zh">装置使用声明</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
@@ -1620,42 +1905,6 @@
           <xs:documentation xml:lang="zh">照护服务节段</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="EventDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneEvento</xs:documentation>
-          <xs:documentation xml:lang="es">DefinitionDeEvento</xs:documentation>
-          <xs:documentation xml:lang="zh">事件定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Evidence">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Evidence</xs:documentation>
-          <xs:documentation xml:lang="en">Evidence</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EvidenceReport">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
-          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EvidenceVariable">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
-          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ExampleScenario">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
-          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
-          <xs:documentation xml:lang="it">ScenarioDiEsempio</xs:documentation>
-          <xs:documentation xml:lang="es">EjemploDeEscenario</xs:documentation>
-          <xs:documentation xml:lang="zh">示例场景</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ExplanationOfBenefit">
         <xs:annotation>
           <xs:documentation xml:lang="en">ExplanationOfBenefit</xs:documentation>
@@ -1691,14 +1940,6 @@
           <xs:documentation xml:lang="zh">目标</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="GraphDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinitionGrafico</xs:documentation>
-          <xs:documentation xml:lang="zh">图形定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Group">
         <xs:annotation>
           <xs:documentation xml:lang="en">Group</xs:documentation>
@@ -1725,6 +1966,12 @@
           <xs:documentation xml:lang="fr">ServiceDeSanté</xs:documentation>
           <xs:documentation xml:lang="es">ServicioDeCuidado</xs:documentation>
           <xs:documentation xml:lang="zh">医疗保健服务项目</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImagingSelection">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImagingSelection</xs:documentation>
+          <xs:documentation xml:lang="en">ImagingSelection</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ImagingStudy">
@@ -1761,14 +2008,6 @@
           <xs:documentation xml:lang="es">RecomendaciónInmunización /</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ImplementationGuide">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
-          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
-          <xs:documentation xml:lang="es">GuiaDeImplementacion</xs:documentation>
-          <xs:documentation xml:lang="zh">实施指南</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Ingredient">
         <xs:annotation>
           <xs:documentation xml:lang="en">Ingredient</xs:documentation>
@@ -1781,18 +2020,16 @@
           <xs:documentation xml:lang="en">InsurancePlan</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="InventoryReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">InventoryReport</xs:documentation>
+          <xs:documentation xml:lang="en">InventoryReport</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Invoice">
         <xs:annotation>
           <xs:documentation xml:lang="en">Invoice</xs:documentation>
           <xs:documentation xml:lang="en">Invoice</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Library">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Library</xs:documentation>
-          <xs:documentation xml:lang="en">Library</xs:documentation>
-          <xs:documentation xml:lang="es">Librería</xs:documentation>
-          <xs:documentation xml:lang="zh">库</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Linkage">
@@ -1828,31 +2065,12 @@
           <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Measure">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Measure</xs:documentation>
-          <xs:documentation xml:lang="en">Measure</xs:documentation>
-          <xs:documentation xml:lang="it">Misura</xs:documentation>
-          <xs:documentation xml:lang="es">Medida</xs:documentation>
-          <xs:documentation xml:lang="zh">指标</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="MeasureReport">
         <xs:annotation>
           <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
           <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
           <xs:documentation xml:lang="es">ReporteMedida</xs:documentation>
           <xs:documentation xml:lang="zh">指标报告</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Media">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="it">Media</xs:documentation>
-          <xs:documentation xml:lang="fr">Média</xs:documentation>
-          <xs:documentation xml:lang="es">Medio</xs:documentation>
-          <xs:documentation xml:lang="zh">媒体</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Medication">
@@ -1897,28 +2115,16 @@
           <xs:documentation xml:lang="es">PrescripciónMedicaciónTODO  /PrescripcionMedicamento</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicationStatement">
+      <xs:enumeration value="MedicationUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="fr">ÉtatMédication</xs:documentation>
-          <xs:documentation xml:lang="zh">药物声明</xs:documentation>
-          <xs:documentation xml:lang="es">ResumenMedicación /ResumenMedicamento</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MedicinalProductDefinition">
         <xs:annotation>
           <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
           <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MessageDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneMessaggio</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionMensaje</xs:documentation>
-          <xs:documentation xml:lang="zh">消息定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MessageHeader">
@@ -1938,13 +2144,10 @@
           <xs:documentation xml:lang="zh">分子序列</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="NamingSystem">
+      <xs:enumeration value="NutritionIntake">
         <xs:annotation>
-          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
-          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
-          <xs:documentation xml:lang="fr">SystèmeDeNommage</xs:documentation>
-          <xs:documentation xml:lang="es">SistemaDeNombres</xs:documentation>
-          <xs:documentation xml:lang="zh">命名系统</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="NutritionOrder">
@@ -1981,16 +2184,6 @@
           <xs:documentation xml:lang="it">DefinizioneOsservazione</xs:documentation>
           <xs:documentation xml:lang="es">DefinicionDeEspecimen</xs:documentation>
           <xs:documentation xml:lang="zh">观察定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="OperationDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneOperazione</xs:documentation>
-          <xs:documentation xml:lang="fr">DéfinitionOpération</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeOperacion</xs:documentation>
-          <xs:documentation xml:lang="zh">操作定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="OperationOutcome">
@@ -2055,6 +2248,14 @@
           <xs:documentation xml:lang="zh">付款对账</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Permission">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="fr">Permission</xs:documentation>
+          <xs:documentation xml:lang="es">Permiso</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Person">
         <xs:annotation>
           <xs:documentation xml:lang="en">Person</xs:documentation>
@@ -2063,14 +2264,6 @@
           <xs:documentation xml:lang="fr">Personne</xs:documentation>
           <xs:documentation xml:lang="es">Persona</xs:documentation>
           <xs:documentation xml:lang="zh">人员</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PlanDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDePlan</xs:documentation>
-          <xs:documentation xml:lang="zh">计划定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Practitioner">
@@ -2110,16 +2303,6 @@
           <xs:documentation xml:lang="es">Procedencia</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Questionnaire">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="it">Questionario</xs:documentation>
-          <xs:documentation xml:lang="fr">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="zh">调查问卷</xs:documentation>
-          <xs:documentation xml:lang="es">Cuestionario</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="QuestionnaireResponse">
         <xs:annotation>
           <xs:documentation xml:lang="en">QuestionnaireResponse</xs:documentation>
@@ -2155,18 +2338,6 @@
           <xs:documentation xml:lang="zh">请求分组</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ResearchDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ResearchElementDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ResearchStudy">
         <xs:annotation>
           <xs:documentation xml:lang="en">ResearchStudy</xs:documentation>
@@ -2198,16 +2369,6 @@
           <xs:documentation xml:lang="en">Schedule</xs:documentation>
           <xs:documentation xml:lang="es">Agenda</xs:documentation>
           <xs:documentation xml:lang="zh">日程安排</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="SearchParameter">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
-          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
-          <xs:documentation xml:lang="it">ParametroDiRicerca</xs:documentation>
-          <xs:documentation xml:lang="fr">ParamètreRecherche</xs:documentation>
-          <xs:documentation xml:lang="es">ParametroDeBusqueda</xs:documentation>
-          <xs:documentation xml:lang="zh">搜索参数</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ServiceRequest">
@@ -2248,24 +2409,6 @@
           <xs:documentation xml:lang="zh">标本定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="StructureDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneStruttura</xs:documentation>
-          <xs:documentation xml:lang="fr">DéfinitionStructure</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeEstructura</xs:documentation>
-          <xs:documentation xml:lang="zh">结构定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="StructureMap">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
-          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
-          <xs:documentation xml:lang="es">MapaDeEstructura</xs:documentation>
-          <xs:documentation xml:lang="zh">结构映射</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Subscription">
         <xs:annotation>
           <xs:documentation xml:lang="en">Subscription</xs:documentation>
@@ -2286,6 +2429,9 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
           <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="fr">Souscription Sujet</xs:documentation>
+          <xs:documentation xml:lang="es">Tema de Suscripción</xs:documentation>
+          <xs:documentation xml:lang="zh">话题</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Substance">
@@ -2302,6 +2448,36 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
           <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceNucleicAcid">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstancePolymer">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceProtein">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceReferenceInformation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceSourceMaterial">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="SupplyDelivery">
@@ -2330,14 +2506,6 @@
           <xs:documentation xml:lang="zh">任务</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="TerminologyCapabilities">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
-          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
-          <xs:documentation xml:lang="es">CapacidadTerminologica</xs:documentation>
-          <xs:documentation xml:lang="zh">术语服务能力</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="TestReport">
         <xs:annotation>
           <xs:documentation xml:lang="en">TestReport</xs:documentation>
@@ -2345,24 +2513,6 @@
           <xs:documentation xml:lang="fr">RapportTest</xs:documentation>
           <xs:documentation xml:lang="es">ReporteDePrueba</xs:documentation>
           <xs:documentation xml:lang="zh">测试报告</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="TestScript">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TestScript</xs:documentation>
-          <xs:documentation xml:lang="en">TestScript</xs:documentation>
-          <xs:documentation xml:lang="fr">ScriptTest</xs:documentation>
-          <xs:documentation xml:lang="es">ScriptDePrueba</xs:documentation>
-          <xs:documentation xml:lang="zh">测试脚本</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ValueSet">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
-          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
-          <xs:documentation xml:lang="fr">EnsembleValeurs</xs:documentation>
-          <xs:documentation xml:lang="zh">取值集合</xs:documentation>
-          <xs:documentation xml:lang="es">ConjuntoValores / ConjuntoDeValores</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="VerificationResult">
@@ -2471,7 +2621,7 @@
   </xs:simpleType>
   <xs:complexType name="date">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A date or partial date (e.g. just year or year + month). There is no time zone. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.</xs:documentation>
+      <xs:documentation xml:lang="en">A date or partial date (e.g. just year or year + month). There is no UTC offset. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -2490,7 +2640,7 @@
   </xs:simpleType>
   <xs:complexType name="dateTime">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a time zone SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.</xs:documentation>
+      <xs:documentation xml:lang="en">A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a UTC offset SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -2502,7 +2652,7 @@
   <xs:simpleType name="code-primitive">
     <xs:restriction base="xs:token">
       <xs:minLength value="1"/>
-      <xs:pattern value="[^\s]+(\s[^\s]+)*"/>
+      <xs:pattern value="[^\s]+( [^\s]+)*"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="code">
@@ -2530,6 +2680,23 @@
     <xs:complexContent>
       <xs:extension base="Element">
         <xs:attribute name="value" type="string-primitive" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="integer64-primitive">
+    <xs:restriction base="xs:long">
+      <xs:pattern value="-?([0]|([1-9][0-9]*))"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="integer64">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A very large whole number</xs:documentation>
+      <xs:documentation xml:lang="en">Typically this is used for record counters (e.g. database keys)</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Element">
+        <xs:attribute name="value" type="integer64-primitive" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -2646,7 +2813,7 @@
   <xs:complexType name="instant">
     <xs:annotation>
       <xs:documentation xml:lang="en">An instant in time - known at least to the second</xs:documentation>
-      <xs:documentation xml:lang="en">Note: This is intended for where precisely observed times are required, typically system logs etc., and not human-reported times - for them, see date and dateTime (which can be as precise as instant, but is not required to be) below. Time zone is always required</xs:documentation>
+      <xs:documentation xml:lang="en">Note: This is intended for where precisely observed times are required, typically system logs etc., and not human-reported times - for them, see date and dateTime (which can be as precise as instant, but is not required to be) below. UTC offset is always required</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -2673,7 +2840,7 @@
   </xs:complexType>
   <xs:simpleType name="base64Binary-primitive">
     <xs:restriction base="xs:base64Binary">
-      <xs:pattern value="(\s*([0-9a-zA-Z\+/=]){4}\s*)+"/>
+      <xs:pattern value="(\s*([0-9a-zA-Z*\/*\+\=]){4}\s*)+"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="base64Binary">
@@ -2798,6 +2965,7 @@
       <xs:element ref="AllergyIntolerance"/>
       <xs:element ref="Appointment"/>
       <xs:element ref="AppointmentResponse"/>
+      <xs:element ref="ArtifactAssessment"/>
       <xs:element ref="AuditEvent"/>
       <xs:element ref="Basic"/>
       <xs:element ref="Binary"/>
@@ -2805,9 +2973,9 @@
       <xs:element ref="BodyStructure"/>
       <xs:element ref="Bundle"/>
       <xs:element ref="CapabilityStatement"/>
+      <xs:element ref="CapabilityStatement2"/>
       <xs:element ref="CarePlan"/>
       <xs:element ref="CareTeam"/>
-      <xs:element ref="CatalogEntry"/>
       <xs:element ref="ChargeItem"/>
       <xs:element ref="ChargeItemDefinition"/>
       <xs:element ref="Citation"/>
@@ -2815,13 +2983,16 @@
       <xs:element ref="ClaimResponse"/>
       <xs:element ref="ClinicalImpression"/>
       <xs:element ref="ClinicalUseDefinition"/>
+      <xs:element ref="ClinicalUseIssue"/>
       <xs:element ref="CodeSystem"/>
       <xs:element ref="Communication"/>
       <xs:element ref="CommunicationRequest"/>
       <xs:element ref="CompartmentDefinition"/>
       <xs:element ref="Composition"/>
       <xs:element ref="ConceptMap"/>
+      <xs:element ref="ConceptMap2"/>
       <xs:element ref="Condition"/>
+      <xs:element ref="ConditionDefinition"/>
       <xs:element ref="Consent"/>
       <xs:element ref="Contract"/>
       <xs:element ref="Coverage"/>
@@ -2830,9 +3001,10 @@
       <xs:element ref="DetectedIssue"/>
       <xs:element ref="Device"/>
       <xs:element ref="DeviceDefinition"/>
+      <xs:element ref="DeviceDispense"/>
       <xs:element ref="DeviceMetric"/>
       <xs:element ref="DeviceRequest"/>
-      <xs:element ref="DeviceUseStatement"/>
+      <xs:element ref="DeviceUsage"/>
       <xs:element ref="DiagnosticReport"/>
       <xs:element ref="DocumentManifest"/>
       <xs:element ref="DocumentReference"/>
@@ -2854,6 +3026,7 @@
       <xs:element ref="Group"/>
       <xs:element ref="GuidanceResponse"/>
       <xs:element ref="HealthcareService"/>
+      <xs:element ref="ImagingSelection"/>
       <xs:element ref="ImagingStudy"/>
       <xs:element ref="Immunization"/>
       <xs:element ref="ImmunizationEvaluation"/>
@@ -2861,6 +3034,7 @@
       <xs:element ref="ImplementationGuide"/>
       <xs:element ref="Ingredient"/>
       <xs:element ref="InsurancePlan"/>
+      <xs:element ref="InventoryReport"/>
       <xs:element ref="Invoice"/>
       <xs:element ref="Library"/>
       <xs:element ref="Linkage"/>
@@ -2869,18 +3043,18 @@
       <xs:element ref="ManufacturedItemDefinition"/>
       <xs:element ref="Measure"/>
       <xs:element ref="MeasureReport"/>
-      <xs:element ref="Media"/>
       <xs:element ref="Medication"/>
       <xs:element ref="MedicationAdministration"/>
       <xs:element ref="MedicationDispense"/>
       <xs:element ref="MedicationKnowledge"/>
       <xs:element ref="MedicationRequest"/>
-      <xs:element ref="MedicationStatement"/>
+      <xs:element ref="MedicationUsage"/>
       <xs:element ref="MedicinalProductDefinition"/>
       <xs:element ref="MessageDefinition"/>
       <xs:element ref="MessageHeader"/>
       <xs:element ref="MolecularSequence"/>
       <xs:element ref="NamingSystem"/>
+      <xs:element ref="NutritionIntake"/>
       <xs:element ref="NutritionOrder"/>
       <xs:element ref="NutritionProduct"/>
       <xs:element ref="Observation"/>
@@ -2893,6 +3067,7 @@
       <xs:element ref="Patient"/>
       <xs:element ref="PaymentNotice"/>
       <xs:element ref="PaymentReconciliation"/>
+      <xs:element ref="Permission"/>
       <xs:element ref="Person"/>
       <xs:element ref="PlanDefinition"/>
       <xs:element ref="Practitioner"/>
@@ -2904,8 +3079,6 @@
       <xs:element ref="RegulatedAuthorization"/>
       <xs:element ref="RelatedPerson"/>
       <xs:element ref="RequestGroup"/>
-      <xs:element ref="ResearchDefinition"/>
-      <xs:element ref="ResearchElementDefinition"/>
       <xs:element ref="ResearchStudy"/>
       <xs:element ref="ResearchSubject"/>
       <xs:element ref="RiskAssessment"/>
@@ -2922,6 +3095,11 @@
       <xs:element ref="SubscriptionTopic"/>
       <xs:element ref="Substance"/>
       <xs:element ref="SubstanceDefinition"/>
+      <xs:element ref="SubstanceNucleicAcid"/>
+      <xs:element ref="SubstancePolymer"/>
+      <xs:element ref="SubstanceProtein"/>
+      <xs:element ref="SubstanceReferenceInformation"/>
+      <xs:element ref="SubstanceSourceMaterial"/>
       <xs:element ref="SupplyDelivery"/>
       <xs:element ref="SupplyRequest"/>
       <xs:element ref="Task"/>
@@ -2940,7 +3118,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
         <xs:choice minOccurs="0" maxOccurs="1">
            <xs:annotation>
@@ -2956,6 +3134,7 @@
            <xs:element name="valueId" type="id"/>
            <xs:element name="valueInstant" type="instant"/>
            <xs:element name="valueInteger" type="integer"/>
+           <xs:element name="valueInteger64" type="integer64"/>
            <xs:element name="valueMarkdown" type="markdown"/>
            <xs:element name="valueOid" type="oid"/>
            <xs:element name="valuePositiveInt" type="positiveInt"/>
@@ -3029,7 +3208,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="status" type="NarrativeStatus" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -3086,7 +3265,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="Base">
         <xs:sequence>
           <xs:element name="extension" type="Extension" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
@@ -3110,13 +3289,52 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="PrimitiveType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The base type for all re-useable types defined that have a simple property.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DataType">
+        <xs:sequence>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="BackboneType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base definition for the few data types that are allowed to carry modifier extensions.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DataType">
+        <xs:sequence>
+          <xs:element name="modifierExtension" type="Extension" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">May be used to represent additional information that is not part of the basic definition of the element and that modifies the understanding of the element in which it is contained and/or the understanding of the containing element's descendants. Usually modifier elements provide negation or qualification. To make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions.
+
+Modifier extensions SHALL NOT change the meaning of any elements on Resource or DomainResource (including cannot change the meaning of modifierExtension itself).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="Base">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Base definition for all types defined in FHIR type system.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
+    </xs:annotation>
+        <xs:sequence>
+        </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="Meta">
     <xs:annotation>
       <xs:documentation xml:lang="en">The metadata about a resource. This is content in the resource that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="versionId" type="id" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3158,7 +3376,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="use" type="AddressUse" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3290,7 +3508,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="type" type="ContributorType" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -3352,7 +3570,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="contentType" type="code" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3374,7 +3592,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
               <xs:documentation xml:lang="en">A location where the data can be accessed.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="size" type="unsignedInt" minOccurs="0" maxOccurs="1">
+          <xs:element name="size" type="integer64" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The number of bytes of data that make up this attachment (before base64 encoding, if that is done).</xs:documentation>
             </xs:annotation>
@@ -3392,6 +3610,31 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
           <xs:element name="creation" type="dateTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The date that the attachment was first created.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="height" type="positiveInt" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Height of the image in pixels (photo/video).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="width" type="positiveInt" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Width of the image in pixels (photo/video).</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="frames" type="positiveInt" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The number of frames in a photo. This is used with a multi-page fax, or an imaging acquisition context that takes multiple slices in a single image, or an animated gif. If there is more than one frame, this SHALL have a value in order to alert interface software that a multi-frame capable rendering widget is required.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="duration" type="decimal" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The duration of the recording in seconds - for audio and video.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="pages" type="positiveInt" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The number of pages when printed.</xs:documentation>
             </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -3416,7 +3659,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="type" type="code" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -3472,7 +3715,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="path" type="string" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3504,7 +3747,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="path" type="string" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3534,7 +3777,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="path" type="string" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -3581,7 +3824,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="sequence" type="integer" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3660,7 +3903,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="type" type="CodeableConcept" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3692,7 +3935,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="value" type="decimal" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3714,7 +3957,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="use" type="NameUse" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3811,7 +4054,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="system" type="ContactPointSystem" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3938,7 +4181,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="country" type="CodeableConcept" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -3975,7 +4218,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="use" type="IdentifierUse" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -4084,7 +4327,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="system" type="uri" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -4121,7 +4364,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="origin" type="Quantity" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4181,7 +4424,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:choice minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -4215,7 +4458,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="numerator" type="Quantity" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -4237,7 +4480,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="path" type="string" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4338,6 +4581,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
            <xs:element name="defaultValueId" type="id"/>
            <xs:element name="defaultValueInstant" type="instant"/>
            <xs:element name="defaultValueInteger" type="integer"/>
+           <xs:element name="defaultValueInteger64" type="integer64"/>
            <xs:element name="defaultValueMarkdown" type="markdown"/>
            <xs:element name="defaultValueOid" type="oid"/>
            <xs:element name="defaultValuePositiveInt" type="positiveInt"/>
@@ -4405,6 +4649,7 @@ The value of mustSupport SHALL be a FHIRPath resolveable on the type of the Data
            <xs:element name="fixedId" type="id"/>
            <xs:element name="fixedInstant" type="instant"/>
            <xs:element name="fixedInteger" type="integer"/>
+           <xs:element name="fixedInteger64" type="integer64"/>
            <xs:element name="fixedMarkdown" type="markdown"/>
            <xs:element name="fixedOid" type="oid"/>
            <xs:element name="fixedPositiveInt" type="positiveInt"/>
@@ -4472,6 +4717,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="patternId" type="id"/>
            <xs:element name="patternInstant" type="instant"/>
            <xs:element name="patternInteger" type="integer"/>
+           <xs:element name="patternInteger64" type="integer64"/>
            <xs:element name="patternMarkdown" type="markdown"/>
            <xs:element name="patternOid" type="oid"/>
            <xs:element name="patternPositiveInt" type="positiveInt"/>
@@ -4530,6 +4776,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="minValueTime" type="time"  maxOccurs="1"/>
            <xs:element name="minValueDecimal" type="decimal"  maxOccurs="1"/>
            <xs:element name="minValueInteger" type="integer"  maxOccurs="1"/>
+           <xs:element name="minValueInteger64" type="integer64"  maxOccurs="1"/>
            <xs:element name="minValuePositiveInt" type="positiveInt"  maxOccurs="1"/>
            <xs:element name="minValueUnsignedInt" type="unsignedInt"  maxOccurs="1"/>
            <xs:element name="minValueQuantity" type="Quantity"  maxOccurs="1"/>
@@ -4544,6 +4791,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="maxValueTime" type="time"  maxOccurs="1"/>
            <xs:element name="maxValueDecimal" type="decimal"  maxOccurs="1"/>
            <xs:element name="maxValueInteger" type="integer"  maxOccurs="1"/>
+           <xs:element name="maxValueInteger64" type="integer64"  maxOccurs="1"/>
            <xs:element name="maxValuePositiveInt" type="positiveInt"  maxOccurs="1"/>
            <xs:element name="maxValueUnsignedInt" type="unsignedInt"  maxOccurs="1"/>
            <xs:element name="maxValueQuantity" type="Quantity"  maxOccurs="1"/>
@@ -4603,7 +4851,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="key" type="id" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4650,7 +4898,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="identity" type="id" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4682,7 +4930,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="path" type="string" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4709,7 +4957,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="code" type="uri" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4746,7 +4994,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="label" type="string" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4767,6 +5015,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
            <xs:element name="valueId" type="id"/>
            <xs:element name="valueInstant" type="instant"/>
            <xs:element name="valueInteger" type="integer"/>
+           <xs:element name="valueInteger64" type="integer64"/>
            <xs:element name="valueMarkdown" type="markdown"/>
            <xs:element name="valueOid" type="oid"/>
            <xs:element name="valuePositiveInt" type="positiveInt"/>
@@ -4820,7 +5069,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="discriminator" type="ElementDefinition.Discriminator" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
@@ -4852,7 +5101,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="strength" type="BindingStrength" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -4879,7 +5128,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="type" type="DiscriminatorType" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -5120,7 +5369,7 @@ When pattern[x] is used to constrain a complex object, it means that each proper
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="reference" type="string" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5154,7 +5403,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="type" type="TriggerType" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -5250,7 +5499,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="value" type="decimal" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5303,6 +5552,11 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           <xs:documentation xml:lang="en">Greater than</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="ad">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Sufficient to achieve this total quantity</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="QuantityComparator">
@@ -5322,7 +5576,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="start" type="dateTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5356,7 +5610,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="low" type="Quantity" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5378,11 +5632,16 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="type" type="RelatedArtifactType" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of relationship to the related artifact.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="classifier" type="CodeableConcept" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Provides additional classifiers of the related artifact.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="label" type="string" minOccurs="0" maxOccurs="1">
@@ -5400,11 +5659,6 @@ The type is the Canonical URL of Resource Definition that is the type this refer
               <xs:documentation xml:lang="en">A bibliographic citation for the related artifact. This text SHOULD be formatted according to an accepted citation format.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="url" type="url" minOccurs="0" maxOccurs="1">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A url for the artifact that can be followed to access the actual content.</xs:documentation>
-            </xs:annotation>
-          </xs:element>
           <xs:element name="document" type="Attachment" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The document being referenced, represented as an attachment. This is exclusive with the resource element.</xs:documentation>
@@ -5412,7 +5666,12 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="resource" type="canonical" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The related resource, such as a library, value set, profile, or other knowledge resource.</xs:documentation>
+              <xs:documentation xml:lang="en">The related artifact, such as a library, value set, profile, or other knowledge resource.</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="resourceReference" type="Reference" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The related artifact, if the artifact is not a canonical resource, or a resource reference to a canonical resource.</xs:documentation>
             </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -5461,6 +5720,126 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           <xs:documentation xml:lang="en">Composed Of</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="part-of">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Part Of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amends">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amends</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="amended-with">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Amended With</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="appends">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Appends</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="appended-with">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Appended With</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cites">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cites</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="cited-by">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Cited By</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="comments-on">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Is Comment On</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="comment-in">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Has Comment In</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="contains">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Contains</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="contained-in">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Contained In</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="corrects">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Corrects</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="correction-in">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Correction In</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="replaces">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Replaces</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="replaced-with">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Replaced With</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="retracts">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Retracts</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="retracted-by">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Retracted By</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="signs">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Signs</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="similar-to">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Similar To</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="supports">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Supports</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="supported-with">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Supported With</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="transforms">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Transforms</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="transformed-into">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Transformed Into</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="transformed-with">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Transformed With</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="RelatedArtifactType">
@@ -5480,7 +5859,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:choice minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5509,7 +5888,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="type" type="CodeableConcept" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5538,7 +5917,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="name" type="string" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5560,7 +5939,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="code" type="Coding" minOccurs="1" maxOccurs="1">
             <xs:annotation>
@@ -5586,7 +5965,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="description" type="string" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5598,7 +5977,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
               <xs:documentation xml:lang="en">A short name assigned to the expression to allow for multiple reuse of the expression in the context where it is defined.</xs:documentation>
             </xs:annotation>
           </xs:element>
-          <xs:element name="language" type="ExpressionLanguage" minOccurs="1" maxOccurs="1">
+          <xs:element name="language" type="code" minOccurs="1" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The media type of the language for the expression.</xs:documentation>
             </xs:annotation>
@@ -5616,36 +5995,6 @@ The type is the Canonical URL of Resource Definition that is the type this refer
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
-  </xs:complexType>
-  <xs:simpleType name="ExpressionLanguageEnum">
-    <xs:restriction base="code-primitive">
-      <xs:enumeration value="text/cql">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">CQL</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="text/fhirpath">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">FHIRPath</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="application/x-fhir-query">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">FHIR Query</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="ExpressionLanguage">
-    <xs:annotation>
-      <xs:documentation xml:lang="en">The media type of the expression language.</xs:documentation>
-      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-       <xs:extension base="Element">
-         <xs:attribute name="value" type="ExpressionLanguageEnum" use="optional"/>
-       </xs:extension>
-     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="CodeableReference">
     <xs:annotation>
@@ -5675,7 +6024,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="type" type="Coding" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
@@ -5722,7 +6071,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="event" type="dateTime" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
@@ -5749,7 +6098,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:choice minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -5781,7 +6130,8 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="durationUnit" type="UnitsOfTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The units of time for the duration, in UCUM units.</xs:documentation>
+              <xs:documentation xml:lang="en">The units of time for the duration, in UCUM units
+Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="frequency" type="positiveInt" minOccurs="0" maxOccurs="1">
@@ -5806,7 +6156,8 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="periodUnit" type="UnitsOfTime" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The units of time for the period in UCUM units.</xs:documentation>
+              <xs:documentation xml:lang="en">The units of time for the period in UCUM units
+Normal practice is to use the 'mo' code as a calendar month when calculating the next occurrence.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="dayOfWeek" type="code" minOccurs="0" maxOccurs="unbounded">
@@ -5945,6 +6296,11 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           <xs:documentation xml:lang="en">After Sleep</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="IMD">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Immediate</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="HS">
         <xs:annotation>
           <xs:documentation xml:lang="en">HS</xs:documentation>
@@ -6034,7 +6390,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="BackboneElement">
+      <xs:extension base="BackboneType">
         <xs:sequence>
           <xs:element name="height" type="Quantity" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -6101,7 +6457,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="coding" type="Coding" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
@@ -6123,7 +6479,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       <xs:documentation xml:lang="en">If the element is present, it must have a value for at least one of the defined elements, an @id referenced from the Narrative, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="Element">
+      <xs:extension base="DataType">
         <xs:sequence>
           <xs:element name="name" type="code" minOccurs="0" maxOccurs="1">
             <xs:annotation>
@@ -6164,6 +6520,15 @@ The type is the Canonical URL of Resource Definition that is the type this refer
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="MetadataResource">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Common Ancestor declaration for conformance and knowledge artifact resources.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="CanonicalResource">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="DomainResource">
     <xs:annotation>
       <xs:documentation xml:lang="en">A resource that includes narrative, extensions, and contained resources.</xs:documentation>
@@ -6178,7 +6543,7 @@ The type is the Canonical URL of Resource Definition that is the type this refer
           </xs:element>
           <xs:element name="contained" type="ResourceContainer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope.</xs:documentation>
+              <xs:documentation xml:lang="en">These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, nor can they have their own independent transaction scope.</xs:documentation>
             </xs:annotation>
           </xs:element>
           <xs:element name="extension" type="Extension" minOccurs="0" maxOccurs="unbounded">
@@ -6201,8 +6566,10 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
     <xs:annotation>
       <xs:documentation xml:lang="en">This is the base resource type for everything.</xs:documentation>
     </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="Base">
         <xs:sequence>
-          <xs:element name="id" type="string" minOccurs="0" maxOccurs="1">
+          <xs:element name="id" type="id" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes.</xs:documentation>
             </xs:annotation>
@@ -6223,5 +6590,16 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
             </xs:annotation>
           </xs:element>
         </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="CanonicalResource">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Common Ancestor declaration for conformance and knowledge artifact resources.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DomainResource">
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 </xs:schema>

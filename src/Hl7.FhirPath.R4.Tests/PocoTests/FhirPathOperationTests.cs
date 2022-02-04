@@ -1,6 +1,7 @@
-﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Core.Tests.Model
@@ -30,7 +31,7 @@ namespace Hl7.Fhir.Core.Tests.Model
         {
             var poco = new ConceptMap
             {
-                Identifier = new Identifier("system", "value"),
+                Identifier = new List<Identifier> { new Identifier("system", "value") },
                 Source = new FhirUri("http://example.com"),
                 DateElement = FhirDateTime.Now()
             };

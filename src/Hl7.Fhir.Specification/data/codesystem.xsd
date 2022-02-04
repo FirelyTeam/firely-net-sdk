@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,7 +67,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -400,6 +400,16 @@
       <xs:enumeration value="generalizes">
         <xs:annotation>
           <xs:documentation xml:lang="en">Generalizes (by Subsumption)</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="child-of">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Child Of</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="descendent-leaf">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Descendent Leaf</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="exists">

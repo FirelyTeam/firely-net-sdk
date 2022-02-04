@@ -6,15 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Serialization;
-using System.IO;
-using Hl7.Fhir.Model;
-using System.Diagnostics;
-using System.Collections.Generic;
-using Tasks = System.Threading.Tasks;
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -52,10 +53,10 @@ namespace Hl7.Fhir.Tests.Serialization
                 parser.Parse<Resource>(xml);
                 Assert.Fail("Should have thrown");
             }
-            catch(FormatException fe)
+            catch (FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }            
+            }
         }
 
         [TestMethod]
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }            
+            }
         }
 
 
@@ -80,7 +81,7 @@ namespace Hl7.Fhir.Tests.Serialization
         public void RequiresHl7Namespace()
         {
             var xml = "<Patient><active value='false' /></Patient>";
-            var parser = new FhirXmlParser(new ParserSettings() { PermissiveParsing = false});
+            var parser = new FhirXmlParser(new ParserSettings() { PermissiveParsing = false });
 
             try
             {
@@ -93,7 +94,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
-            
+
             try
             {
                 parser.Parse<Resource>(xml);
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Tests.Serialization
             for (var i = 0; i < 500; i++)
                 p = await pser.ParseAsync<Patient>(json);
             sw.Stop();
-            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds/500.0*1000} micros");
+            Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
         }
 
         [TestMethod]
@@ -192,7 +193,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
         }
 
-     
+
         [TestMethod]
         public async Tasks.Task AcceptUnknownEnums()
         {
@@ -224,7 +225,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 p = await pser.ParseAsync<Patient>(xml2);
                 Assert.Fail();
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 // By default, should *not* accept unknown enums
             }
@@ -369,6 +370,21 @@ namespace Hl7.Fhir.Tests.Serialization
             var parser = new FhirXmlParser();
 
             ExceptionAssert.Throws<StructuralTypeException>(() => parser.Parse<Patient>(xml));
+        }
+
+        //test for https://github.com/FirelyTeam/firely-net-sdk/issues/1858
+        [TestMethod]
+        public async Tasks.Task CanReadSimilarValueXElements()
+        {
+            var json = TestDataHelper.ReadTestData("test-similar-valuex.json");
+            var pser = new FhirJsonParser();
+
+            // Assume that we can happily read the data and no errors occur
+            var i = await pser.ParseAsync<Ingredient>(json);
+
+            (i.Substance.Strength[0].Presentation as Quantity).Value.Should().Be(1);
+            (i.Substance.Strength[0].Concentration as CodeableConcept).Text.Should().Be("text");
+            i.Substance.Strength[0].ConcentrationText.Should().Be("Another text");
         }
     }
 }

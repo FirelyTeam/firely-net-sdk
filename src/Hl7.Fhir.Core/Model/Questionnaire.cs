@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 
 /*
@@ -55,8 +49,8 @@ namespace Hl7.Fhir.Model
                     StringBuilder sb = new StringBuilder();
                     if (!string.IsNullOrEmpty(this.LinkId))
                         sb.AppendFormat(" LinkId=\"{0}\"", LinkId);
-                    if (!string.IsNullOrEmpty(this.Text))
-                        sb.AppendFormat(" Text=\"{0}\"", Text);
+                    if (!string.IsNullOrEmpty(this.Text?.Value))
+                        sb.AppendFormat(" Text=\"{0}\"", Text.Value);
 
                     return sb.ToString();
                 }

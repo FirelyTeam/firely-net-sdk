@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -187,24 +187,14 @@
               <xs:documentation xml:lang="en">The desired performer for doing the requested service.  For example, the surgeon, dermatopathologist, endoscopist, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="locationCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="location" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The preferred location(s) where the procedure should actually happen in coded or free text form. E.g. at home or nursing day care center.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="locationReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to the the preferred location(s) where the procedure should actually happen. E.g. at home or nursing day care center.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">An explanation or justification for why this service is being requested in coded or textual form.   This is often for billing purposes.  May relate to the resources referred to in `supportingInfo`.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates another resource that provides a justification for why this service is being requested.   May relate to the resources referred to in `supportingInfo`.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="insurance" minOccurs="0" maxOccurs="unbounded" type="Reference">

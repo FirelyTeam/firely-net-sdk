@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,11 +67,16 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
               <xs:documentation xml:lang="en">An absolute URI that is used to identify this terminology capabilities when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this terminology capabilities is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the terminology capabilities is stored on different servers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A formal identifier that is used to identify this terminology capabilities when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
@@ -244,7 +249,7 @@
         <xs:sequence>
           <xs:element name="uri" minOccurs="0" maxOccurs="1" type="canonical">
             <xs:annotation>
-              <xs:documentation xml:lang="en">URI for the Code System.</xs:documentation>
+              <xs:documentation xml:lang="en">Canonical identifier for the code system, represented as a URI.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="version" type="TerminologyCapabilities.Version" minOccurs="0" maxOccurs="unbounded">
@@ -342,7 +347,7 @@
           </xs:element>
           <xs:element name="incomplete" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Allow request for incomplete expansions?</xs:documentation>
+              <xs:documentation xml:lang="en">True if requests for incomplete expansions are allowed.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="parameter" type="TerminologyCapabilities.Parameter" minOccurs="0" maxOccurs="unbounded">
@@ -368,7 +373,7 @@
         <xs:sequence>
           <xs:element name="name" minOccurs="1" maxOccurs="1" type="code">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Expansion Parameter name.</xs:documentation>
+              <xs:documentation xml:lang="en">Name of the supported expansion parameter.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="documentation" minOccurs="0" maxOccurs="1" type="string">

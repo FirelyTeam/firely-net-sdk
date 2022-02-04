@@ -13,6 +13,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/dicom-uid" />
         <name value="DICOM Unique Id" />
         <status value="active" />
         <kind value="identifier" />
@@ -50,6 +51,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/us-ssn" />
         <name value="United States Social Security Number" />
         <status value="active" />
         <kind value="identifier" />
@@ -97,6 +99,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/us-medicare" />
         <name value="United States Medicare Number" />
         <status value="active" />
         <kind value="identifier" />
@@ -144,6 +147,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/us-mbi" />
         <name value="Medicare Beneficiary Identifier (United States)" />
         <status value="active" />
         <kind value="identifier" />
@@ -191,6 +195,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/us-npi" />
         <name value="United States National Provider Identifier" />
         <status value="active" />
         <kind value="identifier" />
@@ -237,6 +242,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/gtin" />
         <name value="Global Trade Item Number (GTIN)" />
         <status value="active" />
         <kind value="identifier" />
@@ -277,6 +283,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.2" />
         <name value="Alaska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -316,6 +323,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.1" />
         <name value="Alabama Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -355,6 +363,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.5" />
         <name value="Arkansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -394,6 +403,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.4" />
         <name value="Arizona Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -433,6 +443,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.6" />
         <name value="California Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -472,6 +483,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.8" />
         <name value="Colorado Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -511,6 +523,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.9" />
         <name value="Connecticut Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -550,6 +563,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.11" />
         <name value="DC Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -589,6 +603,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.10" />
         <name value="Delaware Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -628,6 +643,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.12" />
         <name value="Florida Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -667,6 +683,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.13" />
         <name value="Georgia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -706,6 +723,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.15" />
         <name value="Hawaii Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -745,6 +763,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.18" />
         <name value="Indiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -784,6 +803,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.19" />
         <name value="Iowa Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -823,6 +843,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.16" />
         <name value="Idaho Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -862,6 +883,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.17" />
         <name value="Illinois Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -901,6 +923,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.20" />
         <name value="Kansas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -940,6 +963,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.21" />
         <name value="Kentucky Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -979,6 +1003,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.22" />
         <name value="Louisiana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1018,6 +1043,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.25" />
         <name value="Massachusetts Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1057,6 +1083,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.24" />
         <name value="Maryland Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1096,6 +1123,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.23" />
         <name value="Maine Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1135,6 +1163,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.26" />
         <name value="Michigan Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1174,6 +1203,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.27" />
         <name value="Minnesota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1213,6 +1243,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.29" />
         <name value="Missouri Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1252,6 +1283,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.28" />
         <name value="Mississippi Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1291,6 +1323,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.30" />
         <name value="Montana Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1330,6 +1363,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.36" />
         <name value="New York Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1369,6 +1403,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.37" />
         <name value="North Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1408,6 +1443,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.38" />
         <name value="North Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1447,6 +1483,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.31" />
         <name value="Nebraska Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1486,6 +1523,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.33" />
         <name value="New Hampshire Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1525,6 +1563,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.34" />
         <name value="New Jersey Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1564,6 +1603,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.35" />
         <name value="New Mexico Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1603,6 +1643,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.32" />
         <name value="Nevada Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1642,6 +1683,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.39" />
         <name value="Ohio Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1681,6 +1723,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.40" />
         <name value="Oklahoma Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1720,6 +1763,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.41" />
         <name value="Oregon Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1759,6 +1803,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.42" />
         <name value="Pennsylvania Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1798,6 +1843,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.44" />
         <name value="Rhode Island Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1837,6 +1883,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.45" />
         <name value="South Carolina Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1876,6 +1923,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.46" />
         <name value="South Dakota Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1915,6 +1963,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.47" />
         <name value="Tennessee Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1954,6 +2003,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.48" />
         <name value="Texas Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -1993,6 +2043,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.49" />
         <name value="Utah Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2032,6 +2083,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.51" />
         <name value="Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2071,6 +2123,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.50" />
         <name value="Vermont Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2110,6 +2163,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.53" />
         <name value="Washington Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2149,6 +2203,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.55" />
         <name value="Wisconsin Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2188,6 +2243,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.54" />
         <name value="West Virginia Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2227,6 +2283,7 @@
             <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
           </div>
         </text>
+        <url value="http://hl7.org/fhir/NamingSystem/4.3.56" />
         <name value="Wyoming Driver's License" />
         <status value="active" />
         <kind value="identifier" />
@@ -2251,6 +2308,47 @@
         <uniqueId>
           <type value="uri" />
           <value value="urn:oid:2.16.840.1.113883.4.3.56" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/PassportNumbers" />
+    <resource>
+      <NamingSystem>
+        <id value="PassportNumbers" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/NamingSystem/PassportNumbers" />
+        <name value="Passport Numbers" />
+        <status value="active" />
+        <kind value="root" />
+        <date value="2021-02-11" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="PPN" />
+          </coding>
+        </type>
+        <description value="[XXX] is a 3-letter country code defined by ISO 3166. See [Using ISO 3166 Codes with FHIR](iso3166.html)." />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.330" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/passport-[XXX]" />
         </uniqueId>
       </NamingSystem>
     </resource>

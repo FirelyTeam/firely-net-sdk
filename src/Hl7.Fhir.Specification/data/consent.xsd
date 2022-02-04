@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -58,12 +58,12 @@
   <xs:include schemaLocation="fhir-base.xsd"/>
   <xs:element name="Consent" type="Consent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
   </xs:element>
   <xs:complexType name="Consent">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
@@ -76,46 +76,54 @@
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ConsentState">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates the current state of this consent.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the current state of this Consent resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="scope" minOccurs="1" maxOccurs="1" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">A selector of the type of consent being presented: ADR, Privacy, Treatment, Research.  This list is now extensible.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="category" minOccurs="1" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A classification of the type of consents found in the statement. This element supports indexing and retrieval of consent statements.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="patient" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="subject" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The patient/healthcare consumer to whom this consent applies.</xs:documentation>
+              <xs:documentation xml:lang="en">The patient/healthcare practitioner or group of persons to whom this consent applies.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="dateTime" minOccurs="0" maxOccurs="1" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">When this  Consent was issued / created / indexed.</xs:documentation>
+              <xs:documentation xml:lang="en">Date and time the consent instance was agreed to.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="performer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="grantor" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Either the Grantor, which is the entity responsible for granting the rights listed in a Consent Directive or the Grantee, which is the entity responsible for complying with the Consent Directive, including any obligations or limitations on authorizations and enforcement of prohibitions.</xs:documentation>
+              <xs:documentation xml:lang="en">The entity responsible for granting the rights listed in a Consent Directive.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="organization" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="grantee" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The organization that manages the consent, and the framework within which it is executed.</xs:documentation>
+              <xs:documentation xml:lang="en">The entity responsible for complying with the Consent Directive, including any obligations or limitations on authorizations and enforcement of prohibitions.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="0" maxOccurs="1" >
+          <xs:element name="manager" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The source on which this consent statement is based. The source might be a scanned original paper form, or a reference to a consent that links back to such a source, a reference to a document repository (e.g. XDS) that stores the original consent document.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="sourceAttachment" type="Attachment"/>
-            <xs:element name="sourceReference" type="Reference"/>
-          </xs:choice>
+              <xs:documentation xml:lang="en">The actor that manages the consent through its lifecycle.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="controller" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The actor that controls/enforces the access according to the consent.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="sourceAttachment" minOccurs="0" maxOccurs="unbounded" type="Attachment">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The source on which this consent statement is based. The source might be a scanned original paper form.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="sourceReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to a consent that links back to such a source, a reference to a document repository (e.g. XDS) that stores the original consent document.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="policy" type="Consent.Policy" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The references to the policies that are included in this consent scope. Policies may be organizational, but are often defined jurisdictionally, or in law.</xs:documentation>
@@ -142,7 +150,7 @@
   </xs:complexType>
   <xs:complexType name="Consent.Policy">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -163,7 +171,7 @@
   </xs:complexType>
   <xs:complexType name="Consent.Verification">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -173,14 +181,24 @@
               <xs:documentation xml:lang="en">Has the instruction been verified.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="verificationType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Extensible list of verification type starting with verification and re-validation.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="verifiedBy" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The person who conducted the verification/validation of the Grantee decision.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="verifiedWith" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Who verified the instruction (Patient, Relative or other Authorized Person).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="verificationDate" minOccurs="0" maxOccurs="1" type="dateTime">
+          <xs:element name="verificationDate" minOccurs="0" maxOccurs="unbounded" type="dateTime">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Date verification was collected.</xs:documentation>
+              <xs:documentation xml:lang="en">Date(s) verification was collected.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -189,7 +207,7 @@
   </xs:complexType>
   <xs:complexType name="Consent.Provision">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -244,6 +262,11 @@
               <xs:documentation xml:lang="en">The resources controlled by this rule if specific resources are referenced.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="expression" minOccurs="0" maxOccurs="1" type="Expression">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A computable (FHIRPath or other) definition of what is controlled by this consent.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="provision" type="Consent.Provision" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Rules which provide exceptions to the base rule or subrules.</xs:documentation>
@@ -255,17 +278,17 @@
   </xs:complexType>
   <xs:complexType name="Consent.Actor">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="role" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">How the individual is involved in the resources content that is described in the exception.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reference" minOccurs="1" maxOccurs="1" type="Reference">
+          <xs:element name="reference" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The resource that identifies the actor. To identify actors by type, use group to identify a set of actors by some property they share (e.g. 'admitting officers').</xs:documentation>
            </xs:annotation>
@@ -276,7 +299,7 @@
   </xs:complexType>
   <xs:complexType name="Consent.Data">
     <xs:annotation>
-      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
+      <xs:documentation xml:lang="en">A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="BackboneElement">
@@ -299,12 +322,12 @@
     <xs:restriction base="code-primitive">
       <xs:enumeration value="deny">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Opt Out</xs:documentation>
+          <xs:documentation xml:lang="en">Deny</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="permit">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Opt In</xs:documentation>
+          <xs:documentation xml:lang="en">Permit</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
@@ -362,19 +385,9 @@
           <xs:documentation xml:lang="en">Pending</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="proposed">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Proposed</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="active">
         <xs:annotation>
           <xs:documentation xml:lang="en">Active</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="rejected">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Rejected</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="inactive">
@@ -385,6 +398,11 @@
       <xs:enumeration value="entered-in-error">
         <xs:annotation>
           <xs:documentation xml:lang="en">Entered in Error</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="unknown">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Unknown</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

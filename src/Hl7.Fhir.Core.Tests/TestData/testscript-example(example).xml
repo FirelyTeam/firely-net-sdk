@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><TestScript xmlns="http://hl7.org/fhir">
   <id value="testscript-example"/>
-  <text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative</b></p><div><p>Resource &quot;testscript-example&quot; </p></div><p><b>url</b>: <code>http://hl7.org/fhir/TestScript/testscript-example</code></p><p><b>identifier</b>: id: urn:oid:1.3.6.1.4.1.21367.2005.3.7.9876</p><p><b>version</b>: 1.0</p><p><b>name</b>: TestScript Example</p><p><b>status</b>: draft</p><p><b>experimental</b>: true</p><p><b>date</b>: 2017-01-18</p><p><b>publisher</b>: HL7</p><p><b>contact</b>: Support: <a>support@HL7.org</a></p><p><b>description</b>: TestScript example resource with setup to delete if present and create a new instance of a Patient; and single test definition to read the created Patient with various asserts.</p><p><b>jurisdiction</b>: United States of America (the) <span> (unknown#US)</span></p><p><b>purpose</b>: Patient Conditional Create (Update), Read and Delete Operations</p><p><b>copyright</b>: © HL7.org 2011+</p><blockquote><p><b>metadata</b></p><h3>Links</h3><table><tr><td>-</td><td><b>Url</b></td><td><b>Description</b></td></tr><tr><td>*</td><td><a>http://hl7.org/fhir/patient.html</a></td><td>Demographics and other administrative information about an individual or animal receiving care or other health-related services.</td></tr></table><h3>Capabilities</h3><table><tr><td>-</td><td><b>Required</b></td><td><b>Validated</b></td><td><b>Description</b></td><td><b>Link</b></td><td><b>Capabilities</b></td></tr><tr><td>*</td><td>true</td><td>false</td><td>Patient Update, Read and Delete Operations</td><td><a>http://hl7.org/fhir/http.html#delete</a>, <a>http://hl7.org/fhir/http.html#read</a>, <a>http://hl7.org/fhir/http.html#update</a></td><td><a>http://hl7.org/fhir/CapabilityStatement/example</a></td></tr></table></blockquote><blockquote><p><b>fixture</b></p><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a>Patient/example: Peter Chalmers</a> &quot;Peter CHALMERS&quot;</p></blockquote><blockquote><p><b>fixture</b></p><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a>Patient/example: Peter Chalmers (minimum)</a> &quot;Peter CHALMERS&quot;</p></blockquote><p><b>profile</b>: <a>http://hl7.org/fhir/StructureDefinition/Patient</a> &quot;Patient&quot;</p><h3>Variables</h3><table><tr><td>-</td><td><b>Name</b></td><td><b>Path</b></td><td><b>SourceId</b></td></tr><tr><td>*</td><td>createResourceId</td><td>Patient/id</td><td>fixture-patient-create</td></tr></table><blockquote><p><b>setup</b></p><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td>*</td><td>Delete (Details: http://terminology.hl7.org/CodeSystem/testscript-operation-codes code delete = &#39;Delete&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>SetupDeletePatient</td><td>Execute a delete operation to insure the patient does not exist on the server.</td><td>json</td><td>true</td><td>/${createResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Operator</b></td><td><b>ResponseCode</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 200(OK) or 204(No Content).</td><td>response</td><td>in</td><td>200,204</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>ContentType</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>SourceId</b></td></tr><tr><td>*</td><td>Update (Details: http://terminology.hl7.org/CodeSystem/testscript-operation-codes code update = &#39;Update&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>SetupCreatePatient</td><td>Create patient resource on test server using the contents of fixture-patient-create</td><td>json</td><td>json</td><td>true</td><td>/${createResourceId}</td><td>fixture-patient-create</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>ResponseCode</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 201(Created).</td><td>response</td><td>201</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>EncodeRequestUrl</b></td><td><b>TargetId</b></td></tr><tr><td>*</td><td>Read (Details: http://terminology.hl7.org/CodeSystem/testscript-operation-codes code read = &#39;Read&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>Read the created patient resource on the test server using the id from fixture-patient-create. Verify contents.</td><td>true</td><td>fixture-patient-create</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Response</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 200(OK).</td><td>response</td><td>okay</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>CompareToSourceId</b></td><td><b>CompareToSourceExpression</b></td><td><b>Operator</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned Patient contains the expected family name &#39;Chalmers&#39;. Uses explicit compareToSourceId reference to fixture-patient-create used to create the Patient.</td><td>fixture-patient-create</td><td>Patient.name.first().family</td><td>equals</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: Read Patient</p><p><b>description</b>: Read a Patient and validate response.</p><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote></blockquote><blockquote><p><b>teardown</b></p><blockquote><p><b>action</b></p></blockquote></blockquote></div></text><url value="http://hl7.org/fhir/TestScript/testscript-example"/>
+  <text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative</b></p><div><p>Resource &quot;testscript-example&quot; </p></div><p><b>url</b>: <a>http://hl7.org/fhir/TestScript/testscript-example</a></p><p><b>identifier</b>: id: urn:oid:1.3.6.1.4.1.21367.2005.3.7.9876</p><p><b>version</b>: 1.0</p><p><b>name</b>: TestScript Example</p><p><b>status</b>: draft</p><p><b>experimental</b>: true</p><p><b>date</b>: 2017-01-18</p><p><b>publisher</b>: HL7</p><p><b>contact</b>: Support: <a>support@HL7.org</a></p><p><b>description</b>: TestScript example resource with setup to delete if present and create a new instance of a Patient; and single test definition to read the created Patient with various asserts.</p><p><b>jurisdiction</b>: United States of America (the) <span> (unknown#US)</span></p><p><b>purpose</b>: Patient Conditional Create (Update), Read and Delete Operations</p><p><b>copyright</b>: © HL7.org 2011+</p><blockquote><p><b>metadata</b></p><h3>Links</h3><table><tr><td>-</td><td><b>Url</b></td><td><b>Description</b></td></tr><tr><td>*</td><td><a>http://hl7.org/fhir/patient.html</a></td><td>Demographics and other administrative information about an individual or animal receiving care or other health-related services.</td></tr></table><h3>Capabilities</h3><table><tr><td>-</td><td><b>Required</b></td><td><b>Validated</b></td><td><b>Description</b></td><td><b>Link</b></td><td><b>Capabilities</b></td></tr><tr><td>*</td><td>true</td><td>false</td><td>Patient Update, Read and Delete Operations</td><td><a>http://hl7.org/fhir/http.html#delete</a>, <a>http://hl7.org/fhir/http.html#read</a>, <a>http://hl7.org/fhir/http.html#update</a></td><td><a>http://hl7.org/fhir/CapabilityStatement/example</a></td></tr></table></blockquote><blockquote><p><b>fixture</b></p><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a>Patient/example: Peter Chalmers</a> &quot;Peter CHALMERS&quot;</p></blockquote><blockquote><p><b>fixture</b></p><p><b>autocreate</b>: false</p><p><b>autodelete</b>: false</p><p><b>resource</b>: <a>Patient/example: Peter Chalmers (minimum)</a> &quot;Peter CHALMERS&quot;</p></blockquote><p><b>profile</b>: <a>http://hl7.org/fhir/StructureDefinition/Patient</a> &quot;Patient&quot;</p><h3>Variables</h3><table><tr><td>-</td><td><b>Name</b></td><td><b>Path</b></td><td><b>SourceId</b></td></tr><tr><td>*</td><td>createResourceId</td><td>Patient/id</td><td>fixture-patient-create</td></tr></table><blockquote><p><b>setup</b></p><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td></tr><tr><td>*</td><td>delete (Details: http://hl7.org/fhir/restful-interaction code delete = &#39;delete&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>SetupDeletePatient</td><td>Execute a delete operation to insure the patient does not exist on the server.</td><td>json</td><td>true</td><td>/${createResourceId}</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Operator</b></td><td><b>ResponseCode</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 200(OK) or 204(No Content).</td><td>response</td><td>in</td><td>200,204</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Label</b></td><td><b>Description</b></td><td><b>Accept</b></td><td><b>ContentType</b></td><td><b>EncodeRequestUrl</b></td><td><b>Params</b></td><td><b>SourceId</b></td></tr><tr><td>*</td><td>update (Details: http://hl7.org/fhir/restful-interaction code update = &#39;update&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>SetupCreatePatient</td><td>Create patient resource on test server using the contents of fixture-patient-create</td><td>json</td><td>json</td><td>true</td><td>/${createResourceId}</td><td>fixture-patient-create</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>ResponseCode</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 201(Created).</td><td>response</td><td>201</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Operations</h3><table><tr><td>-</td><td><b>Type</b></td><td><b>Resource</b></td><td><b>Description</b></td><td><b>EncodeRequestUrl</b></td><td><b>TargetId</b></td></tr><tr><td>*</td><td>read (Details: http://hl7.org/fhir/restful-interaction code read = &#39;read&#39;, stated as &#39;null&#39;)</td><td>Patient</td><td>Read the created patient resource on the test server using the id from fixture-patient-create. Verify contents.</td><td>true</td><td>fixture-patient-create</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>Direction</b></td><td><b>Response</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned HTTP status is 200(OK).</td><td>response</td><td>okay</td><td>false</td><td>false</td></tr></table></blockquote><blockquote><p><b>action</b></p><h3>Asserts</h3><table><tr><td>-</td><td><b>Description</b></td><td><b>CompareToSourceId</b></td><td><b>CompareToSourceExpression</b></td><td><b>Operator</b></td><td><b>StopTestOnFail</b></td><td><b>WarningOnly</b></td></tr><tr><td>*</td><td>Confirm that the returned Patient contains the expected family name &#39;Chalmers&#39;. Uses explicit compareToSourceId reference to fixture-patient-create used to create the Patient.</td><td>fixture-patient-create</td><td>Patient.name.first().family</td><td>equals</td><td>false</td><td>false</td></tr></table></blockquote></blockquote><blockquote><p><b>test</b></p><p><b>name</b>: Read Patient</p><p><b>description</b>: Read a Patient and validate response.</p><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote><blockquote><p><b>action</b></p></blockquote></blockquote><blockquote><p><b>teardown</b></p><blockquote><p><b>action</b></p></blockquote></blockquote></div></text><url value="http://hl7.org/fhir/TestScript/testscript-example"/>
   <identifier>
     <system value="urn:ietf:rfc:3986"/>
     <value value="urn:oid:1.3.6.1.4.1.21367.2005.3.7.9876"/>
@@ -31,6 +31,20 @@
         <code value="positive"/>
       </coding>
     </valueCodeableConcept>
+  </useContext>
+  <useContext>
+    <code>
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
+      <code value="program"/>
+    </code>
+    <valueRange>
+      <low>
+        <value value="2018"/>
+        <unit value="year"/>
+        <system value="http://unitsofmeasure.org"/>
+        <code value="a"/>
+      </low>
+    </valueRange>
   </useContext>
   <jurisdiction>
     <coding>
@@ -84,7 +98,7 @@
     <action>
       <operation>
         <type>
-          <system value="http://terminology.hl7.org/CodeSystem/testscript-operation-codes"/>
+          <system value="http://hl7.org/fhir/restful-interaction"/>
           <code value="delete"/>
         </type>
         <resource value="Patient"/>
@@ -101,13 +115,14 @@
         <direction value="response"/>
         <operator value="in"/>
         <responseCode value="200,204"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
     <action>
       <operation>
         <type>
-          <system value="http://terminology.hl7.org/CodeSystem/testscript-operation-codes"/>
+          <system value="http://hl7.org/fhir/restful-interaction"/>
           <code value="update"/>
         </type>
         <resource value="Patient"/>
@@ -125,13 +140,14 @@
         <description value="Confirm that the returned HTTP status is 201(Created)."/>
         <direction value="response"/>
         <responseCode value="201"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
     <action>
       <operation>
         <type>
-          <system value="http://terminology.hl7.org/CodeSystem/testscript-operation-codes"/>
+          <system value="http://hl7.org/fhir/restful-interaction"/>
           <code value="read"/>
         </type>
         <resource value="Patient"/>
@@ -145,6 +161,7 @@
         <description value="Confirm that the returned HTTP status is 200(OK)."/>
         <direction value="response"/>
         <response value="okay"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
@@ -154,6 +171,7 @@
         <compareToSourceId value="fixture-patient-create"/>
         <compareToSourceExpression value="Patient.name.first().family"/>
         <operator value="equals"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
@@ -164,7 +182,7 @@
     <action>
       <operation>
         <type>
-          <system value="http://terminology.hl7.org/CodeSystem/testscript-operation-codes"/>
+          <system value="http://hl7.org/fhir/restful-interaction"/>
           <code value="read"/>
         </type>
         <resource value="Patient"/>
@@ -180,6 +198,7 @@
         <description value="Confirm that the returned HTTP status is 200(OK)."/>
         <direction value="response"/>
         <response value="okay"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
@@ -189,6 +208,7 @@
         <direction value="response"/>
         <headerField value="Last-Modified"/>
         <operator value="notEmpty"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="true"/>
       </assert>
     </action>
@@ -196,12 +216,14 @@
       <assert>
         <description value="Confirm that the returned resource type is Patient."/>
         <resource value="Patient"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
     <action>
       <assert>
         <description value="Confirm that the returned Patient conforms to the base FHIR specification."/>
+        <stopTestOnFail value="false"/>
         <validateProfileId value="patient-profile"/>
         <warningOnly value="false"/>
       </assert>
@@ -212,6 +234,7 @@
         <operator value="equals"/>
         <path value="fhir:Patient/fhir:name/fhir:family/@value"/>
         <sourceId value="fixture-patient-read"/>
+        <stopTestOnFail value="false"/>
         <value value="Chalmers"/>
         <warningOnly value="false"/>
       </assert>
@@ -222,6 +245,7 @@
         <operator value="equals"/>
         <path value="fhir:Patient/fhir:name/fhir:given/@value"/>
         <sourceId value="fixture-patient-read"/>
+        <stopTestOnFail value="false"/>
         <value value="Peter"/>
         <warningOnly value="false"/>
       </assert>
@@ -233,6 +257,7 @@
         <compareToSourcePath value="fhir:Patient/fhir:name/fhir:family/@value"/>
         <operator value="equals"/>
         <path value="fhir:Patient/fhir:name/fhir:family/@value"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
@@ -243,6 +268,7 @@
         <compareToSourcePath value="fhir:Patient/fhir:name/fhir:given/@value"/>
         <path value="fhir:Patient/fhir:name/fhir:given/@value"/>
         <sourceId value="fixture-patient-read"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="false"/>
       </assert>
     </action>
@@ -250,6 +276,7 @@
       <assert>
         <description value="Confirm that the returned resource contains the expected retained elements and values. Warning only to provide users with reviewable results."/>
         <minimumId value="fixture-patient-minimum"/>
+        <stopTestOnFail value="false"/>
         <warningOnly value="true"/>
       </assert>
     </action>
@@ -258,7 +285,7 @@
     <action>
       <operation>
         <type>
-          <system value="http://terminology.hl7.org/CodeSystem/testscript-operation-codes"/>
+          <system value="http://hl7.org/fhir/restful-interaction"/>
           <code value="delete"/>
         </type>
         <resource value="Patient"/>

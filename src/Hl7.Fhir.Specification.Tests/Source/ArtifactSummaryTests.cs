@@ -304,11 +304,11 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20181213] R4 NEW
             // [MV 20191212] R4.0.1 NEW
             // [MV 20200203] R4.0.1 (after reducing dataelements.xml)
-            // [MV 20200911] use complete dataelements.xml again
-            // [MV 20210423] R4.1.0 (R4B)
-            // [MV 20210423] 4.3.0-snapshot1 (R4B) summaries from 3613 to 3607, and SDs from 644 to 646
-            Assert.AreEqual(3607, summaries.Count); // STU3: 7941
-            Assert.AreEqual(646, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            // [MV 20200826] R4.5.0 summery count from 5148 to 3994, resourcetypes from 967 to 964 
+            // [MV 20210525] R4.6.0 summery count from 3680 to 3709, resourcetypes from 650 to 685 
+            // [MV 20220103] 5.0.0-snapshot1 summery count from 3709 to 3845, resourcetypes from 685 to 696
+            Assert.AreEqual(3845, summaries.Count);
+            Assert.AreEqual(696, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 

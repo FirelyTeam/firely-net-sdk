@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -152,12 +152,12 @@
         <xs:sequence>
           <xs:element name="daysOfWeek" minOccurs="0" maxOccurs="unbounded" type="DaysOfWeek">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates which days of the week are available between the start and end Times.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates which days of the week are available between the start and end times.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="allDay" minOccurs="0" maxOccurs="1" type="boolean">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Is this always available? (hence times are irrelevant) e.g. 24 hour service.</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates always available, hence times are irrelevant.  (e.g. 24-hour service).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="availableStartTime" minOccurs="0" maxOccurs="1" type="time">

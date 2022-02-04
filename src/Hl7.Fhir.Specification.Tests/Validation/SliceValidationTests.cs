@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             sliceGroup.ChildSlices[0].Should().Match<DiscriminatorBucket>(s =>
                     s.Cardinality.Max == "1" &&
-                    s.Name == "Communication.payload:String"
+                    s.Name == "Communication.payload:CodeableConcept"
                   );
 
             sliceGroup.ChildSlices[1].Should().Match<DiscriminatorBucket>(s =>

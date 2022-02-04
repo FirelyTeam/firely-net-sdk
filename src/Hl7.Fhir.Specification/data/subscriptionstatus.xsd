@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -69,7 +69,7 @@
     <xs:complexContent>
       <xs:extension base="DomainResource">
         <xs:sequence>
-          <xs:element name="status" minOccurs="0" maxOccurs="1" type="SubscriptionStatus">
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="code">
             <xs:annotation>
               <xs:documentation xml:lang="en">The status of the subscription, which marks the server state for managing the subscription.</xs:documentation>
            </xs:annotation>
@@ -79,7 +79,7 @@
               <xs:documentation xml:lang="en">The type of event being conveyed with this notificaiton.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="eventsSinceSubscriptionStart" minOccurs="0" maxOccurs="1" type="string">
+          <xs:element name="eventsSinceSubscriptionStart" minOccurs="0" maxOccurs="1" type="integer64">
             <xs:annotation>
               <xs:documentation xml:lang="en">The total number of actual events which have been generated since the Subscription was created (inclusive of this notification) - regardless of how many have been successfully communicated.  This number is NOT incremented for handshake and heartbeat notifications.</xs:documentation>
            </xs:annotation>
@@ -120,9 +120,9 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="eventNumber" minOccurs="1" maxOccurs="1" type="string">
+          <xs:element name="eventNumber" minOccurs="1" maxOccurs="1" type="integer64">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The sequential number of this event in this subscription context. Note that this value is a 64-bit integer value, encoded as a string.</xs:documentation>
+              <xs:documentation xml:lang="en">The sequential number of this event in this subscription context.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="timestamp" minOccurs="0" maxOccurs="1" type="instant">

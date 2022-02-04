@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,14 +67,14 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
-          <xs:element name="url" minOccurs="1" maxOccurs="1" type="uri">
+          <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
               <xs:documentation xml:lang="en">An absolute URI that is used to identify this test script when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this test script is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the test script is stored on different servers.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">A formal identifier that is used to identify this test script when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
@@ -157,6 +157,11 @@
           <xs:element name="metadata" type="TestScript.Metadata" minOccurs="0" maxOccurs="1">
             <xs:annotation>
               <xs:documentation xml:lang="en">The required capability must exist and are assumed to function correctly on the FHIR server being tested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="scope" type="TestScript.Scope" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The scope indicates a conformance artifact that is tested by the test(s) within this test case and the expectation of the test outcome(s) as well as the intended test phase inclusion.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="fixture" type="TestScript.Fixture" minOccurs="0" maxOccurs="unbounded">
@@ -317,6 +322,32 @@
           <xs:element name="capabilities" minOccurs="1" maxOccurs="1" type="canonical">
             <xs:annotation>
               <xs:documentation xml:lang="en">Minimum capabilities required of server for test script to execute successfully.   If server does not meet at a minimum the referenced capability statement, then all tests in this script are skipped.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="TestScript.Scope">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="artifact" minOccurs="1" maxOccurs="1" type="canonical">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The specific conformance artifact being tested. The canonical reference can be version-specific.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="conformance" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The expectation of whether the test must pass for the system to be considered conformant with the artifact: required - all tests must pass, optional - all test are expected to pass but non-pass status may be allowed.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="phase" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The phase of testing for this artifact: unit - development / implementation phase, integration - internal system to system phase, production - live system to system phase (Note, this may involve pii/phi data).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -656,6 +687,11 @@
               <xs:documentation xml:lang="en">Fixture to evaluate the XPath/JSONPath expression or the headerField  against.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="stopTestOnFail" minOccurs="1" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Whether or not the current test execution will stop on failure for this assert.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="validateProfileId" minOccurs="0" maxOccurs="1" type="id">
             <xs:annotation>
               <xs:documentation xml:lang="en">The ID of the Profile to validate against.</xs:documentation>
@@ -779,6 +815,16 @@
       <xs:enumeration value="BackboneElement">
         <xs:annotation>
           <xs:documentation xml:lang="en">BackboneElement</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BackboneType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">BackboneType</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Base">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Base</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CodeableConcept">
@@ -911,6 +957,11 @@
           <xs:documentation xml:lang="en">Population</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="PrimitiveType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PrimitiveType</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="ProdCharacteristic">
         <xs:annotation>
           <xs:documentation xml:lang="en">ProdCharacteristic</xs:documentation>
@@ -1031,6 +1082,11 @@
           <xs:documentation xml:lang="en">integer</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="integer64">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">integer64</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="markdown">
         <xs:annotation>
           <xs:documentation xml:lang="en">markdown</xs:documentation>
@@ -1124,15 +1180,6 @@
           <xs:documentation xml:lang="zh">账户</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ActivityDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneAttivita</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeActividad</xs:documentation>
-          <xs:documentation xml:lang="zh">活动定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="AdministrableProductDefinition">
         <xs:annotation>
           <xs:documentation xml:lang="en">AdministrableProductDefinition</xs:documentation>
@@ -1212,12 +1259,269 @@
           <xs:documentation xml:lang="zh">身体结构</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="CanonicalResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CanonicalResource</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="CapabilityStatement">
         <xs:annotation>
           <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
           <xs:documentation xml:lang="en">CapabilityStatement</xs:documentation>
           <xs:documentation xml:lang="es">DeclaracionDeCapacidad</xs:documentation>
           <xs:documentation xml:lang="zh">能力声明</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CapabilityStatement2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+          <xs:documentation xml:lang="en">CapabilityStatement2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CodeSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
+          <xs:documentation xml:lang="it">SistemaDiCodifica</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeCodigos</xs:documentation>
+          <xs:documentation xml:lang="zh">代码系统</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CompartmentDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeCompartimento</xs:documentation>
+          <xs:documentation xml:lang="zh">逻辑区块定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConceptMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
+          <xs:documentation xml:lang="it">MappaDiConcetti</xs:documentation>
+          <xs:documentation xml:lang="fr">CarteDeConcepts</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeConceptos</xs:documentation>
+          <xs:documentation xml:lang="zh">概念映射</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConceptMap2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConceptMap2</xs:documentation>
+          <xs:documentation xml:lang="en">ConceptMap2</xs:documentation>
+          <xs:documentation xml:lang="it">MappaDiConcetti2</xs:documentation>
+          <xs:documentation xml:lang="fr">CarteDeConcepts2</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeConceptos2</xs:documentation>
+          <xs:documentation xml:lang="zh">概念映射2</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExampleScenario">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
+          <xs:documentation xml:lang="it">ScenarioDiEsempio</xs:documentation>
+          <xs:documentation xml:lang="es">EjemploDeEscenario</xs:documentation>
+          <xs:documentation xml:lang="zh">示例场景</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="GraphDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionGrafico</xs:documentation>
+          <xs:documentation xml:lang="zh">图形定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImplementationGuide">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
+          <xs:documentation xml:lang="es">GuiaDeImplementacion</xs:documentation>
+          <xs:documentation xml:lang="zh">实施指南</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MessageDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneMessaggio</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionMensaje</xs:documentation>
+          <xs:documentation xml:lang="zh">消息定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MetadataResource">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">MetadataResource</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ActivityDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ActivityDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneAttivita</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeActividad</xs:documentation>
+          <xs:documentation xml:lang="zh">活动定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ArtifactAssessment">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ArtifactAssessment</xs:documentation>
+          <xs:documentation xml:lang="en">ArtifactAssessment</xs:documentation>
+          <xs:documentation xml:lang="it">ArtefattoValutazione</xs:documentation>
+          <xs:documentation xml:lang="es">ArtefactoEvaluacion</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ChargeItemDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Citation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+          <xs:documentation xml:lang="en">Citation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ConditionDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">ConditionDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EventDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneEvento</xs:documentation>
+          <xs:documentation xml:lang="es">DefinitionDeEvento</xs:documentation>
+          <xs:documentation xml:lang="zh">事件定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Evidence">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+          <xs:documentation xml:lang="en">Evidence</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EvidenceVariable">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Library">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="en">Library</xs:documentation>
+          <xs:documentation xml:lang="es">Librería</xs:documentation>
+          <xs:documentation xml:lang="zh">库</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Measure">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="en">Measure</xs:documentation>
+          <xs:documentation xml:lang="it">Misura</xs:documentation>
+          <xs:documentation xml:lang="es">Medida</xs:documentation>
+          <xs:documentation xml:lang="zh">指标</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PlanDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDePlan</xs:documentation>
+          <xs:documentation xml:lang="zh">计划定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Questionnaire">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="it">Questionario</xs:documentation>
+          <xs:documentation xml:lang="fr">Questionnaire</xs:documentation>
+          <xs:documentation xml:lang="zh">调查问卷</xs:documentation>
+          <xs:documentation xml:lang="es">Cuestionario</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="NamingSystem">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
+          <xs:documentation xml:lang="fr">SystèmeDeNommage</xs:documentation>
+          <xs:documentation xml:lang="es">SistemaDeNombres</xs:documentation>
+          <xs:documentation xml:lang="zh">命名系统</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OperationDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneOperazione</xs:documentation>
+          <xs:documentation xml:lang="fr">DéfinitionOpération</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeOperacion</xs:documentation>
+          <xs:documentation xml:lang="zh">操作定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SearchParameter">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
+          <xs:documentation xml:lang="it">ParametroDiRicerca</xs:documentation>
+          <xs:documentation xml:lang="fr">ParamètreRecherche</xs:documentation>
+          <xs:documentation xml:lang="es">ParametroDeBusqueda</xs:documentation>
+          <xs:documentation xml:lang="zh">搜索参数</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureDefinition">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
+          <xs:documentation xml:lang="it">DefinizioneStruttura</xs:documentation>
+          <xs:documentation xml:lang="fr">DéfinitionStructure</xs:documentation>
+          <xs:documentation xml:lang="es">DefinicionDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">结构定义</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="StructureMap">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
+          <xs:documentation xml:lang="es">MapaDeEstructura</xs:documentation>
+          <xs:documentation xml:lang="zh">结构映射</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TerminologyCapabilities">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
+          <xs:documentation xml:lang="es">CapacidadTerminologica</xs:documentation>
+          <xs:documentation xml:lang="zh">术语服务能力</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="TestScript">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="en">TestScript</xs:documentation>
+          <xs:documentation xml:lang="fr">ScriptTest</xs:documentation>
+          <xs:documentation xml:lang="es">ScriptDePrueba</xs:documentation>
+          <xs:documentation xml:lang="zh">测试脚本</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ValueSet">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
+          <xs:documentation xml:lang="fr">EnsembleValeurs</xs:documentation>
+          <xs:documentation xml:lang="zh">取值集合</xs:documentation>
+          <xs:documentation xml:lang="es">ConjuntoValores / ConjuntoDeValores</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="CarePlan">
@@ -1238,32 +1542,12 @@
           <xs:documentation xml:lang="zh">照护团队</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CatalogEntry">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
-          <xs:documentation xml:lang="en">CatalogEntry</xs:documentation>
-          <xs:documentation xml:lang="es">EntradaDeCatalogo</xs:documentation>
-          <xs:documentation xml:lang="zh">条目定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ChargeItem">
         <xs:annotation>
           <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
           <xs:documentation xml:lang="en">ChargeItem</xs:documentation>
           <xs:documentation xml:lang="es">CargoDeItem</xs:documentation>
           <xs:documentation xml:lang="zh">收费项目</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ChargeItemDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ChargeItemDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Citation">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Citation</xs:documentation>
-          <xs:documentation xml:lang="en">Citation</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Claim">
@@ -1299,13 +1583,10 @@
           <xs:documentation xml:lang="en">ClinicalUseDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CodeSystem">
+      <xs:enumeration value="ClinicalUseIssue">
         <xs:annotation>
-          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
-          <xs:documentation xml:lang="en">CodeSystem</xs:documentation>
-          <xs:documentation xml:lang="it">SistemaDiCodifica</xs:documentation>
-          <xs:documentation xml:lang="es">SistemaDeCodigos</xs:documentation>
-          <xs:documentation xml:lang="zh">代码系统</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
+          <xs:documentation xml:lang="en">ClinicalUseIssue</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Communication">
@@ -1328,14 +1609,6 @@
           <xs:documentation xml:lang="zh">通讯请求</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="CompartmentDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">CompartmentDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeCompartimento</xs:documentation>
-          <xs:documentation xml:lang="zh">逻辑区块定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Composition">
         <xs:annotation>
           <xs:documentation xml:lang="en">Composition</xs:documentation>
@@ -1344,16 +1617,6 @@
           <xs:documentation xml:lang="fr">Composition</xs:documentation>
           <xs:documentation xml:lang="es">Composición</xs:documentation>
           <xs:documentation xml:lang="zh">组合式文书</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ConceptMap">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
-          <xs:documentation xml:lang="en">ConceptMap</xs:documentation>
-          <xs:documentation xml:lang="it">MappaDiConcetti</xs:documentation>
-          <xs:documentation xml:lang="fr">CarteDeConcepts</xs:documentation>
-          <xs:documentation xml:lang="es">MapaDeConceptos</xs:documentation>
-          <xs:documentation xml:lang="zh">概念映射</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Condition">
@@ -1442,6 +1705,14 @@
           <xs:documentation xml:lang="zh">装置组件</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="DeviceDispense">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">DeviceDispense</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceDispense</xs:documentation>
+          <xs:documentation xml:lang="fr">DispensationDeDispositif</xs:documentation>
+          <xs:documentation xml:lang="es">DispensaciónDeDispositivo</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="DeviceMetric">
         <xs:annotation>
           <xs:documentation xml:lang="en">DeviceMetric</xs:documentation>
@@ -1461,10 +1732,10 @@
           <xs:documentation xml:lang="zh">装置请求</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="DeviceUseStatement">
+      <xs:enumeration value="DeviceUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
-          <xs:documentation xml:lang="en">DeviceUseStatement</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
+          <xs:documentation xml:lang="en">DeviceUsage</xs:documentation>
           <xs:documentation xml:lang="zh">装置使用声明</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
@@ -1544,42 +1815,6 @@
           <xs:documentation xml:lang="zh">照护服务节段</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="EventDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">EventDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneEvento</xs:documentation>
-          <xs:documentation xml:lang="es">DefinitionDeEvento</xs:documentation>
-          <xs:documentation xml:lang="zh">事件定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Evidence">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Evidence</xs:documentation>
-          <xs:documentation xml:lang="en">Evidence</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EvidenceReport">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
-          <xs:documentation xml:lang="en">EvidenceReport</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EvidenceVariable">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
-          <xs:documentation xml:lang="en">EvidenceVariable</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ExampleScenario">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
-          <xs:documentation xml:lang="en">ExampleScenario</xs:documentation>
-          <xs:documentation xml:lang="it">ScenarioDiEsempio</xs:documentation>
-          <xs:documentation xml:lang="es">EjemploDeEscenario</xs:documentation>
-          <xs:documentation xml:lang="zh">示例场景</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ExplanationOfBenefit">
         <xs:annotation>
           <xs:documentation xml:lang="en">ExplanationOfBenefit</xs:documentation>
@@ -1615,14 +1850,6 @@
           <xs:documentation xml:lang="zh">目标</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="GraphDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">GraphDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinitionGrafico</xs:documentation>
-          <xs:documentation xml:lang="zh">图形定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Group">
         <xs:annotation>
           <xs:documentation xml:lang="en">Group</xs:documentation>
@@ -1649,6 +1876,12 @@
           <xs:documentation xml:lang="fr">ServiceDeSanté</xs:documentation>
           <xs:documentation xml:lang="es">ServicioDeCuidado</xs:documentation>
           <xs:documentation xml:lang="zh">医疗保健服务项目</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ImagingSelection">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">ImagingSelection</xs:documentation>
+          <xs:documentation xml:lang="en">ImagingSelection</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ImagingStudy">
@@ -1685,14 +1918,6 @@
           <xs:documentation xml:lang="es">RecomendaciónInmunización /</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ImplementationGuide">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
-          <xs:documentation xml:lang="en">ImplementationGuide</xs:documentation>
-          <xs:documentation xml:lang="es">GuiaDeImplementacion</xs:documentation>
-          <xs:documentation xml:lang="zh">实施指南</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Ingredient">
         <xs:annotation>
           <xs:documentation xml:lang="en">Ingredient</xs:documentation>
@@ -1705,18 +1930,16 @@
           <xs:documentation xml:lang="en">InsurancePlan</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="InventoryReport">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">InventoryReport</xs:documentation>
+          <xs:documentation xml:lang="en">InventoryReport</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Invoice">
         <xs:annotation>
           <xs:documentation xml:lang="en">Invoice</xs:documentation>
           <xs:documentation xml:lang="en">Invoice</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Library">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Library</xs:documentation>
-          <xs:documentation xml:lang="en">Library</xs:documentation>
-          <xs:documentation xml:lang="es">Librería</xs:documentation>
-          <xs:documentation xml:lang="zh">库</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Linkage">
@@ -1752,31 +1975,12 @@
           <xs:documentation xml:lang="en">ManufacturedItemDefinition</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Measure">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Measure</xs:documentation>
-          <xs:documentation xml:lang="en">Measure</xs:documentation>
-          <xs:documentation xml:lang="it">Misura</xs:documentation>
-          <xs:documentation xml:lang="es">Medida</xs:documentation>
-          <xs:documentation xml:lang="zh">指标</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="MeasureReport">
         <xs:annotation>
           <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
           <xs:documentation xml:lang="en">MeasureReport</xs:documentation>
           <xs:documentation xml:lang="es">ReporteMedida</xs:documentation>
           <xs:documentation xml:lang="zh">指标报告</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="Media">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="en">Media</xs:documentation>
-          <xs:documentation xml:lang="it">Media</xs:documentation>
-          <xs:documentation xml:lang="fr">Média</xs:documentation>
-          <xs:documentation xml:lang="es">Medio</xs:documentation>
-          <xs:documentation xml:lang="zh">媒体</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Medication">
@@ -1821,28 +2025,16 @@
           <xs:documentation xml:lang="es">PrescripciónMedicaciónTODO  /PrescripcionMedicamento</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="MedicationStatement">
+      <xs:enumeration value="MedicationUsage">
         <xs:annotation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="en">MedicationStatement</xs:documentation>
-          <xs:documentation xml:lang="fr">ÉtatMédication</xs:documentation>
-          <xs:documentation xml:lang="zh">药物声明</xs:documentation>
-          <xs:documentation xml:lang="es">ResumenMedicación /ResumenMedicamento</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
+          <xs:documentation xml:lang="en">MedicationUsage</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MedicinalProductDefinition">
         <xs:annotation>
           <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
           <xs:documentation xml:lang="en">MedicinalProductDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MessageDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">MessageDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneMessaggio</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionMensaje</xs:documentation>
-          <xs:documentation xml:lang="zh">消息定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="MessageHeader">
@@ -1862,13 +2054,10 @@
           <xs:documentation xml:lang="zh">分子序列</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="NamingSystem">
+      <xs:enumeration value="NutritionIntake">
         <xs:annotation>
-          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
-          <xs:documentation xml:lang="en">NamingSystem</xs:documentation>
-          <xs:documentation xml:lang="fr">SystèmeDeNommage</xs:documentation>
-          <xs:documentation xml:lang="es">SistemaDeNombres</xs:documentation>
-          <xs:documentation xml:lang="zh">命名系统</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
+          <xs:documentation xml:lang="en">NutritionIntake</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="NutritionOrder">
@@ -1905,16 +2094,6 @@
           <xs:documentation xml:lang="it">DefinizioneOsservazione</xs:documentation>
           <xs:documentation xml:lang="es">DefinicionDeEspecimen</xs:documentation>
           <xs:documentation xml:lang="zh">观察定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="OperationDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">OperationDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneOperazione</xs:documentation>
-          <xs:documentation xml:lang="fr">DéfinitionOpération</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeOperacion</xs:documentation>
-          <xs:documentation xml:lang="zh">操作定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="OperationOutcome">
@@ -1979,6 +2158,14 @@
           <xs:documentation xml:lang="zh">付款对账</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="Permission">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="en">Permission</xs:documentation>
+          <xs:documentation xml:lang="fr">Permission</xs:documentation>
+          <xs:documentation xml:lang="es">Permiso</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="Person">
         <xs:annotation>
           <xs:documentation xml:lang="en">Person</xs:documentation>
@@ -1987,14 +2174,6 @@
           <xs:documentation xml:lang="fr">Personne</xs:documentation>
           <xs:documentation xml:lang="es">Persona</xs:documentation>
           <xs:documentation xml:lang="zh">人员</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="PlanDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">PlanDefinition</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDePlan</xs:documentation>
-          <xs:documentation xml:lang="zh">计划定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Practitioner">
@@ -2034,16 +2213,6 @@
           <xs:documentation xml:lang="es">Procedencia</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="Questionnaire">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="en">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="it">Questionario</xs:documentation>
-          <xs:documentation xml:lang="fr">Questionnaire</xs:documentation>
-          <xs:documentation xml:lang="zh">调查问卷</xs:documentation>
-          <xs:documentation xml:lang="es">Cuestionario</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="QuestionnaireResponse">
         <xs:annotation>
           <xs:documentation xml:lang="en">QuestionnaireResponse</xs:documentation>
@@ -2079,18 +2248,6 @@
           <xs:documentation xml:lang="zh">请求分组</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="ResearchDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ResearchElementDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">ResearchElementDefinition</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="ResearchStudy">
         <xs:annotation>
           <xs:documentation xml:lang="en">ResearchStudy</xs:documentation>
@@ -2122,16 +2279,6 @@
           <xs:documentation xml:lang="en">Schedule</xs:documentation>
           <xs:documentation xml:lang="es">Agenda</xs:documentation>
           <xs:documentation xml:lang="zh">日程安排</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="SearchParameter">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
-          <xs:documentation xml:lang="en">SearchParameter</xs:documentation>
-          <xs:documentation xml:lang="it">ParametroDiRicerca</xs:documentation>
-          <xs:documentation xml:lang="fr">ParamètreRecherche</xs:documentation>
-          <xs:documentation xml:lang="es">ParametroDeBusqueda</xs:documentation>
-          <xs:documentation xml:lang="zh">搜索参数</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ServiceRequest">
@@ -2172,24 +2319,6 @@
           <xs:documentation xml:lang="zh">标本定义</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="StructureDefinition">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
-          <xs:documentation xml:lang="en">StructureDefinition</xs:documentation>
-          <xs:documentation xml:lang="it">DefinizioneStruttura</xs:documentation>
-          <xs:documentation xml:lang="fr">DéfinitionStructure</xs:documentation>
-          <xs:documentation xml:lang="es">DefinicionDeEstructura</xs:documentation>
-          <xs:documentation xml:lang="zh">结构定义</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="StructureMap">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
-          <xs:documentation xml:lang="en">StructureMap</xs:documentation>
-          <xs:documentation xml:lang="es">MapaDeEstructura</xs:documentation>
-          <xs:documentation xml:lang="zh">结构映射</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="Subscription">
         <xs:annotation>
           <xs:documentation xml:lang="en">Subscription</xs:documentation>
@@ -2210,6 +2339,9 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
           <xs:documentation xml:lang="en">SubscriptionTopic</xs:documentation>
+          <xs:documentation xml:lang="fr">Souscription Sujet</xs:documentation>
+          <xs:documentation xml:lang="es">Tema de Suscripción</xs:documentation>
+          <xs:documentation xml:lang="zh">话题</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="Substance">
@@ -2226,6 +2358,36 @@
         <xs:annotation>
           <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
           <xs:documentation xml:lang="en">SubstanceDefinition</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceNucleicAcid">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceNucleicAcid</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstancePolymer">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+          <xs:documentation xml:lang="en">SubstancePolymer</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceProtein">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceProtein</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceReferenceInformation">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceReferenceInformation</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="SubstanceSourceMaterial">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
+          <xs:documentation xml:lang="en">SubstanceSourceMaterial</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="SupplyDelivery">
@@ -2254,14 +2416,6 @@
           <xs:documentation xml:lang="zh">任务</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="TerminologyCapabilities">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
-          <xs:documentation xml:lang="en">TerminologyCapabilities</xs:documentation>
-          <xs:documentation xml:lang="es">CapacidadTerminologica</xs:documentation>
-          <xs:documentation xml:lang="zh">术语服务能力</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
       <xs:enumeration value="TestReport">
         <xs:annotation>
           <xs:documentation xml:lang="en">TestReport</xs:documentation>
@@ -2269,24 +2423,6 @@
           <xs:documentation xml:lang="fr">RapportTest</xs:documentation>
           <xs:documentation xml:lang="es">ReporteDePrueba</xs:documentation>
           <xs:documentation xml:lang="zh">测试报告</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="TestScript">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">TestScript</xs:documentation>
-          <xs:documentation xml:lang="en">TestScript</xs:documentation>
-          <xs:documentation xml:lang="fr">ScriptTest</xs:documentation>
-          <xs:documentation xml:lang="es">ScriptDePrueba</xs:documentation>
-          <xs:documentation xml:lang="zh">测试脚本</xs:documentation>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="ValueSet">
-        <xs:annotation>
-          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
-          <xs:documentation xml:lang="en">ValueSet</xs:documentation>
-          <xs:documentation xml:lang="fr">EnsembleValeurs</xs:documentation>
-          <xs:documentation xml:lang="zh">取值集合</xs:documentation>
-          <xs:documentation xml:lang="es">ConjuntoValores / ConjuntoDeValores</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="VerificationResult">

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -139,14 +139,14 @@
               <xs:documentation xml:lang="en">Provides a reference to the author of the request group.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Describes the reason for the request group in coded or textual form.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="goal" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates another resource whose existence justifies this request group.</xs:documentation>
+              <xs:documentation xml:lang="en">Goals that are intended to be achieved by following the requests in this RequestGroup.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -170,9 +170,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="linkId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The linkId of the action from the PlanDefinition that corresponds to this action in the RequestGroup resource.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="prefix" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A user-visible prefix for the action.</xs:documentation>
+              <xs:documentation xml:lang="en">A user-visible prefix for the action. For example a section or item numbering such as 1. or A.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
@@ -205,6 +210,11 @@
               <xs:documentation xml:lang="en">Didactic or other informational resources associated with the action that can be provided to the CDS recipient. Information resources can include inline text commentary and links to web resources.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="goal" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Goals that are intended to be achieved by following the requests in this action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="condition" type="RequestGroup.Condition" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">An expression that describes applicability criteria, or start/stop conditions for the action.</xs:documentation>
@@ -226,7 +236,12 @@
             <xs:element name="timingRange" type="Range"/>
             <xs:element name="timingTiming" type="Timing"/>
           </xs:choice>
-          <xs:element name="participant" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="location" minOccurs="0" maxOccurs="1" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the facility where the action will occur; e.g. home, hospital, specific clinic, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="participant" type="RequestGroup.Participant" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">The participant that should perform or be responsible for this action.</xs:documentation>
            </xs:annotation>
@@ -303,9 +318,9 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionId" minOccurs="1" maxOccurs="1" type="id">
+          <xs:element name="targetId" minOccurs="1" maxOccurs="1" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The element id of the action this is related to.</xs:documentation>
+              <xs:documentation xml:lang="en">The element id of the target related action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="ActionRelationshipType">
@@ -320,6 +335,42 @@
             <xs:element name="offsetDuration" type="Duration"/>
             <xs:element name="offsetRange" type="Range"/>
           </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RequestGroup.Participant">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A group of related requests that can be used to capture intended activities that have inter-dependencies such as &quot;give this medication after that one&quot;.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="ActionParticipantType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="typeReference" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="function" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how the actor will be involved in the action - author, reviewer, witness, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="actor" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to the actual participant.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

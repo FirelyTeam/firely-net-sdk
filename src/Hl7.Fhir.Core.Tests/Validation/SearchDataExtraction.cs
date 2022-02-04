@@ -68,18 +68,10 @@ namespace Hl7.Fhir.Test.Validation
                                       // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
                         if (entry.Name == "observation-decimal(decimal).xml")
                             continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
-                        if (entry.Name.StartsWith("sc-valueset-") || entry.Name == "conceptmaps.xml" || entry.Name == "valuesets.xml")
-                            continue; // these files contain conceptmaps with incorrect relationship element
-                        if (entry.Name == "activitydefinition-medicationorder-example(citalopramPrescription).xml" ||
-                            entry.Name == "plandefinition-example(low-suicide-risk-order-set).xml" ||
-                            entry.Name == "plandefinition-example-cardiology-os(example-cardiology-os).xml")
-                            continue; // this file contains an incorrect strengthRatio element
-                        if (entry.Name == "ingredient-example(example).xml")
-                            continue; // this file contains an incorrect coding element
-                        if (entry.Name == "medicationrequest0301(medrx0301).xml")
-                            continue; // this file contains an incorrect dispenser element
-                        if (entry.Name == "subscriptionstatus-example(example).xml")
-                            continue; // this file contains an incorrect focus element
+                        if (entry.Name == "citation-example(example).xml")
+                            continue; // resource Citation is not generated because of generator errors
+
+
                         testFileCount++;
 
                         try

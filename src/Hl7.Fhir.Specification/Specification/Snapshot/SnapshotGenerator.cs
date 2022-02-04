@@ -291,6 +291,25 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
+        /// <summary>
+        /// Return the Parent of the StructureDefinition. The 'classes'
+        /// "MetadataResource" and "CanonicalResource" are skipped here in the hierarchy. Those 'classes' are actually interfaces.
+        /// These interfaces are introduced in the preview of R5 and maybe removed in the hierarchy in the final R5 release. 
+        /// These class are denoted by the extension 'structuredefinition-interface'
+        /// </summary>
+        /// <param name="structure">the StructureDefinition to get the base from</param>
+        /// <returns>The parent of <paramref name="structure"/>, skipping the interface classes</returns>
+        internal async T.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
+        {
+            structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
+            while (structure?.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
+            {
+                structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
+            }
+
+            return structure;
+        }
+
         ///// <inheritdoc cref="MergeElementDefinitionAsync(ElementDefinition, ElementDefinition, bool)" />
         //[Obsolete("SnapshotGenerator now works best with asynchronous resolvers. Use MergeElementDefinition() instead.")]
         //public ElementDefinition MergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
@@ -327,7 +346,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // StructureDefinition.SnapshotComponent snapshot = null;
             if (structure.BaseDefinition != null)
             {
-                var baseStructure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition).ConfigureAwait(false);
+                var baseStructure = await getBaseDefinition(structure);
 
                 // [WMR 20161208] Handle unresolved base profile
                 if (baseStructure == null)
@@ -337,9 +356,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return null;
                 }
 
+                var baseDefinitionUrl = baseStructure.BaseDefinitionElement;
                 // [WMR 20161208] Handle missing differential
                 var location = differential.Element.Count > 0 ? differential.Element[0].Path : null;
-                if (!await ensureSnapshot(baseStructure, structure.BaseDefinition, location).ConfigureAwait(false))
+                if (!await ensureSnapshot(baseStructure, baseDefinitionUrl, location).ConfigureAwait(false))
                 {
                     // Fatal error...
                     return null;
@@ -766,6 +786,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // New element with type profile
                 var newElement = (ElementDefinition)targetElement.DeepCopy();
                 newElement.Path = ElementDefinitionNavigator.ReplacePathRoot(newElement.Path, diff.Path);
+
+                if (typeStructure.Kind == StructureDefinition.StructureDefinitionKind.PrimitiveType)
+                {
+                    // [MV 20200909] in case of primitive types remove the extensions
+                    newElement.Extension.Clear();
+                }
 
                 // [WMR 20190130] STU3: Base component of new elements is empty
                 // [WMR 20190130] R4: Base components of new elements refers to self (.Base.Path = .Path)
@@ -2262,8 +2288,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 #endif
 
             var baseProfileUri = sd.BaseDefinition;
-
-            if (baseProfileUri == null)
+            if (baseProfileUri is null)
             {
                 if (diffRoot == null)
                 {
@@ -2271,10 +2296,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return null;
                 }
 
-                // Structure has no base, i.e. core type definition => differential introduces & defines the root element
+                // Structure is a core type definition => differential introduces & defines the root element
                 // No need to rebase, nothing to merge
                 var snapRoot = (ElementDefinition)diffRoot.DeepCopy();
-                snapRoot.Extension.Clear();
 
 #if CACHE_ROOT_ELEMDEF
                 Debug.Assert(!snapRoot.HasSnapshotElementAnnotation());
@@ -2302,6 +2326,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // profile that is currently being fully expanded, i.e. the url is already on the main stack.
 
             // Debug.Print($"[{nameof(SnapshotGenerator)}.{nameof(getSnapshotRootElement)}] {nameof(profileUri)} = '{profileUri}' - recursively resolve root element definition from base profile '{baseProfileUri}' ...");
+
             var sdBase = await AsyncResolver.FindStructureDefinitionAsync(baseProfileUri).ConfigureAwait(false);
             // [WMR 20180108] diffRoot may be null (sparse differential w/o root)
             var baseRoot = await getSnapshotRootElement(sdBase, baseProfileUri, diffRoot?.Path).ConfigureAwait(false); // Recursion!

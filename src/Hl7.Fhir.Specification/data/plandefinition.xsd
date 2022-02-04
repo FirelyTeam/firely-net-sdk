@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,7 +67,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="MetadataResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -222,6 +222,11 @@
               <xs:documentation xml:lang="en">A goal describes an expected outcome that activities within the plan are intended to achieve. For example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, meeting the acceptance criteria for a test as specified by a quality specification, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="actor" type="PlanDefinition.Actor" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Actors represent the individuals or groups involved in the execution of the defined set of activities.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="action" type="PlanDefinition.Action" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">An action or group of actions to be taken as part of the plan. For example, in clinical care, an action would be to prescribe a particular indicated medication, or perform a particular test as appropriate. In pharmaceutical quality, an action would be the test that needs to be performed on a drug product as defined in the quality specification.</xs:documentation>
@@ -296,10 +301,66 @@
             <xs:element name="detailQuantity" type="Quantity"/>
             <xs:element name="detailRange" type="Range"/>
             <xs:element name="detailCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="detailString" type="string"/>
+            <xs:element name="detailBoolean" type="boolean"/>
+            <xs:element name="detailInteger" type="integer"/>
+            <xs:element name="detailRatio" type="Ratio"/>
           </xs:choice>
           <xs:element name="due" minOccurs="0" maxOccurs="1" type="Duration">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates the timeframe after the start of the goal in which the goal should be met.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.Actor">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A descriptive label for the actor.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A description of how the actor fits into the overall actions of the plan definition.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="option" type="PlanDefinition.Option" minOccurs="1" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The characteristics of the candidates that could serve as the actor.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.Option">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="ActionParticipantType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="typeReference" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -313,9 +374,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
+          <xs:element name="linkId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An identifier that is unique within the PlanDefinition to allow linkage within the realized CarePlan and/or RequestGroup.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="prefix" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A user-visible prefix for the action.</xs:documentation>
+              <xs:documentation xml:lang="en">A user-visible prefix for the action. For example a section or item numbering such as 1. or A.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
@@ -338,7 +404,7 @@
               <xs:documentation xml:lang="en">Indicates how quickly the action should be addressed with respect to other actions.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="code" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">A code that provides a meaning, grouping, or classification for the action or action group. For example, a section may have a LOINC code for the section of a documentation template. In pharmaceutical quality, an action (Test) such as pH could be classified as a physical property.</xs:documentation>
            </xs:annotation>
@@ -376,12 +442,12 @@
               <xs:documentation xml:lang="en">An expression that describes applicability criteria or start/stop conditions for the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="input" minOccurs="0" maxOccurs="unbounded" type="DataRequirement">
+          <xs:element name="input" type="PlanDefinition.Input" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines input data requirements for the action.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="output" minOccurs="0" maxOccurs="unbounded" type="DataRequirement">
+          <xs:element name="output" type="PlanDefinition.Output" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Defines the outputs of the action, if any.</xs:documentation>
            </xs:annotation>
@@ -395,13 +461,16 @@
             <xs:annotation>
               <xs:documentation xml:lang="en">An optional value describing when the action should be performed.</xs:documentation>
             </xs:annotation>
-            <xs:element name="timingDateTime" type="dateTime"/>
             <xs:element name="timingAge" type="Age"/>
-            <xs:element name="timingPeriod" type="Period"/>
             <xs:element name="timingDuration" type="Duration"/>
             <xs:element name="timingRange" type="Range"/>
             <xs:element name="timingTiming" type="Timing"/>
           </xs:choice>
+          <xs:element name="location" minOccurs="0" maxOccurs="1" type="CodeableReference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifies the facility where the action will occur; e.g. home, hospital, specific clinic, etc.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="participant" type="PlanDefinition.Participant" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Indicates who should participate in performing the action described.</xs:documentation>
@@ -439,7 +508,7 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail, or a PlanDefinition that describes a series of actions to be taken.</xs:documentation>
+              <xs:documentation xml:lang="en">A reference to an ActivityDefinition that describes the action to be taken in detail, a PlanDefinition that describes a series of actions to be taken, a Questionnaire that should be filled out, or an ObservationDefinition that specifies what observation should be captured.</xs:documentation>
             </xs:annotation>
             <xs:element name="definitionCanonical" type="canonical"/>
             <xs:element name="definitionUri" type="uri"/>
@@ -484,6 +553,58 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="PlanDefinition.Input">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A human-readable label for the data requirement used to label data flows in BPMN or similar diagrams. Also provides a human readable label when rendering the data requirement that conveys its purpose to human readers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="requirement" minOccurs="0" maxOccurs="1" type="DataRequirement">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the data that is to be provided as input to the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relatedData" minOccurs="0" maxOccurs="1" type="id">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Points to an existing input or output element that provides data to this input.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PlanDefinition.Output">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="title" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A human-readable label for the data requirement used to label data flows in BPMN or similar diagrams. Also provides a human readable label when rendering the data requirement that conveys its purpose to human readers.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="requirement" minOccurs="0" maxOccurs="1" type="DataRequirement">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Defines the data that results as output from the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relatedData" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Points to an existing input or output element that is results as output from the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="PlanDefinition.RelatedAction">
     <xs:annotation>
       <xs:documentation xml:lang="en">This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.</xs:documentation>
@@ -491,9 +612,9 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="actionId" minOccurs="1" maxOccurs="1" type="id">
+          <xs:element name="targetId" minOccurs="1" maxOccurs="1" type="id">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The element id of the related action.</xs:documentation>
+              <xs:documentation xml:lang="en">The element id of the target related action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="ActionRelationshipType">
@@ -519,7 +640,17 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ActionParticipantType">
+          <xs:element name="actorId" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A reference to the id element of the actor who will participate in this action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="ActionParticipantType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="typeReference" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
            </xs:annotation>
@@ -527,6 +658,11 @@
           <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="function" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how the actor will be involved in the action - author, reviewer, witness, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

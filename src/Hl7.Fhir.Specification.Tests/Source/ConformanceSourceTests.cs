@@ -39,14 +39,14 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindConceptMaps()
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use").ToList();
-            Assert.AreEqual(2, conceptMaps.Count());
+            Assert.AreEqual(3, conceptMaps.Count());
             Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v2-0190").ToList();
             Assert.AreEqual(1, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v3-AddressUse").ToList();
-            Assert.AreEqual(1, conceptMaps.Count());
+            Assert.AreEqual(2, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/somethingelse").ToList();
             Assert.AreEqual(0, conceptMaps.Count());
@@ -64,15 +64,15 @@ namespace Hl7.Fhir.Specification.Tests
             vs = await source.FindCodeSystemAsync("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
             Assert.IsNotNull(vs);
 
-            // MV 2021-04-23: No longer part of the spec
+            //MV: No longer part of the spec
             // One from v2-tables
-            // vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v2-0145");
-            // Assert.IsNotNull(vs);
+            //vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v2-0145");
+            //Assert.IsNotNull(vs);
 
-            // MV 2021-04-23: No longer part of the spec
+            //MV: No longer part of the spec
             // One from v3-codesystems
-            // vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v3-ActCode");
-            // Assert.IsNotNull(vs);
+            //vs = await source.FindCodeSystemAsync("http://terminology.hl7.org/CodeSystem/v3-ActCode");
+            //Assert.IsNotNull(vs);
 
             // Something non-existent
             vs = await source.FindCodeSystemAsync("http://nema.org/dicom/dicmQQQQ");
@@ -93,15 +93,15 @@ namespace Hl7.Fhir.Specification.Tests
             //vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/dicom-dcim");
             //Assert.IsNotNull(vs);
 
-            // MV 2021-04-23: No longer part of the spec
+            //MV: No longer part of the spec
             // One from v2-tables
-            // vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v2-0190");
-            // Assert.IsNotNull(vs);
+            //vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v2-0190");
+            //Assert.IsNotNull(vs);
 
-            // MV 2021-04-23: No longer part of the spec
+            //MV: No longer part of the spec
             // One from v3-codesystems
-            // vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActCode");
-            // Assert.IsNotNull(vs);
+            //vs = await source.FindValueSetAsync("http://terminology.hl7.org/ValueSet/v3-ActStatus");
+            //Assert.IsNotNull(vs);
 
             // Something non-existent
             vs = await source.FindValueSetAsync("http://hl7.org/fhir/ValueSet/crapQQQQ");
@@ -160,11 +160,10 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var fa = ZipSource.CreateValidationSource();
 
-            // MV 2021-04-23: No longer part of the spec
-            // var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/v2-0292");
-            // Assert.IsNotNull(vs);
-            // Assert.IsTrue(vs is ValueSet);
-            // Assert.IsTrue(vs.GetOrigin().EndsWith("v2-tables.xml"));
+            //MV: No longer part of the spec
+            //var vs = fa.ResolveByUri("http://terminology.hl7.org/ValueSet/v2-0292");
+            //Assert.IsNotNull(vs);
+            //Assert.IsTrue(vs is ValueSet);
 
             var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
             Assert.IsNotNull(vs);
@@ -192,11 +191,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 
-            // MV 2021-04-23: No longer part of the spec
             // Try to find an additional non-hl7 profile (they are distributed with the spec for now)
-            // var us = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            // Assert.IsNotNull(us);
-            // Assert.IsTrue(us is StructureDefinition);
+            var us = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
+            Assert.IsNotNull(us);
+            Assert.IsTrue(us is StructureDefinition);
         }
 
         [TestMethod]

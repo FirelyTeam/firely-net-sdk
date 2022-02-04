@@ -32,13 +32,13 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         [TestMethod]
         public void EmptyValueShouldNotThrowExceptions()
         {
-            var appointment = new Appointment();
+            var patient = new Patient();
 
-            appointment.PriorityElement = new UnsignedInt(null);
-            appointment.PriorityElement.AddExtension("http://example.com/myExtension", new FhirBoolean(false));
-            var actual = appointment.ToTypedElement();
+            patient.ActiveElement = new FhirBoolean(null);
+            patient.ActiveElement.AddExtension("http://example.com/myExtension", new FhirBoolean(false));
+            var actual = patient.ToTypedElement();
 
-            var prio = actual.Scalar("priority");
+            var prio = actual.Scalar("active");
             Assert.IsNull(prio);
         }
 

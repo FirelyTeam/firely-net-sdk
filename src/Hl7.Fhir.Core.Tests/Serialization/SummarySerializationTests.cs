@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Tests.Serialization
             q.Item.Add(new Questionnaire.ItemComponent()
             {
                 LinkId = "linkid",
-                Text = "TEXT"
+                Text = new Markdown("TEXT")
             });
 
             Assert.IsNull(q.Meta, "Meta element has not been created.");

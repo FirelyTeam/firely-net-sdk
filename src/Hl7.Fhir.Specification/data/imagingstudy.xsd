@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -71,17 +71,17 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Identifiers for the ImagingStudy such as DICOM Study Instance UID, and Accession Number.</xs:documentation>
+              <xs:documentation xml:lang="en">Identifiers for the ImagingStudy such as DICOM Study Instance UID.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="status" minOccurs="1" maxOccurs="1" type="ImagingStudyStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The current state of the ImagingStudy.</xs:documentation>
+              <xs:documentation xml:lang="en">The current state of the ImagingStudy resource. This is not the status of any ServiceRequest or Task resources associated with the ImagingStudy.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="modality" minOccurs="0" maxOccurs="unbounded" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A list of all the series.modality values that are actual acquisition modalities, i.e. those in the DICOM Context Group 29 (value set OID 1.2.840.10008.6.1.19).</xs:documentation>
+              <xs:documentation xml:lang="en">A list of all the distinct values of series.modality. This may include both acquisition and non-acquisition modalities.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="subject" minOccurs="1" maxOccurs="1" type="Reference">
@@ -129,14 +129,9 @@
               <xs:documentation xml:lang="en">Number of SOP Instances in Study. This value given may be larger than the number of instance elements this resource contains due to resource availability, security, or other factors. This element should be present if any instance elements are present.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="procedureReference" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="procedure" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The procedure which this ImagingStudy was part of.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="procedureCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The code for the performed procedure type.</xs:documentation>
+              <xs:documentation xml:lang="en">The procedure or code from which this ImagingStudy was part of.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="location" minOccurs="0" maxOccurs="1" type="Reference">
@@ -144,14 +139,9 @@
               <xs:documentation xml:lang="en">The principal physical location where the ImagingStudy was performed.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Description of clinical condition indicating why the ImagingStudy was requested.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates another resource whose existence justifies this Study.</xs:documentation>
+              <xs:documentation xml:lang="en">Description of clinical condition indicating why the ImagingStudy was requested, and/or Indicates another resource whose existence justifies this Study.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
@@ -192,7 +182,7 @@
           </xs:element>
           <xs:element name="modality" minOccurs="1" maxOccurs="1" type="Coding">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The modality of this series sequence.</xs:documentation>
+              <xs:documentation xml:lang="en">The distinct modality for this series. This may include both acquisition and non-acquisition modalities.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="string">

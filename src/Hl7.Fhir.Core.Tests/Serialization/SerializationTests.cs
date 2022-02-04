@@ -366,13 +366,13 @@ namespace Hl7.Fhir.Tests.Serialization
         {
             // var res = new ValueSet() { Url = "http://example.org/fhir/ValueSet/MyValueSetExample" };
 
-            string json = TestDataHelper.ReadTestData(@"valueset-v2-0717.json");
+            string json = TestDataHelper.ReadTestData(@"TestPatient.json");
             Assert.IsNotNull(json);
             var parser = new FhirJsonParser { Settings = { PermissiveParsing = true } };
-            var vs = await parser.ParseAsync<ValueSet>(json);
-            Assert.IsNotNull(vs);
+            var pat = await parser.ParseAsync<Patient>(json);
+            Assert.IsNotNull(pat);
 
-            var xml = await FhirXmlSerializer.SerializeToStringAsync(vs);
+            var xml = await FhirXmlSerializer.SerializeToStringAsync(pat);
             Assert.IsNotNull(xml);
         }
 

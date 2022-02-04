@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -271,7 +271,7 @@
           </xs:element>
           <xs:element name="publicationStatus" minOccurs="1" maxOccurs="1" type="ContractResourcePublicationStatusCodes">
             <xs:annotation>
-              <xs:documentation xml:lang="en">amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated.</xs:documentation>
+              <xs:documentation xml:lang="en">amended | appended | cancelled | disputed | entered-in-error | executable +.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="copyright" minOccurs="0" maxOccurs="1" type="markdown">
@@ -777,19 +777,9 @@
               <xs:documentation xml:lang="en">Id [identifier??] of the clause or question text related to the reason type or reference of this  action in the referenced form or QuestionnaireResponse.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Rationale for the action to be performed or not performed. Describes why the action is permitted or prohibited.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Indicates another resource whose existence justifies permitting or not permitting this action.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">Describes why the action is to be performed or not performed in textual form.</xs:documentation>
+              <xs:documentation xml:lang="en">Rationale for the action to be performed or not performed. Describes why the action is permitted or prohibited. Either a coded concept, or another resource whose existence justifies permitting or not permitting this action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="reasonLinkId" minOccurs="0" maxOccurs="unbounded" type="string">

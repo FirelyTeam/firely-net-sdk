@@ -387,13 +387,11 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
-        [Ignore("In release 4B the extensions are not empty. Still to be investigated")]
         public async T.Task TestFullyExpandCoreOrganization()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic
             // i.e. perform a regular snapshot expansion, then explicitly expand all complex elements (esp. those without any differential constraints)
 
-            // var sd = await _testResolver.FindStructureDefinitionAsync(@"http://hl7.org/fhir/StructureDefinition/Organization");
             var sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Organization);
             Assert.IsNotNull(sd);
             await generateSnapshot(sd);
@@ -533,7 +531,9 @@ namespace Hl7.Fhir.Specification.Tests
             // -3 inline children, of type CodeableConcept
             // -3*12 full expansion of CodeableConcept
             // -3 inherited children (id, extension, modifierExtension)
-            Assert.AreEqual(277, fullElems.Count);
+            // MV 20200908 R5 fixed
+            // +5 photo (Attachment): extra attributes (TU): heigth, width, frames, duration, pages 
+            Assert.AreEqual(282, fullElems.Count);
             Assert.AreEqual(issues.Count, 0);
 
             // Verify
@@ -2617,6 +2617,9 @@ namespace Hl7.Fhir.Specification.Tests
             // Generate snapshots for all core resources, in the original order as they are defined
             // The Snapshot Generator should recursively process any referenced base/type profiles (e.g. data types)
             var coreResourceUrls = ModelInfo.SupportedResources.Select(t => "http://hl7.org/fhir/StructureDefinition/" + t);
+
+            // R5, version 4.6.0: StructureDefinition is not correct for Citation (Citation.summary should be BackboneElement)
+            coreResourceUrls = coreResourceUrls.Where(url => !url.EndsWith("Citation"));
             await testExpandResources(coreResourceUrls.ToArray());
         }
 
@@ -2638,9 +2641,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         private async T.Task<bool> testExpandResource(string url)
         {
-            // TODO [MV 20220105 Citation is causing problems ]
-            if (url == "http://hl7.org/fhir/StructureDefinition/Citation") return true;
-
             Debug.Print("[testExpandResource] url = '{0}'", url);
             var sd = await _testResolver.FindStructureDefinitionAsync(url);
             Assert.IsNotNull(sd);
@@ -2654,7 +2654,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!result)
             {
                 Debug.Print("Expanded is not exactly equal to original... verifying...");
-                result = verifyElementBase(sd, expanded);
+                result = await verifyElementBase(sd, expanded);
             }
 
             // Core artifact snapshots are incorrect, e.g. url snapshot is missing extension element
@@ -2742,7 +2742,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Verify ElementDefinition.Base components
-        private bool verifyElementBase(StructureDefinition original, StructureDefinition expanded)
+        private async T.Task<bool> verifyElementBase(StructureDefinition original, StructureDefinition expanded)
         {
             var originalElems = original.HasSnapshot ? original.Snapshot.Element : new List<ElementDefinition>();
             var expandedElems = expanded.HasSnapshot ? expanded.Snapshot.Element : new List<ElementDefinition>();
@@ -2803,9 +2803,9 @@ namespace Hl7.Fhir.Specification.Tests
                 else if (expanded.Kind == StructureDefinition.StructureDefinitionKind.Resource)
                 {
                     // [WMR 20190131] Fixed
-                    var baseDef = expanded.BaseDefinition;
-                    bool isDerivedFromResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
-                    bool isDerivedFromDomainResource = baseDef == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
+                    var baseDef = await _generator.getBaseDefinition(expanded);
+                    bool isDerivedFromResource = baseDef?.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource);
+                    bool isDerivedFromDomainResource = baseDef?.Url == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource);
                     bool isDomainResource = expanded.Name == "DomainResource";
 
                     // [WMR 20190130] STU3
@@ -4843,12 +4843,14 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestElementMappings()
         {
-            var profile = await _testResolver.FindStructureDefinitionAsync("http://example.org/fhir/StructureDefinition/TestMedicationStatement-prescribing");
+            var profile = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(profile);
 
-            var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            var diffElem = profile.Differential.Element.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(diffElem);
             dumpMappings(diffElem);
+
+            profile.Snapshot = null; // remove snapshot, so it can generated again below
 
             StructureDefinition expanded = null;
             _generator = new SnapshotGenerator(_testResolver, _settings);
@@ -4869,7 +4871,7 @@ namespace Hl7.Fhir.Specification.Tests
             var elems = expanded.Snapshot.Element;
             elems.Dump();
 
-            var elem = elems.FirstOrDefault(e => e.Path == "MedicationStatement.informationSource");
+            var elem = elems.FirstOrDefault(e => e.Path == "Patient.identifier");
             Assert.IsNotNull(elem);
             dumpMappings(elem);
 
@@ -6202,26 +6204,26 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        private static StructureDefinition MedicationStatementWithSimpleQuantitySlice => new StructureDefinition()
+        static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
         {
-            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
-            Name = "MedicationStatementWithSimpleQuantitySlice",
-            Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
+            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
+            Name = "MedicationUsageWithSimpleQuantitySlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         SliceName = "doseSimpleQuantity",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -6233,7 +6235,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     },
-                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
+                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
                     {
                         SliceName = "dosePeriod",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -6252,7 +6254,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestSimpleQuantitySlice()
         {
-            var sd = MedicationStatementWithSimpleQuantitySlice;
+            var sd = MedicationUsageWithSimpleQuantitySlice;
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
@@ -7801,7 +7803,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToNext("value[x]"));
             var elem = nav.Current;
             Assert.IsNotNull(elem.Type);
-            Assert.AreEqual(11, elem.Type.Count); // Unconstrained
+            // 20200908: R5 +1 because of Attachment is also allowed now.
+            Assert.AreEqual(12, elem.Type.Count); // Unconstrained
 
             // Verify implicit type constraint
 #if NORMALIZE_RENAMED_TYPESLICE

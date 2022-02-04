@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -79,6 +79,11 @@
               <xs:documentation xml:lang="en">Status of the supply request.</xs:documentation>
            </xs:annotation>
           </xs:element>
+          <xs:element name="basedOn" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Plan/proposal/order fulfilled by this request.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">Category of supply, e.g.  central, non-stock, etc. This is used to support work flows associated with the supply process.</xs:documentation>
@@ -89,13 +94,11 @@
               <xs:documentation xml:lang="en">Indicates how quickly this SupplyRequest should be addressed with respect to other requests.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:choice minOccurs="1" maxOccurs="1" >
+          <xs:element name="item" minOccurs="1" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The item that is requested to be supplied. This is either a link to a resource representing the details of the item or a code that identifies the item from a known list.</xs:documentation>
-            </xs:annotation>
-            <xs:element name="itemCodeableConcept" type="CodeableConcept"/>
-            <xs:element name="itemReference" type="Reference"/>
-          </xs:choice>
+           </xs:annotation>
+          </xs:element>
           <xs:element name="quantity" minOccurs="1" maxOccurs="1" type="Quantity">
             <xs:annotation>
               <xs:documentation xml:lang="en">The amount that is being ordered of the indicated item.</xs:documentation>
@@ -129,12 +132,7 @@
               <xs:documentation xml:lang="en">Who is intended to fulfill the request.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="reasonCode" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The reason why the supply item was requested.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="reasonReference" minOccurs="0" maxOccurs="unbounded" type="Reference">
+          <xs:element name="reason" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The reason why the supply item was requested.</xs:documentation>
            </xs:annotation>

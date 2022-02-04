@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,7 +67,7 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="MetadataResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
@@ -244,16 +244,14 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The period, timing or frequency upon which the described activity is to occur.</xs:documentation>
+              <xs:documentation xml:lang="en">The timing or frequency upon which the described activity is to occur.</xs:documentation>
             </xs:annotation>
             <xs:element name="timingTiming" type="Timing"/>
-            <xs:element name="timingDateTime" type="dateTime"/>
             <xs:element name="timingAge" type="Age"/>
-            <xs:element name="timingPeriod" type="Period"/>
             <xs:element name="timingRange" type="Range"/>
             <xs:element name="timingDuration" type="Duration"/>
           </xs:choice>
-          <xs:element name="location" minOccurs="0" maxOccurs="1" type="Reference">
+          <xs:element name="location" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
               <xs:documentation xml:lang="en">Identifies the facility where the activity will occur; e.g. home, hospital, specific clinic, etc.</xs:documentation>
            </xs:annotation>
@@ -321,7 +319,12 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ActionParticipantType">
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="ActionParticipantType">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="typeReference" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
               <xs:documentation xml:lang="en">The type of participant in the action.</xs:documentation>
            </xs:annotation>
@@ -329,6 +332,11 @@
           <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The role the participant should play in performing the described action.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="function" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Indicates how the actor will be involved in the action - author, reviewer, witness, etc.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -358,6 +366,36 @@
   </xs:complexType>
   <xs:simpleType name="ActionParticipantTypeEnum">
     <xs:restriction base="code-primitive">
+      <xs:enumeration value="careteam">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">CareTeam</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="device">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Device</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="group">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Group</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="healthcareservice">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">HealthcareService</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="location">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Location</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="organization">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Organization</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
       <xs:enumeration value="patient">
         <xs:annotation>
           <xs:documentation xml:lang="en">Patient</xs:documentation>
@@ -368,14 +406,14 @@
           <xs:documentation xml:lang="en">Practitioner</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="related-person">
+      <xs:enumeration value="practitionerrole">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Related Person</xs:documentation>
+          <xs:documentation xml:lang="en">PractitionerRole</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
-      <xs:enumeration value="device">
+      <xs:enumeration value="relatedperson">
         <xs:annotation>
-          <xs:documentation xml:lang="en">Device</xs:documentation>
+          <xs:documentation xml:lang="en">RelatedPerson</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>

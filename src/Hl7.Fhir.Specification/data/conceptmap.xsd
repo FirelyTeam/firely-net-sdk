@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -67,14 +67,14 @@
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
-      <xs:extension base="DomainResource">
+      <xs:extension base="CanonicalResource">
         <xs:sequence>
           <xs:element name="url" minOccurs="0" maxOccurs="1" type="uri">
             <xs:annotation>
               <xs:documentation xml:lang="en">An absolute URI that is used to identify this concept map when it is referenced in a specification, model, design or an instance; also called its canonical identifier. This SHOULD be globally unique and SHOULD be a literal address at which at which an authoritative instance of this concept map is (or will be) published. This URL can be the target of a canonical reference. It SHALL remain the same when the concept map is stored on different servers.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
               <xs:documentation xml:lang="en">A formal identifier that is used to identify this concept map when it is represented in other formats, or referenced in a specification, model, design or an instance.</xs:documentation>
            </xs:annotation>
@@ -174,24 +174,14 @@
     <xs:complexContent>
       <xs:extension base="BackboneElement">
         <xs:sequence>
-          <xs:element name="source" minOccurs="0" maxOccurs="1" type="uri">
+          <xs:element name="source" minOccurs="0" maxOccurs="1" type="canonical">
             <xs:annotation>
               <xs:documentation xml:lang="en">An absolute URI that identifies the source system where the concepts to be mapped are defined.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="sourceVersion" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The specific version of the code system, as determined by the code system authority.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="target" minOccurs="0" maxOccurs="1" type="uri">
+          <xs:element name="target" minOccurs="0" maxOccurs="1" type="canonical">
             <xs:annotation>
               <xs:documentation xml:lang="en">An absolute URI that identifies the target system that the concepts will be mapped to.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
-          <xs:element name="targetVersion" minOccurs="0" maxOccurs="1" type="string">
-            <xs:annotation>
-              <xs:documentation xml:lang="en">The specific version of the code system, as determined by the code system authority.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="element" type="ConceptMap.Element" minOccurs="1" maxOccurs="unbounded">
@@ -201,7 +191,7 @@
           </xs:element>
           <xs:element name="unmapped" type="ConceptMap.Unmapped" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">What to do when there is no mapping for the source concept. &quot;Unmapped&quot; does not include codes that are unmatched, and the unmapped element is ignored in a code is specified to have equivalence = unmatched.</xs:documentation>
+              <xs:documentation xml:lang="en">What to do when there is no mapping to a target concept from the source concept.  This provides the &quot;default&quot; to be applied when there is no target concept mapping specified.  The 'unmapped' element is ignored if a code is specified to have relationship = not-related-to.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -223,6 +213,11 @@
           <xs:element name="display" minOccurs="0" maxOccurs="1" type="string">
             <xs:annotation>
               <xs:documentation xml:lang="en">The display for the code. The display is only provided to help editors when editing the concept map.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="noMap" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If noMap = true this indicates that no mapping to a target concept exists for this source concept.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="target" type="ConceptMap.Target" minOccurs="0" maxOccurs="unbounded">
@@ -251,9 +246,9 @@
               <xs:documentation xml:lang="en">The display for the code. The display is only provided to help editors when editing the concept map.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="equivalence" minOccurs="1" maxOccurs="1" type="ConceptMapEquivalence">
+          <xs:element name="relationship" minOccurs="1" maxOccurs="1" type="ConceptMapRelationship">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The equivalence between the source and target concepts (counting for the dependencies and products). The equivalence is read from target to source (e.g. the target is 'wider' than the source).</xs:documentation>
+              <xs:documentation xml:lang="en">The relationship between the source and target concepts. The relationship is read from source to target (e.g. source-is-narrower-than-target).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="comment" minOccurs="0" maxOccurs="1" type="string">
@@ -268,7 +263,7 @@
           </xs:element>
           <xs:element name="product" type="ConceptMap.DependsOn" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A set of additional outcomes from this mapping to other elements. To properly execute this mapping, the specified element must be mapped to some data element or source that is in context. The mapping may still be useful without a place for the additional data elements, but the equivalence cannot be relied on.</xs:documentation>
+              <xs:documentation xml:lang="en">A set of additional outcomes from this mapping to other elements. To properly execute this mapping, the specified element must be mapped to some data element or source that is in context. The mapping may still be useful without a place for the additional data elements, but the relationship (e.g., equivalent) cannot be relied on.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

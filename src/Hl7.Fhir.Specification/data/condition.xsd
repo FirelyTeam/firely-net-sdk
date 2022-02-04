@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sun, Dec 19, 2021 08:15+1100 for FHIR v5.0.0-snapshot1 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,14 +74,14 @@
               <xs:documentation xml:lang="en">Business identifiers assigned to this condition by the performer or other systems which remain constant as the resource is updated and propagates from server to server.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="clinicalStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+          <xs:element name="clinicalStatus" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
               <xs:documentation xml:lang="en">The clinical status of the condition.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="verificationStatus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The verification status to support the clinical status of the condition.</xs:documentation>
+              <xs:documentation xml:lang="en">The verification status to support the clinical status of the condition.  The verification status pertains to the condition, itself, not to any specific condition attribute.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="category" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -126,7 +126,7 @@
           </xs:choice>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">The date or estimated date that the condition resolved or went into remission. This is called &quot;abatement&quot; because of the many overloaded connotations associated with &quot;remission&quot; or &quot;resolution&quot; - Conditions are never really resolved, but they can abate.</xs:documentation>
+              <xs:documentation xml:lang="en">The date or estimated date that the condition resolved or went into remission. This is called &quot;abatement&quot; because of the many overloaded connotations associated with &quot;remission&quot; or &quot;resolution&quot; - Some conditions, such as chronic conditions, are never really resolved, but they can abate.</xs:documentation>
             </xs:annotation>
             <xs:element name="abatementDateTime" type="dateTime"/>
             <xs:element name="abatementAge" type="Age"/>
@@ -146,12 +146,12 @@
           </xs:element>
           <xs:element name="asserter" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Individual who is making the condition statement.</xs:documentation>
+              <xs:documentation xml:lang="en">Individual or device that is making the condition statement.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="stage" type="Condition.Stage" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Clinical stage or grade of a condition. May include formal severity assessments.</xs:documentation>
+              <xs:documentation xml:lang="en">A simple summary of the stage such as &quot;Stage 3&quot; or &quot;Early Onset&quot;. The determination of the stage is disease-specific, such as cancer, retinopathy of prematurity, kidney diseases, Alzheimer's, or Parkinson disease.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="evidence" type="Condition.Evidence" minOccurs="0" maxOccurs="unbounded">
@@ -177,7 +177,7 @@
         <xs:sequence>
           <xs:element name="summary" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A simple summary of the stage such as &quot;Stage 3&quot;. The determination of the stage is disease-specific.</xs:documentation>
+              <xs:documentation xml:lang="en">A simple summary of the stage such as &quot;Stage 3&quot; or &quot;Early Onset&quot;. The determination of the stage is disease-specific, such as cancer, retinopathy of prematurity, kidney diseases, Alzheimer's, or Parkinson disease.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="assessment" minOccurs="0" maxOccurs="unbounded" type="Reference">
