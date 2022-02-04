@@ -1340,33 +1340,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
-        public void ConditionCon3ConstraintTest()
-        {
-            // the invariant con-3 of condition is wrong in the specification (R4). For now we fixed this in profiles-resources.xml. The correct FhirPath is
-            // "clinicalStatus.exists() or verificationStatus.coding.where(system='http://terminology.hl7.org/CodeSystem/condition-ver-status' and code = 'entered-in-error').exists() or category.coding.where($this.code='problem-list-item').empty()"
-            // So when the profiles-resources.xml has been overwritten and this unit test is failing, then the above FP expression should be set again (snapshot and 
-            // differential
-            // MV 28-06-2021
-
-            var condition = new Condition
-            {
-                Text = new Narrative() { Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">Testing the con-3 invariant</div>", Status = Narrative.NarrativeStatus.Additional },
-                Subject = new ResourceReference("Patient/1"),
-                Category = new List<CodeableConcept> { new CodeableConcept("http://terminology.hl7.org/CodeSystem/condition-category", "encounter-diagnosis") },
-            };
-
-            var settings = new ValidationSettings
-            {
-                ConstraintBestPracticesSeverity = ConstraintBestPracticesSeverity.Error,
-                ResourceResolver = new CachedResolver(ZipSource.CreateValidationSource())
-            };
-
-            var validator = new Validator(settings);
-            var result = validator.Validate(condition);
-            Assert.True(result.Success);
-        }
-
-        [Fact]
         public void ValidateWithTargetProfileAndChildDefinitions()
         {
             var visitResolver = new VisitResolver();
