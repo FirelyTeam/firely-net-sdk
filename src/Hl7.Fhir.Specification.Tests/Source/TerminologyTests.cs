@@ -180,9 +180,9 @@ namespace Hl7.Fhir.Specification.Tests
             //    display: "Not any Number");
             //Assert.True(result.Success);
 
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+            result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
                 system: "http://hl7.org/fhir/hacked");
-            Assert.True(result.Success);
+            isSuccess(result).Should().BeTrue();
 
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
@@ -262,9 +262,9 @@ namespace Hl7.Fhir.Specification.Tests
             isSuccess(result).Should().BeTrue();
 
             // This test is not always correctly done by the external services, so copied here instead
-            result = svc.ValidateCode("http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
-                   system: "http://hl7.org/fhir/hacked", @abstract: false);
-            Assert.False(result.Success);
+            result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
+                   system: "http://hl7.org/fhir/hacked");
+            isSuccess(result).Should().BeTrue();
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
@@ -357,9 +357,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-#pragma warning disable CS0618 // obsolete, but used for testing purposes
-            var outcome = svc.ValidateCode("http://hl7.org/fhir/ValueSet/administrative-gender", context: "Partient.gender", code: "test");
-#pragma warning restore CS0618 
+            var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
 
             isSuccess(result).Should().BeFalse();
             getMessage(result).Should().Contain("does not exist in valueset");
@@ -907,10 +905,8 @@ namespace Hl7.Fhir.Specification.Tests
             var fallback = new FallbackTerminologyService(local, service);
 
             // Now, this should fall back to external + send our vs (that the server cannot know about)
-#pragma warning disable CS0618 // Type or member is obsolete
-            var result = fallback.ValidateCode("http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
-#pragma warning restore CS0618 // Type or member is obsolete
-            Assert.True(result.Success);
+            var result = await validateCodedValue(fallback, "http://furore.com/fhir/ValueSet/testVS", code: "1166006", system: "http://snomed.info/sct");
+            isSuccess(result).Should().BeTrue();
         }
 
         #region helper functions

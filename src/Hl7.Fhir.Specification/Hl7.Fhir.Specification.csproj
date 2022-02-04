@@ -5,7 +5,7 @@
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.Specification.R4B</PackageId>
 		<Title>HL7 FHIR Specification support SDK for R4B</Title>
-		<Summary>Support for working with FHIR metadata and validation. Supports FHIR R4B (4.1.0).</Summary>
+		<Summary>Support for working with FHIR metadata and validation. Supports FHIR R4B (4.3.0-snapshot1).</Summary>
 		<Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
 		<PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema;Firely;SD</PackageTags>
 		<AssemblyName>Hl7.Fhir.R4B.Specification</AssemblyName>
