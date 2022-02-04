@@ -186,9 +186,12 @@ namespace Hl7.Fhir.Model
       {
         switch (key)
         {
-          case "code":
-            value = Code;
-            return Code is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
           case "status":
             value = Status;
             return Status is not null;
@@ -201,7 +204,8 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
         if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       }
 
@@ -773,7 +777,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1032,21 +1036,30 @@ namespace Hl7.Fhir.Model
         case "identifier":
           value = Identifier;
           return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "formOf":
+          value = FormOf;
+          return FormOf?.Any() == true;
         case "administrableDoseForm":
           value = AdministrableDoseForm;
           return AdministrableDoseForm is not null;
         case "unitOfPresentation":
           value = UnitOfPresentation;
           return UnitOfPresentation is not null;
+        case "producedFrom":
+          value = ProducedFrom;
+          return ProducedFrom?.Any() == true;
         case "ingredient":
           value = Ingredient;
           return Ingredient?.Any() == true;
         case "device":
           value = Device;
-          return Device?.Any() == true;
-        case "characteristics":
-          value = Characteristics;
-          return Characteristics?.Any() == true;
+          return Device is not null;
+        case "property":
+          value = Property;
+          return Property?.Any() == true;
         case "routeOfAdministration":
           value = RouteOfAdministration;
           return RouteOfAdministration?.Any() == true;
@@ -1060,11 +1073,14 @@ namespace Hl7.Fhir.Model
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (FormOf?.Any() == true) yield return new KeyValuePair<string,object>("formOf",FormOf);
       if (AdministrableDoseForm is not null) yield return new KeyValuePair<string,object>("administrableDoseForm",AdministrableDoseForm);
       if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
+      if (ProducedFrom?.Any() == true) yield return new KeyValuePair<string,object>("producedFrom",ProducedFrom);
       if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
-      if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
-      if (Characteristics?.Any() == true) yield return new KeyValuePair<string,object>("characteristics",Characteristics);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
       if (RouteOfAdministration?.Any() == true) yield return new KeyValuePair<string,object>("routeOfAdministration",RouteOfAdministration);
     }
 

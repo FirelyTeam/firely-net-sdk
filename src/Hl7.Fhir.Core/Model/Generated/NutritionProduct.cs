@@ -190,6 +190,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "amount":
+            value = Amount;
+            return Amount?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Amount?.Any() == true) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
     }
 
     /// <summary>
@@ -298,6 +321,29 @@ namespace Hl7.Fhir.Model
           if (Item != null) yield return new ElementValue("item", Item);
           foreach (var elem in Amount) { if (elem != null) yield return new ElementValue("amount", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "amount":
+            value = Amount;
+            return Amount?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (Amount?.Any() == true) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
     }
@@ -410,6 +456,29 @@ namespace Hl7.Fhir.Model
           if (Type != null) yield return new ElementValue("type", Type);
           if (Value != null) yield return new ElementValue("value", Value);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
       }
 
     }
@@ -629,12 +698,47 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "lotNumber":
+            value = LotNumberElement;
+            return LotNumberElement is not null;
+          case "expiry":
+            value = ExpiryElement;
+            return ExpiryElement is not null;
+          case "useBy":
+            value = UseByElement;
+            return UseByElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+        if (ExpiryElement is not null) yield return new KeyValuePair<string,object>("expiry",ExpiryElement);
+        if (UseByElement is not null) yield return new KeyValuePair<string,object>("useBy",UseByElement);
+      }
+
     }
 
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=90)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=90)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -895,6 +999,61 @@ namespace Hl7.Fhir.Model
         if (Instance != null) yield return new ElementValue("instance", Instance);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "nutrient":
+          value = Nutrient;
+          return Nutrient?.Any() == true;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "knownAllergen":
+          value = KnownAllergen;
+          return KnownAllergen?.Any() == true;
+        case "productCharacteristic":
+          value = ProductCharacteristic;
+          return ProductCharacteristic?.Any() == true;
+        case "instance":
+          value = Instance;
+          return Instance is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (KnownAllergen?.Any() == true) yield return new KeyValuePair<string,object>("knownAllergen",KnownAllergen);
+      if (ProductCharacteristic?.Any() == true) yield return new KeyValuePair<string,object>("productCharacteristic",ProductCharacteristic);
+      if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

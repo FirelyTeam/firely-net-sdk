@@ -173,9 +173,6 @@ namespace Hl7.Fhir.Model
     {
       switch (key)
       {
-        case "identifier":
-          value = Identifier;
-          return Identifier is not null;
         case "type":
           value = Type;
           return Type is not null;
@@ -194,7 +191,6 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
       if (SpecialPrecautionsForStorage?.Any() == true) yield return new KeyValuePair<string,object>("specialPrecautionsForStorage",SpecialPrecautionsForStorage);

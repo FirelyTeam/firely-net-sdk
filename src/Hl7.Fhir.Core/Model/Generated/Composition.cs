@@ -1444,8 +1444,8 @@ namespace Hl7.Fhir.Model
           value = TitleElement;
           return TitleElement is not null;
         case "confidentiality":
-          value = ConfidentialityElement;
-          return ConfidentialityElement is not null;
+          value = Confidentiality_Element;
+          return Confidentiality_Element is not null;
         case "attester":
           value = Attester;
           return Attester?.Any() == true;
@@ -1479,7 +1479,7 @@ namespace Hl7.Fhir.Model
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (ConfidentialityElement is not null) yield return new KeyValuePair<string,object>("confidentiality",ConfidentialityElement);
+      if (Confidentiality_Element is not null) yield return new KeyValuePair<string,object>("confidentiality",Confidentiality_Element);
       if (Attester?.Any() == true) yield return new KeyValuePair<string,object>("attester",Attester);
       if (Custodian is not null) yield return new KeyValuePair<string,object>("custodian",Custodian);
       if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);

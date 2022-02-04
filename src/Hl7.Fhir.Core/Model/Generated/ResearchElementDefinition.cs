@@ -1638,8 +1638,8 @@ namespace Hl7.Fhir.Model
           value = TypeElement;
           return TypeElement is not null;
         case "variableType":
-          value = VariableTypeElement;
-          return VariableTypeElement is not null;
+          value = VariableType_Element;
+          return VariableType_Element is not null;
         case "characteristic":
           value = Characteristic;
           return Characteristic?.Any() == true;
@@ -1683,7 +1683,7 @@ namespace Hl7.Fhir.Model
       if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
       if (LibraryElement?.Any() == true) yield return new KeyValuePair<string,object>("library",LibraryElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (VariableTypeElement is not null) yield return new KeyValuePair<string,object>("variableType",VariableTypeElement);
+      if (VariableType_Element is not null) yield return new KeyValuePair<string,object>("variableType",VariableType_Element);
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
     }
 
