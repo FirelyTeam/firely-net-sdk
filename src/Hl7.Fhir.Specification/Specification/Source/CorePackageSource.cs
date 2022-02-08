@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         private const string PACKAGENAME = "hl7.fhir.r3.corexml-3.0.2.tgz";
         private const string PACKAGENAME_EXPANSIONS = "hl7.fhir.r3.expansions-3.0.2.tgz";
-        private NpmPackageResolver _resolver;
+        private FhirPackageResolver _resolver;
 
         /// <summary>Create a new <see cref="CorePackageSource()"/> instance to read FHIR artifacts from the FHIR core package.</summary>
         /// <returns>A new <see cref="CorePackageSource()"/> instance.</returns>
@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Source
             var inspector = ModelInfo.ModelInspector;
             var corePackagePath = Path.Combine(Directory.GetCurrentDirectory(), PACKAGENAME);
             var coreExpansionPackagePath = Path.Combine(Directory.GetCurrentDirectory(), PACKAGENAME_EXPANSIONS);
-            _resolver = new NpmPackageResolver(inspector, corePackagePath, coreExpansionPackagePath);
+            _resolver = new FhirPackageResolver(inspector, corePackagePath, coreExpansionPackagePath);
         }
 
         ///<inheritdoc/>
