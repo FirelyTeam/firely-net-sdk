@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from the FHIR Core package</summary>
     public class CorePackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
     {
-        private const string PACKAGENAME = "hl7.fhir.r3.core-3.0.2.tgz";
+        private const string PACKAGENAME = "hl7.fhir.r3.corexml-3.0.2.tgz";
         private const string PACKAGENAME_EXPANSIONS = "hl7.fhir.r3.expansions-3.0.2.tgz";
         private NpmPackageResolver _resolver;
 

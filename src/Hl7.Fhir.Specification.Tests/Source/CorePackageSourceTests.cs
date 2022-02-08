@@ -31,7 +31,7 @@ namespace Firely.Fhir.Packages.Tests
 
             //check StructureDefinitions
             var names = resolver.ListArtifactNames();
-            names.Should().Contain("StructureDefinition-Patient.json");
+            names.Should().Contain("StructureDefinition-Patient.xml");
         }
 
         [TestMethod]
@@ -40,12 +40,12 @@ namespace Firely.Fhir.Packages.Tests
             var resolver = new CorePackageSource();
 
             //check StructureDefinitions
-            var stream = resolver.LoadArtifactByName("StructureDefinition-Patient.json");
+            var stream = resolver.LoadArtifactByName("StructureDefinition-Patient.xml");
 
             using var reader = new StreamReader(stream);
             var artifact = reader.ReadToEnd();
 
-            artifact.Should().StartWith("{\"resourceType\":\"StructureDefinition\",\"id\":\"Patient\"");
+            artifact.Should().StartWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?><StructureDefinition xmlns=\"http://hl7.org/fhir\"><id value=\"Patient\"/>");
         }
 
         [TestMethod]
