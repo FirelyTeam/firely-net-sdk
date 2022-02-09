@@ -9,17 +9,18 @@ namespace Firely.Fhir.Packages.Tests
     [TestClass]
     public class CorePackageSourceTests
     {
+        private readonly CorePackageSource _resolver = new();
+
         [TestMethod]
         public async System.Threading.Tasks.Task TestResolveByCanonicalUri()
         {
-            var resolver = new CorePackageSource();
-
             //check StructureDefinitions
-            var pat = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Patient");
+            var pat = await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Patient").ConfigureAwait(false) as StructureDefinition;
             pat.Should().NotBeNull();
+            pat.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/Patient");
 
             //check expansions
-            var adm_gender = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/administrative-gender") as ValueSet;
+            var adm_gender = await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/administrative-gender").ConfigureAwait(false) as ValueSet;
             adm_gender.Should().NotBeNull();
             adm_gender.Expansion.Contains.Should().Contain(c => c.System == "http://hl7.org/fhir/administrative-gender" && c.Code == "other");
         }
@@ -27,20 +28,28 @@ namespace Firely.Fhir.Packages.Tests
         [TestMethod]
         public void TestListFileNames()
         {
-            var resolver = new CorePackageSource();
-
             //check StructureDefinitions
-            var names = resolver.ListArtifactNames();
+            var names = _resolver.ListArtifactNames();
             names.Should().Contain("StructureDefinition-Patient.xml");
         }
 
         [TestMethod]
         public void TestLoadArtifactByName()
         {
-            var resolver = new CorePackageSource();
-
             //check StructureDefinitions
-            var stream = resolver.LoadArtifactByName("StructureDefinition-Patient.xml");
+            var stream = _resolver.LoadArtifactByName("StructureDefinition-Patient.xml");
+
+            using var reader = new StreamReader(stream);
+            var artifact = reader.ReadToEnd();
+
+            artifact.Should().StartWith("<?xml version=\"1.0\" encoding=\"UTF-8\"?><StructureDefinition xmlns=\"http://hl7.org/fhir\"><id value=\"Patient\"/>");
+        }
+
+        [TestMethod]
+        public void TestLoadArtifactByPath()
+        {
+            //check StructureDefinitions
+            var stream = _resolver.LoadArtifactByPath("package/StructureDefinition-Patient.xml");
 
             using var reader = new StreamReader(stream);
             var artifact = reader.ReadToEnd();
@@ -51,10 +60,8 @@ namespace Firely.Fhir.Packages.Tests
         [TestMethod]
         public void TestListResourceUris()
         {
-            var resolver = new CorePackageSource();
-
             //check StructureDefinitions
-            var names = resolver.ListResourceUris();
+            var names = _resolver.ListResourceUris();
             names.Should().Contain("http://hl7.org/fhir/StructureDefinition/Patient");
             names.Should().Contain("http://hl7.org/fhir/administrative-gender");
         }
@@ -62,8 +69,7 @@ namespace Firely.Fhir.Packages.Tests
         [TestMethod]
         public void TestGetCodeSystemByValueSet()
         {
-            var resolver = new CorePackageSource();
-            var cs = resolver.FindCodeSystemByValueSet("http://hl7.org/fhir/ValueSet/address-type");
+            var cs = _resolver.FindCodeSystemByValueSet("http://hl7.org/fhir/ValueSet/address-type");
             cs.Should().NotBeNull();
             cs.Url.Should().Be("http://hl7.org/fhir/address-type");
         }
@@ -71,8 +77,7 @@ namespace Firely.Fhir.Packages.Tests
         [TestMethod]
         public void TestGetConceptMap()
         {
-            var resolver = new CorePackageSource();
-            var cms = resolver.FindConceptMaps(sourceUri: "http://hl7.org/fhir/ValueSet/data-absent-reason", targetUri: "http://hl7.org/fhir/ValueSet/v3-NullFlavor");
+            var cms = _resolver.FindConceptMaps(sourceUri: "http://hl7.org/fhir/ValueSet/data-absent-reason", targetUri: "http://hl7.org/fhir/ValueSet/v3-NullFlavor");
             cms.Should().NotBeEmpty();
             cms.Should().Contain(c => c.Url == "http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3");
             cms.Should().NotContain(c => c.Url == "http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3");
@@ -81,11 +86,18 @@ namespace Firely.Fhir.Packages.Tests
         [TestMethod]
         public void TestGetNamingSystem()
         {
-            var resolver = new CorePackageSource();
-            var ns = resolver.FindNamingSystem("http://snomed.info/sct");
+            var ns = _resolver.FindNamingSystem("http://snomed.info/sct");
             ns.Should().NotBeNull();
             ns.UniqueId.Should().Contain(i => i.Value == "http://snomed.info/sct");
             ns.UniqueId.Should().Contain(i => i.Value == "2.16.840.1.113883.6.96");
+        }
+
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestGetArtifactByUri()
+        {
+            var pat = await _resolver.ResolveByUriAsync("StructureDefinition/Patient").ConfigureAwait(false) as StructureDefinition;
+            pat.Should().NotBeNull();
+            pat.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/Patient");
         }
     }
 }

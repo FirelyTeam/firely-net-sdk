@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public async Task<Resource?> ResolveByUriAsync(string uri)
         {
-            return await _resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false);
+            return await _resolver.ResolveByUriAsync(uri).ConfigureAwait(false);
         }
 
         ///<inheritdoc/>
@@ -47,6 +47,10 @@ namespace Hl7.Fhir.Specification.Source
         public Stream? LoadArtifactByName(string artifactName)
         {
             return _resolver.LoadArtifactByName(artifactName);
+        }
+        public Stream? LoadArtifactByPath(string filePath)
+        {
+            return _resolver.LoadArtifactByPath(filePath);
         }
 
         ///<inheritdoc/>
@@ -84,7 +88,7 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public async Task<NamingSystem?> FindNamingSystemAsync(string uniqueId)
         {
-            var resource = await _resolver.FindNamingSystemByUniqueId(uniqueId);
+            var resource = await _resolver.FindNamingSystemByUniqueId(uniqueId).ConfigureAwait(false);
             return resource as NamingSystem;
         }
 
