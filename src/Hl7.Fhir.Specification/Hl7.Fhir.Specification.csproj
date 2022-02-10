@@ -30,7 +30,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="$(BaseIntermediateOutputPath)\specification.zip" >
+		<Content Include="hl7.fhir.r3.corexml-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="hl7.fhir.r3.expansions-3.0.2.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
