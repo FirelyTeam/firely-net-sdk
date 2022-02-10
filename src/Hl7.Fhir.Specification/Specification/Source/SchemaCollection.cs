@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private IArtifactSource createXmlSource()
         {
-            return new FhirPackageResolver(ModelInfo.ModelInspector, "hl7.fhir.r3.corexml-3.0.2.tgz");
+            return new FhirPackageResolver(ModelInfo.ModelInspector, CorePackageFileNames.CORE_PACKAGENAME);
         }
 
         private readonly Lazy<XmlSchemaSet> _validationSchemaSet;

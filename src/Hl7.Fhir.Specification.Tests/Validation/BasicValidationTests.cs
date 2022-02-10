@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestXsdValidationExplicitSet()
         {
             var mySettings = _validator.Settings.Clone();
-            var source = new FhirPackageResolver(ModelInfo.ModelInspector, "hl7.fhir.r3.corexml-3.0.2.tgz");
+            var source = new FhirPackageResolver(ModelInfo.ModelInspector, CorePackageFileNames.CORE_PACKAGENAME);
 
             mySettings.XsdSchemaCollection = new SchemaCollection(source);
             var myValidator = new Validator(mySettings);
