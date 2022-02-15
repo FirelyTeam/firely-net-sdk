@@ -789,7 +789,9 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestXsdValidationExplicitSet()
         {
             var mySettings = _validator.Settings.Clone();
-            mySettings.XsdSchemaCollection = new SchemaCollection(ZipSource.CreateValidationSource());
+            var source = new FhirPackageResolver(ModelInfo.ModelInspector, CorePackageFileNames.CORE_PACKAGENAME);
+
+            mySettings.XsdSchemaCollection = new SchemaCollection(source);
             var myValidator = new Validator(mySettings);
 
             runXsdValidation(myValidator);
