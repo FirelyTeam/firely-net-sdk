@@ -48,6 +48,12 @@ namespace Hl7.Fhir.FhirPath
             return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.CreateDefault());
         }
 
+        public static bool IsTrue(this Base input, string expression, FhirEvaluationContext ctx = null)
+        {
+            var inputNav = input.ToTypedElement();
+            return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.CreateDefault());
+        }
+
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext ctx = null)
         {
             var inputNav = input.ToTypedElement();
