@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifiers (business identifier)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the subscription topic being subscribed to
     /// </summary>
-    [FhirElement("topic", InSummary=true, Order=120)]
+    [FhirElement("topic", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical TopicElement
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting)
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=130)]
+    [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=140)]
+    [FhirElement("end", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=150)]
+    [FhirElement("reason", InSummary=true, Order=150, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ReasonElement
     {

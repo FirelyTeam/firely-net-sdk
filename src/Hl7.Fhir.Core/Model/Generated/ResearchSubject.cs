@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// candidate | eligible | follow-up | ineligible | not-registered | off-study | on-study | on-study-intervention | on-study-observation | pending-on-study | potential-candidate | screening | withdrawn
       /// </summary>
-      [FhirElement("subjectState", Order=50)]
+      [FhirElement("subjectState", Order=50, FiveWs="FiveWs.status")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubjectState
       {
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// SignedUp | Screened | Randomized
       /// </summary>
-      [FhirElement("milestone", Order=60)]
+      [FhirElement("milestone", Order=60, FiveWs="FiveWs.status")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Milestone
       {
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for research subject in a study
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

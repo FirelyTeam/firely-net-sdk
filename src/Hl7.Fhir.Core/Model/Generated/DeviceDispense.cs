@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this dispensation
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What device was supplied
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=150)]
+    [FhirElement("device", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Device
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the dispense is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information that supports the dispensing of the device
     /// </summary>
-    [FhirElement("supportingInformation", Order=180)]
+    [FhirElement("supportingInformation", Order=180, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]

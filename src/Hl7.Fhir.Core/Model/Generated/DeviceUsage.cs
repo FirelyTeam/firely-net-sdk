@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | not-done | entered-in-error +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient using device
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130)]
+    [FhirElement("patient", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How often  the device was used
     /// </summary>
-    [FhirElement("timing", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("timing", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the statement was made (and recorded)
     /// </summary>
-    [FhirElement("dateAsserted", InSummary=true, Order=170)]
+    [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
     {
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who made the statement
     /// </summary>
-    [FhirElement("informationSource", InSummary=true, Order=200)]
+    [FhirElement("informationSource", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [DataMember]
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or Reference to device used
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=210)]
+    [FhirElement("device", InSummary=true, Order=210, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Device
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why device was used
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=220)]
+    [FhirElement("reason", InSummary=true, Order=220, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason

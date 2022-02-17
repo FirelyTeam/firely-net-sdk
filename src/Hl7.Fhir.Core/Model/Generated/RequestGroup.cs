@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What goals
       /// </summary>
-      [FhirElement("goal", Order=120)]
+      [FhirElement("goal", Order=120, FiveWs="FiveWs.why[x]")]
       [CLSCompliant(false)]
       [References("Goal")]
       [Cardinality(Min=0,Max=-1)]
@@ -358,7 +358,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who should perform the action
       /// </summary>
-      [FhirElement("participant", Order=170)]
+      [FhirElement("participant", Order=170, FiveWs="FiveWs.actor")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.RequestGroup.ParticipantComponent> Participant
@@ -1411,7 +1411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1534,7 +1534,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1567,7 +1567,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=170)]
+    [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -1632,7 +1632,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What's being requested/ordered
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=180)]
+    [FhirElement("code", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1645,7 +1645,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the request group is about
     /// </summary>
-    [FhirElement("subject", Order=190)]
+    [FhirElement("subject", Order=190, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -1660,7 +1660,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created as part of
     /// </summary>
-    [FhirElement("encounter", Order=200)]
+    [FhirElement("encounter", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1675,7 +1675,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the request group was authored
     /// </summary>
-    [FhirElement("authoredOn", Order=210)]
+    [FhirElement("authoredOn", Order=210, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -1706,7 +1706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device or practitioner that authored the request group
     /// </summary>
-    [FhirElement("author", Order=220)]
+    [FhirElement("author", Order=220, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole")]
     [DataMember]
@@ -1721,7 +1721,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the request group is needed
     /// </summary>
-    [FhirElement("reason", Order=230)]
+    [FhirElement("reason", Order=230, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1735,7 +1735,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What goals
     /// </summary>
-    [FhirElement("goal", Order=240)]
+    [FhirElement("goal", Order=240, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Goal")]
     [Cardinality(Min=0,Max=-1)]

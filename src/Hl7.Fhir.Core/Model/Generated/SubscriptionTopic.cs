@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical canonical URL to reference this SubscriptionTopic (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for SubscriptionTopic
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1311,7 +1311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the SubscriptionTopic
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1405,7 +1405,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1438,7 +1438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If for testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1469,7 +1469,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date status first applied
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1500,7 +1500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name of the individual or organization that published the SubscriptionTopic
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1586,7 +1586,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this SubscriptionTopic is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {

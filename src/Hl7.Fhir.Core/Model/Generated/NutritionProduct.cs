@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=90)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A category or class of the nutrition product (halal, kosher, gluten free, vegan, etc)
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=100)]
+    [FhirElement("category", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code designating a specific type of nutritional product
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=110)]
+    [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

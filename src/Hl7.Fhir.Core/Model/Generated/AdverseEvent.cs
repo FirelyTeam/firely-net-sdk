@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who was involved in the adverse event or the potential adverse event
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -1004,7 +1004,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential
     /// </summary>
-    [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1070,7 +1070,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1084,7 +1084,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event or incident that occurred or was averted
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -1097,7 +1097,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject impacted by event
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson")]
     [Cardinality(Min=1,Max=1)]
@@ -1113,7 +1113,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter associated with the start of the AdverseEvent
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
@@ -1174,7 +1174,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event was recorded
     /// </summary>
-    [FhirElement("recordedDate", InSummary=true, Order=180)]
+    [FhirElement("recordedDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
     {
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=230)]
+    [FhirElement("recorder", InSummary=true, Order=230, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]

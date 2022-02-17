@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the food or fluid product that was consumed
       /// </summary>
-      [FhirElement("nutritionProduct", InSummary=true, Order=50)]
+      [FhirElement("nutritionProduct", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference NutritionProduct
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of nutrition intake setting/reporting
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=160)]
+    [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -756,7 +756,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was consuming the food or fluid
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=170)]
+    [FhirElement("subject", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the food or fluid is/was consumed
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the intake was recorded
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=200)]
+    [FhirElement("recorded", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedElement
     {
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the consumption of this food or fluid
     /// </summary>
-    [FhirElement("reported", Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("reported", Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -922,7 +922,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the food or fluid is /was consumed
     /// </summary>
-    [FhirElement("reason", Order=270)]
+    [FhirElement("reason", Order=270, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason

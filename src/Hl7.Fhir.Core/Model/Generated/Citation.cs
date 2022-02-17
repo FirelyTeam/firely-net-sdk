@@ -4661,7 +4661,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this citation, represented as a globally unique URI
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -4692,7 +4692,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for the Citation resource itself
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -4706,7 +4706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the citation
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -4832,7 +4832,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -4863,7 +4863,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -4894,7 +4894,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The publisher of the Citation, not the publisher of the article or artifact being cited
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -4980,7 +4980,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this citation is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {

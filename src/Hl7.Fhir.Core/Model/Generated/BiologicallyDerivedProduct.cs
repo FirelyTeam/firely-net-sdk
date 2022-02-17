@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=130)]
+    [FhirElement("identifier", InSummary=true, Order=130, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier that supports traceability to the biological entity that is the source of biological material in the product
     /// </summary>
-    [FhirElement("biologicalSource", InSummary=true, Order=140)]
+    [FhirElement("biologicalSource", InSummary=true, Order=140, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier BiologicalSource
     {

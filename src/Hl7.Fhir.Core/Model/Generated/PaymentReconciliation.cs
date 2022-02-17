@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for a payment reconciliation
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period covered
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=110)]
+    [FhirElement("period", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=120)]
+    [FhirElement("created", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party generating payment
     /// </summary>
-    [FhirElement("paymentIssuer", InSummary=true, Order=130)]
+    [FhirElement("paymentIssuer", InSummary=true, Order=130, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -703,7 +703,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to requesting resource
     /// </summary>
-    [FhirElement("request", Order=140)]
+    [FhirElement("request", Order=140, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Task")]
     [DataMember]

@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the MeasureReport
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1130,7 +1130,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | pending | error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// individual | subject-list | summary | data-collection
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1228,7 +1228,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What measure was calculated
     /// </summary>
-    [FhirElement("measure", InSummary=true, Order=130)]
+    [FhirElement("measure", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical MeasureElement
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What individual(s) the report is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Location","Device","RelatedPerson","Group")]
     [DataMember]
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the report was generated
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is reporting the data
     /// </summary>
-    [FhirElement("reporter", InSummary=true, Order=160)]
+    [FhirElement("reporter", InSummary=true, Order=160, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Location","Organization","Group")]
     [DataMember]

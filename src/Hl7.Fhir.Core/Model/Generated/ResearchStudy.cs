@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identification of product under study
       /// </summary>
-      [FhirElement("productCode", InSummary=true, Order=40)]
+      [FhirElement("productCode", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductCode
       {
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Group of participants who were enrolled in study
       /// </summary>
-      [FhirElement("actualGroup", InSummary=true, Order=70)]
+      [FhirElement("actualGroup", InSummary=true, Order=70, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
       [References("Group")]
       [DataMember]
@@ -1871,7 +1871,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for study
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -2069,7 +2069,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=190)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=190, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -2156,7 +2156,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition being studied
     /// </summary>
-    [FhirElement("condition", InSummary=true, Order=240)]
+    [FhirElement("condition", InSummary=true, Order=240, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
@@ -2224,7 +2224,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study began and ended
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=290)]
+    [FhirElement("period", InSummary=true, Order=290, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -2251,7 +2251,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that initiates and is legally responsible for the study
     /// </summary>
-    [FhirElement("sponsor", InSummary=true, Order=310)]
+    [FhirElement("sponsor", InSummary=true, Order=310, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -2266,7 +2266,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Researcher who oversees multiple aspects of the study
     /// </summary>
-    [FhirElement("principalInvestigator", InSummary=true, Order=320)]
+    [FhirElement("principalInvestigator", InSummary=true, Order=320, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -2281,7 +2281,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Facility where study activities are conducted
     /// </summary>
-    [FhirElement("site", InSummary=true, Order=330)]
+    [FhirElement("site", InSummary=true, Order=330, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location","ResearchStudy","Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -2367,7 +2367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
     /// </summary>
-    [FhirElement("whyStopped", InSummary=true, Order=390)]
+    [FhirElement("whyStopped", InSummary=true, Order=390, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept WhyStopped
     {
@@ -2380,7 +2380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target or actual group of participants enrolled in study
     /// </summary>
-    [FhirElement("recruitment", InSummary=true, Order=400)]
+    [FhirElement("recruitment", InSummary=true, Order=400, FiveWs="FiveWs.subject")]
     [DataMember]
     public Hl7.Fhir.Model.ResearchStudy.RecruitmentComponent Recruitment
     {

@@ -2538,7 +2538,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code that identifies this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -2583,7 +2583,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creator or owner of the knowledge or information about the medication
     /// </summary>
-    [FhirElement("author", Order=120)]
+    [FhirElement("author", Order=120, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
