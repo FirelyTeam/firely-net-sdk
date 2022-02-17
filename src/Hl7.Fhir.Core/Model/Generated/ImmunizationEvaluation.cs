@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this evaluation is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=110)]
+    [FhirElement("patient", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date evaluation was performed
     /// </summary>
-    [FhirElement("date", Order=120)]
+    [FhirElement("date", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {

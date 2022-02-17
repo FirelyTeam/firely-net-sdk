@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Conditions/problems/diagnoses this episode of care is for
       /// </summary>
-      [FhirElement("condition", InSummary=true, Order=40)]
+      [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Condition")]
       [Cardinality(Min=1,Max=1)]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier(s) relevant for this EpisodeOfCare
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient who is the focus of this episode of care
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval during responsibility is assumed
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=160)]
+    [FhirElement("period", InSummary=true, Order=160, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
