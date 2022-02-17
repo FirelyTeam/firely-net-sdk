@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique code or number identifying the location to its users
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | inactive
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The operational status of the location (typically only for a bed/room)
     /// </summary>
-    [FhirElement("operationalStatus", InSummary=true, Order=110)]
+    [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// instance | kind
     /// </summary>
-    [FhirElement("mode", InSummary=true, Order=150)]
+    [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of function performed
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=160)]
+    [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical form of the location
     /// </summary>
-    [FhirElement("physicalType", InSummary=true, Order=190)]
+    [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {

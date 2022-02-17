@@ -983,7 +983,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Authorized providers
       /// </summary>
-      [FhirElement("provider", Order=70)]
+      [FhirElement("provider", Order=70, FiveWs="FiveWs.source")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [Cardinality(Min=0,Max=-1)]
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date or dates of service or product delivery
       /// </summary>
-      [FhirElement("serviced", Order=110, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("serviced", Order=110, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Place of service or where product was supplied
       /// </summary>
-      [FhirElement("location", Order=120, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("location", Order=120, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -3185,7 +3185,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for a claim response
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -3199,7 +3199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3232,7 +3232,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// More granular claim type
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -3246,7 +3246,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// More granular claim type
     /// </summary>
-    [FhirElement("subType", Order=120)]
+    [FhirElement("subType", Order=120, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SubType
     {
@@ -3259,7 +3259,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// claim | preauthorization | predetermination
     /// </summary>
-    [FhirElement("use", InSummary=true, Order=130)]
+    [FhirElement("use", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -3292,7 +3292,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The recipient of the products and services
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -3308,7 +3308,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=150)]
+    [FhirElement("created", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -3356,7 +3356,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party responsible for the claim
     /// </summary>
-    [FhirElement("requestor", Order=170)]
+    [FhirElement("requestor", Order=170, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -3371,7 +3371,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Id of resource triggering adjudication
     /// </summary>
-    [FhirElement("request", InSummary=true, Order=180)]
+    [FhirElement("request", InSummary=true, Order=180, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Claim")]
     [DataMember]

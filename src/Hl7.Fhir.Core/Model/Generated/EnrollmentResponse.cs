@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer
     /// </summary>
-    [FhirElement("organization", Order=150)]
+    [FhirElement("organization", Order=150, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

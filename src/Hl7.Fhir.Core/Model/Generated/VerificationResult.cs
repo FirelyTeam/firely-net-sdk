@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to the primary source
       /// </summary>
-      [FhirElement("who", Order=40)]
+      [FhirElement("who", Order=40, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
       [References("Organization","Practitioner","PractitionerRole")]
       [DataMember]

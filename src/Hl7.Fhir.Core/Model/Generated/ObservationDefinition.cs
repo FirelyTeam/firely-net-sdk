@@ -693,7 +693,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category of observation
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=90)]
+    [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
