@@ -6,6 +6,7 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using System;
 using System.IO;
 using System.Xml;
@@ -36,7 +37,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>The default source is the source returned by <see cref="ZipSource.CreateValidationSource()"/>.</remarks>
         public SchemaCollection()
         {
-            _validationSchemaSet = new(() => compileValidationSchemas(ZipSource.CreateValidationSource()));
+            var xmlSource = createXmlSource();
+            _validationSchemaSet = new(() => compileValidationSchemas(xmlSource));
+        }
+
+        private IArtifactSource createXmlSource()
+        {
+            return new FhirPackageResolver(ModelInfo.ModelInspector, CorePackageFileNames.CORE_PACKAGENAME);
         }
 
         private readonly Lazy<XmlSchemaSet> _validationSchemaSet;
