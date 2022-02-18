@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who attested the composition
       /// </summary>
-      [FhirElement("party", Order=60)]
+      [FhirElement("party", Order=60, FiveWs="FiveWs.witness")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of the attachment binary
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=60)]
+      [FhirElement("identifier", InSummary=true, Order=60, FiveWs="FiveWs.identifier")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
       {
@@ -574,7 +574,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the document
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error | deprecated
     /// </summary>
-    [FhirElement("docStatus", InSummary=true, Order=120)]
+    [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document (LOINC if possible)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130)]
+    [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of document
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140)]
+    [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is the subject of the document
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device","PractitionerRole","Specimen","Organization","Location")]
     [DataMember]
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context of the document  content
     /// </summary>
-    [FhirElement("encounter", Order=160)]
+    [FhirElement("encounter", Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [Cardinality(Min=0,Max=-1)]
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document reference was created
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=210)]
+    [FhirElement("date", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant DateElement
     {

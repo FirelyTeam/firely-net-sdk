@@ -644,7 +644,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this profile is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]

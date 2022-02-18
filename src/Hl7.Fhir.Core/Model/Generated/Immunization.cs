@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual or organization who was performing
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1007,7 +1007,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error | not-done
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine product administered
     /// </summary>
-    [FhirElement("vaccineCode", InSummary=true, Order=150)]
+    [FhirElement("vaccineCode", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was immunized
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=190)]
+    [FhirElement("patient", InSummary=true, Order=190, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter immunization was part of
     /// </summary>
-    [FhirElement("encounter", Order=200)]
+    [FhirElement("encounter", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine administration date
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirString))]
     [Cardinality(Min=1,Max=1)]
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the immunization was first captured in the subject's record
     /// </summary>
-    [FhirElement("recorded", Order=220)]
+    [FhirElement("recorded", Order=220, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedElement
     {
@@ -1222,7 +1222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates context the data was recorded in
     /// </summary>
-    [FhirElement("primarySource", InSummary=true, Order=230)]
+    [FhirElement("primarySource", InSummary=true, Order=230, FiveWs="FiveWs.source")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
     {
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the source of a  reported record
     /// </summary>
-    [FhirElement("informationSource", Order=240, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("informationSource", Order=240, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1269,7 +1269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where immunization occurred
     /// </summary>
-    [FhirElement("location", Order=250)]
+    [FhirElement("location", Order=250, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]

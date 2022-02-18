@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Account number
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error | on-hold | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. patient, expense, depreciation
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable label
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=130)]
+    [FhirElement("name", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The entity that caused the expenses
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transaction window
     /// </summary>
-    [FhirElement("servicePeriod", InSummary=true, Order=150)]
+    [FhirElement("servicePeriod", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period ServicePeriod
     {

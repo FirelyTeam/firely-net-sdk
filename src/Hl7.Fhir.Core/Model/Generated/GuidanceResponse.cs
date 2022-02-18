@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// success | data-requested | data-required | in-progress | failure | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient the request was performed for
     /// </summary>
-    [FhirElement("subject", Order=130)]
+    [FhirElement("subject", Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter during which the response was returned
     /// </summary>
-    [FhirElement("encounter", Order=140)]
+    [FhirElement("encounter", Order=140, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the guidance response was processed
     /// </summary>
-    [FhirElement("occurrenceDateTime", Order=150)]
+    [FhirElement("occurrenceDateTime", Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime OccurrenceDateTimeElement
     {
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device returning the guidance
     /// </summary>
-    [FhirElement("performer", Order=160)]
+    [FhirElement("performer", Order=160, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why guidance is needed
     /// </summary>
-    [FhirElement("reason", Order=170)]
+    [FhirElement("reason", Order=170, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason

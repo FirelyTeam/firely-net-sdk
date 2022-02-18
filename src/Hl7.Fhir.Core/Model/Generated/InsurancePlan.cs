@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Business Identifier for Product
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40)]
+      [FhirElement("identifier", InSummary=true, Order=40, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1606,7 +1606,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for Product
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1620,7 +1620,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1652,7 +1652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of product
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reach goal on or before
       /// </summary>
-      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this goal
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | planned | accepted | active | on-hold | completed | cancelled | entered-in-error | rejected
     /// </summary>
-    [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high-priority | medium-priority | low-priority
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=140)]
+    [FhirElement("priority", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or text describing goal
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=150)]
+    [FhirElement("description", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Description
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this goal is intended for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Organization")]
     [Cardinality(Min=1,Max=1)]
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal pursuit begins
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("start", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.planned")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal status took effect
     /// </summary>
-    [FhirElement("statusDate", InSummary=true, Order=190)]
+    [FhirElement("statusDate", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date StatusDateElement
     {
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's responsible for creating Goal?
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=210)]
+    [FhirElement("source", InSummary=true, Order=210, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","CareTeam")]
     [DataMember]
@@ -533,7 +533,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issues addressed by this goal
     /// </summary>
-    [FhirElement("addresses", Order=220)]
+    [FhirElement("addresses", Order=220, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","MedicationUsage","MedicationRequest","NutritionOrder","ServiceRequest","RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]

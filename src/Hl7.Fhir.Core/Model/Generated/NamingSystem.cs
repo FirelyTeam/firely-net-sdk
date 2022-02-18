@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50)]
+      [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this naming system, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the naming system
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root
     /// </summary>
-    [FhirElement("kind", InSummary=true, Order=140)]
+    [FhirElement("kind", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=160)]
+    [FhirElement("publisher", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?
     /// </summary>
-    [FhirElement("responsible", Order=180)]
+    [FhirElement("responsible", Order=180, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ResponsibleElement
     {

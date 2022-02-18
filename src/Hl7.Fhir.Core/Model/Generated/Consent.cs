@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for this record (external references)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | inactive | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1272,7 +1272,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1286,7 +1286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the consent applies to
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group")]
     [DataMember]
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When consent was agreed to
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=130)]
+    [FhirElement("dateTime", InSummary=true, Order=130, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
@@ -1364,7 +1364,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Consent workflow management
     /// </summary>
-    [FhirElement("manager", Order=160)]
+    [FhirElement("manager", Order=160, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("HealthcareService","Organization","Patient","Practitioner")]
     [Cardinality(Min=0,Max=-1)]

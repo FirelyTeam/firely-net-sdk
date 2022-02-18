@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The agent that participated in the event
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=60)]
+      [FhirElement("who", InSummary=true, Order=60, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target Reference(s) (usually version specific)
     /// </summary>
-    [FhirElement("target", InSummary=true, Order=90)]
+    [FhirElement("target", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred
     /// </summary>
-    [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurred", Order=100, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity was recorded / updated
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=110)]
+    [FhirElement("recorded", InSummary=true, Order=110, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant RecordedElement
     {
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the activity occurred, if relevant
     /// </summary>
-    [FhirElement("location", Order=130)]
+    [FhirElement("location", Order=130, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -571,7 +571,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authorization (purposeOfUse) related to the event
     /// </summary>
-    [FhirElement("authorization", Order=140)]
+    [FhirElement("authorization", Order=140, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Authorization
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Activity that occurred
     /// </summary>
-    [FhirElement("activity", Order=150)]
+    [FhirElement("activity", Order=150, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Activity
     {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Workflow authorization within which this event occurred
     /// </summary>
-    [FhirElement("basedOn", Order=160)]
+    [FhirElement("basedOn", Order=160, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("CarePlan","DeviceRequest","ImmunizationRecommendation","MedicationRequest","NutritionOrder","ServiceRequest","Task")]
     [Cardinality(Min=0,Max=-1)]
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter within which this event occurred or which the event is tightly associated
     /// </summary>
-    [FhirElement("encounter", Order=170)]
+    [FhirElement("encounter", Order=170, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved
     /// </summary>
-    [FhirElement("agent", Order=180)]
+    [FhirElement("agent", Order=180, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent

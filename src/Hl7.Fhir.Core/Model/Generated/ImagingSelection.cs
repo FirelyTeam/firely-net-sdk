@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for Imaging Selection
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated request
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
+    [FhirElement("basedOn", InSummary=true, Order=100, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject of the selected instances and / or frames
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=110)]
+    [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","Specimen")]
     [DataMember]
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date / Time when the selection of instances was made
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=120)]
+    [FhirElement("issued", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -858,7 +858,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author (human or machine)
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=130)]
+    [FhirElement("performer", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> Performer

@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of component observation (code / type)
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for observation
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -560,7 +560,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of  type of observation
     /// </summary>
-    [FhirElement("category", Order=140)]
+    [FhirElement("category", Order=140, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=150)]
+    [FhirElement("code", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what the observation is about
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","BiologicallyDerivedProduct","NutritionProduct")]
     [DataMember]
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the observation is about, when it is not about the subject of record
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=170)]
+    [FhirElement("focus", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this observation is made
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=180)]
+    [FhirElement("encounter", InSummary=true, Order=180, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for observation
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Instant))]
     [DataMember]
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this version was made available
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=200)]
+    [FhirElement("issued", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for the observation
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=210)]
+    [FhirElement("performer", InSummary=true, Order=210, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]

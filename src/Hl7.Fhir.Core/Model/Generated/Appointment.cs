@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person, Location/HealthcareService or Device
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=60)]
+      [FhirElement("actor", InSummary=true, Order=60, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
       [References("Patient","Group","Practitioner","PractitionerRole","CareTeam","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error | checked-in | waitlist
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=140)]
+    [FhirElement("specialty", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize
     /// </summary>
-    [FhirElement("priority", Order=170)]
+    [FhirElement("priority", Order=170, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment replaced by this Appointment
     /// </summary>
-    [FhirElement("replaces", Order=190)]
+    [FhirElement("replaces", Order=190, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Appointment")]
     [Cardinality(Min=0,Max=-1)]
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support the appointment
     /// </summary>
-    [FhirElement("supportingInformation", Order=200)]
+    [FhirElement("supportingInformation", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to take place
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=210)]
+    [FhirElement("start", InSummary=true, Order=210, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant StartElement
     {
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to conclude
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=220)]
+    [FhirElement("end", InSummary=true, Order=220, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -772,7 +772,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient or group associated with the appointment
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=300)]
+    [FhirElement("subject", InSummary=true, Order=300, FiveWs="FiveWs.who")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
