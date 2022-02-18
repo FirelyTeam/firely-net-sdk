@@ -763,5 +763,12 @@ namespace Hl7.Fhir.Tests.Model
             pat.Name.FirstOrDefault().Family.Should().Be("Levin");
             pat.Name.FirstOrDefault().Suffix.Should().ContainSingle("The 7th");
         }
+
+        [TestMethod]
+        public void TestCorrectCurrencyDescription()
+        {
+            var currency = Money.Currencies.STN;
+            currency.GetDocumentation().Should().Be("São Tomé and Príncipe dobra");
+        }
     }
 }
