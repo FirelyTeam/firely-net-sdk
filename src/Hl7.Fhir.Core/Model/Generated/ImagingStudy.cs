@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the series
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers for the whole study
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -928,7 +928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | available | cancelled | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -961,7 +961,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// All series modality if actual acquisition modalities
     /// </summary>
-    [FhirElement("modality", InSummary=true, Order=110)]
+    [FhirElement("modality", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Modality
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who or what is the subject of the study
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Device","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter with which this imaging study is associated
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=130)]
+    [FhirElement("encounter", InSummary=true, Order=130, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study was started
     /// </summary>
-    [FhirElement("started", InSummary=true, Order=140)]
+    [FhirElement("started", InSummary=true, Order=140, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime StartedElement
     {
@@ -1037,7 +1037,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=150)]
+    [FhirElement("basedOn", InSummary=true, Order=150, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Referring physician
     /// </summary>
-    [FhirElement("referrer", InSummary=true, Order=160)]
+    [FhirElement("referrer", InSummary=true, Order=160, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who interpreted images
     /// </summary>
-    [FhirElement("interpreter", InSummary=true, Order=170)]
+    [FhirElement("interpreter", InSummary=true, Order=170, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where ImagingStudy occurred
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=230)]
+    [FhirElement("location", InSummary=true, Order=230, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -1206,7 +1206,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the study was requested
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=240)]
+    [FhirElement("reasonCode", InSummary=true, Order=240, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was study performed
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=250)]
+    [FhirElement("reasonReference", InSummary=true, Order=250, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","Media","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]

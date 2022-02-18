@@ -2793,7 +2793,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique ID for this particular sequence. This is a FHIR-defined id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier(s) for the image
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of media as image, video, or audio
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130)]
+    [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of acquisition equipment/process
     /// </summary>
-    [FhirElement("modality", InSummary=true, Order=140)]
+    [FhirElement("modality", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Modality
     {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What this Media is a record of
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Group","Device","Specimen","Location")]
     [DataMember]
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter associated with media
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=170)]
+    [FhirElement("encounter", InSummary=true, Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When Media was collected
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("created", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this version was made available
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=190)]
+    [FhirElement("issued", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who generated the image
     /// </summary>
-    [FhirElement("operator", InSummary=true, Order=200)]
+    [FhirElement("operator", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
     [DataMember]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was event performed?
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=210)]
+    [FhirElement("reasonCode", InSummary=true, Order=210, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
