@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Context of the document  content
       /// </summary>
-      [FhirElement("encounter", Order=40)]
+      [FhirElement("encounter", Order=40, FiveWs="FiveWs.context")]
       [CLSCompliant(false)]
       [References("Encounter","EpisodeOfCare")]
       [Cardinality(Min=0,Max=-1)]
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Master Version Specific Identifier
     /// </summary>
-    [FhirElement("masterIdentifier", InSummary=true, Order=90)]
+    [FhirElement("masterIdentifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier MasterIdentifier
     {
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the document
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error
     /// </summary>
-    [FhirElement("docStatus", InSummary=true, Order=120)]
+    [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document (LOINC if possible)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130)]
+    [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of document
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140)]
+    [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is the subject of the document
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device")]
     [DataMember]
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document reference was created
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant DateElement
     {
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what authenticated the document
     /// </summary>
-    [FhirElement("authenticator", Order=180)]
+    [FhirElement("authenticator", Order=180, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]

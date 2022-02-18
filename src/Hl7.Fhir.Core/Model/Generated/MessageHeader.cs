@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Intended "real-world" recipient for the data
       /// </summary>
-      [FhirElement("receiver", InSummary=true, Order=70)]
+      [FhirElement("receiver", InSummary=true, Order=70, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -766,7 +766,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code for the event this message represents or link to event definition
     /// </summary>
-    [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message destination application(s)
     /// </summary>
-    [FhirElement("destination", InSummary=true, Order=100)]
+    [FhirElement("destination", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Real world sender of the message
     /// </summary>
-    [FhirElement("sender", InSummary=true, Order=110)]
+    [FhirElement("sender", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source of the data entry
     /// </summary>
-    [FhirElement("enterer", InSummary=true, Order=120)]
+    [FhirElement("enterer", InSummary=true, Order=120, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source of the decision
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=130)]
+    [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message source application
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=140)]
+    [FhirElement("source", InSummary=true, Order=140, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Final responsibility for event
     /// </summary>
-    [FhirElement("responsible", InSummary=true, Order=150)]
+    [FhirElement("responsible", InSummary=true, Order=150, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Cause of event
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=160)]
+    [FhirElement("reason", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {
