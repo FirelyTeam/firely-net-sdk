@@ -3,6 +3,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 
 namespace Firely.Fhir.Packages.Tests
 {
@@ -100,6 +101,16 @@ namespace Firely.Fhir.Packages.Tests
             var pat = await _resolver.ResolveByUriAsync("StructureDefinition/Patient").ConfigureAwait(false) as StructureDefinition;
             pat.Should().NotBeNull();
             pat.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/Patient");
+        }
+
+        //If this fails, valueset-currencies.json in the fhir-core-expansions package doesn't contain the correct display value for "STN" in the expansion.
+        [TestMethod]
+        public async System.Threading.Tasks.Task CheckCorrectMoneyDescription()
+        {
+            var vs = await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/currencies").ConfigureAwait(false) as ValueSet;
+            vs.Expansion.Should().NotBeNull();
+            var stn = vs.Expansion.Contains.Where(c => c.Code == "STN").FirstOrDefault();
+            stn.Display.Should().Be("São Tomé and Príncipe dobra");
         }
     }
 }
