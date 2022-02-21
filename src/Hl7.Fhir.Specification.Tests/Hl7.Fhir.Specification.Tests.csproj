@@ -2,7 +2,7 @@
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
-  <Import Project="..\firely-net-sdk-tests.props"/>
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>   
@@ -16,6 +16,7 @@
   </ItemGroup>
 	
   <ItemGroup>         
+      <PackageReference Include="NUnit" Version="3.13.2" />         
       <PackageReference Include="System.IO.Compression" Version="4.3.0" />
       <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
       <PackageReference Include="System.Threading.Tasks.Dataflow" Version="5.0.0" />
@@ -81,6 +82,12 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>  
+ 
+  <ItemGroup>
+    <None Update="FOR-611\Resources.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>  
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
