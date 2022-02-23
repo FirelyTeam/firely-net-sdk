@@ -30,12 +30,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="$(BaseIntermediateOutputPath)\specification.zip" >
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="hl7.fhir.r4b.corexml.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="hl7.fhir.r4b.expansions.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 	
