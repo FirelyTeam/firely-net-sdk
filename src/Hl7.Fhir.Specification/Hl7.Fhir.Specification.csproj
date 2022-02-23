@@ -13,6 +13,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="hl7.fhir.r5.core.tgz" />
+	  <None Remove="hl7.fhir.r5.expansions.tgz" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
@@ -30,12 +35,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="$(BaseIntermediateOutputPath)\specification.zip" >
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 			<PackagePath>contentFiles\any\any</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackageFlatten>true</PackageFlatten>
+		</Content>
+		<Content Include="hl7.fhir.r5.core.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="hl7.fhir.r5.expansions.tgz">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
 	
