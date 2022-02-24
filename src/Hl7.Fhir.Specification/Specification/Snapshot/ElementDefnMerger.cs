@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Aliases are cumulative based on the string value
                 snap.AliasElement = mergePrimitiveCollection(snap.AliasElement, diff.AliasElement, matchStringValues);
 
-                snap.MinElement = mergePrimitiveElement(snap.MinElement, diff.MinElement);
+                snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
                 snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.Base should already be there, and is not changed by the diff
@@ -475,6 +475,35 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
+            /// <summary>
+            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// </summary>
+            /// <param name="snap"></param>
+            /// <param name="diff"></param>
+            /// <returns></returns>
+            internal UnsignedInt mergeMin(UnsignedInt snap, UnsignedInt diff)
+            {
+                if (snap.IsNullOrEmpty() && !diff.IsNullOrEmpty())
+                {
+                    // no snap element, but diff element: return the diff:
+                    return deepCopyAndRaiseOnConstraint(diff);
+                }
+
+                if (!diff.IsNullOrEmpty())
+                {
+                    // a snap element and diff element exist
+                    var snapMin = snap.Value;
+                    var diffMin = diff.Value;
+
+                    if (diffMin > snapMin)
+                    {
+                        return deepCopyAndRaiseOnConstraint(diff);
+                    }
+                }
+                // in all other cases, return the snap
+                return snap;
+            }
+
             // TODO: Properly *merge* (extension) collections on nested elements
             // The diamond problem is especially painful for min/max -
             // most datatypes roots have a cardinality of 0..*, so
@@ -515,9 +544,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return snap;
             }
 
-            private FhirString deepCopyAndRaiseOnConstraint(FhirString elt)
+            private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType
             {
-                var result = (FhirString)elt.DeepCopy();
+                var result = (T)elt.DeepCopy();
                 onConstraint(result);
                 return result;
             }
