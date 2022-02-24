@@ -1323,8 +1323,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Rebase before merging
                                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                                 rebasedRootElem.Path = diff.Path;
-                                rebasedRootElem.Min = diff.Current.Min;
-                                rebasedRootElem.Max = diff.Current.Max;
+
+                                // MV 20220224: we have here actually a 3-way merge of the cardinality: merge of the snapshot in progress (1), differential (2) and 
+                                // the external profile type (3). We do first a merge with the profile type and the differential and then the differential 
+                                // will be merged into the snapshot.
+
+                                var sg = new ElementDefnMerger();
+                                // merge the min of the external profile type with the diff. Most constrained wins (the maximum of both values)
+                                rebasedRootElem.MinElement = sg.mergeMin(rebasedRootElem.MinElement, diff.Current.MinElement);
+                                // merge the min of the external profile type with the diff. Most constrained wins (the minumum of both values) 
+                                rebasedRootElem.MaxElement = sg.mergeMax(rebasedRootElem.MaxElement, diff.Current.MaxElement);
+
 
                                 // Merge the type profile root element; no need to expand children
                                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
