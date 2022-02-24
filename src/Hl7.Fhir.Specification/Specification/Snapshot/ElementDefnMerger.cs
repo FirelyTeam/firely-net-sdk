@@ -239,15 +239,23 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return snap;
             }
 
+            /// <summary>
+            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// </summary>
+            /// <param name="snap"></param>
+            /// <param name="diff"></param>
+            /// <returns></returns>
             internal UnsignedInt mergeMin(UnsignedInt snap, UnsignedInt diff)
             {
                 if (snap.IsNullOrEmpty() && !diff.IsNullOrEmpty())
                 {
+                    // no snap element, but diff element: return the diff:
                     return deepCopyAndRaiseOnConstraint(diff);
                 }
 
                 if (!diff.IsNullOrEmpty())
                 {
+                    // a snap element and diff element exist
                     var snapMin = snap.Value;
                     var diffMin = diff.Value;
 
@@ -256,7 +264,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         return deepCopyAndRaiseOnConstraint(diff);
                     }
                 }
-
+                // in all other cases, return the snap
                 return snap;
             }
 
