@@ -88,28 +88,39 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        [TestMethod]
-        public void TestMergeMax()
+        [DataTestMethod]
+        [DataRow(null, "1", "1")]
+        [DataRow("1", null, "1")]
+        [DataRow("1", "1", "1")]
+        [DataRow("1", "*", "1")]
+        [DataRow("2", "*", "2")]
+        [DataRow("*", "*", "*")]
+        [DataRow("*", "2", "2")]
+        [DataRow("*", null, "*")]
+        [DataRow(null, "*", "*")]
+        [DataRow("3", "2", "2")]
+        [DataRow("2", "3", "2")]
+        public void TestMergeMax(string snap, string diff, string expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
-            test(null, "1", "1");
-            test("1", null, "1");
-            test("1", "1", "1");
-            test("1", "*", "1");
-            test("2", "*", "2");
-            test("*", "*", "*");
-            test("*", "2", "2");
-            test("*", null, "*");
-            test(null, "*", "*");
-            test("3", "2", "2");
-            test("2", "3", "2");
+            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+            Assert.AreEqual(expected, actual.Value);
+        }
 
-            void test(string snap, string diff, string expected)
-            {
-                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
-                Assert.AreEqual(expected, actual.Value);
-            }
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, 1, 1)]
+        [DataRow(1, null, 1)]
+        [DataRow(1, 2, 2)]
+        [DataRow(2, 1, 2)]
+        [DataRow(1, 1, 1)]
+        public void TestMinMax(int? snap, int? diff, int? expected)
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            var actual = sg.mergeMin(new UnsignedInt(snap), new UnsignedInt(diff));
+            Assert.AreEqual(expected, actual.Value);
         }
 
         [TestMethod]

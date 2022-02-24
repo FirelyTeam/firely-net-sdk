@@ -1158,13 +1158,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Rebase before merging
                             var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                             rebasedRootElem.Path = diff.Path;
-                            // MV 20210727: copy cardinality from base (so do not use the cardinality of the type). See issue #1824
-                            //rebasedRootElem.Min = diff.Current.Min;
-                            //rebasedRootElem.Max = diff.Current.Max;
 
-                            // NEW 20220224:
-                            rebasedRootElem.Min = mostConstrainedMin(rebasedRootElem.Min, diff.Current.Min);
-                            rebasedRootElem.Max = mostConstrainedMax(rebasedRootElem.Max, diff.Current.Max);
+                            var sg = new ElementDefnMerger();
+                            // merge the min of the external profile type with the diff. Most constrained wins (the maximum of both values)
+                            rebasedRootElem.MinElement = sg.mergeMin(rebasedRootElem.MinElement, diff.Current.MinElement);
+                            // merge the min of the external profile type with the diff. Most constrained wins (the minumum of both values) 
+                            rebasedRootElem.MaxElement = sg.mergeMax(rebasedRootElem.MaxElement, diff.Current.MaxElement);
 
                             // Merge the type profile root element; no need to expand children
                             mergeElementDefinition(snap.Current, rebasedRootElem, false);
@@ -1184,24 +1183,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             return true;
-
-            int? mostConstrainedMin(int? a, int? b)
-            {
-                if (a is null) return b;
-                if (b is null) return a;
-
-                return Math.Max(a.Value, b.Value);
-            }
-
-            string mostConstrainedMax(string a, string b)
-            {
-                if (string.IsNullOrEmpty(a) || a == "*") return b;
-                if (string.IsNullOrEmpty(b) || b == "*") return a;
-
-                var left = int.Parse(a);
-                var right = int.Parse(b);
-                return Math.Min(left, right).ToString();
-            }
         }
 
         // [WMR 20170209] HACK
